@@ -3,7 +3,7 @@
   "prompt_id": "C2",
   "wave_id": "wave-001",
   "execution_kind": "mechanical_tool_operation",
-  "note": "Single-wave mechanical sharding via local Python; not a delegated model subagent.",
+  "note": "Single-wave mechanical sharding via python3 stdlib bytes splitlines(keepends=True); not a delegated model subagent.",
   "invocations": [
     {
       "invocation_id": "mechanical-python-c2-shard-001",

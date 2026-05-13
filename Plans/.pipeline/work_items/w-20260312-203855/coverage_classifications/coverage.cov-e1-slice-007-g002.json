@@ -2,555 +2,518 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-007-g002",
   "obligation_record_count": 25,
-  "source_classification_slices": [
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-007"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-s010-014",
+      "obligation_id": "obl-d2-s012-001",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 201,
-          "line_end": 218,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-015",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-016",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "gap",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1150,
-          "line_end": 1167,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-017",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 203,
-          "line_end": 220,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-018",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Widget_System.md",
-          "line_start": 269,
-          "line_end": 286,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-019",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-020",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1861,
-          "line_end": 1878,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-021",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1862,
-          "line_end": 1879,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-022",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "gap",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 215,
-          "line_end": 232,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-023",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1863,
-          "line_end": 1880,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-024",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 145,
-          "line_end": 162,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-025",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
-      "evidence_spans": [
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-026",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1153,
-          "line_end": 1170,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-027",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 148,
-          "line_end": 165,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s010-028",
-      "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "gap",
-      "classification": "missing",
-      "best_evidence_score": 0.22,
-      "uncertainty": 0.41,
+      "classification": "source_hint_gap",
       "evidence_spans": [],
-      "row_signals": [],
-      "notes": [
-        "No automated excerpt anchor in E1 live_doc_targets_union; bounded multi-window fanout still lists reviewable line ranges for manual follow-up."
-      ]
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001952 | excerpt=\"- Keep `account_switch_reason` on effective/runtime snapshots as the current-run disclosure field.\\n- Add append-only switch/pressure history families for durable audit and shared UI consumption.\\n- Let Usage, History, Ledger, and Orchestrato...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-029",
+      "obligation_id": "obl-d2-s012-002",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "gap",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 41,
-          "line_end": 58,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001955 | excerpt=\"- a failed or blocked switch decision is still historically important even when the effective account did not change\\n- pressure episodes and switch events should support both provider-wide and account-specific views\\n- this history must not ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-030",
+      "obligation_id": "obl-d2-s012-003",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 205,
-          "line_end": 222,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001960 | excerpt=\"- `Plans/FinalGUISpec.md`\\n- `Plans/UI_Command_Catalog.md`\\n- `Plans/Runtime_Artifacts_Panel.md`\\n- `Plans/Orchestrator_Page.md`\\n- `Plans/Run_Graph_View.md`\\n- `Plans/Widget_System.md`\\n- `Plans/usage-feature.md`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-031",
+      "obligation_id": "obl-d2-s012-004",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 150,
-          "line_end": 167,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001963 | excerpt=\"- Final GUI surface ownership is still materially behind the rewrite:\\n  - Dashboard and Appendix C still center tier/task/subtask widgets and vocabulary\\n  - `Tiers` still survives as a first-class tab where the rewrite now wants seam/packag...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-032",
+      "obligation_id": "obl-d2-s012-005",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
-      "evidence_spans": [
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001966 | excerpt=\"- `Plans/FinalGUISpec.md`\\n  - still the broadest consumer doc and still missing concern, trust, switch/pressure, and rewrite-era widget/tab contracts\\n- `Plans/UI_Command_Catalog.md`\\n  - still needs governance families, route-payload normali...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-033",
+      "obligation_id": "obl-d2-s012-006",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Architecture_Invariants.md",
-          "line_start": 852,
-          "line_end": 869,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001969 | excerpt=\"- GUI still claims or implies tier/task/subtask surfaces where rewrite-era seam/package/node surfaces are intended.\\n- No explicit concern model exists in the primary GUI specification.\\n- Commands that change execution truth still lack a sha...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-034",
+      "obligation_id": "obl-d2-s012-007",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1599,
-          "line_end": 1616,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001972 | excerpt=\"- Replace tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress/Seams set.\\n- Add a concern-model GUI contract and projection-health / degraded-trust contract to `FinalGUISpec.md`.\\n- Add projection-freshness gating ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-035",
+      "obligation_id": "obl-d2-s012-008",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "gap",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3119,
-          "line_end": 3136,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001975 | excerpt=\"- Preview `trust_tier` and runtime projection trust must stay distinct.\\n- Artifact provenance/trust needs to work even when the live worktree or provider session is gone.\\n- The Orchestrator/Usage/GitHub deep-link story is now blocked more b...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-036",
+      "obligation_id": "obl-d2-s012-009",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Widget_System.md",
-          "line_start": 73,
-          "line_end": 90,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001980 | excerpt=\"- `Plans/assistant-chat-design.md`\\n- `Plans/interview-subagent-integration.md`\\n- `Plans/human-in-the-loop.md`\\n- `Plans/Tools.md`\\n- `Plans/Permissions_System.md`\\n- `Plans/Contracts_V0.md`\\n- `Plans/Prompt_Pipeline.md`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-037",
+      "obligation_id": "obl-d2-s012-010",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1600,
-          "line_end": 1617,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001983 | excerpt=\"- Conversational actor docs still lag the shared runtime identity model in concrete ways:\\n  - assistant chat promises requested/effective auth/account visibility but still does not actually specify the disclosure surface\\n  - interview runti...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s010-038",
+      "obligation_id": "obl-d2-s012-011",
       "coverage_task_id": "cov-e1-slice-007-g002",
-      "source_shard_id": "shard-0034",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
-      "evidence_spans": [
-        {
-          "path": "Plans/Architecture_Invariants.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
-        }
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
       ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001986 | excerpt=\"- `Plans/assistant-chat-design.md`\\n  - still needs explicit auth/account/role disclosure and thread-level switch/trust handling\\n- `Plans/human-in-the-loop.md`\\n  - still needs actor/lane/account identity, approval provenance, and concurrency...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-012",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001989 | excerpt=\"- Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections.\\n- HITL and permissions still mix tier-boundary governance with tool-level approval semantics.\\n- Tool ev...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-013",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001992 | excerpt=\"- Add explicit auth/account/role disclosure sections to assistant and interview runtime contracts.\\n- Add actor/lane/account identity and approver provenance to HITL request/resolution events.\\n- Define an Approval Scope Key and use it consis...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-014",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-001995 | excerpt=\"- \u201cApprove for session\u201d is now a correctness bug if it is not scoped properly.\\n- Persona display is not a substitute for actor/role identity.\\n- DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drif...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-015",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-002000 | excerpt=\"- `Plans/Executor_Protocol.md`\\n- `Plans/orchestrator-subagent-integration.md`\\n- `Plans/chain-wizard-flexibility.md`\\n- `Plans/WorktreeGitImprovement.md`\\n- `Plans/Glossary.md`\\n- `Plans/Prompt_Pipeline.md`\\n- `Plans/storage-plan.md`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-016",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0042",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0042 | blocks=lblock-002003 | excerpt=\"- The core orchestration architecture docs are still structurally split between node-native ingest and tier-native execution:\\n  - `orchestrator-subagent-integration.md` already ingests node-sharded plans but still dispatches, tracks agents,...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-017",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002004 | excerpt=\"- no clean lane/worktree binding exists\\n  - no single authority is declared between Source Control worktree state and Orchestrator receipt lineage\\n  - blocked worktree reason emitters and historical lineage preservation remain under-owned\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-018",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002007 | excerpt=\"- `Plans/orchestrator-subagent-integration.md`\\n  - still the most contradicted orchestration doc and still structurally split-brain between body and addenda\\n- `Plans/Executor_Protocol.md`\\n  - still needs consolidation plus rewrite-era actor...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-019",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002010 | excerpt=\"- Node-native plan ingest still feeds tier-native execution models.\\n- Lane-aware scheduling still does not flow into worktree and active-agent tracking.\\n- Concern/corroboration/promotion objects remain absent from core runtime protocols.\\n- ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-020",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002013 | excerpt=\"- Consolidate `Executor_Protocol.md` addenda and add package/seam/corroboration/concern hooks.\\n- Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking.\\n- Replace or wrap `TierContext` ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-021",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002016 | excerpt=\"- `scheduler_lane` is already mandatory in some addenda but structurally homeless in the older orchestration body.\\n- Worktree lane binding and historical lineage preservation are now correctness requirements, not nice-to-have source-control...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-022",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002021 | excerpt=\"- `Plans/storage-plan.md`\\n- `Plans/Glossary.md`\\n- `Plans/Contracts_V0.md`\\n- current ledger projection-trust clusters\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-023",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002024 | excerpt=\"- The vocabulary collision is real:\\n  - `trust_tier` already exists in preview/browser state\\n  - broader Orchestrator/UI research has been using \u201cprojection trust\u201d or \u201cdegraded trust\u201d for stale/degraded summary data\\n  - keeping one overload...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-024",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002027 | excerpt=\"- Use `projection_freshness` as the canonical recency field.\\n- Use `projection_health` as the canonical reliability/usability field.\\n- Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed to...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s012-025",
+      "coverage_task_id": "cov-e1-slice-007-g002",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g002 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0043",
+        "source_slice_id": "d2-slice-012",
+        "canonical_excerpt_note": "shards=shard-0043 | blocks=lblock-002030 | excerpt=\"- `Plans/storage-plan.md`\\n- `Plans/Glossary.md`\\n- `Plans/Contracts_V0.md`\\n- `Plans/FinalGUISpec.md`\\n- `Plans/Widget_System.md`\\n- `Plans/Orchestrator_Page.md`\\n- `Plans/Run_Graph_View.md`\\n- any docs currently using \u201cprojection trust\u201d as worki...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     }
   ]
 }

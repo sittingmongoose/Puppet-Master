@@ -2,34 +2,990 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-014-g003",
-  "obligation_record_count": 1,
-  "source_classification_slices": [
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-014"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-020-014",
+      "obligation_id": "obl-d2-s023-019",
       "coverage_task_id": "cov-e1-slice-014-g003",
-      "source_shard_id": "shard-0073",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.59,
-      "uncertainty": 0.38,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 435,
+          "end_line": 435,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004563 | excerpt=\"- Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonica...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-020",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 4374,
+          "end_line": 4374,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004566 | excerpt=\"- Reconciliation should normalize `storage-plan.md` around:\\n  - attempt-native runtime records\\n  - blocked projecti...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-021",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1075,
+          "end_line": 1075,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004569 | excerpt=\"- `storage-plan.md` is not just a stale consumer. It is still publishing canonical key shapes. Any unresolved tier-er...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-022",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/Crosswalk.md",
-          "line_start": 401,
-          "line_end": 800,
-          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 42)."
+          "start_line": 524,
+          "end_line": 524,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial anchor: longest normalized match falls below present threshold but exceeds noise floor."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004574 | excerpt=\"- `Plans/Prompt_Pipeline.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-023",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1384,
+          "end_line": 1384,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004577 | excerpt=\"- `Plans/Prompt_Pipeline.md` already uses the stronger canonical runtime field names:\\n  - `requested_persona`\\n  - `...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-024",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 922,
+          "end_line": 922,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004580 | excerpt=\"- Primary doc:\\n  - `Plans/Prompt_Pipeline.md`\\n- Adjacent owners implicated:\\n  - `Plans/Contracts_V0.md`\\n  - `Plan...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-025",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1967,
+          "end_line": 1967,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004583 | excerpt=\"- The owner doc says runtime identity is canonical, while still anchoring key override and selection concepts to `tie...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-026",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-014-g003 has bounded live_doc_windows (72 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004586 | excerpt=\"- Reconciliation should keep the field names that are already correct and replace the stale scope model under them:\\n...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-027",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2905,
+          "end_line": 2905,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004589 | excerpt=\"- `Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, an...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-028",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 3599,
+          "end_line": 3599,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004594 | excerpt=\"- `Plans/rewrite-tie-in-memo.md`\\n- `Plans/UI_Command_Catalog.md`\\n- `Plans/FinalGUISpec.md`\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-029",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 292,
+          "end_line": 292,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004597 | excerpt=\"- `Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:\\n  - Gemini requested/effective...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-030",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 3599,
+          "end_line": 3599,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004600 | excerpt=\"- Primary docs:\\n  - `Plans/rewrite-tie-in-memo.md`\\n  - `Plans/UI_Command_Catalog.md`\\n  - `Plans/FinalGUISpec.md`\\n...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-031",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 327,
+          "end_line": 327,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004603 | excerpt=\"- The rewrite-root memo already locks provider/runtime architecture, but it does not yet record the newer Orchestrato...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-032",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 2328,
+          "end_line": 2328,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004606 | excerpt=\"- Reconciliation order for this seam should be:\\n  - `rewrite-tie-in-memo.md` first as rewrite-root routing\\n  - `UI_...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-033",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0084",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0084 | blocks=lblock-004609 | excerpt=\"- `FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale ontology into user-visible ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-034",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 922,
+          "end_line": 922,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004614 | excerpt=\"- `Plans/Executor_Protocol.md`\\n- `Plans/Orchestrator_Page.md`\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-035",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "start_line": 74,
+          "end_line": 74,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004617 | excerpt=\"- `Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:\\n  - canonical dispatch already u...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-036",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004620 | excerpt=\"- Primary docs:\\n  - `Plans/Executor_Protocol.md`\\n  - `Plans/Orchestrator_Page.md`\\n- Adjacent owners implicated:\\n ...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-037",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 922,
+          "end_line": 922,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004623 | excerpt=\"- The execution core is now ahead of the main Orchestrator page spec, so the page doc is still teaching a surface mod...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-038",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2337,
+          "end_line": 2337,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004626 | excerpt=\"- Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull `Orchestrator_Page.md` t...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-039",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 4217,
+          "end_line": 4217,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004629 | excerpt=\"- `Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much large...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-040",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 235,
+          "end_line": 235,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004634 | excerpt=\"- `Plans/Run_Graph_View.md`\\n- `Plans/Widget_System.md`\\n- `Plans/usage-feature.md`\\n- `Plans/assistant-chat-design.md`\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-041",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3263,
+          "end_line": 3263,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004637 | excerpt=\"- `Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract:\\n  - worker activity requires `P...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-042",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 220,
+          "end_line": 220,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004640 | excerpt=\"- Primary docs:\\n  - `Plans/Run_Graph_View.md`\\n  - `Plans/Widget_System.md`\\n  - `Plans/usage-feature.md`\\n  - `Plan...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s023-043",
+      "coverage_task_id": "cov-e1-slice-014-g003",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 295,
+          "end_line": 295,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0085",
+        "source_slice_id": "d2-slice-023",
+        "canonical_excerpt_note": "shards=shard-0085 | blocks=lblock-004643 | excerpt=\"- `Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     }
   ]
 }

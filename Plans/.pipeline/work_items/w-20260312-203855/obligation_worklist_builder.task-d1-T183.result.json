@@ -1,0 +1,392 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T183",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T183-01",
+      "source_block_ids": [
+        "lblock-004551",
+        "lblock-004552",
+        "lblock-004553",
+        "lblock-004554",
+        "lblock-004555",
+        "lblock-004556",
+        "lblock-004557",
+        "lblock-004558",
+        "lblock-004559",
+        "lblock-004560",
+        "lblock-004561",
+        "lblock-004562",
+        "lblock-004563",
+        "lblock-004564",
+        "lblock-004565",
+        "lblock-004566",
+        "lblock-004567",
+        "lblock-004568",
+        "lblock-004569",
+        "lblock-004570",
+        "lblock-004571",
+        "lblock-004572",
+        "lblock-004573",
+        "lblock-004574",
+        "lblock-004575"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0084",
+          "start_line": 16601,
+          "end_line": 16668
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "max_source_lines": 68,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T183-01.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004551",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16601,
+            "end_line": 16601
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004552",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16602,
+            "end_line": 16602
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004553",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16603,
+            "end_line": 16603
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004554",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16604,
+            "end_line": 16604
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004555",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16605,
+            "end_line": 16605
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004556",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16606,
+            "end_line": 16606
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004557",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16607,
+            "end_line": 16627
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": true,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004558",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16628,
+            "end_line": 16628
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004559",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16629,
+            "end_line": 16629
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004560",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16630,
+            "end_line": 16639
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/FileManager.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Run_Graph_View.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/WorktreeGitImprovement.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004561",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16640,
+            "end_line": 16640
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004562",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16641,
+            "end_line": 16641
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004563",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16642,
+            "end_line": 16644
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004564",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16645,
+            "end_line": 16645
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004565",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16646,
+            "end_line": 16646
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004566",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16647,
+            "end_line": 16657
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004567",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16658,
+            "end_line": 16658
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004568",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16659,
+            "end_line": 16659
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004569",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16660,
+            "end_line": 16661
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004570",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16662,
+            "end_line": 16663
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004571",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16664,
+            "end_line": 16664
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004572",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16665,
+            "end_line": 16665
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004573",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16666,
+            "end_line": 16666
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004574",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16667,
+            "end_line": 16667
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Prompt_Pipeline.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004575",
+          "source_shard_id": "shard-0084",
+          "source_line_range": {
+            "start_line": 16668,
+            "end_line": 16668
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

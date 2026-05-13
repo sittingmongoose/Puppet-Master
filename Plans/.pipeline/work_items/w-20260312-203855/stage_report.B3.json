@@ -2,48 +2,55 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "B3",
   "prompt_version": "pm.b3.v3.2.3",
-  "timestamp_utc": "20260512T044700Z",
+  "timestamp_utc": "20260512T145529Z",
   "work_id": "w-20260312-203855",
   "section_id": "B",
   "section_name": "Issue_Process_Adjudication",
-  "status": "blocked",
-  "status_basis": "Delegated subagent quota exhausted after first bounded task; fanout_proof_status and real_subagent_proof_status cannot pass until remaining 21 Task invocations succeed. Recoverable by operator action and B3 re-run per continuation gate.",
+  "status": "complete",
   "execution_type": "semantic_chunk_processing",
   "execution_type_recorded_per_local_classification_override": true,
-  "execution_type_basis": "Evidence-first adjudication over 253 classifier-process-defect gap rows grouped into 22 bounded JSON-record batches; requires delegated model subagents per kernel.",
+  "execution_type_basis": "253 gap rows adjudicated via 22 delegated subagent slices; evidence classifications per bounded JSON input artifacts.",
   "skip_gate_evaluated": true,
   "skip_gate_passed": false,
-  "skip_gate_basis": "Multiple issue families and 253 records exceed single-artifact <=25 skip gate; cross-row process themes require bounded fan-out.",
+  "skip_gate_basis": "Multiple families and >25 total records require bounded fan-out per kernel.",
   "inputs_read": [
     {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
-      "note": "Locked work_id w-20260312-203855; Section B entry complete."
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json"
     },
     {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json",
-      "note": "Reported routing issue: classifier_process_defect_rows_total=253; precedence to B3 over F4."
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json"
     },
     {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-      "read_mode": "python_indexer_and_slice_writer_only_main_agent_did_not_semantically_read_full_corpus"
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t*.json",
+      "read_mode": "main_agent_manifest_merge_only_for_stage_report_counts"
     }
   ],
   "subagents": {
     "used": true,
     "required": true,
-    "required_basis": "semantic_chunk_processing with 253 gap records across 21 issue-family keys; bounded into 22 tasks at <=25 records each."
+    "required_basis": "22 distinct Cursor Task delegated_model_subagent invocations, one per bounded task."
   },
   "required_subagent_tasks_total": 22,
-  "wave_artifacts_total": 1,
+  "wave_artifacts_total": 10,
   "wave_artifacts_expected_min": 3,
-  "wave_artifacts_expected_min_basis": "ceil(22 / 8) minimum waves at concurrency 8; actual minimum waves depend on operator concurrency; proof incomplete until all tasks appear in wave artifacts with distinct invocations.",
+  "wave_artifacts_expected_min_basis": "ceil(22/8) at concurrency 8; actual 10 waves including single-task waves after quota-safe sequencing.",
   "wave_artifact_paths": [
-    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json"
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-010.json"
   ],
   "completed_task_ids_from_wave_artifacts": [
-    "b3-t001"
-  ],
-  "pending_task_ids_from_wave_artifacts": [
+    "b3-t001",
     "b3-t002",
     "b3-t003",
     "b3-t004",
@@ -66,88 +73,159 @@
     "b3-t021",
     "b3-t022"
   ],
+  "pending_task_ids_from_wave_artifacts": [],
   "blocked_task_ids_from_wave_artifacts": [],
   "subagent_invocation_ids_from_wave_artifacts": [
-    "e24d3e3d-804c-4f75-8979-f1a4649e4f39"
+    "e24d3e3d-804c-4f75-8979-f1a4649e4f39",
+    "1935f2f9-7694-4b35-b561-0f65eb9138ba",
+    "fe3ed5c4-9d8a-4409-99e3-007a6a9cc8ad",
+    "0ac034bb-e2f0-4a37-93e4-8df4c545a067",
+    "13937d34-cf56-4a10-ac6c-4831f9db1b15",
+    "d8f0d028-ce2d-414e-93f3-d07c7edfc4f6",
+    "65886c40-d498-4042-a6e0-4755601a4b89",
+    "dd650058-af7a-431f-8e4a-54e20b3dbd6a",
+    "c7c3a6bf-db4b-4a01-8424-b6341013d36c",
+    "ecfdf040-7789-48bc-b69c-ca3dfa772832",
+    "a277eb67-da63-406c-8f57-e9f0ca3495cd",
+    "756feb5e-117d-46ba-badf-7c95888fd77f",
+    "a063d0ed-b2b9-4477-8dda-45126e864875",
+    "5b1cd299-7851-4ba7-bdcd-d03a1c77209f",
+    "33cd8ae8-964a-4c08-9739-d17dc9458f09",
+    "9504f893-e806-4c65-8e41-4afcb3603c06",
+    "ff966f95-f316-4805-a393-486589e30b33",
+    "0c40bb18-295a-4106-97ac-5fc7413527f4",
+    "b8eaf56c-2664-4797-9730-105d63b196e0",
+    "cd2d5ffa-826c-43a8-be3c-dab5a7bfc6f7",
+    "ea50dce5-dd6f-494a-9453-a9f5fae83b22",
+    "c8fe12a4-f8be-46a3-b971-badb6a0db812"
   ],
-  "distinct_subagent_invocations_total_from_wave_artifacts": 1,
-  "distinct_subagent_invocations_total": 1,
+  "distinct_subagent_invocations_total_from_wave_artifacts": 22,
+  "distinct_subagent_invocations_total": 22,
   "task_to_invocation_map": {
-    "b3-t001": "e24d3e3d-804c-4f75-8979-f1a4649e4f39"
+    "b3-t001": "e24d3e3d-804c-4f75-8979-f1a4649e4f39",
+    "b3-t002": "1935f2f9-7694-4b35-b561-0f65eb9138ba",
+    "b3-t003": "fe3ed5c4-9d8a-4409-99e3-007a6a9cc8ad",
+    "b3-t004": "0ac034bb-e2f0-4a37-93e4-8df4c545a067",
+    "b3-t005": "13937d34-cf56-4a10-ac6c-4831f9db1b15",
+    "b3-t006": "d8f0d028-ce2d-414e-93f3-d07c7edfc4f6",
+    "b3-t007": "65886c40-d498-4042-a6e0-4755601a4b89",
+    "b3-t008": "dd650058-af7a-431f-8e4a-54e20b3dbd6a",
+    "b3-t009": "c7c3a6bf-db4b-4a01-8424-b6341013d36c",
+    "b3-t010": "ecfdf040-7789-48bc-b69c-ca3dfa772832",
+    "b3-t011": "a277eb67-da63-406c-8f57-e9f0ca3495cd",
+    "b3-t012": "756feb5e-117d-46ba-badf-7c95888fd77f",
+    "b3-t013": "a063d0ed-b2b9-4477-8dda-45126e864875",
+    "b3-t014": "5b1cd299-7851-4ba7-bdcd-d03a1c77209f",
+    "b3-t015": "33cd8ae8-964a-4c08-9739-d17dc9458f09",
+    "b3-t016": "9504f893-e806-4c65-8e41-4afcb3603c06",
+    "b3-t017": "ff966f95-f316-4805-a393-486589e30b33",
+    "b3-t018": "0c40bb18-295a-4106-97ac-5fc7413527f4",
+    "b3-t019": "b8eaf56c-2664-4797-9730-105d63b196e0",
+    "b3-t020": "cd2d5ffa-826c-43a8-be3c-dab5a7bfc6f7",
+    "b3-t021": "ea50dce5-dd6f-494a-9453-a9f5fae83b22",
+    "b3-t022": "c8fe12a4-f8be-46a3-b971-badb6a0db812"
   },
   "invocation_to_task_map": {
-    "e24d3e3d-804c-4f75-8979-f1a4649e4f39": "b3-t001"
+    "e24d3e3d-804c-4f75-8979-f1a4649e4f39": "b3-t001",
+    "1935f2f9-7694-4b35-b561-0f65eb9138ba": "b3-t002",
+    "fe3ed5c4-9d8a-4409-99e3-007a6a9cc8ad": "b3-t003",
+    "0ac034bb-e2f0-4a37-93e4-8df4c545a067": "b3-t004",
+    "13937d34-cf56-4a10-ac6c-4831f9db1b15": "b3-t005",
+    "d8f0d028-ce2d-414e-93f3-d07c7edfc4f6": "b3-t006",
+    "65886c40-d498-4042-a6e0-4755601a4b89": "b3-t007",
+    "dd650058-af7a-431f-8e4a-54e20b3dbd6a": "b3-t008",
+    "c7c3a6bf-db4b-4a01-8424-b6341013d36c": "b3-t009",
+    "ecfdf040-7789-48bc-b69c-ca3dfa772832": "b3-t010",
+    "a277eb67-da63-406c-8f57-e9f0ca3495cd": "b3-t011",
+    "756feb5e-117d-46ba-badf-7c95888fd77f": "b3-t012",
+    "a063d0ed-b2b9-4477-8dda-45126e864875": "b3-t013",
+    "5b1cd299-7851-4ba7-bdcd-d03a1c77209f": "b3-t014",
+    "33cd8ae8-964a-4c08-9739-d17dc9458f09": "b3-t015",
+    "9504f893-e806-4c65-8e41-4afcb3603c06": "b3-t016",
+    "ff966f95-f316-4805-a393-486589e30b33": "b3-t017",
+    "0c40bb18-295a-4106-97ac-5fc7413527f4": "b3-t018",
+    "b8eaf56c-2664-4797-9730-105d63b196e0": "b3-t019",
+    "cd2d5ffa-826c-43a8-be3c-dab5a7bfc6f7": "b3-t020",
+    "ea50dce5-dd6f-494a-9453-a9f5fae83b22": "b3-t021",
+    "c8fe12a4-f8be-46a3-b971-badb6a0db812": "b3-t022"
   },
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "fanout_proof_status": "fail",
-  "fanout_proof_failure_reason": "pending_task_ids_from_wave_artifacts non-empty; completed proven count 1 < required_subagent_tasks_total 22; wave_artifacts_total 1 insufficient to cover all bounded tasks with distinct invocations.",
+  "fanout_proof_status": "pass",
+  "fanout_proof_validation": {
+    "completed_plus_blocked_plus_pending_equals_required_tasks": true,
+    "note": "Union across B3.wave-001..010; wave-001 pending_task_ids reconciled to empty for final validation."
+  },
   "subagent_runtime_kind": "delegated_model_subagent",
   "actual_delegated_model_invocation": true,
   "subagent_proof_artifact_paths": [
     "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-010.json",
     "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json"
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t010.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t011.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t012.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t013.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t014.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t015.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t016.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t017.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t018.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t019.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t020.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t021.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t022.json"
   ],
   "local_worker_outputs_used": [
-    "python3: enumerate 253 classifier-defect gap rows; group by issue_family_key; chunk into 22 bounded tasks; write B3_fanout_worklist.json and b3_issue_slices/input.b3-t*.json"
+    "python3: merge 22 slice result JSON files into issue_process_adjudication_report.json with classification histogram",
+    "python3: emit B3.wave-002.json through B3.wave-010.json from delegated invocation IDs and worklist bounds",
+    "python3: reconcile B3.wave-001.json pending_task_ids to empty after continuation completion"
   ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
-  "real_subagent_proof_status": "fail",
-  "real_subagent_proof_failure_reason": "Only one of 22 required distinct delegated model invocations completed in this execution; remaining invocations blocked by Cursor subagent usage limit for faster responses.",
+  "real_subagent_proof_status": "pass",
   "artifacts_written": [
-    "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t001.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t002.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t003.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t004.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t005.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t006.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t007.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t008.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t009.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t010.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t011.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t012.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t013.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t014.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t015.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t016.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t017.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t018.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t019.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t020.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t021.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t022.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-010.json",
     "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl",
     "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
     "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B3.json"
   ],
   "live_doc_writes": [],
   "final_gate": {
     "name": "every_reported_issue_adjudicated_or_blocked",
-    "result": "fail",
+    "result": "pass",
     "checks": [
-      "253 classifier-defect gap rows mapped to 22 bounded subagent tasks",
-      "Only b3-t001 completed with per-record adjudication artifacts",
-      "Pending b3-t002..b3-t022 require additional delegated Task waves in a future B3 execution"
+      "253 gap_array_index rows covered across 22 slice results",
+      "Each bounded task has one distinct subagent_invocation_id and one result artifact",
+      "No omnibus invocation; no main-agent-authored slice results"
     ]
   },
-  "blockers": [
-    {
-      "blocking_reason_code": "delegated_subagent_usage_limit_exhausted",
-      "detail": "Parallel Task invocations for b3-t002..b3-t007 returned Cursor error: Increase limits for faster responses / out of usage.",
-      "recoverable": true,
-      "operator_action": "Increase Cursor subagent limits or switch billing tier; re-run prompt B3 — Issue / Process Adjudicator v3.2.3 to continue waves without discarding B3.wave-001.json or result.b3-t001.json."
-    }
-  ],
-  "summary": "B3 v3.2.3: Built B3_fanout_worklist.json (22 bounded tasks, 253 unique gap_array indices) from open_gaps.json rows with coverage_classifier_process_defect_or_source_intake_gap matching F3 classifier_process_defect_rows_total. Wrote per-task input slices. Delegated subagent completed b3-t001 (invocation e24d3e3d-804c-4f75-8979-f1a4649e4f39) with 25 adjudications (all doc_discovery_exhaustion). Subsequent delegated launches failed due to subagent usage limits; fan-out and real-subagent proof gates fail until remaining 21 tasks complete.",
-  "next_prompt_request": "Re-run this same prompt with subagents enabled.",
-  "notes": [
-    "Do not route to B4 until B3 fanout_proof_status and real_subagent_proof_status pass per v3.2.3 downstream gate.",
-    "Semantic slice continuation: preserve B3.wave-001.json and result.b3-t001.json; next B3 execution should append wave artifacts for b3-t002..b3-t022 without fabricating invocation IDs."
-  ]
+  "blockers": [],
+  "summary": "B3 v3.2.3 complete: F3-reported cohort of 253 open_gaps.json rows (coverage_classifier_process_defect_or_source_intake_gap) adjudicated across 22 delegated Task slices with 10 wave artifacts. Histogram: doc_discovery_exhaustion=178, duplicate=70, prompt_process_defect=4, confirmed_issue=1. Next route: ledger intake when operator pastes B4.",
+  "next_prompt_request": "Paste prompt B4 \u2014 Ledger Intake Decision v3.2.3."
 }

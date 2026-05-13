@@ -1,16 +1,19 @@
 {
   "schema_id": "pm.obligation_converter.wave.v3.2.3",
   "wave_index": 1,
+  "prompt_id": "D2",
   "work_id": "w-20260312-203855",
   "invocations": [
     {
-      "subagent_invocation_id": "0148f663-0dbb-49a0-8ca2-bd22e9b61a1f",
+      "subagent_invocation_id": "aec3e9eb-d64a-4c10-be32-0d5d8282d75e",
       "subagent_task_id": "d2-slice-001",
       "input_bounds": {
+        "slice_id": "d2-slice-001",
         "source_group_ids": [
           "wg-d1-T001-01",
           "wg-d1-T001-02",
-          "wg-d1-T001-03"
+          "wg-d1-T001-03",
+          "wg-d1-T001-04"
         ],
         "source_block_ids": [
           "lblock-000001",
@@ -37,31 +40,30 @@
           "lblock-000022",
           "lblock-000023",
           "lblock-000024",
-          "lblock-000025",
-          "lblock-000026",
-          "lblock-000027"
+          "lblock-000025"
         ],
         "source_lines_total": 800,
-        "raw_blocks_total": 27,
-        "d1_work_groups_in_slice": 3
+        "raw_blocks_total": 25
       },
       "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-001.json",
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "7bd1a55d-e059-4576-8aa8-9e44dcdcddd9",
+      "subagent_invocation_id": "2ad23edd-8642-4518-9f74-b1ff00568221",
       "subagent_task_id": "d2-slice-002",
       "input_bounds": {
+        "slice_id": "d2-slice-002",
         "source_group_ids": [
           "wg-d1-T002-01",
-          "wg-d1-T002-02",
-          "wg-d1-T002-03",
-          "wg-d1-T002-04",
-          "wg-d1-T002-05",
-          "wg-d1-T002-06",
-          "wg-d1-T002-07"
+          "wg-d1-T003-01",
+          "wg-d1-T004-01",
+          "wg-d1-T005-01",
+          "wg-d1-T006-01",
+          "wg-d1-T007-01"
         ],
         "source_block_ids": [
+          "lblock-000026",
+          "lblock-000027",
           "lblock-000028",
           "lblock-000029",
           "lblock-000030",
@@ -209,7 +211,29 @@
           "lblock-000172",
           "lblock-000173",
           "lblock-000174",
-          "lblock-000175",
+          "lblock-000175"
+        ],
+        "source_lines_total": 727,
+        "raw_blocks_total": 150
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "9b7983dc-3ee5-4fd3-bc3e-7a3c1dd6c3d5",
+      "subagent_task_id": "d2-slice-003",
+      "input_bounds": {
+        "slice_id": "d2-slice-003",
+        "source_group_ids": [
+          "wg-d1-T008-01",
+          "wg-d1-T009-01",
+          "wg-d1-T010-01",
+          "wg-d1-T011-01",
+          "wg-d1-T012-01",
+          "wg-d1-T013-01",
+          "wg-d1-T014-01"
+        ],
+        "source_block_ids": [
           "lblock-000176",
           "lblock-000177",
           "lblock-000178",
@@ -232,37 +256,7 @@
           "lblock-000195",
           "lblock-000196",
           "lblock-000197",
-          "lblock-000198"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 171,
-        "d1_work_groups_in_slice": 7
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "b5062036-6231-4cf2-8f17-ec282588a9e3",
-      "subagent_task_id": "d2-slice-003",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T003-01",
-          "wg-d1-T003-02",
-          "wg-d1-T003-03",
-          "wg-d1-T003-04",
-          "wg-d1-T003-05",
-          "wg-d1-T003-06",
-          "wg-d1-T003-07",
-          "wg-d1-T003-08",
-          "wg-d1-T003-09",
-          "wg-d1-T003-10",
-          "wg-d1-T003-11",
-          "wg-d1-T003-12",
-          "wg-d1-T003-13",
-          "wg-d1-T003-14",
-          "wg-d1-T003-15"
-        ],
-        "source_block_ids": [
+          "lblock-000198",
           "lblock-000199",
           "lblock-000200",
           "lblock-000201",
@@ -318,34 +312,7 @@
           "lblock-000251",
           "lblock-000252",
           "lblock-000253",
-          "lblock-000254"
-        ],
-        "source_lines_total": 311,
-        "raw_blocks_total": 56,
-        "d1_work_groups_in_slice": 15
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "182a791b-46eb-46ce-918d-b47eff7d9f6d",
-      "subagent_task_id": "d2-slice-004",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T003-16",
-          "wg-d1-T003-17",
-          "wg-d1-T003-18",
-          "wg-d1-T003-19",
-          "wg-d1-T003-20",
-          "wg-d1-T003-21",
-          "wg-d1-T003-22",
-          "wg-d1-T003-23",
-          "wg-d1-T003-24",
-          "wg-d1-T004-01",
-          "wg-d1-T004-02",
-          "wg-d1-T004-03"
-        ],
-        "source_block_ids": [
+          "lblock-000254",
           "lblock-000255",
           "lblock-000256",
           "lblock-000257",
@@ -441,7 +408,30 @@
           "lblock-000347",
           "lblock-000348",
           "lblock-000349",
-          "lblock-000350",
+          "lblock-000350"
+        ],
+        "source_lines_total": 733,
+        "raw_blocks_total": 175
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "213b8e32-fb39-49a9-89a5-095a92802de8",
+      "subagent_task_id": "d2-slice-004",
+      "input_bounds": {
+        "slice_id": "d2-slice-004",
+        "source_group_ids": [
+          "wg-d1-T015-01",
+          "wg-d1-T016-01",
+          "wg-d1-T017-01",
+          "wg-d1-T018-01",
+          "wg-d1-T019-01",
+          "wg-d1-T020-01",
+          "wg-d1-T021-01",
+          "wg-d1-T022-01"
+        ],
+        "source_block_ids": [
           "lblock-000351",
           "lblock-000352",
           "lblock-000353",
@@ -545,33 +535,7 @@
           "lblock-000451",
           "lblock-000452",
           "lblock-000453",
-          "lblock-000454"
-        ],
-        "source_lines_total": 727,
-        "raw_blocks_total": 200,
-        "d1_work_groups_in_slice": 12
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "92ce8417-1321-4906-9d39-7f457ac193f9",
-      "subagent_task_id": "d2-slice-005",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T004-04",
-          "wg-d1-T004-05",
-          "wg-d1-T004-06",
-          "wg-d1-T004-07",
-          "wg-d1-T004-08",
-          "wg-d1-T004-09",
-          "wg-d1-T004-10",
-          "wg-d1-T004-11",
-          "wg-d1-T004-12",
-          "wg-d1-T005-01",
-          "wg-d1-T005-02"
-        ],
-        "source_block_ids": [
+          "lblock-000454",
           "lblock-000455",
           "lblock-000456",
           "lblock-000457",
@@ -667,7 +631,29 @@
           "lblock-000547",
           "lblock-000548",
           "lblock-000549",
-          "lblock-000550",
+          "lblock-000550"
+        ],
+        "source_lines_total": 734,
+        "raw_blocks_total": 200
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c331374d-7bc0-4294-99c0-82be2c004a30",
+      "subagent_task_id": "d2-slice-005",
+      "input_bounds": {
+        "slice_id": "d2-slice-005",
+        "source_group_ids": [
+          "wg-d1-T023-01",
+          "wg-d1-T024-01",
+          "wg-d1-T025-01",
+          "wg-d1-T026-01",
+          "wg-d1-T027-01",
+          "wg-d1-T028-01",
+          "wg-d1-T029-01"
+        ],
+        "source_block_ids": [
           "lblock-000551",
           "lblock-000552",
           "lblock-000553",
@@ -760,35 +746,7 @@
           "lblock-000640",
           "lblock-000641",
           "lblock-000642",
-          "lblock-000643"
-        ],
-        "source_lines_total": 762,
-        "raw_blocks_total": 189,
-        "d1_work_groups_in_slice": 11
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "67ca87b1-eaeb-41c9-b33a-4439c9d28d8c",
-      "subagent_task_id": "d2-slice-006",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T005-03",
-          "wg-d1-T005-04",
-          "wg-d1-T005-05",
-          "wg-d1-T005-06",
-          "wg-d1-T005-07",
-          "wg-d1-T005-08",
-          "wg-d1-T005-09",
-          "wg-d1-T005-10",
-          "wg-d1-T005-11",
-          "wg-d1-T006-01",
-          "wg-d1-T006-02",
-          "wg-d1-T006-03",
-          "wg-d1-T006-04"
-        ],
-        "source_block_ids": [
+          "lblock-000643",
           "lblock-000644",
           "lblock-000645",
           "lblock-000646",
@@ -870,7 +828,30 @@
           "lblock-000722",
           "lblock-000723",
           "lblock-000724",
-          "lblock-000725",
+          "lblock-000725"
+        ],
+        "source_lines_total": 706,
+        "raw_blocks_total": 175
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "550bd816-181d-4794-b7d7-70818165d1a6",
+      "subagent_task_id": "d2-slice-006",
+      "input_bounds": {
+        "slice_id": "d2-slice-006",
+        "source_group_ids": [
+          "wg-d1-T030-01",
+          "wg-d1-T031-01",
+          "wg-d1-T032-01",
+          "wg-d1-T033-01",
+          "wg-d1-T034-01",
+          "wg-d1-T035-01",
+          "wg-d1-T036-01",
+          "wg-d1-T037-01"
+        ],
+        "source_block_ids": [
           "lblock-000726",
           "lblock-000727",
           "lblock-000728",
@@ -996,36 +977,7 @@
           "lblock-000848",
           "lblock-000849",
           "lblock-000850",
-          "lblock-000851"
-        ],
-        "source_lines_total": 752,
-        "raw_blocks_total": 208,
-        "d1_work_groups_in_slice": 13
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "6a7f3768-ec90-454c-9953-1cf0c84c5a49",
-      "subagent_task_id": "d2-slice-007",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T006-05",
-          "wg-d1-T006-06",
-          "wg-d1-T006-07",
-          "wg-d1-T006-08",
-          "wg-d1-T006-09",
-          "wg-d1-T006-10",
-          "wg-d1-T006-11",
-          "wg-d1-T006-12",
-          "wg-d1-T006-13",
-          "wg-d1-T006-14",
-          "wg-d1-T006-15",
-          "wg-d1-T006-16",
-          "wg-d1-T007-01",
-          "wg-d1-T007-02"
-        ],
-        "source_block_ids": [
+          "lblock-000851",
           "lblock-000852",
           "lblock-000853",
           "lblock-000854",
@@ -1099,7 +1051,31 @@
           "lblock-000922",
           "lblock-000923",
           "lblock-000924",
-          "lblock-000925",
+          "lblock-000925"
+        ],
+        "source_lines_total": 715,
+        "raw_blocks_total": 200
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "1c76eaa1-deee-41ec-b83b-4791c7f6e579",
+      "subagent_task_id": "d2-slice-007",
+      "input_bounds": {
+        "slice_id": "d2-slice-007",
+        "source_group_ids": [
+          "wg-d1-T038-01",
+          "wg-d1-T039-01",
+          "wg-d1-T040-01",
+          "wg-d1-T041-01",
+          "wg-d1-T042-01",
+          "wg-d1-T043-01",
+          "wg-d1-T044-01",
+          "wg-d1-T045-01",
+          "wg-d1-T046-01"
+        ],
+        "source_block_ids": [
           "lblock-000926",
           "lblock-000927",
           "lblock-000928",
@@ -1247,32 +1223,7 @@
           "lblock-001070",
           "lblock-001071",
           "lblock-001072",
-          "lblock-001073"
-        ],
-        "source_lines_total": 765,
-        "raw_blocks_total": 222,
-        "d1_work_groups_in_slice": 14
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "bff473a0-a2cb-433a-98ac-c5fca7b3b0c4",
-      "subagent_task_id": "d2-slice-008",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T007-03",
-          "wg-d1-T007-04",
-          "wg-d1-T007-05",
-          "wg-d1-T007-06",
-          "wg-d1-T007-07",
-          "wg-d1-T007-08",
-          "wg-d1-T007-09",
-          "wg-d1-T007-10",
-          "wg-d1-T007-11",
-          "wg-d1-T007-12"
-        ],
-        "source_block_ids": [
+          "lblock-001073",
           "lblock-001074",
           "lblock-001075",
           "lblock-001076",
@@ -1349,7 +1300,30 @@
           "lblock-001147",
           "lblock-001148",
           "lblock-001149",
-          "lblock-001150",
+          "lblock-001150"
+        ],
+        "source_lines_total": 795,
+        "raw_blocks_total": 225
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "740db3d8-fa05-4e59-9492-38c2000021a9",
+      "subagent_task_id": "d2-slice-008",
+      "input_bounds": {
+        "slice_id": "d2-slice-008",
+        "source_group_ids": [
+          "wg-d1-T047-01",
+          "wg-d1-T048-01",
+          "wg-d1-T049-01",
+          "wg-d1-T050-01",
+          "wg-d1-T051-01",
+          "wg-d1-T052-01",
+          "wg-d1-T053-01",
+          "wg-d1-T054-01"
+        ],
+        "source_block_ids": [
           "lblock-001151",
           "lblock-001152",
           "lblock-001153",
@@ -1460,11 +1434,99 @@
           "lblock-001258",
           "lblock-001259",
           "lblock-001260",
-          "lblock-001261"
+          "lblock-001261",
+          "lblock-001262",
+          "lblock-001263",
+          "lblock-001264",
+          "lblock-001265",
+          "lblock-001266",
+          "lblock-001267",
+          "lblock-001268",
+          "lblock-001269",
+          "lblock-001270",
+          "lblock-001271",
+          "lblock-001272",
+          "lblock-001273",
+          "lblock-001274",
+          "lblock-001275",
+          "lblock-001276",
+          "lblock-001277",
+          "lblock-001278",
+          "lblock-001279",
+          "lblock-001280",
+          "lblock-001281",
+          "lblock-001282",
+          "lblock-001283",
+          "lblock-001284",
+          "lblock-001285",
+          "lblock-001286",
+          "lblock-001287",
+          "lblock-001288",
+          "lblock-001289",
+          "lblock-001290",
+          "lblock-001291",
+          "lblock-001292",
+          "lblock-001293",
+          "lblock-001294",
+          "lblock-001295",
+          "lblock-001296",
+          "lblock-001297",
+          "lblock-001298",
+          "lblock-001299",
+          "lblock-001300",
+          "lblock-001301",
+          "lblock-001302",
+          "lblock-001303",
+          "lblock-001304",
+          "lblock-001305",
+          "lblock-001306",
+          "lblock-001307",
+          "lblock-001308",
+          "lblock-001309",
+          "lblock-001310",
+          "lblock-001311",
+          "lblock-001312",
+          "lblock-001313",
+          "lblock-001314",
+          "lblock-001315",
+          "lblock-001316",
+          "lblock-001317",
+          "lblock-001318",
+          "lblock-001319",
+          "lblock-001320",
+          "lblock-001321",
+          "lblock-001322",
+          "lblock-001323",
+          "lblock-001324",
+          "lblock-001325",
+          "lblock-001326",
+          "lblock-001327",
+          "lblock-001328",
+          "lblock-001329",
+          "lblock-001330",
+          "lblock-001331",
+          "lblock-001332",
+          "lblock-001333",
+          "lblock-001334",
+          "lblock-001335",
+          "lblock-001336",
+          "lblock-001337",
+          "lblock-001338",
+          "lblock-001339",
+          "lblock-001340",
+          "lblock-001341",
+          "lblock-001342",
+          "lblock-001343",
+          "lblock-001344",
+          "lblock-001345",
+          "lblock-001346",
+          "lblock-001347",
+          "lblock-001348",
+          "lblock-001349",
+          "lblock-001350"
         ],
-        "source_lines_total": 683,
-        "raw_blocks_total": 188,
-        "d1_work_groups_in_slice": 10
+        "source_lines_total": 745,
+        "raw_blocks_total": 200
       },
       "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
       "status": "complete"

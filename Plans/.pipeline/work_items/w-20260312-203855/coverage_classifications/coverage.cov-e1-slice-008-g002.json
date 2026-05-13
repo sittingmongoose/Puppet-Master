@@ -2,555 +2,189 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-008-g002",
-  "obligation_record_count": 25,
-  "source_classification_slices": [
+  "obligation_record_count": 6,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-008"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-011-051",
+      "obligation_id": "obl-d2-s013-057",
       "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "missing",
-      "best_evidence_score": 0.22,
-      "uncertainty": 0.41,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "start_line": 142,
+          "end_line": 142,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002335 | excerpt=\"- `Plans/Contracts_V0.md`\\n- `Plans/Executor_Protocol.md`\\n- `Plans/human-in-the-loop.md`\\n- `Plans/storage-plan.md`\\n- `Plans/Decision_Policy.md`\\n- `Plans/UI_Command_Catalog.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-058",
+      "coverage_task_id": "cov-e1-slice-008-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1466,
+          "end_line": 1466,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002338 | excerpt=\"- The canonical field family is already mostly clear:\\n  - `node.blocked` / `node.unblocked`\\n  - `blocked_reason_code`\\n  - `blocked_sequence`\\n  - `allowed_action_ids[]`\\n  - `node.prerequisite_resolved`\\n  - `wake_rea...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-059",
+      "coverage_task_id": "cov-e1-slice-008-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1906,
+          "end_line": 1906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002341 | excerpt=\"- `blocked_sequence` should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage.\\n- Scope:\\n  - monotonic per `{ run_id, node_id }`\\n  - starts at `1`\\n  - increments only when the node transiti...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-060",
+      "coverage_task_id": "cov-e1-slice-008-g002",
+      "classification": "partial",
       "evidence_spans": [],
-      "row_signals": [],
-      "notes": [
-        "No automated excerpt anchor in E1 live_doc_targets_union; bounded multi-window fanout still lists reviewable line ranges for manual follow-up."
-      ]
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g002 has bounded live_doc_windows (31 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002344 | excerpt=\"- `blocked_sequence` should be canonical; `request_id` should become a child/compatibility handle for approval-specific UX/history.\\n- Practical rule:\\n  - `waiting_approval` blocked episode exists first-class in runtime...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-011-052",
+      "obligation_id": "obl-d2-s013-061",
       "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 346,
-          "line_end": 363,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/Executor_Protocol.md",
+          "start_line": 968,
+          "end_line": 968,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002347 | excerpt=\"- On restart, the runtime restores current unresolved blocked episodes from canonical blocked/runtime records/projections.\\n- The scheduler then emits a scheduler pass with `wake_reason = startup_recovered`.\\n- That star...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-011-053",
+      "obligation_id": "obl-d2-s013-062",
       "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "question",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 174,
-          "line_end": 191,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/Decision_Policy.md",
+          "start_line": 142,
+          "end_line": 142,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-054",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 179,
-          "line_end": 196,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-055",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1159,
-          "line_end": 1176,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-056",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3480,
-          "line_end": 3497,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-057",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 246,
-          "line_end": 263,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-058",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2472,
-          "line_end": 2489,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-059",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 340,
-          "line_end": 357,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-060",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 26,
-          "line_end": 43,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-061",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 50,
-          "line_end": 67,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-062",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 28,
-          "line_end": 45,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-063",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "line_start": 58,
-          "line_end": 75,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-064",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1872,
-          "line_end": 1889,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-011-065",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0040",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "line_start": 183,
-          "line_end": 200,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-001",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4195,
-          "line_end": 4212,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-002",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Models_System.md",
-          "line_start": 1370,
-          "line_end": 1387,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-003",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 418,
-          "line_end": 435,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-004",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2911,
-          "line_end": 2928,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-005",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "line_start": 61,
-          "line_end": 78,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-006",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 340,
-          "line_end": 357,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-007",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 188,
-          "line_end": 205,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-008",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 420,
-          "line_end": 437,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-009",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2325,
-          "line_end": 2342,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-s012-010",
-      "coverage_task_id": "cov-e1-slice-008-g002",
-      "source_shard_id": "shard-0041",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 189,
-          "line_end": 206,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "source_lineage": {
+        "source_shard_id": "shard-0049",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0049 | blocks=lblock-002350 | excerpt=\"- `Plans/Contracts_V0.md`\\n- `Plans/Executor_Protocol.md`\\n- `Plans/human-in-the-loop.md`\\n- `Plans/storage-plan.md`\\n- `Plans/UI_Command_Catalog.md`\\n- `Plans/Decision_Policy.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

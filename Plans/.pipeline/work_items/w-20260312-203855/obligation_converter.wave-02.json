@@ -1,114 +1,24 @@
 {
   "schema_id": "pm.obligation_converter.wave.v3.2.3",
   "wave_index": 2,
+  "prompt_id": "D2",
   "work_id": "w-20260312-203855",
   "invocations": [
     {
-      "subagent_invocation_id": "99cc12b9-04bc-4b6e-83ba-813cc09c074e",
+      "subagent_invocation_id": "c6fd8138-0477-4917-88cc-89e9de2b9f45",
       "subagent_task_id": "d2-slice-009",
       "input_bounds": {
+        "slice_id": "d2-slice-009",
         "source_group_ids": [
-          "wg-d1-T008-01",
-          "wg-d1-T008-02",
-          "wg-d1-T008-03",
-          "wg-d1-T008-04",
-          "wg-d1-T008-05",
-          "wg-d1-T008-06",
-          "wg-d1-T008-07",
-          "wg-d1-T008-08",
-          "wg-d1-T008-09",
-          "wg-d1-T008-10"
+          "wg-d1-T055-01",
+          "wg-d1-T056-01",
+          "wg-d1-T057-01",
+          "wg-d1-T058-01",
+          "wg-d1-T059-01",
+          "wg-d1-T060-01",
+          "wg-d1-T061-01"
         ],
         "source_block_ids": [
-          "lblock-001262",
-          "lblock-001263",
-          "lblock-001264",
-          "lblock-001265",
-          "lblock-001266",
-          "lblock-001267",
-          "lblock-001268",
-          "lblock-001269",
-          "lblock-001270",
-          "lblock-001271",
-          "lblock-001272",
-          "lblock-001273",
-          "lblock-001274",
-          "lblock-001275",
-          "lblock-001276",
-          "lblock-001277",
-          "lblock-001278",
-          "lblock-001279",
-          "lblock-001280",
-          "lblock-001281",
-          "lblock-001282",
-          "lblock-001283",
-          "lblock-001284",
-          "lblock-001285",
-          "lblock-001286",
-          "lblock-001287",
-          "lblock-001288",
-          "lblock-001289",
-          "lblock-001290",
-          "lblock-001291",
-          "lblock-001292",
-          "lblock-001293",
-          "lblock-001294",
-          "lblock-001295",
-          "lblock-001296",
-          "lblock-001297",
-          "lblock-001298",
-          "lblock-001299",
-          "lblock-001300",
-          "lblock-001301",
-          "lblock-001302",
-          "lblock-001303",
-          "lblock-001304",
-          "lblock-001305",
-          "lblock-001306",
-          "lblock-001307",
-          "lblock-001308",
-          "lblock-001309",
-          "lblock-001310",
-          "lblock-001311",
-          "lblock-001312",
-          "lblock-001313",
-          "lblock-001314",
-          "lblock-001315",
-          "lblock-001316",
-          "lblock-001317",
-          "lblock-001318",
-          "lblock-001319",
-          "lblock-001320",
-          "lblock-001321",
-          "lblock-001322",
-          "lblock-001323",
-          "lblock-001324",
-          "lblock-001325",
-          "lblock-001326",
-          "lblock-001327",
-          "lblock-001328",
-          "lblock-001329",
-          "lblock-001330",
-          "lblock-001331",
-          "lblock-001332",
-          "lblock-001333",
-          "lblock-001334",
-          "lblock-001335",
-          "lblock-001336",
-          "lblock-001337",
-          "lblock-001338",
-          "lblock-001339",
-          "lblock-001340",
-          "lblock-001341",
-          "lblock-001342",
-          "lblock-001343",
-          "lblock-001344",
-          "lblock-001345",
-          "lblock-001346",
-          "lblock-001347",
-          "lblock-001348",
-          "lblock-001349",
-          "lblock-001350",
           "lblock-001351",
           "lblock-001352",
           "lblock-001353",
@@ -226,31 +136,7 @@
           "lblock-001465",
           "lblock-001466",
           "lblock-001467",
-          "lblock-001468"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 207,
-        "d1_work_groups_in_slice": 10
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "6e4ae5a3-07e9-4e12-bfe7-b0632e9a5d90",
-      "subagent_task_id": "d2-slice-010",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T009-01",
-          "wg-d1-T009-02",
-          "wg-d1-T009-03",
-          "wg-d1-T009-04",
-          "wg-d1-T009-05",
-          "wg-d1-T009-06",
-          "wg-d1-T009-07",
-          "wg-d1-T009-08",
-          "wg-d1-T009-09"
-        ],
-        "source_block_ids": [
+          "lblock-001468",
           "lblock-001469",
           "lblock-001470",
           "lblock-001471",
@@ -307,7 +193,31 @@
           "lblock-001522",
           "lblock-001523",
           "lblock-001524",
-          "lblock-001525",
+          "lblock-001525"
+        ],
+        "source_lines_total": 722,
+        "raw_blocks_total": 175
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "5ace9fc2-854f-40ba-8c35-6d0e99fdc414",
+      "subagent_task_id": "d2-slice-010",
+      "input_bounds": {
+        "slice_id": "d2-slice-010",
+        "source_group_ids": [
+          "wg-d1-T062-01",
+          "wg-d1-T063-01",
+          "wg-d1-T064-01",
+          "wg-d1-T065-01",
+          "wg-d1-T066-01",
+          "wg-d1-T067-01",
+          "wg-d1-T068-01",
+          "wg-d1-T069-01",
+          "wg-d1-T070-01"
+        ],
+        "source_block_ids": [
           "lblock-001526",
           "lblock-001527",
           "lblock-001528",
@@ -465,33 +375,7 @@
           "lblock-001680",
           "lblock-001681",
           "lblock-001682",
-          "lblock-001683"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 215,
-        "d1_work_groups_in_slice": 9
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "75f5541f-47e3-44d3-87be-99c249d1fb63",
-      "subagent_task_id": "d2-slice-011",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T010-01",
-          "wg-d1-T010-02",
-          "wg-d1-T010-03",
-          "wg-d1-T010-04",
-          "wg-d1-T010-05",
-          "wg-d1-T010-06",
-          "wg-d1-T010-07",
-          "wg-d1-T010-08",
-          "wg-d1-T010-09",
-          "wg-d1-T010-10",
-          "wg-d1-T010-11"
-        ],
-        "source_block_ids": [
+          "lblock-001683",
           "lblock-001684",
           "lblock-001685",
           "lblock-001686",
@@ -558,7 +442,30 @@
           "lblock-001747",
           "lblock-001748",
           "lblock-001749",
-          "lblock-001750",
+          "lblock-001750"
+        ],
+        "source_lines_total": 779,
+        "raw_blocks_total": 225
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "4a0b2542-b5ce-4ad2-89ea-27877ede0e77",
+      "subagent_task_id": "d2-slice-011",
+      "input_bounds": {
+        "slice_id": "d2-slice-011",
+        "source_group_ids": [
+          "wg-d1-T071-01",
+          "wg-d1-T072-01",
+          "wg-d1-T073-01",
+          "wg-d1-T074-01",
+          "wg-d1-T075-01",
+          "wg-d1-T076-01",
+          "wg-d1-T077-01",
+          "wg-d1-T078-01"
+        ],
+        "source_block_ids": [
           "lblock-001751",
           "lblock-001752",
           "lblock-001753",
@@ -703,32 +610,7 @@
           "lblock-001892",
           "lblock-001893",
           "lblock-001894",
-          "lblock-001895"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 212,
-        "d1_work_groups_in_slice": 11
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "6f7bc5d3-f05e-4da2-8d76-bff632d4579d",
-      "subagent_task_id": "d2-slice-012",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T011-01",
-          "wg-d1-T011-02",
-          "wg-d1-T011-03",
-          "wg-d1-T011-04",
-          "wg-d1-T011-05",
-          "wg-d1-T011-06",
-          "wg-d1-T011-07",
-          "wg-d1-T011-08",
-          "wg-d1-T011-09",
-          "wg-d1-T011-10"
-        ],
-        "source_block_ids": [
+          "lblock-001895",
           "lblock-001896",
           "lblock-001897",
           "lblock-001898",
@@ -783,7 +665,30 @@
           "lblock-001947",
           "lblock-001948",
           "lblock-001949",
-          "lblock-001950",
+          "lblock-001950"
+        ],
+        "source_lines_total": 790,
+        "raw_blocks_total": 200
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "e8bd5b89-ee1c-4d37-ad1b-2f8c1b7d7351",
+      "subagent_task_id": "d2-slice-012",
+      "input_bounds": {
+        "slice_id": "d2-slice-012",
+        "source_group_ids": [
+          "wg-d1-T079-01",
+          "wg-d1-T080-01",
+          "wg-d1-T081-01",
+          "wg-d1-T082-01",
+          "wg-d1-T083-01",
+          "wg-d1-T084-01",
+          "wg-d1-T085-01",
+          "wg-d1-T086-01"
+        ],
+        "source_block_ids": [
           "lblock-001951",
           "lblock-001952",
           "lblock-001953",
@@ -948,33 +853,7 @@
           "lblock-002112",
           "lblock-002113",
           "lblock-002114",
-          "lblock-002115"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 220,
-        "d1_work_groups_in_slice": 10
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "f993bead-a7e7-4d53-9e07-c33d42435c35",
-      "subagent_task_id": "d2-slice-013",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T012-01",
-          "wg-d1-T012-02",
-          "wg-d1-T012-03",
-          "wg-d1-T012-04",
-          "wg-d1-T012-05",
-          "wg-d1-T012-06",
-          "wg-d1-T012-07",
-          "wg-d1-T012-08",
-          "wg-d1-T012-09",
-          "wg-d1-T012-10",
-          "wg-d1-T012-11"
-        ],
-        "source_block_ids": [
+          "lblock-002115",
           "lblock-002116",
           "lblock-002117",
           "lblock-002118",
@@ -1009,7 +888,30 @@
           "lblock-002147",
           "lblock-002148",
           "lblock-002149",
-          "lblock-002150",
+          "lblock-002150"
+        ],
+        "source_lines_total": 699,
+        "raw_blocks_total": 200
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c9dd6533-3b8f-41be-a138-833d4746303e",
+      "subagent_task_id": "d2-slice-013",
+      "input_bounds": {
+        "slice_id": "d2-slice-013",
+        "source_group_ids": [
+          "wg-d1-T087-01",
+          "wg-d1-T088-01",
+          "wg-d1-T089-01",
+          "wg-d1-T090-01",
+          "wg-d1-T091-01",
+          "wg-d1-T092-01",
+          "wg-d1-T093-01",
+          "wg-d1-T094-01"
+        ],
+        "source_block_ids": [
           "lblock-002151",
           "lblock-002152",
           "lblock-002153",
@@ -1177,32 +1079,7 @@
           "lblock-002315",
           "lblock-002316",
           "lblock-002317",
-          "lblock-002318"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 203,
-        "d1_work_groups_in_slice": 11
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "6874d0fc-cb01-4335-bff6-a1bd2e308c8e",
-      "subagent_task_id": "d2-slice-014",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T013-01",
-          "wg-d1-T013-02",
-          "wg-d1-T013-03",
-          "wg-d1-T013-04",
-          "wg-d1-T013-05",
-          "wg-d1-T013-06",
-          "wg-d1-T013-07",
-          "wg-d1-T013-08",
-          "wg-d1-T013-09",
-          "wg-d1-T013-10"
-        ],
-        "source_block_ids": [
+          "lblock-002318",
           "lblock-002319",
           "lblock-002320",
           "lblock-002321",
@@ -1234,7 +1111,31 @@
           "lblock-002347",
           "lblock-002348",
           "lblock-002349",
-          "lblock-002350",
+          "lblock-002350"
+        ],
+        "source_lines_total": 786,
+        "raw_blocks_total": 200
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "543705ca-7156-405c-8e50-1b2f5a844910",
+      "subagent_task_id": "d2-slice-014",
+      "input_bounds": {
+        "slice_id": "d2-slice-014",
+        "source_group_ids": [
+          "wg-d1-T095-01",
+          "wg-d1-T096-01",
+          "wg-d1-T097-01",
+          "wg-d1-T098-01",
+          "wg-d1-T099-01",
+          "wg-d1-T100-01",
+          "wg-d1-T101-01",
+          "wg-d1-T102-01",
+          "wg-d1-T103-01"
+        ],
+        "source_block_ids": [
           "lblock-002351",
           "lblock-002352",
           "lblock-002353",
@@ -1429,33 +1330,7 @@
           "lblock-002542",
           "lblock-002543",
           "lblock-002544",
-          "lblock-002545"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 227,
-        "d1_work_groups_in_slice": 10
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "e4d389cf-7a25-44b7-9ce0-abe534b1c096",
-      "subagent_task_id": "d2-slice-015",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T014-01",
-          "wg-d1-T014-02",
-          "wg-d1-T014-03",
-          "wg-d1-T014-04",
-          "wg-d1-T014-05",
-          "wg-d1-T014-06",
-          "wg-d1-T014-07",
-          "wg-d1-T014-08",
-          "wg-d1-T014-09",
-          "wg-d1-T014-10",
-          "wg-d1-T014-11"
-        ],
-        "source_block_ids": [
+          "lblock-002545",
           "lblock-002546",
           "lblock-002547",
           "lblock-002548",
@@ -1485,7 +1360,31 @@
           "lblock-002572",
           "lblock-002573",
           "lblock-002574",
-          "lblock-002575",
+          "lblock-002575"
+        ],
+        "source_lines_total": 772,
+        "raw_blocks_total": 225
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "423aaf2a-344b-43d6-90f2-4c03254cd4de",
+      "subagent_task_id": "d2-slice-015",
+      "input_bounds": {
+        "slice_id": "d2-slice-015",
+        "source_group_ids": [
+          "wg-d1-T104-01",
+          "wg-d1-T105-01",
+          "wg-d1-T106-01",
+          "wg-d1-T107-01",
+          "wg-d1-T108-01",
+          "wg-d1-T109-01",
+          "wg-d1-T110-01",
+          "wg-d1-T111-01",
+          "wg-d1-T112-01"
+        ],
+        "source_block_ids": [
           "lblock-002576",
           "lblock-002577",
           "lblock-002578",
@@ -1695,32 +1594,7 @@
           "lblock-002782",
           "lblock-002783",
           "lblock-002784",
-          "lblock-002785"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 240,
-        "d1_work_groups_in_slice": 11
-      },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
-      "status": "complete"
-    },
-    {
-      "subagent_invocation_id": "eeb1b8b2-09b1-429a-8b77-41975c9e931e",
-      "subagent_task_id": "d2-slice-016",
-      "input_bounds": {
-        "source_group_ids": [
-          "wg-d1-T015-01",
-          "wg-d1-T015-02",
-          "wg-d1-T015-03",
-          "wg-d1-T015-04",
-          "wg-d1-T015-05",
-          "wg-d1-T015-06",
-          "wg-d1-T015-07",
-          "wg-d1-T015-08",
-          "wg-d1-T015-09",
-          "wg-d1-T015-10"
-        ],
-        "source_block_ids": [
+          "lblock-002785",
           "lblock-002786",
           "lblock-002787",
           "lblock-002788",
@@ -1735,7 +1609,32 @@
           "lblock-002797",
           "lblock-002798",
           "lblock-002799",
-          "lblock-002800",
+          "lblock-002800"
+        ],
+        "source_lines_total": 749,
+        "raw_blocks_total": 225
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "7cf9cc94-e6b1-4849-8161-270db0fb67ca",
+      "subagent_task_id": "d2-slice-016",
+      "input_bounds": {
+        "slice_id": "d2-slice-016",
+        "source_group_ids": [
+          "wg-d1-T113-01",
+          "wg-d1-T114-01",
+          "wg-d1-T115-01",
+          "wg-d1-T116-01",
+          "wg-d1-T117-01",
+          "wg-d1-T118-01",
+          "wg-d1-T119-01",
+          "wg-d1-T120-01",
+          "wg-d1-T121-01",
+          "wg-d1-T122-01"
+        ],
+        "source_block_ids": [
           "lblock-002801",
           "lblock-002802",
           "lblock-002803",
@@ -1970,11 +1869,25 @@
           "lblock-003032",
           "lblock-003033",
           "lblock-003034",
-          "lblock-003035"
+          "lblock-003035",
+          "lblock-003036",
+          "lblock-003037",
+          "lblock-003038",
+          "lblock-003039",
+          "lblock-003040",
+          "lblock-003041",
+          "lblock-003042",
+          "lblock-003043",
+          "lblock-003044",
+          "lblock-003045",
+          "lblock-003046",
+          "lblock-003047",
+          "lblock-003048",
+          "lblock-003049",
+          "lblock-003050"
         ],
-        "source_lines_total": 776,
-        "raw_blocks_total": 250,
-        "d1_work_groups_in_slice": 10
+        "source_lines_total": 788,
+        "raw_blocks_total": 250
       },
       "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-016.json",
       "status": "complete"

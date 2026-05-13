@@ -2,562 +2,1365 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-010-g002",
   "obligation_record_count": 25,
-  "source_classification_slices": [
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-010"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-014-040",
+      "obligation_id": "obl-d2-slice-017-010",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1165,
-          "line_end": 1181,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-041",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Commands_System.md",
-          "line_start": 80,
-          "line_end": 96,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-042",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1459,
-          "line_end": 1475,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-043",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3114,
-          "line_end": 3130,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-044",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1188,
-          "line_end": 1200,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-045",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 33,
-          "line_end": 49,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-046",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1229,
-          "line_end": 1245,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-047",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 485,
-          "line_end": 501,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-048",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4027,
-          "line_end": 4043,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-049",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
       "evidence_spans": [
         {
-          "path": "Plans/Executor_Protocol.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
+          "path": "Plans/00-plans-index.md",
+          "start_line": 408,
+          "end_line": 408,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-050",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2230,
-          "line_end": 2246,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003079 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Crosswalk.md`\n- Cross-owner docs implicated by this seam:\n  - `...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-051",
+      "obligation_id": "obl-d2-slice-017-011",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4027,
-          "line_end": 4043,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-052",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1190,
-          "line_end": 1200,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-053",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Commands_System.md",
-          "line_start": 80,
-          "line_end": 96,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-054",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 275,
-          "line_end": 291,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-055",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4027,
-          "line_end": 4043,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-056",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 444,
-          "line_end": 460,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-057",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1475,
-          "line_end": 1491,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-058",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4027,
-          "line_end": 4043,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
-    },
-    {
-      "obligation_id": "obl-014-059",
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "classification": "present",
-      "best_evidence_score": 0.93,
-      "uncertainty": 0.07,
       "evidence_spans": [
         {
           "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 120,
-          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
+          "start_line": 2149,
+          "end_line": 2149,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Path-presence obligation satisfied by existing non-empty markdown file."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003082 | excerpt=\"- Some current surfaces still behave as if every target kind needs its own bespoke payload shape.\n- `subject_id` will be...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-060",
+      "obligation_id": "obl-d2-slice-017-012",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-010-g002 has bounded live_doc_windows (116 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003085 | excerpt=\"- Declare the initial `subject_id` families narrowly and explicitly.\n- Declare an early canonical `object_kind` enum fam...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-013",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1274,
-          "line_end": 1290,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/00-plans-index.md",
+          "start_line": 284,
+          "end_line": 284,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003088 | excerpt=\"- The vocabulary split is what keeps the new routing model from collapsing back into \u201cjust pass whatever ids you have.\u201d\n...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-061",
+      "obligation_id": "obl-d2-slice-017-014",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 444,
-          "line_end": 460,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/00-plans-index.md",
+          "start_line": 126,
+          "end_line": 126,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003093 | excerpt=\"- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/FileManager.md`\n- `Plans/assistant-chat-design.md`\n- `...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-062",
+      "obligation_id": "obl-d2-slice-017-015",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 444,
-          "line_end": 460,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1110,
+          "end_line": 1110,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003096 | excerpt=\"- Several important surfaces need more than just \u201copen object X\u201d:\n  - Node Graph wants a detail panel / subsection selec...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-063",
+      "obligation_id": "obl-d2-slice-017-016",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Commands_System.md",
-          "line_start": 104,
-          "line_end": 120,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 3007,
+          "end_line": 3007,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003099 | excerpt=\"- `route_target` owns the main identity/scope only.\n- Sub-selection is handled by one of three mechanisms:\n  - `OpenFile...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-014-064",
+      "obligation_id": "obl-d2-slice-017-017",
       "coverage_task_id": "cov-e1-slice-010-g002",
-      "source_shard_id": "shard-0051",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
-      "best_evidence_score": 0.52,
-      "uncertainty": 0.31,
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/Orchestrator_Page.md",
-          "line_start": 251,
-          "line_end": 267,
-          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+          "start_line": 279,
+          "end_line": 279,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm requirement completeness under Section E."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003102 | excerpt=\"- selected detail section / subsection\n- evidence tab vs history tab vs review tab within an inspector\n- node detail sub...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-018",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Document_Packaging_Policy.md",
+          "start_line": 137,
+          "end_line": 137,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003105 | excerpt=\"- `wizard_step` as the primary object identity\n- `message_id` when the real target is the message itself\n- `line` / `ran...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-019",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 2428,
+          "end_line": 2428,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0061",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0061 | blocks=lblock-003108 | excerpt=\"- thread search hit:\n  - `object_kind = message`\n  - `object_id = <message_id>`\n  - thread context stays in `thread_id`\n...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-020",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 2096,
+          "end_line": 2096,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003109 | excerpt=\"  - step/clarification focus is a domain-local anchor or serialized deep-link detail, not base identity\n- node graph det...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-021",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 408,
+          "end_line": 408,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003112 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Fi...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-022",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FileSafe.md",
+          "start_line": 127,
+          "end_line": 127,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003115 | excerpt=\"- Several current docs still blur \u201cwhich object\u201d and \u201cwhat part of that object\u2019s UI should be shown.\u201d\n- Without a sub-se...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-023",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 2545,
+          "end_line": 2545,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003118 | excerpt=\"- Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus.\n- Keep line/range under ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-024",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 3008,
+          "end_line": 3008,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003121 | excerpt=\"- Canonical identity and UI focus are different layers.\n- The base routing model gets much cleaner once those layers sta...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-025",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 129,
+          "end_line": 129,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003126 | excerpt=\"- `Plans/UI_Command_Catalog.md`\n- `Plans/Contracts_V0.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Wiring_Matrix.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-026",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 274,
+          "end_line": 274,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003129 | excerpt=\"- The project already has two good migration precedents:\n  - canonical event names with explicit legacy aliases in `Cont...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-027",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "start_line": 670,
+          "end_line": 670,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003132 | excerpt=\"- Canonical layer:\n  - `route_target`\n  - `OpenSubject`\n  - specialized `OpenFile`\n  - canonical wrapper family such as ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-028",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 408,
+          "end_line": 408,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003135 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/Crosswalk.md`\n- Cross-owner d...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-029",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 4206,
+          "end_line": 4206,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003138 | excerpt=\"- Right now navigation has no explicit migration discipline comparable to event aliases or `cmd.runtime.*` consolidation...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-030",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2480,
+          "end_line": 2480,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003141 | excerpt=\"- Reuse the event-alias and recovery-command migration style as the template for navigation normalization.\n- Let wrapper...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-031",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 81,
+          "end_line": 81,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003144 | excerpt=\"- The goal is not to delete every surface-specific command.\n- The goal is to stop every surface-specific command from in...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-032",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 20,
+          "end_line": 20,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003149 | excerpt=\"- `Plans/UI_Command_Catalog.md` (Gemini backfill)\n- `Plans/00-plans-index.md`\n- `Plans/Architecture_Invariants.md`\n- `Pl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-033",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 635,
+          "end_line": 635,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003152 | excerpt=\"- This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-017-034",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 129,
+          "end_line": 129,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0062",
+        "source_slice_id": "d2-slice-017",
+        "canonical_excerpt_note": "shards=shard-0062 | blocks=lblock-003155 | excerpt=\"- Primary docs in this tranche:\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/00-plans-index.md`\n  - `Plans/Architecture_...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

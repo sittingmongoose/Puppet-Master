@@ -1,0 +1,519 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice002-020",
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-002"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2s004-089",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000439 | excerpt=\"- `History` selection changes the whole page's focused run\\n  - `Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id`\\n  - `Progress` in historical mode must stop pretending to be a live...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-090",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- This is important:\\n  - otherwise each tab can drift into a different run context and the page becomes incoherent\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-091",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000442 | excerpt=\"- Current `Progress` tab language is heavily live-run oriented.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-092",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-093",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Likely good direction:\\n  - in historical mode, `Progress` becomes a historical run summary surface\\n  - live-only widgets either:\\n    - switch to historical-summary rendering\\n    - or show disabled/l...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-094",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- This needs a sharper contract later.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-095",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000445 | excerpt=\"- No explicit `historical-run mode` contract yet.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-096",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-097",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-098",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to represent historical runs coherently.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-099",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Background runs exist in Dashboard, but Orchestrator focus rules for live-vs-historical switching are not yet specified.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-100",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000448 | excerpt=\"- Add explicit `active_run_id` vs `focused_run_id` semantics.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-101",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Add a first-class `Historical Run Mode` UI contract for Orchestrator.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-102",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-103",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Define which commands are:\\n  - live-run only\\n  - historical-safe\\n  - record-only/export-only\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-104",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Define how `Progress` behaves when the focused run is historical.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-105",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000451 | excerpt=\"- The page must not auto-switch focus away from a historical run just because live activity appears.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-106",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- The user should always know whether they are looking at the active run or a historical run.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-107",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-113",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000459 | excerpt=\"- Existing docs mostly define local/tab-specific search and filtering:\\n  - Run Graph has node search/filter\\n  - Evidence has local search/filter\\n  - Ledger has local filter/sort\\n  - History is current...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-114",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Cross-surface navigation exists in fragments:\\n  - graph detail can open Evidence\\n  - graph can open Usage\\n  - History rows can open Graph/Evidence\\n  - Ledger can open Usage\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-115",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Storage already provides the right backend ingredients:\\n  - seglog is canonical\\n  - Tantivy is the intended full-text/search layer\\n  - project-scoped indices are already part of the storage model\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-116",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- What is still missing is a unified Orchestrator search contract that is object-first rather than page-first.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-117",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | blocks=lblock-000462 | excerpt=\"- Strong recommendation:\\n  - distinguish `global object search` from `tab-local filtering`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2s004-118",
+      "coverage_task_id": "ct-slice002-020",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-020 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0014",
+        "source_slice_id": "d2-slice-004",
+        "canonical_excerpt_note": "shards=shard-0014 | excerpt=\"- Proposed split:\\n  - `Orchestrator search`\\n    - object-first, run-aware, cross-tab routing\\n  - `tab-local search`\\n    - local narrowing/filtering within the active tab/view\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

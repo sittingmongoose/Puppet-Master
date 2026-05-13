@@ -1,0 +1,299 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-004-g007",
+  "obligation_record_count": 14,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-004"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-slice-007-034",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001043 | excerpt=\"- Storage is already closer than the UI docs to a normalized record family model.\n- `storage-plan.md` already defines several canonical records:\n  - `attempt_record`\n  - `tier_runtime_record`\n  - `blocked_projection`\n  -...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-035",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001046 | excerpt=\"- Strong recommendation:\n  - add one shared governance/runtime record-envelope pattern, then let each family add its own payload block\n- Good base envelope fields:\n  - `record_id`\n  - `record_kind`\n  - `schema_version`\n ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-036",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001049 | excerpt=\"- Important rule:\n  - record and artifact must remain different objects\n- Recommended distinction:\n  - record\n    - structured canonical object used by projections, search, history, and ledger\n  - artifact\n    - blob/fil...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-037",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001052 | excerpt=\"- Good pattern:\n  - shared envelope + family payload block\n- Candidate payload examples:\n  - concern payload:\n    - severity, category, owner, lifecycle, resolution_kind\n  - promotion payload:\n    - promotion_class, sour...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-038",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001055 | excerpt=\"- A normalized envelope would simplify several earlier seams at once:\n  - object-first search\n  - History vs Ledger distinction\n  - deep-link routing\n  - export manifests\n  - cross-tab inspectors\n- Search can index the s...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-039",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001058 | excerpt=\"- Shared envelopes also help apply the earlier semantic vocabulary consistently:\n  - `historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `removed`\n- The envelope should not collapse these into o...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-040",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001061 | excerpt=\"- Current records are partially normalized, but newer governance families still risk being invented ad hoc.\n- Some current docs are better at record identity than at record-family consistency.\n- Without a shared envelope...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-041",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001064 | excerpt=\"- Define a shared record-envelope contract for governance/runtime record families.\n- Keep artifacts and rendered summaries linked but separate from canonical records.\n- Require new first-class Orchestrator object familie...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-042",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001067 | excerpt=\"- `detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced\n- canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records\n- the envelop...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-043",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001075 | excerpt=\"- The existing docs already imply that cleanup cannot be treated as a trivial delete:\n  - worktree rows expose `recover`, `prune`, and `lineage` actions\n  - active-run ownership must be visible before prune/remove\n  - wo...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-044",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001078 | excerpt=\"- Strong recommendation:\n  - treat `lane lifecycle` and `worktree lifecycle` as related but non-identical\n- Reason:\n  - a lane may remain historically important after its live worktree is archived or removed\n  - a live w...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-045",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001081 | excerpt=\"- Current lane vocabulary still looks right and should be kept:\n  - `baseline`\n  - `active`\n  - `suspect`\n  - `restoring`\n  - `retained`\n  - `cleanup_eligible`\n  - `archived`\n  - `removed`\n  - `historical`\n- Working inte...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-046",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001084 | excerpt=\"- Source Control still needs a more concrete worktree-first vocabulary.\n- Recommended worktree row posture:\n  - `live`\n  - `dirty`\n  - `conflict`\n  - `orphaned`\n  - `recovering`\n  - `retained`\n  - `archived`\n  - `removed...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-047",
+      "coverage_task_id": "cov-e1-slice-004-g007",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g007 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0025",
+        "source_slice_id": "d2-slice-007",
+        "canonical_excerpt_note": "shards=shard-0025 | blocks=lblock-001087 | excerpt=\"- Important rule:\n  - `recover`, `archive`, `prune`, and `remove` must not blur together\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

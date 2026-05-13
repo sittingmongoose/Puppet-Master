@@ -1,0 +1,202 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice001-012",
+  "obligation_record_count": 8,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-001"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-003-0027",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task ct-slice001-012 is shard_only_pending_live_path_binding (no live_doc_windows bound).",
+        "Live Plans/** doc windows not yet supplied for this obligation; only ledger/shard citation is available.",
+        "Section E must bind one of the candidate live docs and produce evidence_spans."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000277"
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0028",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-012 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000280"
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0029",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task ct-slice001-012 is shard_only_pending_live_path_binding (no live_doc_windows bound).",
+        "Live Plans/** doc windows not yet supplied for this obligation; only ledger/shard citation is available.",
+        "Section E must bind one of the candidate live docs and produce evidence_spans."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000283"
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0030",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-012 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000286"
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0031",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-012 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000289"
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0032",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-012 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000292"
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0033",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task ct-slice001-012 is shard_only_pending_live_path_binding (no live_doc_windows bound).",
+        "Live Plans/** doc windows not yet supplied for this obligation; only ledger/shard citation is available.",
+        "Section E must bind one of the candidate live docs and produce evidence_spans."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000297"
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0034",
+      "coverage_task_id": "ct-slice001-012",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-012 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0011",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0011 | blocks=lblock-000300"
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

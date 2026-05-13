@@ -2,39 +2,34 @@
   "schema_id": "pm.section_exit.v3.2.3",
   "prompt_id": "E4",
   "prompt_version": "pm.e4.v3.2.3",
-  "timestamp_utc": "20260512T231500Z",
+  "timestamp_utc": "20260513T012000Z",
   "section_id": "E",
   "section_name": "Coverage",
   "work_id": "w-20260312-203855",
   "status": "complete",
   "transfer_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-  "transfer_coverage_sha256": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
-  "transfer_coverage_line_count": 116054,
+  "transfer_coverage_sha256": "b88ee94b21417680d6a305ee975ba2349d14ff838bc59ab2d66c71b8d2e96ab9",
+  "transfer_coverage_line_count": 83680,
   "transfer_coverage_source_gate_report_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_gate_report.json",
-  "transfer_coverage_source_gate_report_sha256": "797bddb9a891ace5191b52cb1b05891e51400a7dde47bbaaeb6356527a0a1882",
+  "transfer_coverage_source_gate_report_sha256": "cac9b8f55df01271438182dad882c7eddba8191ac07eccc82fd50151763581f4",
   "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-  "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
-  "source_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
   "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-  "coverage_worklist_sha256": "25904efef0ba0913d662eeb9dc787d9857b1381f94d7f9afe2dac3d57a9762e4",
-  "coverage_row_total": 1710,
-  "coverage_assigned_rows_total": 1710,
+  "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2",
+  "coverage_row_total": 1775,
+  "coverage_assigned_rows_total": 1775,
   "coverage_excluded_rows_total": 0,
-  "coverage_task_total_from_transfer_coverage": 255,
-  "terminal_unresolved_doc_discovery_rows_total": 598,
+  "coverage_task_total_from_transfer_coverage": 172,
+  "terminal_unresolved_doc_discovery_rows_total": 604,
   "obligation_level_classification_histogram": {
-    "needs_doc_discovery": 713,
-    "open_decision": 1,
-    "present": 569,
-    "process_only": 3,
-    "partial": 381,
-    "missing": 43
+    "needs_doc_discovery": 776,
+    "present": 668,
+    "partial": 331
   },
   "aggregated_task_label_histogram_top": {
-    "slice-003|unresolved_no_live_target|": 74,
-    "bounded_window_phrase_match": 62,
-    "no_live_doc_targets_in_classifier_union": 37,
-    "__other_long_tail_grouping_keys": 1537
+    "bounded_window_phrase_match": 999,
+    "no_live_doc_targets_in_classifier_union": 604,
+    "coverage_reducer_default": 172
   },
   "gaps_routing_active_source_for_section_f": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
   "transfer_coverage_source_gate_status": "pass",
@@ -83,15 +78,15 @@
     }
   },
   "known_deficiencies": [
-    "Automated obligation_level_classification counts are bounded signals; Section F should treat routing hints as heuristic until fidelity or human review updates them.",
-    "Elevated needs_doc_discovery and terminal_unresolved_doc_discovery counts reflect unresolved_no_live_target clusters and source-hint gaps noted in E2/E3 artifacts."
+    "Obligation-level counts are pipeline signals; Section F should treat next_route_hint and doc_discovery fields as heuristic until downstream fidelity or review.",
+    "Terminal unresolved doc-discovery rows (604) align with shard-only / no-live-target clusters per E3 reducer outputs; route b3_issue_process_adjudicator where encoded."
   ],
   "next_section": "F_Gaps_Routing_Doc_Discovery",
   "next_preferred_prompt": "F0",
   "next_prompt_request": "Paste prompt F0 — Section Entry: Gaps / Routing / Doc Discovery v3.2.3.",
   "notes": [
     "Section E exit v3.2.3: transfer_coverage.json is the active handoff source for Section F (Gaps / Routing / Doc Discovery).",
-    "transfer_coverage_source_gate_report.json reports overall_source_gate_pass true; E4 did not semantically read full transfer_coverage row bodies (counts/hashes/gate flags only).",
-    "No doc_discovery_resolution.json in work item root per E3 transfer_coverage f5_doc_discovery_resolution block; F-loop material-delta gate not engaged from archived paths."
+    "transfer_coverage_source_gate_report.json reports overall_source_gate_pass true; E4 used deterministic hashes, line counts, and structural gate flags only (no semantic scan of full row bodies).",
+    "transfer_coverage.f5_doc_discovery_resolution records no root doc_discovery_resolution.json; do not consume archived F5 for loop routing."
   ]
 }

@@ -2,49 +2,43 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-006-g009",
   "obligation_record_count": 1,
-  "source_classification_slices": [
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-006"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-008-044",
+      "obligation_id": "obl-010-023",
       "coverage_task_id": "cov-e1-slice-006-g009",
-      "doc_resolution_status": "doc_discovery",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "Coverage task is doc_discovery and provides candidate names but no bounded live_doc_windows for this E2 slice."
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 145,
+          "end_line": 145,
+          "match_kind": "verbatim_substring"
+        }
       ],
+      "missing_details": [],
       "partial_details": [],
       "candidate_docs": [
-        "Plans/Runtime_Artifacts_Panel.md"
+        "Plans/UI_Command_Catalog.md"
       ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0028"
-        ],
-        "source_block_ids": [
-          "lblock-001208"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-09"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5416,
-            "end_line": 5420
-          }
-        ]
+        "source_shard_id": "shard-0035",
+        "source_slice_id": "d2-slice-010",
+        "canonical_excerpt_note": "shards=shard-0035 | blocks=lblock-001616 | excerpt=\"- `Plans/Contracts_V0.md`\\n  - still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership\\n- `Plans/storage-plan.md`\\n  - now owns the...\""
       },
-      "uncertainty": "Candidate docs require a follow-up bounded binding pass before evidence can be scored.",
-      "deterministic_local_evidence_used_only_as_candidate": true
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

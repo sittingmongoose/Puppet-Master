@@ -2,7 +2,7 @@
   "schema_id": "pm.ledger_condenser_report.v3.2.3",
   "prompt_id": "C1",
   "prompt_version": "pm.c1.v3.2.3",
-  "timestamp_utc": "20260511T210711Z",
+  "timestamp_utc": "20260512T150434Z",
   "work_id": "w-20260312-203855",
   "mode": "existing_working_ledger_preserved",
   "source_mode": "existing_working_ledger",
@@ -26,20 +26,35 @@
   },
   "accepted_research_audit_issue_inputs": {
     "from_manifest": {
-      "research_findings_json": "absent",
-      "feature_spec_audit_report_json": "absent",
-      "issue_process_adjudication_report_json": "absent",
-      "session_notes_jsonl_glob": "none_found"
+      "research_findings_json": "absent_at_primary_work_item_paths",
+      "feature_spec_audit_report_json": "absent_at_primary_work_item_paths",
+      "issue_process_adjudication_report_json": {
+        "status": "present",
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+        "byte_count": 182387
+      },
+      "session_notes_jsonl": {
+        "status": "present",
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl",
+        "byte_count": 2249
+      },
+      "manifest_supplementary_note": "Paths listed under supplementary_material_observed_not_primary_intake; not primary ledger intake for source_mode existing_working_ledger."
     },
-    "paths_read": []
+    "paths_read_bounded": [
+      "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl"
+    ]
   },
   "inputs_read": [
     "Plans/.pipeline/work_items/w-20260312-203855/section_entry_C_report.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json"
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl"
   ],
   "working_ledger_read_policy": "deterministic_validation_and_bounded_head_tail_only_no_full_semantic_read",
   "final_gate": {
     "mode_a_pass": true,
-    "rationale": "existing_working_ledger.md validated non-empty with matching byte/line counts and SHA-256; content not rewritten; source mode and hashes recorded for C2 handoff."
+    "rationale": "source_mode existing_working_ledger: working_ledger.md validated non-empty with matching byte/line counts and SHA-256 versus prior verification; file not rewritten; supplementary manifest paths checked present with bounded reads only; C2 handoff fields recorded."
   }
 }

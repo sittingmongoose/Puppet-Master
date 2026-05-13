@@ -1,87 +1,85 @@
 {
-  "schema_id": "pm.obligation_repair.wave.v3.2.3",
-  "wave_index": 1,
+  "schema_id": "pm.obligation_repair_wave.v3.2.3",
+  "work_id": "w-20260312-203855",
   "prompt_id": "D4",
   "prompt_version": "pm.d4.v3.2.3",
-  "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260512T031500Z",
-  "assignments": [
+  "wave_index": 1,
+  "timestamp_utc": "20260512T195603Z",
+  "invocations": [
     {
-      "subagent_invocation_id": "dae6ab5d-de52-48ed-b504-50abcbcaa290",
-      "subagent_task_id": "d4-repair-d2-slice-002",
+      "subagent_invocation_id": "c92afba4-4a0c-4fc9-8dc2-9fb19b2cc369",
+      "subagent_task_id": "d4-repair-d2-slice-003",
       "input_bounds": {
-        "target_slice_id": "d2-slice-002",
-        "repair_codes": [
-          "obligation_text_unicode_ellipsis_truncation"
-        ],
-        "input_slice_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
-        "ledger_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json"
+        "slice_id": "d2-slice-003",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
       },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
-      "status": "complete",
-      "post_repair_verdict": "pass"
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+      "status": "complete"
     },
     {
-      "subagent_invocation_id": "e39e3099-33f2-48ae-906a-5aea6ecabc44",
-      "subagent_task_id": "d4-repair-d2-slice-009",
+      "subagent_invocation_id": "b3130592-17d5-4362-894b-3448a2bea35e",
+      "subagent_task_id": "d4-repair-d2-slice-004",
       "input_bounds": {
-        "target_slice_id": "d2-slice-009",
-        "repair_codes": [
-          "obligation_text_unicode_ellipsis_truncation"
-        ],
-        "input_slice_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
-        "ledger_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json"
+        "slice_id": "d2-slice-004",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
       },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
-      "status": "complete",
-      "post_repair_verdict": "pass"
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+      "status": "complete"
     },
     {
-      "subagent_invocation_id": "bc823be6-19c0-44cd-ba89-fd403dc04aaa",
-      "subagent_task_id": "d4-repair-d2-slice-015",
+      "subagent_invocation_id": "d8763aac-ec7d-4173-903e-6d1561a0e255",
+      "subagent_task_id": "d4-repair-d2-slice-007",
       "input_bounds": {
-        "target_slice_id": "d2-slice-015",
-        "repair_codes": [
-          "path_hygiene_doc_hints",
-          "representation_duplicate_block_refs"
-        ],
-        "target_block_ids": [
-          "lblock-002576",
-          "lblock-002627",
-          "lblock-002709",
-          "lblock-002741",
-          "lblock-002762"
-        ],
-        "input_slice_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
-        "ledger_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json"
+        "slice_id": "d2-slice-007",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
       },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
-      "status": "complete",
-      "post_repair_verdict": "pass"
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+      "status": "complete"
     },
     {
-      "subagent_invocation_id": "895884b9-75c9-4e7d-b3a9-3e3d045de75e",
-      "subagent_task_id": "d4-repair-d2-slice-018",
+      "subagent_invocation_id": "510bf8eb-d0b2-4680-b413-e72ee4a8d690",
+      "subagent_task_id": "d4-repair-d2-slice-008",
       "input_bounds": {
-        "target_slice_id": "d2-slice-018",
-        "repair_codes": [
-          "process_artifact_doc_hint_exact_paths_pipeline"
-        ],
-        "doc_hint_ids": [
-          "dh-d2-slice-018-127",
-          "dh-d2-slice-018-138",
-          "dh-d2-slice-018-147"
-        ],
-        "input_slice_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
-        "ledger_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json"
+        "slice_id": "d2-slice-008",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
       },
-      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
-      "status": "complete",
-      "post_repair_verdict": "pass"
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "aaa496e5-c4c1-42d2-858d-6e8ae6a2d08a",
+      "subagent_task_id": "d4-repair-d2-slice-010",
+      "input_bounds": {
+        "slice_id": "d2-slice-010",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+      "status": "complete"
     }
   ]
 }

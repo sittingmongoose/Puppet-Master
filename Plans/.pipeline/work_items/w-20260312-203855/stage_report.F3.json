@@ -2,47 +2,39 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "F3",
   "prompt_version": "pm.f3.v3.2.3",
-  "timestamp_utc": "20260511T221600Z",
+  "timestamp_utc": "20260513T025541Z",
   "work_id": "w-20260312-203855",
   "section_id": "F",
   "section_name": "Gaps_Routing_Doc_Discovery",
   "status": "complete",
   "execution_type": "semantic_chunk_processing",
   "execution_type_recorded_per_local_classification_override": true,
-  "execution_type_basis": "Route gate with delegated per-slice reducer analysis plus full-corpus recomputation for reducer counts and single next-prompt precedence.",
-  "stage_purpose": "Merge F2 gap_records into open_gaps.json; validate F2 subagent proof; produce open_gaps_reducer_report.json with doc-discovery counts; request exactly one next prompt per v3.2.3 precedence.",
-  "f2_proof_gate": {
-    "stage_report_f2_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F2.json",
-    "fanout_proof_status": "pass",
-    "real_subagent_proof_status": "pass",
-    "result": "accept_f2_outputs_for_f3_merge"
-  },
+  "execution_type_basis": "Route reduction with eight delegated reducer slice summaries plus full-row recomputation for hotfix counts and single next-prompt gate.",
   "skip_gate_evaluated": true,
   "skip_gate_passed": false,
-  "skip_gate_basis": "1710 gap_records exceed <=25; seven bounded reducer slices at <=250 rows each.",
+  "skip_gate_basis": "1775 merged gap_records exceed <=25 skip; eight bounded reducer slices at <=250 rows.",
   "inputs_read": [
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
-      "sha256": "b96803e2b6aadaf7e6b4b3acc547673073b8a91075c73fc0f459dcaa781c436c",
-      "read_mode": "python_merge_driver_manifest_only"
+      "sha256": "07e9ad7a63c3711340c763dc1a7d7e8b24ff9d4cf608a11be7ff4905e1db4d1f",
+      "read_mode": "hashes_and_manifest_only"
     },
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "sha256": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
+      "sha256": "b88ee94b21417680d6a305ee975ba2349d14ff838bc59ab2d66c71b8d2e96ab9",
       "read_mode": "provenance_sha256_only"
     },
     {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/*.json",
-      "read_mode": "python_batch_load_nine_files_for_merge",
-      "note": "Glob resolved to nine gaps.<group_id>.json paths per work item."
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.*.json",
+      "read_mode": "python_merge_only_no_manual_full_semantic_scan"
     }
   ],
   "subagents": {
     "used": true,
     "required": true,
-    "required_basis": "Seven delegated Cursor Task invocations for reducer slice summaries; final route merged deterministically from full gap_record scan consistent with slice evidence."
+    "required_basis": "Eight sequential delegated Cursor Task generalPurpose invocations (f3-r001..f3-r008) produced route.r00x.json slice summaries."
   },
-  "required_subagent_tasks_total": 7,
+  "required_subagent_tasks_total": 8,
   "wave_artifacts_total": 1,
   "wave_artifacts_expected_min": 1,
   "wave_artifact_paths": [
@@ -55,38 +47,42 @@
     "f3-r004",
     "f3-r005",
     "f3-r006",
-    "f3-r007"
+    "f3-r007",
+    "f3-r008"
   ],
   "pending_task_ids_from_wave_artifacts": [],
   "blocked_task_ids_from_wave_artifacts": [],
   "subagent_invocation_ids_from_wave_artifacts": [
-    "1f56367d-7574-4ec4-9cbf-617ddbba81db",
-    "6f85dd22-d675-462f-9e88-d9af6ef28f62",
-    "d1449c05-4c9e-48ef-a30d-a7418d0cc95b",
-    "3e7c7b90-5269-4fa0-9d52-cca798e9e677",
-    "0951ac4c-2134-430a-b14f-e61758f77295",
-    "23b3aa2f-90ec-48be-95e7-660c3bf14d6d",
-    "29875942-5ca0-4d27-b0db-b90f4f31f753"
+    "806c1b69-8beb-4273-8459-ec9be885d2a9",
+    "1bd935e0-16c4-4961-9537-2fa5c7962fb8",
+    "9fc281fa-e459-4656-af79-f987c92171f1",
+    "b5983aee-023d-41c2-87ee-c98e0ff59023",
+    "1a615714-05ad-4394-a76c-f7f7c711617f",
+    "240cd986-a4e8-477e-9c98-0151e958bc25",
+    "0bcc5f9a-6178-4fc6-9900-fc382c6b1714",
+    "82ad2129-397b-43a2-8575-b22c79706b1b"
   ],
-  "distinct_subagent_invocations_total_from_wave_artifacts": 7,
-  "distinct_subagent_invocations_total": 7,
+  "distinct_subagent_invocations_total_from_wave_artifacts": 8,
+  "distinct_subagent_invocations_total": 8,
   "task_to_invocation_map": {
-    "f3-r001": "1f56367d-7574-4ec4-9cbf-617ddbba81db",
-    "f3-r002": "6f85dd22-d675-462f-9e88-d9af6ef28f62",
-    "f3-r003": "d1449c05-4c9e-48ef-a30d-a7418d0cc95b",
-    "f3-r004": "3e7c7b90-5269-4fa0-9d52-cca798e9e677",
-    "f3-r005": "0951ac4c-2134-430a-b14f-e61758f77295",
-    "f3-r006": "23b3aa2f-90ec-48be-95e7-660c3bf14d6d",
-    "f3-r007": "29875942-5ca0-4d27-b0db-b90f4f31f753"
+    "f3-r001": "806c1b69-8beb-4273-8459-ec9be885d2a9",
+    "f3-r002": "1bd935e0-16c4-4961-9537-2fa5c7962fb8",
+    "f3-r003": "9fc281fa-e459-4656-af79-f987c92171f1",
+    "f3-r004": "b5983aee-023d-41c2-87ee-c98e0ff59023",
+    "f3-r005": "1a615714-05ad-4394-a76c-f7f7c711617f",
+    "f3-r006": "240cd986-a4e8-477e-9c98-0151e958bc25",
+    "f3-r007": "0bcc5f9a-6178-4fc6-9900-fc382c6b1714",
+    "f3-r008": "82ad2129-397b-43a2-8575-b22c79706b1b"
   },
   "invocation_to_task_map": {
-    "1f56367d-7574-4ec4-9cbf-617ddbba81db": "f3-r001",
-    "6f85dd22-d675-462f-9e88-d9af6ef28f62": "f3-r002",
-    "d1449c05-4c9e-48ef-a30d-a7418d0cc95b": "f3-r003",
-    "3e7c7b90-5269-4fa0-9d52-cca798e9e677": "f3-r004",
-    "0951ac4c-2134-430a-b14f-e61758f77295": "f3-r005",
-    "23b3aa2f-90ec-48be-95e7-660c3bf14d6d": "f3-r006",
-    "29875942-5ca0-4d27-b0db-b90f4f31f753": "f3-r007"
+    "806c1b69-8beb-4273-8459-ec9be885d2a9": "f3-r001",
+    "1bd935e0-16c4-4961-9537-2fa5c7962fb8": "f3-r002",
+    "9fc281fa-e459-4656-af79-f987c92171f1": "f3-r003",
+    "b5983aee-023d-41c2-87ee-c98e0ff59023": "f3-r004",
+    "1a615714-05ad-4394-a76c-f7f7c711617f": "f3-r005",
+    "240cd986-a4e8-477e-9c98-0151e958bc25": "f3-r006",
+    "0bcc5f9a-6178-4fc6-9900-fc382c6b1714": "f3-r007",
+    "82ad2129-397b-43a2-8575-b22c79706b1b": "f3-r008"
   },
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
@@ -102,37 +98,28 @@
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r004.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r005.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r006.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007.json"
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_report.json"
   ],
   "local_worker_outputs_used": [
-    "python3: merge nine open_gaps_classifications into sorted gap_records for open_gaps.json",
-    "python3: compute doc_discovery_required_unattempted, doc_discovery_required_stale, doc_discovery_exhausted_terminal and supplemental classifier_defect counts",
-    "python3: apply v3.2.3 route precedence for single next_prompt_id (B3 over F4 when classifier/process/path blockers dominate)",
-    "sha256sum: classification files, open_gaps_worklist, transfer_coverage, open_gaps_reducer_report for provenance"
+    "python3: merge nine gaps.<group>.json gap_records; sort by coverage_row_index; compute doc_discovery_required_unattempted / doc_discovery_exhausted_terminal / gap_group totals",
+    "python3: write open_gaps.json and open_gaps_reducer_report.json with sha256 provenance",
+    "sha256sum: open_gaps_worklist.json, transfer_coverage.json, classification artifacts, reducer report"
   ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
   "real_subagent_proof_status": "pass",
-  "route_outcome": {
-    "next_prompt_id": "B3",
-    "next_prompt_request": "Paste prompt B3 — Issue / Process Adjudicator v3.2.3.",
-    "precedence_rule": "rule_process_classifier_path_source_lineage_layout_blockers_precedence_over_f4_when_classifier_defect_mass_and_mixed_blockers_v3_2_3",
-    "reducer_counts_snapshot": {
-      "doc_discovery_required_unattempted": 122,
-      "doc_discovery_required_stale": 0,
-      "doc_discovery_exhausted_terminal": 345,
-      "classifier_process_defect_rows_total": 253
-    }
+  "f2_upstream_proof_gate": {
+    "stage_report_f2_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F2.json",
+    "fanout_proof_status": "pass",
+    "real_subagent_proof_status": "pass",
+    "accepted": true
   },
   "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/F3.wave-001.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r002-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r003-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r004-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r005-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r006-input.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007-input.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r002.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r003.json",
@@ -140,27 +127,26 @@
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r005.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r006.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r008.json",
     "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/F3.wave-001.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json"
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001-input.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r008-input.json"
   ],
   "live_doc_writes": [],
   "final_gate": {
     "name": "route_based_on_reducer_counts_single_next_prompt",
     "result": "pass",
     "checks": [
-      "open_gaps_reducer_report.json includes doc_discovery_required_unattempted, doc_discovery_required_stale, doc_discovery_exhausted_terminal",
-      "route_decision.exactly_one_next_prompt is true and next_prompt_request matches VALID NEXT list",
-      "Terminal exhausted rows are not selected for F4/F5-only route; B3 chosen when classifier/process/path blockers dominate per hotfix",
-      "open_gaps.json gap_record_total equals 1710 and provenance lists all nine classification artifacts"
+      "open_gaps_reducer_report.route_decision.exactly_one_next_prompt is true",
+      "doc_discovery_required_unattempted + stale + exhausted_terminal counts recomputed from merged gap_records",
+      "F2 proof gate accepted (fanout and real_subagent proof pass)"
     ]
   },
   "blockers": [],
-  "summary": "F3 v3.2.3: validated F2 proof; merged 1710 gap_records into open_gaps.json; seven delegated reducer slice analysts produced route.r00x.json summaries; reducer report counts doc_discovery_required_unattempted=122, stale=0, exhausted_terminal=345; route B3 (Issue/Process Adjudicator) due to 253 classifier-process-defect rows and mixed layout/source/concrete blockers taking precedence over F4 repeat-doc-discovery.",
-  "next_prompt_request": "Paste prompt B3 — Issue / Process Adjudicator v3.2.3.",
+  "summary": "F3 merged 1775 F2 gap_records; eight reducer slice summaries delegated; reducer report counts ddr_unattempted=172, ddr_stale=0, exhausted_terminal=604; route F4 for unattempted doc discovery while loop-breaker excludes terminal exhausted rows from repeat F4/F5 without material delta.",
+  "next_prompt_request": "Paste prompt F4 — Doc Discovery Exhaustion Gate v3.2.3.",
   "notes": [
-    "Subagents did not emit next_prompt_id; final route merged from full-corpus scan plus hotfix precedence.",
-    "F4 remains valid later for the 122 unattempted doc_discovery_required rows after B3 clears classifier/process defects."
+    "Slice-level doc_discovery_exhaustion_rows counters are slice-local OR rules and are not summed for the global exhausted_terminal count; global count uses merged gap_records per hotfix."
   ]
 }

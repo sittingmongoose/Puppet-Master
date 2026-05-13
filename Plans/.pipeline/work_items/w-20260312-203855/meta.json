@@ -7,7 +7,7 @@
   "next_run_seq": 35,
   "status": "route_initialized",
   "run_id": null,
-  "next_required_stage": "A4 — Section Exit: Run Control v3.2.3",
+  "next_required_stage": "C5 \u2014 Section Exit: Ledger Preparation v3.2.3",
   "a2_fresh_run_initializer_v3_1": {
     "schema_id": "pm.a2.fresh_run_initializer.v3.1",
     "prompt_version": "pm.a2.v3.1",
@@ -16,7 +16,7 @@
     "archived_files_count": 2506,
     "archived_from_root_count": 2506,
     "archived_from_active_count": 0,
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
   "a3_route_state_initializer_v3_1": {
@@ -24,7 +24,7 @@
     "prompt_version": "pm.a3.v3.1",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260505T171219Z"
   },
@@ -36,14 +36,14 @@
     "archived_files_count": 14,
     "archived_from_root_count": 14,
     "archived_from_active_count": 0,
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_1_5": {
     "schema_id": "pm.a3.route_state_initializer.v3.1.5",
     "prompt_version": "pm.a3.v3.1.5",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260505T182230Z"
   },
@@ -56,14 +56,14 @@
     "archived_from_root_file_count": 136,
     "archived_from_moved_directory_trees_file_count": 376,
     "archived_from_active_count": 0,
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_1_10": {
     "schema_id": "pm.a3.route_state_initializer.v3.1.10",
     "prompt_version": "pm.a3.v3.1.10",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260505T192307Z"
   },
@@ -76,14 +76,14 @@
     "archived_from_root_file_count": 0,
     "archived_from_moved_directory_trees_file_count": 35,
     "archived_from_active_count": 0,
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_1_12": {
     "schema_id": "pm.a3.route_state_initializer.v3.1.12",
     "prompt_version": "pm.a3.v3.1.12",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260506T182511Z"
   },
@@ -93,14 +93,14 @@
     "timestamp_utc": "20260507T150603Z",
     "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T150603Z",
     "archived_items_total": 61,
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_1_14": {
     "schema_id": "pm.a3.route_state_initializer.v3.1.14",
     "prompt_version": "pm.a3.v3.1.14",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260507T151020Z"
   },
@@ -139,14 +139,14 @@
     "preserved_inputs": [
       "working_ledger.md"
     ],
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_1_15": {
     "schema_id": "pm.a3.route_state_initializer.v3.1.15",
     "prompt_version": "pm.a3.v3.1.15",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260507T164653Z"
   },
@@ -206,14 +206,14 @@
     "preserved_inputs": [
       "working_ledger.md"
     ],
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_2_1": {
     "schema_id": "pm.a3.route_state_initializer.v3.2.1",
     "prompt_version": "pm.a3.v3.2.1",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260507T204206Z"
   },
@@ -225,7 +225,7 @@
     "blocks_total": 4860,
     "inventory_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
     "obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-    "next_required_stage": "C4 — Ledger Seed Completeness Gate"
+    "next_required_stage": "C4 \u2014 Ledger Seed Completeness Gate"
   },
   "c4_ledger_inventory_completeness_gate_v3_2_1": {
     "schema_id": "pm.c4.ledger_inventory_completeness_gate.v3.2.1",
@@ -233,7 +233,7 @@
     "timestamp_utc": "20260507T205244Z",
     "status": "pass",
     "report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-    "next_required_stage": "C5 — Section Exit: Ledger Preparation"
+    "next_required_stage": "C5 \u2014 Section Exit: Ledger Preparation"
   },
   "a2_fresh_run_initializer_v3_2_2": {
     "schema_id": "pm.a2.fresh_run_initializer.v3.2.2",
@@ -314,14 +314,14 @@
       "legacy_quarantine",
       "active"
     ],
-    "next_required_stage": "A3 — Route State Initializer"
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
   "a3_route_state_initializer_v3_2_2": {
     "schema_id": "pm.a3.route_state_initializer.v3.2.2",
     "prompt_version": "pm.a3.v3.2.2",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260511T163218Z"
   },
@@ -335,7 +335,7 @@
     "inventory_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
     "obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
     "builder_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_builder_report.json",
-    "next_required_stage": "C4 — Ledger Seed Completeness Gate v3.2.2"
+    "next_required_stage": "C4 \u2014 Ledger Seed Completeness Gate v3.2.2"
   },
   "c4_ledger_inventory_completeness_gate_v3_2_2": {
     "schema_id": "pm.c4.ledger_inventory_completeness_gate.v3.2.2",
@@ -343,7 +343,7 @@
     "timestamp_utc": "20260511T164913Z",
     "status": "pass",
     "report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-    "next_required_stage": "C5 — Section Exit: Ledger Preparation v3.2.2"
+    "next_required_stage": "C5 \u2014 Section Exit: Ledger Preparation v3.2.2"
   },
   "a2_fresh_run_initializer_v3_2_3": {
     "schema_id": "pm.a2.fresh_run_initializer.v3.2.3",
@@ -365,7 +365,7 @@
     "preserved_inputs": [
       "working_ledger.md"
     ],
-    "next_required_stage": "A3 — Route State Initializer v3.2.3"
+    "next_required_stage": "A3 \u2014 Route State Initializer v3.2.3"
   },
   "a3_route_state_initializer_v3_2_3": {
     "schema_id": "pm.a3.route_state_initializer.v3.2.3",
@@ -373,31 +373,31 @@
     "timestamp_utc": "20260511T210241Z",
     "run_mode": "fresh_restart",
     "current_section": "A",
-    "next_prompt_request": "A4 — Section Exit: Run Control v3.2.3",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control v3.2.3",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "stage_report_a3_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
-    "next_required_stage": "A4 — Section Exit: Run Control v3.2.3"
+    "next_required_stage": "A4 \u2014 Section Exit: Run Control v3.2.3"
   },
   "c3_ledger_inventory_builder_v3_2_3": {
     "schema_id": "pm.c3.ledger_inventory_builder.v3.2.3",
     "prompt_version": "pm.c3.v3.2.3",
-    "timestamp_utc": "20260511T211055Z",
+    "timestamp_utc": "20260512T151257Z",
     "status": "complete",
-    "blocks_total": 4880,
-    "raw_seeds_total": 4880,
+    "blocks_total": 4868,
+    "raw_seeds_total": 4868,
     "inventory_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
     "obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
     "builder_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_builder_report.json",
     "stage_report_c3_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C3.json",
-    "next_required_stage": "C4 — Ledger Seed Completeness Gate v3.2.3"
+    "next_required_stage": "C4 \u2014 Ledger Seed Completeness Gate v3.2.3"
   },
   "c4_ledger_inventory_completeness_gate_v3_2_3": {
     "schema_id": "pm.c4.ledger_inventory_completeness_gate.v3.2.3",
     "prompt_version": "pm.c4.v3.2.3",
-    "timestamp_utc": "20260511T211150Z",
+    "timestamp_utc": "20260512T153710Z",
     "status": "pass",
     "report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
     "stage_report_c4_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C4.json",
-    "next_required_stage": "C5 — Section Exit: Ledger Preparation v3.2.3"
+    "next_required_stage": "C5 \u2014 Section Exit: Ledger Preparation v3.2.3"
   }
 }

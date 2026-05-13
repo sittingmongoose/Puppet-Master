@@ -2,10 +2,10 @@
   "schema_id": "pm.section_entry_C_report.v3.2.3",
   "prompt_id": "C0",
   "prompt_version": "pm.c0.v3.2.3",
-  "timestamp_utc": "20260511T210553Z",
+  "timestamp_utc": "20260512T150155Z",
   "work_id": "w-20260312-203855",
   "section_exit_B_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
-  "section_exit_B_timestamp_utc": "20260511T221500Z",
+  "section_exit_B_timestamp_utc": "20260512T150000Z",
   "work_id_derivation": {
     "source": "section_exit_B.json",
     "field": "work_id",
@@ -37,6 +37,6 @@
   "notes": [
     "work_id locked from active (non-archive) section_exit_B.json; no alternate work item selected.",
     "C0 READ list only: no route_state.json, current_state.md, or meta.json read for this stage.",
-    "Manifest lists source_mode existing_working_ledger and working_ledger.md; final gate re-verified with test -f, test -s, wc, sha256sum (no full semantic read of ledger body)."
+    "Manifest lists source_mode existing_working_ledger and working_ledger.md; final gate re-verified with test -f, wc -c/-l, sha256sum (no full semantic read of ledger body)."
   ]
 }

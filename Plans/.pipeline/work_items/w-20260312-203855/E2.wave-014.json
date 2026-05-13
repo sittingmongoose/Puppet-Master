@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.e2_subagent_wave.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260512T215300Z",
+  "work_id": "w-20260312-203855",
+  "wave_id": "E2.wave-014",
+  "wave_index": 14,
+  "concurrency_note": "single_delegated_subagent_per_wave",
+  "required_subagent_tasks_total": 15,
+  "wave_planned_subagent_task_ids": [
+    "e2-class-014"
+  ],
+  "invocations": [
+    {
+      "subagent_task_id": "e2-class-014",
+      "subagent_invocation_id": "f4f16bdb-18a6-4ca8-b7d9-bd37007a7cb1",
+      "status": "complete",
+      "input_bounds": {
+        "slice_id": "class-014",
+        "obligation_record_count": 104,
+        "coverage_task_count": 5,
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices/coverage.class-014.json",
+      "result_artifact_sha256": "30cae1c21f27cd4a521db59c75a7fb584fbff2073872730bc49d4129e307d45f"
+    }
+  ],
+  "completed_subagent_task_ids": [
+    "e2-class-014"
+  ],
+  "blocked_subagent_task_ids": [],
+  "pending_subagent_task_ids": [
+    "e2-class-015"
+  ],
+  "subagent_invocation_ids": [
+    "f4f16bdb-18a6-4ca8-b7d9-bd37007a7cb1"
+  ],
+  "notes": []
+}

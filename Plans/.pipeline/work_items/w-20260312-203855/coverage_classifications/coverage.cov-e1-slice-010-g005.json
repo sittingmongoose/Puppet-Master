@@ -2,321 +2,660 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-010-g005",
-  "obligation_record_count": 7,
-  "source_classification_slices": [
-    "e2-class-011"
+  "obligation_record_count": 18,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-010"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-slice-015-044",
+      "obligation_id": "obl-d2-slice-018-007",
       "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.66,
-      "uncertainty": 0.27,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 646,
-          "line_end": 666,
-          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm completeness under Section E."
-      ],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002686"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10801,
-            "end_line": 10812
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-06"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-045",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.63,
-      "uncertainty": 0.27,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 163,
-          "line_end": 183,
-          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm completeness under Section E."
-      ],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002689"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10815,
-            "end_line": 10826
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-046",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "partial",
-      "best_evidence_score": 0.59,
-      "uncertainty": 0.27,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 560,
-          "line_end": 580,
-          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Partial textual grounding; confirm completeness under Section E."
-      ],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002692"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10829,
-            "end_line": 10831
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-047",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
       "classification": "present",
-      "best_evidence_score": 0.91,
-      "uncertainty": 0.09,
-      "evidence_spans": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 36,
-          "rationale": "Obligation lists concrete Plans/** paths that exist in-repo; inventory-style coverage satisfied without deep prose match."
-        }
-      ],
-      "row_signals": [],
-      "notes": [
-        "Path inventory row."
-      ],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002695"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10834,
-            "end_line": 10842
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-048",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "recommendation",
-      "classification": "present",
-      "best_evidence_score": 0.95,
-      "uncertainty": 0.06,
-      "evidence_spans": [
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 51,
-          "line_end": 67,
-          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
-        }
-      ],
-      "row_signals": [],
-      "notes": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002698"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10845,
-            "end_line": 10848
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-049",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "fact_observation",
-      "classification": "present",
-      "best_evidence_score": 0.95,
-      "uncertainty": 0.06,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 562,
-          "line_end": 578,
-          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
-        }
-      ],
-      "row_signals": [],
-      "notes": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002701"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10851,
-            "end_line": 10854
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
-    },
-    {
-      "obligation_id": "obl-d2-slice-015-050",
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "source_shard_id": "shard-0055",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "recommendation",
-      "classification": "present",
-      "best_evidence_score": 0.9,
-      "uncertainty": 0.09,
       "evidence_spans": [
         {
           "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 338,
-          "line_end": 354,
-          "rationale": "Strong excerpt/doc line correspondence (match_score=69)."
+          "start_line": 89,
+          "end_line": 89,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "row_signals": [],
-      "notes": [],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0055"
-        ],
-        "source_block_ids": [
-          "lblock-002704"
-        ],
-        "source_slice_id": "d2-slice-015",
-        "source_line_ranges": [
-          {
-            "source_shard_id": "shard-0055",
-            "start_line": 10857,
-            "end_line": 10859
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T014-07"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-010-g005",
-        "doc_resolution_status": "concrete_plans_targets"
-      }
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003319 | excerpt=\"- The command layer wants a three-way split, not a binary split:\n  - pure shell/view-state commands\n  - route-consuming ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-008",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003322 | excerpt=\"- Primary owners:\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/Crosswalk.md`\n- Strongly impl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-009",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1244,
+          "end_line": 1244,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003325 | excerpt=\"- `UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same \\\"layout/U...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-010",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 94,
+          "end_line": 94,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003328 | excerpt=\"- Formalize the three-way command taxonomy:\n  - pure shell/view-state commands\n  - route-consuming navigation commands\n ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-011",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 95,
+          "end_line": 95,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003331 | excerpt=\"- A panel being opened is not the same thing as an object being revealed.\n- \\\"Focus Usage for thread X\\\" is route-consum...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-012",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003336 | excerpt=\"- `Plans/UI_Command_Catalog.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Crosswalk.md`\n- `Plans/UI_Wiring_Rules.md`\n- `Plans/W...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-013",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 351,
+          "end_line": 351,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003339 | excerpt=\"- The command/wiring system is biased toward stable user-facing command IDs with explicit surface meaning.\n- An explicit...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-014",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 80,
+          "end_line": 80,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003342 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/UI_Command_Catalog.md`\n- Strongly impl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-015",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 1039,
+          "end_line": 1039,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003345 | excerpt=\"- There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry sem...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-016",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1476,
+          "end_line": 1476,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003348 | excerpt=\"- Recommend against making a large public `cmd.nav.*` family the main catalog-facing answer.\n- Prefer this layered split...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-017",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 99,
+          "end_line": 99,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003351 | excerpt=\"- The problem is not that wrapper commands exist; the problem is that they currently normalize nowhere shared.\n- Stable ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-018",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003356 | excerpt=\"- `Plans/UI_Command_Catalog.md`\n- `Plans/UI_Wiring_Rules.md`\n- `Plans/Wiring_Matrix.md`\n- `Plans/Progression_Gates.md`\n-...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-019",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 100,
+          "end_line": 100,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003359 | excerpt=\"- The docs currently have one strong migration pattern for names: deprecated event aliases in `Contracts_V0.md`.\n- The c...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-020",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 80,
+          "end_line": 80,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003362 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/UI_Wiring_Rules.md`\n  - `Plans/Wiring_Matrix.md`\n  - `Plans/Pro...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-021",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 101,
+          "end_line": 101,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003365 | excerpt=\"- There is currently no explicit distinction between:\n  - deprecated command alias\n  - stable wrapper command\n  - canoni...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-022",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 107,
+          "end_line": 107,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003368 | excerpt=\"- Add an explicit command-normalization model with three layers:\n  - public command ID\n  - canonical primitive or normal...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-023",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-010-g005 has bounded live_doc_windows (61 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0065",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0065 | blocks=lblock-003371 | excerpt=\"- Wrapper commands are not a temporary compatibility hack by default.\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-024",
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-010-g005 has bounded live_doc_windows (61 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0066",
+        "source_slice_id": "d2-slice-018",
+        "canonical_excerpt_note": "shards=shard-0066 | blocks=lblock-003372 | excerpt=\"- Deprecated aliases and stable wrappers need different lifecycle rules.\n- The wiring/gate layer now needs to understand...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

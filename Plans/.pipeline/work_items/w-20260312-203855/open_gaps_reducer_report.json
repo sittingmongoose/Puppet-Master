@@ -2,42 +2,45 @@
   "schema_id": "pm.open_gaps_reducer_report.v3.2.3",
   "prompt_id": "F3",
   "prompt_version": "pm.f3.v3.2.3",
-  "timestamp_utc": "20260511T221500Z",
+  "timestamp_utc": "20260513T025541Z",
   "work_id": "w-20260312-203855",
-  "doc_discovery_required_unattempted": 122,
+  "doc_discovery_required_unattempted": 172,
   "doc_discovery_required_stale": 0,
-  "doc_discovery_exhausted_terminal": 345,
+  "doc_discovery_exhausted_terminal": 604,
   "counts_by_gap_group_kind": {
-    "concrete_fix_backlog": 376,
-    "doc_discovery_exhaustion": 345,
-    "doc_discovery_required": 122,
-    "layout_repair": 62,
-    "no_gap": 478,
-    "process_followup": 257,
-    "source_lineage_check": 70
+    "no_gap": 967,
+    "concrete_fix_backlog": 0,
+    "concrete_missing_file_fix_backlog": 0,
+    "doc_discovery_required": 172,
+    "doc_discovery_exhaustion": 0,
+    "process_followup": 604,
+    "stale_token_resolution": 0,
+    "layout_repair": 32,
+    "source_lineage_check": 0
   },
   "counts_supplemental": {
-    "classifier_process_defect_rows_total": 253,
-    "planning_blocker_true_rows_total": 1232
+    "planning_blocker_true_rows_total": 808,
+    "process_followup_rows_total": 604,
+    "layout_repair_rows_total": 32
   },
   "doc_discovery_loop_breaker": {
     "do_not_route_terminal_exhausted_to_f4_f5_without_material_delta": true,
-    "f4_selected_only_when_unattempted_or_stale_required_work_exists": false,
+    "f4_selected_only_when_unattempted_or_stale_required_work_exists": true,
     "material_resolution_delta_from_f5": false,
     "notes": [
-      "v3.2.3: No doc_discovery_resolution.json in work item root; material_resolution_delta false.",
-      "Unattempted doc_discovery_required rows exist but classifier/process/path blockers take precedence; route B3 before repeat F4/F5 loops."
+      "v3.2.3: No doc_discovery_resolution.json in work item root; material_resolution_delta false per transfer_coverage f5_doc_discovery_resolution.",
+      "172 doc_discovery_required rows are non-terminal (unattempted); 604 process_followup rows are terminal doc_discovery_exhausted blockers and must not re-enter F5 on same row_hash without material delta."
     ]
   },
   "route_decision": {
-    "next_prompt_id": "B3",
-    "next_prompt_name": "Issue / Process Adjudicator",
-    "precedence_rule": "rule_process_classifier_path_source_lineage_layout_blockers_precedence_over_f4_when_classifier_defect_mass_and_mixed_blockers_v3_2_3",
-    "next_prompt_request": "Paste prompt B3 \u2014 Issue / Process Adjudicator v3.2.3.",
+    "next_prompt_id": "F4",
+    "next_prompt_name": "Doc Discovery Exhaustion Gate",
+    "precedence_rule": "rule_2_unattempted_doc_discovery_required_exists_route_f4_terminal_exhaustion_rows_excluded_from_f4_f5_repeat",
+    "next_prompt_request": "Paste prompt F4 — Doc Discovery Exhaustion Gate v3.2.3.",
     "exactly_one_next_prompt": true,
-    "rationale": "classifier_process_defect_rows=253; process_followup=257; layout_repair=62; source_lineage_check=70; doc_discovery_required_unattempted=122 still present but process/coverage adjudication takes precedence per hotfix."
+    "rationale": "doc_discovery_required_unattempted=172 (>0) triggers F4 per F3 precedence 2; doc_discovery_exhausted_terminal=604 rows remain out-of-scope for repeat F4/F5 loops (precedence 3/4)."
   },
-  "slice_aggregation_source": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001.json through route.r007.json plus full-row recomputation for reducer counts",
+  "slice_aggregation_source": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001.json through route.r008.json (delegated slice summaries) plus full-row recomputation for hotfix counts",
   "final_gate": {
     "passed": true,
     "route_based_on_reducer_counts": true,

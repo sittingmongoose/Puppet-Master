@@ -7,25 +7,25 @@
   "subagent_task_id": "e1-slice-010",
   "source": {
     "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-    "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
     "coverage_worklist_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_slices.json",
-    "input_obligation_record_count": 107,
+    "input_obligation_record_count": 118,
     "primary_source_group_ids": [
-      "wg-d1-T013-03",
-      "wg-d1-T013-04",
-      "wg-d1-T013-05",
-      "wg-d1-T013-06",
-      "wg-d1-T013-07",
-      "wg-d1-T013-08",
-      "wg-d1-T013-09",
-      "wg-d1-T013-10",
-      "wg-d1-T014-01",
-      "wg-d1-T014-02",
-      "wg-d1-T014-03",
-      "wg-d1-T014-04",
-      "wg-d1-T014-05",
-      "wg-d1-T014-06",
-      "wg-d1-T014-07"
+      "wg-d1-T121-01",
+      "wg-d1-T122-01",
+      "wg-d1-T123-01",
+      "wg-d1-T124-01",
+      "wg-d1-T125-01",
+      "wg-d1-T126-01",
+      "wg-d1-T127-01",
+      "wg-d1-T128-01",
+      "wg-d1-T129-01",
+      "wg-d1-T130-01",
+      "wg-d1-T131-01",
+      "wg-d1-T132-01",
+      "wg-d1-T133-01",
+      "wg-d1-T134-01",
+      "wg-d1-T135-01"
     ]
   },
   "budgets": {
@@ -34,25 +34,24 @@
   },
   "live_doc_rules": [
     "Live doc targets must be concrete file paths under Plans/ that exist in the repository workspace.",
-    "Ignore paths under Plans/_shards/ and Plans/.evidence/; those are derived artifacts, not live documentation targets.",
-    "Do not treat glob patterns, placeholders, or non-Plans paths as Section E live doc targets.",
+    "Ignore paths under Plans/.pipeline/, Plans/_shards/, and Plans/.evidence/; exclude archives, sentinels, and non-Plans paths as Section E live doc targets.",
     "When exact_paths_mentioned contains qualifying Plans/** paths, enumerate live_doc_windows using max_lines_per_live_doc_window on the actual checked-in files."
   ],
   "summary": {
     "coverage_task_total": 5,
     "excluded_obligation_total": 0,
-    "assigned_obligation_total": 107,
-    "live_doc_windows_total": 367,
-    "distinct_live_doc_paths_referenced": 28
+    "assigned_obligation_total": 118,
+    "live_doc_windows_total": 413,
+    "distinct_live_doc_paths_referenced": 46
   },
   "final_gate": {
     "passed": true,
     "every_obligation_assigned_or_excluded": true,
     "accounting": {
-      "input_obligations": 107,
-      "assigned": 107,
+      "input_obligations": 118,
+      "assigned": 118,
       "excluded": 0,
-      "sum": 107,
+      "sum": 118,
       "overlap_assigned_and_excluded": 0
     }
   },
@@ -61,83 +60,143 @@
     {
       "coverage_task_id": "cov-e1-slice-010-g001",
       "doc_resolution_status": "concrete_plans_targets",
-      "source_shard_id": "shard-0049",
-      "grouping_key": "shard-0049|concrete_plans_targets|Plans/Commands_System.md|Plans/Crosswalk.md|Plans/Decision_Policy.md|Plans/Executor_Protocol.md|Plans/FileManager.md|Plans/Glossary.md|Plans/Orchestrator_Page.md|Plans/Progression_Gates.md|Plans/Project_Output_Artifacts.md|Plans/Prompt_Pipeline.md|Plans/Run_Graph_View.md|Plans/Run_Modes.md|Plans/Runtime_Artifacts_Panel.md|Plans/UI_Command_Catalog.md|Plans/UI_Wiring_Rules.md|Plans/Wiring_Matrix.md|Plans/assistant-memory-subsystem.md|Plans/human-in-the-loop.md|Plans/newtools.md|Plans/orchestrator-subagent-integration.md|Plans/storage-plan.md",
+      "source_shard_id": "shard-0061",
+      "grouping_key": "shard-0061|concrete_plans_targets|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/FileManager.md|Plans/FinalGUISpec.md|Plans/Orchestrator_Page.md|Plans/Runtime_Artifacts_Panel.md|Plans/UI_Command_Catalog.md|Plans/assistant-chat-design.md|Plans/storage-plan.md",
       "obligation_ids": [
-        "obl-014-015",
-        "obl-014-016",
-        "obl-014-017",
-        "obl-014-018",
-        "obl-014-019",
-        "obl-014-020",
-        "obl-014-021",
-        "obl-014-022",
-        "obl-014-023",
-        "obl-014-024",
-        "obl-014-025",
-        "obl-014-026",
-        "obl-014-027",
-        "obl-014-028",
-        "obl-014-029",
-        "obl-014-030",
-        "obl-014-031",
-        "obl-014-032",
-        "obl-014-033",
-        "obl-014-034",
-        "obl-014-035",
-        "obl-014-036",
-        "obl-014-037",
-        "obl-014-038",
-        "obl-014-039"
+        "obl-d2-slice-016-058",
+        "obl-d2-slice-016-059",
+        "obl-d2-slice-016-060",
+        "obl-d2-slice-016-061",
+        "obl-d2-slice-016-062",
+        "obl-d2-slice-016-063",
+        "obl-d2-slice-016-064",
+        "obl-d2-slice-016-065",
+        "obl-d2-slice-016-066",
+        "obl-d2-slice-016-067",
+        "obl-d2-slice-016-068",
+        "obl-d2-slice-016-069",
+        "obl-d2-slice-016-070",
+        "obl-d2-slice-016-071",
+        "obl-d2-slice-016-072",
+        "obl-d2-slice-016-073",
+        "obl-d2-slice-017-001",
+        "obl-d2-slice-017-002",
+        "obl-d2-slice-017-003",
+        "obl-d2-slice-017-004",
+        "obl-d2-slice-017-005",
+        "obl-d2-slice-017-006",
+        "obl-d2-slice-017-007",
+        "obl-d2-slice-017-008",
+        "obl-d2-slice-017-009"
       ],
       "obligation_record_count": 25,
       "max_obligations_per_task_budget": 25,
       "live_doc_targets_union": [
-        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/Executor_Protocol.md",
         "Plans/FileManager.md",
-        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/Progression_Gates.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Run_Modes.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/UI_Command_Catalog.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/assistant-memory-subsystem.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/newtools.md",
-        "Plans/orchestrator-subagent-integration.md",
+        "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
       ],
       "live_doc_windows": [
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/Contracts_V0.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 4547,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/Contracts_V0.md",
           "line_start": 401,
           "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 4547,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/Contracts_V0.md",
           "line_start": 801,
-          "line_end": 930,
+          "line_end": 1200,
           "window_index": 2,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4547,
+          "window_index": 11,
+          "total_lines_in_doc": 4547,
           "max_lines_per_window": 400
         },
         {
@@ -165,19 +224,861 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Decision_Policy.md",
+          "path": "Plans/FileManager.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 713,
+          "total_lines_in_doc": 471,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Decision_Policy.md",
+          "path": "Plans/FileManager.md",
           "line_start": 401,
-          "line_end": 713,
+          "line_end": 471,
           "window_index": 1,
-          "total_lines_in_doc": 713,
+          "total_lines_in_doc": 471,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1272,
+          "window_index": 3,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 520,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "line_start": 401,
+          "line_end": 520,
+          "window_index": 1,
+          "total_lines_in_doc": 520,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "window_index": 3,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3229,
+          "window_index": 8,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2801,
+          "line_end": 3092,
+          "window_index": 7,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11868,
+          "end_line": 11871,
+          "source_block_ids": [
+            "lblock-003002"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11874,
+          "end_line": 11884,
+          "source_block_ids": [
+            "lblock-003005"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11914,
+          "end_line": 11923,
+          "source_block_ids": [
+            "lblock-003011"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11926,
+          "end_line": 11928,
+          "source_block_ids": [
+            "lblock-003014"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11931,
+          "end_line": 11934,
+          "source_block_ids": [
+            "lblock-003017"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11937,
+          "end_line": 11941,
+          "source_block_ids": [
+            "lblock-003020"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11946,
+          "end_line": 11951,
+          "source_block_ids": [
+            "lblock-003025"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11954,
+          "end_line": 11962,
+          "source_block_ids": [
+            "lblock-003028"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11979,
+          "end_line": 11990,
+          "source_block_ids": [
+            "lblock-003034"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11992,
+          "end_line": 11992,
+          "source_block_ids": [
+            "lblock-003036"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11993,
+          "end_line": 11996,
+          "source_block_ids": [
+            "lblock-003037"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0060",
+          "start_line": 11999,
+          "end_line": 12000,
+          "source_block_ids": [
+            "lblock-003040"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12001,
+          "end_line": 12015,
+          "source_block_ids": [
+            "lblock-003041"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12018,
+          "end_line": 12027,
+          "source_block_ids": [
+            "lblock-003044"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12030,
+          "end_line": 12032,
+          "source_block_ids": [
+            "lblock-003047"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12035,
+          "end_line": 12040,
+          "source_block_ids": [
+            "lblock-003050"
+          ],
+          "source_slice_id": "d2-slice-016"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12043,
+          "end_line": 12045,
+          "source_block_ids": [
+            "lblock-003053"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12050,
+          "end_line": 12055,
+          "source_block_ids": [
+            "lblock-003058"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12058,
+          "end_line": 12061,
+          "source_block_ids": [
+            "lblock-003061"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12064,
+          "end_line": 12066,
+          "source_block_ids": [
+            "lblock-003064"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12068,
+          "end_line": 12068,
+          "source_block_ids": [
+            "lblock-003066"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12069,
+          "end_line": 12069,
+          "source_block_ids": [
+            "lblock-003067"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12072,
+          "end_line": 12093,
+          "source_block_ids": [
+            "lblock-003070"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12096,
+          "end_line": 12105,
+          "source_block_ids": [
+            "lblock-003073"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12108,
+          "end_line": 12121,
+          "source_block_ids": [
+            "lblock-003076"
+          ],
+          "source_slice_id": "d2-slice-017"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0062",
+      "grouping_key": "shard-0062|concrete_plans_targets|Plans/00-plans-index.md|Plans/Architecture_Invariants.md|Plans/Containers_Registry_and_Unraid.md|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/Document_Packaging_Policy.md|Plans/Executor_Protocol.md|Plans/FileManager.md|Plans/FileSafe.md|Plans/FinalGUISpec.md|Plans/GUI_Rebuild_Requirements_Checklist.md|Plans/GitHub_Integration.md|Plans/LSPSupport.md|Plans/Media_Generation_and_Capabilities.md|Plans/MiscPlan.md|Plans/Multi-Account.md|Plans/OpenCode_Deep_Extraction.md|Plans/Orchestrator_Page.md|Plans/Permissions_System.md|Plans/Run_Modes.md|Plans/Runtime_Artifacts_Panel.md|Plans/Section15_MVP_Promoted_Features_Spec.md|Plans/UI_Command_Catalog.md|Plans/UI_Wiring_Rules.md|Plans/Wiring_Matrix.md|Plans/WorktreeGitImprovement.md|Plans/agent-rules-context.md|Plans/assistant-chat-design.md|Plans/newtools.md|Plans/storage-plan.md",
+      "obligation_ids": [
+        "obl-d2-slice-017-010",
+        "obl-d2-slice-017-011",
+        "obl-d2-slice-017-012",
+        "obl-d2-slice-017-013",
+        "obl-d2-slice-017-014",
+        "obl-d2-slice-017-015",
+        "obl-d2-slice-017-016",
+        "obl-d2-slice-017-017",
+        "obl-d2-slice-017-018",
+        "obl-d2-slice-017-019",
+        "obl-d2-slice-017-020",
+        "obl-d2-slice-017-021",
+        "obl-d2-slice-017-022",
+        "obl-d2-slice-017-023",
+        "obl-d2-slice-017-024",
+        "obl-d2-slice-017-025",
+        "obl-d2-slice-017-026",
+        "obl-d2-slice-017-027",
+        "obl-d2-slice-017-028",
+        "obl-d2-slice-017-029",
+        "obl-d2-slice-017-030",
+        "obl-d2-slice-017-031",
+        "obl-d2-slice-017-032",
+        "obl-d2-slice-017-033",
+        "obl-d2-slice-017-034"
+      ],
+      "obligation_record_count": 25,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 444,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 401,
+          "line_end": 444,
+          "window_index": 1,
+          "total_lines_in_doc": 444,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 890,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 890,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "line_start": 801,
+          "line_end": 890,
+          "window_index": 2,
+          "total_lines_in_doc": 890,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1117,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1117,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 801,
+          "line_end": 1117,
+          "window_index": 2,
+          "total_lines_in_doc": 1117,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4547,
+          "window_index": 11,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 801,
+          "line_end": 829,
+          "window_index": 2,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Document_Packaging_Policy.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 486,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Document_Packaging_Policy.md",
+          "line_start": 401,
+          "line_end": 486,
+          "window_index": 1,
+          "total_lines_in_doc": 486,
           "max_lines_per_window": 400
         },
         {
@@ -221,19 +1122,323 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Glossary.md",
+          "path": "Plans/FileSafe.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 527,
+          "total_lines_in_doc": 3186,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Glossary.md",
+          "path": "Plans/FileSafe.md",
           "line_start": 401,
-          "line_end": 527,
+          "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 527,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2801,
+          "line_end": 3186,
+          "window_index": 7,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "line_start": 1,
+          "line_end": 288,
+          "window_index": 0,
+          "total_lines_in_doc": 288,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "line_start": 1,
+          "line_end": 268,
+          "window_index": 0,
+          "total_lines_in_doc": 268,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 801,
+          "line_end": 1129,
+          "window_index": 2,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 801,
+          "line_end": 910,
+          "window_index": 2,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1601,
+          "line_end": 1671,
+          "window_index": 4,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 801,
+          "line_end": 868,
+          "window_index": 2,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 887,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 887,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 801,
+          "line_end": 887,
+          "window_index": 2,
+          "total_lines_in_doc": 887,
           "max_lines_per_window": 400
         },
         {
@@ -269,91 +1474,27 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Progression_Gates.md",
+          "path": "Plans/Permissions_System.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 844,
+          "total_lines_in_doc": 1172,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Progression_Gates.md",
+          "path": "Plans/Permissions_System.md",
           "line_start": 401,
           "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 844,
+          "total_lines_in_doc": 1172,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Progression_Gates.md",
+          "path": "Plans/Permissions_System.md",
           "line_start": 801,
-          "line_end": 844,
+          "line_end": 1172,
           "window_index": 2,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 801,
-          "line_end": 1087,
-          "window_index": 2,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 801,
-          "line_end": 822,
-          "window_index": 2,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 715,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 401,
-          "line_end": 715,
-          "window_index": 1,
-          "total_lines_in_doc": 715,
+          "total_lines_in_doc": 1172,
           "max_lines_per_window": 400
         },
         {
@@ -386,6 +1527,22 @@
           "line_end": 520,
           "window_index": 1,
           "total_lines_in_doc": 520,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 724,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 401,
+          "line_end": 724,
+          "window_index": 1,
+          "total_lines_in_doc": 724,
           "max_lines_per_window": 400
         },
         {
@@ -445,35 +1602,115 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/assistant-memory-subsystem.md",
+          "path": "Plans/WorktreeGitImprovement.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 576,
+          "total_lines_in_doc": 1203,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/assistant-memory-subsystem.md",
+          "path": "Plans/WorktreeGitImprovement.md",
           "line_start": 401,
-          "line_end": 576,
+          "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 576,
+          "total_lines_in_doc": 1203,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/human-in-the-loop.md",
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1203,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1201,
+          "line_end": 1203,
+          "window_index": 3,
+          "total_lines_in_doc": 1203,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/agent-rules-context.md",
+          "line_start": 1,
+          "line_end": 381,
+          "window_index": 0,
+          "total_lines_in_doc": 381,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 681,
+          "total_lines_in_doc": 3229,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/human-in-the-loop.md",
+          "path": "Plans/assistant-chat-design.md",
           "line_start": 401,
-          "line_end": 681,
+          "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 681,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3229,
+          "window_index": 8,
+          "total_lines_in_doc": 3229,
           "max_lines_per_window": 400
         },
         {
@@ -506,142 +1743,6 @@
           "line_end": 1388,
           "window_index": 3,
           "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4401,
-          "line_end": 4800,
-          "window_index": 11,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4801,
-          "line_end": 5200,
-          "window_index": 12,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 5201,
-          "line_end": 5600,
-          "window_index": 13,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 5601,
-          "line_end": 6000,
-          "window_index": 14,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 6001,
-          "line_end": 6400,
-          "window_index": 15,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 6401,
-          "line_end": 6749,
-          "window_index": 16,
-          "total_lines_in_doc": 6749,
           "max_lines_per_window": 400
         },
         {
@@ -709,860 +1810,378 @@
           "max_lines_per_window": 400
         }
       ],
-      "preserved_candidate_hints": [],
-      "cross_target_notes": []
-    },
-    {
-      "coverage_task_id": "cov-e1-slice-010-g002",
-      "doc_resolution_status": "concrete_plans_targets",
-      "source_shard_id": "shard-0051",
-      "grouping_key": "shard-0051|concrete_plans_targets|Plans/Commands_System.md|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/Decision_Policy.md|Plans/Executor_Protocol.md|Plans/FileManager.md|Plans/Glossary.md|Plans/Multi-Account.md|Plans/Orchestrator_Page.md|Plans/Progression_Gates.md|Plans/Project_Output_Artifacts.md|Plans/Prompt_Pipeline.md|Plans/Run_Graph_View.md|Plans/Run_Modes.md|Plans/Runtime_Artifacts_Panel.md|Plans/UI_Wiring_Rules.md|Plans/Wiring_Matrix.md|Plans/assistant-memory-subsystem.md|Plans/human-in-the-loop.md|Plans/newtools.md|Plans/orchestrator-subagent-integration.md|Plans/storage-plan.md|Plans/usage-feature.md",
-      "obligation_ids": [
-        "obl-014-040",
-        "obl-014-041",
-        "obl-014-042",
-        "obl-014-043",
-        "obl-014-044",
-        "obl-014-045",
-        "obl-014-046",
-        "obl-014-047",
-        "obl-014-048",
-        "obl-014-049",
-        "obl-014-050",
-        "obl-014-051",
-        "obl-014-052",
-        "obl-014-053",
-        "obl-014-054",
-        "obl-014-055",
-        "obl-014-056",
-        "obl-014-057",
-        "obl-014-058",
-        "obl-014-059",
-        "obl-014-060",
-        "obl-014-061",
-        "obl-014-062",
-        "obl-014-063",
-        "obl-014-064"
-      ],
-      "obligation_record_count": 25,
-      "max_obligations_per_task_budget": 25,
-      "live_doc_targets_union": [
-        "Plans/Commands_System.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/FileManager.md",
-        "Plans/Glossary.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Progression_Gates.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Run_Modes.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/assistant-memory-subsystem.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/newtools.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
-      ],
-      "live_doc_windows": [
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12124,
+          "end_line": 12133,
+          "source_block_ids": [
+            "lblock-003079"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12136,
+          "end_line": 12138,
+          "source_block_ids": [
+            "lblock-003082"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12141,
+          "end_line": 12144,
+          "source_block_ids": [
+            "lblock-003085"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12147,
+          "end_line": 12149,
+          "source_block_ids": [
+            "lblock-003088"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12154,
+          "end_line": 12158,
+          "source_block_ids": [
+            "lblock-003093"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12161,
+          "end_line": 12171,
+          "source_block_ids": [
+            "lblock-003096"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12174,
+          "end_line": 12178,
+          "source_block_ids": [
+            "lblock-003099"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12181,
+          "end_line": 12184,
+          "source_block_ids": [
+            "lblock-003102"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12187,
+          "end_line": 12191,
+          "source_block_ids": [
+            "lblock-003105"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0061",
+          "start_line": 12194,
+          "end_line": 12200,
+          "source_block_ids": [
+            "lblock-003108"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
         {
-          "path": "Plans/Commands_System.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Commands_System.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Commands_System.md",
-          "line_start": 801,
-          "line_end": 930,
-          "window_index": 2,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4401,
-          "line_end": 4547,
-          "window_index": 11,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Crosswalk.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 829,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Crosswalk.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 829,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Crosswalk.md",
-          "line_start": 801,
-          "line_end": 829,
-          "window_index": 2,
-          "total_lines_in_doc": 829,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Decision_Policy.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 713,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Decision_Policy.md",
-          "line_start": 401,
-          "line_end": 713,
-          "window_index": 1,
-          "total_lines_in_doc": 713,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1139,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1139,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "line_start": 801,
-          "line_end": 1139,
-          "window_index": 2,
-          "total_lines_in_doc": 1139,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FileManager.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FileManager.md",
-          "line_start": 401,
-          "line_end": 471,
-          "window_index": 1,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Glossary.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 527,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Glossary.md",
-          "line_start": 401,
-          "line_end": 527,
-          "window_index": 1,
-          "total_lines_in_doc": 527,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 868,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 868,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "line_start": 801,
-          "line_end": 868,
-          "window_index": 2,
-          "total_lines_in_doc": 868,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 1201,
-          "line_end": 1272,
-          "window_index": 3,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "line_start": 801,
-          "line_end": 844,
-          "window_index": 2,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 801,
-          "line_end": 1087,
-          "window_index": 2,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Prompt_Pipeline.md",
-          "line_start": 801,
-          "line_end": 822,
-          "window_index": 2,
-          "total_lines_in_doc": 822,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 715,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 401,
-          "line_end": 715,
-          "window_index": 1,
-          "total_lines_in_doc": 715,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Modes.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 705,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Modes.md",
-          "line_start": 401,
-          "line_end": 705,
-          "window_index": 1,
-          "total_lines_in_doc": 705,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 401,
-          "line_end": 520,
-          "window_index": 1,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Wiring_Rules.md",
-          "line_start": 1,
-          "line_end": 222,
-          "window_index": 0,
-          "total_lines_in_doc": 222,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Wiring_Matrix.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 554,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Wiring_Matrix.md",
-          "line_start": 401,
-          "line_end": 554,
-          "window_index": 1,
-          "total_lines_in_doc": 554,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 576,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 401,
-          "line_end": 576,
-          "window_index": 1,
-          "total_lines_in_doc": 576,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/human-in-the-loop.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 681,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/human-in-the-loop.md",
-          "line_start": 401,
-          "line_end": 681,
-          "window_index": 1,
-          "total_lines_in_doc": 681,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 1201,
-          "line_end": 1388,
-          "window_index": 3,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4401,
-          "line_end": 4800,
-          "window_index": 11,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 4801,
-          "line_end": 5200,
-          "window_index": 12,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 5201,
-          "line_end": 5600,
-          "window_index": 13,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 5601,
-          "line_end": 6000,
-          "window_index": 14,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 6001,
-          "line_end": 6400,
-          "window_index": 15,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "line_start": 6401,
-          "line_end": 6749,
-          "window_index": 16,
-          "total_lines_in_doc": 6749,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2801,
-          "line_end": 3092,
-          "window_index": 7,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 801,
-          "line_end": 1177,
-          "window_index": 2,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12201,
+          "end_line": 12207,
+          "source_block_ids": [
+            "lblock-003109"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12210,
+          "end_line": 12218,
+          "source_block_ids": [
+            "lblock-003112"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12221,
+          "end_line": 12223,
+          "source_block_ids": [
+            "lblock-003115"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12226,
+          "end_line": 12228,
+          "source_block_ids": [
+            "lblock-003118"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12231,
+          "end_line": 12233,
+          "source_block_ids": [
+            "lblock-003121"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12238,
+          "end_line": 12241,
+          "source_block_ids": [
+            "lblock-003126"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12244,
+          "end_line": 12255,
+          "source_block_ids": [
+            "lblock-003129"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12258,
+          "end_line": 12270,
+          "source_block_ids": [
+            "lblock-003132"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12273,
+          "end_line": 12281,
+          "source_block_ids": [
+            "lblock-003135"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12284,
+          "end_line": 12286,
+          "source_block_ids": [
+            "lblock-003138"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12289,
+          "end_line": 12292,
+          "source_block_ids": [
+            "lblock-003141"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12295,
+          "end_line": 12297,
+          "source_block_ids": [
+            "lblock-003144"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12302,
+          "end_line": 12314,
+          "source_block_ids": [
+            "lblock-003149"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12317,
+          "end_line": 12343,
+          "source_block_ids": [
+            "lblock-003152"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12346,
+          "end_line": 12372,
+          "source_block_ids": [
+            "lblock-003155"
+          ],
+          "source_slice_id": "d2-slice-017"
         }
       ],
-      "preserved_candidate_hints": [],
       "cross_target_notes": []
     },
     {
       "coverage_task_id": "cov-e1-slice-010-g003",
       "doc_resolution_status": "concrete_plans_targets",
-      "source_shard_id": "shard-0052",
-      "grouping_key": "shard-0052|concrete_plans_targets|Plans/Commands_System.md|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/Decision_Policy.md|Plans/Executor_Protocol.md|Plans/FileManager.md|Plans/Glossary.md|Plans/Multi-Account.md|Plans/Orchestrator_Page.md|Plans/Progression_Gates.md|Plans/Project_Output_Artifacts.md|Plans/Run_Graph_View.md|Plans/Run_Modes.md|Plans/Runtime_Artifacts_Panel.md|Plans/Tools.md|Plans/UI_Command_Catalog.md|Plans/UI_Wiring_Rules.md|Plans/Wiring_Matrix.md|Plans/WorktreeGitImprovement.md|Plans/assistant-chat-design.md|Plans/assistant-memory-subsystem.md|Plans/newtools.md|Plans/storage-plan.md|Plans/usage-feature.md",
+      "source_shard_id": "shard-0063",
+      "grouping_key": "shard-0063|concrete_plans_targets|Plans/00-plans-index.md|Plans/Architecture_Invariants.md|Plans/Containers_Registry_and_Unraid.md|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/FileManager.md|Plans/FileSafe.md|Plans/FinalGUISpec.md|Plans/GUI_Rebuild_Requirements_Checklist.md|Plans/LSPSupport.md|Plans/Media_Generation_and_Capabilities.md|Plans/MiscPlan.md|Plans/OpenCode_Deep_Extraction.md|Plans/Orchestrator_Page.md|Plans/Section15_MVP_Promoted_Features_Spec.md|Plans/UI_Command_Catalog.md|Plans/assistant-chat-design.md|Plans/feature-list.md|Plans/storage-plan.md",
       "obligation_ids": [
-        "obl-014-065",
-        "obl-014-066",
-        "obl-014-067",
-        "obl-014-068",
-        "obl-014-069",
-        "obl-014-070",
-        "obl-014-071",
-        "obl-d2-slice-015-001",
-        "obl-d2-slice-015-002",
-        "obl-d2-slice-015-003",
-        "obl-d2-slice-015-004",
-        "obl-d2-slice-015-005",
-        "obl-d2-slice-015-006",
-        "obl-d2-slice-015-007",
-        "obl-d2-slice-015-008",
-        "obl-d2-slice-015-009",
-        "obl-d2-slice-015-010",
-        "obl-d2-slice-015-011",
-        "obl-d2-slice-015-012",
-        "obl-d2-slice-015-013",
-        "obl-d2-slice-015-014",
-        "obl-d2-slice-015-015",
-        "obl-d2-slice-015-016",
-        "obl-d2-slice-015-017",
-        "obl-d2-slice-015-018"
+        "obl-d2-slice-017-035",
+        "obl-d2-slice-017-036",
+        "obl-d2-slice-017-037",
+        "obl-d2-slice-017-038",
+        "obl-d2-slice-017-039",
+        "obl-d2-slice-017-040",
+        "obl-d2-slice-017-041",
+        "obl-d2-slice-017-042",
+        "obl-d2-slice-017-043",
+        "obl-d2-slice-017-044",
+        "obl-d2-slice-017-045",
+        "obl-d2-slice-017-046",
+        "obl-d2-slice-017-047",
+        "obl-d2-slice-017-048",
+        "obl-d2-slice-017-049",
+        "obl-d2-slice-017-050",
+        "obl-d2-slice-017-051",
+        "obl-d2-slice-017-052",
+        "obl-d2-slice-017-053",
+        "obl-d2-slice-017-054",
+        "obl-d2-slice-017-055",
+        "obl-d2-slice-017-056",
+        "obl-d2-slice-017-057",
+        "obl-d2-slice-017-058",
+        "obl-d2-slice-017-059"
       ],
       "obligation_record_count": 25,
       "max_obligations_per_task_budget": 25,
       "live_doc_targets_union": [
-        "Plans/Commands_System.md",
+        "Plans/00-plans-index.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Containers_Registry_and_Unraid.md",
         "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/Executor_Protocol.md",
         "Plans/FileManager.md",
-        "Plans/Glossary.md",
-        "Plans/Multi-Account.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/OpenCode_Deep_Extraction.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/Progression_Gates.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Run_Modes.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Tools.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "Plans/UI_Command_Catalog.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
-        "Plans/assistant-memory-subsystem.md",
-        "Plans/newtools.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
+        "Plans/feature-list.md",
+        "Plans/storage-plan.md"
       ],
       "live_doc_windows": [
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/00-plans-index.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 444,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/00-plans-index.md",
+          "line_start": 401,
+          "line_end": 444,
+          "window_index": 1,
+          "total_lines_in_doc": 444,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 890,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Architecture_Invariants.md",
           "line_start": 401,
           "line_end": 800,
           "window_index": 1,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 890,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Commands_System.md",
+          "path": "Plans/Architecture_Invariants.md",
           "line_start": 801,
-          "line_end": 930,
+          "line_end": 890,
           "window_index": 2,
-          "total_lines_in_doc": 930,
+          "total_lines_in_doc": 890,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1117,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1117,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "line_start": 801,
+          "line_end": 1117,
+          "window_index": 2,
+          "total_lines_in_doc": 1117,
           "max_lines_per_window": 400
         },
         {
@@ -1686,19 +2305,1009 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Decision_Policy.md",
+          "path": "Plans/FileManager.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 713,
+          "total_lines_in_doc": 471,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Decision_Policy.md",
+          "path": "Plans/FileManager.md",
           "line_start": 401,
-          "line_end": 713,
+          "line_end": 471,
           "window_index": 1,
-          "total_lines_in_doc": 713,
+          "total_lines_in_doc": 471,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2801,
+          "line_end": 3186,
+          "window_index": 7,
+          "total_lines_in_doc": 3186,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "line_start": 1,
+          "line_end": 288,
+          "window_index": 0,
+          "total_lines_in_doc": 288,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 801,
+          "line_end": 1129,
+          "window_index": 2,
+          "total_lines_in_doc": 1129,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "line_start": 801,
+          "line_end": 910,
+          "window_index": 2,
+          "total_lines_in_doc": 910,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "line_start": 1601,
+          "line_end": 1671,
+          "window_index": 4,
+          "total_lines_in_doc": 1671,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 887,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 887,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "line_start": 801,
+          "line_end": 887,
+          "window_index": 2,
+          "total_lines_in_doc": 887,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1272,
+          "window_index": 3,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 724,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 401,
+          "line_end": 724,
+          "window_index": 1,
+          "total_lines_in_doc": 724,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "window_index": 3,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3229,
+          "window_index": 8,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/feature-list.md",
+          "line_start": 1,
+          "line_end": 224,
+          "window_index": 0,
+          "total_lines_in_doc": 224,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2801,
+          "line_end": 3092,
+          "window_index": 7,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12375,
+          "end_line": 12377,
+          "source_block_ids": [
+            "lblock-003158"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12380,
+          "end_line": 12390,
+          "source_block_ids": [
+            "lblock-003161"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12393,
+          "end_line": 12395,
+          "source_block_ids": [
+            "lblock-003164"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0062",
+          "start_line": 12400,
+          "end_line": 12400,
+          "source_block_ids": [
+            "lblock-003169"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12401,
+          "end_line": 12403,
+          "source_block_ids": [
+            "lblock-003170"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12406,
+          "end_line": 12418,
+          "source_block_ids": [
+            "lblock-003173"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12421,
+          "end_line": 12425,
+          "source_block_ids": [
+            "lblock-003176"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12442,
+          "end_line": 12446,
+          "source_block_ids": [
+            "lblock-003182"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12449,
+          "end_line": 12456,
+          "source_block_ids": [
+            "lblock-003185"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12459,
+          "end_line": 12461,
+          "source_block_ids": [
+            "lblock-003188"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12464,
+          "end_line": 12467,
+          "source_block_ids": [
+            "lblock-003191"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12470,
+          "end_line": 12472,
+          "source_block_ids": [
+            "lblock-003194"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12477,
+          "end_line": 12480,
+          "source_block_ids": [
+            "lblock-003199"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12483,
+          "end_line": 12503,
+          "source_block_ids": [
+            "lblock-003202"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12506,
+          "end_line": 12514,
+          "source_block_ids": [
+            "lblock-003205"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12517,
+          "end_line": 12526,
+          "source_block_ids": [
+            "lblock-003208"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12529,
+          "end_line": 12531,
+          "source_block_ids": [
+            "lblock-003211"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12534,
+          "end_line": 12537,
+          "source_block_ids": [
+            "lblock-003214"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12540,
+          "end_line": 12542,
+          "source_block_ids": [
+            "lblock-003217"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12547,
+          "end_line": 12550,
+          "source_block_ids": [
+            "lblock-003222"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12553,
+          "end_line": 12562,
+          "source_block_ids": [
+            "lblock-003225"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12565,
+          "end_line": 12574,
+          "source_block_ids": [
+            "lblock-003228"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12577,
+          "end_line": 12581,
+          "source_block_ids": [
+            "lblock-003231"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12584,
+          "end_line": 12592,
+          "source_block_ids": [
+            "lblock-003234"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12595,
+          "end_line": 12597,
+          "source_block_ids": [
+            "lblock-003237"
+          ],
+          "source_slice_id": "d2-slice-017"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-010-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0064",
+      "grouping_key": "shard-0064|concrete_plans_targets|Plans/BinaryLocator_Spec.md|Plans/CLI_Bridged_Providers.md|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/DRY_Rules.md|Plans/Decision_Log.md|Plans/Executor_Protocol.md|Plans/FileManager.md|Plans/FinalGUISpec.md|Plans/Formatters_System.md|Plans/Glossary.md|Plans/Multi-Account.md|Plans/OpenCode_Coverage_Matrix.md|Plans/Orchestrator_Page.md|Plans/Plugins_System.md|Plans/Run_Modes.md|Plans/Section15_MVP_Promoted_Features_Spec.md|Plans/Skills_System.md|Plans/Tools.md|Plans/UI_Command_Catalog.md|Plans/assistant-chat-design.md|Plans/feature-list.md|Plans/newfeatures.md|Plans/rewrite-tie-in-memo.md|Plans/storage-plan.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-d2-slice-017-060",
+        "obl-d2-slice-017-061",
+        "obl-d2-slice-017-062",
+        "obl-d2-slice-017-063",
+        "obl-d2-slice-017-064",
+        "obl-d2-slice-017-065",
+        "obl-d2-slice-017-066",
+        "obl-d2-slice-017-067",
+        "obl-d2-slice-017-068",
+        "obl-d2-slice-017-069",
+        "obl-d2-slice-017-070",
+        "obl-d2-slice-017-071",
+        "obl-d2-slice-017-072",
+        "obl-d2-slice-017-073",
+        "obl-d2-slice-017-074",
+        "obl-d2-slice-017-075",
+        "obl-d2-slice-017-076",
+        "obl-d2-slice-017-077",
+        "obl-d2-slice-017-078",
+        "obl-d2-slice-018-001",
+        "obl-d2-slice-018-002",
+        "obl-d2-slice-018-003",
+        "obl-d2-slice-018-004",
+        "obl-d2-slice-018-005",
+        "obl-d2-slice-018-006"
+      ],
+      "obligation_record_count": 25,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Formatters_System.md",
+        "Plans/Glossary.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Plugins_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Skills_System.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "line_start": 401,
+          "line_end": 527,
+          "window_index": 1,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "line_start": 1,
+          "line_end": 240,
+          "window_index": 0,
+          "total_lines_in_doc": 240,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4547,
+          "window_index": 11,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 801,
+          "line_end": 829,
+          "window_index": 2,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/DRY_Rules.md",
+          "line_start": 1,
+          "line_end": 344,
+          "window_index": 0,
+          "total_lines_in_doc": 344,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1,
+          "line_end": 158,
+          "window_index": 0,
+          "total_lines_in_doc": 158,
           "max_lines_per_window": 400
         },
         {
@@ -1742,6 +3351,118 @@
           "max_lines_per_window": 400
         },
         {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Formatters_System.md",
+          "line_start": 1,
+          "line_end": 319,
+          "window_index": 0,
+          "total_lines_in_doc": 319,
+          "max_lines_per_window": 400
+        },
+        {
           "path": "Plans/Glossary.md",
           "line_start": 1,
           "line_end": 400,
@@ -1782,6 +3503,14 @@
           "max_lines_per_window": 400
         },
         {
+          "path": "Plans/OpenCode_Coverage_Matrix.md",
+          "line_start": 1,
+          "line_end": 302,
+          "window_index": 0,
+          "total_lines_in_doc": 302,
+          "max_lines_per_window": 400
+        },
+        {
           "path": "Plans/Orchestrator_Page.md",
           "line_start": 1,
           "line_end": 400,
@@ -1814,67 +3543,19 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Progression_Gates.md",
+          "path": "Plans/Plugins_System.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 844,
+          "total_lines_in_doc": 666,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Progression_Gates.md",
+          "path": "Plans/Plugins_System.md",
           "line_start": 401,
-          "line_end": 800,
+          "line_end": 666,
           "window_index": 1,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "line_start": 801,
-          "line_end": 844,
-          "window_index": 2,
-          "total_lines_in_doc": 844,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 801,
-          "line_end": 1087,
-          "window_index": 2,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 715,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "line_start": 401,
-          "line_end": 715,
-          "window_index": 1,
-          "total_lines_in_doc": 715,
+          "total_lines_in_doc": 666,
           "max_lines_per_window": 400
         },
         {
@@ -1894,19 +3575,27 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "line_start": 1,
           "line_end": 400,
           "window_index": 0,
-          "total_lines_in_doc": 520,
+          "total_lines_in_doc": 724,
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
           "line_start": 401,
-          "line_end": 520,
+          "line_end": 724,
           "window_index": 1,
-          "total_lines_in_doc": 520,
+          "total_lines_in_doc": 724,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Skills_System.md",
+          "line_start": 1,
+          "line_end": 365,
+          "window_index": 0,
+          "total_lines_in_doc": 365,
           "max_lines_per_window": 400
         },
         {
@@ -1990,6 +3679,791 @@
           "max_lines_per_window": 400
         },
         {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3229,
+          "window_index": 8,
+          "total_lines_in_doc": 3229,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/feature-list.md",
+          "line_start": 1,
+          "line_end": 224,
+          "window_index": 0,
+          "total_lines_in_doc": 224,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/newfeatures.md",
+          "line_start": 1,
+          "line_end": 118,
+          "window_index": 0,
+          "total_lines_in_doc": 118,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 641,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "line_start": 401,
+          "line_end": 641,
+          "window_index": 1,
+          "total_lines_in_doc": 641,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2801,
+          "line_end": 3092,
+          "window_index": 7,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1177,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1177,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1177,
+          "window_index": 2,
+          "total_lines_in_doc": 1177,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0063",
+          "start_line": 12600,
+          "end_line": 12600,
+          "source_block_ids": [
+            "lblock-003240"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12601,
+          "end_line": 12602,
+          "source_block_ids": [
+            "lblock-003241"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12605,
+          "end_line": 12607,
+          "source_block_ids": [
+            "lblock-003244"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12612,
+          "end_line": 12614,
+          "source_block_ids": [
+            "lblock-003249"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12617,
+          "end_line": 12627,
+          "source_block_ids": [
+            "lblock-003252"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12630,
+          "end_line": 12637,
+          "source_block_ids": [
+            "lblock-003255"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12640,
+          "end_line": 12642,
+          "source_block_ids": [
+            "lblock-003258"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12645,
+          "end_line": 12647,
+          "source_block_ids": [
+            "lblock-003261"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12650,
+          "end_line": 12652,
+          "source_block_ids": [
+            "lblock-003264"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12657,
+          "end_line": 12661,
+          "source_block_ids": [
+            "lblock-003269"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12664,
+          "end_line": 12673,
+          "source_block_ids": [
+            "lblock-003272"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12676,
+          "end_line": 12687,
+          "source_block_ids": [
+            "lblock-003275"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12690,
+          "end_line": 12701,
+          "source_block_ids": [
+            "lblock-003278"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12704,
+          "end_line": 12712,
+          "source_block_ids": [
+            "lblock-003281"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12715,
+          "end_line": 12716,
+          "source_block_ids": [
+            "lblock-003284"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12719,
+          "end_line": 12721,
+          "source_block_ids": [
+            "lblock-003287"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12724,
+          "end_line": 12726,
+          "source_block_ids": [
+            "lblock-003290"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12731,
+          "end_line": 12740,
+          "source_block_ids": [
+            "lblock-003295"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12743,
+          "end_line": 12756,
+          "source_block_ids": [
+            "lblock-003298"
+          ],
+          "source_slice_id": "d2-slice-017"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12759,
+          "end_line": 12783,
+          "source_block_ids": [
+            "lblock-003301"
+          ],
+          "source_slice_id": "d2-slice-018"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12786,
+          "end_line": 12788,
+          "source_block_ids": [
+            "lblock-003304"
+          ],
+          "source_slice_id": "d2-slice-018"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0064",
+          "start_line": 12791,
+          "end_line": 12800,
+          "source_block_ids": [
+            "lblock-003307"
+          ],
+          "source_slice_id": "d2-slice-018"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12801,
+          "end_line": 12801,
+          "source_block_ids": [
+            "lblock-003308"
+          ],
+          "source_slice_id": "d2-slice-018"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12804,
+          "end_line": 12806,
+          "source_block_ids": [
+            "lblock-003311"
+          ],
+          "source_slice_id": "d2-slice-018"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12811,
+          "end_line": 12818,
+          "source_block_ids": [
+            "lblock-003316"
+          ],
+          "source_slice_id": "d2-slice-018"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-010-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0065",
+      "grouping_key": "shard-0065|concrete_plans_targets|Plans/Contracts_V0.md|Plans/Crosswalk.md|Plans/FileManager.md|Plans/FinalGUISpec.md|Plans/Progression_Gates.md|Plans/UI_Command_Catalog.md|Plans/UI_Wiring_Rules.md|Plans/Wiring_Matrix.md|Plans/assistant-chat-design.md|Plans/evidence.schema.json|Plans/storage-plan.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-d2-slice-018-007",
+        "obl-d2-slice-018-008",
+        "obl-d2-slice-018-009",
+        "obl-d2-slice-018-010",
+        "obl-d2-slice-018-011",
+        "obl-d2-slice-018-012",
+        "obl-d2-slice-018-013",
+        "obl-d2-slice-018-014",
+        "obl-d2-slice-018-015",
+        "obl-d2-slice-018-016",
+        "obl-d2-slice-018-017",
+        "obl-d2-slice-018-018",
+        "obl-d2-slice-018-019",
+        "obl-d2-slice-018-020",
+        "obl-d2-slice-018-021",
+        "obl-d2-slice-018-022",
+        "obl-d2-slice-018-023",
+        "obl-d2-slice-018-024"
+      ],
+      "obligation_record_count": 18,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4547,
+          "window_index": 11,
+          "total_lines_in_doc": 4547,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 801,
+          "line_end": 829,
+          "window_index": 2,
+          "total_lines_in_doc": 829,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 471,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 401,
+          "line_end": 471,
+          "window_index": 1,
+          "total_lines_in_doc": 471,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 844,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 844,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "line_start": 801,
+          "line_end": 844,
+          "window_index": 2,
+          "total_lines_in_doc": 844,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "window_index": 3,
+          "total_lines_in_doc": 1316,
+          "max_lines_per_window": 400
+        },
+        {
           "path": "Plans/UI_Wiring_Rules.md",
           "line_start": 1,
           "line_end": 222,
@@ -2014,38 +4488,6 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1204,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1204,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1204,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 1201,
-          "line_end": 1204,
-          "window_index": 3,
-          "total_lines_in_doc": 1204,
-          "max_lines_per_window": 400
-        },
-        {
           "path": "Plans/assistant-chat-design.md",
           "line_start": 1,
           "line_end": 400,
@@ -2118,51 +4560,11 @@
           "max_lines_per_window": 400
         },
         {
-          "path": "Plans/assistant-memory-subsystem.md",
+          "path": "Plans/evidence.schema.json",
           "line_start": 1,
-          "line_end": 400,
+          "line_end": 366,
           "window_index": 0,
-          "total_lines_in_doc": 576,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-memory-subsystem.md",
-          "line_start": 401,
-          "line_end": 576,
-          "window_index": 1,
-          "total_lines_in_doc": 576,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1388,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/newtools.md",
-          "line_start": 1201,
-          "line_end": 1388,
-          "window_index": 3,
-          "total_lines_in_doc": 1388,
+          "total_lines_in_doc": 366,
           "max_lines_per_window": 400
         },
         {
@@ -2254,1018 +4656,188 @@
           "max_lines_per_window": 400
         }
       ],
-      "preserved_candidate_hints": [],
-      "cross_target_notes": []
-    },
-    {
-      "coverage_task_id": "cov-e1-slice-010-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "source_shard_id": "shard-0053",
-      "grouping_key": "shard-0053|concrete_plans_targets|Plans/Commands_System.md|Plans/Contracts_V0.md|Plans/FileManager.md|Plans/FinalGUISpec.md|Plans/Orchestrator_Page.md|Plans/Project_Output_Artifacts.md|Plans/Runtime_Artifacts_Panel.md|Plans/UI_Command_Catalog.md|Plans/assistant-chat-design.md|Plans/storage-plan.md|Plans/usage-feature.md",
-      "obligation_ids": [
-        "obl-d2-slice-015-019",
-        "obl-d2-slice-015-020",
-        "obl-d2-slice-015-021",
-        "obl-d2-slice-015-022",
-        "obl-d2-slice-015-023",
-        "obl-d2-slice-015-024",
-        "obl-d2-slice-015-025",
-        "obl-d2-slice-015-026",
-        "obl-d2-slice-015-027",
-        "obl-d2-slice-015-028",
-        "obl-d2-slice-015-029",
-        "obl-d2-slice-015-030",
-        "obl-d2-slice-015-031",
-        "obl-d2-slice-015-032",
-        "obl-d2-slice-015-033",
-        "obl-d2-slice-015-034",
-        "obl-d2-slice-015-035",
-        "obl-d2-slice-015-036",
-        "obl-d2-slice-015-037",
-        "obl-d2-slice-015-038",
-        "obl-d2-slice-015-039",
-        "obl-d2-slice-015-040",
-        "obl-d2-slice-015-041",
-        "obl-d2-slice-015-042",
-        "obl-d2-slice-015-043"
-      ],
-      "obligation_record_count": 25,
-      "max_obligations_per_task_budget": 25,
-      "live_doc_targets_union": [
-        "Plans/Commands_System.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FileManager.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
-      ],
-      "live_doc_windows": [
+      "preserved_candidate_hints": [
         {
-          "path": "Plans/Commands_System.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12821,
+          "end_line": 12833,
+          "source_block_ids": [
+            "lblock-003319"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Commands_System.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12836,
+          "end_line": 12845,
+          "source_block_ids": [
+            "lblock-003322"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Commands_System.md",
-          "line_start": 801,
-          "line_end": 930,
-          "window_index": 2,
-          "total_lines_in_doc": 930,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12848,
+          "end_line": 12852,
+          "source_block_ids": [
+            "lblock-003325"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12855,
+          "end_line": 12863,
+          "source_block_ids": [
+            "lblock-003328"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12866,
+          "end_line": 12869,
+          "source_block_ids": [
+            "lblock-003331"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12874,
+          "end_line": 12879,
+          "source_block_ids": [
+            "lblock-003336"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12882,
+          "end_line": 12896,
+          "source_block_ids": [
+            "lblock-003339"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12899,
+          "end_line": 12906,
+          "source_block_ids": [
+            "lblock-003342"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12909,
+          "end_line": 12913,
+          "source_block_ids": [
+            "lblock-003345"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12916,
+          "end_line": 12924,
+          "source_block_ids": [
+            "lblock-003348"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12927,
+          "end_line": 12929,
+          "source_block_ids": [
+            "lblock-003351"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12934,
+          "end_line": 12939,
+          "source_block_ids": [
+            "lblock-003356"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12942,
+          "end_line": 12960,
+          "source_block_ids": [
+            "lblock-003359"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12963,
+          "end_line": 12971,
+          "source_block_ids": [
+            "lblock-003362"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4401,
-          "line_end": 4547,
-          "window_index": 11,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12974,
+          "end_line": 12982,
+          "source_block_ids": [
+            "lblock-003365"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/FileManager.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 12985,
+          "end_line": 12997,
+          "source_block_ids": [
+            "lblock-003368"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/FileManager.md",
-          "line_start": 401,
-          "line_end": 471,
-          "window_index": 1,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0065",
+          "start_line": 13000,
+          "end_line": 13000,
+          "source_block_ids": [
+            "lblock-003371"
+          ],
+          "source_slice_id": "d2-slice-018"
         },
         {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4401,
-          "line_end": 4800,
-          "window_index": 11,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4801,
-          "line_end": 4872,
-          "window_index": 12,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 1201,
-          "line_end": 1272,
-          "window_index": 3,
-          "total_lines_in_doc": 1272,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Project_Output_Artifacts.md",
-          "line_start": 801,
-          "line_end": 1087,
-          "window_index": 2,
-          "total_lines_in_doc": 1087,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 401,
-          "line_end": 520,
-          "window_index": 1,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 1201,
-          "line_end": 1316,
-          "window_index": 3,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 3201,
-          "line_end": 3229,
-          "window_index": 8,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2801,
-          "line_end": 3092,
-          "window_index": 7,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 801,
-          "line_end": 1177,
-          "window_index": 2,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0066",
+          "start_line": 13001,
+          "end_line": 13003,
+          "source_block_ids": [
+            "lblock-003372"
+          ],
+          "source_slice_id": "d2-slice-018"
         }
       ],
-      "preserved_candidate_hints": [],
-      "cross_target_notes": []
-    },
-    {
-      "coverage_task_id": "cov-e1-slice-010-g005",
-      "doc_resolution_status": "concrete_plans_targets",
-      "source_shard_id": "shard-0055",
-      "grouping_key": "shard-0055|concrete_plans_targets|Plans/Contracts_V0.md|Plans/FileManager.md|Plans/FinalGUISpec.md|Plans/Runtime_Artifacts_Panel.md|Plans/UI_Command_Catalog.md|Plans/assistant-chat-design.md|Plans/storage-plan.md|Plans/usage-feature.md",
-      "obligation_ids": [
-        "obl-d2-slice-015-044",
-        "obl-d2-slice-015-045",
-        "obl-d2-slice-015-046",
-        "obl-d2-slice-015-047",
-        "obl-d2-slice-015-048",
-        "obl-d2-slice-015-049",
-        "obl-d2-slice-015-050"
-      ],
-      "obligation_record_count": 7,
-      "max_obligations_per_task_budget": 25,
-      "live_doc_targets_union": [
-        "Plans/Contracts_V0.md",
-        "Plans/FileManager.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
-      ],
-      "live_doc_windows": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "line_start": 4401,
-          "line_end": 4547,
-          "window_index": 11,
-          "total_lines_in_doc": 4547,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FileManager.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FileManager.md",
-          "line_start": 401,
-          "line_end": 471,
-          "window_index": 1,
-          "total_lines_in_doc": 471,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3201,
-          "line_end": 3600,
-          "window_index": 8,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3601,
-          "line_end": 4000,
-          "window_index": 9,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4001,
-          "line_end": 4400,
-          "window_index": 10,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4401,
-          "line_end": 4800,
-          "window_index": 11,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 4801,
-          "line_end": 4872,
-          "window_index": 12,
-          "total_lines_in_doc": 4872,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 401,
-          "line_end": 520,
-          "window_index": 1,
-          "total_lines_in_doc": 520,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "line_start": 1201,
-          "line_end": 1316,
-          "window_index": 3,
-          "total_lines_in_doc": 1316,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 2801,
-          "line_end": 3200,
-          "window_index": 7,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/assistant-chat-design.md",
-          "line_start": 3201,
-          "line_end": 3229,
-          "window_index": 8,
-          "total_lines_in_doc": 3229,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 801,
-          "line_end": 1200,
-          "window_index": 2,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1201,
-          "line_end": 1600,
-          "window_index": 3,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1601,
-          "line_end": 2000,
-          "window_index": 4,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2001,
-          "line_end": 2400,
-          "window_index": 5,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2401,
-          "line_end": 2800,
-          "window_index": 6,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 2801,
-          "line_end": 3092,
-          "window_index": 7,
-          "total_lines_in_doc": 3092,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 1,
-          "line_end": 400,
-          "window_index": 0,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 401,
-          "line_end": 800,
-          "window_index": 1,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        },
-        {
-          "path": "Plans/usage-feature.md",
-          "line_start": 801,
-          "line_end": 1177,
-          "window_index": 2,
-          "total_lines_in_doc": 1177,
-          "max_lines_per_window": 400
-        }
-      ],
-      "preserved_candidate_hints": [],
       "cross_target_notes": []
     }
   ]

@@ -2,289 +2,158 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "ct-slice002-004",
   "obligation_record_count": 7,
-  "source_classification_slices": [
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-002"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-004-001",
-      "obligation_category": "directive",
-      "classification": "present",
-      "evidence_spans": [
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "start_line": 64,
-          "end_line": 64,
-          "phrase_matched": "`plans/orchestrator_page.md`"
-        }
-      ],
-      "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
-      },
-      "uncertainty": 0.12,
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "coverage_task_id": "ct-slice002-004"
-    },
-    {
-      "obligation_id": "obl-d2-004-002",
-      "obligation_category": "architecture_note",
-      "classification": "present",
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "start_line": 107,
-          "end_line": 107,
-          "phrase_matched": "existing docs are still too runtime-worktree-centric for the rewrite:"
-        }
-      ],
-      "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
-      },
-      "uncertainty": 0.12,
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "coverage_task_id": "ct-slice002-004"
-    },
-    {
-      "obligation_id": "obl-d2-004-003",
-      "obligation_category": "architecture_note",
-      "classification": "present",
-      "evidence_spans": [
-        {
-          "path": "Plans/Run_Graph_View.md",
-          "start_line": 67,
-          "end_line": 67,
-          "phrase_matched": "which package owns which lane pool"
-        }
-      ],
-      "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
-      },
-      "uncertainty": 0.12,
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "coverage_task_id": "ct-slice002-004"
-    },
-    {
-      "obligation_id": "obl-d2-004-004",
-      "obligation_category": "architecture_note",
-      "classification": "partial",
+      "obligation_id": "obl-d2-003-0043",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
-      "missing_details": [],
-      "partial_details": [
-        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
       ],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
-      },
-      "uncertainty": 0.34,
-      "deterministic_local_evidence_used_only_as_candidate": true,
-      "coverage_task_id": "ct-slice002-004"
-    },
-    {
-      "obligation_id": "obl-d2-004-005",
-      "obligation_category": "architecture_note",
-      "classification": "present",
-      "evidence_spans": [
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "start_line": 42,
-          "end_line": 42,
-          "phrase_matched": "`removed` means the live worktree directory is gone"
-        }
-      ],
-      "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
+      "candidate_docs": [],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000325 | excerpt=\"  - project/dashboard interaction docs\\n  - widget/projection contracts\\n  - glossary/help/labels for lane/worktree terminology\""
       },
-      "uncertainty": 0.12,
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "coverage_task_id": "ct-slice002-004"
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-004-006",
-      "obligation_category": "architecture_note",
-      "classification": "present",
-      "evidence_spans": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "start_line": 98,
-          "end_line": 98,
-          "phrase_matched": "orchestrator may initiate scoped actions on a lane/worktree from run context."
-        }
-      ],
-      "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
-      },
-      "uncertainty": 0.12,
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "coverage_task_id": "ct-slice002-004"
-    },
-    {
-      "obligation_id": "obl-d2-004-007",
-      "obligation_category": "directive",
-      "classification": "partial",
+      "obligation_id": "obl-d2-003-0044",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
-      "missing_details": [],
-      "partial_details": [
-        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
       ],
-      "candidate_docs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/Multi-Account.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
-      ],
+      "partial_details": [],
+      "candidate_docs": [],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_ids": [
-          "ct-slice002-004"
-        ],
-        "source_shard_ids": [
-          "shard-0010"
-        ],
-        "doc_resolution_statuses": [
-          "mixed_shard_and_live_paths"
-        ]
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000330 | excerpt=\"- `Source Control` stays `worktree-first`.\""
       },
-      "uncertainty": 0.34,
-      "deterministic_local_evidence_used_only_as_candidate": true,
-      "coverage_task_id": "ct-slice002-004"
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0045",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000333 | excerpt=\"- Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.\\n- Orchestrator should remain package/seam/lane-first and treat worktrees as backi...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0046",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000336 | excerpt=\"- Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:\\n  - owning package\\n  - owning lane\\n  - run reference...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0047",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000339 | excerpt=\"- Do not rename Source Control objects so aggressively that `worktree` becomes hidden or secondary there.\\n- `Lane` is important for runtime/governance modeling, but in Source Control it should appear ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0049",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000347 | excerpt=\"- The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-003-0050",
+      "coverage_task_id": "ct-slice002-004",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice002-004 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0012",
+        "source_slice_id": "d2-slice-003",
+        "canonical_excerpt_note": "shards=shard-0012 | blocks=lblock-000350 | excerpt=\"- Source Control rows and tabs must stay information-dense but selective.\\n- Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.\\n- Prefer:\\n  - one s...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     }
   ]
 }

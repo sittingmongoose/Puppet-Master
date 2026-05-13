@@ -2,7 +2,7 @@
   "schema_id": "pm.section_exit.v3.2.3",
   "prompt_id": "D5",
   "prompt_version": "pm.d5.v3.2.3",
-  "timestamp_utc": "20260512T041500Z",
+  "timestamp_utc": "20260512T201220Z",
   "section_id": "D",
   "work_id": "w-20260312-203855",
   "status": "complete",
@@ -10,22 +10,22 @@
   "source_gate_status": "pass",
   "source_gate_report_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_source_gate_report.json",
   "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-  "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
-  "canonical_obligations_source_gate_report_sha256": "19bff0252715a1b37e226d857f5de78e3008011f756553dabb9ab720386a8ee3",
+  "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+  "canonical_obligations_source_gate_report_sha256": "f9ed58911abf2dda8c4defd91f1fc56c93e29a5bd1a8449ede413dd165421872",
   "canonical_obligations_merge_status": "final",
   "active_source_for_coverage": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
   "source_artifact_family": "obligation_conversion_slices_v3_2_3",
   "conversion_slices_total": 25,
-  "obligations_total": 1710,
-  "open_questions_total": 29,
-  "doc_hints_total": 1402,
-  "excluded_blocks_total": 3356,
+  "obligations_total": 1775,
+  "open_questions_total": 48,
+  "doc_hints_total": 1125,
+  "excluded_blocks_total": 3341,
   "blocked_blocks_total": 0,
-  "worklist_active_blocks_total": 4880,
-  "covered_blocks_total": 4880,
+  "worklist_active_blocks_total": 4868,
+  "covered_blocks_total": 4868,
   "missing_blocks_total": 0,
-  "d1_work_groups_total": 243,
-  "source_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "d1_work_groups_total": 207,
+  "source_ledger_sha256": "4f0fc010e7111bbaddb62d566b98e72869ee763c7dc4539e838846c3293304d2",
   "d_stage_provenance": {
     "D0": {
       "stage_report_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json",
@@ -53,7 +53,7 @@
   "next_prompt_request": "Paste prompt E0 — Section Entry: Coverage v3.2.3.",
   "notes": [
     "Section D exit v3.2.3: canonical_obligations.json is the active source for Coverage (Section E).",
-    "D3 source gate overall_source_gate_pass true; 4880/4880 raw_blocks covered per canonical_obligations_source_gate_report.json mechanical_inventory.",
-    "Totals and SHA256 on this exit record were taken deterministically from READ artifacts (no full canonical semantic read)."
+    "D3 source gate gate_pass true; 4868/4868 raw_blocks covered per canonical_obligations_source_gate_report.json mechanical_inventory.",
+    "Totals and SHA256 on this exit record were produced deterministically from READ artifacts (sha256sum + JSON array lengths only; no full canonical semantic read)."
   ]
 }

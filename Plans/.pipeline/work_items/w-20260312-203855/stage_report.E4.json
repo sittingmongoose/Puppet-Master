@@ -2,14 +2,14 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "E4",
   "prompt_version": "pm.e4.v3.2.3",
-  "timestamp_utc": "20260512T231500Z",
+  "timestamp_utc": "20260513T012000Z",
   "work_id": "w-20260312-203855",
   "section_id": "E",
   "section_name": "Coverage",
   "status": "complete",
   "execution_type": "mechanical_tool_operation",
   "execution_type_recorded_per_local_classification_override": true,
-  "execution_type_basis": "Section E exit handoff only (pm.e4.v3.2.3): deterministic verification of transfer_coverage.json and transfer_coverage_source_gate_report.json; write section_exit_E.json and current_state.md.",
+  "execution_type_basis": "Section E exit handoff only (pm.e4.v3.2.3): deterministic verification of transfer_coverage.json metadata, row count, and transfer_coverage_source_gate_report.json gate flags; no semantic read of full coverage row bodies.",
   "subagents": {
     "used": false,
     "required": false,
@@ -35,8 +35,8 @@
   "subagent_proof_artifact_paths": [],
   "local_worker_outputs_used": [
     "sha256sum: transfer_coverage.json, transfer_coverage_source_gate_report.json",
-    "wc -l: both READ artifacts",
-    "python3: json.load gate flags; len(coverage_rows); terminal_unresolved_doc_discovery count; distinct coverage_task_id count; obligation_level histogram cross-check vs gate report"
+    "wc -l: transfer_coverage.json line count",
+    "python3: json structural load; len(coverage_rows); terminal_unresolved_doc_discovery count; distinct coverage_task_id count; obligation_level histogram cross-check vs gate report"
   ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
@@ -44,16 +44,16 @@
   "deterministic_verification": {
     "checks_performed": [
       "transfer_coverage.json exists; schema_id pm.transfer_coverage.v3.2.3; work_id w-20260312-203855",
-      "len(coverage_rows)==1710 matches canonical_obligation_count in source gate report",
-      "transfer_coverage_source_gate_report.json overall_source_gate_pass == true",
+      "len(coverage_rows)==1775 matches transfer_coverage_source_gate_report.accounting",
+      "transfer_coverage_source_gate_report.overall_source_gate_pass == true",
       "transfer_coverage_source_gate_report.accounting.every_canonical_obligation_has_row == true",
-      "classification_histogram sums to 1710 (cross-check)",
-      "section_exit_E.json and current_state.md paths under work item"
+      "classification_histogram sums to 1775 (cross-check vs coverage_rows)",
+      "section_exit_E.json and current_state.md written under work item"
     ],
     "checks_passed": 6,
     "checks_failed": 0,
-    "transfer_coverage_sha256": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
-    "transfer_coverage_source_gate_report_sha256": "797bddb9a891ace5191b52cb1b05891e51400a7dde47bbaaeb6356527a0a1882"
+    "transfer_coverage_sha256": "b88ee94b21417680d6a305ee975ba2349d14ff838bc59ab2d66c71b8d2e96ab9",
+    "transfer_coverage_source_gate_report_sha256": "cac9b8f55df01271438182dad882c7eddba8191ac07eccc82fd50151763581f4"
   },
   "inputs_read": [
     "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
@@ -62,13 +62,13 @@
   "inputs_read_metadata": [
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "read_mode": "json_metadata_and_row_count_and_hashes_only_no_full_row_semantic_scan",
-      "line_count": 116054
+      "read_mode": "json_structural_plus_row_count_histogram_terminal_count_distinct_task_ids_no_semantic_row_body_review",
+      "line_count": 83680
     },
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_gate_report.json",
       "read_mode": "full_json_structural",
-      "line_count": 38
+      "line_count": 40
     }
   ],
   "artifacts_written": [
@@ -79,9 +79,12 @@
   "final_gate": {
     "name": "coverage_source_gate_passed",
     "result": "pass",
-    "evidence": "transfer_coverage_source_gate_report.json overall_source_gate_pass true"
+    "evidence": {
+      "transfer_coverage_source_gate_report_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_gate_report.json",
+      "overall_source_gate_pass": true
+    }
   },
-  "summary": "E4 mechanical Section E exit: verified source gate pass and row accounting; wrote section_exit_E.json and current_state.md naming transfer_coverage.json as active source for F0.",
+  "summary": "E4 v3.2.3 mechanical section exit: source gate pass; transfer_coverage.json (1775 rows, sha256 b88ee94b…) named as active Section F source; section_exit_E.json and current_state.md updated.",
   "next_prompt_request": "Paste prompt F0 — Section Entry: Gaps / Routing / Doc Discovery v3.2.3.",
   "blockers": []
 }

@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.obligation_conversion_slices.v3.2.3",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260511T235744Z",
+  "timestamp_utc": "20260512T183046Z",
   "source_obligation_worklist": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
   "source_ledger_obligation_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
   "slice_budget": {
@@ -11,15 +11,16 @@
     "soft_max_raw_blocks": 250,
     "soft_max_d1_work_groups": 15
   },
-  "d1_work_groups_total": 243,
-  "raw_blocks_total": 4880,
+  "d1_work_groups_total": 207,
+  "raw_blocks_total": 4868,
   "conversion_slices": [
     {
       "slice_id": "d2-slice-001",
       "source_group_ids": [
         "wg-d1-T001-01",
         "wg-d1-T001-02",
-        "wg-d1-T001-03"
+        "wg-d1-T001-03",
+        "wg-d1-T001-04"
       ],
       "source_block_ids": [
         "lblock-000001",
@@ -46,9 +47,7 @@
         "lblock-000022",
         "lblock-000023",
         "lblock-000024",
-        "lblock-000025",
-        "lblock-000026",
-        "lblock-000027"
+        "lblock-000025"
       ],
       "source_shard_ids": [
         "shard-0001",
@@ -60,11 +59,6 @@
         {
           "source_shard_id": "shard-0001",
           "start_line": 1,
-          "end_line": 28
-        },
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
           "end_line": 200
         },
         {
@@ -80,17 +74,12 @@
         {
           "source_shard_id": "shard-0004",
           "start_line": 601,
-          "end_line": 677
-        },
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 678,
           "end_line": 800
         }
       ],
-      "raw_blocks_total": 27,
+      "raw_blocks_total": 25,
       "source_lines_total": 800,
-      "d1_work_groups_in_slice": 3,
+      "d1_work_groups_in_slice": 4,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-001.json"
     },
@@ -98,14 +87,15 @@
       "slice_id": "d2-slice-002",
       "source_group_ids": [
         "wg-d1-T002-01",
-        "wg-d1-T002-02",
-        "wg-d1-T002-03",
-        "wg-d1-T002-04",
-        "wg-d1-T002-05",
-        "wg-d1-T002-06",
-        "wg-d1-T002-07"
+        "wg-d1-T003-01",
+        "wg-d1-T004-01",
+        "wg-d1-T005-01",
+        "wg-d1-T006-01",
+        "wg-d1-T007-01"
       ],
       "source_block_ids": [
+        "lblock-000026",
+        "lblock-000027",
         "lblock-000028",
         "lblock-000029",
         "lblock-000030",
@@ -253,7 +243,79 @@
         "lblock-000172",
         "lblock-000173",
         "lblock-000174",
-        "lblock-000175",
+        "lblock-000175"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0007",
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 801,
+          "end_line": 1000
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1001,
+          "end_line": 1174
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1175,
+          "end_line": 1200
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1201,
+          "end_line": 1247
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1248,
+          "end_line": 1313
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1314,
+          "end_line": 1385
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1386,
+          "end_line": 1400
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1401,
+          "end_line": 1446
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1447,
+          "end_line": 1527
+        }
+      ],
+      "raw_blocks_total": 150,
+      "source_lines_total": 727,
+      "d1_work_groups_in_slice": 6,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json"
+    },
+    {
+      "slice_id": "d2-slice-003",
+      "source_group_ids": [
+        "wg-d1-T008-01",
+        "wg-d1-T009-01",
+        "wg-d1-T010-01",
+        "wg-d1-T011-01",
+        "wg-d1-T012-01",
+        "wg-d1-T013-01",
+        "wg-d1-T014-01"
+      ],
+      "source_block_ids": [
         "lblock-000176",
         "lblock-000177",
         "lblock-000178",
@@ -276,897 +338,7 @@
         "lblock-000195",
         "lblock-000196",
         "lblock-000197",
-        "lblock-000198"
-      ],
-      "source_shard_ids": [
-        "shard-0005",
-        "shard-0006",
-        "shard-0007",
-        "shard-0008"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 801,
-          "end_line": 825
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 826,
-          "end_line": 826
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 827,
-          "end_line": 827
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 828,
-          "end_line": 897
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 898,
-          "end_line": 898
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 899,
-          "end_line": 899
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 900,
-          "end_line": 913
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 914,
-          "end_line": 914
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 915,
-          "end_line": 915
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 916,
-          "end_line": 922
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 923,
-          "end_line": 923
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 924,
-          "end_line": 924
-        },
-        {
-          "source_shard_id": "shard-0005",
-          "start_line": 925,
-          "end_line": 1000
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1001,
-          "end_line": 1117
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1118,
-          "end_line": 1118
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1119,
-          "end_line": 1119
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1120,
-          "end_line": 1134
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1135,
-          "end_line": 1135
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1136,
-          "end_line": 1136
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1137,
-          "end_line": 1154
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1155,
-          "end_line": 1155
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1156,
-          "end_line": 1156
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1157,
-          "end_line": 1157
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1158,
-          "end_line": 1158
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1159,
-          "end_line": 1174
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1175,
-          "end_line": 1175
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1176,
-          "end_line": 1176
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1177,
-          "end_line": 1188
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1189,
-          "end_line": 1189
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1190,
-          "end_line": 1190
-        },
-        {
-          "source_shard_id": "shard-0006",
-          "start_line": 1191,
-          "end_line": 1200
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1201,
-          "end_line": 1202
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1203,
-          "end_line": 1203
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1204,
-          "end_line": 1204
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1205,
-          "end_line": 1212
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1213,
-          "end_line": 1213
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1214,
-          "end_line": 1214
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1215,
-          "end_line": 1220
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1221,
-          "end_line": 1221
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1222,
-          "end_line": 1222
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1223,
-          "end_line": 1231
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1232,
-          "end_line": 1232
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1233,
-          "end_line": 1233
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1234,
-          "end_line": 1239
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1240,
-          "end_line": 1240
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1241,
-          "end_line": 1241
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1242,
-          "end_line": 1244
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1245,
-          "end_line": 1245
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1246,
-          "end_line": 1246
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1247,
-          "end_line": 1247
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1248,
-          "end_line": 1248
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1249,
-          "end_line": 1249
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1250,
-          "end_line": 1250
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1251,
-          "end_line": 1251
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1252,
-          "end_line": 1257
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1258,
-          "end_line": 1258
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1259,
-          "end_line": 1259
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1260,
-          "end_line": 1260
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1261,
-          "end_line": 1266
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1267,
-          "end_line": 1267
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1268,
-          "end_line": 1268
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1269,
-          "end_line": 1269
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1270,
-          "end_line": 1277
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1278,
-          "end_line": 1278
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1279,
-          "end_line": 1279
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1280,
-          "end_line": 1280
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1281,
-          "end_line": 1285
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1286,
-          "end_line": 1286
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1287,
-          "end_line": 1287
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1288,
-          "end_line": 1288
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1289,
-          "end_line": 1293
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1294,
-          "end_line": 1294
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1295,
-          "end_line": 1295
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1296,
-          "end_line": 1296
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1297,
-          "end_line": 1313
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1314,
-          "end_line": 1314
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1315,
-          "end_line": 1315
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1316,
-          "end_line": 1316
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1317,
-          "end_line": 1323
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1324,
-          "end_line": 1324
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1325,
-          "end_line": 1325
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1326,
-          "end_line": 1326
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1327,
-          "end_line": 1334
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1335,
-          "end_line": 1335
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1336,
-          "end_line": 1336
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1337,
-          "end_line": 1337
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1338,
-          "end_line": 1338
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1339,
-          "end_line": 1339
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1340,
-          "end_line": 1340
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1341,
-          "end_line": 1341
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1342,
-          "end_line": 1365
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1366,
-          "end_line": 1366
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1367,
-          "end_line": 1367
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1368,
-          "end_line": 1368
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1369,
-          "end_line": 1373
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1374,
-          "end_line": 1374
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1375,
-          "end_line": 1375
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1376,
-          "end_line": 1376
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1377,
-          "end_line": 1384
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1385,
-          "end_line": 1385
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1386,
-          "end_line": 1386
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1387,
-          "end_line": 1387
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1388,
-          "end_line": 1392
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1393,
-          "end_line": 1393
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1394,
-          "end_line": 1394
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1395,
-          "end_line": 1395
-        },
-        {
-          "source_shard_id": "shard-0007",
-          "start_line": 1396,
-          "end_line": 1400
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1401,
-          "end_line": 1401
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1402,
-          "end_line": 1402
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1403,
-          "end_line": 1403
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1404,
-          "end_line": 1420
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1421,
-          "end_line": 1421
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1422,
-          "end_line": 1422
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1423,
-          "end_line": 1423
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1424,
-          "end_line": 1429
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1430,
-          "end_line": 1430
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1431,
-          "end_line": 1431
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1432,
-          "end_line": 1432
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1433,
-          "end_line": 1440
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1441,
-          "end_line": 1441
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1442,
-          "end_line": 1442
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1443,
-          "end_line": 1443
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1444,
-          "end_line": 1444
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1445,
-          "end_line": 1445
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1446,
-          "end_line": 1446
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1447,
-          "end_line": 1447
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1448,
-          "end_line": 1471
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1472,
-          "end_line": 1472
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1473,
-          "end_line": 1473
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1474,
-          "end_line": 1474
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1475,
-          "end_line": 1479
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1480,
-          "end_line": 1480
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1481,
-          "end_line": 1481
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1482,
-          "end_line": 1482
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1483,
-          "end_line": 1490
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1491,
-          "end_line": 1491
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1492,
-          "end_line": 1492
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1493,
-          "end_line": 1493
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1494,
-          "end_line": 1498
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1499,
-          "end_line": 1499
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1500,
-          "end_line": 1500
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1501,
-          "end_line": 1501
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1502,
-          "end_line": 1506
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1507,
-          "end_line": 1507
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1508,
-          "end_line": 1508
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1509,
-          "end_line": 1509
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1510,
-          "end_line": 1524
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1525,
-          "end_line": 1525
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1526,
-          "end_line": 1526
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1527,
-          "end_line": 1527
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1528,
-          "end_line": 1533
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1534,
-          "end_line": 1534
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1535,
-          "end_line": 1535
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1536,
-          "end_line": 1536
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1537,
-          "end_line": 1543
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1544,
-          "end_line": 1544
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1545,
-          "end_line": 1545
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1546,
-          "end_line": 1546
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1547,
-          "end_line": 1547
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1548,
-          "end_line": 1548
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1549,
-          "end_line": 1549
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1550,
-          "end_line": 1550
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1551,
-          "end_line": 1574
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1575,
-          "end_line": 1575
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1576,
-          "end_line": 1576
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1577,
-          "end_line": 1577
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1578,
-          "end_line": 1586
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1587,
-          "end_line": 1587
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1588,
-          "end_line": 1588
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1589,
-          "end_line": 1589
-        },
-        {
-          "source_shard_id": "shard-0008",
-          "start_line": 1590,
-          "end_line": 1600
-        }
-      ],
-      "raw_blocks_total": 171,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 7,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json"
-    },
-    {
-      "slice_id": "d2-slice-003",
-      "source_group_ids": [
-        "wg-d1-T003-01",
-        "wg-d1-T003-02",
-        "wg-d1-T003-03",
-        "wg-d1-T003-04",
-        "wg-d1-T003-05",
-        "wg-d1-T003-06",
-        "wg-d1-T003-07",
-        "wg-d1-T003-08",
-        "wg-d1-T003-09",
-        "wg-d1-T003-10",
-        "wg-d1-T003-11",
-        "wg-d1-T003-12",
-        "wg-d1-T003-13",
-        "wg-d1-T003-14",
-        "wg-d1-T003-15"
-      ],
-      "source_block_ids": [
+        "lblock-000198",
         "lblock-000199",
         "lblock-000200",
         "lblock-000201",
@@ -1222,117 +394,7 @@
         "lblock-000251",
         "lblock-000252",
         "lblock-000253",
-        "lblock-000254"
-      ],
-      "source_shard_ids": [
-        "shard-0009",
-        "shard-0010"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1601,
-          "end_line": 1608
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1609,
-          "end_line": 1621
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1622,
-          "end_line": 1636
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1637,
-          "end_line": 1662
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1663,
-          "end_line": 1692
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1693,
-          "end_line": 1712
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1713,
-          "end_line": 1714
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1715,
-          "end_line": 1761
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1762,
-          "end_line": 1779
-        },
-        {
-          "source_shard_id": "shard-0009",
-          "start_line": 1780,
-          "end_line": 1800
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1801,
-          "end_line": 1801
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1802,
-          "end_line": 1815
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1816,
-          "end_line": 1829
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1830,
-          "end_line": 1861
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1862,
-          "end_line": 1891
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1892,
-          "end_line": 1911
-        }
-      ],
-      "raw_blocks_total": 56,
-      "source_lines_total": 311,
-      "d1_work_groups_in_slice": 15,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json"
-    },
-    {
-      "slice_id": "d2-slice-004",
-      "source_group_ids": [
-        "wg-d1-T003-16",
-        "wg-d1-T003-17",
-        "wg-d1-T003-18",
-        "wg-d1-T003-19",
-        "wg-d1-T003-20",
-        "wg-d1-T003-21",
-        "wg-d1-T003-22",
-        "wg-d1-T003-23",
-        "wg-d1-T003-24",
-        "wg-d1-T004-01",
-        "wg-d1-T004-02",
-        "wg-d1-T004-03"
-      ],
-      "source_block_ids": [
+        "lblock-000254",
         "lblock-000255",
         "lblock-000256",
         "lblock-000257",
@@ -1428,7 +490,91 @@
         "lblock-000347",
         "lblock-000348",
         "lblock-000349",
-        "lblock-000350",
+        "lblock-000350"
+      ],
+      "source_shard_ids": [
+        "shard-0008",
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1528,
+          "end_line": 1600
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1601,
+          "end_line": 1610
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1762
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1763,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1801,
+          "end_line": 1893
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1999
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 2000,
+          "end_line": 2000
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2001,
+          "end_line": 2094
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2095,
+          "end_line": 2200
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2201,
+          "end_line": 2203
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2204,
+          "end_line": 2260
+        }
+      ],
+      "raw_blocks_total": 175,
+      "source_lines_total": 733,
+      "d1_work_groups_in_slice": 7,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json"
+    },
+    {
+      "slice_id": "d2-slice-004",
+      "source_group_ids": [
+        "wg-d1-T015-01",
+        "wg-d1-T016-01",
+        "wg-d1-T017-01",
+        "wg-d1-T018-01",
+        "wg-d1-T019-01",
+        "wg-d1-T020-01",
+        "wg-d1-T021-01",
+        "wg-d1-T022-01"
+      ],
+      "source_block_ids": [
         "lblock-000351",
         "lblock-000352",
         "lblock-000353",
@@ -1532,114 +678,7 @@
         "lblock-000451",
         "lblock-000452",
         "lblock-000453",
-        "lblock-000454"
-      ],
-      "source_shard_ids": [
-        "shard-0010",
-        "shard-0011",
-        "shard-0012",
-        "shard-0013",
-        "shard-0014"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1912,
-          "end_line": 1996
-        },
-        {
-          "source_shard_id": "shard-0010",
-          "start_line": 1997,
-          "end_line": 2000
-        },
-        {
-          "source_shard_id": "shard-0011",
-          "start_line": 2001,
-          "end_line": 2063
-        },
-        {
-          "source_shard_id": "shard-0011",
-          "start_line": 2064,
-          "end_line": 2181
-        },
-        {
-          "source_shard_id": "shard-0011",
-          "start_line": 2182,
-          "end_line": 2200
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2201,
-          "end_line": 2204
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2205,
-          "end_line": 2244
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2245,
-          "end_line": 2261
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2262,
-          "end_line": 2375
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2376,
-          "end_line": 2388
-        },
-        {
-          "source_shard_id": "shard-0012",
-          "start_line": 2389,
-          "end_line": 2400
-        },
-        {
-          "source_shard_id": "shard-0013",
-          "start_line": 2401,
-          "end_line": 2493
-        },
-        {
-          "source_shard_id": "shard-0013",
-          "start_line": 2494,
-          "end_line": 2596
-        },
-        {
-          "source_shard_id": "shard-0013",
-          "start_line": 2597,
-          "end_line": 2600
-        },
-        {
-          "source_shard_id": "shard-0014",
-          "start_line": 2601,
-          "end_line": 2638
-        }
-      ],
-      "raw_blocks_total": 200,
-      "source_lines_total": 727,
-      "d1_work_groups_in_slice": 12,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json"
-    },
-    {
-      "slice_id": "d2-slice-005",
-      "source_group_ids": [
-        "wg-d1-T004-04",
-        "wg-d1-T004-05",
-        "wg-d1-T004-06",
-        "wg-d1-T004-07",
-        "wg-d1-T004-08",
-        "wg-d1-T004-09",
-        "wg-d1-T004-10",
-        "wg-d1-T004-11",
-        "wg-d1-T004-12",
-        "wg-d1-T005-01",
-        "wg-d1-T005-02"
-      ],
-      "source_block_ids": [
+        "lblock-000454",
         "lblock-000455",
         "lblock-000456",
         "lblock-000457",
@@ -1735,7 +774,89 @@
         "lblock-000547",
         "lblock-000548",
         "lblock-000549",
-        "lblock-000550",
+        "lblock-000550"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0013",
+        "shard-0014",
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2261,
+          "end_line": 2365
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2366,
+          "end_line": 2400
+        },
+        {
+          "source_shard_id": "shard-0013",
+          "start_line": 2401,
+          "end_line": 2456
+        },
+        {
+          "source_shard_id": "shard-0013",
+          "start_line": 2457,
+          "end_line": 2536
+        },
+        {
+          "source_shard_id": "shard-0013",
+          "start_line": 2537,
+          "end_line": 2600
+        },
+        {
+          "source_shard_id": "shard-0014",
+          "start_line": 2601,
+          "end_line": 2634
+        },
+        {
+          "source_shard_id": "shard-0014",
+          "start_line": 2635,
+          "end_line": 2731
+        },
+        {
+          "source_shard_id": "shard-0014",
+          "start_line": 2732,
+          "end_line": 2800
+        },
+        {
+          "source_shard_id": "shard-0015",
+          "start_line": 2801,
+          "end_line": 2812
+        },
+        {
+          "source_shard_id": "shard-0015",
+          "start_line": 2813,
+          "end_line": 2921
+        },
+        {
+          "source_shard_id": "shard-0015",
+          "start_line": 2922,
+          "end_line": 2994
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 734,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json"
+    },
+    {
+      "slice_id": "d2-slice-005",
+      "source_group_ids": [
+        "wg-d1-T023-01",
+        "wg-d1-T024-01",
+        "wg-d1-T025-01",
+        "wg-d1-T026-01",
+        "wg-d1-T027-01",
+        "wg-d1-T028-01",
+        "wg-d1-T029-01"
+      ],
+      "source_block_ids": [
         "lblock-000551",
         "lblock-000552",
         "lblock-000553",
@@ -1828,105 +949,7 @@
         "lblock-000640",
         "lblock-000641",
         "lblock-000642",
-        "lblock-000643"
-      ],
-      "source_shard_ids": [
-        "shard-0014",
-        "shard-0015",
-        "shard-0016",
-        "shard-0017"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0014",
-          "start_line": 2639,
-          "end_line": 2731
-        },
-        {
-          "source_shard_id": "shard-0014",
-          "start_line": 2732,
-          "end_line": 2783
-        },
-        {
-          "source_shard_id": "shard-0014",
-          "start_line": 2784,
-          "end_line": 2800
-        },
-        {
-          "source_shard_id": "shard-0015",
-          "start_line": 2801,
-          "end_line": 2871
-        },
-        {
-          "source_shard_id": "shard-0015",
-          "start_line": 2872,
-          "end_line": 2911
-        },
-        {
-          "source_shard_id": "shard-0015",
-          "start_line": 2912,
-          "end_line": 2972
-        },
-        {
-          "source_shard_id": "shard-0015",
-          "start_line": 2973,
-          "end_line": 3000
-        },
-        {
-          "source_shard_id": "shard-0016",
-          "start_line": 3001,
-          "end_line": 3051
-        },
-        {
-          "source_shard_id": "shard-0016",
-          "start_line": 3052,
-          "end_line": 3128
-        },
-        {
-          "source_shard_id": "shard-0016",
-          "start_line": 3129,
-          "end_line": 3187
-        },
-        {
-          "source_shard_id": "shard-0016",
-          "start_line": 3188,
-          "end_line": 3200
-        },
-        {
-          "source_shard_id": "shard-0017",
-          "start_line": 3201,
-          "end_line": 3332
-        },
-        {
-          "source_shard_id": "shard-0017",
-          "start_line": 3333,
-          "end_line": 3400
-        }
-      ],
-      "raw_blocks_total": 189,
-      "source_lines_total": 762,
-      "d1_work_groups_in_slice": 11,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json"
-    },
-    {
-      "slice_id": "d2-slice-006",
-      "source_group_ids": [
-        "wg-d1-T005-03",
-        "wg-d1-T005-04",
-        "wg-d1-T005-05",
-        "wg-d1-T005-06",
-        "wg-d1-T005-07",
-        "wg-d1-T005-08",
-        "wg-d1-T005-09",
-        "wg-d1-T005-10",
-        "wg-d1-T005-11",
-        "wg-d1-T006-01",
-        "wg-d1-T006-02",
-        "wg-d1-T006-03",
-        "wg-d1-T006-04"
-      ],
-      "source_block_ids": [
+        "lblock-000643",
         "lblock-000644",
         "lblock-000645",
         "lblock-000646",
@@ -2008,7 +1031,91 @@
         "lblock-000722",
         "lblock-000723",
         "lblock-000724",
-        "lblock-000725",
+        "lblock-000725"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0016",
+        "shard-0017",
+        "shard-0018",
+        "shard-0019"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0015",
+          "start_line": 2995,
+          "end_line": 3000
+        },
+        {
+          "source_shard_id": "shard-0016",
+          "start_line": 3001,
+          "end_line": 3156
+        },
+        {
+          "source_shard_id": "shard-0016",
+          "start_line": 3157,
+          "end_line": 3200
+        },
+        {
+          "source_shard_id": "shard-0017",
+          "start_line": 3201,
+          "end_line": 3226
+        },
+        {
+          "source_shard_id": "shard-0017",
+          "start_line": 3227,
+          "end_line": 3339
+        },
+        {
+          "source_shard_id": "shard-0017",
+          "start_line": 3340,
+          "end_line": 3400
+        },
+        {
+          "source_shard_id": "shard-0018",
+          "start_line": 3401,
+          "end_line": 3461
+        },
+        {
+          "source_shard_id": "shard-0018",
+          "start_line": 3462,
+          "end_line": 3537
+        },
+        {
+          "source_shard_id": "shard-0018",
+          "start_line": 3538,
+          "end_line": 3600
+        },
+        {
+          "source_shard_id": "shard-0019",
+          "start_line": 3601,
+          "end_line": 3632
+        },
+        {
+          "source_shard_id": "shard-0019",
+          "start_line": 3633,
+          "end_line": 3700
+        }
+      ],
+      "raw_blocks_total": 175,
+      "source_lines_total": 706,
+      "d1_work_groups_in_slice": 7,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json"
+    },
+    {
+      "slice_id": "d2-slice-006",
+      "source_group_ids": [
+        "wg-d1-T030-01",
+        "wg-d1-T031-01",
+        "wg-d1-T032-01",
+        "wg-d1-T033-01",
+        "wg-d1-T034-01",
+        "wg-d1-T035-01",
+        "wg-d1-T036-01",
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
         "lblock-000726",
         "lblock-000727",
         "lblock-000728",
@@ -2134,331 +1241,7 @@
         "lblock-000848",
         "lblock-000849",
         "lblock-000850",
-        "lblock-000851"
-      ],
-      "source_shard_ids": [
-        "shard-0018",
-        "shard-0019",
-        "shard-0020",
-        "shard-0021"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0018",
-          "start_line": 3401,
-          "end_line": 3513
-        },
-        {
-          "source_shard_id": "shard-0018",
-          "start_line": 3514,
-          "end_line": 3590
-        },
-        {
-          "source_shard_id": "shard-0018",
-          "start_line": 3591,
-          "end_line": 3600
-        },
-        {
-          "source_shard_id": "shard-0019",
-          "start_line": 3601,
-          "end_line": 3663
-        },
-        {
-          "source_shard_id": "shard-0019",
-          "start_line": 3664,
-          "end_line": 3780
-        },
-        {
-          "source_shard_id": "shard-0019",
-          "start_line": 3781,
-          "end_line": 3800
-        },
-        {
-          "source_shard_id": "shard-0020",
-          "start_line": 3801,
-          "end_line": 3896
-        },
-        {
-          "source_shard_id": "shard-0020",
-          "start_line": 3897,
-          "end_line": 3993
-        },
-        {
-          "source_shard_id": "shard-0020",
-          "start_line": 3994,
-          "end_line": 4000
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4001,
-          "end_line": 4006
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4007,
-          "end_line": 4007
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4008,
-          "end_line": 4008
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4009,
-          "end_line": 4011
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4012,
-          "end_line": 4012
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4013,
-          "end_line": 4013
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4014,
-          "end_line": 4014
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4015,
-          "end_line": 4015
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4016,
-          "end_line": 4021
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4022,
-          "end_line": 4022
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4023,
-          "end_line": 4023
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4024,
-          "end_line": 4029
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4030,
-          "end_line": 4030
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4031,
-          "end_line": 4031
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4032,
-          "end_line": 4043
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4044,
-          "end_line": 4044
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4045,
-          "end_line": 4045
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4046,
-          "end_line": 4054
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4055,
-          "end_line": 4055
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4056,
-          "end_line": 4056
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4057,
-          "end_line": 4073
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4074,
-          "end_line": 4074
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4075,
-          "end_line": 4075
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4076,
-          "end_line": 4080
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4081,
-          "end_line": 4081
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4082,
-          "end_line": 4082
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4083,
-          "end_line": 4097
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4098,
-          "end_line": 4098
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4099,
-          "end_line": 4099
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4100,
-          "end_line": 4107
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4108,
-          "end_line": 4108
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4109,
-          "end_line": 4109
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4110,
-          "end_line": 4119
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4120,
-          "end_line": 4120
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4121,
-          "end_line": 4121
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4122,
-          "end_line": 4129
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4130,
-          "end_line": 4130
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4131,
-          "end_line": 4131
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4132,
-          "end_line": 4135
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4136,
-          "end_line": 4136
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4137,
-          "end_line": 4137
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4138,
-          "end_line": 4140
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4141,
-          "end_line": 4141
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4142,
-          "end_line": 4142
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4143,
-          "end_line": 4146
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4147,
-          "end_line": 4147
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4148,
-          "end_line": 4148
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4149,
-          "end_line": 4151
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4152,
-          "end_line": 4152
-        }
-      ],
-      "raw_blocks_total": 208,
-      "source_lines_total": 752,
-      "d1_work_groups_in_slice": 13,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json"
-    },
-    {
-      "slice_id": "d2-slice-007",
-      "source_group_ids": [
-        "wg-d1-T006-05",
-        "wg-d1-T006-06",
-        "wg-d1-T006-07",
-        "wg-d1-T006-08",
-        "wg-d1-T006-09",
-        "wg-d1-T006-10",
-        "wg-d1-T006-11",
-        "wg-d1-T006-12",
-        "wg-d1-T006-13",
-        "wg-d1-T006-14",
-        "wg-d1-T006-15",
-        "wg-d1-T006-16",
-        "wg-d1-T007-01",
-        "wg-d1-T007-02"
-      ],
-      "source_block_ids": [
+        "lblock-000851",
         "lblock-000852",
         "lblock-000853",
         "lblock-000854",
@@ -2532,7 +1315,97 @@
         "lblock-000922",
         "lblock-000923",
         "lblock-000924",
-        "lblock-000925",
+        "lblock-000925"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0022",
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0019",
+          "start_line": 3701,
+          "end_line": 3800
+        },
+        {
+          "source_shard_id": "shard-0020",
+          "start_line": 3801,
+          "end_line": 3802
+        },
+        {
+          "source_shard_id": "shard-0020",
+          "start_line": 3803,
+          "end_line": 3911
+        },
+        {
+          "source_shard_id": "shard-0020",
+          "start_line": 3912,
+          "end_line": 4000
+        },
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4001,
+          "end_line": 4006
+        },
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4007,
+          "end_line": 4082
+        },
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4083,
+          "end_line": 4154
+        },
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4155,
+          "end_line": 4200
+        },
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4201,
+          "end_line": 4258
+        },
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4259,
+          "end_line": 4337
+        },
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4338,
+          "end_line": 4400
+        },
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4415
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 715,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json"
+    },
+    {
+      "slice_id": "d2-slice-007",
+      "source_group_ids": [
+        "wg-d1-T038-01",
+        "wg-d1-T039-01",
+        "wg-d1-T040-01",
+        "wg-d1-T041-01",
+        "wg-d1-T042-01",
+        "wg-d1-T043-01",
+        "wg-d1-T044-01",
+        "wg-d1-T045-01",
+        "wg-d1-T046-01"
+      ],
+      "source_block_ids": [
         "lblock-000926",
         "lblock-000927",
         "lblock-000928",
@@ -2680,1013 +1553,7 @@
         "lblock-001070",
         "lblock-001071",
         "lblock-001072",
-        "lblock-001073"
-      ],
-      "source_shard_ids": [
-        "shard-0021",
-        "shard-0022",
-        "shard-0023",
-        "shard-0024",
-        "shard-0025"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4153,
-          "end_line": 4153
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4154,
-          "end_line": 4154
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4155,
-          "end_line": 4155
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4156,
-          "end_line": 4160
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4161,
-          "end_line": 4161
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4162,
-          "end_line": 4162
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4163,
-          "end_line": 4178
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4179,
-          "end_line": 4179
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4180,
-          "end_line": 4180
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4181,
-          "end_line": 4192
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4193,
-          "end_line": 4193
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4194,
-          "end_line": 4194
-        },
-        {
-          "source_shard_id": "shard-0021",
-          "start_line": 4195,
-          "end_line": 4200
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4201,
-          "end_line": 4205
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4206,
-          "end_line": 4207
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4208,
-          "end_line": 4208
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4209,
-          "end_line": 4209
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4210,
-          "end_line": 4210
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4211,
-          "end_line": 4224
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4225,
-          "end_line": 4225
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4226,
-          "end_line": 4226
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4227,
-          "end_line": 4237
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4238,
-          "end_line": 4238
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4239,
-          "end_line": 4239
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4240,
-          "end_line": 4249
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4250,
-          "end_line": 4250
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4251,
-          "end_line": 4251
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4252,
-          "end_line": 4257
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4258,
-          "end_line": 4258
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4259,
-          "end_line": 4259
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4260,
-          "end_line": 4267
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4268,
-          "end_line": 4268
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4269,
-          "end_line": 4269
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4270,
-          "end_line": 4276
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4277,
-          "end_line": 4277
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4278,
-          "end_line": 4278
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4279,
-          "end_line": 4281
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4282,
-          "end_line": 4282
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4283,
-          "end_line": 4283
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4284,
-          "end_line": 4292
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4293,
-          "end_line": 4293
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4294,
-          "end_line": 4294
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4295,
-          "end_line": 4297
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4298,
-          "end_line": 4298
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4299,
-          "end_line": 4299
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4300,
-          "end_line": 4300
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4301,
-          "end_line": 4301
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4302,
-          "end_line": 4305
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4306,
-          "end_line": 4306
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4307,
-          "end_line": 4307
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4308,
-          "end_line": 4317
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4318,
-          "end_line": 4318
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4319,
-          "end_line": 4319
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4320,
-          "end_line": 4337
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4338,
-          "end_line": 4338
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4339,
-          "end_line": 4339
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4340,
-          "end_line": 4350
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4351,
-          "end_line": 4351
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4352,
-          "end_line": 4352
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4353,
-          "end_line": 4364
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4365,
-          "end_line": 4365
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4366,
-          "end_line": 4366
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4367,
-          "end_line": 4373
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4374,
-          "end_line": 4374
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4375,
-          "end_line": 4375
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4376,
-          "end_line": 4385
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4386,
-          "end_line": 4386
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4387,
-          "end_line": 4387
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4388,
-          "end_line": 4396
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4397,
-          "end_line": 4397
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4398,
-          "end_line": 4398
-        },
-        {
-          "source_shard_id": "shard-0022",
-          "start_line": 4399,
-          "end_line": 4400
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4401,
-          "end_line": 4404
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4405,
-          "end_line": 4405
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4406,
-          "end_line": 4406
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4407,
-          "end_line": 4409
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4410,
-          "end_line": 4410
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4411,
-          "end_line": 4411
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4412,
-          "end_line": 4415
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4416,
-          "end_line": 4416
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4417,
-          "end_line": 4417
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4418,
-          "end_line": 4420
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4421,
-          "end_line": 4421
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4422,
-          "end_line": 4422
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4423,
-          "end_line": 4423
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4424,
-          "end_line": 4424
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4425,
-          "end_line": 4428
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4429,
-          "end_line": 4429
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4430,
-          "end_line": 4430
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4431,
-          "end_line": 4448
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4449,
-          "end_line": 4449
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4450,
-          "end_line": 4450
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4451,
-          "end_line": 4464
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4465,
-          "end_line": 4465
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4466,
-          "end_line": 4466
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4467,
-          "end_line": 4489
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4490,
-          "end_line": 4490
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4491,
-          "end_line": 4491
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4492,
-          "end_line": 4499
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4500,
-          "end_line": 4500
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4501,
-          "end_line": 4501
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4502,
-          "end_line": 4509
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4510,
-          "end_line": 4510
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4511,
-          "end_line": 4511
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4512,
-          "end_line": 4517
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4518,
-          "end_line": 4518
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4519,
-          "end_line": 4519
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4520,
-          "end_line": 4527
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4528,
-          "end_line": 4528
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4529,
-          "end_line": 4529
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4530,
-          "end_line": 4534
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4535,
-          "end_line": 4535
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4536,
-          "end_line": 4536
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4537,
-          "end_line": 4539
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4540,
-          "end_line": 4540
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4541,
-          "end_line": 4541
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4542,
-          "end_line": 4542
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4543,
-          "end_line": 4543
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4544,
-          "end_line": 4548
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4549,
-          "end_line": 4549
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4550,
-          "end_line": 4550
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4551,
-          "end_line": 4563
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4564,
-          "end_line": 4564
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4565,
-          "end_line": 4565
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4566,
-          "end_line": 4578
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4579,
-          "end_line": 4579
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4580,
-          "end_line": 4580
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4581,
-          "end_line": 4594
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4595,
-          "end_line": 4595
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4596,
-          "end_line": 4596
-        },
-        {
-          "source_shard_id": "shard-0023",
-          "start_line": 4597,
-          "end_line": 4600
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4601,
-          "end_line": 4606
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4607,
-          "end_line": 4607
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4608,
-          "end_line": 4608
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4609,
-          "end_line": 4618
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4619,
-          "end_line": 4619
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4620,
-          "end_line": 4620
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4621,
-          "end_line": 4630
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4631,
-          "end_line": 4631
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4632,
-          "end_line": 4632
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4633,
-          "end_line": 4641
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4642,
-          "end_line": 4642
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4643,
-          "end_line": 4643
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4644,
-          "end_line": 4646
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4647,
-          "end_line": 4647
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4648,
-          "end_line": 4648
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4649,
-          "end_line": 4656
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4657,
-          "end_line": 4657
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4658,
-          "end_line": 4658
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4659,
-          "end_line": 4667
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4668,
-          "end_line": 4668
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4669,
-          "end_line": 4669
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4670,
-          "end_line": 4672
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4673,
-          "end_line": 4673
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4674,
-          "end_line": 4674
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4675,
-          "end_line": 4675
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4676,
-          "end_line": 4676
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4677,
-          "end_line": 4681
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4682,
-          "end_line": 4682
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4683,
-          "end_line": 4683
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4684,
-          "end_line": 4696
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4697,
-          "end_line": 4697
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4698,
-          "end_line": 4698
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4699,
-          "end_line": 4716
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4717,
-          "end_line": 4717
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4718,
-          "end_line": 4718
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4719,
-          "end_line": 4728
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4729,
-          "end_line": 4729
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4730,
-          "end_line": 4730
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4731,
-          "end_line": 4746
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4747,
-          "end_line": 4747
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4748,
-          "end_line": 4748
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4749,
-          "end_line": 4753
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4754,
-          "end_line": 4754
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4755,
-          "end_line": 4755
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4756,
-          "end_line": 4767
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4768,
-          "end_line": 4768
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4769,
-          "end_line": 4769
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4770,
-          "end_line": 4775
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4776,
-          "end_line": 4776
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4777,
-          "end_line": 4777
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4778,
-          "end_line": 4780
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4781,
-          "end_line": 4781
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4782,
-          "end_line": 4782
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4783,
-          "end_line": 4786
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4787,
-          "end_line": 4787
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4788,
-          "end_line": 4788
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4789,
-          "end_line": 4791
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4792,
-          "end_line": 4792
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4793,
-          "end_line": 4793
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4794,
-          "end_line": 4794
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4795,
-          "end_line": 4795
-        },
-        {
-          "source_shard_id": "shard-0024",
-          "start_line": 4796,
-          "end_line": 4800
-        },
-        {
-          "source_shard_id": "shard-0025",
-          "start_line": 4801,
-          "end_line": 4911
-        },
-        {
-          "source_shard_id": "shard-0025",
-          "start_line": 4912,
-          "end_line": 4917
-        }
-      ],
-      "raw_blocks_total": 222,
-      "source_lines_total": 765,
-      "d1_work_groups_in_slice": 14,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json"
-    },
-    {
-      "slice_id": "d2-slice-008",
-      "source_group_ids": [
-        "wg-d1-T007-03",
-        "wg-d1-T007-04",
-        "wg-d1-T007-05",
-        "wg-d1-T007-06",
-        "wg-d1-T007-07",
-        "wg-d1-T007-08",
-        "wg-d1-T007-09",
-        "wg-d1-T007-10",
-        "wg-d1-T007-11",
-        "wg-d1-T007-12"
-      ],
-      "source_block_ids": [
+        "lblock-001073",
         "lblock-001074",
         "lblock-001075",
         "lblock-001076",
@@ -3763,7 +1630,101 @@
         "lblock-001147",
         "lblock-001148",
         "lblock-001149",
-        "lblock-001150",
+        "lblock-001150"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0024",
+        "shard-0025",
+        "shard-0026",
+        "shard-0027"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4416,
+          "end_line": 4511
+        },
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4512,
+          "end_line": 4595
+        },
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4596,
+          "end_line": 4600
+        },
+        {
+          "source_shard_id": "shard-0024",
+          "start_line": 4601,
+          "end_line": 4673
+        },
+        {
+          "source_shard_id": "shard-0024",
+          "start_line": 4674,
+          "end_line": 4775
+        },
+        {
+          "source_shard_id": "shard-0024",
+          "start_line": 4776,
+          "end_line": 4800
+        },
+        {
+          "source_shard_id": "shard-0025",
+          "start_line": 4801,
+          "end_line": 4864
+        },
+        {
+          "source_shard_id": "shard-0025",
+          "start_line": 4865,
+          "end_line": 4941
+        },
+        {
+          "source_shard_id": "shard-0025",
+          "start_line": 4942,
+          "end_line": 5000
+        },
+        {
+          "source_shard_id": "shard-0026",
+          "start_line": 5001,
+          "end_line": 5049
+        },
+        {
+          "source_shard_id": "shard-0026",
+          "start_line": 5050,
+          "end_line": 5128
+        },
+        {
+          "source_shard_id": "shard-0026",
+          "start_line": 5129,
+          "end_line": 5200
+        },
+        {
+          "source_shard_id": "shard-0027",
+          "start_line": 5201,
+          "end_line": 5210
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 795,
+      "d1_work_groups_in_slice": 9,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json"
+    },
+    {
+      "slice_id": "d2-slice-008",
+      "source_group_ids": [
+        "wg-d1-T047-01",
+        "wg-d1-T048-01",
+        "wg-d1-T049-01",
+        "wg-d1-T050-01",
+        "wg-d1-T051-01",
+        "wg-d1-T052-01",
+        "wg-d1-T053-01",
+        "wg-d1-T054-01"
+      ],
+      "source_block_ids": [
         "lblock-001151",
         "lblock-001152",
         "lblock-001153",
@@ -3874,102 +1835,7 @@
         "lblock-001258",
         "lblock-001259",
         "lblock-001260",
-        "lblock-001261"
-      ],
-      "source_shard_ids": [
-        "shard-0025",
-        "shard-0026",
-        "shard-0027",
-        "shard-0028"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0025",
-          "start_line": 4918,
-          "end_line": 5000
-        },
-        {
-          "source_shard_id": "shard-0026",
-          "start_line": 5001,
-          "end_line": 5022
-        },
-        {
-          "source_shard_id": "shard-0026",
-          "start_line": 5023,
-          "end_line": 5076
-        },
-        {
-          "source_shard_id": "shard-0026",
-          "start_line": 5077,
-          "end_line": 5187
-        },
-        {
-          "source_shard_id": "shard-0026",
-          "start_line": 5188,
-          "end_line": 5199
-        },
-        {
-          "source_shard_id": "shard-0026",
-          "start_line": 5200,
-          "end_line": 5200
-        },
-        {
-          "source_shard_id": "shard-0027",
-          "start_line": 5201,
-          "end_line": 5301
-        },
-        {
-          "source_shard_id": "shard-0027",
-          "start_line": 5302,
-          "end_line": 5323
-        },
-        {
-          "source_shard_id": "shard-0027",
-          "start_line": 5324,
-          "end_line": 5400
-        },
-        {
-          "source_shard_id": "shard-0028",
-          "start_line": 5401,
-          "end_line": 5422
-        },
-        {
-          "source_shard_id": "shard-0028",
-          "start_line": 5423,
-          "end_line": 5465
-        },
-        {
-          "source_shard_id": "shard-0028",
-          "start_line": 5466,
-          "end_line": 5566
-        },
-        {
-          "source_shard_id": "shard-0028",
-          "start_line": 5567,
-          "end_line": 5600
-        }
-      ],
-      "raw_blocks_total": 188,
-      "source_lines_total": 683,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json"
-    },
-    {
-      "slice_id": "d2-slice-009",
-      "source_group_ids": [
-        "wg-d1-T008-01",
-        "wg-d1-T008-02",
-        "wg-d1-T008-03",
-        "wg-d1-T008-04",
-        "wg-d1-T008-05",
-        "wg-d1-T008-06",
-        "wg-d1-T008-07",
-        "wg-d1-T008-08",
-        "wg-d1-T008-09",
-        "wg-d1-T008-10"
-      ],
-      "source_block_ids": [
+        "lblock-001261",
         "lblock-001262",
         "lblock-001263",
         "lblock-001264",
@@ -4058,7 +1924,89 @@
         "lblock-001347",
         "lblock-001348",
         "lblock-001349",
-        "lblock-001350",
+        "lblock-001350"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0028",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0027",
+          "start_line": 5211,
+          "end_line": 5311
+        },
+        {
+          "source_shard_id": "shard-0027",
+          "start_line": 5312,
+          "end_line": 5400
+        },
+        {
+          "source_shard_id": "shard-0028",
+          "start_line": 5401,
+          "end_line": 5413
+        },
+        {
+          "source_shard_id": "shard-0028",
+          "start_line": 5414,
+          "end_line": 5475
+        },
+        {
+          "source_shard_id": "shard-0028",
+          "start_line": 5476,
+          "end_line": 5584
+        },
+        {
+          "source_shard_id": "shard-0028",
+          "start_line": 5585,
+          "end_line": 5600
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5601,
+          "end_line": 5695
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5696,
+          "end_line": 5761
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5762,
+          "end_line": 5800
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5801,
+          "end_line": 5868
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5869,
+          "end_line": 5955
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 745,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json"
+    },
+    {
+      "slice_id": "d2-slice-009",
+      "source_group_ids": [
+        "wg-d1-T055-01",
+        "wg-d1-T056-01",
+        "wg-d1-T057-01",
+        "wg-d1-T058-01",
+        "wg-d1-T059-01",
+        "wg-d1-T060-01",
+        "wg-d1-T061-01"
+      ],
+      "source_block_ids": [
         "lblock-001351",
         "lblock-001352",
         "lblock-001353",
@@ -4176,101 +2124,7 @@
         "lblock-001465",
         "lblock-001466",
         "lblock-001467",
-        "lblock-001468"
-      ],
-      "source_shard_ids": [
-        "shard-0029",
-        "shard-0030",
-        "shard-0031",
-        "shard-0032"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0029",
-          "start_line": 5601,
-          "end_line": 5718
-        },
-        {
-          "source_shard_id": "shard-0029",
-          "start_line": 5719,
-          "end_line": 5759
-        },
-        {
-          "source_shard_id": "shard-0029",
-          "start_line": 5760,
-          "end_line": 5800
-        },
-        {
-          "source_shard_id": "shard-0030",
-          "start_line": 5801,
-          "end_line": 5857
-        },
-        {
-          "source_shard_id": "shard-0030",
-          "start_line": 5858,
-          "end_line": 5911
-        },
-        {
-          "source_shard_id": "shard-0030",
-          "start_line": 5912,
-          "end_line": 6000
-        },
-        {
-          "source_shard_id": "shard-0031",
-          "start_line": 6001,
-          "end_line": 6039
-        },
-        {
-          "source_shard_id": "shard-0031",
-          "start_line": 6040,
-          "end_line": 6101
-        },
-        {
-          "source_shard_id": "shard-0031",
-          "start_line": 6102,
-          "end_line": 6183
-        },
-        {
-          "source_shard_id": "shard-0031",
-          "start_line": 6184,
-          "end_line": 6200
-        },
-        {
-          "source_shard_id": "shard-0032",
-          "start_line": 6201,
-          "end_line": 6248
-        },
-        {
-          "source_shard_id": "shard-0032",
-          "start_line": 6249,
-          "end_line": 6324
-        },
-        {
-          "source_shard_id": "shard-0032",
-          "start_line": 6325,
-          "end_line": 6400
-        }
-      ],
-      "raw_blocks_total": 207,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json"
-    },
-    {
-      "slice_id": "d2-slice-010",
-      "source_group_ids": [
-        "wg-d1-T009-01",
-        "wg-d1-T009-02",
-        "wg-d1-T009-03",
-        "wg-d1-T009-04",
-        "wg-d1-T009-05",
-        "wg-d1-T009-06",
-        "wg-d1-T009-07",
-        "wg-d1-T009-08",
-        "wg-d1-T009-09"
-      ],
-      "source_block_ids": [
+        "lblock-001468",
         "lblock-001469",
         "lblock-001470",
         "lblock-001471",
@@ -4327,7 +2181,92 @@
         "lblock-001522",
         "lblock-001523",
         "lblock-001524",
-        "lblock-001525",
+        "lblock-001525"
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0034"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5956,
+          "end_line": 6000
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6001,
+          "end_line": 6085
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6086,
+          "end_line": 6175
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6176,
+          "end_line": 6200
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6201,
+          "end_line": 6248
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6249,
+          "end_line": 6337
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6338,
+          "end_line": 6400
+        },
+        {
+          "source_shard_id": "shard-0033",
+          "start_line": 6401,
+          "end_line": 6440
+        },
+        {
+          "source_shard_id": "shard-0033",
+          "start_line": 6441,
+          "end_line": 6555
+        },
+        {
+          "source_shard_id": "shard-0033",
+          "start_line": 6556,
+          "end_line": 6600
+        },
+        {
+          "source_shard_id": "shard-0034",
+          "start_line": 6601,
+          "end_line": 6677
+        }
+      ],
+      "raw_blocks_total": 175,
+      "source_lines_total": 722,
+      "d1_work_groups_in_slice": 7,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json"
+    },
+    {
+      "slice_id": "d2-slice-010",
+      "source_group_ids": [
+        "wg-d1-T062-01",
+        "wg-d1-T063-01",
+        "wg-d1-T064-01",
+        "wg-d1-T065-01",
+        "wg-d1-T066-01",
+        "wg-d1-T067-01",
+        "wg-d1-T068-01",
+        "wg-d1-T069-01",
+        "wg-d1-T070-01"
+      ],
+      "source_block_ids": [
         "lblock-001526",
         "lblock-001527",
         "lblock-001528",
@@ -4485,98 +2424,7 @@
         "lblock-001680",
         "lblock-001681",
         "lblock-001682",
-        "lblock-001683"
-      ],
-      "source_shard_ids": [
-        "shard-0033",
-        "shard-0034",
-        "shard-0035",
-        "shard-0036"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0033",
-          "start_line": 6401,
-          "end_line": 6503
-        },
-        {
-          "source_shard_id": "shard-0033",
-          "start_line": 6504,
-          "end_line": 6600
-        },
-        {
-          "source_shard_id": "shard-0034",
-          "start_line": 6601,
-          "end_line": 6630
-        },
-        {
-          "source_shard_id": "shard-0034",
-          "start_line": 6631,
-          "end_line": 6730
-        },
-        {
-          "source_shard_id": "shard-0034",
-          "start_line": 6731,
-          "end_line": 6800
-        },
-        {
-          "source_shard_id": "shard-0035",
-          "start_line": 6801,
-          "end_line": 6811
-        },
-        {
-          "source_shard_id": "shard-0035",
-          "start_line": 6812,
-          "end_line": 6886
-        },
-        {
-          "source_shard_id": "shard-0035",
-          "start_line": 6887,
-          "end_line": 6978
-        },
-        {
-          "source_shard_id": "shard-0035",
-          "start_line": 6979,
-          "end_line": 7000
-        },
-        {
-          "source_shard_id": "shard-0036",
-          "start_line": 7001,
-          "end_line": 7059
-        },
-        {
-          "source_shard_id": "shard-0036",
-          "start_line": 7060,
-          "end_line": 7107
-        },
-        {
-          "source_shard_id": "shard-0036",
-          "start_line": 7108,
-          "end_line": 7200
-        }
-      ],
-      "raw_blocks_total": 215,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 9,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json"
-    },
-    {
-      "slice_id": "d2-slice-011",
-      "source_group_ids": [
-        "wg-d1-T010-01",
-        "wg-d1-T010-02",
-        "wg-d1-T010-03",
-        "wg-d1-T010-04",
-        "wg-d1-T010-05",
-        "wg-d1-T010-06",
-        "wg-d1-T010-07",
-        "wg-d1-T010-08",
-        "wg-d1-T010-09",
-        "wg-d1-T010-10",
-        "wg-d1-T010-11"
-      ],
-      "source_block_ids": [
+        "lblock-001683",
         "lblock-001684",
         "lblock-001685",
         "lblock-001686",
@@ -4643,7 +2491,101 @@
         "lblock-001747",
         "lblock-001748",
         "lblock-001749",
-        "lblock-001750",
+        "lblock-001750"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0037",
+        "shard-0038"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0034",
+          "start_line": 6678,
+          "end_line": 6762
+        },
+        {
+          "source_shard_id": "shard-0034",
+          "start_line": 6763,
+          "end_line": 6800
+        },
+        {
+          "source_shard_id": "shard-0035",
+          "start_line": 6801,
+          "end_line": 6853
+        },
+        {
+          "source_shard_id": "shard-0035",
+          "start_line": 6854,
+          "end_line": 6935
+        },
+        {
+          "source_shard_id": "shard-0035",
+          "start_line": 6936,
+          "end_line": 7000
+        },
+        {
+          "source_shard_id": "shard-0036",
+          "start_line": 7001,
+          "end_line": 7012
+        },
+        {
+          "source_shard_id": "shard-0036",
+          "start_line": 7013,
+          "end_line": 7086
+        },
+        {
+          "source_shard_id": "shard-0036",
+          "start_line": 7087,
+          "end_line": 7167
+        },
+        {
+          "source_shard_id": "shard-0036",
+          "start_line": 7168,
+          "end_line": 7200
+        },
+        {
+          "source_shard_id": "shard-0037",
+          "start_line": 7201,
+          "end_line": 7286
+        },
+        {
+          "source_shard_id": "shard-0037",
+          "start_line": 7287,
+          "end_line": 7366
+        },
+        {
+          "source_shard_id": "shard-0037",
+          "start_line": 7367,
+          "end_line": 7400
+        },
+        {
+          "source_shard_id": "shard-0038",
+          "start_line": 7401,
+          "end_line": 7456
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 779,
+      "d1_work_groups_in_slice": 9,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json"
+    },
+    {
+      "slice_id": "d2-slice-011",
+      "source_group_ids": [
+        "wg-d1-T071-01",
+        "wg-d1-T072-01",
+        "wg-d1-T073-01",
+        "wg-d1-T074-01",
+        "wg-d1-T075-01",
+        "wg-d1-T076-01",
+        "wg-d1-T077-01",
+        "wg-d1-T078-01"
+      ],
+      "source_block_ids": [
         "lblock-001751",
         "lblock-001752",
         "lblock-001753",
@@ -4788,107 +2730,7 @@
         "lblock-001892",
         "lblock-001893",
         "lblock-001894",
-        "lblock-001895"
-      ],
-      "source_shard_ids": [
-        "shard-0037",
-        "shard-0038",
-        "shard-0039",
-        "shard-0040"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0037",
-          "start_line": 7201,
-          "end_line": 7286
-        },
-        {
-          "source_shard_id": "shard-0037",
-          "start_line": 7287,
-          "end_line": 7354
-        },
-        {
-          "source_shard_id": "shard-0037",
-          "start_line": 7355,
-          "end_line": 7400
-        },
-        {
-          "source_shard_id": "shard-0038",
-          "start_line": 7401,
-          "end_line": 7425
-        },
-        {
-          "source_shard_id": "shard-0038",
-          "start_line": 7426,
-          "end_line": 7533
-        },
-        {
-          "source_shard_id": "shard-0038",
-          "start_line": 7534,
-          "end_line": 7600
-        },
-        {
-          "source_shard_id": "shard-0039",
-          "start_line": 7601,
-          "end_line": 7625
-        },
-        {
-          "source_shard_id": "shard-0039",
-          "start_line": 7626,
-          "end_line": 7693
-        },
-        {
-          "source_shard_id": "shard-0039",
-          "start_line": 7694,
-          "end_line": 7760
-        },
-        {
-          "source_shard_id": "shard-0039",
-          "start_line": 7761,
-          "end_line": 7800
-        },
-        {
-          "source_shard_id": "shard-0040",
-          "start_line": 7801,
-          "end_line": 7836
-        },
-        {
-          "source_shard_id": "shard-0040",
-          "start_line": 7837,
-          "end_line": 7926
-        },
-        {
-          "source_shard_id": "shard-0040",
-          "start_line": 7927,
-          "end_line": 7987
-        },
-        {
-          "source_shard_id": "shard-0040",
-          "start_line": 7988,
-          "end_line": 8000
-        }
-      ],
-      "raw_blocks_total": 212,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 11,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json"
-    },
-    {
-      "slice_id": "d2-slice-012",
-      "source_group_ids": [
-        "wg-d1-T011-01",
-        "wg-d1-T011-02",
-        "wg-d1-T011-03",
-        "wg-d1-T011-04",
-        "wg-d1-T011-05",
-        "wg-d1-T011-06",
-        "wg-d1-T011-07",
-        "wg-d1-T011-08",
-        "wg-d1-T011-09",
-        "wg-d1-T011-10"
-      ],
-      "source_block_ids": [
+        "lblock-001895",
         "lblock-001896",
         "lblock-001897",
         "lblock-001898",
@@ -4943,7 +2785,96 @@
         "lblock-001947",
         "lblock-001948",
         "lblock-001949",
-        "lblock-001950",
+        "lblock-001950"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0038",
+          "start_line": 7457,
+          "end_line": 7586
+        },
+        {
+          "source_shard_id": "shard-0038",
+          "start_line": 7587,
+          "end_line": 7600
+        },
+        {
+          "source_shard_id": "shard-0039",
+          "start_line": 7601,
+          "end_line": 7689
+        },
+        {
+          "source_shard_id": "shard-0039",
+          "start_line": 7690,
+          "end_line": 7763
+        },
+        {
+          "source_shard_id": "shard-0039",
+          "start_line": 7764,
+          "end_line": 7800
+        },
+        {
+          "source_shard_id": "shard-0040",
+          "start_line": 7801,
+          "end_line": 7869
+        },
+        {
+          "source_shard_id": "shard-0040",
+          "start_line": 7870,
+          "end_line": 7957
+        },
+        {
+          "source_shard_id": "shard-0040",
+          "start_line": 7958,
+          "end_line": 8000
+        },
+        {
+          "source_shard_id": "shard-0041",
+          "start_line": 8001,
+          "end_line": 8039
+        },
+        {
+          "source_shard_id": "shard-0041",
+          "start_line": 8040,
+          "end_line": 8139
+        },
+        {
+          "source_shard_id": "shard-0041",
+          "start_line": 8140,
+          "end_line": 8200
+        },
+        {
+          "source_shard_id": "shard-0042",
+          "start_line": 8201,
+          "end_line": 8246
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 790,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json"
+    },
+    {
+      "slice_id": "d2-slice-012",
+      "source_group_ids": [
+        "wg-d1-T079-01",
+        "wg-d1-T080-01",
+        "wg-d1-T081-01",
+        "wg-d1-T082-01",
+        "wg-d1-T083-01",
+        "wg-d1-T084-01",
+        "wg-d1-T085-01",
+        "wg-d1-T086-01"
+      ],
+      "source_block_ids": [
         "lblock-001951",
         "lblock-001952",
         "lblock-001953",
@@ -5108,88 +3039,7 @@
         "lblock-002112",
         "lblock-002113",
         "lblock-002114",
-        "lblock-002115"
-      ],
-      "source_shard_ids": [
-        "shard-0041",
-        "shard-0042",
-        "shard-0043",
-        "shard-0044"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0041",
-          "start_line": 8001,
-          "end_line": 8110
-        },
-        {
-          "source_shard_id": "shard-0041",
-          "start_line": 8111,
-          "end_line": 8200
-        },
-        {
-          "source_shard_id": "shard-0042",
-          "start_line": 8201,
-          "end_line": 8289
-        },
-        {
-          "source_shard_id": "shard-0042",
-          "start_line": 8290,
-          "end_line": 8364
-        },
-        {
-          "source_shard_id": "shard-0042",
-          "start_line": 8365,
-          "end_line": 8400
-        },
-        {
-          "source_shard_id": "shard-0043",
-          "start_line": 8401,
-          "end_line": 8473
-        },
-        {
-          "source_shard_id": "shard-0043",
-          "start_line": 8474,
-          "end_line": 8586
-        },
-        {
-          "source_shard_id": "shard-0043",
-          "start_line": 8587,
-          "end_line": 8600
-        },
-        {
-          "source_shard_id": "shard-0044",
-          "start_line": 8601,
-          "end_line": 8696
-        },
-        {
-          "source_shard_id": "shard-0044",
-          "start_line": 8697,
-          "end_line": 8800
-        }
-      ],
-      "raw_blocks_total": 220,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json"
-    },
-    {
-      "slice_id": "d2-slice-013",
-      "source_group_ids": [
-        "wg-d1-T012-01",
-        "wg-d1-T012-02",
-        "wg-d1-T012-03",
-        "wg-d1-T012-04",
-        "wg-d1-T012-05",
-        "wg-d1-T012-06",
-        "wg-d1-T012-07",
-        "wg-d1-T012-08",
-        "wg-d1-T012-09",
-        "wg-d1-T012-10",
-        "wg-d1-T012-11"
-      ],
-      "source_block_ids": [
+        "lblock-002115",
         "lblock-002116",
         "lblock-002117",
         "lblock-002118",
@@ -5224,7 +3074,90 @@
         "lblock-002147",
         "lblock-002148",
         "lblock-002149",
-        "lblock-002150",
+        "lblock-002150"
+      ],
+      "source_shard_ids": [
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0042",
+          "start_line": 8247,
+          "end_line": 8316
+        },
+        {
+          "source_shard_id": "shard-0042",
+          "start_line": 8317,
+          "end_line": 8386
+        },
+        {
+          "source_shard_id": "shard-0042",
+          "start_line": 8387,
+          "end_line": 8400
+        },
+        {
+          "source_shard_id": "shard-0043",
+          "start_line": 8401,
+          "end_line": 8461
+        },
+        {
+          "source_shard_id": "shard-0043",
+          "start_line": 8462,
+          "end_line": 8581
+        },
+        {
+          "source_shard_id": "shard-0043",
+          "start_line": 8582,
+          "end_line": 8600
+        },
+        {
+          "source_shard_id": "shard-0044",
+          "start_line": 8601,
+          "end_line": 8654
+        },
+        {
+          "source_shard_id": "shard-0044",
+          "start_line": 8655,
+          "end_line": 8776
+        },
+        {
+          "source_shard_id": "shard-0044",
+          "start_line": 8777,
+          "end_line": 8800
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8801,
+          "end_line": 8851
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8852,
+          "end_line": 8945
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 699,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json"
+    },
+    {
+      "slice_id": "d2-slice-013",
+      "source_group_ids": [
+        "wg-d1-T087-01",
+        "wg-d1-T088-01",
+        "wg-d1-T089-01",
+        "wg-d1-T090-01",
+        "wg-d1-T091-01",
+        "wg-d1-T092-01",
+        "wg-d1-T093-01",
+        "wg-d1-T094-01"
+      ],
+      "source_block_ids": [
         "lblock-002151",
         "lblock-002152",
         "lblock-002153",
@@ -5392,107 +3325,7 @@
         "lblock-002315",
         "lblock-002316",
         "lblock-002317",
-        "lblock-002318"
-      ],
-      "source_shard_ids": [
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0048"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0045",
-          "start_line": 8801,
-          "end_line": 8850
-        },
-        {
-          "source_shard_id": "shard-0045",
-          "start_line": 8851,
-          "end_line": 8928
-        },
-        {
-          "source_shard_id": "shard-0045",
-          "start_line": 8929,
-          "end_line": 9000
-        },
-        {
-          "source_shard_id": "shard-0046",
-          "start_line": 9001,
-          "end_line": 9006
-        },
-        {
-          "source_shard_id": "shard-0046",
-          "start_line": 9007,
-          "end_line": 9077
-        },
-        {
-          "source_shard_id": "shard-0046",
-          "start_line": 9078,
-          "end_line": 9162
-        },
-        {
-          "source_shard_id": "shard-0046",
-          "start_line": 9163,
-          "end_line": 9200
-        },
-        {
-          "source_shard_id": "shard-0047",
-          "start_line": 9201,
-          "end_line": 9247
-        },
-        {
-          "source_shard_id": "shard-0047",
-          "start_line": 9248,
-          "end_line": 9322
-        },
-        {
-          "source_shard_id": "shard-0047",
-          "start_line": 9323,
-          "end_line": 9400
-        },
-        {
-          "source_shard_id": "shard-0048",
-          "start_line": 9401,
-          "end_line": 9406
-        },
-        {
-          "source_shard_id": "shard-0048",
-          "start_line": 9407,
-          "end_line": 9484
-        },
-        {
-          "source_shard_id": "shard-0048",
-          "start_line": 9485,
-          "end_line": 9586
-        },
-        {
-          "source_shard_id": "shard-0048",
-          "start_line": 9587,
-          "end_line": 9600
-        }
-      ],
-      "raw_blocks_total": 203,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 11,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json"
-    },
-    {
-      "slice_id": "d2-slice-014",
-      "source_group_ids": [
-        "wg-d1-T013-01",
-        "wg-d1-T013-02",
-        "wg-d1-T013-03",
-        "wg-d1-T013-04",
-        "wg-d1-T013-05",
-        "wg-d1-T013-06",
-        "wg-d1-T013-07",
-        "wg-d1-T013-08",
-        "wg-d1-T013-09",
-        "wg-d1-T013-10"
-      ],
-      "source_block_ids": [
+        "lblock-002318",
         "lblock-002319",
         "lblock-002320",
         "lblock-002321",
@@ -5524,7 +3357,97 @@
         "lblock-002347",
         "lblock-002348",
         "lblock-002349",
-        "lblock-002350",
+        "lblock-002350"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048",
+        "shard-0049"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8946,
+          "end_line": 9000
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9001,
+          "end_line": 9056
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9057,
+          "end_line": 9156
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9157,
+          "end_line": 9200
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9201,
+          "end_line": 9247
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9248,
+          "end_line": 9331
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9332,
+          "end_line": 9400
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9401,
+          "end_line": 9451
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9452,
+          "end_line": 9565
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9566,
+          "end_line": 9600
+        },
+        {
+          "source_shard_id": "shard-0049",
+          "start_line": 9601,
+          "end_line": 9654
+        },
+        {
+          "source_shard_id": "shard-0049",
+          "start_line": 9655,
+          "end_line": 9731
+        }
+      ],
+      "raw_blocks_total": 200,
+      "source_lines_total": 786,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json"
+    },
+    {
+      "slice_id": "d2-slice-014",
+      "source_group_ids": [
+        "wg-d1-T095-01",
+        "wg-d1-T096-01",
+        "wg-d1-T097-01",
+        "wg-d1-T098-01",
+        "wg-d1-T099-01",
+        "wg-d1-T100-01",
+        "wg-d1-T101-01",
+        "wg-d1-T102-01",
+        "wg-d1-T103-01"
+      ],
+      "source_block_ids": [
         "lblock-002351",
         "lblock-002352",
         "lblock-002353",
@@ -5719,103 +3642,7 @@
         "lblock-002542",
         "lblock-002543",
         "lblock-002544",
-        "lblock-002545"
-      ],
-      "source_shard_ids": [
-        "shard-0049",
-        "shard-0050",
-        "shard-0051",
-        "shard-0052"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0049",
-          "start_line": 9601,
-          "end_line": 9690
-        },
-        {
-          "source_shard_id": "shard-0049",
-          "start_line": 9691,
-          "end_line": 9758
-        },
-        {
-          "source_shard_id": "shard-0049",
-          "start_line": 9759,
-          "end_line": 9800
-        },
-        {
-          "source_shard_id": "shard-0050",
-          "start_line": 9801,
-          "end_line": 9852
-        },
-        {
-          "source_shard_id": "shard-0050",
-          "start_line": 9853,
-          "end_line": 9962
-        },
-        {
-          "source_shard_id": "shard-0050",
-          "start_line": 9963,
-          "end_line": 10000
-        },
-        {
-          "source_shard_id": "shard-0051",
-          "start_line": 10001,
-          "end_line": 10030
-        },
-        {
-          "source_shard_id": "shard-0051",
-          "start_line": 10031,
-          "end_line": 10109
-        },
-        {
-          "source_shard_id": "shard-0051",
-          "start_line": 10110,
-          "end_line": 10183
-        },
-        {
-          "source_shard_id": "shard-0051",
-          "start_line": 10184,
-          "end_line": 10200
-        },
-        {
-          "source_shard_id": "shard-0052",
-          "start_line": 10201,
-          "end_line": 10255
-        },
-        {
-          "source_shard_id": "shard-0052",
-          "start_line": 10256,
-          "end_line": 10391
-        },
-        {
-          "source_shard_id": "shard-0052",
-          "start_line": 10392,
-          "end_line": 10400
-        }
-      ],
-      "raw_blocks_total": 227,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json"
-    },
-    {
-      "slice_id": "d2-slice-015",
-      "source_group_ids": [
-        "wg-d1-T014-01",
-        "wg-d1-T014-02",
-        "wg-d1-T014-03",
-        "wg-d1-T014-04",
-        "wg-d1-T014-05",
-        "wg-d1-T014-06",
-        "wg-d1-T014-07",
-        "wg-d1-T014-08",
-        "wg-d1-T014-09",
-        "wg-d1-T014-10",
-        "wg-d1-T014-11"
-      ],
-      "source_block_ids": [
+        "lblock-002545",
         "lblock-002546",
         "lblock-002547",
         "lblock-002548",
@@ -5845,7 +3672,102 @@
         "lblock-002572",
         "lblock-002573",
         "lblock-002574",
-        "lblock-002575",
+        "lblock-002575"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052",
+        "shard-0053"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0049",
+          "start_line": 9732,
+          "end_line": 9800
+        },
+        {
+          "source_shard_id": "shard-0050",
+          "start_line": 9801,
+          "end_line": 9815
+        },
+        {
+          "source_shard_id": "shard-0050",
+          "start_line": 9816,
+          "end_line": 9925
+        },
+        {
+          "source_shard_id": "shard-0050",
+          "start_line": 9926,
+          "end_line": 10000
+        },
+        {
+          "source_shard_id": "shard-0051",
+          "start_line": 10001,
+          "end_line": 10002
+        },
+        {
+          "source_shard_id": "shard-0051",
+          "start_line": 10003,
+          "end_line": 10063
+        },
+        {
+          "source_shard_id": "shard-0051",
+          "start_line": 10064,
+          "end_line": 10146
+        },
+        {
+          "source_shard_id": "shard-0051",
+          "start_line": 10147,
+          "end_line": 10200
+        },
+        {
+          "source_shard_id": "shard-0052",
+          "start_line": 10201,
+          "end_line": 10231
+        },
+        {
+          "source_shard_id": "shard-0052",
+          "start_line": 10232,
+          "end_line": 10328
+        },
+        {
+          "source_shard_id": "shard-0052",
+          "start_line": 10329,
+          "end_line": 10400
+        },
+        {
+          "source_shard_id": "shard-0053",
+          "start_line": 10401,
+          "end_line": 10431
+        },
+        {
+          "source_shard_id": "shard-0053",
+          "start_line": 10432,
+          "end_line": 10503
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 772,
+      "d1_work_groups_in_slice": 9,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json"
+    },
+    {
+      "slice_id": "d2-slice-015",
+      "source_group_ids": [
+        "wg-d1-T104-01",
+        "wg-d1-T105-01",
+        "wg-d1-T106-01",
+        "wg-d1-T107-01",
+        "wg-d1-T108-01",
+        "wg-d1-T109-01",
+        "wg-d1-T110-01",
+        "wg-d1-T111-01",
+        "wg-d1-T112-01"
+      ],
+      "source_block_ids": [
         "lblock-002576",
         "lblock-002577",
         "lblock-002578",
@@ -6055,107 +3977,7 @@
         "lblock-002782",
         "lblock-002783",
         "lblock-002784",
-        "lblock-002785"
-      ],
-      "source_shard_ids": [
-        "shard-0053",
-        "shard-0054",
-        "shard-0055",
-        "shard-0056"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0053",
-          "start_line": 10401,
-          "end_line": 10480
-        },
-        {
-          "source_shard_id": "shard-0053",
-          "start_line": 10481,
-          "end_line": 10533
-        },
-        {
-          "source_shard_id": "shard-0053",
-          "start_line": 10534,
-          "end_line": 10600
-        },
-        {
-          "source_shard_id": "shard-0054",
-          "start_line": 10601,
-          "end_line": 10618
-        },
-        {
-          "source_shard_id": "shard-0054",
-          "start_line": 10619,
-          "end_line": 10673
-        },
-        {
-          "source_shard_id": "shard-0054",
-          "start_line": 10674,
-          "end_line": 10752
-        },
-        {
-          "source_shard_id": "shard-0054",
-          "start_line": 10753,
-          "end_line": 10800
-        },
-        {
-          "source_shard_id": "shard-0055",
-          "start_line": 10801,
-          "end_line": 10813
-        },
-        {
-          "source_shard_id": "shard-0055",
-          "start_line": 10814,
-          "end_line": 10869
-        },
-        {
-          "source_shard_id": "shard-0055",
-          "start_line": 10870,
-          "end_line": 10955
-        },
-        {
-          "source_shard_id": "shard-0055",
-          "start_line": 10956,
-          "end_line": 11000
-        },
-        {
-          "source_shard_id": "shard-0056",
-          "start_line": 11001,
-          "end_line": 11080
-        },
-        {
-          "source_shard_id": "shard-0056",
-          "start_line": 11081,
-          "end_line": 11193
-        },
-        {
-          "source_shard_id": "shard-0056",
-          "start_line": 11194,
-          "end_line": 11200
-        }
-      ],
-      "raw_blocks_total": 240,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 11,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json"
-    },
-    {
-      "slice_id": "d2-slice-016",
-      "source_group_ids": [
-        "wg-d1-T015-01",
-        "wg-d1-T015-02",
-        "wg-d1-T015-03",
-        "wg-d1-T015-04",
-        "wg-d1-T015-05",
-        "wg-d1-T015-06",
-        "wg-d1-T015-07",
-        "wg-d1-T015-08",
-        "wg-d1-T015-09",
-        "wg-d1-T015-10"
-      ],
-      "source_block_ids": [
+        "lblock-002785",
         "lblock-002786",
         "lblock-002787",
         "lblock-002788",
@@ -6170,7 +3992,103 @@
         "lblock-002797",
         "lblock-002798",
         "lblock-002799",
-        "lblock-002800",
+        "lblock-002800"
+      ],
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0053",
+          "start_line": 10504,
+          "end_line": 10562
+        },
+        {
+          "source_shard_id": "shard-0053",
+          "start_line": 10563,
+          "end_line": 10600
+        },
+        {
+          "source_shard_id": "shard-0054",
+          "start_line": 10601,
+          "end_line": 10655
+        },
+        {
+          "source_shard_id": "shard-0054",
+          "start_line": 10656,
+          "end_line": 10728
+        },
+        {
+          "source_shard_id": "shard-0054",
+          "start_line": 10729,
+          "end_line": 10792
+        },
+        {
+          "source_shard_id": "shard-0054",
+          "start_line": 10793,
+          "end_line": 10800
+        },
+        {
+          "source_shard_id": "shard-0055",
+          "start_line": 10801,
+          "end_line": 10859
+        },
+        {
+          "source_shard_id": "shard-0055",
+          "start_line": 10860,
+          "end_line": 10942
+        },
+        {
+          "source_shard_id": "shard-0055",
+          "start_line": 10943,
+          "end_line": 11000
+        },
+        {
+          "source_shard_id": "shard-0056",
+          "start_line": 11001,
+          "end_line": 11063
+        },
+        {
+          "source_shard_id": "shard-0056",
+          "start_line": 11064,
+          "end_line": 11186
+        },
+        {
+          "source_shard_id": "shard-0056",
+          "start_line": 11187,
+          "end_line": 11200
+        },
+        {
+          "source_shard_id": "shard-0057",
+          "start_line": 11201,
+          "end_line": 11252
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 749,
+      "d1_work_groups_in_slice": 9,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json"
+    },
+    {
+      "slice_id": "d2-slice-016",
+      "source_group_ids": [
+        "wg-d1-T113-01",
+        "wg-d1-T114-01",
+        "wg-d1-T115-01",
+        "wg-d1-T116-01",
+        "wg-d1-T117-01",
+        "wg-d1-T118-01",
+        "wg-d1-T119-01",
+        "wg-d1-T120-01",
+        "wg-d1-T121-01",
+        "wg-d1-T122-01"
+      ],
+      "source_block_ids": [
         "lblock-002801",
         "lblock-002802",
         "lblock-002803",
@@ -6405,97 +4323,7 @@
         "lblock-003032",
         "lblock-003033",
         "lblock-003034",
-        "lblock-003035"
-      ],
-      "source_shard_ids": [
-        "shard-0057",
-        "shard-0058",
-        "shard-0059",
-        "shard-0060"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0057",
-          "start_line": 11201,
-          "end_line": 11279
-        },
-        {
-          "source_shard_id": "shard-0057",
-          "start_line": 11280,
-          "end_line": 11352
-        },
-        {
-          "source_shard_id": "shard-0057",
-          "start_line": 11353,
-          "end_line": 11400
-        },
-        {
-          "source_shard_id": "shard-0058",
-          "start_line": 11401,
-          "end_line": 11416
-        },
-        {
-          "source_shard_id": "shard-0058",
-          "start_line": 11417,
-          "end_line": 11483
-        },
-        {
-          "source_shard_id": "shard-0058",
-          "start_line": 11484,
-          "end_line": 11600
-        },
-        {
-          "source_shard_id": "shard-0059",
-          "start_line": 11601,
-          "end_line": 11668
-        },
-        {
-          "source_shard_id": "shard-0059",
-          "start_line": 11669,
-          "end_line": 11747
-        },
-        {
-          "source_shard_id": "shard-0059",
-          "start_line": 11748,
-          "end_line": 11800
-        },
-        {
-          "source_shard_id": "shard-0060",
-          "start_line": 11801,
-          "end_line": 11806
-        },
-        {
-          "source_shard_id": "shard-0060",
-          "start_line": 11807,
-          "end_line": 11885
-        },
-        {
-          "source_shard_id": "shard-0060",
-          "start_line": 11886,
-          "end_line": 11976
-        }
-      ],
-      "raw_blocks_total": 250,
-      "source_lines_total": 776,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-016.json"
-    },
-    {
-      "slice_id": "d2-slice-017",
-      "source_group_ids": [
-        "wg-d1-T016-01",
-        "wg-d1-T016-02",
-        "wg-d1-T016-03",
-        "wg-d1-T016-04",
-        "wg-d1-T016-05",
-        "wg-d1-T016-06",
-        "wg-d1-T016-07",
-        "wg-d1-T016-08",
-        "wg-d1-T016-09",
-        "wg-d1-T016-10"
-      ],
-      "source_block_ids": [
+        "lblock-003035",
         "lblock-003036",
         "lblock-003037",
         "lblock-003038",
@@ -6510,7 +4338,108 @@
         "lblock-003047",
         "lblock-003048",
         "lblock-003049",
-        "lblock-003050",
+        "lblock-003050"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0057",
+          "start_line": 11253,
+          "end_line": 11336
+        },
+        {
+          "source_shard_id": "shard-0057",
+          "start_line": 11337,
+          "end_line": 11400
+        },
+        {
+          "source_shard_id": "shard-0058",
+          "start_line": 11401,
+          "end_line": 11402
+        },
+        {
+          "source_shard_id": "shard-0058",
+          "start_line": 11403,
+          "end_line": 11474
+        },
+        {
+          "source_shard_id": "shard-0058",
+          "start_line": 11475,
+          "end_line": 11538
+        },
+        {
+          "source_shard_id": "shard-0058",
+          "start_line": 11539,
+          "end_line": 11600
+        },
+        {
+          "source_shard_id": "shard-0059",
+          "start_line": 11601,
+          "end_line": 11651
+        },
+        {
+          "source_shard_id": "shard-0059",
+          "start_line": 11652,
+          "end_line": 11732
+        },
+        {
+          "source_shard_id": "shard-0059",
+          "start_line": 11733,
+          "end_line": 11799
+        },
+        {
+          "source_shard_id": "shard-0059",
+          "start_line": 11800,
+          "end_line": 11800
+        },
+        {
+          "source_shard_id": "shard-0060",
+          "start_line": 11801,
+          "end_line": 11866
+        },
+        {
+          "source_shard_id": "shard-0060",
+          "start_line": 11867,
+          "end_line": 11951
+        },
+        {
+          "source_shard_id": "shard-0060",
+          "start_line": 11952,
+          "end_line": 12000
+        },
+        {
+          "source_shard_id": "shard-0061",
+          "start_line": 12001,
+          "end_line": 12040
+        }
+      ],
+      "raw_blocks_total": 250,
+      "source_lines_total": 788,
+      "d1_work_groups_in_slice": 10,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-016.json"
+    },
+    {
+      "slice_id": "d2-slice-017",
+      "source_group_ids": [
+        "wg-d1-T123-01",
+        "wg-d1-T124-01",
+        "wg-d1-T125-01",
+        "wg-d1-T126-01",
+        "wg-d1-T127-01",
+        "wg-d1-T128-01",
+        "wg-d1-T129-01",
+        "wg-d1-T130-01",
+        "wg-d1-T131-01",
+        "wg-d1-T132-01"
+      ],
+      "source_block_ids": [
         "lblock-003051",
         "lblock-003052",
         "lblock-003053",
@@ -6745,108 +4674,7 @@
         "lblock-003282",
         "lblock-003283",
         "lblock-003284",
-        "lblock-003285"
-      ],
-      "source_shard_ids": [
-        "shard-0060",
-        "shard-0061",
-        "shard-0062",
-        "shard-0063",
-        "shard-0064"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0060",
-          "start_line": 11977,
-          "end_line": 12000
-        },
-        {
-          "source_shard_id": "shard-0061",
-          "start_line": 12001,
-          "end_line": 12048
-        },
-        {
-          "source_shard_id": "shard-0061",
-          "start_line": 12049,
-          "end_line": 12135
-        },
-        {
-          "source_shard_id": "shard-0061",
-          "start_line": 12136,
-          "end_line": 12192
-        },
-        {
-          "source_shard_id": "shard-0061",
-          "start_line": 12193,
-          "end_line": 12200
-        },
-        {
-          "source_shard_id": "shard-0062",
-          "start_line": 12201,
-          "end_line": 12257
-        },
-        {
-          "source_shard_id": "shard-0062",
-          "start_line": 12258,
-          "end_line": 12373
-        },
-        {
-          "source_shard_id": "shard-0062",
-          "start_line": 12374,
-          "end_line": 12400
-        },
-        {
-          "source_shard_id": "shard-0063",
-          "start_line": 12401,
-          "end_line": 12441
-        },
-        {
-          "source_shard_id": "shard-0063",
-          "start_line": 12442,
-          "end_line": 12515
-        },
-        {
-          "source_shard_id": "shard-0063",
-          "start_line": 12516,
-          "end_line": 12581
-        },
-        {
-          "source_shard_id": "shard-0063",
-          "start_line": 12582,
-          "end_line": 12600
-        },
-        {
-          "source_shard_id": "shard-0064",
-          "start_line": 12601,
-          "end_line": 12638
-        },
-        {
-          "source_shard_id": "shard-0064",
-          "start_line": 12639,
-          "end_line": 12712
-        }
-      ],
-      "raw_blocks_total": 250,
-      "source_lines_total": 736,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-017.json"
-    },
-    {
-      "slice_id": "d2-slice-018",
-      "source_group_ids": [
-        "wg-d1-T017-01",
-        "wg-d1-T017-02",
-        "wg-d1-T017-03",
-        "wg-d1-T017-04",
-        "wg-d1-T017-05",
-        "wg-d1-T017-06",
-        "wg-d1-T017-07",
-        "wg-d1-T017-08",
-        "wg-d1-T017-09",
-        "wg-d1-T017-10"
-      ],
-      "source_block_ids": [
+        "lblock-003285",
         "lblock-003286",
         "lblock-003287",
         "lblock-003288",
@@ -6861,7 +4689,101 @@
         "lblock-003297",
         "lblock-003298",
         "lblock-003299",
-        "lblock-003300",
+        "lblock-003300"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0061",
+          "start_line": 12041,
+          "end_line": 12107
+        },
+        {
+          "source_shard_id": "shard-0061",
+          "start_line": 12108,
+          "end_line": 12179
+        },
+        {
+          "source_shard_id": "shard-0061",
+          "start_line": 12180,
+          "end_line": 12200
+        },
+        {
+          "source_shard_id": "shard-0062",
+          "start_line": 12201,
+          "end_line": 12237
+        },
+        {
+          "source_shard_id": "shard-0062",
+          "start_line": 12238,
+          "end_line": 12315
+        },
+        {
+          "source_shard_id": "shard-0062",
+          "start_line": 12316,
+          "end_line": 12400
+        },
+        {
+          "source_shard_id": "shard-0063",
+          "start_line": 12401,
+          "end_line": 12420
+        },
+        {
+          "source_shard_id": "shard-0063",
+          "start_line": 12421,
+          "end_line": 12481
+        },
+        {
+          "source_shard_id": "shard-0063",
+          "start_line": 12482,
+          "end_line": 12562
+        },
+        {
+          "source_shard_id": "shard-0063",
+          "start_line": 12563,
+          "end_line": 12600
+        },
+        {
+          "source_shard_id": "shard-0064",
+          "start_line": 12601,
+          "end_line": 12615
+        },
+        {
+          "source_shard_id": "shard-0064",
+          "start_line": 12616,
+          "end_line": 12687
+        },
+        {
+          "source_shard_id": "shard-0064",
+          "start_line": 12688,
+          "end_line": 12758
+        }
+      ],
+      "raw_blocks_total": 250,
+      "source_lines_total": 718,
+      "d1_work_groups_in_slice": 10,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-017.json"
+    },
+    {
+      "slice_id": "d2-slice-018",
+      "source_group_ids": [
+        "wg-d1-T133-01",
+        "wg-d1-T134-01",
+        "wg-d1-T135-01",
+        "wg-d1-T136-01",
+        "wg-d1-T137-01",
+        "wg-d1-T138-01",
+        "wg-d1-T139-01",
+        "wg-d1-T140-01",
+        "wg-d1-T141-01"
+      ],
+      "source_block_ids": [
         "lblock-003301",
         "lblock-003302",
         "lblock-003303",
@@ -7086,8 +5008,7 @@
         "lblock-003522",
         "lblock-003523",
         "lblock-003524",
-        "lblock-003525",
-        "lblock-003526"
+        "lblock-003525"
       ],
       "source_shard_ids": [
         "shard-0064",
@@ -7099,86 +5020,92 @@
       "source_line_ranges": [
         {
           "source_shard_id": "shard-0064",
-          "start_line": 12713,
-          "end_line": 12790
-        },
-        {
-          "source_shard_id": "shard-0064",
-          "start_line": 12791,
+          "start_line": 12759,
           "end_line": 12800
         },
         {
           "source_shard_id": "shard-0065",
           "start_line": 12801,
-          "end_line": 12869
+          "end_line": 12852
         },
         {
           "source_shard_id": "shard-0065",
-          "start_line": 12870,
-          "end_line": 12939
+          "start_line": 12853,
+          "end_line": 12926
         },
         {
           "source_shard_id": "shard-0065",
-          "start_line": 12940,
+          "start_line": 12927,
           "end_line": 13000
         },
         {
           "source_shard_id": "shard-0066",
           "start_line": 13001,
-          "end_line": 13038
+          "end_line": 13006
         },
         {
           "source_shard_id": "shard-0066",
-          "start_line": 13039,
-          "end_line": 13098
+          "start_line": 13007,
+          "end_line": 13087
         },
         {
           "source_shard_id": "shard-0066",
-          "start_line": 13099,
+          "start_line": 13088,
+          "end_line": 13163
+        },
+        {
+          "source_shard_id": "shard-0066",
+          "start_line": 13164,
           "end_line": 13200
         },
         {
           "source_shard_id": "shard-0067",
           "start_line": 13201,
-          "end_line": 13294
+          "end_line": 13278
         },
         {
           "source_shard_id": "shard-0067",
-          "start_line": 13295,
+          "start_line": 13279,
+          "end_line": 13384
+        },
+        {
+          "source_shard_id": "shard-0067",
+          "start_line": 13385,
           "end_line": 13400
         },
         {
           "source_shard_id": "shard-0068",
           "start_line": 13401,
-          "end_line": 13476
+          "end_line": 13455
         },
         {
           "source_shard_id": "shard-0068",
-          "start_line": 13477,
-          "end_line": 13507
+          "start_line": 13456,
+          "end_line": 13519
         }
       ],
-      "raw_blocks_total": 241,
-      "source_lines_total": 795,
-      "d1_work_groups_in_slice": 10,
+      "raw_blocks_total": 225,
+      "source_lines_total": 761,
+      "d1_work_groups_in_slice": 9,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json"
     },
     {
       "slice_id": "d2-slice-019",
       "source_group_ids": [
-        "wg-d1-T018-01",
-        "wg-d1-T018-02",
-        "wg-d1-T018-03",
-        "wg-d1-T018-04",
-        "wg-d1-T018-05",
-        "wg-d1-T018-06",
-        "wg-d1-T018-07",
-        "wg-d1-T018-08",
-        "wg-d1-T018-09",
-        "wg-d1-T018-10"
+        "wg-d1-T142-01",
+        "wg-d1-T143-01",
+        "wg-d1-T144-01",
+        "wg-d1-T145-01",
+        "wg-d1-T146-01",
+        "wg-d1-T147-01",
+        "wg-d1-T148-01",
+        "wg-d1-T149-01",
+        "wg-d1-T150-01",
+        "wg-d1-T151-01"
       ],
       "source_block_ids": [
+        "lblock-003526",
         "lblock-003527",
         "lblock-003528",
         "lblock-003529",
@@ -7427,8 +5354,7 @@
         "lblock-003772",
         "lblock-003773",
         "lblock-003774",
-        "lblock-003775",
-        "lblock-003776"
+        "lblock-003775"
       ],
       "source_shard_ids": [
         "shard-0068",
@@ -7440,77 +5366,77 @@
       "source_line_ranges": [
         {
           "source_shard_id": "shard-0068",
-          "start_line": 13508,
-          "end_line": 13571
+          "start_line": 13520,
+          "end_line": 13578
         },
         {
           "source_shard_id": "shard-0068",
-          "start_line": 13572,
+          "start_line": 13579,
           "end_line": 13600
         },
         {
           "source_shard_id": "shard-0069",
           "start_line": 13601,
-          "end_line": 13623
+          "end_line": 13631
         },
         {
           "source_shard_id": "shard-0069",
-          "start_line": 13624,
-          "end_line": 13729
+          "start_line": 13632,
+          "end_line": 13735
         },
         {
           "source_shard_id": "shard-0069",
-          "start_line": 13730,
-          "end_line": 13790
+          "start_line": 13736,
+          "end_line": 13792
         },
         {
           "source_shard_id": "shard-0069",
-          "start_line": 13791,
+          "start_line": 13793,
           "end_line": 13800
         },
         {
           "source_shard_id": "shard-0070",
           "start_line": 13801,
-          "end_line": 13886
+          "end_line": 13925
         },
         {
           "source_shard_id": "shard-0070",
-          "start_line": 13887,
+          "start_line": 13926,
           "end_line": 14000
         },
         {
           "source_shard_id": "shard-0071",
           "start_line": 14001,
-          "end_line": 14007
+          "end_line": 14017
         },
         {
           "source_shard_id": "shard-0071",
-          "start_line": 14008,
-          "end_line": 14102
+          "start_line": 14018,
+          "end_line": 14107
         },
         {
           "source_shard_id": "shard-0071",
-          "start_line": 14103,
-          "end_line": 14187
+          "start_line": 14108,
+          "end_line": 14192
         },
         {
           "source_shard_id": "shard-0071",
-          "start_line": 14188,
+          "start_line": 14193,
           "end_line": 14200
         },
         {
           "source_shard_id": "shard-0072",
           "start_line": 14201,
-          "end_line": 14242
+          "end_line": 14246
         },
         {
           "source_shard_id": "shard-0072",
-          "start_line": 14243,
-          "end_line": 14297
+          "start_line": 14247,
+          "end_line": 14300
         }
       ],
       "raw_blocks_total": 250,
-      "source_lines_total": 790,
+      "source_lines_total": 781,
       "d1_work_groups_in_slice": 10,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json"
@@ -7518,18 +5444,20 @@
     {
       "slice_id": "d2-slice-020",
       "source_group_ids": [
-        "wg-d1-T019-01",
-        "wg-d1-T019-02",
-        "wg-d1-T019-03",
-        "wg-d1-T019-04",
-        "wg-d1-T019-05",
-        "wg-d1-T019-06",
-        "wg-d1-T019-07",
-        "wg-d1-T019-08",
-        "wg-d1-T019-09",
-        "wg-d1-T019-10"
+        "wg-d1-T152-01",
+        "wg-d1-T153-01",
+        "wg-d1-T154-01",
+        "wg-d1-T155-01",
+        "wg-d1-T156-01",
+        "wg-d1-T157-01",
+        "wg-d1-T158-01",
+        "wg-d1-T159-01",
+        "wg-d1-T159-02",
+        "wg-d1-T160-01",
+        "wg-d1-T161-01"
       ],
       "source_block_ids": [
+        "lblock-003776",
         "lblock-003777",
         "lblock-003778",
         "lblock-003779",
@@ -7778,8 +5706,7 @@
         "lblock-004022",
         "lblock-004023",
         "lblock-004024",
-        "lblock-004025",
-        "lblock-004026"
+        "lblock-004025"
       ],
       "source_shard_ids": [
         "shard-0072",
@@ -7790,91 +5717,95 @@
       "source_line_ranges": [
         {
           "source_shard_id": "shard-0072",
-          "start_line": 14298,
-          "end_line": 14398
-        },
-        {
-          "source_shard_id": "shard-0072",
-          "start_line": 14399,
+          "start_line": 14301,
           "end_line": 14400
         },
         {
           "source_shard_id": "shard-0073",
           "start_line": 14401,
-          "end_line": 14467
+          "end_line": 14413
         },
         {
           "source_shard_id": "shard-0073",
-          "start_line": 14468,
-          "end_line": 14538
+          "start_line": 14414,
+          "end_line": 14474
         },
         {
           "source_shard_id": "shard-0073",
-          "start_line": 14539,
-          "end_line": 14591
+          "start_line": 14475,
+          "end_line": 14542
         },
         {
           "source_shard_id": "shard-0073",
-          "start_line": 14592,
+          "start_line": 14543,
+          "end_line": 14595
+        },
+        {
+          "source_shard_id": "shard-0073",
+          "start_line": 14596,
           "end_line": 14600
         },
         {
           "source_shard_id": "shard-0074",
           "start_line": 14601,
-          "end_line": 14647
+          "end_line": 14659
         },
         {
           "source_shard_id": "shard-0074",
-          "start_line": 14648,
-          "end_line": 14718
+          "start_line": 14660,
+          "end_line": 14723
         },
         {
           "source_shard_id": "shard-0074",
-          "start_line": 14719,
-          "end_line": 14781
+          "start_line": 14724,
+          "end_line": 14785
         },
         {
           "source_shard_id": "shard-0074",
-          "start_line": 14782,
+          "start_line": 14786,
           "end_line": 14800
         },
         {
           "source_shard_id": "shard-0075",
           "start_line": 14801,
-          "end_line": 14835
+          "end_line": 14838
         },
         {
           "source_shard_id": "shard-0075",
-          "start_line": 14836,
-          "end_line": 14901
+          "start_line": 14839,
+          "end_line": 14916
         },
         {
           "source_shard_id": "shard-0075",
-          "start_line": 14902,
-          "end_line": 14971
+          "start_line": 14917,
+          "end_line": 14976
         }
       ],
       "raw_blocks_total": 250,
-      "source_lines_total": 674,
-      "d1_work_groups_in_slice": 10,
+      "source_lines_total": 676,
+      "d1_work_groups_in_slice": 11,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json"
     },
     {
       "slice_id": "d2-slice-021",
       "source_group_ids": [
-        "wg-d1-T020-01",
-        "wg-d1-T020-02",
-        "wg-d1-T020-03",
-        "wg-d1-T020-04",
-        "wg-d1-T020-05",
-        "wg-d1-T020-06",
-        "wg-d1-T020-07",
-        "wg-d1-T020-08",
-        "wg-d1-T020-09",
-        "wg-d1-T020-10"
+        "wg-d1-T162-01",
+        "wg-d1-T163-01",
+        "wg-d1-T164-01",
+        "wg-d1-T165-01",
+        "wg-d1-T165-02",
+        "wg-d1-T166-01",
+        "wg-d1-T167-01",
+        "wg-d1-T167-02",
+        "wg-d1-T168-01",
+        "wg-d1-T169-01",
+        "wg-d1-T170-01",
+        "wg-d1-T170-02",
+        "wg-d1-T171-01"
       ],
       "source_block_ids": [
+        "lblock-004026",
         "lblock-004027",
         "lblock-004028",
         "lblock-004029",
@@ -8123,8 +6054,7 @@
         "lblock-004272",
         "lblock-004273",
         "lblock-004274",
-        "lblock-004275",
-        "lblock-004276"
+        "lblock-004275"
       ],
       "source_shard_ids": [
         "shard-0075",
@@ -8136,96 +6066,97 @@
       "source_line_ranges": [
         {
           "source_shard_id": "shard-0075",
-          "start_line": 14972,
+          "start_line": 14977,
           "end_line": 15000
         },
         {
           "source_shard_id": "shard-0076",
           "start_line": 15001,
-          "end_line": 15034
+          "end_line": 15049
         },
         {
           "source_shard_id": "shard-0076",
-          "start_line": 15035,
-          "end_line": 15108
+          "start_line": 15050,
+          "end_line": 15111
         },
         {
           "source_shard_id": "shard-0076",
-          "start_line": 15109,
-          "end_line": 15179
+          "start_line": 15112,
+          "end_line": 15199
         },
         {
           "source_shard_id": "shard-0076",
-          "start_line": 15180,
+          "start_line": 15200,
           "end_line": 15200
         },
         {
           "source_shard_id": "shard-0077",
           "start_line": 15201,
-          "end_line": 15258
+          "end_line": 15263
         },
         {
           "source_shard_id": "shard-0077",
-          "start_line": 15259,
-          "end_line": 15319
+          "start_line": 15264,
+          "end_line": 15323
         },
         {
           "source_shard_id": "shard-0077",
-          "start_line": 15320,
-          "end_line": 15392
-        },
-        {
-          "source_shard_id": "shard-0077",
-          "start_line": 15393,
+          "start_line": 15324,
           "end_line": 15400
         },
         {
           "source_shard_id": "shard-0078",
           "start_line": 15401,
-          "end_line": 15478
+          "end_line": 15418
         },
         {
           "source_shard_id": "shard-0078",
-          "start_line": 15479,
-          "end_line": 15552
+          "start_line": 15419,
+          "end_line": 15485
         },
         {
           "source_shard_id": "shard-0078",
-          "start_line": 15553,
+          "start_line": 15486,
+          "end_line": 15558
+        },
+        {
+          "source_shard_id": "shard-0078",
+          "start_line": 15559,
           "end_line": 15600
         },
         {
           "source_shard_id": "shard-0079",
           "start_line": 15601,
-          "end_line": 15621
+          "end_line": 15624
         },
         {
           "source_shard_id": "shard-0079",
-          "start_line": 15622,
-          "end_line": 15679
+          "start_line": 15625,
+          "end_line": 15696
         }
       ],
       "raw_blocks_total": 250,
-      "source_lines_total": 708,
-      "d1_work_groups_in_slice": 10,
+      "source_lines_total": 720,
+      "d1_work_groups_in_slice": 13,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-021.json"
     },
     {
       "slice_id": "d2-slice-022",
       "source_group_ids": [
-        "wg-d1-T021-01",
-        "wg-d1-T021-02",
-        "wg-d1-T021-03",
-        "wg-d1-T021-04",
-        "wg-d1-T021-05",
-        "wg-d1-T021-06",
-        "wg-d1-T021-07",
-        "wg-d1-T021-08",
-        "wg-d1-T021-09",
-        "wg-d1-T021-10"
+        "wg-d1-T172-01",
+        "wg-d1-T173-01",
+        "wg-d1-T174-01",
+        "wg-d1-T175-01",
+        "wg-d1-T176-01",
+        "wg-d1-T177-01",
+        "wg-d1-T178-01",
+        "wg-d1-T179-01",
+        "wg-d1-T180-01",
+        "wg-d1-T180-02"
       ],
       "source_block_ids": [
+        "lblock-004276",
         "lblock-004277",
         "lblock-004278",
         "lblock-004279",
@@ -8449,7 +6380,103 @@
         "lblock-004497",
         "lblock-004498",
         "lblock-004499",
-        "lblock-004500",
+        "lblock-004500"
+      ],
+      "source_shard_ids": [
+        "shard-0079",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0079",
+          "start_line": 15697,
+          "end_line": 15744
+        },
+        {
+          "source_shard_id": "shard-0079",
+          "start_line": 15745,
+          "end_line": 15800
+        },
+        {
+          "source_shard_id": "shard-0080",
+          "start_line": 15801,
+          "end_line": 15814
+        },
+        {
+          "source_shard_id": "shard-0080",
+          "start_line": 15815,
+          "end_line": 15869
+        },
+        {
+          "source_shard_id": "shard-0080",
+          "start_line": 15870,
+          "end_line": 15940
+        },
+        {
+          "source_shard_id": "shard-0080",
+          "start_line": 15941,
+          "end_line": 15987
+        },
+        {
+          "source_shard_id": "shard-0080",
+          "start_line": 15988,
+          "end_line": 16000
+        },
+        {
+          "source_shard_id": "shard-0081",
+          "start_line": 16001,
+          "end_line": 16114
+        },
+        {
+          "source_shard_id": "shard-0081",
+          "start_line": 16115,
+          "end_line": 16200
+        },
+        {
+          "source_shard_id": "shard-0082",
+          "start_line": 16201,
+          "end_line": 16240
+        },
+        {
+          "source_shard_id": "shard-0082",
+          "start_line": 16241,
+          "end_line": 16355
+        },
+        {
+          "source_shard_id": "shard-0082",
+          "start_line": 16356,
+          "end_line": 16400
+        },
+        {
+          "source_shard_id": "shard-0083",
+          "start_line": 16401,
+          "end_line": 16458
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 762,
+      "d1_work_groups_in_slice": 10,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json"
+    },
+    {
+      "slice_id": "d2-slice-023",
+      "source_group_ids": [
+        "wg-d1-T181-01",
+        "wg-d1-T182-01",
+        "wg-d1-T183-01",
+        "wg-d1-T184-01",
+        "wg-d1-T185-01",
+        "wg-d1-T186-01",
+        "wg-d1-T187-01",
+        "wg-d1-T187-02",
+        "wg-d1-T188-01",
+        "wg-d1-T189-01"
+      ],
+      "source_block_ids": [
         "lblock-004501",
         "lblock-004502",
         "lblock-004503",
@@ -8466,108 +6493,7 @@
         "lblock-004514",
         "lblock-004515",
         "lblock-004516",
-        "lblock-004517"
-      ],
-      "source_shard_ids": [
-        "shard-0079",
-        "shard-0080",
-        "shard-0081",
-        "shard-0082",
-        "shard-0083"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0079",
-          "start_line": 15680,
-          "end_line": 15738
-        },
-        {
-          "source_shard_id": "shard-0079",
-          "start_line": 15739,
-          "end_line": 15800
-        },
-        {
-          "source_shard_id": "shard-0080",
-          "start_line": 15801,
-          "end_line": 15808
-        },
-        {
-          "source_shard_id": "shard-0080",
-          "start_line": 15809,
-          "end_line": 15863
-        },
-        {
-          "source_shard_id": "shard-0080",
-          "start_line": 15864,
-          "end_line": 15916
-        },
-        {
-          "source_shard_id": "shard-0080",
-          "start_line": 15917,
-          "end_line": 15980
-        },
-        {
-          "source_shard_id": "shard-0080",
-          "start_line": 15981,
-          "end_line": 16000
-        },
-        {
-          "source_shard_id": "shard-0081",
-          "start_line": 16001,
-          "end_line": 16097
-        },
-        {
-          "source_shard_id": "shard-0081",
-          "start_line": 16098,
-          "end_line": 16200
-        },
-        {
-          "source_shard_id": "shard-0082",
-          "start_line": 16201,
-          "end_line": 16232
-        },
-        {
-          "source_shard_id": "shard-0082",
-          "start_line": 16233,
-          "end_line": 16346
-        },
-        {
-          "source_shard_id": "shard-0082",
-          "start_line": 16347,
-          "end_line": 16400
-        },
-        {
-          "source_shard_id": "shard-0083",
-          "start_line": 16401,
-          "end_line": 16423
-        },
-        {
-          "source_shard_id": "shard-0083",
-          "start_line": 16424,
-          "end_line": 16479
-        }
-      ],
-      "raw_blocks_total": 241,
-      "source_lines_total": 800,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json"
-    },
-    {
-      "slice_id": "d2-slice-023",
-      "source_group_ids": [
-        "wg-d1-T022-01",
-        "wg-d1-T022-02",
-        "wg-d1-T022-03",
-        "wg-d1-T022-04",
-        "wg-d1-T022-05",
-        "wg-d1-T022-06",
-        "wg-d1-T022-07",
-        "wg-d1-T022-08",
-        "wg-d1-T022-09",
-        "wg-d1-T022-10"
-      ],
-      "source_block_ids": [
+        "lblock-004517",
         "lblock-004518",
         "lblock-004519",
         "lblock-004520",
@@ -8775,7 +6701,96 @@
         "lblock-004722",
         "lblock-004723",
         "lblock-004724",
-        "lblock-004725",
+        "lblock-004725"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0083",
+          "start_line": 16459,
+          "end_line": 16529
+        },
+        {
+          "source_shard_id": "shard-0083",
+          "start_line": 16530,
+          "end_line": 16600
+        },
+        {
+          "source_shard_id": "shard-0084",
+          "start_line": 16601,
+          "end_line": 16668
+        },
+        {
+          "source_shard_id": "shard-0084",
+          "start_line": 16669,
+          "end_line": 16769
+        },
+        {
+          "source_shard_id": "shard-0084",
+          "start_line": 16770,
+          "end_line": 16800
+        },
+        {
+          "source_shard_id": "shard-0085",
+          "start_line": 16801,
+          "end_line": 16859
+        },
+        {
+          "source_shard_id": "shard-0085",
+          "start_line": 16860,
+          "end_line": 16975
+        },
+        {
+          "source_shard_id": "shard-0085",
+          "start_line": 16976,
+          "end_line": 17000
+        },
+        {
+          "source_shard_id": "shard-0086",
+          "start_line": 17001,
+          "end_line": 17063
+        },
+        {
+          "source_shard_id": "shard-0086",
+          "start_line": 17064,
+          "end_line": 17134
+        },
+        {
+          "source_shard_id": "shard-0086",
+          "start_line": 17135,
+          "end_line": 17200
+        },
+        {
+          "source_shard_id": "shard-0087",
+          "start_line": 17201,
+          "end_line": 17219
+        }
+      ],
+      "raw_blocks_total": 225,
+      "source_lines_total": 761,
+      "d1_work_groups_in_slice": 10,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json"
+    },
+    {
+      "slice_id": "d2-slice-024",
+      "source_group_ids": [
+        "wg-d1-T190-01",
+        "wg-d1-T191-01",
+        "wg-d1-T192-01",
+        "wg-d1-T192-02",
+        "wg-d1-T193-01",
+        "wg-d1-T193-02",
+        "wg-d1-T194-01",
+        "wg-d1-T194-02"
+      ],
+      "source_block_ids": [
         "lblock-004726",
         "lblock-004727",
         "lblock-004728",
@@ -8806,103 +6821,7 @@
         "lblock-004753",
         "lblock-004754",
         "lblock-004755",
-        "lblock-004756"
-      ],
-      "source_shard_ids": [
-        "shard-0083",
-        "shard-0084",
-        "shard-0085",
-        "shard-0086",
-        "shard-0087"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0083",
-          "start_line": 16480,
-          "end_line": 16549
-        },
-        {
-          "source_shard_id": "shard-0083",
-          "start_line": 16550,
-          "end_line": 16600
-        },
-        {
-          "source_shard_id": "shard-0084",
-          "start_line": 16601,
-          "end_line": 16629
-        },
-        {
-          "source_shard_id": "shard-0084",
-          "start_line": 16630,
-          "end_line": 16707
-        },
-        {
-          "source_shard_id": "shard-0084",
-          "start_line": 16708,
-          "end_line": 16794
-        },
-        {
-          "source_shard_id": "shard-0084",
-          "start_line": 16795,
-          "end_line": 16800
-        },
-        {
-          "source_shard_id": "shard-0085",
-          "start_line": 16801,
-          "end_line": 16877
-        },
-        {
-          "source_shard_id": "shard-0085",
-          "start_line": 16878,
-          "end_line": 16984
-        },
-        {
-          "source_shard_id": "shard-0085",
-          "start_line": 16985,
-          "end_line": 17000
-        },
-        {
-          "source_shard_id": "shard-0086",
-          "start_line": 17001,
-          "end_line": 17074
-        },
-        {
-          "source_shard_id": "shard-0086",
-          "start_line": 17075,
-          "end_line": 17138
-        },
-        {
-          "source_shard_id": "shard-0086",
-          "start_line": 17139,
-          "end_line": 17200
-        },
-        {
-          "source_shard_id": "shard-0087",
-          "start_line": 17201,
-          "end_line": 17234
-        },
-        {
-          "source_shard_id": "shard-0087",
-          "start_line": 17235,
-          "end_line": 17272
-        }
-      ],
-      "raw_blocks_total": 239,
-      "source_lines_total": 793,
-      "d1_work_groups_in_slice": 10,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json"
-    },
-    {
-      "slice_id": "d2-slice-024",
-      "source_group_ids": [
-        "wg-d1-T023-01",
-        "wg-d1-T023-02",
-        "wg-d1-T023-03",
-        "wg-d1-T023-04",
-        "wg-d1-T023-05"
-      ],
-      "source_block_ids": [
+        "lblock-004756",
         "lblock-004757",
         "lblock-004758",
         "lblock-004759",
@@ -8996,7 +6915,68 @@
         "lblock-004847",
         "lblock-004848",
         "lblock-004849",
-        "lblock-004850",
+        "lblock-004850"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0087",
+          "start_line": 17220,
+          "end_line": 17298
+        },
+        {
+          "source_shard_id": "shard-0087",
+          "start_line": 17299,
+          "end_line": 17370
+        },
+        {
+          "source_shard_id": "shard-0087",
+          "start_line": 17371,
+          "end_line": 17400
+        },
+        {
+          "source_shard_id": "shard-0088",
+          "start_line": 17401,
+          "end_line": 17459
+        },
+        {
+          "source_shard_id": "shard-0088",
+          "start_line": 17460,
+          "end_line": 17600
+        },
+        {
+          "source_shard_id": "shard-0089",
+          "start_line": 17601,
+          "end_line": 17686
+        },
+        {
+          "source_shard_id": "shard-0089",
+          "start_line": 17687,
+          "end_line": 17800
+        },
+        {
+          "source_shard_id": "shard-0090",
+          "start_line": 17801,
+          "end_line": 17972
+        }
+      ],
+      "raw_blocks_total": 125,
+      "source_lines_total": 753,
+      "d1_work_groups_in_slice": 8,
+      "budget_status": "within_budget",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json"
+    },
+    {
+      "slice_id": "d2-slice-025",
+      "source_group_ids": [
+        "wg-d1-T195-01"
+      ],
+      "source_block_ids": [
         "lblock-004851",
         "lblock-004852",
         "lblock-004853",
@@ -9014,90 +6994,22 @@
         "lblock-004865",
         "lblock-004866",
         "lblock-004867",
-        "lblock-004868",
-        "lblock-004869"
+        "lblock-004868"
       ],
       "source_shard_ids": [
-        "shard-0087",
-        "shard-0088",
-        "shard-0089",
         "shard-0090",
-        "shard-0091"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0087",
-          "start_line": 17273,
-          "end_line": 17355
-        },
-        {
-          "source_shard_id": "shard-0087",
-          "start_line": 17356,
-          "end_line": 17400
-        },
-        {
-          "source_shard_id": "shard-0088",
-          "start_line": 17401,
-          "end_line": 17435
-        },
-        {
-          "source_shard_id": "shard-0088",
-          "start_line": 17436,
-          "end_line": 17600
-        },
-        {
-          "source_shard_id": "shard-0089",
-          "start_line": 17601,
-          "end_line": 17800
-        },
-        {
-          "source_shard_id": "shard-0090",
-          "start_line": 17801,
-          "end_line": 17875
-        },
-        {
-          "source_shard_id": "shard-0090",
-          "start_line": 17876,
-          "end_line": 18000
-        },
-        {
-          "source_shard_id": "shard-0091",
-          "start_line": 18001,
-          "end_line": 18068
-        }
-      ],
-      "raw_blocks_total": 113,
-      "source_lines_total": 796,
-      "d1_work_groups_in_slice": 5,
-      "budget_status": "within_budget",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json"
-    },
-    {
-      "slice_id": "d2-slice-025",
-      "source_group_ids": [
-        "wg-d1-T024-01"
-      ],
-      "source_block_ids": [
-        "lblock-004870",
-        "lblock-004871",
-        "lblock-004872",
-        "lblock-004873",
-        "lblock-004874",
-        "lblock-004875",
-        "lblock-004876",
-        "lblock-004877",
-        "lblock-004878",
-        "lblock-004879",
-        "lblock-004880"
-      ],
-      "source_shard_ids": [
         "shard-0091",
         "shard-0092"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0090",
+          "start_line": 17973,
+          "end_line": 18000
+        },
+        {
           "source_shard_id": "shard-0091",
-          "start_line": 18069,
+          "start_line": 18001,
           "end_line": 18200
         },
         {
@@ -9106,8 +7018,8 @@
           "end_line": 18244
         }
       ],
-      "raw_blocks_total": 11,
-      "source_lines_total": 176,
+      "raw_blocks_total": 18,
+      "source_lines_total": 272,
       "d1_work_groups_in_slice": 1,
       "budget_status": "within_budget",
       "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-025.json"
@@ -9115,8 +7027,8 @@
   ],
   "summary": {
     "conversion_slices_total": 25,
-    "partition_rule": "greedy_d1_work_group_order_flush_when_exceeds_hard_lines_800_or_soft_blocks_250_or_soft_groups_15",
-    "conversion_slices_completed": 25
+    "greedy_pack_order": "obligation_worklist.work_groups array order",
+    "notes": "Rebuilt from current D1 obligation_worklist.json (207 work groups, 4868 blocks)."
   },
   "continuation_state": {
     "status": "complete",
@@ -9148,6 +7060,7 @@
       "d2-slice-024",
       "d2-slice-025"
     ],
-    "blocked_slice_ids": []
+    "blocked_slice_ids": [],
+    "last_updated_utc": "20260512T185908Z"
   }
 }

@@ -1,0 +1,699 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-008-g005",
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-008"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-slice-014-051",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 80,
+          "end_line": 80,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002500 | excerpt=\"- `Plans/Contracts_V0.md`\\n- `Plans/storage-plan.md`\\n- `Plans/Multi-Account.md`\\n- `Plans/Prompt_Pipeline.md`\\n- `Plans/Runtime_Artifacts_Panel.md`\\n- `Plans/usage-feature.md`\\n- likely UI consumers:\\n  - `Plans/Orchest...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-052",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002502 | excerpt=\"### Contradictions / gaps surfaced\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-053",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002503 | excerpt=\"- `Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target conte...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-054",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002506 | excerpt=\"- Make `execution_role` part of the canonical attempt packet in `Contracts_V0.md` and `storage-plan.md`.\\n- Define `operational_identity` as a separate optional field family for receipts, artifacts, and side-effect-beari...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-055",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002509 | excerpt=\"- `execution_role` and `operational_identity` solve different problems and should not be merged.\\n- Provider/account identity stays shared-runtime truth; operational identity stays side-effect/target truth.\\n- The strong...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-056",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FileManager.md",
+        "Plans/Glossary.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002514 | excerpt=\"- `Plans/Commands_System.md`\\n- `Plans/Wiring_Matrix.md`\\n- `Plans/UI_Wiring_Rules.md`\\n- `Plans/Project_Output_Artifacts.md`\\n- `Plans/Glossary.md`\\n- `Plans/FileManager.md`\\n- `Plans/Crosswalk.md`\\n- `Plans/Decision_Po...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-057",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 555,
+          "end_line": 555,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Glossary.md",
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002517 | excerpt=\"- The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.\\n- `Commands_System.md`, `Wiring_Matrix.md`, and `UI_...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-058",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002520 | excerpt=\"- Primary owners:\\n  - `Plans/Commands_System.md`\\n  - `Plans/Wiring_Matrix.md`\\n  - `Plans/UI_Wiring_Rules.md`\\n  - `Plans/Project_Output_Artifacts.md`\\n  - `Plans/Glossary.md`\\n  - `Plans/FileManager.md`\\n  - `Plans/Cr...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-059",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002522 | excerpt=\"### Contradictions / gaps surfaced\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-060",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002523 | excerpt=\"- Command-system docs still allow ghost or stale IDs to survive across catalog, wiring, and chat surfaces without a canonical tombstone/deprecation model.\\n- Runtime mutation/recovery surfaces now depend on preconditions...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-061",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 394,
+          "end_line": 394,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002526 | excerpt=\"- Register/fix the missing command families and remove false catalog/wiring claims:\\n  - add or explicitly retire `cmd.chat.run_user_command`, `cmd.chat.branch_from_restore`, preview/build/open-artifact commands, Assista...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-062",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FileManager.md",
+        "Plans/Glossary.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002529 | excerpt=\"- This tranche is no longer just \u201csupporting docs need cleanup.\u201d Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.\\n- The biggest repeate...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-063",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 662,
+          "end_line": 662,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002534 | excerpt=\"- `Plans/Tools.md`\\n- `Plans/Runtime_Artifacts_Panel.md`\\n- `Plans/storage-plan.md`\\n- `Plans/Contracts_V0.md`\\n- `Plans/usage-feature.md`\\n- spot-checks against `Plans/Orchestrator_Page.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-064",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "start_line": 54,
+          "end_line": 54,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002537 | excerpt=\"- Tool events, runtime artifacts, receipts, and usage now want one shared attribution packet, but the docs still describe them as separate identity worlds.\\n- `Tools.md` still treats `tool.invoked` primarily as analytics...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-065",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0052",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0052 | blocks=lblock-002540 | excerpt=\"- one shared attribution family should be available to:\\n  - `tool.invoked`\\n  - `tool.denied`\\n  - `runtime_artifact.*`\\n  - runtime receipts\\n  - `usage_record` / `cost_usage`\\n  - relevant evidence / trace views\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-066",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3194,
+          "end_line": 3194,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002543 | excerpt=\"- `run_id`\\n- `attempt_id?`\\n- `thread_id?`\\n- `node_id?`\\n- `artifact_id?`\\n- `usage_event_ref?`\\n- `provider_attempt_ref?`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-067",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 452,
+          "end_line": 452,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002546 | excerpt=\"- `execution_role?`\\n- requested/effective provider/model/auth/account disclosure fields by ref or normalized snapshot\\n- `effective_account_id?`\\n- `effective_auth_mode?`\\n- `effective_project_id?`\\n- `operational_ident...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-068",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002549 | excerpt=\"- workspace/source-control:\\n  - `repo_id?`\\n  - `worktree_id?`\\n  - `branch_ref?`\\n  - `commit_range?`\\n- external operational targets:\\n  - `workflow_refs?`\\n  - `docker_refs?`\\n  - `kubernetes_refs?`\\n- artifact linea...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-069",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1914,
+          "end_line": 1914,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002552 | excerpt=\"- every side-effect-bearing or evidence-bearing runtime object should be able to answer:\\n  - which run/attempt produced this\\n  - which node/thread it belonged to\\n  - which provider attempt and effective account/runtim...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-070",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 4442,
+          "end_line": 4442,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002555 | excerpt=\"- `Contracts_V0.md`\\n  - own the shared cross-family attribution packet shape for runtime events\\n- `storage-plan.md`\\n  - own persistence/projection of that packet across:\\n    - `attempt_record`\\n    - `usage_record`\\n...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-071",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 80,
+          "end_line": 80,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002558 | excerpt=\"- `Plans/Contracts_V0.md`\\n- `Plans/storage-plan.md`\\n- `Plans/Tools.md`\\n- `Plans/Runtime_Artifacts_Panel.md`\\n- `Plans/usage-feature.md`\\n- likely surface consumers:\\n  - `Plans/Orchestrator_Page.md`\\n  - `Plans/Run_Gr...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-072",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002560 | excerpt=\"### Contradictions / gaps surfaced\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-073",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002561 | excerpt=\"- `tool.invoked` remains under-attributed compared with `tool.denied`; it is still documented mainly as analytics exhaust rather than as a first-class runtime trace record.\\n- runtime artifacts still have no normalized p...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-074",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002564 | excerpt=\"- Define one shared runtime attribution packet and make tool events, artifact envelopes, receipts, and usage records reference it.\\n- Expand `tool.invoked` so it can carry runtime attribution on parity with side-effect-r...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-075",
+      "coverage_task_id": "cov-e1-slice-008-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g005 has bounded live_doc_windows (92 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002567 | excerpt=\"- The storage layer is already closest to the right answer; tool and artifact docs are the ones still lagging.\\n- `provider_attempt_ref` now looks like a key bridge field, not a niche detail.\\n- If this packet is not nor...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

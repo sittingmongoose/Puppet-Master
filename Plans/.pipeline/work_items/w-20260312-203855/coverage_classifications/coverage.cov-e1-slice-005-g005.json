@@ -2,124 +2,288 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-005-g005",
-  "obligation_record_count": 2,
-  "source_classification_slices": [
-    "e2-class-006"
+  "obligation_record_count": 12,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-005"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-008-001",
+      "obligation_id": "obl-d2-slice-008-045",
       "coverage_task_id": "cov-e1-slice-005-g005",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001309 | excerpt=\"- `stale_historical`\n    - historical and explicitly not resumable/reusable for live execution\n  - `superseded`\n    - replaced by a newer canonical successor in the same lineage\n  - `revoked`\n    -...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-046",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001312 | excerpt=\"- Strong recommendation:\n  - do not force family-local workflows into the cross-family semantic core\n- Examples:\n  - annotation lifecycle:\n    - `open -> addressed -> resolved`\n  - concern lifecycl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-047",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001318 | excerpt=\"- Recommended fix direction:\n  - remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum\n-...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-048",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001321 | excerpt=\"- Another important rule:\n  - `resolved` does not always imply \u201cthe problem disappeared\u201d\n- Examples:\n  - blocked episode can become historical after resolution, but still matters for audit and line...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-049",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001324 | excerpt=\"- Storage and UI already hint at an important distinction:\n  - `archived`\n  - `removed`\n  - `deleted`\n- Recommended rule:\n  - preserve these as different meanings\n- Examples:\n  - thread archived vs...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-050",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001327 | excerpt=\"- Earlier research established these as important for promotions and graph/patch flows, but local docs are still uneven.\n- Recommended rule:\n  - `reopened`, `revoked`, and `superseded` should be re...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-051",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001330 | excerpt=\"- Shared historical semantics are important mainly because search and ledger need to render them consistently.\n- Good rule:\n  - search filters and ledger inspectors should be able to distinguish:\n ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-052",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001333 | excerpt=\"- `Contracts_V0.md` has a real `remediation.resolved` enum conflict.\n- Several docs imply strong historical semantics, but those meanings are not yet summarized in one shared consistency rule.\n- So...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-053",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001336 | excerpt=\"- Define a shared historical-semantic vocabulary for cross-family overlays:\n  - `historical`\n  - `stale_historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `removed`\n- Expl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-054",
+      "coverage_task_id": "cov-e1-slice-005-g005",
       "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 1,
-          "line_end": 120,
-          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
-        },
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "line_start": 1,
-          "line_end": 120,
-          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "line_start": 1,
-          "line_end": 120,
-          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 1,
-          "line_end": 120,
-          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "line_start": 1,
-          "line_end": 120,
-          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+          "path": "Plans/chain-wizard-flexibility.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
         }
       ],
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0025"
-        ],
-        "source_block_ids": [
-          "lblock-001077"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-03"
-        ],
+        "source_shard_id": "shard-0030",
         "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 4921,
-            "end_line": 4925
-          }
-        ]
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001344 | excerpt=\"- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Crosswalk.md`\n- `Plans/chain-wizard-flexibility.md`\n- existing concern clusters...\""
       },
-      "uncertainty": 0.07,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-002",
+      "obligation_id": "obl-d2-slice-008-055",
       "coverage_task_id": "cov-e1-slice-005-g005",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
-      "classification": "partial",
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 234,
-          "line_end": 274,
-          "quote": "Fidelity recovery cov-059 records lane/worktree lifecycle split and gates cleanup on runtime/recovery/lineage checks."
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "line_start": 626,
-          "line_end": 649,
-          "quote": "Source Control worktree handshake records lifecycle and blocked/recovery state while reporting through canonical lane/worktree records."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1445,
+          "end_line": 1445,
+          "match_kind": "verbatim_substring"
         }
       ],
       "missing_details": [],
-      "partial_details": [
-        "Worktree cleanup, lifecycle, and lineage constraints are represented, but the source excerpt itself says a full lifecycle remains to be separated across logical lane history, live worktree existence, cleanup eligibility, and archive/remove semantics."
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
       ],
-      "candidate_docs": [],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0025"
-        ],
-        "source_block_ids": [
-          "lblock-001080"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-03"
-        ],
+        "source_shard_id": "shard-0030",
         "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 4928,
-            "end_line": 4941
-          }
-        ]
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001347 | excerpt=\"- The local docs still do not define a canonical concern record family the way they define:\n  - attempts\n  - blocked projections\n  - usage records\n  - evidence records\n  - wizard runtime state\n- Bu...\""
       },
-      "uncertainty": 0.24,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-008-056",
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g005 has bounded live_doc_windows (47 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0030",
+        "source_slice_id": "d2-slice-008",
+        "canonical_excerpt_note": "shards=shard-0030 | blocks=lblock-001350 | excerpt=\"- Strong recommendation:\n  - keep concern distinct from:\n    - review finding\n    - annotation\n    - blocked episode\n    - graph patch request\n    - recovery record\n- Working split:\n  - review find...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

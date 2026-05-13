@@ -2,49 +2,40 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-006-g005",
   "obligation_record_count": 1,
-  "source_classification_slices": [
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-006"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-008-027",
+      "obligation_id": "obl-d2-slice-009-044",
       "coverage_task_id": "cov-e1-slice-006-g005",
-      "doc_resolution_status": "doc_discovery",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task is doc_discovery and provides candidate names but no bounded live_doc_windows for this E2 slice."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-006-g005 has bounded live_doc_windows (26 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
       "candidate_docs": [
-        "Plans/Multi-Account.md"
+        "Plans/FinalGUISpec.md"
       ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0027"
-        ],
-        "source_block_ids": [
-          "lblock-001157"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-07"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5212,
-            "end_line": 5222
-          }
-        ]
+        "source_shard_id": "shard-0034",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0034 | blocks=lblock-001509 | excerpt=\"- `Plans/Widget_System.md`\\n- `Plans/Orchestrator_Page.md`\\n- `Plans/FinalGUISpec.md`\\n- `Plans/storage-plan.md`\\n- current ledger widget/projection/multi-run clusters\""
       },
-      "uncertainty": "Candidate docs require a follow-up bounded binding pass before evidence can be scored.",
-      "deterministic_local_evidence_used_only_as_candidate": true
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

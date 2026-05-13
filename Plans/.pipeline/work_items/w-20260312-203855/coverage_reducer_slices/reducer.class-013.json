@@ -1,0 +1,5149 @@
+{
+  "schema_id": "pm.coverage_reducer_slice.v3.2.3",
+  "prompt_id": "E3",
+  "prompt_version": "pm.e3.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "slice_id": "class-013",
+  "subagent_task_id": "e3-class-013",
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "slice_summary": {
+    "validation_notes": [
+      "e3_v3_2_3_f5_loop_breaker_no_root_doc_discovery_resolution_json",
+      "all_99_rows_concrete_plans_targets_no_doc_discovery_loop",
+      "present_96_partial_3",
+      "f5_unresolved_explicit_preserved_false_without_active_f5",
+      "no_timestamp_only_f5_loop_material_delta_skipped",
+      "terminal_shard_gap_none",
+      "obligation_order_matches_input",
+      "e3_reducer_slice_id_preserved_e3-class-013",
+      "task_footer_coverage_rows_sha256sum:d1257ad13a3caa4afe76c56d60cdb9a630e0414208e6da858fc9a0ae3b96987f",
+      "task_footer_agent_id_uuid:dbb956a3-03cf-4ef2-aa48-a29783013df7"
+    ],
+    "obligation_record_count": 99
+  },
+  "coverage_rows": [
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-015",
+      "row_hash": "27dfb83b2f975529f4cc4c5821d434cf1d96494aba05c1b81ee3226546724d50",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004076"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15112,
+          "end_line": 15114
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-016",
+      "row_hash": "f54049478f1619f37594be0cb156c895f16514f1e4c9cffc7706cdc78e439153",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004079"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15117,
+          "end_line": 15140
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-017",
+      "row_hash": "539c2deef3a0d85cbcf50f949f2a60c1e9166fd302759c74e96e0b8d3e7eea9e",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004082"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15143,
+          "end_line": 15147
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-018",
+      "row_hash": "28ae1a4968f903330bb0296270c82a5080e70b9fc0d85fb4306fba4c46138f2f",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004085"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15150,
+          "end_line": 15152
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-019",
+      "row_hash": "730897a92dc6ac28aeb7e905466c3dd5d3c7e172ed26342df61b3b058a34cf0a",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004088"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15155,
+          "end_line": 15165
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-020",
+      "row_hash": "4dda4629fff988b5056014c9652b7c97f81313867dc386db9122682d7fb07a96",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004091"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15168,
+          "end_line": 15169
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-021",
+      "row_hash": "74398dc4e5d04af5c3ec471c095527532b3ea4ec8aaeefc78ef90db72a4695c8",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004096"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15174,
+          "end_line": 15178
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-022",
+      "row_hash": "1d5f48dc4e5af802a3733ab600cf5017158b323c72679718d7f3efd46834b181",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_block_ids": [
+        "lblock-004099"
+      ],
+      "source_group_ids": [
+        "wg-d1-T164-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15181,
+          "end_line": 15198
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-023",
+      "row_hash": "ef4db713967be5f70085ee28dfa51caa8491433fed787a35c35727e311a71cee",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004102"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15201,
+          "end_line": 15208
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-024",
+      "row_hash": "3f47d3be7fdff9c316287cb53793dd0f14524f453d1fac0d7fbbc4fd005bfba0",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004105"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15211,
+          "end_line": 15217
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-025",
+      "row_hash": "1a1e9c52bb9114c7cd059ef67c23c86dfa29aaa08bf62ab70cc010b4d48f34a6",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004108"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15220,
+          "end_line": 15223
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-026",
+      "row_hash": "ef451883d82249e41b8e83d5cf0c5a339ef0e6a350bcb6658081c53c98195ee8",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004111"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15226,
+          "end_line": 15227
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-027",
+      "row_hash": "af6742c7a75d46a6480b16ebd86c8cc90ea97feee07c88c91684ad8948911fe1",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004116"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15232,
+          "end_line": 15232
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-028",
+      "row_hash": "25d72464dd296cf27a63f8eb8b105039ae7141c19b00a13fe3d5811cf718c73e",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004119"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15235,
+          "end_line": 15254
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-029",
+      "row_hash": "478314ecccb270c539fd71b02989fa14115763bb1ed51c2803b0a31395899e83",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004122"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15257,
+          "end_line": 15258
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-030",
+      "row_hash": "0abd2ff70921c2664fae69a823b6a62e47c419843aa8978c6a295a5dfdfa9742",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004125"
+      ],
+      "source_group_ids": [
+        "wg-d1-T165-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15261,
+          "end_line": 15263
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-031",
+      "row_hash": "86b926a005306fd88a5a2224f5bc045d46207dbda92f5d21c2617b59d0cbf985",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004128"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15266,
+          "end_line": 15272
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-032",
+      "row_hash": "82789089f4c2b769d46e13f4f49a67564876b5b8813dec3f9403f4c5b3364ef7",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004131"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15275,
+          "end_line": 15276
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-033",
+      "row_hash": "a344e3d4b0819afffb1d07d16edfb586a1d50b548b6054dceb272d4fb2bea548",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004136"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15281,
+          "end_line": 15285
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-034",
+      "row_hash": "1caf0e6282c2df84c146a364902ed0abc53e98bdda34c1837e76029ef00c83df",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004139"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15288,
+          "end_line": 15292
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-035",
+      "row_hash": "05e4737c088d29a8758a807a2147491c75138f1ae2360e502854b15f3359f58c",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004142"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15295,
+          "end_line": 15300
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-036",
+      "row_hash": "b11ccf84ed1977a2e31e6c2023ad390e0219492b8340a3d439d2174903e6102d",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004145"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15303,
+          "end_line": 15317
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-037",
+      "row_hash": "d4445ddd34353522ec3abecd1a3b129732c34c2529a50c124e3329c31c3107de",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004148"
+      ],
+      "source_group_ids": [
+        "wg-d1-T166-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15320,
+          "end_line": 15321
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-038",
+      "row_hash": "d0092f742f34a973820830abb0cdb5cb471bf530c175c3570054e724390e0593",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004153"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15326,
+          "end_line": 15335
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-039",
+      "row_hash": "2d8ab158ad3dfc9e3b0e12fdc318c996f8b13cdeeeec9082f714e09dff1efb2a",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004156"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15338,
+          "end_line": 15366
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Modes.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-040",
+      "row_hash": "69d6ba1ee17281f0c59d9bf8626882d8193e1413766a7d151bfa45b23cbce506",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004159"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15369,
+          "end_line": 15373
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-041",
+      "row_hash": "55dd3aa901c7d1a04d4f2480171c3088123df078664951c7591a2db5135ccb8b",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004162"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15376,
+          "end_line": 15378
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "partial",
+      "best_evidence_score": 0.52,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-042",
+      "row_hash": "ee0c82597ed5621e3b45965a54b20a0d0700d7753c8578229f427d9c7e447b18",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004165"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15381,
+          "end_line": 15382
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-043",
+      "row_hash": "9c2c2f45d659e3a6f1830f108b799dd16f66fe2dda1952c19e64da2b7ac97db3",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004170"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15387,
+          "end_line": 15390
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-044",
+      "row_hash": "76d099717b20a855321bac54a375295fd81cc68ffa575b48b3eb43d3db648e70",
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_block_ids": [
+        "lblock-004173"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15393,
+          "end_line": 15400
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-045",
+      "row_hash": "aab42c6d0c00dd07fc03d61c6392f0cbe1ff52f525ea2971f6888a6003dfd806",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004174"
+      ],
+      "source_group_ids": [
+        "wg-d1-T167-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15401,
+          "end_line": 15417
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-046",
+      "row_hash": "630b691dca1fc8e4a7e9193322dc36ab46c548a38c1ed946c053f7dc416d0032",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004177"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15420,
+          "end_line": 15426
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-047",
+      "row_hash": "6dd892b5c5507082ed821a9fd47559ee61ed35280babcbb94e1d525b99b7ce0b",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004180"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15429,
+          "end_line": 15434
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-048",
+      "row_hash": "6a203cc81b24665b0a00d37032bd37ad2a9777bb5487659d92b31bca23077a0a",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004183"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15437,
+          "end_line": 15440
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-049",
+      "row_hash": "e8d8fed5b069778888e19615b2e9d93fea20098dba24e97723b28216aaf73504",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004186"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15443,
+          "end_line": 15444
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-050",
+      "row_hash": "02010dfdf3938db55726c9209e192736baae19099cb6ebbd7572f4ad9f2663d7",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004191"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15449,
+          "end_line": 15452
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-051",
+      "row_hash": "75e779c22e74106219d32af683a180ca41c5c5ac152358642019bfa73ab0a012",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004194"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15455,
+          "end_line": 15470
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-052",
+      "row_hash": "e353e77028cf5132811699961cd54b6d2ddc521d65310a02be88af36079b08b0",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004197"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15473,
+          "end_line": 15478
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-053",
+      "row_hash": "be3e4aff1afaf9e6af2bb6d85c40f32f2325592d43ba90f4effebf9ff61adfed",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004200"
+      ],
+      "source_group_ids": [
+        "wg-d1-T168-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15481,
+          "end_line": 15485
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-054",
+      "row_hash": "d1e47afb61ad55512319de3f099c03e71057200bf9c9d11bb2b9aa1a3dac6f5e",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004203"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15488,
+          "end_line": 15491
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-055",
+      "row_hash": "b5804a42d0491a66eb0666790b425d706ca4e63db0b2bc8836c0d312a0346646",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004206"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15494,
+          "end_line": 15495
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-056",
+      "row_hash": "d1191d93ffc197ef2e258f7989e4759d4bb63a3341a303b2e102f104882658fd",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004211"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15500,
+          "end_line": 15505
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-057",
+      "row_hash": "8a3e25b5c73c0a1d9a4fd38c9ae25fe8732e0681f57c868cb0d084270a1f6360",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004214"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15508,
+          "end_line": 15529
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-058",
+      "row_hash": "c649a0761e486cd2046cb153f212e746544ab2c94a640f1efc4f1cf2b42638e2",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004217"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15532,
+          "end_line": 15539
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-059",
+      "row_hash": "fd8a5180b7d3ea16b0d8fdfba656bac1ad01255b1f9fb2c4e1987a22841fb10a",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004220"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15542,
+          "end_line": 15550
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-060",
+      "row_hash": "8a84aeda90174d71b5183a331e91d7377013a7335f68ce343aaa24351d2a45e7",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004223"
+      ],
+      "source_group_ids": [
+        "wg-d1-T169-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15553,
+          "end_line": 15556
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-061",
+      "row_hash": "b56b9a235e5fb8d64287e2be88f655690e3a38f8658d30aa8937456d136bdfe7",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004226"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15559,
+          "end_line": 15563
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-062",
+      "row_hash": "198988aa5eca88a5bbd7c48f186de56f262baa2f3b85a0783e23cba1997ba162",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004231"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15568,
+          "end_line": 15572
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-063",
+      "row_hash": "e9d35cb20baedf88fc9f48c8d7c91b837e72904c6d0a5d13ef9219b14060e4e0",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004234"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15575,
+          "end_line": 15594
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-064",
+      "row_hash": "6ef310cc14a45ab5a80d90a62e8548b0390054b3a270e2713a515e47833e31f1",
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "source_block_ids": [
+        "lblock-004237"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15597,
+          "end_line": 15600
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-065",
+      "row_hash": "e74f4ace226ef0d65dc8f3cd3d14312d662bb7e62df36d3cc36d1a40f186e63c",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004238"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15601,
+          "end_line": 15604
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-066",
+      "row_hash": "4743a34f32bacfa9e34d01d3882cc68948bbbc6e1f877fbb7cc7eeac45f75abc",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004241"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15607,
+          "end_line": 15611
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-067",
+      "row_hash": "7e00afc5bce699239a62d5921fd9581ddc3c5232da83a6df28be18917b0edf96",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004244"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15614,
+          "end_line": 15617
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-068",
+      "row_hash": "7dc04174daaaf96d80bb5a767beee307820c674f34820cd750902a14fc943123",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004247"
+      ],
+      "source_group_ids": [
+        "wg-d1-T170-02"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15620,
+          "end_line": 15621
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-069",
+      "row_hash": "277e25bc7de3257cd6223a9ce5094cf92775de106aba4fb4ce0f6dfe69fedd9d",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004252"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15626,
+          "end_line": 15629
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-070",
+      "row_hash": "ef74cb2f7f326b361fe24373e6041e35c4b809d64f5da36a67cacef528ad7c1d",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004255"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15632,
+          "end_line": 15649
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-071",
+      "row_hash": "eca5dd0c6c21c55865869ed6fee567ae29f349b649e1559b437a19c6882d5777",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004258"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15652,
+          "end_line": 15657
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-072",
+      "row_hash": "1ddb9cd21ef035cb73b65b13fce73f77b0cb57bb96ac486c915a3fa928ca42ee",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004261"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15660,
+          "end_line": 15664
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-073",
+      "row_hash": "4e612004d3b5b2420c2533edc9efc9272afdc614870dcf83f24332556657a6b4",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004264"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15667,
+          "end_line": 15670
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-074",
+      "row_hash": "f435efae2723586f3427c567f47b9547152b3f7576f751428b044b788a9e995c",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004267"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15673,
+          "end_line": 15674
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-075",
+      "row_hash": "410faa5c346cdf14bb1ce8f0f2a22cd45da93dc89d7d82bb90197c61b1bed6a4",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004272"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15679,
+          "end_line": 15679
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-021-076",
+      "row_hash": "6189b1038f1e1386470fb642e4f3812f1f77cec79b0bb7e1135b585c032fa271",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004275"
+      ],
+      "source_group_ids": [
+        "wg-d1-T171-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15682,
+          "end_line": 15696
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-001",
+      "row_hash": "e739d68b863484110f6d1970c7db0c55cf234f37a34738deacc15b7c2d8cb43b",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004278"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15699,
+          "end_line": 15700
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-002",
+      "row_hash": "cf1178368099688a1327a63c65996911bee753ee041384ae9b4efb09ca0960e0",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004281"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15703,
+          "end_line": 15705
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-003",
+      "row_hash": "208e49932eef3a425dbdab72014b472912c2cc40d584939d86c58133df984c8e",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004284"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15708,
+          "end_line": 15713
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-004",
+      "row_hash": "c0b685e2baf6cd70f02fdb2a273bb60670c8d25a92a23efd605bc5a4c96fc347",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004287"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15716,
+          "end_line": 15717
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-005",
+      "row_hash": "e728770b285480763be0ac73cfdb65494d0526531089761df1fd3c937f0c136b",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004292"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15722,
+          "end_line": 15723
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-006",
+      "row_hash": "fe1016cd3bc99448785ec2d12c5fa0ef2896e4999eedacb09ccbca54064c0289",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004295"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15726,
+          "end_line": 15737
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-007",
+      "row_hash": "3a6bc50e7ceefcc5ee3ef47bf22e428b60716c8f39106e2ab3e6a52a7ea9b52e",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004298"
+      ],
+      "source_group_ids": [
+        "wg-d1-T172-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15740,
+          "end_line": 15742
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-008",
+      "row_hash": "2bb9d4bf001b7a62ac7965255b21cf01adbd3a06e9837b896661deabba0078cc",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004301"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15745,
+          "end_line": 15747
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-009",
+      "row_hash": "40d7a88e01ac842f463f901dbed3484d5c3af6cd901471b8d174781baa34ecae",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004304"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15750,
+          "end_line": 15752
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-010",
+      "row_hash": "78e18a9acc534ee49cb9481feff828a680d7b5783fe7392417ed2cc57723f405",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004307"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15755,
+          "end_line": 15756
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "partial",
+      "best_evidence_score": 0.52,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-011",
+      "row_hash": "20d96b2c727175db9a5b453e3718f8cfe8b7daf190f69766b264c39e7fccabbe",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004312"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15761,
+          "end_line": 15764
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-012",
+      "row_hash": "d0ade77bd67778e12e9eea9c336483207fcf26980276966446514058025ae504",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004315"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15767,
+          "end_line": 15792
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-013",
+      "row_hash": "703f14fb8510686b7d3dbea643194365e4f32bdb2058919d8b88b6a5ca98464f",
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_block_ids": [
+        "lblock-004318"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15795,
+          "end_line": 15800
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-014",
+      "row_hash": "61910a2fafd9558b6f4f1fa4bc3e3255d6d69c874fa352f1609822c7799e0494",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004321"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15803,
+          "end_line": 15808
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-015",
+      "row_hash": "f25bbd4b1b125f6a294becbcbc8ced3d48f4a4fcf13f6312ebef7b326e4d5ad8",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004324"
+      ],
+      "source_group_ids": [
+        "wg-d1-T173-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15811,
+          "end_line": 15813
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-016",
+      "row_hash": "180e527f35da6dc7db82a6aab60f8e427fc778de4e5a93d4588979ef68f15f57",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004327"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15816,
+          "end_line": 15817
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-017",
+      "row_hash": "c6b32629c8b18bfd2cc48f4ed2fa89cc24c866ec7126c1b6ce73e26232beed86",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004332"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15822,
+          "end_line": 15822
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-018",
+      "row_hash": "d50de6113add2f0c211b27fcd757f4a9ad464adef46f4a5acfa6bdde75f5ce0d",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004335"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15825,
+          "end_line": 15845
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-019",
+      "row_hash": "4ec35eab10f0c3bab590d3257b3145e5483e3374d4a048b516e54a22f87e8250",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004338"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15848,
+          "end_line": 15849
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-020",
+      "row_hash": "ae3e5a2f37078a92d430a0b3d2a3a2f5b178d8b0b7af5d7a3ad16e6d4b641e42",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004341"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15852,
+          "end_line": 15856
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-021",
+      "row_hash": "564c148d5b2af36575d2a6d7982d48b07425baa787a8dd8ad290130ebd37595e",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004344"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15859,
+          "end_line": 15862
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-022",
+      "row_hash": "c1f514b83f923e3e9a1f4c2df24ba2143106834a12448a52d4b0be1ff99db541",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004347"
+      ],
+      "source_group_ids": [
+        "wg-d1-T174-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15865,
+          "end_line": 15866
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "partial",
+      "best_evidence_score": 0.52,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-023",
+      "row_hash": "5bf81ab10e60ecda632bd4b4907ffba2a8616fcb58c27df798804c620d7102fe",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004352"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15871,
+          "end_line": 15871
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-024",
+      "row_hash": "b4ca83b8758fb7fd0bca253caa5c5cb469b7e9e27126bd2078bd16bc3d5b2c9d",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004355"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15874,
+          "end_line": 15888
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-025",
+      "row_hash": "5a209ee1d414d53ad14be3be808617cb2a9e4f08b13849b140e4c878b71dcb65",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004358"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15891,
+          "end_line": 15892
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-026",
+      "row_hash": "ba45d5f8a1eb53cc8b7e21b15ac03177c9c47aa8cdc649a48be6e654892db208",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004361"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15895,
+          "end_line": 15900
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-027",
+      "row_hash": "c0893fb312d2a3f2daffb83d282e18a92680576d0ffac9f6381f837a98653dfa",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004364"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15903,
+          "end_line": 15909
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-028",
+      "row_hash": "306379a39039225aa99876786f568009c52e85b5f925e0620eddff79c0d52504",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004367"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15912,
+          "end_line": 15913
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-029",
+      "row_hash": "8ec7d10452cfda81f19ccf89b9effe7c8d4f758b6c9fd49f823c15cfbaaea3fd",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004372"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15918,
+          "end_line": 15918
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-030",
+      "row_hash": "d7ef352224c7807c1a310acb9168631b6a8daa7d2de04a6670ba04f82303180e",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004375"
+      ],
+      "source_group_ids": [
+        "wg-d1-T175-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15921,
+          "end_line": 15940
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-031",
+      "row_hash": "12bc46a07944d68cda23e94c18d0d8b50a26587474466dccd129c90ccab924a7",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004378"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15943,
+          "end_line": 15944
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-032",
+      "row_hash": "06c3c21349439ffa0671bcbf2654a74b5944050585947a7a98c476060c7dd6e1",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004381"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15947,
+          "end_line": 15952
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-033",
+      "row_hash": "c8154f32eab912b17cb717b559d5581258881733164cb5b3da8f49a5eb748d88",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004384"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15955,
+          "end_line": 15958
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-034",
+      "row_hash": "4ce0f5d05f548ccf4347ca2fe8abea1b824d3381f06df912defb715f9f3b321b",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004387"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15961,
+          "end_line": 15962
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-035",
+      "row_hash": "f4a35b7d8e936881c9d056014341f13c8ecb7656a9fbbcbd6beee4310e24b824",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004392"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15967,
+          "end_line": 15968
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-036",
+      "row_hash": "5a177db863c339f5577b7cd14b4ae3bef838a0dc0012b7be0698ba13e6dbf480",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004395"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15971,
+          "end_line": 15980
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.819,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-022-037",
+      "row_hash": "0b93351bdc396f83d319846018810050ba09b8626fa20ac35ecda942af77999d",
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_block_ids": [
+        "lblock-004398"
+      ],
+      "source_group_ids": [
+        "wg-d1-T176-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 15983,
+          "end_line": 15985
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "present",
+      "best_evidence_score": 0.78,
+      "aggregated_task_label": "bounded_window_phrase_match",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-class-013"
+    }
+  ]
+}

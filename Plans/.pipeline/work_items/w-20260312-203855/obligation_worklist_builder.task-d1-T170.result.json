@@ -1,0 +1,409 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T170",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T170-01",
+      "source_block_ids": [
+        "lblock-004226",
+        "lblock-004227",
+        "lblock-004228",
+        "lblock-004229",
+        "lblock-004230",
+        "lblock-004231",
+        "lblock-004232",
+        "lblock-004233",
+        "lblock-004234",
+        "lblock-004235",
+        "lblock-004236",
+        "lblock-004237"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0078",
+          "start_line": 15559,
+          "end_line": 15600
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "max_source_lines": 42,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T170-01.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004226",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15559,
+            "end_line": 15563
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004227",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15564,
+            "end_line": 15564
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004228",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15565,
+            "end_line": 15565
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004229",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15566,
+            "end_line": 15566
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004230",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15567,
+            "end_line": 15567
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004231",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15568,
+            "end_line": 15572
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004232",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15573,
+            "end_line": 15573
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004233",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15574,
+            "end_line": 15574
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004234",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15575,
+            "end_line": 15594
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": true,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004235",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15595,
+            "end_line": 15595
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004236",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15596,
+            "end_line": 15596
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004237",
+          "source_shard_id": "shard-0078",
+          "source_line_range": {
+            "start_line": 15597,
+            "end_line": 15600
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    },
+    {
+      "work_group_id": "wg-d1-T170-02",
+      "source_block_ids": [
+        "lblock-004238",
+        "lblock-004239",
+        "lblock-004240",
+        "lblock-004241",
+        "lblock-004242",
+        "lblock-004243",
+        "lblock-004244",
+        "lblock-004245",
+        "lblock-004246",
+        "lblock-004247",
+        "lblock-004248",
+        "lblock-004249",
+        "lblock-004250"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0079",
+          "start_line": 15601,
+          "end_line": 15624
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "max_source_lines": 24,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T170-02.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004238",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15601,
+            "end_line": 15604
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Executor_Protocol.md",
+              "Plans/UI_Command_Catalog.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004239",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15605,
+            "end_line": 15605
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004240",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15606,
+            "end_line": 15606
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004241",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15607,
+            "end_line": 15611
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004242",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15612,
+            "end_line": 15612
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004243",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15613,
+            "end_line": 15613
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004244",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15614,
+            "end_line": 15617
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004245",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15618,
+            "end_line": 15618
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004246",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15619,
+            "end_line": 15619
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004247",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15620,
+            "end_line": 15621
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004248",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15622,
+            "end_line": 15622
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004249",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15623,
+            "end_line": 15623
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004250",
+          "source_shard_id": "shard-0079",
+          "source_line_range": {
+            "start_line": 15624,
+            "end_line": 15624
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

@@ -1,20 +1,20 @@
 {
-  "schema_id": "pm.stage_report.v1",
+  "schema_id": "pm.stage_report.v3.2.3",
   "prompt_id": "E0",
   "prompt_version": "pm.e0.v3.2.3",
-  "timestamp_utc": "20260512T120000Z",
+  "timestamp_utc": "20260512T201451Z",
   "work_id": "w-20260312-203855",
   "section_id": "E",
   "section_name": "Coverage",
   "status": "complete",
   "execution_type": "mechanical_tool_operation",
   "execution_type_recorded_per_local_classification_override": true,
-  "execution_type_basis": "Section entry/handoff only (pm.e0.v3.2.3): derive work_id from section_exit_D; existence and sha256 verification of canonical_obligations.json against exit; no full semantic read of obligation corpus.",
-  "stage_purpose": "Start Coverage from Section D handoff; confirm Coverage inputs exist for E1.",
+  "execution_type_basis": "Section entry (pm.e0.v3.2.3): derive work_id from active section_exit_D.json; deterministic existence, size, line count, sha256, and len(obligations) checks only.",
+  "stage_purpose": "Start Coverage from Section D handoff; confirm canonical_obligations.json exists and matches section exit for E1.",
   "subagents": {
     "used": false,
     "required": false,
-    "required_basis": "execution_type=mechanical_tool_operation; deterministic READ/WRITE and hash checks only."
+    "required_basis": "execution_type=mechanical_tool_operation; deterministic READ/WRITE and tooling only."
   },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "required_subagent_tasks_total": 0,
@@ -35,39 +35,42 @@
   "actual_delegated_model_invocation": false,
   "subagent_proof_artifact_paths": [],
   "local_worker_outputs_used": [
-    "sha256sum: canonical_obligations.json",
-    "sha256sum: section_exit_D.json",
     "test -f: canonical_obligations.json",
-    "wc -l: section_exit_D.json, canonical_obligations.json",
-    "stat -c bytes: canonical_obligations.json",
-    "python3: json.load top-level schema_id, work_id, len(obligations)"
+    "sha256sum: section_exit_D.json, canonical_obligations.json",
+    "wc -c, wc -l: canonical_obligations.json; wc -l: section_exit_D.json",
+    "python3: json.load len(obligations) and schema_id from canonical_obligations.json"
   ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
   "real_subagent_proof_status": "not_required_mechanical",
   "deterministic_verification": {
-    "tool": "glob + test + sha256sum + wc + stat",
+    "tools": "glob, test -f, sha256sum, wc, python3 json.load",
+    "section_exit_d_glob_matches_under_Plans_dot_pipeline_work_items": 3,
+    "section_exit_d_active_non_archive_paths_used": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json"
+    ],
     "checks_performed": [
-      "Active section_exit_D.json at Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json (handoff source; archive paths not used)",
+      "Active section_exit_D.json at work item root (archive paths not used for handoff)",
       "section_exit_D.status == complete; work_id == w-20260312-203855",
       "section_exit_D.next_preferred_prompt == E0",
       "section_exit_D.active_source_for_coverage equals canonical_obligations path under same work_id",
-      "canonical_obligations.json exists",
+      "canonical_obligations.json exists (test -f)",
       "sha256sum(canonical_obligations.json) == section_exit_D.canonical_obligations_sha256",
       "section_exit_D.source_gate_status == pass",
       "section_exit_D.obligation_conversion_complete == true",
       "section_exit_D.canonical_obligations_merge_status == final",
-      "python3 json.load: schema_id pm.canonical_obligations.v3.2.3, work_id w-20260312-203855, len(obligations)==1710 matches section_exit_D.obligations_total"
+      "python3: len(obligations) == 1775 == section_exit_D.obligations_total",
+      "python3: schema_id pm.canonical_obligations.v3.2.3"
     ],
-    "checks_passed": 9,
-    "obligations_array_length_from_python_parse": 1710,
+    "checks_passed": 10,
     "checks_failed": 0,
     "section_exit_D_line_count": 59,
-    "canonical_obligations_line_count": 162001,
-    "canonical_obligations_stat_bytes": 6998470,
-    "section_exit_D_sha256": "a5f4086d12d41564c9366d8f736033dbbcb4ea69f39922012f5d8b5babdf65fc",
-    "canonical_obligations_sha256_observed": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
-    "canonical_obligations_sha256_expected_from_exit": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
+    "canonical_obligations_line_count": 131188,
+    "canonical_obligations_byte_size": 6058885,
+    "section_exit_D_sha256": "5de2488b51062e9c47dbdac33f3a199fe4b29661c0b8be377c1eb86f5683986a",
+    "canonical_obligations_sha256_observed": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "canonical_obligations_sha256_expected_from_exit": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "obligations_array_length_from_python_parse": 1775,
     "main_agent_did_not_semantically_read_full_canonical_obligations": true
   },
   "inputs_read": [
@@ -77,20 +80,18 @@
   "inputs_read_metadata": [
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
-      "read_mode": "full_json_structural",
+      "read_mode": "full_json_structural_for_handoff_fields",
       "line_count": 59
     },
     {
       "path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-      "read_mode": "existence_sha256_stat_wc_line_count_plus_python_json_load_top_level_only",
-      "line_count": 162001
+      "read_mode": "existence_sha256_size_line_count_python_len_obligations_and_schema_id_only",
+      "line_count": 131188
     }
   ],
   "work_id_derivation": {
-    "method": "section_exit_D.json work_id field on active non-archive artifact",
+    "method": "section_exit_D.json work_id on active non-archive artifact",
     "section_exit_D_selected_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
-    "section_exit_d_glob_total_matches_under_work_items": 3,
-    "section_exit_d_active_non_archive_count": 1,
     "conflict_detected": false,
     "selected_work_id": "w-20260312-203855"
   },
@@ -106,14 +107,15 @@
       "section_exit_D.json present and complete for work_id w-20260312-203855",
       "canonical_obligations.json present at path declared in section_exit_D",
       "sha256 of canonical_obligations.json matches section_exit_D.canonical_obligations_sha256",
-      "source_gate_status pass and obligation_conversion_complete true on section exit"
+      "source_gate_status pass and obligation_conversion_complete true on section exit",
+      "len(obligations) matches section_exit_D.obligations_total"
     ]
   },
   "blockers": [],
-  "summary": "E0 mechanical Coverage entry: work_id w-20260312-203855 from active section_exit_D; canonical_obligations.json verified by hash and size; Section E inputs ready for E1.",
+  "summary": "E0 mechanical Coverage entry: work_id w-20260312-203855 from active section_exit_D; canonical_obligations.json verified by hash, size, lines, and obligations count; Section E inputs ready for E1.",
   "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.2.3.",
   "notes": [
     "fanout_proof_status not_applicable_mechanical_tool_operation; wave fan-out proof omitted because subagents not required.",
-    "real_subagent_proof_status not_required_mechanical; subagent_runtime_kind local_tool_worker reflects deterministic tooling only (not delegated model subagents)."
+    "real_subagent_proof_status not_required_mechanical; subagent_runtime_kind local_tool_worker reflects deterministic shell/python checks only (not delegated model subagents)."
   ]
 }
