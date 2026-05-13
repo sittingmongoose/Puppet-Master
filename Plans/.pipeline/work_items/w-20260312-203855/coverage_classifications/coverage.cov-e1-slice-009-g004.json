@@ -2,232 +2,1273 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-009-g004",
-  "obligation_record_count": 5,
-  "source_classification_slices": [
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-009"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-slice-013-033",
+      "obligation_id": "obl-d2-slice-016-020",
       "coverage_task_id": "cov-e1-slice-009-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 426,
+          "end_line": 426,
+          "match_kind": "verbatim_substring"
+        }
+      ],
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0047"
-        ],
-        "source_block_ids": [
-          "lblock-002220"
-        ],
-        "source_group_ids": [
-          "wg-d1-T012-06"
-        ],
-        "source_slice_id": "d2-slice-013",
-        "source_line_ranges": [
-          {
-            "start_line": 9205,
-            "end_line": 9213
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g004",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002863 | excerpt=\"- `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:\n  - `command_id`\n  - `iss...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-021",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002866 | excerpt=\"- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/UI_Command_Catalog.md`\n- Cross-owner docs implicated by this...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-022",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/FinalGUISpec.md",
-          "line_start": 334,
-          "line_end": 350,
-          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "start_line": 1501,
+          "end_line": 1501,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-slice-013-037",
-      "coverage_task_id": "cov-e1-slice-009-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0047"
-        ],
-        "source_block_ids": [
-          "lblock-002234"
-        ],
-        "source_group_ids": [
-          "wg-d1-T012-07"
-        ],
-        "source_slice_id": "d2-slice-013",
-        "source_line_ranges": [
-          {
-            "start_line": 9251,
-            "end_line": 9262
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g004",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002869 | excerpt=\"- `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired ...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-023",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/chain-wizard-flexibility.md",
-          "line_start": 16,
-          "line_end": 32,
-          "quote": "- `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "path": "Plans/WorktreeGitImprovement.md",
+          "start_line": 576,
+          "end_line": 576,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-slice-013-039",
-      "coverage_task_id": "cov-e1-slice-009-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0047"
-        ],
-        "source_block_ids": [
-          "lblock-002240"
-        ],
-        "source_group_ids": [
-          "wg-d1-T012-07"
-        ],
-        "source_slice_id": "d2-slice-013",
-        "source_line_ranges": [
-          {
-            "start_line": 9284,
-            "end_line": 9299
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g004",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002875 | excerpt=\"- This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered ...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-024",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/Runtime_Artifacts_Panel.md",
-          "line_start": 37,
-          "line_end": 53,
-          "quote": "- `Plans/UI_Command_Catalog.md` + `Plans/Runtime_Artifacts_Panel.md`",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "path": "Plans/Progression_Gates.md",
+          "start_line": 681,
+          "end_line": 681,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-slice-013-043",
-      "coverage_task_id": "cov-e1-slice-009-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0047"
-        ],
-        "source_block_ids": [
-          "lblock-002254"
-        ],
-        "source_group_ids": [
-          "wg-d1-T012-08"
-        ],
-        "source_slice_id": "d2-slice-013",
-        "source_line_ranges": [
-          {
-            "start_line": 9326,
-            "end_line": 9330
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g004",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002880 | excerpt=\"- `Plans/Project_Output_Artifacts.md`\n- `Plans/chain-wizard-flexibility.md`\n- `Plans/interview-subagent-integration.m...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-025",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002883 | excerpt=\"- The planning/output side is already closer to the subject-open model than the file-opening docs are.\n- `Project_Out...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-026",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002886 | excerpt=\"- Primary owners:\n  - `Plans/Project_Output_Artifacts.md`\n  - `Plans/chain-wizard-flexibility.md`\n  - `Plans/intervie...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-027",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002889 | excerpt=\"- Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contra...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-028",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 312,
+          "end_line": 312,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002892 | excerpt=\"- Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with su...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-029",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002895 | excerpt=\"- This seam is mostly confirming alignment, not exposing a major contradiction.\n- The planning side is already provin...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-030",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002900 | excerpt=\"- `Plans/Commands_System.md`\n- `Plans/Wiring_Matrix.md`\n- `Plans/UI_Wiring_Rules.md`\n- `Plans/Project_Output_Artifact...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-031",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3669,
+          "end_line": 3669,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002903 | excerpt=\"- The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-032",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0058",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0058 | blocks=lblock-002906 | excerpt=\"- Primary owners:\n  - `Plans/Commands_System.md`\n  - `Plans/Wiring_Matrix.md`\n  - `Plans/UI_Wiring_Rules.md`\n  - `Pla...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-033",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 88,
+          "end_line": 88,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002907 | excerpt=\"  - `Plans/FinalGUISpec.md`\n  - `Plans/Media_Generation_and_Capabilities.md`\n  - `STATE_FILES.md`\n  - `Plans/evidence...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-034",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002910 | excerpt=\"- Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-035",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002913 | excerpt=\"- After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, bu...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-036",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002916 | excerpt=\"- Codex did not invalidate earlier findings; it mostly tightened them into more concrete, machine-verification-releva...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-037",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 88,
+          "end_line": 88,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002921 | excerpt=\"- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/UI_Command_Catalog...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-038",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002927 | excerpt=\"- Primary owners:\n  - `Plans/FinalGUISpec.md`\n  - `Plans/usage-feature.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  -...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-039",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002930 | excerpt=\"- `resume_url` and some attention flows are more exact than general-purpose search and cross-surface pivots, which is...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-040",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002936 | excerpt=\"- The issue here is less missing identity than missing normalization; the local docs already know what context they n...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-041",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 664,
+          "end_line": 664,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002941 | excerpt=\"- `Plans/storage-plan.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/usage-feature.md`\n- `Plans/Project_Output_Art...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-042",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/FinalGUISpec.md",
-          "line_start": 334,
-          "line_end": 350,
-          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "start_line": 2948,
+          "end_line": 2948,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-slice-013-045",
-      "coverage_task_id": "cov-e1-slice-009-g004",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0047"
-        ],
-        "source_block_ids": [
-          "lblock-002260"
-        ],
-        "source_group_ids": [
-          "wg-d1-T012-08"
-        ],
-        "source_slice_id": "d2-slice-013",
-        "source_line_ranges": [
-          {
-            "start_line": 9370,
-            "end_line": 9378
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g004",
-        "doc_resolution_status": "concrete_plans_targets"
-      },
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 334,
-          "line_end": 350,
-          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
-        }
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
       ],
-      "classification": "present",
-      "uncertainty": 0.11
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002944 | excerpt=\"- The canonical-storage side is already disciplined:\n  - `seglog` is canonical\n  - JSONL mirror is derived\n  - Projec...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-043",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002947 | excerpt=\"- Primary owners:\n  - `Plans/storage-plan.md`\n  - `Plans/usage-feature.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  -...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-016-044",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g004 has bounded live_doc_windows (107 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/interview-subagent-integration.md",
+        "Plans/newtools.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0059",
+        "source_slice_id": "d2-slice-016",
+        "canonical_excerpt_note": "shards=shard-0059 | blocks=lblock-002950 | excerpt=\"- Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their o...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

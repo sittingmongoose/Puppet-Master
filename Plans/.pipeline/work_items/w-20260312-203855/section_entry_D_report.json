@@ -2,10 +2,11 @@
   "schema_id": "pm.section_entry_D_report.v3.2.3",
   "prompt_id": "D0",
   "prompt_version": "pm.d0.v3.2.3",
-  "timestamp_utc": "20260511T211314Z",
+  "timestamp_utc": "20260512T154039Z",
   "work_id": "w-20260312-203855",
   "section_exit_C_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
   "section_exit_C_prompt_id": "C5",
+  "section_exit_C_timestamp_utc": "20260512T153743Z",
   "section_exit_C_status": "complete",
   "work_id_derivation": {
     "source": "section_exit_C.json",
@@ -33,7 +34,7 @@
     "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
     "ledger_seed_completeness_status": "pass",
     "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
-    "raw_blocks_count_mechanical": 4880,
+    "raw_blocks_count_mechanical": 4868,
     "raw_blocks_count_matches_completeness_report": true
   },
   "section_D_inputs_gate": {
@@ -51,6 +52,6 @@
   "notes": [
     "work_id locked from active (non-archive) section_exit_C.json only; no alternate work item selected.",
     "Prior obligation conversion artifacts were not read per D0 READ/TASK scope.",
-    "Mechanical confirmation: Python json load counted raw_blocks length 4880; equals ledger_seed_completeness_report.summary.raw_seed_blocks_total."
+    "Mechanical confirmation: JSON parse counted ledger_obligation_seed.raw_blocks length 4868; equals ledger_seed_completeness_report.summary.raw_seed_blocks_total."
   ]
 }

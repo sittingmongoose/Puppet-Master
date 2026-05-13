@@ -2,7 +2,7 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "C2",
   "prompt_version": "pm.c2.v3.2.3",
-  "timestamp_utc": "20260511T210827Z",
+  "timestamp_utc": "20260512T150629Z",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "status": "complete",
@@ -17,7 +17,7 @@
       "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json"
     ],
     "max_lines_per_shard": 200,
-    "source_line_count": 18244,
+    "source_line_count_wc_l": 18244,
     "source_bytes": 1044305,
     "source_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
     "shard_count_written": 92,
@@ -30,8 +30,9 @@
       "Plans/.pipeline/work_items/w-20260312-203855/ledger_shard_indexer.wave-001.json"
     ],
     "commands_run_post_write": [
-      "python3 verification: wc -l per shard sum vs source wc -l",
-      "python3 verification: ordered shard bytes concat == source bytes"
+      "python3: splitlines(keepends=True) windows of 200 lines; verify sum(wc -l shard_i)==wc -l source",
+      "python3: ordered shard bytes concat == source bytes",
+      "python3: emit manifest.json with per-shard sha256 and inclusive source line ranges"
     ],
     "outputs_written_paths": [
       "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
@@ -139,8 +140,8 @@
   "task_to_invocation_map": {},
   "invocation_to_task_map": {},
   "local_worker_outputs_used": [
-    "python3: deterministic bytes splitlines + shard write + manifest JSON",
-    "python3: post-verify wc -l sum and ordered byte concat vs source"
+    "python3: deterministic bytes splitlines + shard write + manifest JSON + wave JSON",
+    "wc: line count verification per shard and source"
   ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
@@ -159,5 +160,5 @@
   "distinct_subagent_invocations_total": 0,
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "summary": "Mechanical sharding: 18,244 source lines split into 92 shards (<=200 lines each) with byte-identical reassembly to working_ledger.md; manifest records per-shard line ranges and SHA-256; fan-out worklist + mechanical wave artifact document single-tool run; no model subagent sharding."
+  "summary": "Mechanical C2 re-run: 18,244 wc lines split into 92 shards (<=200 lines each); ordered concatenation byte-identical to working_ledger.md; manifest.json lists per-shard ranges and SHA-256; fanout worklist + wave-001 record single mechanical invocation; no delegated subagents."
 }

@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T029",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T029-01",
+      "source_block_ids": [
+        "lblock-000701",
+        "lblock-000702",
+        "lblock-000703",
+        "lblock-000704",
+        "lblock-000705",
+        "lblock-000706",
+        "lblock-000707",
+        "lblock-000708",
+        "lblock-000709",
+        "lblock-000710",
+        "lblock-000711",
+        "lblock-000712",
+        "lblock-000713",
+        "lblock-000714",
+        "lblock-000715",
+        "lblock-000716",
+        "lblock-000717",
+        "lblock-000718",
+        "lblock-000719",
+        "lblock-000720",
+        "lblock-000721",
+        "lblock-000722",
+        "lblock-000723",
+        "lblock-000724",
+        "lblock-000725"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0019",
+          "start_line": 3633,
+          "end_line": 3700
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "max_source_lines": 68,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T029-01.json"
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

@@ -2,492 +2,493 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-003-g008",
-  "obligation_record_count": 24,
-  "source_classification_slices": [
-    "e2-class-004"
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-003"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-005-151",
+      "obligation_id": "obl-005-002",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000554 | excerpt=\"- Working interpretation:\\n  - `concern record` = canonical durable object with stable identity and lifecycle\\n  - `concern source event/ref` = review finding, corroboration result, blocked episode, patch result, recovery \""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-152",
+      "obligation_id": "obl-005-003",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000557 | excerpt=\"- Concern record should likely carry:\\n  - `concern_id`\\n  - `project_id`\\n  - `run_id?`\\n  - scope object refs:\\n    - `seam_id?`\\n    - `package_id?`\\n    - `node_id?`\\n    - `attempt_id?`\\n    - `lane_id?`\\n    - `worktree_id?`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-153",
+      "obligation_id": "obl-005-004",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000560 | excerpt=\"- Good category set likely needs to align with weak-integration groupings plus runtime/governance classes:\\n  - `wiring`\\n  - `workflow`\\n  - `state_contract`\\n  - `gui_alignment`\\n  - `design_architecture`\\n  - `quality`\\n  - \""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-154",
+      "obligation_id": "obl-005-005",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Severity should probably stay independent from blocking semantics:\\n  - severity answers \"how bad is it\"\\n  - blocking_effect answers \"what does it prevent\"\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-155",
+      "obligation_id": "obl-005-006",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000563 | excerpt=\"- Existing lifecycle still seems right:\\n  - `active`\\n  - `acknowledged`\\n  - `resolved`\\n  - `dismissed`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-156",
+      "obligation_id": "obl-005-007",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Strong clarification:\\n  - `acknowledged`\\n    - user/operator has seen and accepted the concern as still real but not requiring immediate noise\\n  - `dismissed`\\n    - concern presentation was intentionally hidden/rejecte\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-157",
+      "obligation_id": "obl-005-008",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "ux_requirement",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Candidate `resolution_kind` values:\\n  - `fixed`\\n  - `accepted_risk`\\n  - `superseded`\\n  - `merged`\\n  - `split`\\n  - `invalidated`\\n  - `obsoleted_by_patch`\\n  - `obsoleted_by_recovery`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-158",
+      "obligation_id": "obl-005-009",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "ux_requirement",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000566 | excerpt=\"- Concerns should not duplicate endlessly when the same underlying issue reappears.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-159",
+      "obligation_id": "obl-005-010",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Recommended rules:\\n  - same issue persists with more evidence:\\n    - update existing concern\\n    - append sources/evidence\\n    - allow severity/attention escalation\\n  - one concern was too broad and really contains sep\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-160",
+      "obligation_id": "obl-005-011",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000569 | excerpt=\"- Recommended relationship model:\\n  - reviews and corroboration do not have to create new concern ids every time\\n  - they may:\\n    - create a new concern\\n    - reinforce an existing concern\\n    - downgrade/invalidate an \""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-161",
+      "obligation_id": "obl-005-012",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Specific interaction rules:\\n  - review finding:\\n    - may nominate a concern or attach evidence to an existing concern\\n  - corroboration outcome:\\n    - may confirm/deny/escalate/downgrade concern credibility\\n    - shou\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-162",
+      "obligation_id": "obl-005-013",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000572 | excerpt=\"- Need to distinguish:\\n  - concern owner for follow-up\\n  - concern creator/source\\n  - concern resolver\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-163",
+      "obligation_id": "obl-005-014",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "ux_requirement",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Good owner kinds still look like:\\n  - `Runtime`\\n  - `Package Overseer`\\n  - `Seam Overseer`\\n  - `Corroboration`\\n  - `Graph Patch`\\n  - `Recovery`\\n  - `User`\\n  - `External Resource`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-164",
+      "obligation_id": "obl-005-015",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- A concern should be allowed to change owner over time without changing identity.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-165",
+      "obligation_id": "obl-005-016",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000575 | excerpt=\"- Concern results should be object-first.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-166",
+      "obligation_id": "obl-005-017",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Search result should route based on what the user likely needs:\\n  - operational concern summary -> `Progress` or `Seams`\\n  - proof/evidence-heavy concern -> `Evidence`\\n  - exact concern record / merge-split lineage -> \""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-167",
+      "obligation_id": "obl-005-018",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "recommendation",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Concern result should carry:\\n  - focused run implications\\n  - target tab\\n  - selected concern id\\n  - related object context\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-168",
+      "obligation_id": "obl-005-019",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000578 | excerpt=\"- `Progress`\\n  - concern attention/urgency projection\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-169",
+      "obligation_id": "obl-005-020",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- `Seams`\\n  - grouped concern clusters by seam/package and weak-integration category\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-170",
+      "obligation_id": "obl-005-021",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "enum_definition",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- `Evidence`\\n  - concern-backed proof and source artifacts\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-171",
+      "obligation_id": "obl-005-022",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "recommendation",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- `History`\\n  - concern timeline and major lifecycle transitions\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-172",
+      "obligation_id": "obl-005-023",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "recommendation",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- `Ledger`\\n  - exact concern record, sources, lineage, merge/split/supersession, acknowledgment/dismissal rationale\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-173",
+      "obligation_id": "obl-005-024",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "recommendation",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | blocks=lblock-000581 | excerpt=\"- Concern importance is already established, but canonical storage/contract shape is still underdefined.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-005-174",
+      "obligation_id": "obl-005-025",
       "coverage_task_id": "cov-e1-slice-003-g008",
-      "source_shard_id": "shard-0017",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "acceptance_criterion",
       "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.64,
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- There is no obvious current concern event family or concern record family in the local docs comparable to attempts/blocked/remediation.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-026",
+      "coverage_task_id": "cov-e1-slice-003-g008",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g008 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0016",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0016 | excerpt=\"- Merge/split/supersession logic for concerns is currently discussion-only, not contract-level.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     }
   ]
 }

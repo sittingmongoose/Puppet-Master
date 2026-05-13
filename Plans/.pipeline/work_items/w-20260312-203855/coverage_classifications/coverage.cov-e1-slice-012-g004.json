@@ -2,252 +2,984 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-012-g004",
-  "obligation_record_count": 12,
-  "source_classification_slices": [
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-012"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-017-028",
+      "obligation_id": "obl-020-063",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 811,
+          "end_line": 811,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003979 | excerpt=\"- The wiring layer is still built around a simple command-binding contract:\n  - `ui_element_id`\n  - `ui_command_id`\n  - ...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-030",
+      "obligation_id": "obl-020-064",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_path_token"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003982 | excerpt=\"- Primary owner docs:\n  - `Plans/UI_Wiring_Rules.md`\n  - `Plans/Wiring_Matrix.schema.json`\n  - `Plans/evidence.schema.js...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-031",
+      "obligation_id": "obl-020-065",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2153,
+          "end_line": 2153,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003985 | excerpt=\"- The routing rewrite requires stable wrapper commands that normalize to shared contracts, but the wiring model still tr...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-032",
+      "obligation_id": "obl-020-066",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1280,
+          "end_line": 1280,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003988 | excerpt=\"- Keep normalization metadata owned by the command-definition side, not by wiring rows.\n- Extend the wiring/gate model s...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-034",
+      "obligation_id": "obl-020-067",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2489,
+          "end_line": 2489,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003991 | excerpt=\"- The matrix schema limitation and the evidence schema limitation are different problems.\n- The clean fix is catalog-own...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-035",
+      "obligation_id": "obl-020-068",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_path_token"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003996 | excerpt=\"- `Plans/Crosswalk.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-037",
+      "obligation_id": "obl-020-069",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_path_token"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-003999 | excerpt=\"- Several routing-adjacent docs now have plain spec-integrity defects in addition to stale model assumptions.\n- `Plans/C...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-038",
+      "obligation_id": "obl-020-070",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_path_token"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004002 | excerpt=\"- Primary spec-integrity docs:\n  - `Plans/Crosswalk.md`\n  - `Plans/usage-feature.md`\n  - `Plans/FinalGUISpec.md`\n  - `Pl...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-039",
+      "obligation_id": "obl-020-071",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
+      "classification": "partial",
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-012-g004 has bounded live_doc_windows (74 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004005 | excerpt=\"- Some of the current drift is not only conceptual. The docs also contain duplicate headings and repeated sections that ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-041",
+      "obligation_id": "obl-020-072",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/usage-feature.md",
+          "start_line": 612,
+          "end_line": 612,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004008 | excerpt=\"- Treat duplicate numbering and repeated sections as first-class reconciliation tasks, not cosmetic cleanup.\n- Repair `C...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-043",
+      "obligation_id": "obl-020-073",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
+      "classification": "partial",
       "evidence_spans": [],
-      "row_signals": [
-        {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
-        }
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-012-g004 has bounded live_doc_windows (74 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004011 | excerpt=\"- These are spec-integrity failures, not open design questions.\n- They should be fixed in the same pass as the surroundi...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-017-045",
+      "obligation_id": "obl-020-074",
       "coverage_task_id": "cov-e1-slice-012-g004",
-      "source_shard_id": "shard-0062",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "best_evidence_score": 0.0,
-      "uncertainty": 0.62,
-      "evidence_spans": [],
-      "row_signals": [
+      "classification": "present",
+      "evidence_spans": [
         {
-          "signal_type": "source_hint_gap",
-          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "notes": [
-        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
-      ]
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004016 | excerpt=\"- `Plans/Contracts_V0.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/assistant-chat-design.md`\n- `Plan...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-020-075",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004019 | excerpt=\"- `resume_url` is still acting as a shadow routing primitive in multiple docs instead of being treated as serialized tra...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-020-076",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004022 | excerpt=\"- Primary owner-gap docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n- Strong stale consumers:\n  - `Plans/F...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-020-077",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-012-g004 has bounded live_doc_windows (74 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-020",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004025 | excerpt=\"- `resume_url` is still being used as if it were canonical navigation identity instead of serialized transport.\n- Owner ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-001",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 693,
+          "end_line": 693,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004028 | excerpt=\"- Treat `resume_url` as serialized transport only.\n- Make canonical route/object identity primary in owner docs.\n- Keep ...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-002",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2898,
+          "end_line": 2898,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004031 | excerpt=\"- This seam is now an owner-doc contradiction, not just a GUI wording issue.\n- `assistant-chat-design.md` already contai...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-003",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0075",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0075 | blocks=lblock-004036 | excerpt=\"- `Plans/Contracts_V0.md`\n- `Plans/storage-plan.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/assistant-chat-design....\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-004",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 816,
+          "end_line": 816,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004039 | excerpt=\"- The docs currently carry several different ref families under one loose \u201clink\u201d idea:\n  - inspection/detail refs\n  - re...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-005",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004042 | excerpt=\"- Primary owner docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n- Strong adjacent consumers:\n  - `Plans/Ru...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-006",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1612,
+          "end_line": 1612,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004045 | excerpt=\"- `resume_url` is currently the only ref field trying to carry actual navigation, which is why it keeps colliding with t...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-007",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 817,
+          "end_line": 817,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004048 | excerpt=\"- Make the owner-doc distinction explicit:\n  - inspection/provenance refs stay in event and record payloads\n  - route/op...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-008",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 311,
+          "end_line": 311,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004051 | excerpt=\"- This split will make the owner-doc rewrite much easier because most refs do not need replacement.\n- The real conflict ...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-009",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 724,
+          "end_line": 724,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004056 | excerpt=\"- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/Executor_Protocol.md`\n- ...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-021-010",
+      "coverage_task_id": "cov-e1-slice-012-g004",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 823,
+          "end_line": 823,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0076",
+        "source_slice_id": "d2-slice-021",
+        "canonical_excerpt_note": "shards=shard-0076 | blocks=lblock-004059 | excerpt=\"- `Plans/storage-plan.md` is still carrying two execution models at once inside its canonical-record section.\n- The newe...\""
+      },
+      "uncertainty": "low",
+      "local_deterministic_seed_used": false
     }
   ]
 }

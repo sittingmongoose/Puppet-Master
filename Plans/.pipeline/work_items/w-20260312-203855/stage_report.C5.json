@@ -2,7 +2,7 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "C5",
   "prompt_version": "pm.c5.v3.2.3",
-  "timestamp_utc": "20260511T211218Z",
+  "timestamp_utc": "20260512T153743Z",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "status": "complete",
@@ -19,6 +19,7 @@
     "c4_validation_mode": "lossless_inventory_mechanical",
     "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
     "obligation_seed_mode": "lossless_raw_blocks",
+    "obligation_seed_raw_blocks_total": 4868,
     "source_inventory_path_from_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
     "outputs_written_paths": [
       "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
@@ -32,7 +33,9 @@
   "subagent_proof_artifact_paths": [],
   "task_to_invocation_map": {},
   "invocation_to_task_map": {},
-  "local_worker_outputs_used": [],
+  "local_worker_outputs_used": [
+    "python3: load ledger_obligation_seed.json; count raw_blocks; print schema_id/work_id/seed_mode (bounded mechanical summary only)"
+  ],
   "main_agent_batching_detected": false,
   "shell_or_python_worker_misclassified_as_subagent_detected": false,
   "real_subagent_proof_status": "not_required_mechanical",
@@ -48,5 +51,5 @@
   "distinct_subagent_invocations_total": 0,
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "summary": "Section C exit: C4 mechanical completeness pass (lossless_inventory_mechanical); obligation seed v3.2.3 lossless_raw_blocks; section_exit_C.json written; next D0."
+  "summary": "Section C exit v3.2.3: confirmed C4 pass (lossless_inventory_mechanical) and pm.ledger_obligation_seed.v3.2.3 with 4868 raw_blocks; wrote section_exit_C.json and routed to D0; no semantic seed_groups requirement."
 }

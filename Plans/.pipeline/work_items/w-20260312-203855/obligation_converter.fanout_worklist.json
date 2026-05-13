@@ -2,7 +2,7 @@
   "schema_id": "pm.obligation_converter.fanout_worklist.v3.2.3",
   "prompt_id": "D2",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260511T235744Z",
+  "timestamp_utc": "20260512T183046Z",
   "required_subagent_tasks_total": 25,
   "tasks": [
     {
@@ -15,7 +15,8 @@
         "source_group_ids": [
           "wg-d1-T001-01",
           "wg-d1-T001-02",
-          "wg-d1-T001-03"
+          "wg-d1-T001-03",
+          "wg-d1-T001-04"
         ],
         "source_block_ids": [
           "lblock-000001",
@@ -42,12 +43,10 @@
           "lblock-000022",
           "lblock-000023",
           "lblock-000024",
-          "lblock-000025",
-          "lblock-000026",
-          "lblock-000027"
+          "lblock-000025"
         ],
         "source_lines_total": 800,
-        "raw_blocks_total": 27
+        "raw_blocks_total": 25
       },
       "budget": {
         "target_source_lines_min": 500,
@@ -67,14 +66,15 @@
         "slice_id": "d2-slice-002",
         "source_group_ids": [
           "wg-d1-T002-01",
-          "wg-d1-T002-02",
-          "wg-d1-T002-03",
-          "wg-d1-T002-04",
-          "wg-d1-T002-05",
-          "wg-d1-T002-06",
-          "wg-d1-T002-07"
+          "wg-d1-T003-01",
+          "wg-d1-T004-01",
+          "wg-d1-T005-01",
+          "wg-d1-T006-01",
+          "wg-d1-T007-01"
         ],
         "source_block_ids": [
+          "lblock-000026",
+          "lblock-000027",
           "lblock-000028",
           "lblock-000029",
           "lblock-000030",
@@ -222,7 +222,37 @@
           "lblock-000172",
           "lblock-000173",
           "lblock-000174",
-          "lblock-000175",
+          "lblock-000175"
+        ],
+        "source_lines_total": 727,
+        "raw_blocks_total": 150
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-003",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-003",
+        "source_group_ids": [
+          "wg-d1-T008-01",
+          "wg-d1-T009-01",
+          "wg-d1-T010-01",
+          "wg-d1-T011-01",
+          "wg-d1-T012-01",
+          "wg-d1-T013-01",
+          "wg-d1-T014-01"
+        ],
+        "source_block_ids": [
           "lblock-000176",
           "lblock-000177",
           "lblock-000178",
@@ -245,45 +275,7 @@
           "lblock-000195",
           "lblock-000196",
           "lblock-000197",
-          "lblock-000198"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 171
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-003",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-003",
-        "source_group_ids": [
-          "wg-d1-T003-01",
-          "wg-d1-T003-02",
-          "wg-d1-T003-03",
-          "wg-d1-T003-04",
-          "wg-d1-T003-05",
-          "wg-d1-T003-06",
-          "wg-d1-T003-07",
-          "wg-d1-T003-08",
-          "wg-d1-T003-09",
-          "wg-d1-T003-10",
-          "wg-d1-T003-11",
-          "wg-d1-T003-12",
-          "wg-d1-T003-13",
-          "wg-d1-T003-14",
-          "wg-d1-T003-15"
-        ],
-        "source_block_ids": [
+          "lblock-000198",
           "lblock-000199",
           "lblock-000200",
           "lblock-000201",
@@ -339,42 +331,7 @@
           "lblock-000251",
           "lblock-000252",
           "lblock-000253",
-          "lblock-000254"
-        ],
-        "source_lines_total": 311,
-        "raw_blocks_total": 56
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-004",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-004",
-        "source_group_ids": [
-          "wg-d1-T003-16",
-          "wg-d1-T003-17",
-          "wg-d1-T003-18",
-          "wg-d1-T003-19",
-          "wg-d1-T003-20",
-          "wg-d1-T003-21",
-          "wg-d1-T003-22",
-          "wg-d1-T003-23",
-          "wg-d1-T003-24",
-          "wg-d1-T004-01",
-          "wg-d1-T004-02",
-          "wg-d1-T004-03"
-        ],
-        "source_block_ids": [
+          "lblock-000254",
           "lblock-000255",
           "lblock-000256",
           "lblock-000257",
@@ -470,7 +427,38 @@
           "lblock-000347",
           "lblock-000348",
           "lblock-000349",
-          "lblock-000350",
+          "lblock-000350"
+        ],
+        "source_lines_total": 733,
+        "raw_blocks_total": 175
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-004",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-004",
+        "source_group_ids": [
+          "wg-d1-T015-01",
+          "wg-d1-T016-01",
+          "wg-d1-T017-01",
+          "wg-d1-T018-01",
+          "wg-d1-T019-01",
+          "wg-d1-T020-01",
+          "wg-d1-T021-01",
+          "wg-d1-T022-01"
+        ],
+        "source_block_ids": [
           "lblock-000351",
           "lblock-000352",
           "lblock-000353",
@@ -574,41 +562,7 @@
           "lblock-000451",
           "lblock-000452",
           "lblock-000453",
-          "lblock-000454"
-        ],
-        "source_lines_total": 727,
-        "raw_blocks_total": 200
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-005",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-005",
-        "source_group_ids": [
-          "wg-d1-T004-04",
-          "wg-d1-T004-05",
-          "wg-d1-T004-06",
-          "wg-d1-T004-07",
-          "wg-d1-T004-08",
-          "wg-d1-T004-09",
-          "wg-d1-T004-10",
-          "wg-d1-T004-11",
-          "wg-d1-T004-12",
-          "wg-d1-T005-01",
-          "wg-d1-T005-02"
-        ],
-        "source_block_ids": [
+          "lblock-000454",
           "lblock-000455",
           "lblock-000456",
           "lblock-000457",
@@ -704,7 +658,37 @@
           "lblock-000547",
           "lblock-000548",
           "lblock-000549",
-          "lblock-000550",
+          "lblock-000550"
+        ],
+        "source_lines_total": 734,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-005",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-005",
+        "source_group_ids": [
+          "wg-d1-T023-01",
+          "wg-d1-T024-01",
+          "wg-d1-T025-01",
+          "wg-d1-T026-01",
+          "wg-d1-T027-01",
+          "wg-d1-T028-01",
+          "wg-d1-T029-01"
+        ],
+        "source_block_ids": [
           "lblock-000551",
           "lblock-000552",
           "lblock-000553",
@@ -797,43 +781,7 @@
           "lblock-000640",
           "lblock-000641",
           "lblock-000642",
-          "lblock-000643"
-        ],
-        "source_lines_total": 762,
-        "raw_blocks_total": 189
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-006",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-006",
-        "source_group_ids": [
-          "wg-d1-T005-03",
-          "wg-d1-T005-04",
-          "wg-d1-T005-05",
-          "wg-d1-T005-06",
-          "wg-d1-T005-07",
-          "wg-d1-T005-08",
-          "wg-d1-T005-09",
-          "wg-d1-T005-10",
-          "wg-d1-T005-11",
-          "wg-d1-T006-01",
-          "wg-d1-T006-02",
-          "wg-d1-T006-03",
-          "wg-d1-T006-04"
-        ],
-        "source_block_ids": [
+          "lblock-000643",
           "lblock-000644",
           "lblock-000645",
           "lblock-000646",
@@ -915,7 +863,38 @@
           "lblock-000722",
           "lblock-000723",
           "lblock-000724",
-          "lblock-000725",
+          "lblock-000725"
+        ],
+        "source_lines_total": 706,
+        "raw_blocks_total": 175
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-006",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-006",
+        "source_group_ids": [
+          "wg-d1-T030-01",
+          "wg-d1-T031-01",
+          "wg-d1-T032-01",
+          "wg-d1-T033-01",
+          "wg-d1-T034-01",
+          "wg-d1-T035-01",
+          "wg-d1-T036-01",
+          "wg-d1-T037-01"
+        ],
+        "source_block_ids": [
           "lblock-000726",
           "lblock-000727",
           "lblock-000728",
@@ -1041,44 +1020,7 @@
           "lblock-000848",
           "lblock-000849",
           "lblock-000850",
-          "lblock-000851"
-        ],
-        "source_lines_total": 752,
-        "raw_blocks_total": 208
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-007",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-007",
-        "source_group_ids": [
-          "wg-d1-T006-05",
-          "wg-d1-T006-06",
-          "wg-d1-T006-07",
-          "wg-d1-T006-08",
-          "wg-d1-T006-09",
-          "wg-d1-T006-10",
-          "wg-d1-T006-11",
-          "wg-d1-T006-12",
-          "wg-d1-T006-13",
-          "wg-d1-T006-14",
-          "wg-d1-T006-15",
-          "wg-d1-T006-16",
-          "wg-d1-T007-01",
-          "wg-d1-T007-02"
-        ],
-        "source_block_ids": [
+          "lblock-000851",
           "lblock-000852",
           "lblock-000853",
           "lblock-000854",
@@ -1152,7 +1094,39 @@
           "lblock-000922",
           "lblock-000923",
           "lblock-000924",
-          "lblock-000925",
+          "lblock-000925"
+        ],
+        "source_lines_total": 715,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-007",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-007",
+        "source_group_ids": [
+          "wg-d1-T038-01",
+          "wg-d1-T039-01",
+          "wg-d1-T040-01",
+          "wg-d1-T041-01",
+          "wg-d1-T042-01",
+          "wg-d1-T043-01",
+          "wg-d1-T044-01",
+          "wg-d1-T045-01",
+          "wg-d1-T046-01"
+        ],
+        "source_block_ids": [
           "lblock-000926",
           "lblock-000927",
           "lblock-000928",
@@ -1300,40 +1274,7 @@
           "lblock-001070",
           "lblock-001071",
           "lblock-001072",
-          "lblock-001073"
-        ],
-        "source_lines_total": 765,
-        "raw_blocks_total": 222
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-008",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-008",
-        "source_group_ids": [
-          "wg-d1-T007-03",
-          "wg-d1-T007-04",
-          "wg-d1-T007-05",
-          "wg-d1-T007-06",
-          "wg-d1-T007-07",
-          "wg-d1-T007-08",
-          "wg-d1-T007-09",
-          "wg-d1-T007-10",
-          "wg-d1-T007-11",
-          "wg-d1-T007-12"
-        ],
-        "source_block_ids": [
+          "lblock-001073",
           "lblock-001074",
           "lblock-001075",
           "lblock-001076",
@@ -1410,7 +1351,38 @@
           "lblock-001147",
           "lblock-001148",
           "lblock-001149",
-          "lblock-001150",
+          "lblock-001150"
+        ],
+        "source_lines_total": 795,
+        "raw_blocks_total": 225
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-008",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-008",
+        "source_group_ids": [
+          "wg-d1-T047-01",
+          "wg-d1-T048-01",
+          "wg-d1-T049-01",
+          "wg-d1-T050-01",
+          "wg-d1-T051-01",
+          "wg-d1-T052-01",
+          "wg-d1-T053-01",
+          "wg-d1-T054-01"
+        ],
+        "source_block_ids": [
           "lblock-001151",
           "lblock-001152",
           "lblock-001153",
@@ -1521,40 +1493,7 @@
           "lblock-001258",
           "lblock-001259",
           "lblock-001260",
-          "lblock-001261"
-        ],
-        "source_lines_total": 683,
-        "raw_blocks_total": 188
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-009",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-009",
-        "source_group_ids": [
-          "wg-d1-T008-01",
-          "wg-d1-T008-02",
-          "wg-d1-T008-03",
-          "wg-d1-T008-04",
-          "wg-d1-T008-05",
-          "wg-d1-T008-06",
-          "wg-d1-T008-07",
-          "wg-d1-T008-08",
-          "wg-d1-T008-09",
-          "wg-d1-T008-10"
-        ],
-        "source_block_ids": [
+          "lblock-001261",
           "lblock-001262",
           "lblock-001263",
           "lblock-001264",
@@ -1643,7 +1582,37 @@
           "lblock-001347",
           "lblock-001348",
           "lblock-001349",
-          "lblock-001350",
+          "lblock-001350"
+        ],
+        "source_lines_total": 745,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-009",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-009",
+        "source_group_ids": [
+          "wg-d1-T055-01",
+          "wg-d1-T056-01",
+          "wg-d1-T057-01",
+          "wg-d1-T058-01",
+          "wg-d1-T059-01",
+          "wg-d1-T060-01",
+          "wg-d1-T061-01"
+        ],
+        "source_block_ids": [
           "lblock-001351",
           "lblock-001352",
           "lblock-001353",
@@ -1761,39 +1730,7 @@
           "lblock-001465",
           "lblock-001466",
           "lblock-001467",
-          "lblock-001468"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 207
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-010",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-010",
-        "source_group_ids": [
-          "wg-d1-T009-01",
-          "wg-d1-T009-02",
-          "wg-d1-T009-03",
-          "wg-d1-T009-04",
-          "wg-d1-T009-05",
-          "wg-d1-T009-06",
-          "wg-d1-T009-07",
-          "wg-d1-T009-08",
-          "wg-d1-T009-09"
-        ],
-        "source_block_ids": [
+          "lblock-001468",
           "lblock-001469",
           "lblock-001470",
           "lblock-001471",
@@ -1850,7 +1787,39 @@
           "lblock-001522",
           "lblock-001523",
           "lblock-001524",
-          "lblock-001525",
+          "lblock-001525"
+        ],
+        "source_lines_total": 722,
+        "raw_blocks_total": 175
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-010",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-010",
+        "source_group_ids": [
+          "wg-d1-T062-01",
+          "wg-d1-T063-01",
+          "wg-d1-T064-01",
+          "wg-d1-T065-01",
+          "wg-d1-T066-01",
+          "wg-d1-T067-01",
+          "wg-d1-T068-01",
+          "wg-d1-T069-01",
+          "wg-d1-T070-01"
+        ],
+        "source_block_ids": [
           "lblock-001526",
           "lblock-001527",
           "lblock-001528",
@@ -2008,41 +1977,7 @@
           "lblock-001680",
           "lblock-001681",
           "lblock-001682",
-          "lblock-001683"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 215
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-011",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-011",
-        "source_group_ids": [
-          "wg-d1-T010-01",
-          "wg-d1-T010-02",
-          "wg-d1-T010-03",
-          "wg-d1-T010-04",
-          "wg-d1-T010-05",
-          "wg-d1-T010-06",
-          "wg-d1-T010-07",
-          "wg-d1-T010-08",
-          "wg-d1-T010-09",
-          "wg-d1-T010-10",
-          "wg-d1-T010-11"
-        ],
-        "source_block_ids": [
+          "lblock-001683",
           "lblock-001684",
           "lblock-001685",
           "lblock-001686",
@@ -2109,7 +2044,38 @@
           "lblock-001747",
           "lblock-001748",
           "lblock-001749",
-          "lblock-001750",
+          "lblock-001750"
+        ],
+        "source_lines_total": 779,
+        "raw_blocks_total": 225
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-011",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-011",
+        "source_group_ids": [
+          "wg-d1-T071-01",
+          "wg-d1-T072-01",
+          "wg-d1-T073-01",
+          "wg-d1-T074-01",
+          "wg-d1-T075-01",
+          "wg-d1-T076-01",
+          "wg-d1-T077-01",
+          "wg-d1-T078-01"
+        ],
+        "source_block_ids": [
           "lblock-001751",
           "lblock-001752",
           "lblock-001753",
@@ -2254,40 +2220,7 @@
           "lblock-001892",
           "lblock-001893",
           "lblock-001894",
-          "lblock-001895"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 212
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-012",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-012",
-        "source_group_ids": [
-          "wg-d1-T011-01",
-          "wg-d1-T011-02",
-          "wg-d1-T011-03",
-          "wg-d1-T011-04",
-          "wg-d1-T011-05",
-          "wg-d1-T011-06",
-          "wg-d1-T011-07",
-          "wg-d1-T011-08",
-          "wg-d1-T011-09",
-          "wg-d1-T011-10"
-        ],
-        "source_block_ids": [
+          "lblock-001895",
           "lblock-001896",
           "lblock-001897",
           "lblock-001898",
@@ -2342,7 +2275,38 @@
           "lblock-001947",
           "lblock-001948",
           "lblock-001949",
-          "lblock-001950",
+          "lblock-001950"
+        ],
+        "source_lines_total": 790,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-012",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-012",
+        "source_group_ids": [
+          "wg-d1-T079-01",
+          "wg-d1-T080-01",
+          "wg-d1-T081-01",
+          "wg-d1-T082-01",
+          "wg-d1-T083-01",
+          "wg-d1-T084-01",
+          "wg-d1-T085-01",
+          "wg-d1-T086-01"
+        ],
+        "source_block_ids": [
           "lblock-001951",
           "lblock-001952",
           "lblock-001953",
@@ -2507,41 +2471,7 @@
           "lblock-002112",
           "lblock-002113",
           "lblock-002114",
-          "lblock-002115"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 220
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-013",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-013",
-        "source_group_ids": [
-          "wg-d1-T012-01",
-          "wg-d1-T012-02",
-          "wg-d1-T012-03",
-          "wg-d1-T012-04",
-          "wg-d1-T012-05",
-          "wg-d1-T012-06",
-          "wg-d1-T012-07",
-          "wg-d1-T012-08",
-          "wg-d1-T012-09",
-          "wg-d1-T012-10",
-          "wg-d1-T012-11"
-        ],
-        "source_block_ids": [
+          "lblock-002115",
           "lblock-002116",
           "lblock-002117",
           "lblock-002118",
@@ -2576,7 +2506,38 @@
           "lblock-002147",
           "lblock-002148",
           "lblock-002149",
-          "lblock-002150",
+          "lblock-002150"
+        ],
+        "source_lines_total": 699,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-013",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-013",
+        "source_group_ids": [
+          "wg-d1-T087-01",
+          "wg-d1-T088-01",
+          "wg-d1-T089-01",
+          "wg-d1-T090-01",
+          "wg-d1-T091-01",
+          "wg-d1-T092-01",
+          "wg-d1-T093-01",
+          "wg-d1-T094-01"
+        ],
+        "source_block_ids": [
           "lblock-002151",
           "lblock-002152",
           "lblock-002153",
@@ -2744,40 +2705,7 @@
           "lblock-002315",
           "lblock-002316",
           "lblock-002317",
-          "lblock-002318"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 203
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-014",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-014",
-        "source_group_ids": [
-          "wg-d1-T013-01",
-          "wg-d1-T013-02",
-          "wg-d1-T013-03",
-          "wg-d1-T013-04",
-          "wg-d1-T013-05",
-          "wg-d1-T013-06",
-          "wg-d1-T013-07",
-          "wg-d1-T013-08",
-          "wg-d1-T013-09",
-          "wg-d1-T013-10"
-        ],
-        "source_block_ids": [
+          "lblock-002318",
           "lblock-002319",
           "lblock-002320",
           "lblock-002321",
@@ -2809,7 +2737,39 @@
           "lblock-002347",
           "lblock-002348",
           "lblock-002349",
-          "lblock-002350",
+          "lblock-002350"
+        ],
+        "source_lines_total": 786,
+        "raw_blocks_total": 200
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-014",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-014",
+        "source_group_ids": [
+          "wg-d1-T095-01",
+          "wg-d1-T096-01",
+          "wg-d1-T097-01",
+          "wg-d1-T098-01",
+          "wg-d1-T099-01",
+          "wg-d1-T100-01",
+          "wg-d1-T101-01",
+          "wg-d1-T102-01",
+          "wg-d1-T103-01"
+        ],
+        "source_block_ids": [
           "lblock-002351",
           "lblock-002352",
           "lblock-002353",
@@ -3004,41 +2964,7 @@
           "lblock-002542",
           "lblock-002543",
           "lblock-002544",
-          "lblock-002545"
-        ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 227
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-015",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-015",
-        "source_group_ids": [
-          "wg-d1-T014-01",
-          "wg-d1-T014-02",
-          "wg-d1-T014-03",
-          "wg-d1-T014-04",
-          "wg-d1-T014-05",
-          "wg-d1-T014-06",
-          "wg-d1-T014-07",
-          "wg-d1-T014-08",
-          "wg-d1-T014-09",
-          "wg-d1-T014-10",
-          "wg-d1-T014-11"
-        ],
-        "source_block_ids": [
+          "lblock-002545",
           "lblock-002546",
           "lblock-002547",
           "lblock-002548",
@@ -3068,7 +2994,39 @@
           "lblock-002572",
           "lblock-002573",
           "lblock-002574",
-          "lblock-002575",
+          "lblock-002575"
+        ],
+        "source_lines_total": 772,
+        "raw_blocks_total": 225
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-015",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-015",
+        "source_group_ids": [
+          "wg-d1-T104-01",
+          "wg-d1-T105-01",
+          "wg-d1-T106-01",
+          "wg-d1-T107-01",
+          "wg-d1-T108-01",
+          "wg-d1-T109-01",
+          "wg-d1-T110-01",
+          "wg-d1-T111-01",
+          "wg-d1-T112-01"
+        ],
+        "source_block_ids": [
           "lblock-002576",
           "lblock-002577",
           "lblock-002578",
@@ -3278,10 +3236,25 @@
           "lblock-002782",
           "lblock-002783",
           "lblock-002784",
-          "lblock-002785"
+          "lblock-002785",
+          "lblock-002786",
+          "lblock-002787",
+          "lblock-002788",
+          "lblock-002789",
+          "lblock-002790",
+          "lblock-002791",
+          "lblock-002792",
+          "lblock-002793",
+          "lblock-002794",
+          "lblock-002795",
+          "lblock-002796",
+          "lblock-002797",
+          "lblock-002798",
+          "lblock-002799",
+          "lblock-002800"
         ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 240
+        "source_lines_total": 749,
+        "raw_blocks_total": 225
       },
       "budget": {
         "target_source_lines_min": 500,
@@ -3300,33 +3273,18 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-016",
         "source_group_ids": [
-          "wg-d1-T015-01",
-          "wg-d1-T015-02",
-          "wg-d1-T015-03",
-          "wg-d1-T015-04",
-          "wg-d1-T015-05",
-          "wg-d1-T015-06",
-          "wg-d1-T015-07",
-          "wg-d1-T015-08",
-          "wg-d1-T015-09",
-          "wg-d1-T015-10"
+          "wg-d1-T113-01",
+          "wg-d1-T114-01",
+          "wg-d1-T115-01",
+          "wg-d1-T116-01",
+          "wg-d1-T117-01",
+          "wg-d1-T118-01",
+          "wg-d1-T119-01",
+          "wg-d1-T120-01",
+          "wg-d1-T121-01",
+          "wg-d1-T122-01"
         ],
         "source_block_ids": [
-          "lblock-002786",
-          "lblock-002787",
-          "lblock-002788",
-          "lblock-002789",
-          "lblock-002790",
-          "lblock-002791",
-          "lblock-002792",
-          "lblock-002793",
-          "lblock-002794",
-          "lblock-002795",
-          "lblock-002796",
-          "lblock-002797",
-          "lblock-002798",
-          "lblock-002799",
-          "lblock-002800",
           "lblock-002801",
           "lblock-002802",
           "lblock-002803",
@@ -3561,9 +3519,24 @@
           "lblock-003032",
           "lblock-003033",
           "lblock-003034",
-          "lblock-003035"
+          "lblock-003035",
+          "lblock-003036",
+          "lblock-003037",
+          "lblock-003038",
+          "lblock-003039",
+          "lblock-003040",
+          "lblock-003041",
+          "lblock-003042",
+          "lblock-003043",
+          "lblock-003044",
+          "lblock-003045",
+          "lblock-003046",
+          "lblock-003047",
+          "lblock-003048",
+          "lblock-003049",
+          "lblock-003050"
         ],
-        "source_lines_total": 776,
+        "source_lines_total": 788,
         "raw_blocks_total": 250
       },
       "budget": {
@@ -3583,33 +3556,18 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-017",
         "source_group_ids": [
-          "wg-d1-T016-01",
-          "wg-d1-T016-02",
-          "wg-d1-T016-03",
-          "wg-d1-T016-04",
-          "wg-d1-T016-05",
-          "wg-d1-T016-06",
-          "wg-d1-T016-07",
-          "wg-d1-T016-08",
-          "wg-d1-T016-09",
-          "wg-d1-T016-10"
+          "wg-d1-T123-01",
+          "wg-d1-T124-01",
+          "wg-d1-T125-01",
+          "wg-d1-T126-01",
+          "wg-d1-T127-01",
+          "wg-d1-T128-01",
+          "wg-d1-T129-01",
+          "wg-d1-T130-01",
+          "wg-d1-T131-01",
+          "wg-d1-T132-01"
         ],
         "source_block_ids": [
-          "lblock-003036",
-          "lblock-003037",
-          "lblock-003038",
-          "lblock-003039",
-          "lblock-003040",
-          "lblock-003041",
-          "lblock-003042",
-          "lblock-003043",
-          "lblock-003044",
-          "lblock-003045",
-          "lblock-003046",
-          "lblock-003047",
-          "lblock-003048",
-          "lblock-003049",
-          "lblock-003050",
           "lblock-003051",
           "lblock-003052",
           "lblock-003053",
@@ -3844,9 +3802,24 @@
           "lblock-003282",
           "lblock-003283",
           "lblock-003284",
-          "lblock-003285"
+          "lblock-003285",
+          "lblock-003286",
+          "lblock-003287",
+          "lblock-003288",
+          "lblock-003289",
+          "lblock-003290",
+          "lblock-003291",
+          "lblock-003292",
+          "lblock-003293",
+          "lblock-003294",
+          "lblock-003295",
+          "lblock-003296",
+          "lblock-003297",
+          "lblock-003298",
+          "lblock-003299",
+          "lblock-003300"
         ],
-        "source_lines_total": 736,
+        "source_lines_total": 718,
         "raw_blocks_total": 250
       },
       "budget": {
@@ -3866,33 +3839,17 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-018",
         "source_group_ids": [
-          "wg-d1-T017-01",
-          "wg-d1-T017-02",
-          "wg-d1-T017-03",
-          "wg-d1-T017-04",
-          "wg-d1-T017-05",
-          "wg-d1-T017-06",
-          "wg-d1-T017-07",
-          "wg-d1-T017-08",
-          "wg-d1-T017-09",
-          "wg-d1-T017-10"
+          "wg-d1-T133-01",
+          "wg-d1-T134-01",
+          "wg-d1-T135-01",
+          "wg-d1-T136-01",
+          "wg-d1-T137-01",
+          "wg-d1-T138-01",
+          "wg-d1-T139-01",
+          "wg-d1-T140-01",
+          "wg-d1-T141-01"
         ],
         "source_block_ids": [
-          "lblock-003286",
-          "lblock-003287",
-          "lblock-003288",
-          "lblock-003289",
-          "lblock-003290",
-          "lblock-003291",
-          "lblock-003292",
-          "lblock-003293",
-          "lblock-003294",
-          "lblock-003295",
-          "lblock-003296",
-          "lblock-003297",
-          "lblock-003298",
-          "lblock-003299",
-          "lblock-003300",
           "lblock-003301",
           "lblock-003302",
           "lblock-003303",
@@ -4117,11 +4074,10 @@
           "lblock-003522",
           "lblock-003523",
           "lblock-003524",
-          "lblock-003525",
-          "lblock-003526"
+          "lblock-003525"
         ],
-        "source_lines_total": 795,
-        "raw_blocks_total": 241
+        "source_lines_total": 761,
+        "raw_blocks_total": 225
       },
       "budget": {
         "target_source_lines_min": 500,
@@ -4140,18 +4096,19 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-019",
         "source_group_ids": [
-          "wg-d1-T018-01",
-          "wg-d1-T018-02",
-          "wg-d1-T018-03",
-          "wg-d1-T018-04",
-          "wg-d1-T018-05",
-          "wg-d1-T018-06",
-          "wg-d1-T018-07",
-          "wg-d1-T018-08",
-          "wg-d1-T018-09",
-          "wg-d1-T018-10"
+          "wg-d1-T142-01",
+          "wg-d1-T143-01",
+          "wg-d1-T144-01",
+          "wg-d1-T145-01",
+          "wg-d1-T146-01",
+          "wg-d1-T147-01",
+          "wg-d1-T148-01",
+          "wg-d1-T149-01",
+          "wg-d1-T150-01",
+          "wg-d1-T151-01"
         ],
         "source_block_ids": [
+          "lblock-003526",
           "lblock-003527",
           "lblock-003528",
           "lblock-003529",
@@ -4400,10 +4357,9 @@
           "lblock-003772",
           "lblock-003773",
           "lblock-003774",
-          "lblock-003775",
-          "lblock-003776"
+          "lblock-003775"
         ],
-        "source_lines_total": 790,
+        "source_lines_total": 781,
         "raw_blocks_total": 250
       },
       "budget": {
@@ -4423,18 +4379,20 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-020",
         "source_group_ids": [
-          "wg-d1-T019-01",
-          "wg-d1-T019-02",
-          "wg-d1-T019-03",
-          "wg-d1-T019-04",
-          "wg-d1-T019-05",
-          "wg-d1-T019-06",
-          "wg-d1-T019-07",
-          "wg-d1-T019-08",
-          "wg-d1-T019-09",
-          "wg-d1-T019-10"
+          "wg-d1-T152-01",
+          "wg-d1-T153-01",
+          "wg-d1-T154-01",
+          "wg-d1-T155-01",
+          "wg-d1-T156-01",
+          "wg-d1-T157-01",
+          "wg-d1-T158-01",
+          "wg-d1-T159-01",
+          "wg-d1-T159-02",
+          "wg-d1-T160-01",
+          "wg-d1-T161-01"
         ],
         "source_block_ids": [
+          "lblock-003776",
           "lblock-003777",
           "lblock-003778",
           "lblock-003779",
@@ -4683,10 +4641,9 @@
           "lblock-004022",
           "lblock-004023",
           "lblock-004024",
-          "lblock-004025",
-          "lblock-004026"
+          "lblock-004025"
         ],
-        "source_lines_total": 674,
+        "source_lines_total": 676,
         "raw_blocks_total": 250
       },
       "budget": {
@@ -4706,18 +4663,22 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-021",
         "source_group_ids": [
-          "wg-d1-T020-01",
-          "wg-d1-T020-02",
-          "wg-d1-T020-03",
-          "wg-d1-T020-04",
-          "wg-d1-T020-05",
-          "wg-d1-T020-06",
-          "wg-d1-T020-07",
-          "wg-d1-T020-08",
-          "wg-d1-T020-09",
-          "wg-d1-T020-10"
+          "wg-d1-T162-01",
+          "wg-d1-T163-01",
+          "wg-d1-T164-01",
+          "wg-d1-T165-01",
+          "wg-d1-T165-02",
+          "wg-d1-T166-01",
+          "wg-d1-T167-01",
+          "wg-d1-T167-02",
+          "wg-d1-T168-01",
+          "wg-d1-T169-01",
+          "wg-d1-T170-01",
+          "wg-d1-T170-02",
+          "wg-d1-T171-01"
         ],
         "source_block_ids": [
+          "lblock-004026",
           "lblock-004027",
           "lblock-004028",
           "lblock-004029",
@@ -4966,10 +4927,9 @@
           "lblock-004272",
           "lblock-004273",
           "lblock-004274",
-          "lblock-004275",
-          "lblock-004276"
+          "lblock-004275"
         ],
-        "source_lines_total": 708,
+        "source_lines_total": 720,
         "raw_blocks_total": 250
       },
       "budget": {
@@ -4989,18 +4949,19 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-022",
         "source_group_ids": [
-          "wg-d1-T021-01",
-          "wg-d1-T021-02",
-          "wg-d1-T021-03",
-          "wg-d1-T021-04",
-          "wg-d1-T021-05",
-          "wg-d1-T021-06",
-          "wg-d1-T021-07",
-          "wg-d1-T021-08",
-          "wg-d1-T021-09",
-          "wg-d1-T021-10"
+          "wg-d1-T172-01",
+          "wg-d1-T173-01",
+          "wg-d1-T174-01",
+          "wg-d1-T175-01",
+          "wg-d1-T176-01",
+          "wg-d1-T177-01",
+          "wg-d1-T178-01",
+          "wg-d1-T179-01",
+          "wg-d1-T180-01",
+          "wg-d1-T180-02"
         ],
         "source_block_ids": [
+          "lblock-004276",
           "lblock-004277",
           "lblock-004278",
           "lblock-004279",
@@ -5224,27 +5185,10 @@
           "lblock-004497",
           "lblock-004498",
           "lblock-004499",
-          "lblock-004500",
-          "lblock-004501",
-          "lblock-004502",
-          "lblock-004503",
-          "lblock-004504",
-          "lblock-004505",
-          "lblock-004506",
-          "lblock-004507",
-          "lblock-004508",
-          "lblock-004509",
-          "lblock-004510",
-          "lblock-004511",
-          "lblock-004512",
-          "lblock-004513",
-          "lblock-004514",
-          "lblock-004515",
-          "lblock-004516",
-          "lblock-004517"
+          "lblock-004500"
         ],
-        "source_lines_total": 800,
-        "raw_blocks_total": 241
+        "source_lines_total": 762,
+        "raw_blocks_total": 225
       },
       "budget": {
         "target_source_lines_min": 500,
@@ -5263,18 +5207,35 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-023",
         "source_group_ids": [
-          "wg-d1-T022-01",
-          "wg-d1-T022-02",
-          "wg-d1-T022-03",
-          "wg-d1-T022-04",
-          "wg-d1-T022-05",
-          "wg-d1-T022-06",
-          "wg-d1-T022-07",
-          "wg-d1-T022-08",
-          "wg-d1-T022-09",
-          "wg-d1-T022-10"
+          "wg-d1-T181-01",
+          "wg-d1-T182-01",
+          "wg-d1-T183-01",
+          "wg-d1-T184-01",
+          "wg-d1-T185-01",
+          "wg-d1-T186-01",
+          "wg-d1-T187-01",
+          "wg-d1-T187-02",
+          "wg-d1-T188-01",
+          "wg-d1-T189-01"
         ],
         "source_block_ids": [
+          "lblock-004501",
+          "lblock-004502",
+          "lblock-004503",
+          "lblock-004504",
+          "lblock-004505",
+          "lblock-004506",
+          "lblock-004507",
+          "lblock-004508",
+          "lblock-004509",
+          "lblock-004510",
+          "lblock-004511",
+          "lblock-004512",
+          "lblock-004513",
+          "lblock-004514",
+          "lblock-004515",
+          "lblock-004516",
+          "lblock-004517",
           "lblock-004518",
           "lblock-004519",
           "lblock-004520",
@@ -5482,7 +5443,38 @@
           "lblock-004722",
           "lblock-004723",
           "lblock-004724",
-          "lblock-004725",
+          "lblock-004725"
+        ],
+        "source_lines_total": 761,
+        "raw_blocks_total": 225
+      },
+      "budget": {
+        "target_source_lines_min": 500,
+        "target_source_lines_max": 800,
+        "hard_max_source_lines": 800,
+        "soft_max_raw_blocks": 250,
+        "soft_max_d1_work_groups": 15
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json"
+    },
+    {
+      "subagent_task_id": "d2-slice-024",
+      "input": {
+        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+        "slice_id": "d2-slice-024",
+        "source_group_ids": [
+          "wg-d1-T190-01",
+          "wg-d1-T191-01",
+          "wg-d1-T192-01",
+          "wg-d1-T192-02",
+          "wg-d1-T193-01",
+          "wg-d1-T193-02",
+          "wg-d1-T194-01",
+          "wg-d1-T194-02"
+        ],
+        "source_block_ids": [
           "lblock-004726",
           "lblock-004727",
           "lblock-004728",
@@ -5513,35 +5505,7 @@
           "lblock-004753",
           "lblock-004754",
           "lblock-004755",
-          "lblock-004756"
-        ],
-        "source_lines_total": 793,
-        "raw_blocks_total": 239
-      },
-      "budget": {
-        "target_source_lines_min": 500,
-        "target_source_lines_max": 800,
-        "hard_max_source_lines": 800,
-        "soft_max_raw_blocks": 250,
-        "soft_max_d1_work_groups": 15
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json"
-    },
-    {
-      "subagent_task_id": "d2-slice-024",
-      "input": {
-        "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
-        "slice_id": "d2-slice-024",
-        "source_group_ids": [
-          "wg-d1-T023-01",
-          "wg-d1-T023-02",
-          "wg-d1-T023-03",
-          "wg-d1-T023-04",
-          "wg-d1-T023-05"
-        ],
-        "source_block_ids": [
+          "lblock-004756",
           "lblock-004757",
           "lblock-004758",
           "lblock-004759",
@@ -5635,29 +5599,10 @@
           "lblock-004847",
           "lblock-004848",
           "lblock-004849",
-          "lblock-004850",
-          "lblock-004851",
-          "lblock-004852",
-          "lblock-004853",
-          "lblock-004854",
-          "lblock-004855",
-          "lblock-004856",
-          "lblock-004857",
-          "lblock-004858",
-          "lblock-004859",
-          "lblock-004860",
-          "lblock-004861",
-          "lblock-004862",
-          "lblock-004863",
-          "lblock-004864",
-          "lblock-004865",
-          "lblock-004866",
-          "lblock-004867",
-          "lblock-004868",
-          "lblock-004869"
+          "lblock-004850"
         ],
-        "source_lines_total": 796,
-        "raw_blocks_total": 113
+        "source_lines_total": 753,
+        "raw_blocks_total": 125
       },
       "budget": {
         "target_source_lines_min": 500,
@@ -5676,23 +5621,30 @@
         "conversion_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
         "slice_id": "d2-slice-025",
         "source_group_ids": [
-          "wg-d1-T024-01"
+          "wg-d1-T195-01"
         ],
         "source_block_ids": [
-          "lblock-004870",
-          "lblock-004871",
-          "lblock-004872",
-          "lblock-004873",
-          "lblock-004874",
-          "lblock-004875",
-          "lblock-004876",
-          "lblock-004877",
-          "lblock-004878",
-          "lblock-004879",
-          "lblock-004880"
+          "lblock-004851",
+          "lblock-004852",
+          "lblock-004853",
+          "lblock-004854",
+          "lblock-004855",
+          "lblock-004856",
+          "lblock-004857",
+          "lblock-004858",
+          "lblock-004859",
+          "lblock-004860",
+          "lblock-004861",
+          "lblock-004862",
+          "lblock-004863",
+          "lblock-004864",
+          "lblock-004865",
+          "lblock-004866",
+          "lblock-004867",
+          "lblock-004868"
         ],
-        "source_lines_total": 176,
-        "raw_blocks_total": 11
+        "source_lines_total": 272,
+        "raw_blocks_total": 18
       },
       "budget": {
         "target_source_lines_min": 500,

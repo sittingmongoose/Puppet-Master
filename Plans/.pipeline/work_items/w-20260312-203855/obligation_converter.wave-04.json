@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.obligation_converter.wave.v3.2.3",
+  "wave_index": 4,
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "invocations": [
+    {
+      "subagent_invocation_id": "f2570d6b-04f0-42ee-a376-c394ad77d0a4",
+      "subagent_task_id": "d2-slice-025",
+      "input_bounds": {
+        "slice_id": "d2-slice-025",
+        "source_group_ids": [
+          "wg-d1-T195-01"
+        ],
+        "source_block_ids": [
+          "lblock-004851",
+          "lblock-004852",
+          "lblock-004853",
+          "lblock-004854",
+          "lblock-004855",
+          "lblock-004856",
+          "lblock-004857",
+          "lblock-004858",
+          "lblock-004859",
+          "lblock-004860",
+          "lblock-004861",
+          "lblock-004862",
+          "lblock-004863",
+          "lblock-004864",
+          "lblock-004865",
+          "lblock-004866",
+          "lblock-004867",
+          "lblock-004868"
+        ],
+        "source_lines_total": 272,
+        "raw_blocks_total": 18
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-025.json",
+      "status": "complete"
+    }
+  ]
+}

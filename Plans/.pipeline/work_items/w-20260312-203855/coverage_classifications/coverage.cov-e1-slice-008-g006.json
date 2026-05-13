@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-008-g006",
+  "obligation_record_count": 2,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-008"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-slice-014-076",
+      "coverage_task_id": "cov-e1-slice-008-g006",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g006 has bounded live_doc_windows (17 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002572 | excerpt=\"- `Plans/storage-plan.md`\\n- `Plans/Runtime_Artifacts_Panel.md`\\n- `Plans/usage-feature.md`\\n- `Plans/Orchestrator_Page.md`\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-014-077",
+      "coverage_task_id": "cov-e1-slice-008-g006",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-008-g006 has bounded live_doc_windows (17 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0053",
+        "source_slice_id": "d2-slice-014",
+        "canonical_excerpt_note": "shards=shard-0053 | blocks=lblock-002575 | excerpt=\"- The bridge fields now want a precedence rule, not just a field inventory.\\n- `provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.\\n- `usage_event_ref...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

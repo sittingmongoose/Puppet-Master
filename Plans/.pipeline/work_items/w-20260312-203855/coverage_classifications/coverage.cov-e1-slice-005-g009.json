@@ -1,0 +1,257 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-005-g009",
+  "obligation_record_count": 10,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-005"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-slice-009-032",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 95,
+          "end_line": 95,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001469 | excerpt=\"- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n- `Plans/Contracts_V0.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- current ledger concern/action-po...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-033",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g009 has bounded live_doc_windows (51 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001472 | excerpt=\"- Existing docs already imply three distinct action classes, even though they do not name them centrally:\n  - low-risk presentation actions may use no confirmation plus short undo windows\n  - durab...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-034",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 95,
+          "end_line": 95,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001475 | excerpt=\"- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n- `Plans/Contracts_V0.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- future concern-specific record/action docs not yet written\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-035",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g009 has bounded live_doc_windows (51 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001478 | excerpt=\"- There is still no canonical concern action matrix spanning:\n  - confirmation level\n  - rationale requirements\n  - who may perform the action\n  - reversibility model\n  - lineage side effects\n- Exi...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-036",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g009 has bounded live_doc_windows (51 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001481 | excerpt=\"- Add a canonical concern action policy table with at least:\n  - `action`\n  - `allowed_actor_kinds`\n  - `confirmation_level`\n  - `rationale_required`\n  - `resulting_status_or_lineage`\n  - `reversib...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-037",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g009 has bounded live_doc_windows (51 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001484 | excerpt=\"- concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI d...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-038",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 352,
+          "end_line": 352,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001489 | excerpt=\"- `Plans/Glossary.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Personas.md`\n- `Plans/Models_System.md`\n- current ledger terminology/help clusters\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-039",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Models_System.md",
+          "start_line": 536,
+          "end_line": 536,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Models_System.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001492 | excerpt=\"- The app already has a strong authored-copy mechanism for `Expert` vs `ELI5` variants.\n  - `FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tool...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-040",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 352,
+          "end_line": 352,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001495 | excerpt=\"- `Plans/Glossary.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Widget_System.md`\n- future Orchestrator help-entry docs or copy inventories not y...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-041",
+      "coverage_task_id": "cov-e1-slice-005-g009",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 271,
+          "end_line": 271,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Glossary.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0033",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0033 | blocks=lblock-001498 | excerpt=\"- The rewrite now depends on canonical terms that do not yet have canonical glossary ownership.\n- The app has tooltip inventories, but not a rule for which concepts deserve:\n  - glossary-only treat...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

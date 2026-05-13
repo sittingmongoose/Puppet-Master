@@ -1,0 +1,379 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T195",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T195-01",
+      "source_block_ids": [
+        "lblock-004851",
+        "lblock-004852",
+        "lblock-004853",
+        "lblock-004854",
+        "lblock-004855",
+        "lblock-004856",
+        "lblock-004857",
+        "lblock-004858",
+        "lblock-004859",
+        "lblock-004860",
+        "lblock-004861",
+        "lblock-004862",
+        "lblock-004863",
+        "lblock-004864",
+        "lblock-004865",
+        "lblock-004866",
+        "lblock-004867",
+        "lblock-004868"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0090",
+          "start_line": 17973,
+          "end_line": 18000
+        },
+        {
+          "source_shard_id": "shard-0091",
+          "start_line": 18001,
+          "end_line": 18200
+        },
+        {
+          "source_shard_id": "shard-0092",
+          "start_line": 18201,
+          "end_line": 18244
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "max_source_lines": 272,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T195-01.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004851",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17973,
+            "end_line": 18000
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Project_Output_Artifacts.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004852",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18001,
+            "end_line": 18021
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004853",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18022,
+            "end_line": 18022
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004854",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18023,
+            "end_line": 18023
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004855",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18024,
+            "end_line": 18066
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/WorktreeGitImprovement.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004856",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18067,
+            "end_line": 18067
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004857",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18068,
+            "end_line": 18068
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004858",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18069,
+            "end_line": 18106
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/FinalGUISpec.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004859",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18107,
+            "end_line": 18107
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004860",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18108,
+            "end_line": 18108
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004861",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18109,
+            "end_line": 18147
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/WorktreeGitImprovement.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004862",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18148,
+            "end_line": 18148
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004863",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18149,
+            "end_line": 18149
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004864",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18150,
+            "end_line": 18196
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Project_Output_Artifacts.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/WorktreeGitImprovement.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004865",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18197,
+            "end_line": 18197
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004866",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18198,
+            "end_line": 18198
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004867",
+          "source_shard_id": "shard-0091",
+          "source_line_range": {
+            "start_line": 18199,
+            "end_line": 18200
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004868",
+          "source_shard_id": "shard-0092",
+          "source_line_range": {
+            "start_line": 18201,
+            "end_line": 18244
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Crosswalk.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/GUI_Rebuild_Requirements_Checklist.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Models_System.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/WorktreeGitImprovement.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/storage-plan.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

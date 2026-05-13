@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.f4_subagent_wave.v3.2.3",
+  "prompt_id": "F4",
+  "prompt_version": "pm.f4.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "wave_number": 1,
+  "timestamp_utc": "20260513T030351Z",
+  "required_subagent_tasks_total": 4,
+  "wave_tasks": [
+    {
+      "subagent_invocation_id": "e6e32e0a-1e08-404d-83e6-f9fb8eb9bf79",
+      "subagent_task_id": "f4-slice-001",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-001-input.json",
+        "slice_id": "slice-001",
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-001.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "1eeb7c81-b112-4d25-a3e3-f1072833de6b",
+      "subagent_task_id": "f4-slice-002",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-002-input.json",
+        "slice_id": "slice-002",
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-002.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "43e50dd8-8678-44a8-9eb2-4e180656a3bf",
+      "subagent_task_id": "f4-slice-003",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-003-input.json",
+        "slice_id": "slice-003",
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-003.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "804ad9f5-5162-489c-8884-f9a8ecb0babe",
+      "subagent_task_id": "f4-slice-004",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-004-input.json",
+        "slice_id": "slice-004",
+        "row_count": 26,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-004.json",
+      "status": "complete"
+    }
+  ],
+  "pending_task_ids": [],
+  "blocked_task_ids": [],
+  "completed_task_ids": [
+    "f4-slice-001",
+    "f4-slice-002",
+    "f4-slice-003",
+    "f4-slice-004"
+  ]
+}

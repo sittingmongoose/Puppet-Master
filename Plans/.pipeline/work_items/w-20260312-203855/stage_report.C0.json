@@ -2,7 +2,7 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "C0",
   "prompt_version": "pm.c0.v3.2.3",
-  "timestamp_utc": "20260511T210553Z",
+  "timestamp_utc": "20260512T150155Z",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "status": "complete",
@@ -24,8 +24,8 @@
     "manifest_accepted_sources_match_working_ledger": true,
     "commands_run": [
       "test -f Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "test -s Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "wc -c -l Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "wc -c Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "wc -l Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
       "sha256sum Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
     ],
     "outputs_written_paths": [
@@ -55,5 +55,5 @@
   "distinct_subagent_invocations_total": 0,
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "summary": "Locked work_id from section_exit_B.json; ledger_intake_manifest.json present with existing_working_ledger and accepted working_ledger.md; deterministic file/stat/hash checks confirm working_ledger.md exists and is non-empty; Section C entry artifacts written."
+  "summary": "Locked work_id from section_exit_B.json; ledger_intake_manifest.json present with existing_working_ledger and accepted working_ledger.md; deterministic wc/sha256 checks confirm working_ledger.md exists and is non-empty; Section C entry artifacts written."
 }

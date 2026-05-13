@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.b3_issue_slice_result.v1",
+  "subagent_task_id": "b3-t019",
+  "adjudications": [
+    {
+      "gap_array_index": 635,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; candidate_doc_hints and live_doc_targets_union are empty; unresolved_reason lists doc_resolution_status=unresolved_no_live_target and assignment_reason_code=classifier_union_no_live_targets for obl-009-049 on shard-0032; blocker_classification.blocker_type=coverage_classifier_process_defect_or_source_intake_gap matches f2_route_hint to process review not repeat discovery.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-006-g021 (shard-0032), indicating classifier union and/or source intake failed to bind live doc paths."
+    },
+    {
+      "gap_array_index": 637,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Same terminal bundle as sibling rows: doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true; empty candidate_doc_hints and live_doc_targets_union; unresolved_reason confirms aggregated_task_label shard-0032|unresolved_no_live_target| and obl-009-051 still needs_doc_discovery with zero hint/target counts.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-006-g021 (shard-0032), indicating classifier union and/or source intake failed to bind live doc paths."
+    },
+    {
+      "gap_array_index": 638,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state shows doc_discovery_exhaustion with doc_resolution_status=unresolved_no_live_target; both doc arrays empty; unresolved_reason explicitly ties obl-009-052 to classifier_union_no_live_targets and doc_discovery_exhaustion terminal flags.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-006-g021 (shard-0032), indicating classifier union and/or source intake failed to bind live doc paths."
+    },
+    {
+      "gap_array_index": 639,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Exhaustion corroborated by prior_resolver_state and unresolved_reason; obl-009-053 row has planning_blocker with coverage_classifier_process_defect_or_source_intake_gap; no live targets or hints populated post-discovery; next_route_hint=b3_issue_process_adjudicator aligns with process review path.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-006-g021 (shard-0032), indicating classifier union and/or source intake failed to bind live doc paths."
+    }
+  ]
+}

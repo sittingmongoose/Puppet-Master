@@ -2,8 +2,8 @@
   "schema_id": "pm.obligation_worklist_builder.fanout_worklist.v3.2.3",
   "prompt_id": "D1",
   "work_id": "w-20260312-203855",
-  "required_subagent_tasks_total": 24,
-  "partition_rule": "greedy_contiguous_raw_blocks_order_max_250_blocks_or_800_source_lines_per_task_input",
+  "required_subagent_tasks_total": 195,
+  "partition_rule": "greedy_contiguous_seed_order_max_25_blocks_and_max_800_source_lines_per_bounded_task_input",
   "tasks": [
     {
       "subagent_task_id": "d1-T001",
@@ -34,11 +34,9 @@
           "lblock-000022",
           "lblock-000023",
           "lblock-000024",
-          "lblock-000025",
-          "lblock-000026",
-          "lblock-000027"
+          "lblock-000025"
         ],
-        "block_count": 27,
+        "block_count": 25,
         "approx_source_lines_in_task": 800,
         "source_shard_ids_span": [
           "shard-0001",
@@ -58,6 +56,8 @@
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-000026",
+          "lblock-000027",
           "lblock-000028",
           "lblock-000029",
           "lblock-000030",
@@ -80,7 +80,26 @@
           "lblock-000047",
           "lblock-000048",
           "lblock-000049",
-          "lblock-000050",
+          "lblock-000050"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 374,
+        "source_shard_ids_span": [
+          "shard-0005",
+          "shard-0006"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T002.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T003",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000051",
           "lblock-000052",
           "lblock-000053",
@@ -105,7 +124,26 @@
           "lblock-000072",
           "lblock-000073",
           "lblock-000074",
-          "lblock-000075",
+          "lblock-000075"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0006",
+          "shard-0007"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T003.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T004",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000076",
           "lblock-000077",
           "lblock-000078",
@@ -130,7 +168,25 @@
           "lblock-000097",
           "lblock-000098",
           "lblock-000099",
-          "lblock-000100",
+          "lblock-000100"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 66,
+        "source_shard_ids_span": [
+          "shard-0007"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T004.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T005",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000101",
           "lblock-000102",
           "lblock-000103",
@@ -155,7 +211,25 @@
           "lblock-000122",
           "lblock-000123",
           "lblock-000124",
-          "lblock-000125",
+          "lblock-000125"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0007"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T005.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T006",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000126",
           "lblock-000127",
           "lblock-000128",
@@ -180,7 +254,26 @@
           "lblock-000147",
           "lblock-000148",
           "lblock-000149",
-          "lblock-000150",
+          "lblock-000150"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 61,
+        "source_shard_ids_span": [
+          "shard-0007",
+          "shard-0008"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T006.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T007",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000151",
           "lblock-000152",
           "lblock-000153",
@@ -205,7 +298,25 @@
           "lblock-000172",
           "lblock-000173",
           "lblock-000174",
-          "lblock-000175",
+          "lblock-000175"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
+        "source_shard_ids_span": [
+          "shard-0008"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T007.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T008",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000176",
           "lblock-000177",
           "lblock-000178",
@@ -228,30 +339,28 @@
           "lblock-000195",
           "lblock-000196",
           "lblock-000197",
-          "lblock-000198"
+          "lblock-000198",
+          "lblock-000199",
+          "lblock-000200"
         ],
-        "block_count": 171,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 83,
         "source_shard_ids_span": [
-          "shard-0005",
-          "shard-0006",
-          "shard-0007",
-          "shard-0008"
+          "shard-0008",
+          "shard-0009"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T002.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T008.result.json"
     },
     {
-      "subagent_task_id": "d1-T003",
+      "subagent_task_id": "d1-T009",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
-          "lblock-000199",
-          "lblock-000200",
           "lblock-000201",
           "lblock-000202",
           "lblock-000203",
@@ -276,7 +385,25 @@
           "lblock-000222",
           "lblock-000223",
           "lblock-000224",
-          "lblock-000225",
+          "lblock-000225"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 152,
+        "source_shard_ids_span": [
+          "shard-0009"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T009.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T010",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000226",
           "lblock-000227",
           "lblock-000228",
@@ -301,7 +428,26 @@
           "lblock-000247",
           "lblock-000248",
           "lblock-000249",
-          "lblock-000250",
+          "lblock-000250"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 131,
+        "source_shard_ids_span": [
+          "shard-0009",
+          "shard-0010"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T010.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T011",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000251",
           "lblock-000252",
           "lblock-000253",
@@ -326,7 +472,25 @@
           "lblock-000272",
           "lblock-000273",
           "lblock-000274",
-          "lblock-000275",
+          "lblock-000275"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 106,
+        "source_shard_ids_span": [
+          "shard-0010"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T011.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T012",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000276",
           "lblock-000277",
           "lblock-000278",
@@ -351,7 +515,26 @@
           "lblock-000297",
           "lblock-000298",
           "lblock-000299",
-          "lblock-000300",
+          "lblock-000300"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 95,
+        "source_shard_ids_span": [
+          "shard-0010",
+          "shard-0011"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T012.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T013",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000301",
           "lblock-000302",
           "lblock-000303",
@@ -376,7 +559,26 @@
           "lblock-000322",
           "lblock-000323",
           "lblock-000324",
-          "lblock-000325",
+          "lblock-000325"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 109,
+        "source_shard_ids_span": [
+          "shard-0011",
+          "shard-0012"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T013.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T014",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000326",
           "lblock-000327",
           "lblock-000328",
@@ -401,7 +603,25 @@
           "lblock-000347",
           "lblock-000348",
           "lblock-000349",
-          "lblock-000350",
+          "lblock-000350"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 57,
+        "source_shard_ids_span": [
+          "shard-0012"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T014.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T015",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000351",
           "lblock-000352",
           "lblock-000353",
@@ -426,7 +646,25 @@
           "lblock-000372",
           "lblock-000373",
           "lblock-000374",
-          "lblock-000375",
+          "lblock-000375"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 105,
+        "source_shard_ids_span": [
+          "shard-0012"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T015.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T016",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000376",
           "lblock-000377",
           "lblock-000378",
@@ -443,28 +681,7 @@
           "lblock-000389",
           "lblock-000390",
           "lblock-000391",
-          "lblock-000392"
-        ],
-        "block_count": 194,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0009",
-          "shard-0010",
-          "shard-0011",
-          "shard-0012"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T003.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T004",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-000392",
           "lblock-000393",
           "lblock-000394",
           "lblock-000395",
@@ -472,7 +689,26 @@
           "lblock-000397",
           "lblock-000398",
           "lblock-000399",
-          "lblock-000400",
+          "lblock-000400"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 91,
+        "source_shard_ids_span": [
+          "shard-0012",
+          "shard-0013"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T016.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T017",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000401",
           "lblock-000402",
           "lblock-000403",
@@ -497,7 +733,25 @@
           "lblock-000422",
           "lblock-000423",
           "lblock-000424",
-          "lblock-000425",
+          "lblock-000425"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 80,
+        "source_shard_ids_span": [
+          "shard-0013"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T017.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T018",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000426",
           "lblock-000427",
           "lblock-000428",
@@ -522,7 +776,26 @@
           "lblock-000447",
           "lblock-000448",
           "lblock-000449",
-          "lblock-000450",
+          "lblock-000450"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 98,
+        "source_shard_ids_span": [
+          "shard-0013",
+          "shard-0014"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T018.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T019",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000451",
           "lblock-000452",
           "lblock-000453",
@@ -547,7 +820,25 @@
           "lblock-000472",
           "lblock-000473",
           "lblock-000474",
-          "lblock-000475",
+          "lblock-000475"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 97,
+        "source_shard_ids_span": [
+          "shard-0014"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T019.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T020",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000476",
           "lblock-000477",
           "lblock-000478",
@@ -572,7 +863,26 @@
           "lblock-000497",
           "lblock-000498",
           "lblock-000499",
-          "lblock-000500",
+          "lblock-000500"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
+        "source_shard_ids_span": [
+          "shard-0014",
+          "shard-0015"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T020.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T021",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000501",
           "lblock-000502",
           "lblock-000503",
@@ -597,7 +907,25 @@
           "lblock-000522",
           "lblock-000523",
           "lblock-000524",
-          "lblock-000525",
+          "lblock-000525"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 109,
+        "source_shard_ids_span": [
+          "shard-0015"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T021.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T022",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000526",
           "lblock-000527",
           "lblock-000528",
@@ -622,7 +950,25 @@
           "lblock-000547",
           "lblock-000548",
           "lblock-000549",
-          "lblock-000550",
+          "lblock-000550"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0015"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T022.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T023",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000551",
           "lblock-000552",
           "lblock-000553",
@@ -647,7 +993,26 @@
           "lblock-000572",
           "lblock-000573",
           "lblock-000574",
-          "lblock-000575",
+          "lblock-000575"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 162,
+        "source_shard_ids_span": [
+          "shard-0015",
+          "shard-0016"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T023.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T024",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000576",
           "lblock-000577",
           "lblock-000578",
@@ -670,30 +1035,28 @@
           "lblock-000595",
           "lblock-000596",
           "lblock-000597",
-          "lblock-000598"
+          "lblock-000598",
+          "lblock-000599",
+          "lblock-000600"
         ],
-        "block_count": 206,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 70,
         "source_shard_ids_span": [
-          "shard-0013",
-          "shard-0014",
-          "shard-0015",
-          "shard-0016"
+          "shard-0016",
+          "shard-0017"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T004.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T024.result.json"
     },
     {
-      "subagent_task_id": "d1-T005",
+      "subagent_task_id": "d1-T025",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
-          "lblock-000599",
-          "lblock-000600",
           "lblock-000601",
           "lblock-000602",
           "lblock-000603",
@@ -718,7 +1081,25 @@
           "lblock-000622",
           "lblock-000623",
           "lblock-000624",
-          "lblock-000625",
+          "lblock-000625"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 113,
+        "source_shard_ids_span": [
+          "shard-0017"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T025.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T026",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000626",
           "lblock-000627",
           "lblock-000628",
@@ -743,7 +1124,26 @@
           "lblock-000647",
           "lblock-000648",
           "lblock-000649",
-          "lblock-000650",
+          "lblock-000650"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 122,
+        "source_shard_ids_span": [
+          "shard-0017",
+          "shard-0018"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T026.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T027",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000651",
           "lblock-000652",
           "lblock-000653",
@@ -768,7 +1168,25 @@
           "lblock-000672",
           "lblock-000673",
           "lblock-000674",
-          "lblock-000675",
+          "lblock-000675"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 76,
+        "source_shard_ids_span": [
+          "shard-0018"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T027.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T028",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000676",
           "lblock-000677",
           "lblock-000678",
@@ -793,7 +1211,26 @@
           "lblock-000697",
           "lblock-000698",
           "lblock-000699",
-          "lblock-000700",
+          "lblock-000700"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 95,
+        "source_shard_ids_span": [
+          "shard-0018",
+          "shard-0019"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T028.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T029",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000701",
           "lblock-000702",
           "lblock-000703",
@@ -818,7 +1255,25 @@
           "lblock-000722",
           "lblock-000723",
           "lblock-000724",
-          "lblock-000725",
+          "lblock-000725"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 68,
+        "source_shard_ids_span": [
+          "shard-0019"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T029.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T030",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000726",
           "lblock-000727",
           "lblock-000728",
@@ -843,7 +1298,26 @@
           "lblock-000747",
           "lblock-000748",
           "lblock-000749",
-          "lblock-000750",
+          "lblock-000750"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 102,
+        "source_shard_ids_span": [
+          "shard-0019",
+          "shard-0020"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T030.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T031",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000751",
           "lblock-000752",
           "lblock-000753",
@@ -868,7 +1342,25 @@
           "lblock-000772",
           "lblock-000773",
           "lblock-000774",
-          "lblock-000775",
+          "lblock-000775"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 109,
+        "source_shard_ids_span": [
+          "shard-0020"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T031.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T032",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000776",
           "lblock-000777",
           "lblock-000778",
@@ -893,30 +1385,28 @@
           "lblock-000797",
           "lblock-000798",
           "lblock-000799",
-          "lblock-000800",
-          "lblock-000801",
-          "lblock-000802"
+          "lblock-000800"
         ],
-        "block_count": 204,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 95,
         "source_shard_ids_span": [
-          "shard-0017",
-          "shard-0018",
-          "shard-0019",
-          "shard-0020"
+          "shard-0020",
+          "shard-0021"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T005.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T032.result.json"
     },
     {
-      "subagent_task_id": "d1-T006",
+      "subagent_task_id": "d1-T033",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-000801",
+          "lblock-000802",
           "lblock-000803",
           "lblock-000804",
           "lblock-000805",
@@ -939,7 +1429,25 @@
           "lblock-000822",
           "lblock-000823",
           "lblock-000824",
-          "lblock-000825",
+          "lblock-000825"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 76,
+        "source_shard_ids_span": [
+          "shard-0021"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T033.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T034",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000826",
           "lblock-000827",
           "lblock-000828",
@@ -964,7 +1472,25 @@
           "lblock-000847",
           "lblock-000848",
           "lblock-000849",
-          "lblock-000850",
+          "lblock-000850"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0021"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T034.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T035",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000851",
           "lblock-000852",
           "lblock-000853",
@@ -989,7 +1515,26 @@
           "lblock-000872",
           "lblock-000873",
           "lblock-000874",
-          "lblock-000875",
+          "lblock-000875"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 104,
+        "source_shard_ids_span": [
+          "shard-0021",
+          "shard-0022"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T035.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T036",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000876",
           "lblock-000877",
           "lblock-000878",
@@ -1014,7 +1559,25 @@
           "lblock-000897",
           "lblock-000898",
           "lblock-000899",
-          "lblock-000900",
+          "lblock-000900"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 79,
+        "source_shard_ids_span": [
+          "shard-0022"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T036.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T037",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000901",
           "lblock-000902",
           "lblock-000903",
@@ -1039,7 +1602,26 @@
           "lblock-000922",
           "lblock-000923",
           "lblock-000924",
-          "lblock-000925",
+          "lblock-000925"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 78,
+        "source_shard_ids_span": [
+          "shard-0022",
+          "shard-0023"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T037.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T038",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000926",
           "lblock-000927",
           "lblock-000928",
@@ -1064,7 +1646,25 @@
           "lblock-000947",
           "lblock-000948",
           "lblock-000949",
-          "lblock-000950",
+          "lblock-000950"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 96,
+        "source_shard_ids_span": [
+          "shard-0023"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T038.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T039",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000951",
           "lblock-000952",
           "lblock-000953",
@@ -1089,7 +1689,25 @@
           "lblock-000972",
           "lblock-000973",
           "lblock-000974",
-          "lblock-000975",
+          "lblock-000975"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 84,
+        "source_shard_ids_span": [
+          "shard-0023"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T039.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T040",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-000976",
           "lblock-000977",
           "lblock-000978",
@@ -1114,7 +1732,26 @@
           "lblock-000997",
           "lblock-000998",
           "lblock-000999",
-          "lblock-001000",
+          "lblock-001000"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 78,
+        "source_shard_ids_span": [
+          "shard-0023",
+          "shard-0024"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T040.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T041",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001001",
           "lblock-001002",
           "lblock-001003",
@@ -1139,7 +1776,25 @@
           "lblock-001022",
           "lblock-001023",
           "lblock-001024",
-          "lblock-001025",
+          "lblock-001025"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 102,
+        "source_shard_ids_span": [
+          "shard-0024"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T041.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T042",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001026",
           "lblock-001027",
           "lblock-001028",
@@ -1158,34 +1813,32 @@
           "lblock-001041",
           "lblock-001042",
           "lblock-001043",
-          "lblock-001044"
+          "lblock-001044",
+          "lblock-001045",
+          "lblock-001046",
+          "lblock-001047",
+          "lblock-001048",
+          "lblock-001049",
+          "lblock-001050"
         ],
-        "block_count": 242,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 89,
         "source_shard_ids_span": [
-          "shard-0021",
-          "shard-0022",
-          "shard-0023",
-          "shard-0024"
+          "shard-0024",
+          "shard-0025"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T006.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T042.result.json"
     },
     {
-      "subagent_task_id": "d1-T007",
+      "subagent_task_id": "d1-T043",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
-          "lblock-001045",
-          "lblock-001046",
-          "lblock-001047",
-          "lblock-001048",
-          "lblock-001049",
-          "lblock-001050",
           "lblock-001051",
           "lblock-001052",
           "lblock-001053",
@@ -1210,7 +1863,25 @@
           "lblock-001072",
           "lblock-001073",
           "lblock-001074",
-          "lblock-001075",
+          "lblock-001075"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 77,
+        "source_shard_ids_span": [
+          "shard-0025"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T043.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T044",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001076",
           "lblock-001077",
           "lblock-001078",
@@ -1235,7 +1906,26 @@
           "lblock-001097",
           "lblock-001098",
           "lblock-001099",
-          "lblock-001100",
+          "lblock-001100"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 108,
+        "source_shard_ids_span": [
+          "shard-0025",
+          "shard-0026"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T044.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T045",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001101",
           "lblock-001102",
           "lblock-001103",
@@ -1260,7 +1950,25 @@
           "lblock-001122",
           "lblock-001123",
           "lblock-001124",
-          "lblock-001125",
+          "lblock-001125"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 79,
+        "source_shard_ids_span": [
+          "shard-0026"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T045.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T046",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001126",
           "lblock-001127",
           "lblock-001128",
@@ -1285,7 +1993,26 @@
           "lblock-001147",
           "lblock-001148",
           "lblock-001149",
-          "lblock-001150",
+          "lblock-001150"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 82,
+        "source_shard_ids_span": [
+          "shard-0026",
+          "shard-0027"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T046.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T047",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001151",
           "lblock-001152",
           "lblock-001153",
@@ -1310,7 +2037,25 @@
           "lblock-001172",
           "lblock-001173",
           "lblock-001174",
-          "lblock-001175",
+          "lblock-001175"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 101,
+        "source_shard_ids_span": [
+          "shard-0027"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T047.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T048",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001176",
           "lblock-001177",
           "lblock-001178",
@@ -1335,7 +2080,26 @@
           "lblock-001197",
           "lblock-001198",
           "lblock-001199",
-          "lblock-001200",
+          "lblock-001200"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 102,
+        "source_shard_ids_span": [
+          "shard-0027",
+          "shard-0028"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T048.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T049",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001201",
           "lblock-001202",
           "lblock-001203",
@@ -1360,7 +2124,25 @@
           "lblock-001222",
           "lblock-001223",
           "lblock-001224",
-          "lblock-001225",
+          "lblock-001225"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 62,
+        "source_shard_ids_span": [
+          "shard-0028"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T049.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T050",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001226",
           "lblock-001227",
           "lblock-001228",
@@ -1385,7 +2167,25 @@
           "lblock-001247",
           "lblock-001248",
           "lblock-001249",
-          "lblock-001250",
+          "lblock-001250"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 109,
+        "source_shard_ids_span": [
+          "shard-0028"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T050.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T051",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001251",
           "lblock-001252",
           "lblock-001253",
@@ -1396,28 +2196,7 @@
           "lblock-001258",
           "lblock-001259",
           "lblock-001260",
-          "lblock-001261"
-        ],
-        "block_count": 217,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0025",
-          "shard-0026",
-          "shard-0027",
-          "shard-0028"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T007.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T008",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-001261",
           "lblock-001262",
           "lblock-001263",
           "lblock-001264",
@@ -1431,7 +2210,26 @@
           "lblock-001272",
           "lblock-001273",
           "lblock-001274",
-          "lblock-001275",
+          "lblock-001275"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 111,
+        "source_shard_ids_span": [
+          "shard-0028",
+          "shard-0029"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T051.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T052",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001276",
           "lblock-001277",
           "lblock-001278",
@@ -1456,7 +2254,25 @@
           "lblock-001297",
           "lblock-001298",
           "lblock-001299",
-          "lblock-001300",
+          "lblock-001300"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 66,
+        "source_shard_ids_span": [
+          "shard-0029"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T052.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T053",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001301",
           "lblock-001302",
           "lblock-001303",
@@ -1481,7 +2297,26 @@
           "lblock-001322",
           "lblock-001323",
           "lblock-001324",
-          "lblock-001325",
+          "lblock-001325"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 107,
+        "source_shard_ids_span": [
+          "shard-0029",
+          "shard-0030"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T053.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T054",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001326",
           "lblock-001327",
           "lblock-001328",
@@ -1506,7 +2341,25 @@
           "lblock-001347",
           "lblock-001348",
           "lblock-001349",
-          "lblock-001350",
+          "lblock-001350"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 87,
+        "source_shard_ids_span": [
+          "shard-0030"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T054.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T055",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001351",
           "lblock-001352",
           "lblock-001353",
@@ -1531,7 +2384,26 @@
           "lblock-001372",
           "lblock-001373",
           "lblock-001374",
-          "lblock-001375",
+          "lblock-001375"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 130,
+        "source_shard_ids_span": [
+          "shard-0030",
+          "shard-0031"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T055.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T056",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001376",
           "lblock-001377",
           "lblock-001378",
@@ -1556,7 +2428,25 @@
           "lblock-001397",
           "lblock-001398",
           "lblock-001399",
-          "lblock-001400",
+          "lblock-001400"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 90,
+        "source_shard_ids_span": [
+          "shard-0031"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T056.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T057",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001401",
           "lblock-001402",
           "lblock-001403",
@@ -1581,7 +2471,26 @@
           "lblock-001422",
           "lblock-001423",
           "lblock-001424",
-          "lblock-001425",
+          "lblock-001425"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0031",
+          "shard-0032"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T057.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T058",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001426",
           "lblock-001427",
           "lblock-001428",
@@ -1606,7 +2515,25 @@
           "lblock-001447",
           "lblock-001448",
           "lblock-001449",
-          "lblock-001450",
+          "lblock-001450"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 89,
+        "source_shard_ids_span": [
+          "shard-0032"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T058.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T059",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001451",
           "lblock-001452",
           "lblock-001453",
@@ -1624,35 +2551,33 @@
           "lblock-001465",
           "lblock-001466",
           "lblock-001467",
-          "lblock-001468"
-        ],
-        "block_count": 207,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0029",
-          "shard-0030",
-          "shard-0031",
-          "shard-0032"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T008.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T009",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-001468",
           "lblock-001469",
           "lblock-001470",
           "lblock-001471",
           "lblock-001472",
           "lblock-001473",
           "lblock-001474",
-          "lblock-001475",
+          "lblock-001475"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 103,
+        "source_shard_ids_span": [
+          "shard-0032",
+          "shard-0033"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T059.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T060",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001476",
           "lblock-001477",
           "lblock-001478",
@@ -1677,7 +2602,25 @@
           "lblock-001497",
           "lblock-001498",
           "lblock-001499",
-          "lblock-001500",
+          "lblock-001500"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 115,
+        "source_shard_ids_span": [
+          "shard-0033"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T060.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T061",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001501",
           "lblock-001502",
           "lblock-001503",
@@ -1702,7 +2645,26 @@
           "lblock-001522",
           "lblock-001523",
           "lblock-001524",
-          "lblock-001525",
+          "lblock-001525"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 122,
+        "source_shard_ids_span": [
+          "shard-0033",
+          "shard-0034"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T061.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T062",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001526",
           "lblock-001527",
           "lblock-001528",
@@ -1727,7 +2689,25 @@
           "lblock-001547",
           "lblock-001548",
           "lblock-001549",
-          "lblock-001550",
+          "lblock-001550"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 85,
+        "source_shard_ids_span": [
+          "shard-0034"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T062.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T063",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001551",
           "lblock-001552",
           "lblock-001553",
@@ -1752,7 +2732,26 @@
           "lblock-001572",
           "lblock-001573",
           "lblock-001574",
-          "lblock-001575",
+          "lblock-001575"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 91,
+        "source_shard_ids_span": [
+          "shard-0034",
+          "shard-0035"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T063.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T064",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001576",
           "lblock-001577",
           "lblock-001578",
@@ -1777,7 +2776,25 @@
           "lblock-001597",
           "lblock-001598",
           "lblock-001599",
-          "lblock-001600",
+          "lblock-001600"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 82,
+        "source_shard_ids_span": [
+          "shard-0035"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T064.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T065",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001601",
           "lblock-001602",
           "lblock-001603",
@@ -1802,7 +2819,26 @@
           "lblock-001622",
           "lblock-001623",
           "lblock-001624",
-          "lblock-001625",
+          "lblock-001625"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 77,
+        "source_shard_ids_span": [
+          "shard-0035",
+          "shard-0036"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T065.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T066",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001626",
           "lblock-001627",
           "lblock-001628",
@@ -1827,7 +2863,25 @@
           "lblock-001647",
           "lblock-001648",
           "lblock-001649",
-          "lblock-001650",
+          "lblock-001650"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 74,
+        "source_shard_ids_span": [
+          "shard-0036"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T066.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T067",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001651",
           "lblock-001652",
           "lblock-001653",
@@ -1852,22 +2906,11 @@
           "lblock-001672",
           "lblock-001673",
           "lblock-001674",
-          "lblock-001675",
-          "lblock-001676",
-          "lblock-001677",
-          "lblock-001678",
-          "lblock-001679",
-          "lblock-001680",
-          "lblock-001681",
-          "lblock-001682",
-          "lblock-001683"
+          "lblock-001675"
         ],
-        "block_count": 215,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
         "source_shard_ids_span": [
-          "shard-0033",
-          "shard-0034",
-          "shard-0035",
           "shard-0036"
         ]
       },
@@ -1875,13 +2918,21 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T009.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T067.result.json"
     },
     {
-      "subagent_task_id": "d1-T010",
+      "subagent_task_id": "d1-T068",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-001676",
+          "lblock-001677",
+          "lblock-001678",
+          "lblock-001679",
+          "lblock-001680",
+          "lblock-001681",
+          "lblock-001682",
+          "lblock-001683",
           "lblock-001684",
           "lblock-001685",
           "lblock-001686",
@@ -1898,7 +2949,26 @@
           "lblock-001697",
           "lblock-001698",
           "lblock-001699",
-          "lblock-001700",
+          "lblock-001700"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 119,
+        "source_shard_ids_span": [
+          "shard-0036",
+          "shard-0037"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T068.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T069",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001701",
           "lblock-001702",
           "lblock-001703",
@@ -1923,7 +2993,25 @@
           "lblock-001722",
           "lblock-001723",
           "lblock-001724",
-          "lblock-001725",
+          "lblock-001725"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 80,
+        "source_shard_ids_span": [
+          "shard-0037"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T069.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T070",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001726",
           "lblock-001727",
           "lblock-001728",
@@ -1948,7 +3036,26 @@
           "lblock-001747",
           "lblock-001748",
           "lblock-001749",
-          "lblock-001750",
+          "lblock-001750"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 90,
+        "source_shard_ids_span": [
+          "shard-0037",
+          "shard-0038"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T070.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T071",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001751",
           "lblock-001752",
           "lblock-001753",
@@ -1973,7 +3080,25 @@
           "lblock-001772",
           "lblock-001773",
           "lblock-001774",
-          "lblock-001775",
+          "lblock-001775"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 130,
+        "source_shard_ids_span": [
+          "shard-0038"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T071.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T072",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001776",
           "lblock-001777",
           "lblock-001778",
@@ -1998,7 +3123,26 @@
           "lblock-001797",
           "lblock-001798",
           "lblock-001799",
-          "lblock-001800",
+          "lblock-001800"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 103,
+        "source_shard_ids_span": [
+          "shard-0038",
+          "shard-0039"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T072.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T073",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001801",
           "lblock-001802",
           "lblock-001803",
@@ -2023,7 +3167,25 @@
           "lblock-001822",
           "lblock-001823",
           "lblock-001824",
-          "lblock-001825",
+          "lblock-001825"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 74,
+        "source_shard_ids_span": [
+          "shard-0039"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T073.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T074",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001826",
           "lblock-001827",
           "lblock-001828",
@@ -2048,7 +3210,26 @@
           "lblock-001847",
           "lblock-001848",
           "lblock-001849",
-          "lblock-001850",
+          "lblock-001850"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 106,
+        "source_shard_ids_span": [
+          "shard-0039",
+          "shard-0040"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T074.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T075",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001851",
           "lblock-001852",
           "lblock-001853",
@@ -2073,7 +3254,25 @@
           "lblock-001872",
           "lblock-001873",
           "lblock-001874",
-          "lblock-001875",
+          "lblock-001875"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 88,
+        "source_shard_ids_span": [
+          "shard-0040"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T075.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T076",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001876",
           "lblock-001877",
           "lblock-001878",
@@ -2093,33 +3292,31 @@
           "lblock-001892",
           "lblock-001893",
           "lblock-001894",
-          "lblock-001895"
+          "lblock-001895",
+          "lblock-001896",
+          "lblock-001897",
+          "lblock-001898",
+          "lblock-001899",
+          "lblock-001900"
         ],
-        "block_count": 212,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 82,
         "source_shard_ids_span": [
-          "shard-0037",
-          "shard-0038",
-          "shard-0039",
-          "shard-0040"
+          "shard-0040",
+          "shard-0041"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T010.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T076.result.json"
     },
     {
-      "subagent_task_id": "d1-T011",
+      "subagent_task_id": "d1-T077",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
-          "lblock-001896",
-          "lblock-001897",
-          "lblock-001898",
-          "lblock-001899",
-          "lblock-001900",
           "lblock-001901",
           "lblock-001902",
           "lblock-001903",
@@ -2144,7 +3341,25 @@
           "lblock-001922",
           "lblock-001923",
           "lblock-001924",
-          "lblock-001925",
+          "lblock-001925"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 100,
+        "source_shard_ids_span": [
+          "shard-0041"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T077.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T078",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001926",
           "lblock-001927",
           "lblock-001928",
@@ -2169,7 +3384,26 @@
           "lblock-001947",
           "lblock-001948",
           "lblock-001949",
-          "lblock-001950",
+          "lblock-001950"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 107,
+        "source_shard_ids_span": [
+          "shard-0041",
+          "shard-0042"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T078.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T079",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001951",
           "lblock-001952",
           "lblock-001953",
@@ -2194,7 +3428,25 @@
           "lblock-001972",
           "lblock-001973",
           "lblock-001974",
-          "lblock-001975",
+          "lblock-001975"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 70,
+        "source_shard_ids_span": [
+          "shard-0042"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T079.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T080",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-001976",
           "lblock-001977",
           "lblock-001978",
@@ -2219,7 +3471,25 @@
           "lblock-001997",
           "lblock-001998",
           "lblock-001999",
-          "lblock-002000",
+          "lblock-002000"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 70,
+        "source_shard_ids_span": [
+          "shard-0042"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T080.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T081",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002001",
           "lblock-002002",
           "lblock-002003",
@@ -2244,7 +3514,26 @@
           "lblock-002022",
           "lblock-002023",
           "lblock-002024",
-          "lblock-002025",
+          "lblock-002025"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 75,
+        "source_shard_ids_span": [
+          "shard-0042",
+          "shard-0043"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T081.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T082",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002026",
           "lblock-002027",
           "lblock-002028",
@@ -2269,7 +3558,25 @@
           "lblock-002047",
           "lblock-002048",
           "lblock-002049",
-          "lblock-002050",
+          "lblock-002050"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 120,
+        "source_shard_ids_span": [
+          "shard-0043"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T082.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T083",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002051",
           "lblock-002052",
           "lblock-002053",
@@ -2294,7 +3601,26 @@
           "lblock-002072",
           "lblock-002073",
           "lblock-002074",
-          "lblock-002075",
+          "lblock-002075"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0043",
+          "shard-0044"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T083.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T084",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002076",
           "lblock-002077",
           "lblock-002078",
@@ -2319,7 +3645,25 @@
           "lblock-002097",
           "lblock-002098",
           "lblock-002099",
-          "lblock-002100",
+          "lblock-002100"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 122,
+        "source_shard_ids_span": [
+          "shard-0044"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T084.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T085",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002101",
           "lblock-002102",
           "lblock-002103",
@@ -2334,28 +3678,7 @@
           "lblock-002112",
           "lblock-002113",
           "lblock-002114",
-          "lblock-002115"
-        ],
-        "block_count": 220,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0041",
-          "shard-0042",
-          "shard-0043",
-          "shard-0044"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T011.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T012",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-002115",
           "lblock-002116",
           "lblock-002117",
           "lblock-002118",
@@ -2365,7 +3688,26 @@
           "lblock-002122",
           "lblock-002123",
           "lblock-002124",
-          "lblock-002125",
+          "lblock-002125"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 75,
+        "source_shard_ids_span": [
+          "shard-0044",
+          "shard-0045"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T085.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T086",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002126",
           "lblock-002127",
           "lblock-002128",
@@ -2390,7 +3732,25 @@
           "lblock-002147",
           "lblock-002148",
           "lblock-002149",
-          "lblock-002150",
+          "lblock-002150"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 94,
+        "source_shard_ids_span": [
+          "shard-0045"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T086.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T087",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002151",
           "lblock-002152",
           "lblock-002153",
@@ -2415,7 +3775,26 @@
           "lblock-002172",
           "lblock-002173",
           "lblock-002174",
-          "lblock-002175",
+          "lblock-002175"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 111,
+        "source_shard_ids_span": [
+          "shard-0045",
+          "shard-0046"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T087.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T088",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002176",
           "lblock-002177",
           "lblock-002178",
@@ -2440,7 +3819,25 @@
           "lblock-002197",
           "lblock-002198",
           "lblock-002199",
-          "lblock-002200",
+          "lblock-002200"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 100,
+        "source_shard_ids_span": [
+          "shard-0046"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T088.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T089",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002201",
           "lblock-002202",
           "lblock-002203",
@@ -2465,7 +3862,26 @@
           "lblock-002222",
           "lblock-002223",
           "lblock-002224",
-          "lblock-002225",
+          "lblock-002225"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 91,
+        "source_shard_ids_span": [
+          "shard-0046",
+          "shard-0047"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T089.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T090",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002226",
           "lblock-002227",
           "lblock-002228",
@@ -2490,7 +3906,25 @@
           "lblock-002247",
           "lblock-002248",
           "lblock-002249",
-          "lblock-002250",
+          "lblock-002250"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 84,
+        "source_shard_ids_span": [
+          "shard-0047"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T090.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T091",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002251",
           "lblock-002252",
           "lblock-002253",
@@ -2515,7 +3949,26 @@
           "lblock-002272",
           "lblock-002273",
           "lblock-002274",
-          "lblock-002275",
+          "lblock-002275"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 120,
+        "source_shard_ids_span": [
+          "shard-0047",
+          "shard-0048"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T091.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T092",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002276",
           "lblock-002277",
           "lblock-002278",
@@ -2540,7 +3993,25 @@
           "lblock-002297",
           "lblock-002298",
           "lblock-002299",
-          "lblock-002300",
+          "lblock-002300"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 114,
+        "source_shard_ids_span": [
+          "shard-0048"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T092.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T093",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002301",
           "lblock-002302",
           "lblock-002303",
@@ -2558,35 +4029,33 @@
           "lblock-002315",
           "lblock-002316",
           "lblock-002317",
-          "lblock-002318"
-        ],
-        "block_count": 203,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0045",
-          "shard-0046",
-          "shard-0047",
-          "shard-0048"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T012.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T013",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-002318",
           "lblock-002319",
           "lblock-002320",
           "lblock-002321",
           "lblock-002322",
           "lblock-002323",
           "lblock-002324",
-          "lblock-002325",
+          "lblock-002325"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 89,
+        "source_shard_ids_span": [
+          "shard-0048",
+          "shard-0049"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T093.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T094",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002326",
           "lblock-002327",
           "lblock-002328",
@@ -2611,7 +4080,25 @@
           "lblock-002347",
           "lblock-002348",
           "lblock-002349",
-          "lblock-002350",
+          "lblock-002350"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 77,
+        "source_shard_ids_span": [
+          "shard-0049"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T094.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T095",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002351",
           "lblock-002352",
           "lblock-002353",
@@ -2636,7 +4123,26 @@
           "lblock-002372",
           "lblock-002373",
           "lblock-002374",
-          "lblock-002375",
+          "lblock-002375"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 84,
+        "source_shard_ids_span": [
+          "shard-0049",
+          "shard-0050"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T095.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T096",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002376",
           "lblock-002377",
           "lblock-002378",
@@ -2661,7 +4167,25 @@
           "lblock-002397",
           "lblock-002398",
           "lblock-002399",
-          "lblock-002400",
+          "lblock-002400"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 110,
+        "source_shard_ids_span": [
+          "shard-0050"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T096.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T097",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002401",
           "lblock-002402",
           "lblock-002403",
@@ -2686,7 +4210,26 @@
           "lblock-002422",
           "lblock-002423",
           "lblock-002424",
-          "lblock-002425",
+          "lblock-002425"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 77,
+        "source_shard_ids_span": [
+          "shard-0050",
+          "shard-0051"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T097.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T098",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002426",
           "lblock-002427",
           "lblock-002428",
@@ -2711,7 +4254,25 @@
           "lblock-002447",
           "lblock-002448",
           "lblock-002449",
-          "lblock-002450",
+          "lblock-002450"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 61,
+        "source_shard_ids_span": [
+          "shard-0051"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T098.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T099",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002451",
           "lblock-002452",
           "lblock-002453",
@@ -2736,7 +4297,25 @@
           "lblock-002472",
           "lblock-002473",
           "lblock-002474",
-          "lblock-002475",
+          "lblock-002475"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 83,
+        "source_shard_ids_span": [
+          "shard-0051"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T099.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T100",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002476",
           "lblock-002477",
           "lblock-002478",
@@ -2761,7 +4340,26 @@
           "lblock-002497",
           "lblock-002498",
           "lblock-002499",
-          "lblock-002500",
+          "lblock-002500"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 85,
+        "source_shard_ids_span": [
+          "shard-0051",
+          "shard-0052"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T100.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T101",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002501",
           "lblock-002502",
           "lblock-002503",
@@ -2786,7 +4384,25 @@
           "lblock-002522",
           "lblock-002523",
           "lblock-002524",
-          "lblock-002525",
+          "lblock-002525"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 97,
+        "source_shard_ids_span": [
+          "shard-0052"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T101.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T102",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002526",
           "lblock-002527",
           "lblock-002528",
@@ -2806,33 +4422,31 @@
           "lblock-002542",
           "lblock-002543",
           "lblock-002544",
-          "lblock-002545"
+          "lblock-002545",
+          "lblock-002546",
+          "lblock-002547",
+          "lblock-002548",
+          "lblock-002549",
+          "lblock-002550"
         ],
-        "block_count": 227,
-        "approx_source_lines_in_task": 800,
+        "block_count": 25,
+        "approx_source_lines_in_task": 103,
         "source_shard_ids_span": [
-          "shard-0049",
-          "shard-0050",
-          "shard-0051",
-          "shard-0052"
+          "shard-0052",
+          "shard-0053"
         ]
       },
       "budget": {
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T013.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T102.result.json"
     },
     {
-      "subagent_task_id": "d1-T014",
+      "subagent_task_id": "d1-T103",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
-          "lblock-002546",
-          "lblock-002547",
-          "lblock-002548",
-          "lblock-002549",
-          "lblock-002550",
           "lblock-002551",
           "lblock-002552",
           "lblock-002553",
@@ -2857,7 +4471,25 @@
           "lblock-002572",
           "lblock-002573",
           "lblock-002574",
-          "lblock-002575",
+          "lblock-002575"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0053"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T103.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T104",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002576",
           "lblock-002577",
           "lblock-002578",
@@ -2882,7 +4514,25 @@
           "lblock-002597",
           "lblock-002598",
           "lblock-002599",
-          "lblock-002600",
+          "lblock-002600"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 59,
+        "source_shard_ids_span": [
+          "shard-0053"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T104.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T105",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002601",
           "lblock-002602",
           "lblock-002603",
@@ -2907,7 +4557,26 @@
           "lblock-002622",
           "lblock-002623",
           "lblock-002624",
-          "lblock-002625",
+          "lblock-002625"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 93,
+        "source_shard_ids_span": [
+          "shard-0053",
+          "shard-0054"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T105.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T106",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002626",
           "lblock-002627",
           "lblock-002628",
@@ -2932,7 +4601,25 @@
           "lblock-002647",
           "lblock-002648",
           "lblock-002649",
-          "lblock-002650",
+          "lblock-002650"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0054"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T106.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T107",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002651",
           "lblock-002652",
           "lblock-002653",
@@ -2957,7 +4644,25 @@
           "lblock-002672",
           "lblock-002673",
           "lblock-002674",
-          "lblock-002675",
+          "lblock-002675"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
+        "source_shard_ids_span": [
+          "shard-0054"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T107.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T108",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002676",
           "lblock-002677",
           "lblock-002678",
@@ -2982,7 +4687,26 @@
           "lblock-002697",
           "lblock-002698",
           "lblock-002699",
-          "lblock-002700",
+          "lblock-002700"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 67,
+        "source_shard_ids_span": [
+          "shard-0054",
+          "shard-0055"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T108.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T109",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002701",
           "lblock-002702",
           "lblock-002703",
@@ -3007,7 +4731,25 @@
           "lblock-002722",
           "lblock-002723",
           "lblock-002724",
-          "lblock-002725",
+          "lblock-002725"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 83,
+        "source_shard_ids_span": [
+          "shard-0055"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T109.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T110",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002726",
           "lblock-002727",
           "lblock-002728",
@@ -3032,7 +4774,26 @@
           "lblock-002747",
           "lblock-002748",
           "lblock-002749",
-          "lblock-002750",
+          "lblock-002750"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 121,
+        "source_shard_ids_span": [
+          "shard-0055",
+          "shard-0056"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T110.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T111",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002751",
           "lblock-002752",
           "lblock-002753",
@@ -3057,7 +4818,25 @@
           "lblock-002772",
           "lblock-002773",
           "lblock-002774",
-          "lblock-002775",
+          "lblock-002775"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 123,
+        "source_shard_ids_span": [
+          "shard-0056"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T111.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T112",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002776",
           "lblock-002777",
           "lblock-002778",
@@ -3067,28 +4846,7 @@
           "lblock-002782",
           "lblock-002783",
           "lblock-002784",
-          "lblock-002785"
-        ],
-        "block_count": 240,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0053",
-          "shard-0054",
-          "shard-0055",
-          "shard-0056"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T014.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T015",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-002785",
           "lblock-002786",
           "lblock-002787",
           "lblock-002788",
@@ -3103,7 +4861,26 @@
           "lblock-002797",
           "lblock-002798",
           "lblock-002799",
-          "lblock-002800",
+          "lblock-002800"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 66,
+        "source_shard_ids_span": [
+          "shard-0056",
+          "shard-0057"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T112.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T113",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002801",
           "lblock-002802",
           "lblock-002803",
@@ -3128,7 +4905,25 @@
           "lblock-002822",
           "lblock-002823",
           "lblock-002824",
-          "lblock-002825",
+          "lblock-002825"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 84,
+        "source_shard_ids_span": [
+          "shard-0057"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T113.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T114",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002826",
           "lblock-002827",
           "lblock-002828",
@@ -3153,7 +4948,26 @@
           "lblock-002847",
           "lblock-002848",
           "lblock-002849",
-          "lblock-002850",
+          "lblock-002850"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 66,
+        "source_shard_ids_span": [
+          "shard-0057",
+          "shard-0058"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T114.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T115",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002851",
           "lblock-002852",
           "lblock-002853",
@@ -3178,7 +4992,25 @@
           "lblock-002872",
           "lblock-002873",
           "lblock-002874",
-          "lblock-002875",
+          "lblock-002875"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0058"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T115.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T116",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002876",
           "lblock-002877",
           "lblock-002878",
@@ -3203,7 +5035,25 @@
           "lblock-002897",
           "lblock-002898",
           "lblock-002899",
-          "lblock-002900",
+          "lblock-002900"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
+        "source_shard_ids_span": [
+          "shard-0058"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T116.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T117",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002901",
           "lblock-002902",
           "lblock-002903",
@@ -3228,7 +5078,26 @@
           "lblock-002922",
           "lblock-002923",
           "lblock-002924",
-          "lblock-002925",
+          "lblock-002925"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 113,
+        "source_shard_ids_span": [
+          "shard-0058",
+          "shard-0059"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T117.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T118",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002926",
           "lblock-002927",
           "lblock-002928",
@@ -3253,7 +5122,25 @@
           "lblock-002947",
           "lblock-002948",
           "lblock-002949",
-          "lblock-002950",
+          "lblock-002950"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
+        "source_shard_ids_span": [
+          "shard-0059"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T118.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T119",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002951",
           "lblock-002952",
           "lblock-002953",
@@ -3278,7 +5165,25 @@
           "lblock-002972",
           "lblock-002973",
           "lblock-002974",
-          "lblock-002975",
+          "lblock-002975"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 67,
+        "source_shard_ids_span": [
+          "shard-0059"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T119.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T120",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-002976",
           "lblock-002977",
           "lblock-002978",
@@ -3303,7 +5208,26 @@
           "lblock-002997",
           "lblock-002998",
           "lblock-002999",
-          "lblock-003000",
+          "lblock-003000"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 67,
+        "source_shard_ids_span": [
+          "shard-0059",
+          "shard-0060"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T120.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T121",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003001",
           "lblock-003002",
           "lblock-003003",
@@ -3328,7 +5252,25 @@
           "lblock-003022",
           "lblock-003023",
           "lblock-003024",
-          "lblock-003025",
+          "lblock-003025"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 85,
+        "source_shard_ids_span": [
+          "shard-0060"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T121.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T122",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003026",
           "lblock-003027",
           "lblock-003028",
@@ -3338,28 +5280,7 @@
           "lblock-003032",
           "lblock-003033",
           "lblock-003034",
-          "lblock-003035"
-        ],
-        "block_count": 250,
-        "approx_source_lines_in_task": 776,
-        "source_shard_ids_span": [
-          "shard-0057",
-          "shard-0058",
-          "shard-0059",
-          "shard-0060"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T015.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T016",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-003035",
           "lblock-003036",
           "lblock-003037",
           "lblock-003038",
@@ -3374,7 +5295,26 @@
           "lblock-003047",
           "lblock-003048",
           "lblock-003049",
-          "lblock-003050",
+          "lblock-003050"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 89,
+        "source_shard_ids_span": [
+          "shard-0060",
+          "shard-0061"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T122.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T123",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003051",
           "lblock-003052",
           "lblock-003053",
@@ -3399,7 +5339,25 @@
           "lblock-003072",
           "lblock-003073",
           "lblock-003074",
-          "lblock-003075",
+          "lblock-003075"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 67,
+        "source_shard_ids_span": [
+          "shard-0061"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T123.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T124",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003076",
           "lblock-003077",
           "lblock-003078",
@@ -3424,7 +5382,25 @@
           "lblock-003097",
           "lblock-003098",
           "lblock-003099",
-          "lblock-003100",
+          "lblock-003100"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0061"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T124.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T125",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003101",
           "lblock-003102",
           "lblock-003103",
@@ -3449,7 +5425,26 @@
           "lblock-003122",
           "lblock-003123",
           "lblock-003124",
-          "lblock-003125",
+          "lblock-003125"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 58,
+        "source_shard_ids_span": [
+          "shard-0061",
+          "shard-0062"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T125.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T126",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003126",
           "lblock-003127",
           "lblock-003128",
@@ -3474,7 +5469,25 @@
           "lblock-003147",
           "lblock-003148",
           "lblock-003149",
-          "lblock-003150",
+          "lblock-003150"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 78,
+        "source_shard_ids_span": [
+          "shard-0062"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T126.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T127",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003151",
           "lblock-003152",
           "lblock-003153",
@@ -3499,7 +5512,26 @@
           "lblock-003172",
           "lblock-003173",
           "lblock-003174",
-          "lblock-003175",
+          "lblock-003175"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 105,
+        "source_shard_ids_span": [
+          "shard-0062",
+          "shard-0063"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T127.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T128",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003176",
           "lblock-003177",
           "lblock-003178",
@@ -3524,7 +5556,25 @@
           "lblock-003197",
           "lblock-003198",
           "lblock-003199",
-          "lblock-003200",
+          "lblock-003200"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 61,
+        "source_shard_ids_span": [
+          "shard-0063"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T128.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T129",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003201",
           "lblock-003202",
           "lblock-003203",
@@ -3549,7 +5599,25 @@
           "lblock-003222",
           "lblock-003223",
           "lblock-003224",
-          "lblock-003225",
+          "lblock-003225"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
+        "source_shard_ids_span": [
+          "shard-0063"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T129.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T130",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003226",
           "lblock-003227",
           "lblock-003228",
@@ -3574,7 +5642,26 @@
           "lblock-003247",
           "lblock-003248",
           "lblock-003249",
-          "lblock-003250",
+          "lblock-003250"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 53,
+        "source_shard_ids_span": [
+          "shard-0063",
+          "shard-0064"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T130.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T131",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003251",
           "lblock-003252",
           "lblock-003253",
@@ -3599,7 +5686,25 @@
           "lblock-003272",
           "lblock-003273",
           "lblock-003274",
-          "lblock-003275",
+          "lblock-003275"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0064"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T131.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T132",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003276",
           "lblock-003277",
           "lblock-003278",
@@ -3609,29 +5714,7 @@
           "lblock-003282",
           "lblock-003283",
           "lblock-003284",
-          "lblock-003285"
-        ],
-        "block_count": 250,
-        "approx_source_lines_in_task": 736,
-        "source_shard_ids_span": [
-          "shard-0060",
-          "shard-0061",
-          "shard-0062",
-          "shard-0063",
-          "shard-0064"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T016.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T017",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-003285",
           "lblock-003286",
           "lblock-003287",
           "lblock-003288",
@@ -3646,7 +5729,25 @@
           "lblock-003297",
           "lblock-003298",
           "lblock-003299",
-          "lblock-003300",
+          "lblock-003300"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0064"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T132.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T133",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003301",
           "lblock-003302",
           "lblock-003303",
@@ -3671,7 +5772,26 @@
           "lblock-003322",
           "lblock-003323",
           "lblock-003324",
-          "lblock-003325",
+          "lblock-003325"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 94,
+        "source_shard_ids_span": [
+          "shard-0064",
+          "shard-0065"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T133.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T134",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003326",
           "lblock-003327",
           "lblock-003328",
@@ -3696,7 +5816,25 @@
           "lblock-003347",
           "lblock-003348",
           "lblock-003349",
-          "lblock-003350",
+          "lblock-003350"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 74,
+        "source_shard_ids_span": [
+          "shard-0065"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T134.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T135",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003351",
           "lblock-003352",
           "lblock-003353",
@@ -3721,7 +5859,26 @@
           "lblock-003372",
           "lblock-003373",
           "lblock-003374",
-          "lblock-003375",
+          "lblock-003375"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 80,
+        "source_shard_ids_span": [
+          "shard-0065",
+          "shard-0066"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T135.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T136",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003376",
           "lblock-003377",
           "lblock-003378",
@@ -3746,7 +5903,25 @@
           "lblock-003397",
           "lblock-003398",
           "lblock-003399",
-          "lblock-003400",
+          "lblock-003400"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 81,
+        "source_shard_ids_span": [
+          "shard-0066"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T136.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T137",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003401",
           "lblock-003402",
           "lblock-003403",
@@ -3771,7 +5946,25 @@
           "lblock-003422",
           "lblock-003423",
           "lblock-003424",
-          "lblock-003425",
+          "lblock-003425"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 76,
+        "source_shard_ids_span": [
+          "shard-0066"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T137.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T138",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003426",
           "lblock-003427",
           "lblock-003428",
@@ -3796,7 +5989,26 @@
           "lblock-003447",
           "lblock-003448",
           "lblock-003449",
-          "lblock-003450",
+          "lblock-003450"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 115,
+        "source_shard_ids_span": [
+          "shard-0066",
+          "shard-0067"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T138.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T139",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003451",
           "lblock-003452",
           "lblock-003453",
@@ -3821,7 +6033,25 @@
           "lblock-003472",
           "lblock-003473",
           "lblock-003474",
-          "lblock-003475",
+          "lblock-003475"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 106,
+        "source_shard_ids_span": [
+          "shard-0067"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T139.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T140",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003476",
           "lblock-003477",
           "lblock-003478",
@@ -3846,7 +6076,26 @@
           "lblock-003497",
           "lblock-003498",
           "lblock-003499",
-          "lblock-003500",
+          "lblock-003500"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0067",
+          "shard-0068"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T140.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T141",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003501",
           "lblock-003502",
           "lblock-003503",
@@ -3871,16 +6120,11 @@
           "lblock-003522",
           "lblock-003523",
           "lblock-003524",
-          "lblock-003525",
-          "lblock-003526"
+          "lblock-003525"
         ],
-        "block_count": 241,
-        "approx_source_lines_in_task": 795,
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
         "source_shard_ids_span": [
-          "shard-0064",
-          "shard-0065",
-          "shard-0066",
-          "shard-0067",
           "shard-0068"
         ]
       },
@@ -3888,13 +6132,14 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T017.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T141.result.json"
     },
     {
-      "subagent_task_id": "d1-T018",
+      "subagent_task_id": "d1-T142",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-003526",
           "lblock-003527",
           "lblock-003528",
           "lblock-003529",
@@ -3918,7 +6163,25 @@
           "lblock-003547",
           "lblock-003548",
           "lblock-003549",
-          "lblock-003550",
+          "lblock-003550"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 59,
+        "source_shard_ids_span": [
+          "shard-0068"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T142.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T143",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003551",
           "lblock-003552",
           "lblock-003553",
@@ -3943,7 +6206,26 @@
           "lblock-003572",
           "lblock-003573",
           "lblock-003574",
-          "lblock-003575",
+          "lblock-003575"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 53,
+        "source_shard_ids_span": [
+          "shard-0068",
+          "shard-0069"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T143.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T144",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003576",
           "lblock-003577",
           "lblock-003578",
@@ -3968,7 +6250,25 @@
           "lblock-003597",
           "lblock-003598",
           "lblock-003599",
-          "lblock-003600",
+          "lblock-003600"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 104,
+        "source_shard_ids_span": [
+          "shard-0069"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T144.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T145",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003601",
           "lblock-003602",
           "lblock-003603",
@@ -3993,7 +6293,25 @@
           "lblock-003622",
           "lblock-003623",
           "lblock-003624",
-          "lblock-003625",
+          "lblock-003625"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 57,
+        "source_shard_ids_span": [
+          "shard-0069"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T145.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T146",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003626",
           "lblock-003627",
           "lblock-003628",
@@ -4018,7 +6336,26 @@
           "lblock-003647",
           "lblock-003648",
           "lblock-003649",
-          "lblock-003650",
+          "lblock-003650"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 133,
+        "source_shard_ids_span": [
+          "shard-0069",
+          "shard-0070"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T146.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T147",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003651",
           "lblock-003652",
           "lblock-003653",
@@ -4043,7 +6380,26 @@
           "lblock-003672",
           "lblock-003673",
           "lblock-003674",
-          "lblock-003675",
+          "lblock-003675"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 92,
+        "source_shard_ids_span": [
+          "shard-0070",
+          "shard-0071"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T147.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T148",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003676",
           "lblock-003677",
           "lblock-003678",
@@ -4068,7 +6424,25 @@
           "lblock-003697",
           "lblock-003698",
           "lblock-003699",
-          "lblock-003700",
+          "lblock-003700"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 90,
+        "source_shard_ids_span": [
+          "shard-0071"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T148.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T149",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003701",
           "lblock-003702",
           "lblock-003703",
@@ -4093,7 +6467,25 @@
           "lblock-003722",
           "lblock-003723",
           "lblock-003724",
-          "lblock-003725",
+          "lblock-003725"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 85,
+        "source_shard_ids_span": [
+          "shard-0071"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T149.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T150",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003726",
           "lblock-003727",
           "lblock-003728",
@@ -4118,7 +6510,26 @@
           "lblock-003747",
           "lblock-003748",
           "lblock-003749",
-          "lblock-003750",
+          "lblock-003750"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 54,
+        "source_shard_ids_span": [
+          "shard-0071",
+          "shard-0072"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T150.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T151",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003751",
           "lblock-003752",
           "lblock-003753",
@@ -4143,16 +6554,11 @@
           "lblock-003772",
           "lblock-003773",
           "lblock-003774",
-          "lblock-003775",
-          "lblock-003776"
+          "lblock-003775"
         ],
-        "block_count": 250,
-        "approx_source_lines_in_task": 790,
+        "block_count": 25,
+        "approx_source_lines_in_task": 54,
         "source_shard_ids_span": [
-          "shard-0068",
-          "shard-0069",
-          "shard-0070",
-          "shard-0071",
           "shard-0072"
         ]
       },
@@ -4160,13 +6566,14 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T018.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T151.result.json"
     },
     {
-      "subagent_task_id": "d1-T019",
+      "subagent_task_id": "d1-T152",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-003776",
           "lblock-003777",
           "lblock-003778",
           "lblock-003779",
@@ -4190,7 +6597,26 @@
           "lblock-003797",
           "lblock-003798",
           "lblock-003799",
-          "lblock-003800",
+          "lblock-003800"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 113,
+        "source_shard_ids_span": [
+          "shard-0072",
+          "shard-0073"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T152.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T153",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003801",
           "lblock-003802",
           "lblock-003803",
@@ -4215,7 +6641,25 @@
           "lblock-003822",
           "lblock-003823",
           "lblock-003824",
-          "lblock-003825",
+          "lblock-003825"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 61,
+        "source_shard_ids_span": [
+          "shard-0073"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T153.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T154",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003826",
           "lblock-003827",
           "lblock-003828",
@@ -4240,7 +6684,25 @@
           "lblock-003847",
           "lblock-003848",
           "lblock-003849",
-          "lblock-003850",
+          "lblock-003850"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 68,
+        "source_shard_ids_span": [
+          "shard-0073"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T154.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T155",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003851",
           "lblock-003852",
           "lblock-003853",
@@ -4265,7 +6727,25 @@
           "lblock-003872",
           "lblock-003873",
           "lblock-003874",
-          "lblock-003875",
+          "lblock-003875"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 53,
+        "source_shard_ids_span": [
+          "shard-0073"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T155.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T156",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003876",
           "lblock-003877",
           "lblock-003878",
@@ -4290,7 +6770,26 @@
           "lblock-003897",
           "lblock-003898",
           "lblock-003899",
-          "lblock-003900",
+          "lblock-003900"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
+        "source_shard_ids_span": [
+          "shard-0073",
+          "shard-0074"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T156.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T157",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003901",
           "lblock-003902",
           "lblock-003903",
@@ -4315,7 +6814,25 @@
           "lblock-003922",
           "lblock-003923",
           "lblock-003924",
-          "lblock-003925",
+          "lblock-003925"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
+        "source_shard_ids_span": [
+          "shard-0074"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T157.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T158",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003926",
           "lblock-003927",
           "lblock-003928",
@@ -4340,7 +6857,25 @@
           "lblock-003947",
           "lblock-003948",
           "lblock-003949",
-          "lblock-003950",
+          "lblock-003950"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 62,
+        "source_shard_ids_span": [
+          "shard-0074"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T158.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T159",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003951",
           "lblock-003952",
           "lblock-003953",
@@ -4365,7 +6900,26 @@
           "lblock-003972",
           "lblock-003973",
           "lblock-003974",
-          "lblock-003975",
+          "lblock-003975"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 53,
+        "source_shard_ids_span": [
+          "shard-0074",
+          "shard-0075"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T159.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T160",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-003976",
           "lblock-003977",
           "lblock-003978",
@@ -4390,7 +6944,25 @@
           "lblock-003997",
           "lblock-003998",
           "lblock-003999",
-          "lblock-004000",
+          "lblock-004000"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 78,
+        "source_shard_ids_span": [
+          "shard-0075"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T160.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T161",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004001",
           "lblock-004002",
           "lblock-004003",
@@ -4415,15 +6987,11 @@
           "lblock-004022",
           "lblock-004023",
           "lblock-004024",
-          "lblock-004025",
-          "lblock-004026"
+          "lblock-004025"
         ],
-        "block_count": 250,
-        "approx_source_lines_in_task": 674,
+        "block_count": 25,
+        "approx_source_lines_in_task": 60,
         "source_shard_ids_span": [
-          "shard-0072",
-          "shard-0073",
-          "shard-0074",
           "shard-0075"
         ]
       },
@@ -4431,13 +6999,14 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T019.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T161.result.json"
     },
     {
-      "subagent_task_id": "d1-T020",
+      "subagent_task_id": "d1-T162",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-004026",
           "lblock-004027",
           "lblock-004028",
           "lblock-004029",
@@ -4461,7 +7030,26 @@
           "lblock-004047",
           "lblock-004048",
           "lblock-004049",
-          "lblock-004050",
+          "lblock-004050"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0075",
+          "shard-0076"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T162.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T163",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004051",
           "lblock-004052",
           "lblock-004053",
@@ -4486,7 +7074,25 @@
           "lblock-004072",
           "lblock-004073",
           "lblock-004074",
-          "lblock-004075",
+          "lblock-004075"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 62,
+        "source_shard_ids_span": [
+          "shard-0076"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T163.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T164",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004076",
           "lblock-004077",
           "lblock-004078",
@@ -4511,7 +7117,25 @@
           "lblock-004097",
           "lblock-004098",
           "lblock-004099",
-          "lblock-004100",
+          "lblock-004100"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 88,
+        "source_shard_ids_span": [
+          "shard-0076"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T164.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T165",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004101",
           "lblock-004102",
           "lblock-004103",
@@ -4536,7 +7160,26 @@
           "lblock-004122",
           "lblock-004123",
           "lblock-004124",
-          "lblock-004125",
+          "lblock-004125"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 64,
+        "source_shard_ids_span": [
+          "shard-0076",
+          "shard-0077"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T165.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T166",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004126",
           "lblock-004127",
           "lblock-004128",
@@ -4561,7 +7204,25 @@
           "lblock-004147",
           "lblock-004148",
           "lblock-004149",
-          "lblock-004150",
+          "lblock-004150"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 60,
+        "source_shard_ids_span": [
+          "shard-0077"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T166.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T167",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004151",
           "lblock-004152",
           "lblock-004153",
@@ -4586,7 +7247,26 @@
           "lblock-004172",
           "lblock-004173",
           "lblock-004174",
-          "lblock-004175",
+          "lblock-004175"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 95,
+        "source_shard_ids_span": [
+          "shard-0077",
+          "shard-0078"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T167.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T168",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004176",
           "lblock-004177",
           "lblock-004178",
@@ -4611,7 +7291,25 @@
           "lblock-004197",
           "lblock-004198",
           "lblock-004199",
-          "lblock-004200",
+          "lblock-004200"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 67,
+        "source_shard_ids_span": [
+          "shard-0078"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T168.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T169",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004201",
           "lblock-004202",
           "lblock-004203",
@@ -4636,7 +7334,25 @@
           "lblock-004222",
           "lblock-004223",
           "lblock-004224",
-          "lblock-004225",
+          "lblock-004225"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 73,
+        "source_shard_ids_span": [
+          "shard-0078"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T169.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T170",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004226",
           "lblock-004227",
           "lblock-004228",
@@ -4661,7 +7377,26 @@
           "lblock-004247",
           "lblock-004248",
           "lblock-004249",
-          "lblock-004250",
+          "lblock-004250"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 66,
+        "source_shard_ids_span": [
+          "shard-0078",
+          "shard-0079"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T170.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T171",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004251",
           "lblock-004252",
           "lblock-004253",
@@ -4686,16 +7421,11 @@
           "lblock-004272",
           "lblock-004273",
           "lblock-004274",
-          "lblock-004275",
-          "lblock-004276"
+          "lblock-004275"
         ],
-        "block_count": 250,
-        "approx_source_lines_in_task": 708,
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
         "source_shard_ids_span": [
-          "shard-0075",
-          "shard-0076",
-          "shard-0077",
-          "shard-0078",
           "shard-0079"
         ]
       },
@@ -4703,13 +7433,14 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T020.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T171.result.json"
     },
     {
-      "subagent_task_id": "d1-T021",
+      "subagent_task_id": "d1-T172",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-004276",
           "lblock-004277",
           "lblock-004278",
           "lblock-004279",
@@ -4733,7 +7464,25 @@
           "lblock-004297",
           "lblock-004298",
           "lblock-004299",
-          "lblock-004300",
+          "lblock-004300"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 48,
+        "source_shard_ids_span": [
+          "shard-0079"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T172.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T173",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004301",
           "lblock-004302",
           "lblock-004303",
@@ -4758,7 +7507,26 @@
           "lblock-004322",
           "lblock-004323",
           "lblock-004324",
-          "lblock-004325",
+          "lblock-004325"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 70,
+        "source_shard_ids_span": [
+          "shard-0079",
+          "shard-0080"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T173.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T174",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004326",
           "lblock-004327",
           "lblock-004328",
@@ -4783,7 +7551,25 @@
           "lblock-004347",
           "lblock-004348",
           "lblock-004349",
-          "lblock-004350",
+          "lblock-004350"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 55,
+        "source_shard_ids_span": [
+          "shard-0080"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T174.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T175",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004351",
           "lblock-004352",
           "lblock-004353",
@@ -4808,7 +7594,25 @@
           "lblock-004372",
           "lblock-004373",
           "lblock-004374",
-          "lblock-004375",
+          "lblock-004375"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0080"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T175.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T176",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004376",
           "lblock-004377",
           "lblock-004378",
@@ -4833,7 +7637,25 @@
           "lblock-004397",
           "lblock-004398",
           "lblock-004399",
-          "lblock-004400",
+          "lblock-004400"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 47,
+        "source_shard_ids_span": [
+          "shard-0080"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T176.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T177",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004401",
           "lblock-004402",
           "lblock-004403",
@@ -4858,7 +7680,26 @@
           "lblock-004422",
           "lblock-004423",
           "lblock-004424",
-          "lblock-004425",
+          "lblock-004425"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 127,
+        "source_shard_ids_span": [
+          "shard-0080",
+          "shard-0081"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T177.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T178",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004426",
           "lblock-004427",
           "lblock-004428",
@@ -4883,7 +7724,26 @@
           "lblock-004447",
           "lblock-004448",
           "lblock-004449",
-          "lblock-004450",
+          "lblock-004450"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 126,
+        "source_shard_ids_span": [
+          "shard-0081",
+          "shard-0082"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T178.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T179",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004451",
           "lblock-004452",
           "lblock-004453",
@@ -4908,7 +7768,25 @@
           "lblock-004472",
           "lblock-004473",
           "lblock-004474",
-          "lblock-004475",
+          "lblock-004475"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 115,
+        "source_shard_ids_span": [
+          "shard-0082"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T179.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T180",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004476",
           "lblock-004477",
           "lblock-004478",
@@ -4933,7 +7811,26 @@
           "lblock-004497",
           "lblock-004498",
           "lblock-004499",
-          "lblock-004500",
+          "lblock-004500"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 103,
+        "source_shard_ids_span": [
+          "shard-0082",
+          "shard-0083"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T180.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T181",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004501",
           "lblock-004502",
           "lblock-004503",
@@ -4950,29 +7847,7 @@
           "lblock-004514",
           "lblock-004515",
           "lblock-004516",
-          "lblock-004517"
-        ],
-        "block_count": 241,
-        "approx_source_lines_in_task": 800,
-        "source_shard_ids_span": [
-          "shard-0079",
-          "shard-0080",
-          "shard-0081",
-          "shard-0082",
-          "shard-0083"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T021.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T022",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
+          "lblock-004517",
           "lblock-004518",
           "lblock-004519",
           "lblock-004520",
@@ -4980,7 +7855,25 @@
           "lblock-004522",
           "lblock-004523",
           "lblock-004524",
-          "lblock-004525",
+          "lblock-004525"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0083"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T181.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T182",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004526",
           "lblock-004527",
           "lblock-004528",
@@ -5005,7 +7898,25 @@
           "lblock-004547",
           "lblock-004548",
           "lblock-004549",
-          "lblock-004550",
+          "lblock-004550"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0083"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T182.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T183",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004551",
           "lblock-004552",
           "lblock-004553",
@@ -5030,7 +7941,25 @@
           "lblock-004572",
           "lblock-004573",
           "lblock-004574",
-          "lblock-004575",
+          "lblock-004575"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 68,
+        "source_shard_ids_span": [
+          "shard-0084"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T183.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T184",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004576",
           "lblock-004577",
           "lblock-004578",
@@ -5055,7 +7984,25 @@
           "lblock-004597",
           "lblock-004598",
           "lblock-004599",
-          "lblock-004600",
+          "lblock-004600"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 101,
+        "source_shard_ids_span": [
+          "shard-0084"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T184.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T185",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004601",
           "lblock-004602",
           "lblock-004603",
@@ -5080,7 +8027,26 @@
           "lblock-004622",
           "lblock-004623",
           "lblock-004624",
-          "lblock-004625",
+          "lblock-004625"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 90,
+        "source_shard_ids_span": [
+          "shard-0084",
+          "shard-0085"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T185.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T186",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004626",
           "lblock-004627",
           "lblock-004628",
@@ -5105,7 +8071,25 @@
           "lblock-004647",
           "lblock-004648",
           "lblock-004649",
-          "lblock-004650",
+          "lblock-004650"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 116,
+        "source_shard_ids_span": [
+          "shard-0085"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T186.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T187",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004651",
           "lblock-004652",
           "lblock-004653",
@@ -5130,7 +8114,26 @@
           "lblock-004672",
           "lblock-004673",
           "lblock-004674",
-          "lblock-004675",
+          "lblock-004675"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 88,
+        "source_shard_ids_span": [
+          "shard-0085",
+          "shard-0086"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T187.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T188",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004676",
           "lblock-004677",
           "lblock-004678",
@@ -5155,7 +8158,25 @@
           "lblock-004697",
           "lblock-004698",
           "lblock-004699",
-          "lblock-004700",
+          "lblock-004700"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 71,
+        "source_shard_ids_span": [
+          "shard-0086"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T188.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T189",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004701",
           "lblock-004702",
           "lblock-004703",
@@ -5180,7 +8201,26 @@
           "lblock-004722",
           "lblock-004723",
           "lblock-004724",
-          "lblock-004725",
+          "lblock-004725"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 85,
+        "source_shard_ids_span": [
+          "shard-0086",
+          "shard-0087"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T189.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T190",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004726",
           "lblock-004727",
           "lblock-004728",
@@ -5205,21 +8245,11 @@
           "lblock-004747",
           "lblock-004748",
           "lblock-004749",
-          "lblock-004750",
-          "lblock-004751",
-          "lblock-004752",
-          "lblock-004753",
-          "lblock-004754",
-          "lblock-004755",
-          "lblock-004756"
+          "lblock-004750"
         ],
-        "block_count": 239,
-        "approx_source_lines_in_task": 793,
+        "block_count": 25,
+        "approx_source_lines_in_task": 79,
         "source_shard_ids_span": [
-          "shard-0083",
-          "shard-0084",
-          "shard-0085",
-          "shard-0086",
           "shard-0087"
         ]
       },
@@ -5227,13 +8257,19 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T022.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T190.result.json"
     },
     {
-      "subagent_task_id": "d1-T023",
+      "subagent_task_id": "d1-T191",
       "input": {
         "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
         "block_ids_ordered": [
+          "lblock-004751",
+          "lblock-004752",
+          "lblock-004753",
+          "lblock-004754",
+          "lblock-004755",
+          "lblock-004756",
           "lblock-004757",
           "lblock-004758",
           "lblock-004759",
@@ -5252,7 +8288,25 @@
           "lblock-004772",
           "lblock-004773",
           "lblock-004774",
-          "lblock-004775",
+          "lblock-004775"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 72,
+        "source_shard_ids_span": [
+          "shard-0087"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T191.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T192",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004776",
           "lblock-004777",
           "lblock-004778",
@@ -5277,7 +8331,26 @@
           "lblock-004797",
           "lblock-004798",
           "lblock-004799",
-          "lblock-004800",
+          "lblock-004800"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 89,
+        "source_shard_ids_span": [
+          "shard-0087",
+          "shard-0088"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T192.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T193",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004801",
           "lblock-004802",
           "lblock-004803",
@@ -5302,7 +8375,26 @@
           "lblock-004822",
           "lblock-004823",
           "lblock-004824",
-          "lblock-004825",
+          "lblock-004825"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 227,
+        "source_shard_ids_span": [
+          "shard-0088",
+          "shard-0089"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T193.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T194",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004826",
           "lblock-004827",
           "lblock-004828",
@@ -5327,7 +8419,26 @@
           "lblock-004847",
           "lblock-004848",
           "lblock-004849",
-          "lblock-004850",
+          "lblock-004850"
+        ],
+        "block_count": 25,
+        "approx_source_lines_in_task": 286,
+        "source_shard_ids_span": [
+          "shard-0089",
+          "shard-0090"
+        ]
+      },
+      "budget": {
+        "max_blocks_per_output_group": 25,
+        "max_source_lines_per_output_group": 800
+      },
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T194.result.json"
+    },
+    {
+      "subagent_task_id": "d1-T195",
+      "input": {
+        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "block_ids_ordered": [
           "lblock-004851",
           "lblock-004852",
           "lblock-004853",
@@ -5345,45 +8456,12 @@
           "lblock-004865",
           "lblock-004866",
           "lblock-004867",
-          "lblock-004868",
-          "lblock-004869"
+          "lblock-004868"
         ],
-        "block_count": 113,
-        "approx_source_lines_in_task": 796,
+        "block_count": 18,
+        "approx_source_lines_in_task": 272,
         "source_shard_ids_span": [
-          "shard-0087",
-          "shard-0088",
-          "shard-0089",
           "shard-0090",
-          "shard-0091"
-        ]
-      },
-      "budget": {
-        "max_blocks_per_output_group": 25,
-        "max_source_lines_per_output_group": 800
-      },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T023.result.json"
-    },
-    {
-      "subagent_task_id": "d1-T024",
-      "input": {
-        "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-        "block_ids_ordered": [
-          "lblock-004870",
-          "lblock-004871",
-          "lblock-004872",
-          "lblock-004873",
-          "lblock-004874",
-          "lblock-004875",
-          "lblock-004876",
-          "lblock-004877",
-          "lblock-004878",
-          "lblock-004879",
-          "lblock-004880"
-        ],
-        "block_count": 11,
-        "approx_source_lines_in_task": 176,
-        "source_shard_ids_span": [
           "shard-0091",
           "shard-0092"
         ]
@@ -5392,7 +8470,7 @@
         "max_blocks_per_output_group": 25,
         "max_source_lines_per_output_group": 800
       },
-      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T024.result.json"
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-d1-T195.result.json"
     }
   ]
 }

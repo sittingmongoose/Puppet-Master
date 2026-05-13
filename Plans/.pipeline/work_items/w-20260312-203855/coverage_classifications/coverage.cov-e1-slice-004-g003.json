@@ -2,951 +2,378 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-004-g003",
-  "obligation_record_count": 25,
-  "source_classification_slices": [
-    "e2-class-005"
+  "obligation_record_count": 18,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-004"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-006-032",
+      "obligation_id": "obl-006-060",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "acceptance_criterion",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0019"
-        ],
-        "source_block_ids": [
-          "lblock-000748"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3790,
-            "end_line": 3797
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-08"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000862 | excerpt=\"  - primary blocked/attention reason\n  - blocked owner / attention owner when relevant\n  - pressure summary\n  - last active / last opened\n- Good compact model:\n  - `Activity`: `idle | running | paused | queued | backgrou...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-033",
+      "obligation_id": "obl-006-061",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0019",
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000751",
-          "lblock-000752"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3800,
-            "end_line": 3800
-          },
-          {
-            "start_line": 3801,
-            "end_line": 3801
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-08",
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000865 | excerpt=\"- The user specifically flagged this seam earlier and it still looks underdefined.\n- Recommended rule:\n  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that st...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-034",
+      "obligation_id": "obl-006-062",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000755"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3804,
-            "end_line": 3813
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000868 | excerpt=\"- Projects page should not try to summarize every problem.\n- Strong recommendation:\n  - show one `primary attention reason` / `primary blocked reason`\n  - with optional count badge for additional issues\n- Candidate examp...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-035",
+      "obligation_id": "obl-006-063",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "acceptance_criterion",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000758"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3816,
-            "end_line": 3821
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000871 | excerpt=\"- Project cards likely need compact pressure signals, not full usage details.\n- Good compact summaries:\n  - provider/account pressure present\n  - quota pressure severity\n  - signal confidence if especially important\n- Ex...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-036",
+      "obligation_id": "obl-006-064",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000761"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3824,
-            "end_line": 3828
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000874 | excerpt=\"- Similar to runs, project cards should not imply that \u201chistorical project\u201d is a real semantic class unless the product introduces archiving.\n- Better distinction:\n  - active workspace/project\n  - recently active\n  - arc...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-037",
+      "obligation_id": "obl-006-065",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000764"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3831,
-            "end_line": 3833
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000877 | excerpt=\"- Background activity matters at project-card level.\n- Recommended rule:\n  - project card should surface background work independently from blocked attention\n- Example:\n  - a project can be:\n    - `background_active`\n   ...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-038",
+      "obligation_id": "obl-006-066",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000772"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3846,
-            "end_line": 3865
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000880 | excerpt=\"- Projects page should summarize from canonical project-level projections rather than inventing its own status model.\n- Likely it needs a small project summary projection that rolls up:\n  - current active run state\n  - d...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-039",
+      "obligation_id": "obl-006-067",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "acceptance_criterion",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000775"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3868,
-            "end_line": 3896
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-09"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000883 | excerpt=\"- Current Projects page health/status model is too setup-centric for the rewrite.\n- There is no obvious current project-level rollup for blocked-owner and primary attention reason.\n- Existing `orchestrator status` (`idle...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-040",
+      "obligation_id": "obl-006-068",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000778"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3899,
-            "end_line": 3911
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000886 | excerpt=\"- Define a project-summary projection with:\n  - activity state\n  - attention state\n  - health state\n  - primary blocked/attention owner\n  - primary reason\n  - pressure summary\n- Keep project-card status compact and singu...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-041",
+      "obligation_id": "obl-006-069",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000781"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3914,
-            "end_line": 3929
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000889 | excerpt=\"- blocked ownership should describe the dominant current issue, not every issue in the project\n- project health and project attention are different things and should not share one overloaded dot\n- a project with only his...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-042",
+      "obligation_id": "obl-006-074",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000784"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3932,
-            "end_line": 3940
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000897 | excerpt=\"- The docs already define many local attention behaviors:\n  - Dashboard `Action Required` section\n  - thread badges\n  - run-graph/node blocked badges\n  - warnings/toasts/banners\n  - tray/system notifications for some eve...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-043",
+      "obligation_id": "obl-006-075",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000787"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3943,
-            "end_line": 3947
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000900 | excerpt=\"- Strong recommendation:\n  - define one shared progression:\n    - `info`\n    - `warning`\n    - `attention_required`\n    - `blocked`\n    - `system_notification`\n- Working interpretation:\n  - `info`\n    - visible in local ...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-044",
+      "obligation_id": "obl-006-076",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000790"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3950,
-            "end_line": 3961
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000903 | excerpt=\"- Recommended mapping:\n  - `History`\n    - receives everything chronologically\n  - `Progress` / `Dashboard`\n    - show active warnings / attention / blocked states\n  - badges\n    - show compressed counts/severity markers...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-045",
+      "obligation_id": "obl-006-077",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000793"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3964,
-            "end_line": 3973
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000906 | excerpt=\"- The ledger already established some aging behavior for operational items.\n- Strong next-step rule:\n  - unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update\n- Candidate...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-046",
+      "obligation_id": "obl-006-078",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000796"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3976,
-            "end_line": 3987
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000909 | excerpt=\"- Persistent blockers should not become invisible just because the user dismissed a nearby warning once.\n- Good rule:\n  - advisory warnings may respect quiet/dismiss windows\n  - real blocked states should remain represen...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-047",
+      "obligation_id": "obl-006-079",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "gap_acknowledgment",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020"
-        ],
-        "source_block_ids": [
-          "lblock-000799"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3990,
-            "end_line": 3992
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-10"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000912 | excerpt=\"- System/tray notifications should stay narrow.\n- Good candidates:\n  - HITL approval required\n  - run complete\n  - major failure requiring attention\n  - maybe severe rate-limit/pressure event when it materially stops pro...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-048",
+      "obligation_id": "obl-006-080",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0020",
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000802",
-          "lblock-000803"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 3995,
-            "end_line": 4000
-          },
-          {
-            "start_line": 4001,
-            "end_line": 4006
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T005-11",
-          "wg-d1-T006-01"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000915 | excerpt=\"- Usage warnings already suggest:\n  - configurable threshold\n  - dismiss/quiet window\n  - path to Usage/config\n- This is a good pattern for non-blocking pressure:\n  - warning banner\n  - optional toast\n  - quiet period\n  ...\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-006-049",
+      "obligation_id": "obl-006-081",
       "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "source_hint_gap",
       "evidence_spans": [],
       "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-004-g003 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned for these obligations; bind shard citations to authoritative live docs during Section E.\""
       ],
       "partial_details": [],
       "candidate_docs": [],
       "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000806"
-        ],
+        "source_shard_id": "shard-0022",
         "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4009,
-            "end_line": 4011
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-01"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
+        "canonical_excerpt_note": "shards=shard-0022 | blocks=lblock-000918 | excerpt=\"- Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.\n- Recommended rule:\""
       },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-050",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000814"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4024,
-            "end_line": 4029
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-02"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-051",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000817"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4032,
-            "end_line": 4043
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-02"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-052",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000820"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4046,
-            "end_line": 4054
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-03"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-053",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000823"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4057,
-            "end_line": 4073
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-03"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-054",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000826"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4076,
-            "end_line": 4080
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-03"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-055",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "acceptance_criterion",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000829"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4083,
-            "end_line": 4097
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-03"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
-    },
-    {
-      "obligation_id": "obl-d2-006-056",
-      "coverage_task_id": "cov-e1-slice-004-g003",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
-        "No preserved_candidate_hints on this task; shard-only binding with zero materialized live_doc_targets_union."
-      ],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "source_shard_ids": [
-          "shard-0021"
-        ],
-        "source_block_ids": [
-          "lblock-000832"
-        ],
-        "source_slice_id": "d2-slice-006",
-        "source_line_ranges": [
-          {
-            "start_line": 4100,
-            "end_line": 4107
-          }
-        ],
-        "source_group_ids": [
-          "wg-d1-T006-03"
-        ],
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_task_id": "cov-e1-slice-004-g003",
-        "doc_resolution_status": "unresolved_no_live_target"
-      },
-      "uncertainty": 0.62,
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
     }
   ]
 }

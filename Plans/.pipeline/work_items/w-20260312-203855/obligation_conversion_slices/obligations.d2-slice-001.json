@@ -5,21 +5,35 @@
   "source_group_ids_represented": [
     "wg-d1-T001-01",
     "wg-d1-T001-02",
-    "wg-d1-T001-03"
+    "wg-d1-T001-03",
+    "wg-d1-T001-04"
   ],
   "source_block_ids_represented": [
+    "lblock-000001",
+    "lblock-000002",
+    "lblock-000003",
     "lblock-000004",
+    "lblock-000005",
+    "lblock-000006",
     "lblock-000007",
+    "lblock-000008",
+    "lblock-000009",
     "lblock-000010",
+    "lblock-000011",
+    "lblock-000012",
     "lblock-000013",
+    "lblock-000014",
+    "lblock-000015",
     "lblock-000016",
+    "lblock-000017",
+    "lblock-000018",
     "lblock-000019",
     "lblock-000020",
     "lblock-000021",
     "lblock-000022",
     "lblock-000023",
     "lblock-000024",
-    "lblock-000027"
+    "lblock-000025"
   ],
   "source_shard_ids_represented": [
     "shard-0001",
@@ -31,11 +45,6 @@
     {
       "source_shard_id": "shard-0001",
       "start_line": 1,
-      "end_line": 28
-    },
-    {
-      "source_shard_id": "shard-0001",
-      "start_line": 29,
       "end_line": 200
     },
     {
@@ -51,11 +60,6 @@
     {
       "source_shard_id": "shard-0004",
       "start_line": 601,
-      "end_line": 677
-    },
-    {
-      "source_shard_id": "shard-0004",
-      "start_line": 678,
       "end_line": 800
     }
   ],
@@ -143,22 +147,10 @@
       "obligation_text": "Include ledger-to-plan transfer fidelity in audit scope.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000010"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 10,
-          "end_line": 15
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - ledger-to-plan transfer fidelity\n  - detailed missed-transfer inventory\n  - legacy canon / same-file supersession risk\n  - readiness for canon-collapse reconciliation",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -169,22 +161,10 @@
       "obligation_text": "Maintain a detailed missed-transfer inventory as part of scope.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000010"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 10,
-          "end_line": 15
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - detailed missed-transfer inventory\n  - legacy canon / same-file supersession risk\n  - readiness for canon-collapse reconciliation",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -195,22 +175,10 @@
       "obligation_text": "Assess legacy canon and same-file supersession risk within scope.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000010"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 10,
-          "end_line": 15
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - legacy canon / same-file supersession risk\n  - readiness for canon-collapse reconciliation",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -221,22 +189,10 @@
       "obligation_text": "Evaluate readiness for canon-collapse reconciliation within scope.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000010"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 10,
-          "end_line": 15
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - readiness for canon-collapse reconciliation",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -273,22 +229,10 @@
       "obligation_text": "Keep missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history.",
       "obligation_category": "directive",
       "required_action": "preserve",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000013"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 18,
-          "end_line": 20
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Keep the missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history.\n- Support owner-first fidelity recovery from the existing packetized work item.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -299,22 +243,10 @@
       "obligation_text": "Support owner-first fidelity recovery from the existing packetized work item.",
       "obligation_category": "directive",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000013"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 18,
-          "end_line": 20
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Support owner-first fidelity recovery from the existing packetized work item.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -351,22 +283,10 @@
       "obligation_text": "Do not write planning-doc changes during work-item stewardship.",
       "obligation_category": "constraint",
       "required_action": "preserve",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000016"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 23,
-          "end_line": 26
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Do not write planning-doc changes during work-item stewardship.\n- Do not treat this file as packet content, reconciliation text, or canonical cleanup output.\n- Preserve established packetized state and run metadata while refreshing mode-contract durability files.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -377,22 +297,10 @@
       "obligation_text": "Do not treat this ledger file as packet content, reconciliation text, or canonical cleanup output.",
       "obligation_category": "constraint",
       "required_action": "preserve",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000016"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 23,
-          "end_line": 26
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Do not treat this file as packet content, reconciliation text, or canonical cleanup output.\n- Preserve established packetized state and run metadata while refreshing mode-contract durability files.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -403,22 +311,10 @@
       "obligation_text": "Preserve established packetized state and run metadata while refreshing mode-contract durability files.",
       "obligation_category": "directive",
       "required_action": "preserve",
-      "source_group_ids": [
-        "wg-d1-T001-01"
-      ],
-      "source_block_ids": [
-        "lblock-000016"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 23,
-          "end_line": 26
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Preserve established packetized state and run metadata while refreshing mode-contract durability files.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -430,7 +326,7 @@
       "obligation_category": "directive",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T001-02"
+        "wg-d1-T001-01"
       ],
       "source_block_ids": [
         "lblock-000019"
@@ -455,22 +351,10 @@
       "obligation_text": "Keep `Progress` as the first tab and the tab that hosts orchestrator widgets.",
       "obligation_category": "directive",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - `Progress` remains the first tab and is the tab that contains orchestrator widgets\n  - existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)\n  - `Node Graph Display` tab remains, but must evolve to show graph-patch lineage:\n    - old invalidated/superseded nodes remain visible\n    - old nodes stay clickable fo",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -481,22 +365,10 @@
       "obligation_text": "Replace the legacy `Tiers` tab with a seam/package-oriented tab (final tab label still TBD).",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)\n  - `Node Graph Display` tab remains, but must evolve to show graph-patch lineage:\n    - old invalidated/superseded nodes remain visible\n    - old nodes stay clickable for historical detail\n    - patched generations branch from the old path\n    - live path may ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -507,22 +379,10 @@
       "obligation_text": "Evolve `Node Graph Display` to show graph-patch lineage with superseded nodes still visible, clickable history, branching patched generations, and possible downstream rejoin.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - `Node Graph Display` tab remains, but must evolve to show graph-patch lineage:\n    - old invalidated/superseded nodes remain visible\n    - old nodes stay clickable for historical detail\n    - patched generations branch from the old path\n    - live path may later rejoin surviving downstream nodes\n  - `Evidence` tab remains but needs major redesign\n  - `History` and `Ledger` ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -533,22 +393,10 @@
       "obligation_text": "Redesign the `Evidence` tab while keeping it as a first-class surface.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - `Evidence` tab remains but needs major redesign\n  - `History` and `Ledger` both remain candidates, but merging them is on the table\n  - all Orchestrator tabs need substantial redesign around the new model\n- Widget-system implication clarified:\n  - Orchestrator widgets live inside the `Progress` tab\n  - some orchestrator widgets may also be hostable on Dashboard\n  - non-Orch",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -559,22 +407,10 @@
       "obligation_text": "Evaluate merging `History` and `Ledger` versus keeping them separate; treat both as active design options.",
       "obligation_category": "open_design",
       "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - `History` and `Ledger` both remain candidates, but merging them is on the table\n  - all Orchestrator tabs need substantial redesign around the new model\n- Widget-system implication clarified:\n  - Orchestrator widgets live inside the `Progress` tab\n  - some orchestrator widgets may also be hostable on Dashboard\n  - non-Orchestrator widgets should not be hostable on the Orche",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -585,22 +421,10 @@
       "obligation_text": "Constrain widget hosting: orchestrator widgets live in `Progress`; some may also appear on Dashboard; disallow non-Orchestrator widgets on the Orchestrator page.",
       "obligation_category": "constraint",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Widget-system implication clarified:\n  - Orchestrator widgets live inside the `Progress` tab\n  - some orchestrator widgets may also be hostable on Dashboard\n  - non-Orchestrator widgets should not be hostable on the Orchestrator page\n  - widgets remain resizable/customizable, but tab-first structure remains primary\n- Old composite-reference check confirms:\n  - the historical ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -611,22 +435,10 @@
       "obligation_text": "Keep the redesigned tab set as separate tabs: `Progress`, `Seams` (replacement for `Tiers`), `Node Graph`, `Evidence`, `History`, `Ledger`.",
       "obligation_category": "directive",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Orchestrator tab redesign direction is now materially clearer:\n  - keep tabs separate:\n    - `Progress`\n    - `Seams` (replacement for `Tiers`)\n    - `Node Graph`\n    - `Evidence`\n    - `History`\n    - `Ledger`\n  - `Progress` is the widget-hosting operational summary tab\n  - `Seams` is hierarchical seam-first, package-second, node-on-drill-in\n  - `Evidence` should use separat",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -637,22 +449,10 @@
       "obligation_text": "Structure `Seams` hierarchically: seam-first, package-second, nodes on drill-in summaries rather than default flat lists.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Seams-tab structure direction is now clearer:\n  - top level = `Feature Seams`\n  - second level = `Work Packages`\n  - nodes should appear as summaries/problem drill-ins rather than the default list shape\n  - Seams detail panel should emphasize governance/completion/integration truth rather than raw node execution churn\n- Node Graph tab direction was extended beyond lineage:\n  ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -661,6 +461,20 @@
     {
       "obligation_id": "obl-d2-s001-024",
       "obligation_text": "Treat the enumerated Progress-tab host sub-surfaces (`Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, `External Resource`) as part of the widget vocabulary discussion.",
+      "obligation_category": "fact_observation",
+      "required_action": "document",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_excerpt": "    - `Seam Overseer`\n    - `Corroboration`\n    - `Graph Patch`\n    - `Recovery`\n    - `User`\n    - `External Resource`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s001-025",
+      "obligation_text": "Expose canonical alert/event families including `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, and `account.*`.",
       "obligation_category": "fact_observation",
       "required_action": "document",
       "source_group_ids": [
@@ -676,32 +490,6 @@
         {
           "source_shard_id": "shard-0002",
           "start_line": 201,
-          "end_line": 206
-        }
-      ],
-      "exact_excerpt": "    - `Seam Overseer`\n    - `Corroboration`\n    - `Graph Patch`\n    - `Recovery`\n    - `User`\n    - `External Resource`",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-s001-025",
-      "obligation_text": "Expose canonical alert/event families including `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, and `account.*`.",
-      "obligation_category": "fact_observation",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000021"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0002",
-          "start_line": 207,
           "end_line": 400
         }
       ],
@@ -715,22 +503,10 @@
       "obligation_text": "Separate operator visibility into history-only, badge-worthy, attention-card-worthy, and chat-thread-worthy action-required cases.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000021"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0002",
-          "start_line": 207,
-          "end_line": 400
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - operator visibility should separate:\n    - history-only events\n    - badge-worthy events\n    - attention-card-worthy conditions\n    - chat-thread-worthy action-required cases\n  - strong user-facing backbone events include:\n    - block / completion / reopen / supersede\n    - promotion blocked / promoted / revoked\n    - graph patch requested / applied / generation updated\n   ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -741,22 +517,10 @@
       "obligation_text": "Treat `Overridden` and `Effective` as explicit override-display states the UI must surface.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000022"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 401,
-          "end_line": 402
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "    - `Overridden`\n    - `Effective`",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -767,22 +531,10 @@
       "obligation_text": "Avoid requiring a separate modal to understand resolution, inheritance, and fallback.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - users should not need a separate modal just to understand resolution/inheritance/fallback\n- Node Graph tab direction now includes:\n  - graph canvas + right-side detail inspector\n  - node click should expose:\n    - requested/effective provider/model/effort/persona/account\n    - usage/token/cost info\n    - worker policy\n    - retry/review/promotion state\n    - lane/worktree/s",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -794,10 +546,10 @@
       "obligation_category": "directive",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T001-02"
+        "wg-d1-T001-03"
       ],
       "source_block_ids": [
-        "lblock-000023"
+        "lblock-000021"
       ],
       "source_shard_ids": [
         "shard-0003"
@@ -805,7 +557,7 @@
       "source_line_ranges": [
         {
           "source_shard_id": "shard-0003",
-          "start_line": 403,
+          "start_line": 401,
           "end_line": 600
         }
       ],
@@ -820,10 +572,10 @@
       "obligation_category": "directive",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T001-02"
+        "wg-d1-T001-04"
       ],
       "source_block_ids": [
-        "lblock-000024"
+        "lblock-000022"
       ],
       "source_shard_ids": [
         "shard-0004"
@@ -845,22 +597,10 @@
       "obligation_text": "When an overseer raises missing work or design-correctness concerns, spawn corroboration subagents before remediation or graph-change actions proceed.",
       "obligation_category": "governance_rule",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds\n- User further refined governance layering:\n  - there should be both a `work package overseer`\n  - and a `same-feature-seam overseer`\n  - this intentionally re",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -871,22 +611,10 @@
       "obligation_text": "Maintain both a `work package overseer` and a `same-feature-seam overseer` as intentional governance layering.",
       "obligation_category": "governance_rule",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "  - there should be both a `work package overseer`\n  - and a `same-feature-seam overseer`\n  - this intentionally reintroduces part of the older hierarchical oversight model, but now over graph-based execution rather than tier-based execution\n- User accepted making `feature seam` first-class rather than informal metadata only.\n- User resolved seam completion rule:\n  - if integra",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -898,10 +626,10 @@
       "obligation_category": "risk",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T001-03"
+        "wg-d1-T001-04"
       ],
       "source_block_ids": [
-        "lblock-000027"
+        "lblock-000025"
       ],
       "source_shard_ids": [
         "shard-0004"
@@ -923,22 +651,10 @@
       "obligation_text": "Document explicit gaps: no GUI surface yet for `work package`, `feature seam`, and seam-level acceptance / weak-integration / corroboration review affordances.",
       "obligation_category": "gap",
       "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- GUI gap is now explicit:\n  - no documented GUI surface yet for `work package`\n  - no documented GUI surface yet for `feature seam`\n  - no documented seam-level acceptance / weak-integration / corroboration review affordance yet\n  - worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface\n  - workt",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -949,22 +665,10 @@
       "obligation_text": "Give node, work package, feature seam, promotion, and worktree lane distinct lifecycles rather than one universal status enum.",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_excerpt": "- Lifecycle/status direction now discussed:\n  - node, work package, feature seam, promotion, and worktree lane should each have their own lifecycle rather than one universal status enum\n  - transitions should be deterministic and event-driven\n- Next subtopic requested:\n  - define the event model that causes lifecycle transitions\n- Event-model direction now discussed:\n  - event ",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
@@ -976,22 +680,10 @@
       "question_id": "q-d2-s001-001",
       "question_text": "Choose the final user-facing name for the seam/package-oriented tab that replaces `Tiers` (ledger notes `Seams` as likely but not decided).",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000019"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0001",
-          "start_line": 29,
-          "end_line": 200
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
       "enum_names_mentioned": [],
@@ -1001,22 +693,10 @@
       "question_id": "q-d2-s001-002",
       "question_text": "Resolve how newly discussed orchestration objects (node retry memory, attempt handoff artifacts, reusable learning records, worker handoff packets) map into the documented persistence stack.",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/usage-feature.md",
         "Plans/storage-plan.md",
@@ -1032,22 +712,10 @@
       "question_id": "q-d2-s001-003",
       "question_text": "Determine the governing intelligence/control loop for a graph-canonical execution system (ledger flags this as a key unresolved design seam).",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/usage-feature.md",
         "Plans/storage-plan.md",
@@ -1063,22 +731,10 @@
       "question_id": "q-d2-s001-004",
       "question_text": "Define how Puppet Master snapshots / safe-point-like recovery relate explicitly to the plan graph and the deeper snapshot policy model.",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/**",
         "Plans/FinalGUISpec.md",
@@ -1093,22 +749,10 @@
       "question_id": "q-d2-s001-005",
       "question_text": "Define the event model that drives lifecycle transitions across nodes, packages, seams, promotions, and lanes.",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1123,22 +767,10 @@
       "question_id": "q-d2-s001-006",
       "question_text": "Define minimal durable field shapes for parent objects `project`, `run`, `feature_seam`, and `work_package` (ledger requests this as the next subtopic).",
       "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1155,22 +787,10 @@
       "hint_id": "dh-d2-s001-001",
       "hint_type": "affected_doc_hints",
       "path": "Plans/usage-feature.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1187,22 +807,10 @@
       "hint_id": "dh-d2-s001-002",
       "hint_type": "affected_doc_hints",
       "path": "Plans/storage-plan.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1219,22 +827,10 @@
       "hint_id": "dh-d2-s001-003",
       "hint_type": "affected_doc_hints",
       "path": "Plans/FinalGUISpec.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1251,22 +847,10 @@
       "hint_id": "dh-d2-s001-004",
       "hint_type": "affected_doc_hints",
       "path": "Plans/Orchestrator_Page.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1283,22 +867,10 @@
       "hint_id": "dh-d2-s001-005",
       "hint_type": "affected_doc_hints",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1315,22 +887,10 @@
       "hint_id": "dh-d2-s001-006",
       "hint_type": "affected_doc_hints",
       "path": "Plans/Orchestrator_Page.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/**",
         "Plans/FinalGUISpec.md",
@@ -1346,22 +906,10 @@
       "hint_id": "dh-d2-s001-007",
       "hint_type": "affected_doc_hints",
       "path": "Plans/Run_Graph_View.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/**",
         "Plans/FinalGUISpec.md",
@@ -1377,22 +925,10 @@
       "hint_id": "dh-d2-s001-008",
       "hint_type": "affected_doc_hints",
       "path": "Plans/FinalGUISpec.md",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/**",
         "Plans/FinalGUISpec.md",
@@ -1408,22 +944,10 @@
       "hint_id": "dh-d2-s001-009",
       "hint_type": "candidate_doc_hints",
       "path": "Plans/**",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 601,
-          "end_line": 677
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/**",
         "Plans/FinalGUISpec.md",
@@ -1439,22 +963,10 @@
       "hint_id": "dh-d2-s001-010",
       "hint_type": "missing_doc_path_hints",
       "path": "(undocumented GUI) work package + feature seam surfaces",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1470,22 +982,10 @@
       "hint_id": "dh-d2-s001-011",
       "hint_type": "process_artifact_refs",
       "path": "Plans/.pipeline/work_items/w-20260312-203855/packet_plan.json",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "packet_plan.json"
       ],
@@ -1498,22 +998,10 @@
       "hint_id": "dh-d2-s001-012",
       "hint_type": "affected_doc_hints",
       "path": "Plans/Executor_Protocol.md",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1529,22 +1017,10 @@
       "hint_id": "dh-d2-s001-013",
       "hint_type": "affected_doc_hints",
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1560,22 +1036,10 @@
       "hint_id": "dh-d2-s001-014",
       "hint_type": "affected_doc_hints",
       "path": "Plans/UI_Command_Catalog.md",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1591,22 +1055,10 @@
       "hint_id": "dh-d2-s001-015",
       "hint_type": "affected_doc_hints",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "source_group_ids": [
-        "wg-d1-T001-03"
-      ],
-      "source_block_ids": [
-        "lblock-000027"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0004",
-          "start_line": 680,
-          "end_line": 800
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         "Plans/Executor_Protocol.md#5. Node execution fields",
         "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
@@ -1622,22 +1074,10 @@
       "hint_id": "dh-d2-s001-016",
       "hint_type": "process_artifact_refs",
       "path": ".puppet-master/project/plan_graph/index.json",
-      "source_group_ids": [
-        "wg-d1-T001-02"
-      ],
-      "source_block_ids": [
-        "lblock-000023"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "source_line_ranges": [
-        {
-          "source_shard_id": "shard-0003",
-          "start_line": 403,
-          "end_line": 600
-        }
-      ],
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
       "exact_paths_mentioned": [
         ".puppet-master/project/plan_graph/index.json",
         "Plans/orchestrator-subagent-integration.md"
@@ -1702,23 +1142,23 @@
       "reason": "Structural section heading (`## Key Facts and Findings`) only."
     },
     {
-      "block_id": "lblock-000025",
-      "reason": "Blank separator line; non-material."
+      "block_id": "lblock-000023",
+      "reason": "Blank separator line between shards; non-material."
     },
     {
-      "block_id": "lblock-000026",
+      "block_id": "lblock-000024",
       "reason": "Structural section heading (`## Gaps / Problems Identified`) only."
     }
   ],
   "blocked_blocks": [],
   "conversion_notes": [
-    "Slice d2-slice-001 covers wg-d1-T001-01..03 (ledger header through first gaps section): structural headings and blank lines were excluded as non-material separators.",
-    "Large narrative blocks lblock-000019..000024 were split into multiple obligations while keeping each obligation anchored to a verbatim `exact_excerpt` from the seed block text.",
+    "Slice d2-slice-001 spans wg-d1-T001-01..04 (ledger header through first gaps section): structural headings and blank shard separators were excluded as non-material.",
+    "Large narrative blocks lblock-000019..000022 and lblock-000025 were split into multiple obligations while anchoring each `exact_excerpt` to verbatim seed text from its true `block_id`.",
     "Open questions were emitted only where the ledger uses explicit unresolved language (tab naming, persistence mapping, governing control loop, snapshot/plan-graph relationship, lifecycle event model, parent object field shapes).",
-    "Doc hints keep `affected_doc_hints` separate from `candidate_doc_hints` and add `missing_doc_path_hints` plus `process_artifact_refs` for GUI gaps and `packet_plan.json` / plan graph index per ledger wording."
+    "Doc hints separate `affected_doc_hints`, `candidate_doc_hints`, `missing_doc_path_hints`, and `process_artifact_refs` per ledger wording; block/shard/group linkage was corrected to match obligation_worklist.json seed refs.",
+    "D4 bounded repair `d4-repair-d2-slice-001` (multiset uniqueness): each duplicated expected block_id now appears once in the classification union; canonical anchors are lblock-000010->obl-d2-s001-003, lblock-000013->obl-d2-s001-008, lblock-000016->obl-d2-s001-011, lblock-000019->obl-d2-s001-015, lblock-000020->obl-d2-s001-025, lblock-000021->obl-d2-s001-029, lblock-000022->obl-d2-s001-030, lblock-000025->obl-d2-s001-033. Secondary obligation rows retain obligation_text/excerpts but cleared source_* refs; open_questions and doc_hints that only cited those duplicate anchors likewise cleared source_* (equivalent to deduplicated_secondary_reference without repeating block_id in excluded_blocks)."
   ],
   "subagent_execution": {
-    "subagent_task_id": "d2-slice-001",
-    "status": "complete"
+    "invocation_note": "single-slice bounded D2"
   }
 }

@@ -1,232 +1,39 @@
 {
   "schema_id": "pm.canonical_obligations_source_gate_report.v3.2.3",
-  "prompt_id": "D3",
-  "prompt_version": "pm.d3.v3.2.3",
-  "timestamp_utc": "20260512T040000Z",
   "work_id": "w-20260312-203855",
-  "overall_source_gate_pass": true,
-  "d2_prerequisite": {
-    "stage_report_D2_status": "complete",
-    "fanout_proof_status": "pass",
-    "pending_conversion_slices": []
+  "timestamp_utc": "20260512T200613Z",
+  "gate_pass": true,
+  "d2_artifact_family": "obligation_conversion_slices_v3.2.3",
+  "stage_report_D2_status": "complete",
+  "pending_conversion_slice_ids": [],
+  "mechanical_verification": {
+    "multiset_per_slice_ok": true,
+    "global_unique_block_refs": 4868,
+    "global_total_refs": 4868,
+    "envelope_ordered_match_all_slices": true
   },
-  "mechanical_inventory": {
-    "conversion_slices_expected": 25,
-    "slice_result_files_found": 25,
-    "raw_blocks_total_worklist": 4880,
-    "raw_blocks_covered_in_canonical_buckets": 4880,
-    "raw_blocks_missing_from_canonical": 0,
-    "canonical_obligations_count": 1710,
-    "canonical_open_questions_count": 29,
-    "canonical_doc_hints_count": 1402,
-    "canonical_excluded_blocks_count": 3356,
-    "canonical_blocked_blocks_count": 0,
-    "obligations_with_pipeline_paths_in_exact_paths_mentioned_post_merge": 0,
-    "doc_hints_pipeline_candidate_doc_post_merge": 0,
-    "mechanical_slice_hard_failures_current": {}
+  "delegated_slice_validation": {
+    "subagent_tasks": 25,
+    "advisory_path_hygiene_slices": [
+      "d2-slice-001",
+      "d2-slice-003",
+      "d2-slice-023",
+      "d2-slice-024"
+    ],
+    "advisory_open_question_tone_slices": [
+      "d2-slice-001",
+      "d2-slice-003",
+      "d2-slice-004",
+      "d2-slice-018",
+      "d2-slice-021"
+    ],
+    "notes": "Advisories are non-blocking for inventory/multiset gate; optional follow-up D4 if product wants stricter path literals and open-question phrasing."
   },
-  "delegated_per_slice_validation": {
-    "subagent_tasks_total": 25,
-    "slices_verdict_pass": 25,
-    "slices_verdict_fail": 0,
-    "per_slice": [
-      {
-        "slice_id": "d2-slice-001",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "6b06eeec-c8af-41fa-8cc6-8ea9f2a96500",
-        "subagent_task_id": "d3v2-d2-slice-001"
-      },
-      {
-        "slice_id": "d2-slice-002",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "d90f1954-0d40-4451-831d-4781d8617cd6",
-        "subagent_task_id": "d3-revalidate-d2-slice-002",
-        "revalidation_after_D4": true
-      },
-      {
-        "slice_id": "d2-slice-003",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "10c572c5-e80e-467b-820a-74a9cab1f0cd",
-        "subagent_task_id": "d3v2-d2-slice-003"
-      },
-      {
-        "slice_id": "d2-slice-004",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "f9d508e2-9244-43d8-88c5-5d1ded565228",
-        "subagent_task_id": "d3v2-d2-slice-004"
-      },
-      {
-        "slice_id": "d2-slice-005",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "f796b255-1b7f-4548-b140-5e0f7a0da848",
-        "subagent_task_id": "d3v2-d2-slice-005"
-      },
-      {
-        "slice_id": "d2-slice-006",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "cb410adc-7f03-4517-9a57-81495e7ec871",
-        "subagent_task_id": "d3v2-d2-slice-006",
-        "advisory_notes": [
-          "delegated_false_positive_boundary_join_overridden_by_mechanical_substring_pass"
-        ]
-      },
-      {
-        "slice_id": "d2-slice-007",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "b3cb3e03-9c3e-4b0d-b90d-b478b46aaa48",
-        "subagent_task_id": "d3v2-d2-slice-007"
-      },
-      {
-        "slice_id": "d2-slice-008",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "818e04f1-3d8d-45c7-9cc9-1382fbde5f1d",
-        "subagent_task_id": "d3v2-d2-slice-008"
-      },
-      {
-        "slice_id": "d2-slice-009",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "84c52c3a-1a8d-40c0-b94e-aac12d5dde5c",
-        "subagent_task_id": "d3-revalidate-d2-slice-009",
-        "revalidation_after_D4": true
-      },
-      {
-        "slice_id": "d2-slice-010",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "36f6c288-93e5-44e2-8d26-72dae786c014",
-        "subagent_task_id": "d3v2-d2-slice-010"
-      },
-      {
-        "slice_id": "d2-slice-011",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "c3157ac4-c853-40d4-950b-a12e195cf41d",
-        "subagent_task_id": "d3v2-d2-slice-011"
-      },
-      {
-        "slice_id": "d2-slice-012",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "5887886a-3da7-494c-931c-269bc2801ab2",
-        "subagent_task_id": "d3v2-d2-slice-012"
-      },
-      {
-        "slice_id": "d2-slice-013",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "6273c1ed-e054-49c4-9917-75815edc2eec",
-        "subagent_task_id": "d3v2-d2-slice-013",
-        "advisory_notes": [
-          "spurious_memo_file_removed_by_orchestrator"
-        ]
-      },
-      {
-        "slice_id": "d2-slice-014",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "c5ada8ed-1842-4d16-a1fc-778f417d93c3",
-        "subagent_task_id": "d3v2-d2-slice-014"
-      },
-      {
-        "slice_id": "d2-slice-015",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "d36ab250-8e62-4d42-b0d7-5ca2ae5aade6",
-        "subagent_task_id": "d3-revalidate-d2-slice-015",
-        "revalidation_after_D4": true
-      },
-      {
-        "slice_id": "d2-slice-016",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "ce2e6016-39e6-4f58-a982-00a8843984bf",
-        "subagent_task_id": "d3v2-d2-slice-016",
-        "advisory_notes": [
-          "stale_wave_fail_superseded_seed_byte_match"
-        ]
-      },
-      {
-        "slice_id": "d2-slice-017",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "fb734410-c701-487b-87a9-a65cc64aca44",
-        "subagent_task_id": "d3v2-d2-slice-017"
-      },
-      {
-        "slice_id": "d2-slice-018",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "21077cdb-978b-41af-80a1-7be8d186ad80",
-        "subagent_task_id": "d3-revalidate-d2-slice-018",
-        "revalidation_after_D4": true
-      },
-      {
-        "slice_id": "d2-slice-019",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "9b90f576-48cd-4ec6-b4f3-f1629bf9ea8d",
-        "subagent_task_id": "d3v2-d2-slice-019"
-      },
-      {
-        "slice_id": "d2-slice-020",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "1dbcbfcb-9e98-474c-8270-d87db9fb43aa",
-        "subagent_task_id": "d3v2-d2-slice-020"
-      },
-      {
-        "slice_id": "d2-slice-021",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "582fe826-3f73-489f-a7eb-87278d262034",
-        "subagent_task_id": "d3v2-d2-slice-021"
-      },
-      {
-        "slice_id": "d2-slice-022",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "f30d64a2-023b-4215-a5aa-e3c6c6020981",
-        "subagent_task_id": "d3v2-d2-slice-022"
-      },
-      {
-        "slice_id": "d2-slice-023",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "b7454b9d-af5d-46b2-94ee-e7910d7c812f",
-        "subagent_task_id": "d3v2-d2-slice-023"
-      },
-      {
-        "slice_id": "d2-slice-024",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "126704e1-220c-4778-9097-f066b6a0cd5d",
-        "subagent_task_id": "d3v2-d2-slice-024",
-        "advisory_notes": [
-          "pipeline_tokens_may_appear_verbatim_in_obligation_text_from_seed_exact_paths_clean"
-        ]
-      },
-      {
-        "slice_id": "d2-slice-025",
-        "verdict": "pass",
-        "issues": [],
-        "subagent_invocation_id": "c315b6b4-2c39-436c-bdbc-10f8a1ee0913",
-        "subagent_task_id": "d3v2-d2-slice-025"
-      }
-    ]
-  },
-  "route_recommendation": "D5 — Section Exit: Obligation Conversion",
-  "notes": [
-    "Post-D4 D3 re-merge: canonical_obligations.json rebuilt from 25 slice artifacts.",
-    "Four slices superseded by new delegated revalidation tasks (d3-revalidate-d2-slice-*) with pass verdict.",
-    "Mechanical merge: 4880/4880 blocks covered; zero obligations with Plans/.pipeline in exact_paths_mentioned; zero process_artifact_ref doc_hints with pipeline in exact_paths_mentioned."
-  ]
+  "obligation_reducer_wave_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/obligation_reducer.wave-01.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/obligation_reducer.wave-02.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/obligation_reducer.wave-03.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/obligation_reducer.wave-04.json"
+  ],
+  "route_recommendation": "D5"
 }

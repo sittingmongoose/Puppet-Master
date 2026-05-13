@@ -2,432 +2,332 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-005-g008",
-  "obligation_record_count": 12,
-  "source_classification_slices": [
-    "e2-class-006"
+  "obligation_record_count": 14,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-005"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-008-007",
+      "obligation_id": "obl-d2-slice-009-018",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001093"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-03"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5001,
-            "end_line": 5010
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001412 | excerpt=\"- Authority is still framed too monolithically in several places:\n  - policy docs still assume a stronger single \\\"Puppet Master\\\" authority center\n  - the rewrite now needs seam/package overseer s...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-008",
+      "obligation_id": "obl-d2-slice-009-019",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001096"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-03"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5013,
-            "end_line": 5020
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001418 | excerpt=\"- Requested/effective identity is canonical enough to affect policy and permissions now, but those docs still treat it as adjacent detail rather than core decision context.\n- `HITLRequest` / blocke...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-009",
+      "obligation_id": "obl-d2-slice-009-020",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001099"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5023,
-            "end_line": 5032
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001421 | excerpt=\"- Extend `Decision_Policy.md` with first-class policy objects and transitions for:\n  - concerns\n  - corroboration\n  - promotions\n  - superseded/revoked/reopened states\n- Require requested/effective...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-010",
+      "obligation_id": "obl-d2-slice-009-021",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001102"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5035,
-            "end_line": 5042
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001424 | excerpt=\"- `blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings\n- `attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids\n- acknowledged concerns ...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-011",
+      "obligation_id": "obl-d2-slice-009-022",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001105"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5045,
-            "end_line": 5049
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001429 | excerpt=\"- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Inte...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-012",
+      "obligation_id": "obl-d2-slice-009-023",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1860,
+          "end_line": 1860,
+          "match_kind": "verbatim_substring"
+        }
       ],
+      "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001108"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5052,
-            "end_line": 5057
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001432 | excerpt=\"- Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass suggested:\n  - `Contracts_V0.md` prohibits canonical `requested_persona_id` / `effective_persona_id`\n  - bu...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-013",
+      "obligation_id": "obl-d2-slice-009-024",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001111"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5060,
-            "end_line": 5064
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001438 | excerpt=\"- Canonical naming conflict:\n  - some docs still normalize around `requested_persona_id` / `effective_persona_id`\n  - `Contracts_V0.md` explicitly says those are not canonical persisted names\n- Ide...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-014",
+      "obligation_id": "obl-d2-slice-009-025",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001114"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5067,
-            "end_line": 5070
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001441 | excerpt=\"- Normalize all persona/runtime identity field names to the canonical `requested_*` / `effective_*` contract from `Contracts_V0.md`, and remove drifted `_id` variants where they are being treated a...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-015",
+      "obligation_id": "obl-d2-slice-009-026",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001117"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-04"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5073,
-            "end_line": 5075
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001444 | excerpt=\"- `provider_account_id` needs an explicit relationship to `effective_account_id` / `effective_provider_identity` or it will become a hidden second identity system\n- historical-run mode needs to be ...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-018",
+      "obligation_id": "obl-d2-slice-009-027",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001128"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-05"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5101,
-            "end_line": 5126
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001449 | excerpt=\"- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Inte...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-019",
+      "obligation_id": "obl-d2-slice-009-028",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "directive",
-      "classification": "needs_doc_discovery",
-      "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 2473,
+          "end_line": 2473,
+          "match_kind": "verbatim_substring"
+        }
       ],
+      "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/storage-plan.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001131"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-05"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5129,
-            "end_line": 5140
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001452 | excerpt=\"- Sonnet sharpened the identity problem from \\\"requested vs effective is missing\\\" to a more specific structural asymmetry:\n  - canonical contracts expose `requested_account_policy`\n  - but not an ...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-008-020",
+      "obligation_id": "obl-d2-slice-009-029",
       "coverage_task_id": "cov-e1-slice-005-g008",
-      "doc_resolution_status": "unresolved_no_live_target",
-      "obligation_category": "constraint",
-      "classification": "needs_doc_discovery",
+      "classification": "partial",
       "evidence_spans": [],
-      "missing_details": [
-        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
       ],
-      "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "source_shard_ids": [
-          "shard-0026"
-        ],
-        "source_block_ids": [
-          "lblock-001134"
-        ],
-        "source_group_ids": [
-          "wg-d1-T007-05"
-        ],
-        "source_slice_id": "d2-slice-008",
-        "source_line_ranges": [
-          {
-            "start_line": 5143,
-            "end_line": 5157
-          }
-        ]
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001458 | excerpt=\"- Requested-side identity gap:\n  - canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor\n  - downstream docs therefore improvise or omit requested...\""
       },
-      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs.",
-      "deterministic_local_evidence_used_only_as_candidate": false
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-030",
+      "coverage_task_id": "cov-e1-slice-005-g008",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001461 | excerpt=\"- Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.\n- Reconcile event-table rows with the richer prose MU...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-009-031",
+      "coverage_task_id": "cov-e1-slice-005-g008",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-005-g008 has bounded live_doc_windows (32 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0032",
+        "source_slice_id": "d2-slice-009",
+        "canonical_excerpt_note": "shards=shard-0032 | blocks=lblock-001464 | excerpt=\"- `provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity`\n- command payloads with generic `page: string` or tier-bound ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

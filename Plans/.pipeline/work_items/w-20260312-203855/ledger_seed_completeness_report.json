@@ -1,13 +1,14 @@
 {
   "schema_id": "pm.ledger_seed_completeness_report.v3.2.3",
+  "prompt_version": "pm.c4.v3.2.3",
+  "timestamp_utc": "20260512T153710Z",
   "work_id": "w-20260312-203855",
   "status": "pass",
   "validation_mode": "lossless_inventory_mechanical",
-  "timestamp_utc": "20260511T211150Z",
   "summary": {
     "manifest_shards_total": 92,
-    "inventory_blocks_total": 4880,
-    "raw_seed_blocks_total": 4880,
+    "inventory_blocks_total": 4868,
+    "raw_seed_blocks_total": 4868,
     "source_lines_total": 18244,
     "represented_nonblank_lines_total": 16453,
     "excluded_blank_lines_total": 0,
@@ -16,11 +17,33 @@
     "text_mismatch_blocks": 0,
     "seed_block_reference_errors": 0
   },
+  "checks": {
+    "inventory_schema_id": "pm.ledger_inventory_blocks.v3.2.3",
+    "seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
+    "source_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "every_manifest_shard_file_present": true,
+    "every_global_line_covered_exactly_once": true,
+    "every_block_exact_text_matches_working_ledger_slice": true,
+    "raw_seed_to_block_bijection": true
+  },
   "blocking_items": [],
   "semantic_checks_deferred_to": [
     "D3",
     "I5",
     "I6"
   ],
-  "next_required_stage": "C5 Section Exit: Ledger Preparation"
+  "next_required_stage": "C5 Section Exit: Ledger Preparation",
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-*.md (existence verified via manifest)",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C3.json"
+  ],
+  "notes": [
+    "Blank-only lines are represented inside blank_separator blocks (not excluded as structural whitespace).",
+    "No v3.1 semantic seed_groups or category completeness checks performed in C4 v3.2.3."
+  ]
 }

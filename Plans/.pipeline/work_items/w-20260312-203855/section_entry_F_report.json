@@ -2,7 +2,7 @@
   "schema_id": "pm.section_entry.v3.2.3",
   "prompt_id": "F0",
   "prompt_version": "pm.f0.v3.2.3",
-  "timestamp_utc": "20260511T180000Z",
+  "timestamp_utc": "20260512T230000Z",
   "section_id": "F",
   "section_name": "Gaps_Routing_Doc_Discovery",
   "work_id": "w-20260312-203855",
@@ -11,14 +11,14 @@
   "upstream_section": "E",
   "upstream_section_exit": {
     "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
-    "sha256": "035842bd63b9cf57c6554cccd18db6f2eab7474ed327c23f25a930e21f7c2731",
+    "sha256": "f17908ba96dba11d9777fc3944e2a77c4df33913cd449942066cb80b431ac05e",
     "status": "complete",
     "prompt_id": "E4",
     "prompt_version": "pm.e4.v3.2.3",
     "next_section": "F_Gaps_Routing_Doc_Discovery",
     "next_preferred_prompt": "F0",
     "gaps_routing_active_source_for_section_f": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-    "transfer_coverage_sha256": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
+    "transfer_coverage_sha256": "b88ee94b21417680d6a305ee975ba2349d14ff838bc59ab2d66c71b8d2e96ab9",
     "transfer_coverage_source_gate_status": "pass",
     "transfer_coverage_final_gate_passed": true
   },
@@ -32,13 +32,13 @@
     "gaps_routing_active_source_for_section_f_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json"
   },
   "active_inputs_sha256": {
-    "section_exit_E.json": "035842bd63b9cf57c6554cccd18db6f2eab7474ed327c23f25a930e21f7c2731",
-    "transfer_coverage.json": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c"
+    "section_exit_E.json": "f17908ba96dba11d9777fc3944e2a77c4df33913cd449942066cb80b431ac05e",
+    "transfer_coverage.json": "b88ee94b21417680d6a305ee975ba2349d14ff838bc59ab2d66c71b8d2e96ab9"
   },
   "gaps_routing_entry_summary": {
-    "transfer_coverage_line_count_observed": 116054,
-    "transfer_coverage_line_count_from_exit": 116054,
-    "transfer_coverage_active_basis": "section_exit_E designates gaps_routing_active_source_for_section_f to work-root transfer_coverage.json; E4 final_gate.transfer_coverage_final_gate_passed true; on-disk sha256 and line count match exit report"
+    "transfer_coverage_line_count_observed": 83680,
+    "transfer_coverage_line_count_from_exit": 83680,
+    "transfer_coverage_active_basis": "section_exit_E designates gaps_routing_active_source_for_section_f to work-root transfer_coverage.json; E4 final_gate.transfer_coverage_final_gate_passed true; on-disk sha256 and wc -l match exit report fields transfer_coverage_sha256 and transfer_coverage_line_count"
   },
   "deterministic_verification": {
     "section_exit_e_status": "complete",
@@ -54,9 +54,9 @@
   "final_gate_status": "pass",
   "next_prompt_request": "Paste prompt F1 — Open Gaps Worklist Builder v3.2.3.",
   "notes": [
-    "Section F entry v3.2.3: work_id from active Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json (archive copies under work_items/*/archive/ ignored for handoff).",
-    "transfer_coverage.json present at work root; sha256sum and wc -l match section_exit_E.transfer_coverage_sha256 and transfer_coverage_line_count.",
-    "Mechanical section entry; execution_type mechanical_tool_operation; no delegated model subagents.",
+    "Section F entry v3.2.3: work_id from active Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json (archive copies under work_items/*/archive/ ignored for handoff selection).",
+    "transfer_coverage.json at work root verified with test -f, sha256sum, wc -l; bounded JSON head fields only for schema_id/work_id; no full semantic read of coverage_rows.",
+    "Mechanical section entry; execution_type mechanical_tool_operation per pm.f0.v3.2.3; no delegated model subagents.",
     "Glob under Plans/.pipeline/work_items found one active section_exit_E.json at work root plus two archive copies under the same work_id."
   ]
 }

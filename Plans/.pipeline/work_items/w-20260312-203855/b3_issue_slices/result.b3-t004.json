@@ -1,0 +1,142 @@
+{
+  "schema_id": "pm.b3_issue_slice_result.v1",
+  "subagent_task_id": "b3-t004",
+  "adjudications": [
+    {
+      "gap_array_index": 1183,
+      "adjudication_classification": "prompt_process_defect",
+      "rationale_brief": "Terminal doc_discovery_exhaustion with empty candidate_doc_hints and live_doc_targets_union; classifier_union_no_live_targets and blocker coverage_classifier_process_defect_or_source_intake_gap indicate pipeline/classifier or intake defect, not a missing one-off doc search.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Coverage/classifier stage did not attach resolvable doc hints or live targets for cov-e1-slice-012-g006 on shard-0063 after exhaustive discovery, leaving obligations in needs_doc_discovery with no routable documents."
+    },
+    {
+      "gap_array_index": 1184,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-049 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1185,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-050 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1186,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-051 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1188,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-053 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1189,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-054 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1190,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-055 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1192,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-057 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1193,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-058 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1195,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-060 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1196,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-061 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1197,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-062 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1199,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-064 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1200,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-065 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1201,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-066 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1203,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-068 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    },
+    {
+      "gap_array_index": 1204,
+      "adjudication_classification": "duplicate",
+      "rationale_brief": "Same unresolved fingerprint and prior_resolver_state as gap 1183; distinct obligation obl-017-069 only.",
+      "duplicate_of_gap_array_index": 1183,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Same systemic defect as gap 1183; repeated per obligation row."
+    }
+  ]
+}

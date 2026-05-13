@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.b3_issue_slice_result.v1",
+  "subagent_task_id": "b3-t021",
+  "adjudications": [
+    {
+      "gap_array_index": 1246,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; candidate_doc_hints and live_doc_targets_union are empty; unresolved_reason lists doc_resolution_status=unresolved_no_live_target and assignment_reason_code=classifier_union_no_live_targets for obl-d2-slice-018-029 on shard-0066; blocker_classification.blocker_type=coverage_classifier_process_defect_or_source_intake_gap matches f2_route_hint b3_issue_or_coverage_process_review_not_repeat_doc_discovery.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-012-g012 (shard-0066), indicating classifier union and/or source intake failed to bind live doc paths."
+    },
+    {
+      "gap_array_index": 1248,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Same terminal bundle as sibling row 1246: doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true; empty candidate_doc_hints and live_doc_targets_union; unresolved_reason confirms aggregated_task_label shard-0066|unresolved_no_live_target| and obl-d2-slice-018-031 still needs_doc_discovery with zero hint/target counts; distinct obligation_id from 1246 so not a duplicate index.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "After terminal doc discovery exhaustion, classifier_union_no_live_targets left no live_doc_targets_union and no candidate_doc_hints for coverage_task_id cov-e1-slice-012-g012 (shard-0066), indicating classifier union and/or source intake failed to bind live doc paths."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.obligation_repair_wave.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "prompt_id": "D4",
+  "prompt_version": "pm.d4.v3.2.3",
+  "wave_index": 2,
+  "timestamp_utc": "20260512T195603Z",
+  "invocations": [
+    {
+      "subagent_invocation_id": "188730a4-e7ed-4957-88c8-76466ffdac1a",
+      "subagent_task_id": "d4-repair-d2-slice-015",
+      "input_bounds": {
+        "slice_id": "d2-slice-015",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "7873e781-7e8c-421b-9fd7-8d0fe70d71bc",
+      "subagent_task_id": "d4-repair-d2-slice-019",
+      "input_bounds": {
+        "slice_id": "d2-slice-019",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "eb8d17b9-585c-4d3b-b003-e9a91cece32c",
+      "subagent_task_id": "d4-repair-d2-slice-020",
+      "input_bounds": {
+        "slice_id": "d2-slice-020",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "df9f7b90-c2c7-4ead-81d8-9d3467bcc67f",
+      "subagent_task_id": "d4-repair-d2-slice-022",
+      "input_bounds": {
+        "slice_id": "d2-slice-022",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "df9d7435-53bb-453a-b089-7d8701e6633c",
+      "subagent_task_id": "d4-repair-d2-slice-024",
+      "input_bounds": {
+        "slice_id": "d2-slice-024",
+        "target_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json",
+        "repair_families": [
+          "multiset_partition",
+          "doc_hint_obligation_dedupe",
+          "open_question_dedupe"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json",
+      "status": "complete"
+    }
+  ]
+}

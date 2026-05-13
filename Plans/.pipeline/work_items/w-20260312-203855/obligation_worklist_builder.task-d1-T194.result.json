@@ -1,0 +1,465 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T194",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T194-01",
+      "source_block_ids": [
+        "lblock-004826",
+        "lblock-004827",
+        "lblock-004828",
+        "lblock-004829",
+        "lblock-004830",
+        "lblock-004831",
+        "lblock-004832",
+        "lblock-004833",
+        "lblock-004834",
+        "lblock-004835"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0089",
+          "start_line": 17687,
+          "end_line": 17800
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "max_source_lines": 114,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T194-01.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004826",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17687,
+            "end_line": 17740
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/human-in-the-loop.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004827",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17741,
+            "end_line": 17741
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004828",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17742,
+            "end_line": 17742
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004829",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17743,
+            "end_line": 17766
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/FinalGUISpec.md",
+              "Plans/Tools.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/human-in-the-loop.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004830",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17767,
+            "end_line": 17767
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004831",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17768,
+            "end_line": 17768
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004832",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17769,
+            "end_line": 17793
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Project_Output_Artifacts.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004833",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17794,
+            "end_line": 17794
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004834",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17795,
+            "end_line": 17795
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004835",
+          "source_shard_id": "shard-0089",
+          "source_line_range": {
+            "start_line": 17796,
+            "end_line": 17800
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    },
+    {
+      "work_group_id": "wg-d1-T194-02",
+      "source_block_ids": [
+        "lblock-004836",
+        "lblock-004837",
+        "lblock-004838",
+        "lblock-004839",
+        "lblock-004840",
+        "lblock-004841",
+        "lblock-004842",
+        "lblock-004843",
+        "lblock-004844",
+        "lblock-004845",
+        "lblock-004846",
+        "lblock-004847",
+        "lblock-004848",
+        "lblock-004849",
+        "lblock-004850"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0090",
+          "start_line": 17801,
+          "end_line": 17972
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "max_source_lines": 172,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T194-02.json",
+      "source_block_seed_refs": [
+        {
+          "block_id": "lblock-004836",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17801,
+            "end_line": 17824
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Tools.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004837",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17825,
+            "end_line": 17825
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004838",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17826,
+            "end_line": 17826
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004839",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17827,
+            "end_line": 17847
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004840",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17848,
+            "end_line": 17848
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004841",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17849,
+            "end_line": 17849
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004842",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17850,
+            "end_line": 17873
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004843",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17874,
+            "end_line": 17874
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004844",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17875,
+            "end_line": 17875
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004845",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17876,
+            "end_line": 17918
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/Contracts_V0.md",
+              "Plans/FinalGUISpec.md",
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Project_Output_Artifacts.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004846",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17919,
+            "end_line": 17919
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004847",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17920,
+            "end_line": 17920
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004848",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17921,
+            "end_line": 17970
+          },
+          "surface_hints": {
+            "plans_paths_exact": [
+              "Plans/GitHub_Integration.md",
+              "Plans/Glossary.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Project_Output_Artifacts.md",
+              "Plans/Runtime_Artifacts_Panel.md",
+              "Plans/Tools.md",
+              "Plans/UI_Command_Catalog.md",
+              "Plans/assistant-chat-design.md",
+              "Plans/interview-subagent-integration.md",
+              "Plans/orchestrator-subagent-integration.md",
+              "Plans/storage-plan.md",
+              "Plans/usage-feature.md"
+            ],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004849",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17971,
+            "end_line": 17971
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        },
+        {
+          "block_id": "lblock-004850",
+          "source_shard_id": "shard-0090",
+          "source_line_range": {
+            "start_line": 17972,
+            "end_line": 17972
+          },
+          "surface_hints": {
+            "plans_paths_exact": [],
+            "looks_like_open_question": false,
+            "contains_todo_stub_marker": false
+          }
+        }
+      ]
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

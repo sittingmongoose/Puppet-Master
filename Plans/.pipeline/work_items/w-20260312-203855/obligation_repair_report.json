@@ -1,92 +1,125 @@
 {
   "schema_id": "pm.obligation_repair_report.v3.2.3",
+  "work_id": "w-20260312-203855",
   "prompt_id": "D4",
   "prompt_version": "pm.d4.v3.2.3",
-  "timestamp_utc": "20260512T031500Z",
-  "work_id": "w-20260312-203855",
-  "source_repair_request": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
-  "repair_summary": {
-    "target_slice_count": 4,
-    "slices_repaired_in_place": [
-      "d2-slice-002",
-      "d2-slice-009",
-      "d2-slice-015",
-      "d2-slice-018"
-    ],
-    "delegated_subagent_invocations": 4,
-    "canonical_obligations_touched": false,
-    "notes": [
-      "Four bounded Cursor Task (delegated model) invocations verified slice JSON after deterministic baseline edits; see obligation_repair.wave-01.json for invocation_id ↔ task_id proof.",
-      "d2-slice-002 / d2-slice-009: obligation_text and open-question text aligned to ledger_obligation_seed.json exact_text for cited source_block_ids; exact_source_excerpt refreshed where it diverged from seed or contained synthetic U+2026 truncation (remaining U+2026 on 009 matches seed verbatim where present).",
-      "d2-slice-015: removed doc_hints whose source_block_ids overlapped excluded path-list blocks lblock-002576, lblock-002627, lblock-002709, lblock-002741, lblock-002762; doc_hints array empty; doc_hint_source_blocks set to 0 to match doc_hints_emitted.",
-      "d2-slice-018: process_artifact_ref doc_hints dh-d2-slice-018-127, -138, -147 — Plans/.pipeline/** and Plans/.evidence/** stripped from exact_paths_mentioned (path + process_artifact_ref retained). Post-delegation deterministic pass: obligations obl-d2-slice-018-057, obl-d2-slice-018-065, obl-d2-slice-018-073 — pipeline path removed from exact_paths_mentioned and appended to process_paths_quarantined_at_slice; obligation_text and exact_source_excerpt unchanged (verbatim ledger).",
-      "Re-run D3 merge + source gate; D4 does not write canonical_obligations.json."
+  "timestamp_utc": "20260512T195603Z",
+  "repair_request_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
+  "target_slice_ids": [
+    "d2-slice-003",
+    "d2-slice-004",
+    "d2-slice-007",
+    "d2-slice-008",
+    "d2-slice-010",
+    "d2-slice-015",
+    "d2-slice-019",
+    "d2-slice-020",
+    "d2-slice-022",
+    "d2-slice-024"
+  ],
+  "subagents_used": true,
+  "post_delegation_mechanical_pass": {
+    "description": "Envelope normalization for d2-slice-008 only: copied source_*_represented from obligation_converter.conversion_slices.json and removed legacy top-level source_block_ids/source_group_ids keys.",
+    "slices_touched": [
+      "d2-slice-008"
     ]
   },
-  "per_slice_repairs": [
+  "repairs": [
     {
-      "slice_id": "d2-slice-002",
-      "subagent_task_id": "d4-repair-d2-slice-002",
-      "subagent_invocation_id": "dae6ab5d-de52-48ed-b504-50abcbcaa290",
-      "repair_codes": [
-        "obligation_text_unicode_ellipsis_truncation"
+      "slice_id": "d2-slice-003",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "target_block_ids": [],
-      "source_block_ids_cited": "per obligation/open_question per ledger seed join for obligation_text refresh",
-      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
-      "post_verify_notes": "Delegated post_repair_verdict=pass."
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
     },
     {
-      "slice_id": "d2-slice-009",
-      "subagent_task_id": "d4-repair-d2-slice-009",
-      "subagent_invocation_id": "e39e3099-33f2-48ae-906a-5aea6ecabc44",
-      "repair_codes": [
-        "obligation_text_unicode_ellipsis_truncation"
+      "slice_id": "d2-slice-004",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "target_block_ids": [],
-      "source_block_ids_cited": "per obligation per ledger seed exact_text",
-      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
-      "post_verify_notes": "Delegated post_repair_verdict=pass; some obligation_text retains U+2026 where seed exact_text contains the same typographic ellipsis (not synthetic truncation)."
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-007",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
+      ],
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-008",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
+      ],
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-010",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
+      ],
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
     },
     {
       "slice_id": "d2-slice-015",
-      "subagent_task_id": "d4-repair-d2-slice-015",
-      "subagent_invocation_id": "bc823be6-19c0-44cd-ba89-fd403dc04aaa",
-      "repair_codes": [
-        "path_hygiene_doc_hints",
-        "representation_duplicate_block_refs"
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "target_block_ids": [
-        "lblock-002576",
-        "lblock-002627",
-        "lblock-002709",
-        "lblock-002741",
-        "lblock-002762"
-      ],
-      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
-      "post_verify_notes": "Delegated post_repair_verdict=pass; doc_hints empty; counter doc_hint_source_blocks normalized to 0."
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
     },
     {
-      "slice_id": "d2-slice-018",
-      "subagent_task_id": "d4-repair-d2-slice-018",
-      "subagent_invocation_id": "895884b9-75c9-4e7d-b3a9-3e3d045de75e",
-      "repair_codes": [
-        "process_artifact_doc_hint_exact_paths_pipeline",
-        "pipeline_path_in_obligation_exact_paths"
+      "slice_id": "d2-slice-019",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "target_block_ids": [],
-      "doc_hint_ids": [
-        "dh-d2-slice-018-127",
-        "dh-d2-slice-018-138",
-        "dh-d2-slice-018-147"
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-020",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "obligation_ids_additional_deterministic": [
-        "obl-d2-slice-018-057",
-        "obl-d2-slice-018-065",
-        "obl-d2-slice-018-073"
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-022",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
       ],
-      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
-      "post_verify_notes": "Delegated post_repair_verdict=pass for named doc_hints; main-agent deterministic quarantine then removed Plans/.pipeline/** from obligation exact_paths_mentioned for obl-057/065/073 with process_paths_quarantined_at_slice."
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
+    },
+    {
+      "slice_id": "d2-slice-024",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json",
+      "repair_modes": [
+        "multiset_dedupe",
+        "structure_only"
+      ],
+      "notes": "Delegated multiset partition repair per D3 obligation_repair_request; d2-slice-008 + mechanical v3.2.3 envelope fields."
     }
-  ]
+  ],
+  "validation": {
+    "per_slice_multiset_ok_D3_definition": true,
+    "global_unique_refs_4868": true,
+    "envelope_source_block_ids_represented_matches_conversion_slices": true
+  },
+  "status": "complete"
 }

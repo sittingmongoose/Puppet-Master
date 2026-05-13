@@ -1,106 +1,21 @@
 {
   "schema_id": "pm.obligation_conversion_slice.v3.2.3",
   "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.2.3",
   "work_id": "w-20260312-203855",
   "slice_id": "d2-slice-006",
+  "timestamp_utc": "20260512T210000Z",
   "source_group_ids_represented": [
-    "wg-d1-T005-03",
-    "wg-d1-T005-04",
-    "wg-d1-T005-05",
-    "wg-d1-T005-06",
-    "wg-d1-T005-07",
-    "wg-d1-T005-08",
-    "wg-d1-T005-09",
-    "wg-d1-T005-10",
-    "wg-d1-T005-11",
-    "wg-d1-T006-01",
-    "wg-d1-T006-02",
-    "wg-d1-T006-03",
-    "wg-d1-T006-04"
+    "wg-d1-T030-01",
+    "wg-d1-T031-01",
+    "wg-d1-T032-01",
+    "wg-d1-T033-01",
+    "wg-d1-T034-01",
+    "wg-d1-T035-01",
+    "wg-d1-T036-01",
+    "wg-d1-T037-01"
   ],
   "source_block_ids_represented": [
-    "lblock-000644",
-    "lblock-000645",
-    "lblock-000646",
-    "lblock-000647",
-    "lblock-000648",
-    "lblock-000649",
-    "lblock-000650",
-    "lblock-000651",
-    "lblock-000652",
-    "lblock-000653",
-    "lblock-000654",
-    "lblock-000655",
-    "lblock-000656",
-    "lblock-000657",
-    "lblock-000658",
-    "lblock-000659",
-    "lblock-000660",
-    "lblock-000661",
-    "lblock-000662",
-    "lblock-000663",
-    "lblock-000664",
-    "lblock-000665",
-    "lblock-000666",
-    "lblock-000667",
-    "lblock-000668",
-    "lblock-000669",
-    "lblock-000670",
-    "lblock-000671",
-    "lblock-000672",
-    "lblock-000673",
-    "lblock-000674",
-    "lblock-000675",
-    "lblock-000676",
-    "lblock-000677",
-    "lblock-000678",
-    "lblock-000679",
-    "lblock-000680",
-    "lblock-000681",
-    "lblock-000682",
-    "lblock-000683",
-    "lblock-000684",
-    "lblock-000685",
-    "lblock-000686",
-    "lblock-000687",
-    "lblock-000688",
-    "lblock-000689",
-    "lblock-000690",
-    "lblock-000691",
-    "lblock-000692",
-    "lblock-000693",
-    "lblock-000694",
-    "lblock-000695",
-    "lblock-000696",
-    "lblock-000697",
-    "lblock-000698",
-    "lblock-000699",
-    "lblock-000700",
-    "lblock-000701",
-    "lblock-000702",
-    "lblock-000703",
-    "lblock-000704",
-    "lblock-000705",
-    "lblock-000706",
-    "lblock-000707",
-    "lblock-000708",
-    "lblock-000709",
-    "lblock-000710",
-    "lblock-000711",
-    "lblock-000712",
-    "lblock-000713",
-    "lblock-000714",
-    "lblock-000715",
-    "lblock-000716",
-    "lblock-000717",
-    "lblock-000718",
-    "lblock-000719",
-    "lblock-000720",
-    "lblock-000721",
-    "lblock-000722",
-    "lblock-000723",
-    "lblock-000724",
-    "lblock-000725",
     "lblock-000726",
     "lblock-000727",
     "lblock-000728",
@@ -226,58 +141,108 @@
     "lblock-000848",
     "lblock-000849",
     "lblock-000850",
-    "lblock-000851"
+    "lblock-000851",
+    "lblock-000852",
+    "lblock-000853",
+    "lblock-000854",
+    "lblock-000855",
+    "lblock-000856",
+    "lblock-000857",
+    "lblock-000858",
+    "lblock-000859",
+    "lblock-000860",
+    "lblock-000861",
+    "lblock-000862",
+    "lblock-000863",
+    "lblock-000864",
+    "lblock-000865",
+    "lblock-000866",
+    "lblock-000867",
+    "lblock-000868",
+    "lblock-000869",
+    "lblock-000870",
+    "lblock-000871",
+    "lblock-000872",
+    "lblock-000873",
+    "lblock-000874",
+    "lblock-000875",
+    "lblock-000876",
+    "lblock-000877",
+    "lblock-000878",
+    "lblock-000879",
+    "lblock-000880",
+    "lblock-000881",
+    "lblock-000882",
+    "lblock-000883",
+    "lblock-000884",
+    "lblock-000885",
+    "lblock-000886",
+    "lblock-000887",
+    "lblock-000888",
+    "lblock-000889",
+    "lblock-000890",
+    "lblock-000891",
+    "lblock-000892",
+    "lblock-000893",
+    "lblock-000894",
+    "lblock-000895",
+    "lblock-000896",
+    "lblock-000897",
+    "lblock-000898",
+    "lblock-000899",
+    "lblock-000900",
+    "lblock-000901",
+    "lblock-000902",
+    "lblock-000903",
+    "lblock-000904",
+    "lblock-000905",
+    "lblock-000906",
+    "lblock-000907",
+    "lblock-000908",
+    "lblock-000909",
+    "lblock-000910",
+    "lblock-000911",
+    "lblock-000912",
+    "lblock-000913",
+    "lblock-000914",
+    "lblock-000915",
+    "lblock-000916",
+    "lblock-000917",
+    "lblock-000918",
+    "lblock-000919",
+    "lblock-000920",
+    "lblock-000921",
+    "lblock-000922",
+    "lblock-000923",
+    "lblock-000924",
+    "lblock-000925"
   ],
   "source_shard_ids_represented": [
-    "shard-0018",
     "shard-0019",
     "shard-0020",
-    "shard-0021"
+    "shard-0021",
+    "shard-0022",
+    "shard-0023"
   ],
   "source_line_ranges_represented": [
     {
-      "source_shard_id": "shard-0018",
-      "start_line": 3401,
-      "end_line": 3513
-    },
-    {
-      "source_shard_id": "shard-0018",
-      "start_line": 3514,
-      "end_line": 3590
-    },
-    {
-      "source_shard_id": "shard-0018",
-      "start_line": 3591,
-      "end_line": 3600
-    },
-    {
       "source_shard_id": "shard-0019",
-      "start_line": 3601,
-      "end_line": 3663
-    },
-    {
-      "source_shard_id": "shard-0019",
-      "start_line": 3664,
-      "end_line": 3780
-    },
-    {
-      "source_shard_id": "shard-0019",
-      "start_line": 3781,
+      "start_line": 3701,
       "end_line": 3800
     },
     {
       "source_shard_id": "shard-0020",
       "start_line": 3801,
-      "end_line": 3896
+      "end_line": 3802
     },
     {
       "source_shard_id": "shard-0020",
-      "start_line": 3897,
-      "end_line": 3993
+      "start_line": 3803,
+      "end_line": 3911
     },
     {
       "source_shard_id": "shard-0020",
-      "start_line": 3994,
+      "start_line": 3912,
       "end_line": 4000
     },
     {
@@ -288,867 +253,53 @@
     {
       "source_shard_id": "shard-0021",
       "start_line": 4007,
-      "end_line": 4007
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4008,
-      "end_line": 4008
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4009,
-      "end_line": 4011
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4012,
-      "end_line": 4012
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4013,
-      "end_line": 4013
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4014,
-      "end_line": 4014
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4015,
-      "end_line": 4015
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4016,
-      "end_line": 4021
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4022,
-      "end_line": 4022
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4023,
-      "end_line": 4023
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4024,
-      "end_line": 4029
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4030,
-      "end_line": 4030
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4031,
-      "end_line": 4031
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4032,
-      "end_line": 4043
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4044,
-      "end_line": 4044
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4045,
-      "end_line": 4045
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4046,
-      "end_line": 4054
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4055,
-      "end_line": 4055
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4056,
-      "end_line": 4056
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4057,
-      "end_line": 4073
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4074,
-      "end_line": 4074
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4075,
-      "end_line": 4075
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4076,
-      "end_line": 4080
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4081,
-      "end_line": 4081
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4082,
       "end_line": 4082
     },
     {
       "source_shard_id": "shard-0021",
       "start_line": 4083,
-      "end_line": 4097
+      "end_line": 4154
     },
     {
       "source_shard_id": "shard-0021",
-      "start_line": 4098,
-      "end_line": 4098
+      "start_line": 4155,
+      "end_line": 4200
     },
     {
-      "source_shard_id": "shard-0021",
-      "start_line": 4099,
-      "end_line": 4099
+      "source_shard_id": "shard-0022",
+      "start_line": 4201,
+      "end_line": 4258
     },
     {
-      "source_shard_id": "shard-0021",
-      "start_line": 4100,
-      "end_line": 4107
+      "source_shard_id": "shard-0022",
+      "start_line": 4259,
+      "end_line": 4337
     },
     {
-      "source_shard_id": "shard-0021",
-      "start_line": 4108,
-      "end_line": 4108
+      "source_shard_id": "shard-0022",
+      "start_line": 4338,
+      "end_line": 4400
     },
     {
-      "source_shard_id": "shard-0021",
-      "start_line": 4109,
-      "end_line": 4109
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4110,
-      "end_line": 4119
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4120,
-      "end_line": 4120
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4121,
-      "end_line": 4121
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4122,
-      "end_line": 4129
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4130,
-      "end_line": 4130
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4131,
-      "end_line": 4131
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4132,
-      "end_line": 4135
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4136,
-      "end_line": 4136
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4137,
-      "end_line": 4137
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4138,
-      "end_line": 4140
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4141,
-      "end_line": 4141
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4142,
-      "end_line": 4142
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4143,
-      "end_line": 4146
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4147,
-      "end_line": 4147
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4148,
-      "end_line": 4148
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4149,
-      "end_line": 4151
-    },
-    {
-      "source_shard_id": "shard-0021",
-      "start_line": 4152,
-      "end_line": 4152
+      "source_shard_id": "shard-0023",
+      "start_line": 4401,
+      "end_line": 4415
     }
   ],
-  "blocks_observed": 208,
-  "blocks_converted": 65,
-  "blocks_excluded": 143,
+  "blocks_observed": 200,
+  "blocks_converted": 67,
+  "blocks_excluded": 133,
   "blocks_blocked": 0,
+  "doc_hint_source_blocks": 5,
+  "doc_hints_emitted": 22,
   "obligations": [
     {
-      "obligation_id": "obl-d2-006-001",
-      "obligation_text": "Align ledger/export/search record families on shared routing fields including `source_refs[]`, `artifact_refs[]`, `evidence_refs[]`, `summary`, and optional `detail_ref`.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-001",
+      "obligation_text": "- Good canonical display groups:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000644"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3401,
-          "end_line": 3408
-        }
-      ],
-      "exact_source_excerpt": "- `source_refs[]`\n  - `artifact_refs[]`\n  - `evidence_refs[]`\n  - `summary`\n  - `detail_ref?`\n- Benefit:\n  - Ledger and exports can inspect different record families consistently\n  - search/routing can reuse common routing fields",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-002",
-      "obligation_text": "Model review records as distinct ledger objects from concern records: findings may nominate or update concerns, but must not collapse the review record into a concern.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000647"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3411,
-          "end_line": 3426
-        }
-      ],
-      "exact_source_excerpt": "- A review record likely needs:\n  - `review_id`\n  - review kind:\n    - package review\n    - seam review\n    - verifier/reviewer review\n  - target scope refs\n  - requested/effective reviewer identity\n  - review criteria/profile\n  - findings summary\n  - finding refs / concern refs\n  - verdict / decision\n  - linked artifacts/evidence\n  - timestamps\n- Important rule:\n  - review findings may nominate or update concerns, but the review record itself should remain distinct from concern records",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-003",
-      "obligation_text": "Split corroboration into a request/packet object and a result object; packet carries claim, scope, trigger, evidence set, quorum model, and participants; result carries outputs, quorum outcome, advisory vs accepted posture, and downstream implications.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000650"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3429,
-          "end_line": 3443
-        }
-      ],
-      "exact_source_excerpt": "- Corroboration likely wants at least two layers:\n  - `corroboration_request` / packet\n  - `corroboration_result`\n- Packet should likely carry:\n  - claim/issue under test\n  - target scope\n  - why corroboration was triggered\n  - evidence set / source refs\n  - required quorum model\n  - participating actor refs\n- Result should likely carry:\n  - participant outputs\n  - quorum result\n  - accepted / not accepted / advisory-only result\n  - resulting concern/promotion/patch implications",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-004",
-      "obligation_text": "Represent graph patches as paired `graph_patch_request` and `graph_patch_result` with generation transitions, invalidated/new/surviving path refs, and downstream concern/promotion/recovery implications.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000653"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3446,
-          "end_line": 3461
-        }
-      ],
-      "exact_source_excerpt": "- Graph patch likely needs:\n  - `graph_patch_request`\n  - `graph_patch_result`\n- Request should carry:\n  - patch point\n  - triggering issue/concern refs\n  - requested structural change summary\n  - affected generation\n  - requester identity\n- Result should carry:\n  - old generation\n  - new generation\n  - invalidated path refs\n  - new path refs\n  - surviving/rejoined path refs\n  - resulting concern/promotion/recovery implications",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-005",
-      "obligation_text": "Promotion records must capture promotion class (`lane_to_package`, `package_to_seam`, `seam_completion`), scopes, eligibility snapshot, blocking/concern/review/corroboration refs, decision outcome, and revocation/reopen lineage when later invalidated.",
-      "obligation_category": "acceptance_criterion",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000656"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3464,
-          "end_line": 3474
-        }
-      ],
-      "exact_source_excerpt": "- Promotion record should likely include:\n  - promotion class\n    - `lane_to_package`\n    - `package_to_seam`\n    - `seam_completion`\n  - source scope and target scope refs\n  - eligibility state at decision time\n  - blocking refs / concern refs\n  - review/corroboration refs\n  - decision outcome\n  - revocation/reopen lineage if it later changes",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-006",
-      "obligation_text": "Recovery records must name recovery kind (safe-point restore, restart reconciliation, blocked prerequisite resolution, lane/worktree restore), target scopes, trigger, preconditions, result, attempt/run linkage, and affected concerns.",
-      "obligation_category": "acceptance_criterion",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000659"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3477,
-          "end_line": 3488
-        }
-      ],
-      "exact_source_excerpt": "- Recovery record likely needs:\n  - recovery kind\n    - safe-point restore\n    - restart reconciliation\n    - blocked prerequisite resolution\n    - lane/worktree restore\n  - target scope refs\n  - trigger reason\n  - preconditions\n  - result\n  - resulting attempt/run linkage\n  - affected concern refs",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-007",
-      "obligation_text": "Use a shared state-transition report for consequential transitions (from/to state, target object, actor, rationale, prerequisite refs, downstream obligations) instead of ad hoc per-family decision summaries.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000662"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3491,
-          "end_line": 3499
-        }
-      ],
-      "exact_source_excerpt": "- A state transition report looks useful as a shared exact record for consequential transitions:\n  - from state\n  - to state\n  - target object\n  - actor/source\n  - why transition occurred\n  - prerequisite evidence / review / corroboration refs\n  - resulting downstream obligations\n- This may help avoid every major object family inventing bespoke \"decision summary\" fields.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-008",
-      "obligation_text": "Keep ledger records separate from artifacts: structured records anchor search/export; artifacts are linked files/blobs (e.g., review markdown vs review record, corroboration packet vs result record).",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-03"
-      ],
-      "source_block_ids": [
-        "lblock-000665"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3502,
-          "end_line": 3511
-        }
-      ],
-      "exact_source_excerpt": "- Strong recommendation:\n  - keep records and artifacts separate\n- Working interpretation:\n  - record = canonical structured object in Ledger/export/search/routing\n  - artifact = file/blob/renderable output linked from the record\n- Examples:\n  - review markdown summary = artifact\n  - review record = structured ledger object\n  - corroboration packet JSON/markdown = artifact\n  - corroboration result record = structured object",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-009",
-      "obligation_text": "Treat export contracts as record-envelope-first manifests with artifacts attached by reference, not as substitutes for canonical record structure.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000668"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3514,
-          "end_line": 3515
-        }
-      ],
-      "exact_source_excerpt": "- Export contracts should likely use the record envelope as the manifest backbone.\n- Then artifact files/blobs attach by reference rather than replacing record structure.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-010",
-      "obligation_text": "Normalize exact record shapes across governance/runtime families before relying on search, deep links, and ledger exact-record views; artifacts are currently over-specified relative to governing record objects.",
-      "obligation_category": "gap_acknowledgment",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000671"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3518,
-          "end_line": 3520
-        }
-      ],
-      "exact_source_excerpt": "- The product already assumes many exact record families, but the local docs do not shape them consistently.\n- Artifacts are discussed more concretely than the governing record objects in several places.\n- Search, deep links, and Ledger exact-record views will remain awkward until these record shapes are normalized.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-011",
-      "obligation_text": "Define a shared record-envelope convention plus minimum shapes for review, corroboration request/result, graph patch request/result, promotion, recovery, and state-transition reports; keep artifacts linked rather than substituted.",
-      "obligation_category": "directive",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000674"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3523,
-          "end_line": 3531
-        }
-      ],
-      "exact_source_excerpt": "- Define a shared record-envelope convention for governance/runtime record families.\n- Define exact minimum shapes for:\n  - review\n  - corroboration request/result\n  - graph patch request/result\n  - promotion\n  - recovery\n  - state transition report\n- Keep file/blob artifacts linked to records, not substituted for records.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-012",
-      "obligation_text": "Keep Evidence and Artifacts panes distinct even when both link the same underlying record; do not collapse parent-summary artifacts with UI evidence summaries.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000677"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3534,
-          "end_line": 3536
-        }
-      ],
-      "exact_source_excerpt": "- `Evidence` and `Artifacts` panes should remain distinct even when both link back to the same underlying record.\n- parent-summary artifacts and UI evidence summaries are not interchangeable and should not be collapsed.\n- search and deep-link routing will benefit a lot from record envelopes carrying stable scope refs.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-013",
-      "obligation_text": "Specify Orchestrator export contracts as record-shaped manifests answering canonical manifest, view vs record shape, packaging of artifacts/records/references, and semantics for historical/superseded/removed backing objects.",
-      "obligation_category": "acceptance_criterion",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000685"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3548,
-          "end_line": 3559
-        }
-      ],
-      "exact_source_excerpt": "- Export support already exists in fragments:\n  - config bundles are clearly defined (`.pm-bundle`)\n  - thread export/share is defined\n  - Usage/Ledger export is mentioned as CSV/JSON\n  - Evidence items can be exported\n  - storage plan mentions thread/run history export to JSONL/JSON\n- Orchestrator-specific export contracts are still underspecified.\n- Current language often says \"export filtered view\" but does not clearly answer:\n  - what is the canonical manifest\n  - whether exports are view-shaped or record-shaped\n  - how artifacts, records, and references are packaged together\n  - what happens when exported content includes historical, superseded, or removed backing objects",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-014",
-      "obligation_text": "Name and separate export modes: `record export` (canonical ids and references), `bundle export` (manifest + records + blobs), and `view export` (filtered convenience projections).",
-      "obligation_category": "enum_definition",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000688"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3562,
-          "end_line": 3573
-        }
-      ],
-      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish:\n    - `record export`\n    - `bundle export`\n    - `view export`\n- Working interpretation:\n  - `record export`\n    - exact structured object(s), canonical ids, references, metadata\n  - `bundle export`\n    - manifest + records + attached artifacts/blobs/files\n  - `view export`\n    - user-facing convenience representation of the current filtered table/list/chart",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": [
-        "record export",
-        "bundle export",
-        "view export"
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-006-015",
-      "obligation_text": "Provide Orchestrator export families (`Evidence export`, `Artifact export`, `Ledger export`, `Run export`, single-record export) with ledger/history JSON as canonical structure, CSV as projection, run exports bundling metadata, records, linked artifacts, and historical flags.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000691"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3576,
-          "end_line": 3589
-        }
-      ],
-      "exact_source_excerpt": "- Likely export families needed:\n  - `Evidence export`\n  - `Artifact export`\n  - `Ledger export`\n  - `Run export`\n  - `Record export` for single exact records\n- Working expectation:\n  - `Ledger export` should be record-shaped first, CSV/JSON second\n  - `Evidence export` should preserve evidence/artifact distinction\n  - `Run export` should include a manifest that ties together:\n    - run metadata\n    - exact records\n    - linked artifacts/evidence\n    - historical/superseded status flags where relevant",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-016",
-      "obligation_text": "Every non-trivial Orchestrator export must ship a manifest including `export_id`, `export_kind`, `project_id`, optional `run_id`/`focused_run_id`, `generated_at_utc`, `source_surface`, `filter_summary`, record/artifact counts, included id lists, `status_notes`, and `schema_version` for later auditability.",
-      "obligation_category": "acceptance_criterion",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-05",
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000694",
-        "lblock-000695"
-      ],
-      "source_shard_ids": [
-        "shard-0018",
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3592,
-          "end_line": 3600
-        },
-        {
-          "start_line": 3601,
-          "end_line": 3609
-        }
-      ],
-      "exact_source_excerpt": "- Strong recommendation:\n  - every non-trivial Orchestrator export should include a manifest\n- Candidate manifest fields:\n  - `export_id`\n  - `export_kind`\n  - `project_id`\n  - `run_id?`\n  - `focused_run_id?`\n  - `generated_at_utc`\n  - `source_surface`\n  - `filter_summary`\n  - `record_counts`\n  - `artifact_counts`\n  - `included_record_ids[]`\n  - `included_artifact_ids[]`\n  - `status_notes`\n  - `schema_version`\n- This makes exported bundles inspectable and auditable later.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-017",
-      "obligation_text": "Exact-record surfaces must export canonical structured records (JSON/JSONL close to canonical), not UI-transformed rows; CSV may be a convenience projection only.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000698"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3612,
-          "end_line": 3617
-        }
-      ],
-      "exact_source_excerpt": "- Recommended rule:\n  - exact-record surfaces should export canonical records, not UI-specific transformed rows\n- Implication:\n  - `Ledger` export should preserve canonical ids and structured fields\n  - CSV is fine as a convenience projection\n  - JSON/JSONL should remain close to canonical record structure",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-018",
-      "obligation_text": "Evidence exports bundle evidence records, linked artifact refs, summaries, and governance linkages; artifact exports bundle files/blobs with metadata and source record refs; artifact-only exports must still disclose originating record/run/object.",
-      "obligation_category": "acceptance_criterion",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000701"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3620,
-          "end_line": 3630
-        }
-      ],
-      "exact_source_excerpt": "- Evidence export should likely include:\n  - evidence records\n  - linked artifact refs\n  - evidence summaries\n  - concern/review/corroboration linkage where present\n- Artifact export should likely focus on:\n  - actual files/blobs\n  - metadata manifest\n  - source record refs\n- Important rule:\n  - exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-019",
-      "obligation_text": "Exports must preserve historical truth when live backing objects are gone (e.g., removed worktrees or retired graph paths) without corrupting bundles when files are absent.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000704"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3633,
-          "end_line": 3636
-        }
-      ],
-      "exact_source_excerpt": "- Exports must preserve historical truth even when live backing objects no longer exist.\n- Example:\n  - removed worktree or retired graph path still exports as record metadata with historical status\n  - absence of a live backing file/worktree should not corrupt the exported record bundle",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-020",
-      "obligation_text": "Label `view export` outputs explicitly as non-canonical convenience formats (filtered CSVs, tables, charts) rather than archival sources of truth.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000707"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3639,
-          "end_line": 3644
-        }
-      ],
-      "exact_source_excerpt": "- `view export` is still useful, but should be clearly labeled as a convenience format.\n- Example:\n  - filtered ledger CSV\n  - filtered concern table CSV\n  - analytics chart/table export\n- These should not be treated as canonical archival formats.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-021",
-      "obligation_text": "Close the gap between explicit config export/import contracts and underspecified Orchestrator export language that over-centers UI views.",
-      "obligation_category": "gap_acknowledgment",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000710"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3647,
-          "end_line": 3649
-        }
-      ],
-      "exact_source_excerpt": "- Config export/import is much more explicit than Orchestrator export contracts.\n- Current Orchestrator usage/evidence export language is too UI-view-centric.\n- No shared export-manifest contract is obvious for Orchestrator record families.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-022",
-      "obligation_text": "Add a shared Orchestrator export manifest contract; define record-first exports for ledger/history/concern/review/promotion/patch/recovery families; keep CSV/table exports as view exports; preserve historical/superseded/removed metadata.",
-      "obligation_category": "directive",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000713"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3652,
-          "end_line": 3655
-        }
-      ],
-      "exact_source_excerpt": "- Add a shared Orchestrator export manifest contract.\n- Define record-first exports for Ledger/History/concern/review/promotion/patch/recovery families.\n- Keep CSV/table exports as convenience view exports, not as canonical archival exports.\n- Preserve historical/superseded/removed semantics in exported metadata.",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-023",
-      "obligation_text": "Orchestrator exports must align with record-envelope work from adjacent seams; keep evidence vs artifact exports differentiated; match config-bundle clarity for Orchestrator bundles.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-06"
-      ],
-      "source_block_ids": [
-        "lblock-000716"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3658,
-          "end_line": 3660
-        }
-      ],
-      "exact_source_excerpt": "- exact-record exports will depend on the record-envelope work from the previous seam\n- Evidence and artifact exports should not collapse into one undifferentiated zip of files\n- export/import of config bundles is already strong; Orchestrator exports should reach similar clarity",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-024",
-      "obligation_text": "Presentation must keep three concepts separate: configuration `inherit/override`, runtime `requested/effective`, and provider capability outcomes `honored/skipped/clamped`.",
-      "obligation_category": "constraint",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-07"
-      ],
-      "source_block_ids": [
-        "lblock-000724"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3674,
-          "end_line": 3684
-        }
-      ],
-      "exact_source_excerpt": "- The docs already define most of the raw data needed for this seam:\n  - requested/effective Persona display requirements\n  - requested/effective platform/model/variant/runtime controls\n  - scoped override lifecycle for Persona overrides\n  - project-owned multi-account policies plus run snapshots and effective account selection\n  - provider-gap disclosure rules (`honored`, `skipped`, `clamped`)\n- The main gap is presentation coherence.\n- The system currently has at least three different concepts that the UI must not blur:\n  - `inherit/override` from configuration layering\n  - `requested/effective` from runtime resolution\n  - `honored/skipped/clamped` from provider capability handling",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-025",
-      "obligation_text": "Model settings displays on three axes: `source axis` (where configured values originate), `request axis` (what a run/attempt asked for), and `execution/result axis` (what ran, including honored/skipped/clamped controls).",
-      "obligation_category": "directive",
-      "required_action": "document",
-      "source_group_ids": [
-        "wg-d1-T005-07"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
         "lblock-000727"
@@ -1158,31 +309,7 @@
       ],
       "source_line_ranges": [
         {
-          "start_line": 3687,
-          "end_line": 3699
-        }
-      ],
-      "exact_source_excerpt": "- Strong recommendation:\n  - treat these as three separate axes:\n    - `source axis`\n    - `request axis`\n    - `execution/result axis`\n- Working interpretation:\n  - `source axis`\n    - where the configured value came from\n    - e.g. app default, project override, role policy, tier mapping, manual override\n  - `request axis`\n    - what the run/attempt actually asked for at execution start\n  - `execution/result axis`\n    - what the provider/runtime actually used and whether controls were honored/skipped/clamped",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": []
-    },
-    {
-      "obligation_id": "obl-d2-006-026",
-      "obligation_text": "Adopt a canonical display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`) with compact vs expanded disclosure driven by deltas and skipped/clamped controls.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-07"
-      ],
-      "source_block_ids": [
-        "lblock-000730"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
+          "source_shard_id": "shard-0019",
           "start_line": 3702,
           "end_line": 3718
         }
@@ -1193,21 +320,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-027",
-      "obligation_text": "Surface explicit source-layer labels (app default, project override, surface default, role policy, seam/package/node mapping, manual override, scoped overrides) and always show the winning source without forcing users to infer precedence.",
-      "obligation_category": "acceptance_criterion",
+      "obligation_id": "obl-006-002",
+      "obligation_text": "- Likely source layers that need explicit labeling:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-07"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000733"
+        "lblock-000730"
       ],
       "source_shard_ids": [
         "shard-0019"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0019",
           "start_line": 3721,
           "end_line": 3736
         }
@@ -1218,21 +346,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-028",
-      "obligation_text": "Treat requested vs effective Persona/platform/model/variant/auth/account policy as auditable runtime fields with switch reasons and skipped/clamped controls; expand UI whenever requested != effective or controls were adjusted.",
-      "obligation_category": "acceptance_criterion",
+      "obligation_id": "obl-006-003",
+      "obligation_text": "- Requested/effective must remain runtime-facing and auditable.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-07"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000736"
+        "lblock-000733"
       ],
       "source_shard_ids": [
         "shard-0019"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0019",
           "start_line": 3739,
           "end_line": 3749
         }
@@ -1243,12 +372,38 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-029",
-      "obligation_text": "Treat honored/skipped/clamped as orthogonal to requested-vs-effective mismatches; render explicit support chips/rows for control outcomes.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-004",
+      "obligation_text": "- This is not the same as requested/effective difference in general.",
+      "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-07"
+        "wg-d1-T030-01"
+      ],
+      "source_block_ids": [
+        "lblock-000736"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0019",
+          "start_line": 3752,
+          "end_line": 3763
+        }
+      ],
+      "exact_source_excerpt": "- This is not the same as requested/effective difference in general.\n- A control may be:\n  - requested and honored exactly\n  - requested and clamped\n  - requested and skipped\n  - not requested at all\n- Recommended display:\n  - use explicit support chips or rows for runtime controls\n  - examples:\n    - `Reasoning effort: High -> Skipped`\n    - `Temperature: 0.2 -> Honored`\n    - `Top-p: 1.0 -> Clamped to 0.9`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-005",
+      "obligation_text": "- `Settings`",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
         "lblock-000739"
@@ -1258,35 +413,7 @@
       ],
       "source_line_ranges": [
         {
-          "start_line": 3752,
-          "end_line": 3763
-        }
-      ],
-      "exact_source_excerpt": "- This is not the same as requested/effective difference in general.\n- A control may be:\n  - requested and honored exactly\n  - requested and clamped\n  - requested and skipped\n  - not requested at all\n- Recommended display:\n  - use explicit support chips or rows for runtime controls\n  - examples:\n    - `Reasoning effort: High -> Skipped`\n    - `Temperature: 0.2 -> Honored`\n    - `Top-p: 1.0 -> Clamped to 0.9`",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": [
-        "honored",
-        "skipped",
-        "clamped"
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-006-030",
-      "obligation_text": "Tune each surface: Settings emphasizes source/inheritance answering future requests; Orchestrator inspectors emphasize request/execution truth; Progress shows compact live summaries; History/Ledger retain exact audit trails; Authentication/Usage emphasize effective account with policy context.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-07"
-      ],
-      "source_block_ids": [
-        "lblock-000742"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
+          "source_shard_id": "shard-0019",
           "start_line": 3766,
           "end_line": 3778
         }
@@ -1297,21 +424,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-031",
-      "obligation_text": "Extend the same source/requested/effective/reason grammar to worker policy (`subagent`, fresh vs reused worker) in node inspector and run detail.",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-006",
+      "obligation_text": "- The same display grammar should extend beyond provider/model/persona/account.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-08"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000745"
+        "lblock-000742"
       ],
       "source_shard_ids": [
         "shard-0019"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0019",
           "start_line": 3781,
           "end_line": 3787
         }
@@ -1322,21 +450,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-032",
-      "obligation_text": "Disambiguate multi-account UI: requested account policy vs effective account vs manual preferred vs project policy snapshot vs live runtime decisions, with exemplar strings like `Account policy: Auto switch (Project policy)` and `Effective account: ...`.",
+      "obligation_id": "obl-006-007",
+      "obligation_text": "- Multi-account adds a second layer of confusion if not presented carefully:",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-08"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000748"
+        "lblock-000745"
       ],
       "source_shard_ids": [
         "shard-0019"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0019",
           "start_line": 3790,
           "end_line": 3797
         }
@@ -1347,53 +476,74 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-033",
-      "obligation_text": "Historical run views must freeze requested/effective state from execution time; current settings may appear elsewhere but must never overwrite historical truth.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-008",
+      "obligation_text": "- Historical run views should show the frozen requested/effective state from that run, not recompute from current settings.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-08",
-        "wg-d1-T005-09"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000751",
-        "lblock-000752"
+        "lblock-000748"
       ],
       "source_shard_ids": [
-        "shard-0019",
-        "shard-0020"
+        "shard-0019"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0019",
           "start_line": 3800,
           "end_line": 3800
-        },
-        {
-          "start_line": 3801,
-          "end_line": 3801
         }
       ],
-      "exact_source_excerpt": "- Historical run views should show the frozen requested/effective state from that run, not recompute from current settings.\n- Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+      "exact_source_excerpt": "- Historical run views should show the frozen requested/effective state from that run, not recompute from current settings.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-034",
-      "obligation_text": "Settings rows should pair primary values with origin badges and expandable precedence chains; inspectors use two-column requested/effective layouts with support chips and reasons; compact surfaces show deltas only when meaningful.",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-009",
+      "obligation_text": "- Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T030-01"
       ],
       "source_block_ids": [
-        "lblock-000755"
+        "lblock-000749"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
+          "start_line": 3801,
+          "end_line": 3801
+        }
+      ],
+      "exact_source_excerpt": "- Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-010",
+      "obligation_text": "- In settings rows:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [
+        "lblock-000752"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0020",
           "start_line": 3804,
           "end_line": 3813
         }
@@ -1404,21 +554,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-035",
-      "obligation_text": "Unify inherited/override presentation across settings surfaces so users cannot confuse current settings winners, requested run state, and effective runtime results.",
-      "obligation_category": "acceptance_criterion",
+      "obligation_id": "obl-006-011",
+      "obligation_text": "- Requested/effective is well defined in runtime docs, but inherited/override presentation is not unified across settings surfaces.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000758"
+        "lblock-000755"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3816,
           "end_line": 3821
         }
@@ -1429,21 +580,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-036",
-      "obligation_text": "Ship a shared override-display grammar separating `source`, `requested`, and `effective`; add precedence disclosure in Settings and request/effective/support blocks in runtime/history; extend consistently to worker policy.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-012",
+      "obligation_text": "- Define a shared override-display grammar for all runtime-related settings surfaces.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000761"
+        "lblock-000758"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3824,
           "end_line": 3828
         }
@@ -1454,21 +606,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-037",
-      "obligation_text": "Keep historical runs frozen to historical requested/effective; show deltas in compact surfaces only when material; treat provider-gap disclosure as a third axis distinct from overrides.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-013",
+      "obligation_text": "- historical run views must stay frozen to historical requested/effective state",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000764"
+        "lblock-000761"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3831,
           "end_line": 3833
         }
@@ -1479,21 +632,130 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-038",
-      "obligation_text": "Preserve the global requested-Persona precedence backbone while documenting Orchestrator auto inputs (project/language/domain/framework/tier/operation) and how much resolver reasoning is user-visible.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-014",
+      "obligation_text": "- `Plans/Personas.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000772"
+        "lblock-000766"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
+          "start_line": 3838,
+          "end_line": 3843
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Personas.md`",
+      "exact_paths_mentioned": [
+        "Plans/Personas.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-015",
+      "obligation_text": "- `Plans/Prompt_Pipeline.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Prompt_Pipeline.md`",
+      "exact_paths_mentioned": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-016",
+      "obligation_text": "- `Plans/interview-subagent-integration.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/interview-subagent-integration.md`",
+      "exact_paths_mentioned": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-017",
+      "obligation_text": "- `Plans/Models_System.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Models_System.md`",
+      "exact_paths_mentioned": [
+        "Plans/Models_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-018",
+      "obligation_text": "- `Plans/orchestrator-subagent-integration.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/orchestrator-subagent-integration.md`",
+      "exact_paths_mentioned": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-019",
+      "obligation_text": "- `Plans/FinalGUISpec.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-020",
+      "obligation_text": "- The global requested-Persona precedence is already strong and should remain the backbone:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [
+        "lblock-000769"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0020",
           "start_line": 3846,
           "end_line": 3865
         }
@@ -1504,21 +766,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-039",
-      "obligation_text": "Each surface auto resolver must emit a deterministic ranked candidate set plus explanation metadata while sharing one global precedence chain.",
+      "obligation_id": "obl-006-021",
+      "obligation_text": "- Strong recommendation:",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-09"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000775"
+        "lblock-000772"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3868,
           "end_line": 3896
         }
@@ -1529,21 +792,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-040",
-      "obligation_text": "Inside auto resolvers, prioritize hard contractual requirements, then actor-type bias, operation-type bias, scope bias, stack hints, project tendencies, then fallback—actor/operation biases must dominate stack hints (e.g., review passes must not silently flip to coding personas).",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-022",
+      "obligation_text": "- Good input priority inside the auto resolver:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T031-01"
       ],
       "source_block_ids": [
-        "lblock-000778"
+        "lblock-000775"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3899,
           "end_line": 3911
         }
@@ -1554,21 +818,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-041",
-      "obligation_text": "Publish explicit actor-to-persona mapping policy for package overseer, seam overseer, node worker, verifier/reviewer, corroborator, recovery actor, and graph patch planner defaults even if persona ids evolve.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-023",
+      "obligation_text": "- Likely high-level defaults:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000781"
+        "lblock-000778"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3914,
           "end_line": 3929
         }
@@ -1579,21 +844,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-042",
-      "obligation_text": "When preferred personas fail capability filtering, fall through deterministically, record requested vs effective persona, selection and fallback reasons, and relevant skipped controls; only hard requirements may force stronger blocking.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-024",
+      "obligation_text": "- Recommended rule:",
+      "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000784"
+        "lblock-000781"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3932,
           "end_line": 3940
         }
@@ -1604,21 +870,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-043",
-      "obligation_text": "Retain Prompt Pipeline clarification when two same-tier candidates tie nondeterministically; expect rare Orchestrator cases resolved primarily by actor plus operation type.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-025",
+      "obligation_text": "- Keep the existing Prompt Pipeline rule:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000787"
+        "lblock-000784"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3943,
           "end_line": 3947
         }
@@ -1629,21 +896,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-044",
-      "obligation_text": "Auto resolvers emit concise structured reasons (compact primary string plus optional expanded hint list) without defaulting to noisy full candidate scoring dumps in UI.",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-026",
+      "obligation_text": "- The auto resolver should emit concise but structured reason text.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000790"
+        "lblock-000787"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3950,
           "end_line": 3961
         }
@@ -1654,12 +922,38 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-045",
-      "obligation_text": "Respect scoped override lifecycles (`turn`, `session`, `run`, `task`, `subagent`) so package overrides do not leak across runs, subagent overrides do not become package defaults, and historical runs keep frozen effective persona state.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-027",
+      "obligation_text": "- Scoped overrides already have strong lifecycle rules:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
+      ],
+      "source_block_ids": [
+        "lblock-000790"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0020",
+          "start_line": 3964,
+          "end_line": 3973
+        }
+      ],
+      "exact_source_excerpt": "- Scoped overrides already have strong lifecycle rules:\n  - `turn`\n  - `session`\n  - `run`\n  - `task`\n  - `subagent`\n- Orchestrator work likely needs careful treatment of `task` / `run` / `subagent` scopes so:\n  - package-level overrides do not leak across unrelated runs\n  - subagent overrides do not accidentally become package defaults\n  - historical runs keep their frozen effective Persona state",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-028",
+      "obligation_text": "- Interview already shows a good pattern:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
         "lblock-000793"
@@ -1669,37 +963,7 @@
       ],
       "source_line_ranges": [
         {
-          "start_line": 3964,
-          "end_line": 3973
-        }
-      ],
-      "exact_source_excerpt": "- Scoped overrides already have strong lifecycle rules:\n  - `turn`\n  - `session`\n  - `run`\n  - `task`\n  - `subagent`\n- Orchestrator work likely needs careful treatment of `task` / `run` / `subagent` scopes so:\n  - package-level overrides do not leak across unrelated runs\n  - subagent overrides do not accidentally become package defaults\n  - historical runs keep their frozen effective Persona state",
-      "exact_paths_mentioned": [],
-      "schema_ids_mentioned": [],
-      "enum_names_mentioned": [
-        "turn",
-        "session",
-        "run",
-        "task",
-        "subagent"
-      ]
-    },
-    {
-      "obligation_id": "obl-d2-006-046",
-      "obligation_text": "Give Orchestrator the same deterministic persona clarity already shown in Interview (implementation vs review vs corroboration vs governance vs recovery vs patch planning) while sharing effective resolution records and display grammar across Chat/Interview/Builder/Orchestrator.",
-      "obligation_category": "directive",
-      "required_action": "implement",
-      "source_group_ids": [
-        "wg-d1-T005-10"
-      ],
-      "source_block_ids": [
-        "lblock-000796"
-      ],
-      "source_shard_ids": [
-        "shard-0020"
-      ],
-      "source_line_ranges": [
-        {
+          "source_shard_id": "shard-0020",
           "start_line": 3976,
           "end_line": 3987
         }
@@ -1710,21 +974,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-047",
-      "obligation_text": "Sharpen qualitative Orchestrator auto-resolver docs with explicit prioritization so `auto` does not feel arbitrary when overseer roles dominate.",
-      "obligation_category": "gap_acknowledgment",
-      "required_action": "document",
+      "obligation_id": "obl-006-029",
+      "obligation_text": "- The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-10"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000799"
+        "lblock-000796"
       ],
       "source_shard_ids": [
         "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3990,
           "end_line": 3992
         }
@@ -1735,53 +1000,74 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-048",
-      "obligation_text": "Define a deterministic Orchestrator auto-resolver matrix over actor type, operation type, scope, and stack/domain hints; require ranked candidates, winner, concise selection reason, and fallback rationale while favoring actor-type defaults over stack hints.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-030",
+      "obligation_text": "- Define a deterministic Orchestrator auto-resolver matrix by:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-11",
-        "wg-d1-T006-01"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000802",
-        "lblock-000803"
+        "lblock-000799"
       ],
       "source_shard_ids": [
-        "shard-0020",
-        "shard-0021"
+        "shard-0020"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0020",
           "start_line": 3995,
           "end_line": 4000
-        },
-        {
-          "start_line": 4001,
-          "end_line": 4006
         }
       ],
-      "exact_source_excerpt": "- Define a deterministic Orchestrator auto-resolver matrix by:\n  - actor type\n  - operation type\n  - scope\n  - stack/domain hints\n- Require each auto resolver to emit:\n  - ranked candidate(s)\n  - winning candidate\n  - concise selection reason\n  - fallback reason when the preferred candidate is not the effective one\n- Keep actor-type defaults stronger than stack hints.\n- Reuse the Interview-style deterministic resolver pattern for other surfaces where possible.",
+      "exact_source_excerpt": "- Define a deterministic Orchestrator auto-resolver matrix by:\n  - actor type\n  - operation type\n  - scope\n  - stack/domain hints\n- Require each auto resolver to emit:",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-049",
-      "obligation_text": "Never surface `auto` without a resolved persona and reason; preserve historical effective persona and selection reason; keep corroboration/review personas distinct from originating implementation personas when possible.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-031",
+      "obligation_text": "- ranked candidate(s)",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-01"
+        "wg-d1-T032-01"
       ],
       "source_block_ids": [
-        "lblock-000806"
+        "lblock-000800"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
+          "start_line": 4001,
+          "end_line": 4006
+        }
+      ],
+      "exact_source_excerpt": "  - ranked candidate(s)\n  - winning candidate\n  - concise selection reason\n  - fallback reason when the preferred candidate is not the effective one\n- Keep actor-type defaults stronger than stack hints.\n- Reuse the Interview-style deterministic resolver pattern for other surfaces where possible.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-032",
+      "obligation_text": "- `auto` must never appear as an opaque state with no resolved Persona/reason.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [
+        "lblock-000803"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0021",
           "start_line": 4009,
           "end_line": 4011
         }
@@ -1789,26 +1075,133 @@
       "exact_source_excerpt": "- `auto` must never appear as an opaque state with no resolved Persona/reason.\n- historical runs must preserve the resolved effective Persona and reason from the time of execution.\n- corroboration/review personas should remain distinct from the original implementation persona whenever possible.",
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
-      "enum_names_mentioned": [
-        "auto"
-      ]
+      "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-050",
-      "obligation_text": "Maintain the dual-copy boundary: app-level Interaction Mode (Expert/ELI5) governs authored help/tooltips separately from chat-level `Chat ELI5`, which must not be conflated.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-033",
+      "obligation_text": "- `Plans/FinalGUISpec.md`",
+      "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-02"
+        "wg-d1-T033-01"
       ],
       "source_block_ids": [
-        "lblock-000814"
+        "lblock-000808"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
+          "start_line": 4016,
+          "end_line": 4021
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-034",
+      "obligation_text": "- `Plans/Glossary.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Glossary.md`",
+      "exact_paths_mentioned": [
+        "Plans/Glossary.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-035",
+      "obligation_text": "- `Plans/WorktreeGitImprovement.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-036",
+      "obligation_text": "- `Plans/Personas.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Personas.md`",
+      "exact_paths_mentioned": [
+        "Plans/Personas.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-037",
+      "obligation_text": "- `Plans/Multi-Account.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-038",
+      "obligation_text": "- `Plans/Orchestrator_Page.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-039",
+      "obligation_text": "- The app already has a strong dual-copy rule:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [
+        "lblock-000811"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0021",
           "start_line": 4024,
           "end_line": 4029
         }
@@ -1819,21 +1212,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-051",
-      "obligation_text": "Structure help as three systems: canonical term names, dedicated help entries for complex concepts, and contextual inline affordances—tooltip-only help is insufficient for rewrite-era density.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-040",
+      "obligation_text": "- Strong recommendation:",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-02"
+        "wg-d1-T033-01"
       ],
       "source_block_ids": [
-        "lblock-000817"
+        "lblock-000814"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4032,
           "end_line": 4043
         }
@@ -1844,21 +1238,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-052",
-      "obligation_text": "ELI5/help copy must simplify explanations without renaming canonical objects or inventing alternate semantics that drift from contracts.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-041",
+      "obligation_text": "- Simple help must simplify explanation, not rename the model.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-03"
+        "wg-d1-T033-01"
       ],
       "source_block_ids": [
-        "lblock-000820"
+        "lblock-000817"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4046,
           "end_line": 4054
         }
@@ -1869,21 +1264,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-053",
-      "obligation_text": "Provide dedicated help entries for core rewrite concepts (Feature Seam, Work Package, overseers, Weak Integration, Promotion, Corroboration, Graph Patch, Reopened, Revoked, requested vs effective identity, safe vs restore points, lane vs worktree, concern lifecycle) because they span multiple surfaces.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-042",
+      "obligation_text": "- Likely dedicated entries:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-03"
+        "wg-d1-T033-01"
       ],
       "source_block_ids": [
-        "lblock-000823"
+        "lblock-000820"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4057,
           "end_line": 4073
         }
@@ -1894,21 +1290,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-054",
-      "obligation_text": "Reserve contextual-only help for obvious local controls, simple badges, single-surface affordances, and provider caveats adjacent to controls.",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-043",
+      "obligation_text": "- Good candidates for contextual help only:",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-03"
+        "wg-d1-T033-01"
       ],
       "source_block_ids": [
-        "lblock-000826"
+        "lblock-000823"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4076,
           "end_line": 4080
         }
@@ -1919,21 +1316,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-055",
-      "obligation_text": "Use a fixed template per dedicated help entry (canonical name, definition, why it matters, what it is not, related states/actions, related concepts, surface examples) to disambiguate easily confused pairs.",
+      "obligation_id": "obl-006-044",
+      "obligation_text": "- Strong recommendation:",
       "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-03"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000829"
+        "lblock-000826"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4083,
           "end_line": 4097
         }
@@ -1944,21 +1342,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-056",
-      "obligation_text": "Link related concepts explicitly across help (seams/packages/integration/seam completion; promotion/revoked/reopened; corroboration/concern/review; graph patch/generations/historical paths; lane/worktree/cleanup; requested/effective/skipped-clamped).",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-045",
+      "obligation_text": "- The help system should explicitly support related links.",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-03"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000832"
+        "lblock-000829"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4100,
           "end_line": 4107
         }
@@ -1969,21 +1368,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-057",
-      "obligation_text": "Expert and ELI5 variants share the same conceptual skeleton—density and assumed background differ, not behavioral semantics.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-046",
+      "obligation_text": "- Recommended rule:",
+      "obligation_category": "acceptance_criterion",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000835"
+        "lblock-000832"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4110,
           "end_line": 4119
         }
@@ -1994,21 +1394,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-058",
-      "obligation_text": "Bias help density by surface: Settings tooltips for settings semantics; Orchestrator clickable affordances on dense tabs; History/Ledger concept links beside exact records.",
-      "obligation_category": "directive",
+      "obligation_id": "obl-006-047",
+      "obligation_text": "- `Settings`",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000838"
+        "lblock-000835"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4122,
           "end_line": 4129
         }
@@ -2019,21 +1420,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-059",
-      "obligation_text": "Treat `Plans/Glossary.md` as the canonical short-definition inventory while richer help entries live elsewhere with cross-links.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-048",
+      "obligation_text": "- `Plans/Glossary.md` likely needs to become the canonical concept inventory backbone, even if richer help entries live elsewhere.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000841"
+        "lblock-000838"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4132,
           "end_line": 4135
         }
@@ -2046,21 +1448,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-060",
-      "obligation_text": "Acknowledge missing policy for which concepts deserve full help entries; without a contract, rewrite terminology risks inconsistent redefinition across surfaces.",
-      "obligation_category": "gap_acknowledgment",
-      "required_action": "document",
+      "obligation_id": "obl-006-049",
+      "obligation_text": "- The current dual-copy contract is strong for tooltip/help text, but not yet for a concept-help system.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000844"
+        "lblock-000841"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4138,
           "end_line": 4140
         }
@@ -2071,21 +1474,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-061",
-      "obligation_text": "Publish a dedicated help-entry contract with stable canonical names, fixed structure, related-concept links, and explicit classification of full-entry vs contextual-only topics.",
-      "obligation_category": "directive",
-      "required_action": "document",
+      "obligation_id": "obl-006-050",
+      "obligation_text": "- Define a dedicated help-entry contract with a fixed structure and related-concept links.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000847"
+        "lblock-000844"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4143,
           "end_line": 4146
         }
@@ -2096,21 +1500,22 @@
       "enum_names_mentioned": []
     },
     {
-      "obligation_id": "obl-d2-006-062",
-      "obligation_text": "Keep app Expert/ELI5 independent from chat simplification; forbid simple help from mutating runtime truth; strengthen related-concept linking as more objects become first-class records.",
-      "obligation_category": "constraint",
+      "obligation_id": "obl-006-051",
+      "obligation_text": "- app-level Expert/ELI5 remains independent from chat-style simplification",
+      "obligation_category": "ux_requirement",
       "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T006-04"
+        "wg-d1-T034-01"
       ],
       "source_block_ids": [
-        "lblock-000850"
+        "lblock-000847"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
+          "source_shard_id": "shard-0021",
           "start_line": 4149,
           "end_line": 4151
         }
@@ -2119,412 +1524,1205 @@
       "exact_paths_mentioned": [],
       "schema_ids_mentioned": [],
       "enum_names_mentioned": []
-    }
-  ],
-  "open_questions": [
-    {
-      "question_id": "q-d2-006-001",
-      "question_text": "Which owner/schema will normatively define the shared record-envelope and minimum per-family record shapes named in this slice?",
-      "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T005-04"
-      ],
-      "source_block_ids": [
-        "lblock-000674"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3523,
-          "end_line": 3531
-        }
-      ],
-      "exact_source_excerpt": "- Define a shared record-envelope convention for governance/runtime record families.\n- Define exact minimum shapes for:\n  - review\n  - corroboration request/result\n  - graph patch request/result\n  - promotion\n  - recovery\n  - state transition report\n- Keep file/blob artifacts linked to records, not substituted for records.",
-      "exact_paths_mentioned": []
     },
     {
-      "question_id": "q-d2-006-002",
-      "question_text": "What is the canonical Orchestrator export manifest schema/versioning strategy (`schema_version`, `export_kind` taxonomy) referenced here?",
-      "required_action": "open_decision",
+      "obligation_id": "obl-006-052",
+      "obligation_text": "- `Plans/FinalGUISpec.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
       "source_group_ids": [
-        "wg-d1-T005-05"
+        "wg-d1-T035-01"
       ],
       "source_block_ids": [
-        "lblock-000694",
-        "lblock-000695"
-      ],
-      "source_shard_ids": [
-        "shard-0018",
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3592,
-          "end_line": 3600
-        },
-        {
-          "start_line": 3601,
-          "end_line": 3609
-        }
-      ],
-      "exact_source_excerpt": "- Strong recommendation:\n  - every non-trivial Orchestrator export should include a manifest\n- Candidate manifest fields:\n  - `export_id`\n  - `export_kind`\n  - `project_id`\n  - `run_id?`\n  - `focused_run_id?`\n  - `generated_at_utc`\n  - `source_surface`\n  - `filter_summary`\n  - `record_counts`\n  - `artifact_counts`\n  - `included_record_ids[]`\n  - `included_artifact_ids[]`\n  - `status_notes`\n  - `schema_version`\n- This makes exported bundles inspectable and auditable later.",
-      "exact_paths_mentioned": []
-    },
-    {
-      "question_id": "q-d2-006-003",
-      "question_text": "How should UI compactness rules trade off against audit requirements when requested equals effective but support controls were skipped or clamped?",
-      "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T005-07"
-      ],
-      "source_block_ids": [
-        "lblock-000736"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3739,
-          "end_line": 3749
-        }
-      ],
-      "exact_source_excerpt": "- Requested/effective must remain runtime-facing and auditable.\n- Minimum runtime-facing fields still align with earlier findings:\n  - requested Persona\n  - effective Persona\n  - requested platform/model/variant/auth/account policy\n  - effective platform/model/variant/auth/account\n  - selection/switch reason\n  - skipped/clamped controls\n- Recommended UI rule:\n  - if requested == effective and nothing was skipped/clamped, compact display is fine\n  - if they differ, the UI must expand/disclose the difference visibly",
-      "exact_paths_mentioned": []
-    },
-    {
-      "question_id": "q-d2-006-004",
-      "question_text": "What deterministic matrix and governance process will own future persona-id changes while keeping actor-type mapping policies stable for users?",
-      "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T005-10"
-      ],
-      "source_block_ids": [
-        "lblock-000781"
-      ],
-      "source_shard_ids": [
-        "shard-0020"
-      ],
-      "source_line_ranges": [
-        {
-          "start_line": 3914,
-          "end_line": 3929
-        }
-      ],
-      "exact_source_excerpt": "- Likely high-level defaults:\n  - package overseer\n    - execution/governance persona biased toward package-local delivery and readiness truth\n  - seam overseer\n    - integration/governance persona biased toward cross-package integration truth\n  - node worker\n    - implementation persona biased by language/framework/work type\n  - verifier/reviewer\n    - review persona distinct from drafting/implementation persona\n  - corroborator\n    - review/challenge persona distinct from original claimer\n  - recovery actor\n    - troubleshooting/recovery persona\n  - graph patch planner\n    - planning/architecture persona\n- The exact persona ids may still evolve, but the mapping policy should be explicit now.",
-      "exact_paths_mentioned": []
-    },
-    {
-      "question_id": "q-d2-006-005",
-      "question_text": "Where will richer help entries physically live versus glossary rows, and how will deep links stay synchronized across Expert/ELI5 variants?",
-      "required_action": "open_decision",
-      "source_group_ids": [
-        "wg-d1-T006-04"
-      ],
-      "source_block_ids": [
-        "lblock-000841"
+        "lblock-000852"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
       "source_line_ranges": [
         {
-          "start_line": 4132,
-          "end_line": 4135
+          "source_shard_id": "shard-0021",
+          "start_line": 4156,
+          "end_line": 4160
         }
       ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-053",
+      "obligation_text": "- `Plans/storage-plan.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`",
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-054",
+      "obligation_text": "- `Plans/Orchestrator_Page.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-055",
+      "obligation_text": "- `Plans/usage-feature.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/usage-feature.md`",
+      "exact_paths_mentioned": [
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-056",
+      "obligation_text": "- `Plans/Multi-Account.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-057",
+      "obligation_text": "- The current Projects page contract is still fairly basic:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4163,
+          "end_line": 4178
+        }
+      ],
+      "exact_source_excerpt": "- The current Projects page contract is still fairly basic:\n  - project name/path\n  - language badges\n  - last opened\n  - orchestrator status (`idle/running/paused`)\n  - health indicator\n- Current project health indicators are mostly repo/config existence checks:\n  - green = directory exists / repo intact / config valid\n  - amber = stale config / missing optional files\n  - red = missing directory / corrupt repo / critical config errors\n- This is useful, but it does not express the newer operational state model:\n  - blocked ownership\n  - main reason the project needs attention\n  - multi-account pressure\n  - active-vs-historical run posture\n  - background activity",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-058",
+      "obligation_text": "- Strong recommendation:",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000858"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4181,
+          "end_line": 4192
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - separate:\n    - `project health`\n    - `project activity`\n    - `project attention`\n- Working interpretation:\n  - `project health`\n    - setup/integrity/config viability\n  - `project activity`\n    - whether runs are active/paused/queued/background\n  - `project attention`\n    - whether something actually needs user or operator action",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-059",
+      "obligation_text": "- Likely required fields:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000861"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0021",
+          "start_line": 4195,
+          "end_line": 4200
+        }
+      ],
+      "exact_source_excerpt": "- Likely required fields:\n  - project name\n  - path\n  - language/framework badges\n  - activity status\n  - attention status",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-060",
+      "obligation_text": "- primary blocked/attention reason",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000862"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4201,
+          "end_line": 4208
+        }
+      ],
+      "exact_source_excerpt": "  - primary blocked/attention reason\n  - blocked owner / attention owner when relevant\n  - pressure summary\n  - last active / last opened\n- Good compact model:\n  - `Activity`: `idle | running | paused | queued | background_active`\n  - `Attention`: `none | attention_required | blocked | degraded`\n  - `Health`: setup/config/repo integrity signal",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-061",
+      "obligation_text": "- The user specifically flagged this seam earlier and it still looks underdefined.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000865"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4211,
+          "end_line": 4224
+        }
+      ],
+      "exact_source_excerpt": "- The user specifically flagged this seam earlier and it still looks underdefined.\n- Recommended rule:\n  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state\n- Owner kinds already align with prior ledger work:\n  - `Runtime`\n  - `Package Overseer`\n  - `Seam Overseer`\n  - `Corroboration`\n  - `Graph Patch`\n  - `Recovery`\n  - `User`\n  - `External Resource`\n- This should answer:\n  - \"who/what is the project waiting on?\"",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-062",
+      "obligation_text": "- Projects page should not try to summarize every problem.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000868"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4227,
+          "end_line": 4237
+        }
+      ],
+      "exact_source_excerpt": "- Projects page should not try to summarize every problem.\n- Strong recommendation:\n  - show one `primary attention reason` / `primary blocked reason`\n  - with optional count badge for additional issues\n- Candidate examples:\n  - `Waiting on user approval`\n  - `Seam integration blocked`\n  - `Graph patch required`\n  - `Recovery in progress`\n  - `Provider/account pressure`\n  - `Projection trust degraded`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-063",
+      "obligation_text": "- Project cards likely need compact pressure signals, not full usage details.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000871"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4240,
+          "end_line": 4249
+        }
+      ],
+      "exact_source_excerpt": "- Project cards likely need compact pressure signals, not full usage details.\n- Good compact summaries:\n  - provider/account pressure present\n  - quota pressure severity\n  - signal confidence if especially important\n- Example:\n  - `Gemini pressure: high`\n  - `Account switch active`\n  - `Quota signal: heuristic`\n- This should stay short and deep-link into Usage/Authentication/Orchestrator as needed.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-064",
+      "obligation_text": "- Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [
+        "lblock-000874"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4252,
+          "end_line": 4257
+        }
+      ],
+      "exact_source_excerpt": "- Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.\n- Better distinction:\n  - active workspace/project\n  - recently active\n  - archived/unregistered project\n- If a project has no active runs but lots of historical runs, that is not itself a problem state.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-065",
+      "obligation_text": "- Background activity matters at project-card level.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000877"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4260,
+          "end_line": 4267
+        }
+      ],
+      "exact_source_excerpt": "- Background activity matters at project-card level.\n- Recommended rule:\n  - project card should surface background work independently from blocked attention\n- Example:\n  - a project can be:\n    - `background_active`\n    - with `attention_required`\n    - while still not globally `blocked`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-066",
+      "obligation_text": "- Projects page should summarize from canonical project-level projections rather than inventing its own status model.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000880"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4270,
+          "end_line": 4276
+        }
+      ],
+      "exact_source_excerpt": "- Projects page should summarize from canonical project-level projections rather than inventing its own status model.\n- Likely it needs a small project summary projection that rolls up:\n  - current active run state\n  - dominant concern/blocked owner\n  - highest-severity attention state\n  - current pressure summary\n  - health/config integrity",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-067",
+      "obligation_text": "- Current Projects page health/status model is too setup-centric for the rewrite.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000883"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4279,
+          "end_line": 4281
+        }
+      ],
+      "exact_source_excerpt": "- Current Projects page health/status model is too setup-centric for the rewrite.\n- There is no obvious current project-level rollup for blocked-owner and primary attention reason.\n- Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-068",
+      "obligation_text": "- Define a project-summary projection with:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000886"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4284,
+          "end_line": 4292
+        }
+      ],
+      "exact_source_excerpt": "- Define a project-summary projection with:\n  - activity state\n  - attention state\n  - health state\n  - primary blocked/attention owner\n  - primary reason\n  - pressure summary\n- Keep project-card status compact and singular, with deep links for detail.\n- Avoid turning project cards into mini dashboards; one dominant reason is better than many badges.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-069",
+      "obligation_text": "- blocked ownership should describe the dominant current issue, not every issue in the project",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000889"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4295,
+          "end_line": 4297
+        }
+      ],
+      "exact_source_excerpt": "- blocked ownership should describe the dominant current issue, not every issue in the project\n- project health and project attention are different things and should not share one overloaded dot\n- a project with only historical runs is not inherently degraded or blocked",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-070",
+      "obligation_text": "- `Plans/FinalGUISpec.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000894"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4302,
+          "end_line": 4305
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-071",
+      "obligation_text": "- `Plans/Orchestrator_Page.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-072",
+      "obligation_text": "- `Plans/storage-plan.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`",
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-073",
+      "obligation_text": "- `Plans/usage-feature.md`",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [],
+      "source_block_ids": [],
+      "source_shard_ids": [],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/usage-feature.md`",
+      "exact_paths_mentioned": [
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-074",
+      "obligation_text": "- The docs already define many local attention behaviors:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000897"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4308,
+          "end_line": 4317
+        }
+      ],
+      "exact_source_excerpt": "- The docs already define many local attention behaviors:\n  - Dashboard `Action Required` section\n  - thread badges\n  - run-graph/node blocked badges\n  - warnings/toasts/banners\n  - tray/system notifications for some events\n  - rate-limit warning banner with dismiss cooldown\n  - blocked and attention-required visual distinction\n- The current rules are mostly case-by-case.\n- What is still missing is a shared escalation ladder across concerns, blocked states, usage pressure, and persistent unresolved conditions.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-075",
+      "obligation_text": "- Strong recommendation:",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [
+        "lblock-000900"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4320,
+          "end_line": 4337
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - define one shared progression:\n    - `info`\n    - `warning`\n    - `attention_required`\n    - `blocked`\n    - `system_notification`\n- Working interpretation:\n  - `info`\n    - visible in local context/history only\n  - `warning`\n    - in-app banner/card/badge but not necessarily action-blocking\n  - `attention_required`\n    - user input helpful/needed, but background progress may still continue\n  - `blocked`\n    - cannot continue meaningfully until required action/precondition changes\n  - `system_notification`\n    - out-of-app signal for events important enough to interrupt or summon the user",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-076",
+      "obligation_text": "- Recommended mapping:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000903"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4340,
+          "end_line": 4350
+        }
+      ],
+      "exact_source_excerpt": "- Recommended mapping:\n  - `History`\n    - receives everything chronologically\n  - `Progress` / `Dashboard`\n    - show active warnings / attention / blocked states\n  - badges\n    - show compressed counts/severity markers\n  - chat/thread surfaces\n    - only for things that genuinely need user decision/input\n  - system notifications\n    - reserved for high-value, sparse events",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-077",
+      "obligation_text": "- The ledger already established some aging behavior for operational items.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000906"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4353,
+          "end_line": 4364
+        }
+      ],
+      "exact_source_excerpt": "- The ledger already established some aging behavior for operational items.\n- Strong next-step rule:\n  - unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update\n- Candidate cadence idea:\n  - immediate show on first activation\n  - suppress duplicate noise while unchanged\n  - resurface only when:\n    - severity increases\n    - owner changes\n    - blocked duration crosses threshold\n    - new action becomes available\n    - user returns focus after time away",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-078",
+      "obligation_text": "- Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000909"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4367,
+          "end_line": 4373
+        }
+      ],
+      "exact_source_excerpt": "- Persistent blockers should not become invisible just because the user dismissed a nearby warning once.\n- Good rule:\n  - advisory warnings may respect quiet/dismiss windows\n  - real blocked states should remain represented until underlying truth changes\n- This aligns with earlier concern and blocked-state work:\n  - `dismissed` is presentation state, not semantic resolution\n  - active blockers must not be dismissible into fake health",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-079",
+      "obligation_text": "- System/tray notifications should stay narrow.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000912"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4376,
+          "end_line": 4385
+        }
+      ],
+      "exact_source_excerpt": "- System/tray notifications should stay narrow.\n- Good candidates:\n  - HITL approval required\n  - run complete\n  - major failure requiring attention\n  - maybe severe rate-limit/pressure event when it materially stops progress\n- Poor candidates:\n  - routine warnings\n  - every blocked node in a large run\n  - repeated unresolved reminders without new information",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-080",
+      "obligation_text": "- Usage warnings already suggest:",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000915"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4388,
+          "end_line": 4396
+        }
+      ],
+      "exact_source_excerpt": "- Usage warnings already suggest:\n  - configurable threshold\n  - dismiss/quiet window\n  - path to Usage/config\n- This is a good pattern for non-blocking pressure:\n  - warning banner\n  - optional toast\n  - quiet period\n  - escalate further only if it becomes execution-blocking",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-081",
+      "obligation_text": "- Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000918"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0022",
+          "start_line": 4399,
+          "end_line": 4400
+        }
+      ],
+      "exact_source_excerpt": "- Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.\n- Recommended rule:",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-082",
+      "obligation_text": "- concern severity + blocking effect + owner + persistence decide escalation",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000919"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404
+        }
+      ],
+      "exact_source_excerpt": "  - concern severity + blocking effect + owner + persistence decide escalation\n- Example:\n  - minor advisory concern -> local/in-app only\n  - seam-blocking weak integration concern with no progress for hours -> blocked surfaces + possible system notification",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-083",
+      "obligation_text": "- There is no one explicit cross-surface escalation contract yet.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000922"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409
+        }
+      ],
+      "exact_source_excerpt": "- There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model.\n- Rate-limit warning suppression exists conceptually, but comparable suppression/resurfacing rules are less clear for other condition classes.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-006-084",
+      "obligation_text": "- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.",
+      "obligation_category": "ux_requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [
+        "lblock-000925"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415
+        }
+      ],
+      "exact_source_excerpt": "- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.\n- Add resurfacing rules based on change/persistence thresholds rather than repeated identical events.\n- Reserve system notifications for sparse, high-value events.\n- Keep blocked-state persistence semantically stronger than dismissible warning surfaces.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "q-006-001",
+      "question_text": "How should inherited/override presentation be unified with requested/effective semantics across settings and runtime surfaces?",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- Requested/effective is well defined in runtime docs, but inherited/override presentation is not unified across settings surfaces.\n- Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.\n- Without a shared grammar, users will confuse:\n  - current settings winner\n  - requested run state\n  - effective runtime result"
+    },
+    {
+      "question_id": "q-006-002",
+      "question_text": "What deterministic matrix should govern Orchestrator auto Persona resolution across actor type, operation type, scope, and stack hints?",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T032-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative.\n- Current docs mention project/language/domain/framework/tier/operation inputs but do not fully prioritize them.\n- Without a sharper actor-type mapping, `auto` risks feeling arbitrary in the rewrite model where overseer roles are much more important."
+    },
+    {
+      "question_id": "q-006-003",
+      "question_text": "What policy decides which rewrite concepts require full help entries versus contextual-only help?",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T034-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- The current dual-copy contract is strong for tooltip/help text, but not yet for a concept-help system.\n- There is no clearly defined “which concepts deserve full help entries” policy yet.\n- Without a help-entry contract, complex rewrite terms may end up redefined inconsistently across surfaces."
+    },
+    {
+      "question_id": "q-006-004",
+      "question_text": "What canonical project-summary projection should power Projects page activity, attention, health, blocked-owner, and pressure fields?",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- Current Projects page health/status model is too setup-centric for the rewrite.\n- There is no obvious current project-level rollup for blocked-owner and primary attention reason.\n- Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention."
+    },
+    {
+      "question_id": "q-006-005",
+      "question_text": "What shared escalation ladder and resurfacing cadence should span Dashboard, Orchestrator, threads, and system notifications?",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T037-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model.\n- Rate-limit warning suppression exists conceptually, but comparable suppression/resurfacing rules are less clear for other condition classes."
+    }
+  ],
+  "doc_hints": [
+    {
+      "hint_id": "dh-006-001",
+      "hint_type": "affected_doc",
+      "path": "Plans/Personas.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Personas.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-002",
+      "hint_type": "affected_doc",
+      "path": "Plans/Prompt_Pipeline.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Prompt_Pipeline.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-003",
+      "hint_type": "affected_doc",
+      "path": "Plans/interview-subagent-integration.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/interview-subagent-integration.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-004",
+      "hint_type": "affected_doc",
+      "path": "Plans/Models_System.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Models_System.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-005",
+      "hint_type": "affected_doc",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/orchestrator-subagent-integration.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-006",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T031-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-007",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-008",
+      "hint_type": "affected_doc",
+      "path": "Plans/Glossary.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Glossary.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-009",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-010",
+      "hint_type": "affected_doc",
+      "path": "Plans/Personas.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Personas.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-011",
+      "hint_type": "affected_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-012",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T033-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-013",
+      "hint_type": "affected_doc",
+      "path": "Plans/Glossary.md",
+      "source_group_ids": [
+        "wg-d1-T034-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
       "exact_source_excerpt": "- `Plans/Glossary.md` likely needs to become the canonical concept inventory backbone, even if richer help entries live elsewhere.\n- Good split:\n  - Glossary = canonical short definitions\n  - Help entries = fuller explanations with examples and related links",
-      "exact_paths_mentioned": []
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-014",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-015",
+      "hint_type": "affected_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-016",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-017",
+      "hint_type": "affected_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/usage-feature.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-018",
+      "hint_type": "affected_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_group_ids": [
+        "wg-d1-T035-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-019",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-020",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-021",
+      "hint_type": "affected_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`",
+      "notes": "Cited in ledger seed text for this slice."
+    },
+    {
+      "hint_id": "dh-006-022",
+      "hint_type": "affected_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T036-01"
+      ],
+      "source_block_ids": [],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [],
+      "exact_source_excerpt": "- `Plans/usage-feature.md`",
+      "notes": "Cited in ledger seed text for this slice."
     }
   ],
   "excluded_blocks": [
-    {
-      "block_id": "lblock-000645",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000646",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000648",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000649",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000651",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000652",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000654",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000655",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000657",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000658",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000660",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000661",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000663",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000664",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000666",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000667",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000669",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000670",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000672",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000673",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000675",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000676",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000678",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000679",
-      "reason": "research_progress_heading",
-      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000680",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000681",
-      "reason": "targeted_docs_heading_only",
-      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000682",
-      "reason": "plans_path_inventory_without_normative_text",
-      "rationale": "Classified as doc_paths per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000683",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000684",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000686",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000687",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000689",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000690",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000692",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000693",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000696",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000697",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000699",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000700",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000702",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000703",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000705",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000706",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000708",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000709",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000711",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000712",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000714",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000715",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000717",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000718",
-      "reason": "research_progress_heading",
-      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000719",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000720",
-      "reason": "targeted_docs_heading_only",
-      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000721",
-      "reason": "plans_path_inventory_without_normative_text",
-      "rationale": "Classified as doc_paths per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000722",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000723",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000725",
-      "reason": "blank_seed_block",
-      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
-    },
     {
       "block_id": "lblock-000726",
       "reason": "non_material_heading_without_body",
@@ -2601,12 +2799,12 @@
       "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000749",
+      "block_id": "lblock-000750",
       "reason": "blank_seed_block",
       "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000750",
+      "block_id": "lblock-000751",
       "reason": "non_material_heading_without_body",
       "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
@@ -2647,18 +2845,18 @@
     },
     {
       "block_id": "lblock-000763",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+      "reason": "research_progress_heading",
+      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000765",
+      "block_id": "lblock-000764",
       "reason": "blank_seed_block",
       "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000766",
-      "reason": "research_progress_heading",
-      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
+      "block_id": "lblock-000765",
+      "reason": "targeted_docs_heading_only",
+      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
       "block_id": "lblock-000767",
@@ -2667,13 +2865,8 @@
     },
     {
       "block_id": "lblock-000768",
-      "reason": "targeted_docs_heading_only",
-      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000769",
-      "reason": "plans_path_inventory_without_normative_text",
-      "rationale": "Classified as doc_paths per D2 semantic exclusion rules for slice d2-slice-006."
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
       "block_id": "lblock-000770",
@@ -2776,12 +2969,12 @@
       "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000800",
+      "block_id": "lblock-000801",
       "reason": "blank_seed_block",
       "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000801",
+      "block_id": "lblock-000802",
       "reason": "non_material_heading_without_body",
       "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
@@ -2792,18 +2985,18 @@
     },
     {
       "block_id": "lblock-000805",
-      "reason": "non_material_heading_without_body",
-      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+      "reason": "research_progress_heading",
+      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000807",
+      "block_id": "lblock-000806",
       "reason": "blank_seed_block",
       "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000808",
-      "reason": "research_progress_heading",
-      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
+      "block_id": "lblock-000807",
+      "reason": "targeted_docs_heading_only",
+      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
       "block_id": "lblock-000809",
@@ -2812,13 +3005,8 @@
     },
     {
       "block_id": "lblock-000810",
-      "reason": "targeted_docs_heading_only",
-      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
-    },
-    {
-      "block_id": "lblock-000811",
-      "reason": "plans_path_inventory_without_normative_text",
-      "rationale": "Classified as doc_paths per D2 semantic exclusion rules for slice d2-slice-006."
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
       "block_id": "lblock-000812",
@@ -2947,21 +3135,266 @@
     },
     {
       "block_id": "lblock-000849",
+      "reason": "research_progress_heading",
+      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000850",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000851",
+      "reason": "targeted_docs_heading_only",
+      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000853",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000854",
       "reason": "non_material_heading_without_body",
       "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     },
     {
-      "block_id": "lblock-000851",
+      "block_id": "lblock-000856",
       "reason": "blank_seed_block",
       "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000857",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000859",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000860",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000863",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000864",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000866",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000867",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000869",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000870",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000872",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000873",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000875",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000876",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000878",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000879",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000881",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000882",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000884",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000885",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000887",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000888",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000890",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000891",
+      "reason": "research_progress_heading",
+      "rationale": "Classified as research_progress per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000892",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000893",
+      "reason": "targeted_docs_heading_only",
+      "rationale": "Classified as targeted_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000895",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000896",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000898",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000899",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000901",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000902",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000904",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000905",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000907",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000908",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000910",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000911",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000913",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000914",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000916",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000917",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000920",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000921",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000923",
+      "reason": "blank_seed_block",
+      "rationale": "Classified as empty per D2 semantic exclusion rules for slice d2-slice-006."
+    },
+    {
+      "block_id": "lblock-000924",
+      "reason": "non_material_heading_without_body",
+      "rationale": "Classified as short_heading per D2 semantic exclusion rules for slice d2-slice-006."
     }
   ],
   "blocked_blocks": [],
   "conversion_notes": [
-    "Semantic conversion used only D2 READ inputs (obligation_worklist.json, ledger_obligation_seed.json, obligation_converter.conversion_slices.json) plus this slice's fanout task definition.",
-    "Multi-block obligations merge contiguous manifest bullets spanning lblock-000694 + lblock-000695 and resolver emission spanning lblock-000802 + lblock-000803.",
-    "Doc path inventory blocks are excluded as non-normative enumerations; obligations still capture paths when embedded in normative material.",
-    "Open questions track unresolved schema ownership, export manifest taxonomy, UI compactness vs audit, persona matrix governance, and help-entry storage."
+    "D2 slice d2-slice-006 converts D1 work groups wg-d1-T030-01..wg-d1-T037-01 from lossless ledger seeds (shards shard-0019..shard-0023).",
+    "Headings, research-progress titles, and blank separators are excluded as non-material; normative bullets are converted, with per-file splits for pure targeted-doc lists.",
+    "Open questions capture unresolved cross-surface contracts called out in contradictions/gaps seed blocks without resolving them here.",
+    "doc_hints enumerate Plans/* paths recovered from converted obligations for downstream canon alignment."
   ],
   "subagent_execution": {
     "subagent_task_id": "d2-slice-006",

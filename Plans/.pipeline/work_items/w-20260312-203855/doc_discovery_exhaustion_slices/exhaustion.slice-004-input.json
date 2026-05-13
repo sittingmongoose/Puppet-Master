@@ -1,0 +1,1360 @@
+{
+  "schema_id": "pm.doc_discovery_exhaustion_slice_input.v3.2.3",
+  "slice_id": "slice-004",
+  "subagent_task_id": "f4-slice-004",
+  "row_count": 26,
+  "gap_records": [
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 926,
+      "obligation_id": "obl-d2-s013-006",
+      "row_hash": "a673cf68d7309f32d0a1d0d532cbdc6b3372e0f292ee0636b25f258fa7c503f0",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002168"
+      ],
+      "source_group_ids": [
+        "wg-d1-T087-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9010,
+          "end_line": 9021
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 927,
+      "obligation_id": "obl-d2-s013-007",
+      "row_hash": "058ce6883ec49e2484670db777512621a61bdecd39c5189243612d74f046361f",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002171"
+      ],
+      "source_group_ids": [
+        "wg-d1-T087-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9024,
+          "end_line": 9039
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 928,
+      "obligation_id": "obl-d2-s013-008",
+      "row_hash": "7397446cde017e316a125877048bd985734caf3942484fbf983cc320c11e38d0",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002174"
+      ],
+      "source_group_ids": [
+        "wg-d1-T087-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9042,
+          "end_line": 9055
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "gap",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 929,
+      "obligation_id": "obl-d2-s013-009",
+      "row_hash": "95cbea33b8c4d17148543163e6ef17230c5c872d9f0884f72d48df1cced12b69",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002177"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9058,
+          "end_line": 9062
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 930,
+      "obligation_id": "obl-d2-s013-010",
+      "row_hash": "8de53d5258f902c2555549ea56b588c427bd413407e8a3d4d0dc2fbb863e9aab",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002180"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9065,
+          "end_line": 9069
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 931,
+      "obligation_id": "obl-d2-s013-011",
+      "row_hash": "4c3c34d569d356ceed43ea88d3ba31faf9d52fd717cceae2a01f966dab326b7e",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002183"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9072,
+          "end_line": 9076
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 932,
+      "obligation_id": "obl-d2-s013-012",
+      "row_hash": "e124766251cfc0cfb5eaf7908afdf07412384a6e431146570a14bbe93ecb66ed",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002188"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9081,
+          "end_line": 9085
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 933,
+      "obligation_id": "obl-d2-s013-013",
+      "row_hash": "bcdfbc4b2d122374eaf211455321eac8aa885361576870040cc1dd457dfd355b",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002191"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9088,
+          "end_line": 9125
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 934,
+      "obligation_id": "obl-d2-s013-014",
+      "row_hash": "1c3a803c95e5de04da6cc33d12426561d34ecce302f924dc739ba9f73f7a1061",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002194"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9128,
+          "end_line": 9137
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 935,
+      "obligation_id": "obl-d2-s013-015",
+      "row_hash": "7f26c61181eb66608d6cfd67a7753e2d3054f4597041b2c80c8e72bdb50bd26c",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002197"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9140,
+          "end_line": 9144
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 936,
+      "obligation_id": "obl-d2-s013-016",
+      "row_hash": "bdea1825ceba91ee9c36c882a315eeea09c5056df17e4a1b2a06ca92d568787c",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002200"
+      ],
+      "source_group_ids": [
+        "wg-d1-T088-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9147,
+          "end_line": 9156
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 937,
+      "obligation_id": "obl-d2-s013-017",
+      "row_hash": "abb05b88fbea665626db9f2ff853e07a68746c8fa036ec142a347eaa31987196",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002203"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9159,
+          "end_line": 9161
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 938,
+      "obligation_id": "obl-d2-s013-018",
+      "row_hash": "8b65f37d8d18cfe718a6a98c419d35c776a8af31f789d18858e108c45de5dd7c",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002208"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9166,
+          "end_line": 9170
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 939,
+      "obligation_id": "obl-d2-s013-019",
+      "row_hash": "b563d8a443819df4edcac83f9425c0885d3e88e0ebfa3bc652fe99cd9f1fab39",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0046",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_block_ids": [
+        "lblock-002211"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9173,
+          "end_line": 9200
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "gap",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 940,
+      "obligation_id": "obl-d2-s013-020",
+      "row_hash": "0f6eee1a65c9d93e78075c7e8f6124b36dbbceed4ce66c46ee66c7cb0acd8180",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002212"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9201,
+          "end_line": 9202
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 941,
+      "obligation_id": "obl-d2-s013-021",
+      "row_hash": "36efcccdc0812460e56f3f5c25c875cbc086b08bf62440db88b5fd8fc65c0e0a",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002215"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9205,
+          "end_line": 9213
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 942,
+      "obligation_id": "obl-d2-s013-022",
+      "row_hash": "cb2e9db4e4562dec5168c8ea69b9298a6062c1e90bebca9a32bc5e84d6308e31",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002218"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9216,
+          "end_line": 9220
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 943,
+      "obligation_id": "obl-d2-s013-023",
+      "row_hash": "7e122e0b667678067390f0f932cc398098df86fec9045d02b488e2b6b9371303",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002221"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9223,
+          "end_line": 9241
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 944,
+      "obligation_id": "obl-d2-s013-024",
+      "row_hash": "8d941702e9636b20f79d4a105991276f5cbb4e9e1d5ed01d675f788c09954c89",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002224"
+      ],
+      "source_group_ids": [
+        "wg-d1-T089-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9244,
+          "end_line": 9246
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 945,
+      "obligation_id": "obl-d2-s013-025",
+      "row_hash": "4024e49872627e23ab866574b0379cb4bd8bcca40a03c171bf340fbc56383791",
+      "coverage_task_id": "cov-e1-slice-007-g005",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002229"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9251,
+          "end_line": 9262
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 946,
+      "obligation_id": "obl-d2-s013-026",
+      "row_hash": "1e441334515ec148d5cccaec5522c730cce0c71be1e99be6e30e2e2ca8125f02",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002232"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9265,
+          "end_line": 9281
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "gap",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 947,
+      "obligation_id": "obl-d2-s013-027",
+      "row_hash": "0cfb3b39940d0884abeaa177f57e5a05a9db50a15752e2f1da9127aa9213869f",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002235"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9284,
+          "end_line": 9299
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 948,
+      "obligation_id": "obl-d2-s013-028",
+      "row_hash": "841e5e86faa68f092f000e2a830ee8410c48d49a4712ac4beef102e1cca67b10",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002238"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9302,
+          "end_line": 9306
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "gap",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 949,
+      "obligation_id": "obl-d2-s013-029",
+      "row_hash": "4ad9b522e88dd5f8f815735c490ca4faf29c2637ee8c551ecda67ab58036dff8",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002241"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9309,
+          "end_line": 9314
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 950,
+      "obligation_id": "obl-d2-s013-030",
+      "row_hash": "e1b89751eeba8ded4439e71424579b3a8db08c060236bcd0b11a8c03f10c32fe",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002244"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9317,
+          "end_line": 9321
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "gap",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 951,
+      "obligation_id": "obl-d2-s013-031",
+      "row_hash": "a22a68c3bda7b788289c03925f26dd4d86a678e1db1f94fc920bf959a8c72bfa",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "source_shard_id": "shard-0047",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "candidate_doc_set_hash": "74c0a78f0cba4dfa9a3d10acbaa614bdf0a098a7582b88c224c9c8632f62d385",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "doc_discovery_exhaustion",
+        "terminal_unresolved_doc_discovery": true,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "shard_only_pending_live_path_binding",
+        "next_route_hint": "b3_issue_process_adjudicator",
+        "aggregated_task_label": "no_live_doc_targets_in_classifier_union"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; gap_bucket=process_followup; doc_resolution_status=shard_only_pending_live_path_binding; doc_discovery_attempt_state=doc_discovery_exhaustion; terminal_unresolved_doc_discovery=True; next_route_hint=b3_issue_process_adjudicator; obligation_level_classification=needs_doc_discovery; assignment_reason_code=classifier_union_no_live_targets; aggregated_task_label=no_live_doc_targets_in_classifier_union; candidate_doc_hints_count=0; live_doc_targets_union_count=0.",
+      "f1_assignment_reason_code": "classifier_union_no_live_targets",
+      "blocker_classification": {
+        "blocker_type": "doc_discovery_exhausted",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery_no_repeat_f5_same_hash",
+        "doc_discovery_loop_breaker": "do_not_reset_f5_unresolved_explicit_to_doc_discovery_required"
+      },
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_block_ids": [
+        "lblock-002249"
+      ],
+      "source_group_ids": [
+        "wg-d1-T090-01"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 9326,
+          "end_line": 9330
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_doc_discovery",
+      "best_evidence_score": 0.068,
+      "exclusion": null,
+      "e3_reducer_slice_id": "e3-reducer-007",
+      "gap_bucket": "process_followup",
+      "transfer_row_kind": "classified"
+    }
+  ]
+}

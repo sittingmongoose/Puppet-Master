@@ -2,30 +2,30 @@
   "schema_id": "pm.ledger_intake_manifest.v1",
   "prompt_id": "B4",
   "prompt_version": "pm.b4.v3.2.3",
-  "timestamp_utc": "20260511T221500Z",
+  "timestamp_utc": "20260512T150000Z",
   "work_id": "w-20260312-203855",
   "source_mode": "existing_working_ledger",
   "accepted_sources": [
     "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
   ],
+  "accepted_source_verification": {
+    "path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "line_count": 18244,
+    "byte_count": 1044305,
+    "sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "verification_method": "wc_line_byte_count_and_sha256sum"
+  },
   "requires_new_research": false,
   "requires_condensation": false,
   "requires_ledger_preparation": true,
   "next_section": "C_Ledger_Preparation",
   "next_preferred_prompt": "C0",
-  "inputs_checked": {
-    "working_ledger_md": {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "present": true,
-      "bytes": 1044305,
-      "lines": 18244,
-      "non_empty": true,
-      "verification": "stat_and_wc"
-    },
-    "session_notes_jsonl_glob": "none_found",
-    "research_findings_json": "absent",
-    "feature_spec_audit_report_json": "absent",
-    "issue_process_adjudication_report_json": "absent"
-  },
-  "selection_rule": "priority_1_existing_working_ledger_non_empty"
+  "supplementary_material_observed_not_primary_intake": [
+    "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl"
+  ],
+  "notes": [
+    "Priority-1 rule: non-empty working_ledger.md is the durable ledger intake source; Section C performs validation, sharding, extraction, and trace.",
+    "research_findings.json and feature_spec_audit_report.json were absent under the work item active tree at intake time."
+  ]
 }

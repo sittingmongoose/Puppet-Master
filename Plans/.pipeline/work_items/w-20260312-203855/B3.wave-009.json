@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.b3_subagent_wave.v1",
+  "prompt_id": "B3",
+  "prompt_version": "pm.b3.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "wave_number": 9,
+  "timestamp_utc": "20260512T145410Z",
+  "required_subagent_tasks_total": 22,
+  "upstream_reported_issue_reference": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json classifier_process_defect_rows_total",
+  "wave_tasks": [
+    {
+      "subagent_invocation_id": "ff966f95-f316-4805-a393-486589e30b33",
+      "subagent_task_id": "b3-t017",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t017.json",
+        "gap_record_indices": [
+          838,
+          840,
+          841,
+          842,
+          844,
+          845,
+          847,
+          848,
+          849,
+          851
+        ],
+        "record_count": 10,
+        "max_records_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t017.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "0c40bb18-295a-4106-97ac-5fc7413527f4",
+      "subagent_task_id": "b3-t018",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t018.json",
+        "gap_record_indices": [
+          868,
+          870,
+          872,
+          873,
+          874,
+          876,
+          878,
+          879,
+          880,
+          882
+        ],
+        "record_count": 10,
+        "max_records_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t018.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b8eaf56c-2664-4797-9730-105d63b196e0",
+      "subagent_task_id": "b3-t019",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t019.json",
+        "gap_record_indices": [
+          635,
+          637,
+          638,
+          639
+        ],
+        "record_count": 4,
+        "max_records_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t019.json",
+      "status": "complete"
+    }
+  ],
+  "completed_task_ids": [
+    "b3-t017",
+    "b3-t018",
+    "b3-t019"
+  ],
+  "pending_task_ids": [],
+  "blocked_task_ids": []
+}

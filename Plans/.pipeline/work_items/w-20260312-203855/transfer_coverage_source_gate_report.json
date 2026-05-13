@@ -3,25 +3,26 @@
   "prompt_id": "E3",
   "prompt_version": "pm.e3.v3.2.3",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260512T230000Z",
+  "timestamp_utc": "20260513T011038Z",
   "upstream_e2_validation": {
     "stage_report_e2_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.E2.json",
     "real_subagent_proof_status": "pass",
     "fanout_proof_status": "pass"
   },
   "accounting": {
-    "canonical_obligation_count": 1710,
-    "transfer_coverage_row_count": 1710,
+    "canonical_obligation_count": 1775,
+    "transfer_coverage_row_count": 1775,
     "every_canonical_obligation_has_row": true
   },
   "overall_source_gate_pass": true,
   "classification_histogram": {
-    "needs_doc_discovery": 713,
-    "open_decision": 1,
-    "present": 569,
-    "process_only": 3,
-    "partial": 381,
-    "missing": 43
+    "needs_doc_discovery": 776,
+    "present": 668,
+    "partial": 331
+  },
+  "next_route_hint_histogram": {
+    "e4_section_exit_coverage": 1171,
+    "b3_issue_process_adjudicator": 604
   },
   "f5_loop_breaker": {
     "active_doc_discovery_resolution_json_in_work_item_root": false,
@@ -30,10 +31,10 @@
     "timestamp_only_f5_loop_detected": false,
     "timestamp_only_delta_guard": "pass_no_f5_input",
     "e3_to_f5_to_e3_loop_risk": "not_applicable_no_active_f5_resolution",
-    "note": "Per E3 hotfix v3.2.3: no doc_discovery_resolution.json in work item root; do not route from archived/quarantine F5 artifacts."
+    "note": "Per E3 hotfix v3.2.3: no doc_discovery_resolution.json in work item root; do not route from archived F5 artifacts."
   },
   "notes": [
-    "Mechanical merge of 18 delegated reducer slice artifacts into transfer_coverage.json with canonical-order rows.",
-    "Heterogeneous slice row shapes normalized using canonical_obligations.json and coverage_worklist.json task bindings."
+    "Fifteen delegated reducer slice artifacts (E3.wave-001..005) merged in canonical_obligations.json order.",
+    "Local worker: _e3_build_reducer_inputs.py produced bounded slice inputs; subagents validated and emitted pm.coverage_reducer_slice.v3.2.3."
   ]
 }

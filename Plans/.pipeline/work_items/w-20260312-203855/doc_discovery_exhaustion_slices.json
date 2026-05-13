@@ -1,0 +1,70 @@
+{
+  "schema_id": "pm.doc_discovery_exhaustion_slices.v3.2.3",
+  "prompt_id": "F4",
+  "prompt_version": "pm.f4.v3.2.3",
+  "timestamp_utc": "20260513T030351Z",
+  "work_id": "w-20260312-203855",
+  "doc_discovery_rows_total": 776,
+  "slice_row_budget_hard_max": 250,
+  "tasks": [
+    {
+      "subagent_task_id": "f4-slice-001",
+      "slice_id": "slice-001",
+      "row_count": 250,
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-001-input.json",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-001.json"
+    },
+    {
+      "subagent_task_id": "f4-slice-002",
+      "slice_id": "slice-002",
+      "row_count": 250,
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-002-input.json",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-002.json"
+    },
+    {
+      "subagent_task_id": "f4-slice-003",
+      "slice_id": "slice-003",
+      "row_count": 250,
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-003-input.json",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-003.json"
+    },
+    {
+      "subagent_task_id": "f4-slice-004",
+      "slice_id": "slice-004",
+      "row_count": 26,
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-004-input.json",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-004.json"
+    }
+  ],
+  "required_subagent_tasks_total": 4,
+  "delegated_model_subagent_invocations": [
+    {
+      "subagent_task_id": "f4-slice-001",
+      "subagent_invocation_id": "e6e32e0a-1e08-404d-83e6-f9fb8eb9bf79",
+      "slice_id": "slice-001",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-001.json",
+      "status": "complete"
+    },
+    {
+      "subagent_task_id": "f4-slice-002",
+      "subagent_invocation_id": "1eeb7c81-b112-4d25-a3e3-f1072833de6b",
+      "slice_id": "slice-002",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-002.json",
+      "status": "complete"
+    },
+    {
+      "subagent_task_id": "f4-slice-003",
+      "subagent_invocation_id": "43e50dd8-8678-44a8-9eb2-4e180656a3bf",
+      "slice_id": "slice-003",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-003.json",
+      "status": "complete"
+    },
+    {
+      "subagent_task_id": "f4-slice-004",
+      "subagent_invocation_id": "804ad9f5-5162-489c-8884-f9a8ecb0babe",
+      "slice_id": "slice-004",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_slices/exhaustion.slice-004.json",
+      "status": "complete"
+    }
+  ]
+}

@@ -2,232 +2,838 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-009-g001",
-  "obligation_record_count": 5,
-  "source_classification_slices": [
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-009"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-d2-s012-056",
+      "obligation_id": "obl-d2-slice-015-017",
       "coverage_task_id": "cov-e1-slice-009-g001",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 221,
+          "end_line": 221,
+          "match_kind": "verbatim_substring"
+        }
+      ],
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0044"
-        ],
-        "source_block_ids": [
-          "lblock-002069"
-        ],
-        "source_group_ids": [
-          "wg-d1-T011-09"
-        ],
-        "source_slice_id": "d2-slice-012",
-        "source_line_ranges": [
-          {
-            "start_line": 8601,
-            "end_line": 8604
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g001",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002626 | excerpt=\"- `Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logi...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-018",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "start_line": 21,
+          "end_line": 21,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002629 | excerpt=\"- Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in `Runtim...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-019",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/Contracts_V0.md",
-          "line_start": 922,
-          "line_end": 938,
-          "quote": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "start_line": 1203,
+          "end_line": 1203,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-s012-058",
-      "coverage_task_id": "cov-e1-slice-009-g001",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0044"
-        ],
-        "source_block_ids": [
-          "lblock-002075"
-        ],
-        "source_group_ids": [
-          "wg-d1-T011-09"
-        ],
-        "source_slice_id": "d2-slice-012",
-        "source_line_ranges": [
-          {
-            "start_line": 8627,
-            "end_line": 8636
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g001",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002632 | excerpt=\"- The missing piece is no longer \u201cwe need schemas\u201d; it is \u201cthe common envelope contract is underspecified.\u201d\n- `artifa...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-020",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002637 | excerpt=\"- `Plans/FileManager.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/storage-plan.md`\n- spot-checks against `Plans/...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-021",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002640 | excerpt=\"- `FileManager.md` still states one canonical open contract:\n  - `OpenFile { path: PathBuf, line?, range?, target_gro...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-022",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 2541,
+          "end_line": 2541,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002643 | excerpt=\"- keep `OpenFile { path... }` for canonical workspace-file opens\n- add a second canonical open contract for identity-...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-023",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002646 | excerpt=\"- document/file-backed:\n  - `doc:<document_id>`\n  - resolves to canonical workspace file/buffer\n- artifact-backed:\n  ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-024",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002649 | excerpt=\"- path-based open remains for repo/workspace files\n- identity-based open is the canonical entrypoint for:\n  - runtime...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-025",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002652 | excerpt=\"- resolve subject type\n- if file-backed canonical document exists:\n  - open/focus workspace buffer\n- else if artifact...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-026",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002655 | excerpt=\"- it prevents runtime artifacts from being forced through fake repo paths\n- it keeps attempt/safe-point/remediation o...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-027",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "start_line": 16,
+          "end_line": 16,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002658 | excerpt=\"- `Plans/FileManager.md`\n- `Plans/storage-plan.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/Orchestrator_Page.md...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-028",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
       "evidence_spans": [
         {
           "path": "Plans/Contracts_V0.md",
-          "line_start": 922,
-          "line_end": 938,
-          "quote": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "start_line": 4042,
+          "end_line": 4042,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
-    },
-    {
-      "obligation_id": "obl-d2-s012-062",
-      "coverage_task_id": "cov-e1-slice-009-g001",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
       "missing_details": [],
       "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0044"
-        ],
-        "source_block_ids": [
-          "lblock-002089"
-        ],
-        "source_group_ids": [
-          "wg-d1-T011-09"
-        ],
-        "source_slice_id": "d2-slice-012",
-        "source_line_ranges": [
-          {
-            "start_line": 8674,
-            "end_line": 8678
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g001",
-        "doc_resolution_status": "concrete_plans_targets"
-      },
-      "deterministic_local_evidence_used_only_as_candidate": false,
-      "evidence_spans": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3586,
-          "line_end": 3600,
-          "quote": "| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
-        }
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
       ],
-      "classification": "present",
-      "uncertainty": 0.11
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002661 | excerpt=\"- `FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already re...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s012-065",
+      "obligation_id": "obl-d2-slice-015-029",
       "coverage_task_id": "cov-e1-slice-009-g001",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
-      "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [],
-      "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0044"
-        ],
-        "source_block_ids": [
-          "lblock-002098"
-        ],
-        "source_group_ids": [
-          "wg-d1-T011-10"
-        ],
-        "source_slice_id": "d2-slice-012",
-        "source_line_ranges": [
-          {
-            "start_line": 8745,
-            "end_line": 8755
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g001",
-        "doc_resolution_status": "concrete_plans_targets"
-      },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3586,
-          "line_end": 3600,
-          "quote": "| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1208,
+          "end_line": 1208,
+          "match_kind": "verbatim_substring"
         }
       ],
-      "classification": "present",
-      "uncertainty": 0.11
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002664 | excerpt=\"- Split FileManager\u2019s canonical open contract into:\n  - workspace path open\n  - identity-native subject open\n- Reuse ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     },
     {
-      "obligation_id": "obl-d2-s012-069",
+      "obligation_id": "obl-d2-slice-015-030",
       "coverage_task_id": "cov-e1-slice-009-g001",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [],
       "missing_details": [],
-      "partial_details": [],
-      "candidate_docs": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0044"
-        ],
-        "source_block_ids": [
-          "lblock-002112"
-        ],
-        "source_group_ids": [
-          "wg-d1-T011-10"
-        ],
-        "source_slice_id": "d2-slice-012",
-        "source_line_ranges": [
-          {
-            "start_line": 8785,
-            "end_line": 8789
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-009-g001",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002667 | excerpt=\"- The real seam is no longer \u201cpath vs not path\u201d; it is \u201cworkspace document open vs subject/identity open.\u201d\n- `generat...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-031",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
       "evidence_spans": [
         {
-          "path": "Plans/FinalGUISpec.md",
-          "line_start": 3579,
-          "line_end": 3595,
-          "quote": "| `Plans/human-in-the-loop.md` | HITL settings, approval UI, and dashboard calls to action. |",
-          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "start_line": 37,
+          "end_line": 37,
+          "match_kind": "verbatim_substring"
         }
       ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002672 | excerpt=\"- `Plans/UI_Command_Catalog.md`\n- `Plans/Commands_System.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/FinalGUISpec...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-032",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002675 | excerpt=\"- The routing model is now split across at least four partially overlapping mechanisms:\n  - `resume_url`\n  - command ...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-033",
+      "coverage_task_id": "cov-e1-slice-009-g001",
       "classification": "present",
-      "uncertainty": 0.11
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3177,
+          "end_line": 3177,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002678 | excerpt=\"- define one canonical internal route/target payload for navigation\n- `resume_url` should be one serialized transport...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-034",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0054",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0054 | blocks=lblock-002681 | excerpt=\"- path-based target:\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-035",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 654,
+          "end_line": 654,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002682 | excerpt=\"  - `open_file`\n  - uses `OpenFile { path, line?, range?, target_group? }`\n- identity-based target:\n  - `open_subject...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-036",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3346,
+          "end_line": 3346,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002685 | excerpt=\"- `target_kind`\n- `project_id?`\n- `workspace_tab_id?`\n- `focused_run_id?`\n- `thread_id?`\n- `subject_id?`\n- `usage_eve...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-037",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002688 | excerpt=\"- it lets `OpenSubject` and `OpenFile` live inside one routing model instead of becoming separate navigation stacks\n-...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-038",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 95,
+          "end_line": 95,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002691 | excerpt=\"- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/FileManager.md`...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-039",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Coverage task cov-e1-slice-009-g001 has bounded live_doc_windows (60 windows, max 400 lines each).",
+        "No verbatim/long-line excerpt match for the obligation was located within the union of emitted windows.",
+        "Deeper sections outside emitted windows were not evaluated in this E2 slice."
+      ],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002694 | excerpt=\"- `FinalGUISpec.md` still overstates the scope of `OpenFile` by claiming all file-open actions across the app use tha...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-040",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3179,
+          "end_line": 3179,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002697 | excerpt=\"- Add a canonical route payload / target model owner section, likely in `Contracts_V0.md` or an equivalent routing ow...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-015-041",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 346,
+          "end_line": 346,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "shard-0055",
+        "source_slice_id": "d2-slice-015",
+        "canonical_excerpt_note": "shards=shard-0055 | blocks=lblock-002700 | excerpt=\"- The system now wants a routing contract, not just more command IDs.\n- `resume_url` should not stay the most express...\""
+      },
+      "uncertainty": "medium",
+      "local_deterministic_seed_used": false
     }
   ]
 }

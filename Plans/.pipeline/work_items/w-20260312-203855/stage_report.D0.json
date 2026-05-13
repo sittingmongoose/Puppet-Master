@@ -2,7 +2,7 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "D0",
   "prompt_version": "pm.d0.v3.2.3",
-  "timestamp_utc": "20260511T211314Z",
+  "timestamp_utc": "20260512T154039Z",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "status": "complete",
@@ -20,8 +20,8 @@
     "c4_gate_status": "pass",
     "ledger_seed_completeness_status": "pass",
     "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
-    "raw_blocks_len_from_json_parse": 4880,
-    "expected_raw_seed_blocks_total_from_report": 4880,
+    "raw_blocks_len_from_json_parse": 4868,
+    "expected_raw_seed_blocks_total_from_report": 4868,
     "counts_match": true,
     "outputs_written_paths": [
       "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
@@ -50,5 +50,5 @@
   "distinct_subagent_invocations_total": 0,
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "summary": "Section D entry: work_id from section_exit_C; C4 seed completeness pass; obligation seed present with 4880 raw_blocks matching report; section_entry_D_report.json and stage_report.D0.json written; next D1."
+  "summary": "Section D entry (mechanical): work_id from active section_exit_C; C4 seed completeness pass; obligation seed parses with schema pm.ledger_obligation_seed.v3.2.3, raw_blocks 4868 matching completeness report; section_entry_D_report.json and stage_report.D0.json written; next D1."
 }

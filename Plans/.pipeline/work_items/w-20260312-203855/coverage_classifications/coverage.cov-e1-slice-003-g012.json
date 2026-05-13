@@ -1,0 +1,323 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-003-g012",
+  "obligation_record_count": 16,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-003"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-005-068",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000620 | excerpt=\"- narrow Source Control panel means destructive actions there should likely route through compact but clear confirmation patterns, not giant forms\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-069",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- worktree prune/remove and cleanup actions should disclose:\\n  - whether the backing worktree will be removed\\n  - whether historical lineage remains\\n  - whether there is any direct restore path\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-070",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000623 | excerpt=\"- Confirmation behavior exists in many isolated places, but there is no shared action policy spanning runtime, Orchestrator, Source Control, cleanup, and review/governance actions.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-071",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- The current docs sometimes use \"revert\", \"rollback\", \"restore\", and \"undo\" in different domains without a clear global distinction.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-072",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- `Delete Run` in History looks especially questionable until delete semantics and reversibility are defined more carefully.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-073",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000626 | excerpt=\"- Add a shared action policy matrix:\\n  - action family\\n  - confirmation level\\n  - reversibility class\\n  - canonical recovery path\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-074",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- Normalize copy:\\n  - `Undo` only for real undo\\n  - `Restore` / `Rollback` / `Retry from Safe Point` / `Reopen` for distinct cases\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-075",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- Bind high-consequence runtime actions to canonical blocked/HITL command contracts where appropriate instead of ad hoc UI confirms.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-076",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000629 | excerpt=\"- confirmation is not the same as authorization; some actions require runtime/HITL gating, not just a modal\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-077",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- destructive worktree/cleanup actions must preserve historical lineage even when the live object is removed\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-078",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- strong confirmations should be consequence-specific, not generic \"Are you sure?\"\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-084",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000637 | excerpt=\"- The docs already distinguish several important things:\\n  - evidence vs artifacts\\n  - parent-summary artifact vs evidence summary\\n  - preview subjects can be document-backed or artifact-backed\\n  - exact records belong i\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-085",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- The problem is that many major record families are named but not shaped clearly enough:\\n  - review record\\n  - corroboration packet/result\\n  - graph patch request / applied result\\n  - promotion record\\n  - recovery recor\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-086",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- Compared to attempts/blocked/usage, these families still lack a normalized envelope and linkage story.\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-087",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | blocks=lblock-000640 | excerpt=\"- Strong recommendation:\\n  - use a shared record-envelope pattern across major governance/runtime record families\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-005-088",
+      "coverage_task_id": "cov-e1-slice-003-g012",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task cov-e1-slice-003-g012 is unresolved_no_live_target with empty live_doc_windows.",
+        "E1 did not materialize bounded live_doc_windows for this grouping; automated E2 evidence binding is blocked pending Section E path binding."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0017",
+        "source_slice_id": "d2-slice-005",
+        "canonical_excerpt_note": "shards=shard-0017 | excerpt=\"- Candidate shared envelope fields:\\n  - `record_id`\\n  - `record_kind`\\n  - `project_id`\\n  - `run_id?`\\n  - scope refs:\\n    - `seam_id?`\\n    - `package_id?`\\n    - `node_id?`\\n    - `attempt_id?`\\n    - `promotion_id?`\\n    - `\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

@@ -2,40 +2,41 @@
   "schema_id": "pm.stage_report.v1",
   "prompt_id": "B4",
   "prompt_version": "pm.b4.v3.2.3",
-  "timestamp_utc": "20260511T221500Z",
+  "timestamp_utc": "20260512T150000Z",
   "work_id": "w-20260312-203855",
-  "execution_type": "mechanical_tool_operation",
+  "section_id": "B",
+  "section_name": "Ledger_Intake_Decision_Section_B_Exit",
   "status": "complete",
-  "subagents": {
-    "used": false
-  },
-  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "deterministic_verification": {
-    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-    "bytes": 1044305,
-    "lines": 18244,
-    "non_empty_confirmed": true,
-    "optional_sources_glob": {
-      "session_notes_jsonl": 0,
-      "research_findings_json": false,
-      "feature_spec_audit_report_json": false,
-      "issue_process_adjudication_report_json": false
+  "execution_type": "mechanical_tool_operation",
+  "execution_type_recorded_per_local_classification_override": true,
+  "execution_type_basis": "Intake-source selection via deterministic existence, size, and hash checks on working_ledger.md; no semantic condensation or full-source read.",
+  "inputs_read": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "read_mode": "deterministic_wc_and_sha256_only"
     },
-    "outputs_written_paths": [
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B4.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json"
-    ]
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl",
+      "read_mode": "glob_presence_only"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+      "read_mode": "glob_presence_only"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/research_findings.json",
+      "read_mode": "absent_at_intake"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/feature_spec_audit_report.json",
+      "read_mode": "absent_at_intake"
+    }
+  ],
+  "subagents": {
+    "used": false,
+    "required": false,
+    "required_basis": "mechanical_tool_operation per B4 v3.2.3 local classification; subagents not applicable."
   },
-  "subagent_runtime_kind": "not_required_mechanical",
-  "actual_delegated_model_invocation": false,
-  "subagent_proof_artifact_paths": [],
-  "task_to_invocation_map": {},
-  "invocation_to_task_map": {},
-  "local_worker_outputs_used": [],
-  "main_agent_batching_detected": false,
-  "shell_or_python_worker_misclassified_as_subagent_detected": false,
-  "real_subagent_proof_status": "not_required_mechanical",
   "required_subagent_tasks_total": 0,
   "wave_artifacts_total": 0,
   "wave_artifacts_expected_min": 0,
@@ -46,7 +47,44 @@
   "subagent_invocation_ids_from_wave_artifacts": [],
   "distinct_subagent_invocations_total_from_wave_artifacts": 0,
   "distinct_subagent_invocations_total": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "summary": "Intake accepted from existing working_ledger.md (non-empty by byte/line count); no session_notes or B1/B2/B3 report artifacts present; Section B exit points to C0."
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "subagent_runtime_kind": "local_tool_worker",
+  "actual_delegated_model_invocation": false,
+  "subagent_proof_artifact_paths": [],
+  "local_worker_outputs_used": [
+    "wc -l -c working_ledger.md",
+    "sha256sum working_ledger.md",
+    "test -f and glob checks for optional READ artifacts"
+  ],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "not_required_mechanical",
+  "deterministic_verification": {
+    "working_ledger_nonempty": true,
+    "line_count": 18244,
+    "byte_count": 1044305,
+    "sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1"
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B4.json"
+  ],
+  "live_doc_writes": [],
+  "final_gate": {
+    "name": "durable_source_material_accepted_or_blocked",
+    "result": "pass",
+    "checks": [
+      "working_ledger.md present with non-zero line and byte counts",
+      "ledger_intake_manifest.json records source_mode existing_working_ledger and requires_ledger_preparation true",
+      "section_exit_B.json written with next_prompt_request C0"
+    ]
+  },
+  "blockers": [],
+  "summary": "B4 v3.2.3: Accepted existing working_ledger.md (18244 lines, sha256 verified) as sole durable intake source per priority-1 rule; no new research or condensation required; Section B exit written for immediate C0 — Ledger Preparation.",
+  "next_prompt_request": "Paste prompt C0 — Section Entry: Ledger Preparation v3.2.3."
 }

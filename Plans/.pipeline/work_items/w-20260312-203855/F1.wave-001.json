@@ -4,11 +4,11 @@
   "prompt_version": "pm.f1.v3.2.3",
   "work_id": "w-20260312-203855",
   "wave_number": 1,
-  "timestamp_utc": "20260511T200500Z",
-  "required_subagent_tasks_total": 7,
+  "timestamp_utc": "20260513T014535Z",
+  "required_subagent_tasks_total": 8,
   "wave_tasks": [
     {
-      "subagent_invocation_id": "4d3d86e5-e48f-4be1-918b-a460a1a6aef0",
+      "subagent_invocation_id": "8d60c68d-c160-42ff-bc5d-87920a4c69bb",
       "subagent_task_id": "f1-slice-001",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-001-input.json",
@@ -21,7 +21,7 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "19571ecc-10c5-4f8c-9b5e-15418ea97385",
+      "subagent_invocation_id": "eae35e3e-d056-4921-9e72-1c48d1c4485d",
       "subagent_task_id": "f1-slice-002",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-002-input.json",
@@ -34,7 +34,7 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "5b75d723-64f5-4470-8516-e3dd600f427a",
+      "subagent_invocation_id": "defd3da5-a6f3-4dcc-9e16-a585cf03f441",
       "subagent_task_id": "f1-slice-003",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-003-input.json",
@@ -47,7 +47,7 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "8ab491a9-ae9c-45d0-bab0-ecadc483ef1c",
+      "subagent_invocation_id": "dc052e75-5de8-4c2f-bcbd-914c6d05c2d7",
       "subagent_task_id": "f1-slice-004",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-004-input.json",
@@ -60,7 +60,7 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "ea22c36d-0f2a-4086-98a3-a1208b311e89",
+      "subagent_invocation_id": "7ddf421b-d358-4e48-b28a-99042ce699e2",
       "subagent_task_id": "f1-slice-005",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-005-input.json",
@@ -73,7 +73,7 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "fbc70a83-2e69-46af-9ae8-9698b965f18f",
+      "subagent_invocation_id": "8a7a47ee-37af-463c-bfd7-f0a8279395ba",
       "subagent_task_id": "f1-slice-006",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-006-input.json",
@@ -86,16 +86,29 @@
       "status": "complete"
     },
     {
-      "subagent_invocation_id": "f69d9d5a-a7fb-48db-8dd7-eb3b7e15d7dc",
+      "subagent_invocation_id": "6759d4cb-a5e6-48b7-ab36-951fbfa0015d",
       "subagent_task_id": "f1-slice-007",
       "input_bounds": {
         "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-007-input.json",
         "coverage_row_index_start": 1500,
-        "coverage_row_index_end_inclusive": 1709,
-        "row_count": 210,
+        "coverage_row_index_end_inclusive": 1749,
+        "row_count": 250,
         "max_rows_budget": 250
       },
       "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-007.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "57d2c4de-8a8a-4d59-b325-164524c982b6",
+      "subagent_task_id": "f1-slice-008",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-008-input.json",
+        "coverage_row_index_start": 1750,
+        "coverage_row_index_end_inclusive": 1774,
+        "row_count": 25,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_slices/open_gaps_worklist.slice-008.json",
       "status": "complete"
     }
   ],
@@ -108,6 +121,7 @@
     "f1-slice-004",
     "f1-slice-005",
     "f1-slice-006",
-    "f1-slice-007"
+    "f1-slice-007",
+    "f1-slice-008"
   ]
 }

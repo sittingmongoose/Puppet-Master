@@ -10,29 +10,21 @@
   "row_count": 250,
   "slice_summary": {
     "counts_by_gap_group_id": {
-      "process_followup": 41,
-      "layout_repair": 62,
-      "source_lineage_check": 70,
-      "doc_discovery_required": 6,
-      "no_gap": 48,
-      "concrete_fix_backlog": 23
+      "layout_repair": 27,
+      "no_gap": 7,
+      "process_followup": 216
     },
-    "planning_blocker_true": 202,
+    "planning_blocker_true": 243,
     "counts_by_blocker_type": {
-      "coverage_classifier_process_defect_or_source_intake_gap": 37,
-      "process_followup_lane": 4,
-      "layout_repair_or_bounded_window": 62,
-      "source_lineage_or_d2_transfer_fidelity": 70,
-      "doc_discovery_candidate_backlog": 6,
-      "none": 48,
-      "concrete_evidence_gap": 23
+      "bounded_window_or_live_path_alignment": 27,
+      "doc_discovery_exhausted": 216,
+      "none": 7
     },
-    "doc_discovery_required_non_terminal": 6,
-    "doc_discovery_exhaustion_rows": 0,
-    "classifier_process_defect_rows": 37,
+    "doc_discovery_required_non_terminal": 0,
+    "doc_discovery_exhaustion_rows": 216,
+    "classifier_process_defect_rows": 216,
     "notes": [
-      "Processed 250 gap_record(s); coverage_row_index range [0, 249].",
-      "Counts use gap_group_id and blocker_classification.blocker_type; planning_blocker_true counts records with planning_blocker==true."
+      "coverage_row_index range [0, 249] processed (250 rows)."
     ]
   }
 }

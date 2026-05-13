@@ -1,8 +1,8 @@
 {
-  "schema_id": "pm.section_entry.v3.2.3",
+  "schema_id": "pm.section_entry_E_report.v3.2.3",
   "prompt_id": "E0",
   "prompt_version": "pm.e0.v3.2.3",
-  "timestamp_utc": "20260512T120000Z",
+  "timestamp_utc": "20260512T201451Z",
   "section_id": "E",
   "section_name": "Coverage",
   "work_id": "w-20260312-203855",
@@ -11,16 +11,22 @@
   "upstream_section": "D",
   "upstream_section_exit": {
     "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
-    "sha256": "a5f4086d12d41564c9366d8f736033dbbcb4ea69f39922012f5d8b5babdf65fc",
+    "sha256": "5de2488b51062e9c47dbdac33f3a199fe4b29661c0b8be377c1eb86f5683986a",
     "status": "complete",
     "prompt_id": "D5",
     "prompt_version": "pm.d5.v3.2.3",
     "next_section": "E_Coverage",
     "next_preferred_prompt": "E0",
     "active_source_for_coverage": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-    "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
     "source_gate_status": "pass",
     "obligation_conversion_complete": true
+  },
+  "work_id_derivation": {
+    "source": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+    "field": "work_id",
+    "value": "w-20260312-203855",
+    "matches_route_state_meta_fallback": "not_required_section_exit_d_definitive"
   },
   "active_inputs_present": {
     "section_exit_D": true,
@@ -32,15 +38,15 @@
     "active_source_for_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
   },
   "active_inputs_sha256": {
-    "section_exit_D.json": "a5f4086d12d41564c9366d8f736033dbbcb4ea69f39922012f5d8b5babdf65fc",
-    "canonical_obligations.json": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749"
+    "section_exit_D.json": "5de2488b51062e9c47dbdac33f3a199fe4b29661c0b8be377c1eb86f5683986a",
+    "canonical_obligations.json": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e"
   },
   "coverage_entry_summary": {
-    "obligations_total_from_exit": 1710,
+    "obligations_total_from_exit": 1775,
     "canonical_obligations_merge_status_from_exit": "final",
     "source_gate_status_from_exit": "pass",
-    "canonical_obligations_byte_size": 6998470,
-    "canonical_obligations_line_count": 162001
+    "canonical_obligations_byte_size": 6058885,
+    "canonical_obligations_line_count": 131188
   },
   "deterministic_verification": {
     "section_exit_d_status": "complete",
@@ -48,15 +54,20 @@
     "section_exit_d_next_preferred_prompt_is_E0": true,
     "canonical_obligations_exists": true,
     "canonical_obligations_sha256_matches_section_exit_d": true,
-    "active_source_path_matches_canonical_obligations_path": true
+    "active_source_path_matches_canonical_obligations_path": true,
+    "python_len_obligations_matches_section_exit_d_obligations_total": true
   },
   "stale_or_archive_reads": "none",
   "final_gate_status": "pass",
   "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.2.3.",
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
+  ],
   "notes": [
-    "Section E entry v3.2.3: work_id from active Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json (archive copies under work_items/*/archive/ ignored for handoff).",
-    "canonical_obligations.json present; sha256sum matches section_exit_D.canonical_obligations_sha256 per deterministic check.",
-    "Mechanical section entry; execution_type mechanical_tool_operation; no delegated model subagents.",
-    "Glob under Plans/.pipeline/work_items found one active section_exit_D.json at work root plus two archive copies under the same work_id."
+    "work_id locked from active (non-archive) section_exit_D.json at work item root; archive copies under work_items/*/archive/ ignored for handoff selection.",
+    "canonical_obligations.json verified with test -f, sha256sum, wc -c/wc -l, and python3 len(obligations) only; main agent did not semantically read the full obligation corpus.",
+    "Glob Plans/.pipeline/work_items/*/section_exit_D.json yielded 3 paths for this work_id (1 active + 2 archive); only the active root artifact was used.",
+    "execution_type mechanical_tool_operation per pm.e0.v3.2.3 local classification; no delegated model subagents."
   ]
 }

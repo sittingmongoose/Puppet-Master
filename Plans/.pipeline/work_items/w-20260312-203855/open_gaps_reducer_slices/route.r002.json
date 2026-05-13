@@ -10,21 +10,20 @@
   "row_count": 250,
   "slice_summary": {
     "counts_by_gap_group_id": {
-      "concrete_fix_backlog": 32,
-      "doc_discovery_exhaustion": 99,
-      "doc_discovery_required": 67,
-      "no_gap": 52
+      "process_followup": 41,
+      "layout_repair": 5,
+      "doc_discovery_required": 172,
+      "no_gap": 32
     },
-    "planning_blocker_true": 198,
+    "planning_blocker_true": 218,
     "counts_by_blocker_type": {
-      "concrete_evidence_gap": 32,
-      "doc_discovery_candidate_backlog": 67,
-      "doc_discovery_exhausted": 99,
-      "informational": 17,
-      "none": 35
+      "doc_discovery_exhausted": 41,
+      "bounded_window_or_live_path_alignment": 5,
+      "doc_discovery_candidate_backlog": 172,
+      "none": 32
     },
-    "doc_discovery_required_non_terminal": 67,
-    "doc_discovery_exhaustion_rows": 99,
+    "doc_discovery_required_non_terminal": 172,
+    "doc_discovery_exhaustion_rows": 0,
     "classifier_process_defect_rows": 0,
     "notes": [
       "Processed 250 gap_record(s); coverage_row_index range [250, 499].",

@@ -1,0 +1,199 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice001-008",
+  "obligation_record_count": 9,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-001"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-s002-018",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000136 | excerpt=\"- **Priority 1 \u2014 Lock the runtime schema anchors**\n  - Relax or replace stale graph-schema constants (`selection_rule`, tier-rooted breadcrumbs).\n  - Add package/seam/lane/worktree/account identity fields to the canonica...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-019",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000140 | excerpt=\"1. **Scored scheduler vs lexicographic schema lock.** Runtime docs define a scored ready-set; graph schemas still hard-code lexicographic node selection.\n2. **Automation-first default vs HTE/visible/manual-default behavi...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-020",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000144 | excerpt=\"1. **Define the dual-overseer runtime model canonically.** Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment.\n2. **Design the package/s...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-021",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation (only glob \"Plans/**\" referenced).",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000148 | excerpt=\"Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-022",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000156 | excerpt=\"- **Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard CtAs, thread badges, blocked node CTAs, and live-run cards, but no single canonical routing contract across Dashboard \u2192 Orchestrato...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-023",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000160 | excerpt=\"- **Schema-level contradictions are active, not hypothetical.**\n  - Graph schemas still hard-code lexicographic node ordering while runtime addenda describe scored scheduler tuples.\n  - Base provider envelope/spec tables...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-024",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000164 | excerpt=\"- **Automation-first conflicts with existing defaults.** `regular`/HTE defaults, `visual_mode = auto` preferring visible runs, and several mandatory approval flows all work against the desired automation-first baseline....\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-025",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000168 | excerpt=\"- **Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s002-026",
+      "coverage_task_id": "ct-slice001-008",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task ct-slice001-008 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0008",
+        "source_slice_id": "d2-slice-002",
+        "canonical_excerpt_note": "shards=shard-0008 | blocks=lblock-000172 | excerpt=\"- **Priority 1 \u2014 Fix canonical contracts and schemas**\n  - Reconcile graph ordering rules, dependency representations, and blocked payload field names.\n  - Add package/seam/lane/worktree/account identity fields to runtim...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

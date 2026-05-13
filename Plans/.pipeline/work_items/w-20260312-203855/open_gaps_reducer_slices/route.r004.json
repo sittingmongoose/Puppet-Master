@@ -10,19 +10,17 @@
   "row_count": 250,
   "slice_summary": {
     "counts_by_gap_group_id": {
-      "concrete_fix_backlog": 131,
-      "no_gap": 54,
-      "process_followup": 65
+      "no_gap": 75,
+      "process_followup": 175
     },
-    "planning_blocker_true": 196,
+    "planning_blocker_true": 175,
     "counts_by_blocker_type": {
-      "coverage_classifier_process_defect_or_source_intake_gap": 65,
-      "none": 54,
-      "concrete_evidence_gap": 131
+      "doc_discovery_exhausted": 175,
+      "none": 75
     },
     "doc_discovery_required_non_terminal": 0,
     "doc_discovery_exhaustion_rows": 0,
-    "classifier_process_defect_rows": 65,
+    "classifier_process_defect_rows": 0,
     "notes": [
       "Processed 250 gap_record(s); coverage_row_index range [750, 999].",
       "Counts use gap_group_id and blocker_classification.blocker_type; planning_blocker_true counts records with planning_blocker==true."

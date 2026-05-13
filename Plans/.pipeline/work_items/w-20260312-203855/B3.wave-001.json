@@ -50,29 +50,7 @@
   "completed_task_ids": [
     "b3-t001"
   ],
-  "pending_task_ids": [
-    "b3-t002",
-    "b3-t003",
-    "b3-t004",
-    "b3-t005",
-    "b3-t006",
-    "b3-t007",
-    "b3-t008",
-    "b3-t009",
-    "b3-t010",
-    "b3-t011",
-    "b3-t012",
-    "b3-t013",
-    "b3-t014",
-    "b3-t015",
-    "b3-t016",
-    "b3-t017",
-    "b3-t018",
-    "b3-t019",
-    "b3-t020",
-    "b3-t021",
-    "b3-t022"
-  ],
+  "pending_task_ids": [],
   "blocked_task_ids": [],
-  "wave2_launch_note": "Delegated Task batch b3-t002..b3-t007 failed: Cursor usage limit for faster subagent model responses; no invocation IDs produced for pending tasks."
+  "wave_closure_note": "Wave 1 completed only b3-t001 in the first prompt execution. Remaining bounded tasks b3-t002..b3-t022 were completed in subsequent waves B3.wave-002.json through B3.wave-010.json (2026-05-12 continuation); this artifact was reconciled so pending_task_ids is empty for final fan-out union validation."
 }

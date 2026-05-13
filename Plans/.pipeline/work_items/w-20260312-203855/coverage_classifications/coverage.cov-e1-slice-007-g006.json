@@ -1,0 +1,139 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-007-g006",
+  "obligation_record_count": 6,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
+    "e2-class-007"
+  ],
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
+    {
+      "obligation_id": "obl-d2-s013-026",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002232 | excerpt=\"- The Codex pass mostly closed the loop by turning several remaining downstream issues into exact spec-integrity failures.\\n- GUI / command ownership remains split in concrete, machine-breaking ways:\\n  - `FinalGUISpec.md` now shows a second ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-027",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002235 | excerpt=\"- `Plans/UI_Command_Catalog.md`\\n  - command/catalog/template/example integrity is still broken enough to miswire surfaces mechanically.\\n- `Plans/Runtime_Artifacts_Panel.md`\\n  - schema-family authority, missing storage key owner, and missing...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-028",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002238 | excerpt=\"- Several docs now fail because they promise canonical sections/IDs that do not exist at all.\\n- Approval and mutation flows still span multiple incompatible key families and scope models across chat/HITL/runtime/tooling.\\n- The same owner do...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-029",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002241 | excerpt=\"- Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.\\n- Resolve the payload-owner triangle for runtime artifacts and either add the ...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-030",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002244 | excerpt=\"- `Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.\\n- `cmd.orchestrator.switch_tab` is still referenced without existing in the catalog.\\n- `Runtime_Artifacts_Panel.md` s...\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    },
+    {
+      "obligation_id": "obl-d2-s013-031",
+      "coverage_task_id": "cov-e1-slice-007-g006",
+      "classification": "source_hint_gap",
+      "evidence_spans": [],
+      "missing_details": [
+        "No live Plans/** path bound for this obligation; ledger-only binding via shard citation.",
+        "Coverage task cov-e1-slice-007-g006 has empty live_doc_targets_union / live_doc_windows.",
+        "Cross-target note: \"Shard-only packaging: bind shard_line_citation hints to authoritative Plans/** live docs during Section E; canonical rows may cite qualifying paths in exact_paths_mentioned that were not lifted into live_doc_windows here.\""
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_id": "shard-0047",
+        "source_slice_id": "d2-slice-013",
+        "canonical_excerpt_note": "shards=shard-0047 | blocks=lblock-002249 | excerpt=\"- `Plans/chain-wizard-flexibility.md`\\n- `Plans/Project_Output_Artifacts.md`\\n- `Plans/storage-plan.md`\\n- `Plans/Contracts_V0.md`\\n- current `working_ledger.md`\""
+      },
+      "uncertainty": "high",
+      "local_deterministic_seed_used": false
+    }
+  ]
+}

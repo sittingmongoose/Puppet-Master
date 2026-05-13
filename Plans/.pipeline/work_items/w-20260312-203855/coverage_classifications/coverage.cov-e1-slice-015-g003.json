@@ -2,58 +2,1014 @@
   "schema_id": "pm.coverage_classification_task.v3.2.3",
   "prompt_id": "E2",
   "prompt_version": "pm.e2.v3.2.3",
+  "timestamp_utc": "20260513T005531Z",
   "work_id": "w-20260312-203855",
   "coverage_task_id": "cov-e1-slice-015-g003",
-  "obligation_record_count": 1,
-  "source_classification_slices": [
+  "obligation_record_count": 25,
+  "merge_execution": "deterministic_partition_from_e2_classification_slices",
+  "source_e2_subagent_task_ids": [
     "e2-class-015"
   ],
-  "classifications": [
+  "source": {
+    "canonical_obligations_sha256": "1937be9262fe1b7bb84fd02f4714123b677c193f92f5d910871e64715421815e",
+    "coverage_worklist_sha256": "f0a0ca7450baca5ad7a42fef0062bfc19928e9f14472c38cb84f954734b5bec2"
+  },
+  "obligation_classifications": [
     {
-      "obligation_id": "obl-021-047",
+      "obligation_id": "obl-d2-s025-007",
       "coverage_task_id": "cov-e1-slice-015-g003",
-      "doc_resolution_status": "concrete_plans_targets",
-      "obligation_category": "constraint",
       "missing_details": [],
       "partial_details": [
-        "Match is substring/window-local; confirm the full canonical obligation (multi-bullet) is represented without silent narrowing."
+        "Matched a shorter or non-primary excerpt fragment (1 chars) inside bounded live_doc_window; review adjacent lines for full obligation phrasing."
       ],
-      "candidate_docs": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
       "source_lineage": {
-        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
-        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
-        "source_shard_ids": [
-          "shard-0078"
-        ],
-        "source_block_ids": [
-          "lblock-004181"
-        ],
-        "source_group_ids": [
-          "wg-d1-T020-07"
-        ],
-        "source_slice_id": "d2-slice-021",
-        "source_line_ranges": [
-          {
-            "start_line": 15420,
-            "end_line": 15426
-          }
-        ],
-        "coverage_task_id": "cov-e1-slice-015-g003",
-        "doc_resolution_status": "concrete_plans_targets"
+        "source_shard_id": "shard-0092",
+        "source_slice_id": "d2-slice-025",
+        "canonical_excerpt_note": "shards=shard-0092 | blocks=lblock-004868 | excerpt=\"- finding_type: contract\\n- summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-5...\""
       },
-      "deterministic_local_evidence_used_only_as_candidate": false,
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
       "evidence_spans": [
         {
           "path": "Plans/Contracts_V0.md",
-          "line_start": 334,
-          "line_end": 340,
-          "quote": "  - recovery_refs[]?\\n  - concern-linked findings/evidence\\n  - `Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure\\n  - Orchestrator_Page.md\\n  - Tiers\\n  - canonical contracts want stable internal `account_id`\\n  - account_id",
-          "rationale": "First excerpt/needle match inside an E1 bounded live_doc_window for this coverage_task's Plans/** union (<=400-line windows materialized in coverage_worklist)."
+          "start_line": 27,
+          "end_line": 27,
+          "match_kind": "verbatim_substring"
         }
       ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-015",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Prompt_Pipeline.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2905,
+          "end_line": 2905,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-016",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/interview-subagent-integration.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 235,
+          "end_line": 235,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "low"
+    },
+    {
+      "obligation_id": "obl-006-017",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Models_System.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3593,
+          "end_line": 3593,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-018",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/orchestrator-subagent-integration.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 4454,
+          "end_line": 4454,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-019",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/FinalGUISpec.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-034",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a shorter or non-primary excerpt fragment (19 chars) inside bounded live_doc_window; review adjacent lines for full obligation phrasing."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Glossary.md`...\""
+      },
+      "local_deterministic_seed_used": false,
       "classification": "partial",
-      "uncertainty": 0.28
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 175,
+          "end_line": 175,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-035",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/WorktreeGitImprovement.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 88,
+          "end_line": 88,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-036",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a shorter or non-primary excerpt fragment (19 chars) inside bounded live_doc_window; review adjacent lines for full obligation phrasing."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Personas.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 348,
+          "end_line": 348,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-037",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Multi-Account.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2927,
+          "end_line": 2927,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-038",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Orchestrator_Page.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3281,
+          "end_line": 3281,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-053",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/storage-plan.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-054",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Orchestrator_Page.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3281,
+          "end_line": 3281,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-055",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/usage-feature.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2936,
+          "end_line": 2936,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-056",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Multi-Account.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2927,
+          "end_line": 2927,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-071",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/Orchestrator_Page.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 3281,
+          "end_line": 3281,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-072",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/storage-plan.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 906,
+          "end_line": 906,
+          "match_kind": "verbatim_substring"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-006-073",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-006",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"- `Plans/usage-feature.md`...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 2936,
+          "end_line": 2936,
+          "match_kind": "verbatim_path_token"
+        }
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "obligation_id": "obl-d2-s001-004",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-005",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-006",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-007",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-009",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-010",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
+    },
+    {
+      "obligation_id": "obl-d2-s001-012",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "missing_details": [],
+      "partial_details": [
+        "No verbatim excerpt or obligation_text line matched within the task's bounded live_doc_windows (each \u2264400 lines); treat as coverage gap pending broader doc reads."
+      ],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_lineage": {
+        "source_shard_id": "unknown",
+        "source_slice_id": "d2-slice-001",
+        "canonical_excerpt_note": "shards= | blocks= | excerpt=\"...\""
+      },
+      "local_deterministic_seed_used": false,
+      "classification": "partial",
+      "evidence_spans": [],
+      "uncertainty": "high"
     }
   ]
 }
