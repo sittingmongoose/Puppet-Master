@@ -1,0 +1,146 @@
+{
+  "artifacts": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "103a8f4b5c193ecd359fa52f172f6e369f5a49fa4e4eb2827e4c06d46aca1192"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "84ccd67aba2f193bbe4299e47e5a6cfcf6a419c803c65573ea9828cad0e997f8"
+    },
+    {
+      "path": "Plans/plan_graph.json",
+      "sha256": "de1024b4b799b25bfd53b4c38742f052f3ea0f4ec975db1f7ca5b7b7a3875494"
+    },
+    {
+      "path": "Plans/sharding_config.json",
+      "sha256": "6105386c26c3c0f67911de5b51d72f5d27802dd0260d3acb1efc03d29003c328"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "65740018ed94ccf591cd600e615d4ded8348d408e071635c7acd22bec8566ef1"
+    },
+    {
+      "path": "scripts/pm-shard-plans.py",
+      "sha256": "9780096665150fbab6996cc599888ce3665ec93d513d1ea178d9c6e830df1434"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "sha256": "097a71cb92ffabed3a09c36289d50dc17285a81702ce7a88a31bcd3f77077ff7"
+    },
+    {
+      "path": "Plans/acceptance_manifest.schema.json",
+      "sha256": "864a49f575c56fb18f860db0fab330281bf7a8084d3e4120987768cd6fa0b0a5"
+    },
+    {
+      "path": "Plans/auto_decisions.schema.json",
+      "sha256": "9f4f78462e5124ae145642f87b90631b2d2c0aa0797fc34a5390947b1ea6284e"
+    },
+    {
+      "path": "Plans/change_budget.schema.json",
+      "sha256": "277c72ce79ba09f8b78a3b8811043572c6cf143414da0f1a3362361ac42874d3"
+    },
+    {
+      "path": "Plans/contracts_index.schema.json",
+      "sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+    },
+    {
+      "path": "Plans/evidence.schema.json",
+      "sha256": "12302339745460c6810efebb7bdf762aa8b52621245a70dca825dfc9aed21138"
+    },
+    {
+      "path": "Plans/gui_automation_manifest.schema.json",
+      "sha256": "f549b161ebdcb34033caa26490f2ddf4ad9b2212ebf40be8d0e39565b732fac3"
+    },
+    {
+      "path": "Plans/plan_graph.schema.json",
+      "sha256": "d4d58cd8a506e00bf16e6de493ec2d20f2dd6d0fa7a47605634dc38f44101c7a"
+    },
+    {
+      "path": "Plans/project_plan_graph_index.schema.json",
+      "sha256": "fe4a87fd35e5c9fd469f804b609d032907b242ba7953e4b968cb1952e9bf33a1"
+    },
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15"
+    },
+    {
+      "path": "Plans/requirements_coverage.schema.json",
+      "sha256": "d043a8d4bb238e479cb9f265fef3d3726c0dcc9c9782cde40fcb260a4e33251a"
+    },
+    {
+      "path": "Plans/requirements_quality_report.schema.json",
+      "sha256": "62857cb0bf9d8a9a332e10139885162bd2bb750c433bc92c006ea3cc92b71489"
+    },
+    {
+      "path": "Plans/test_strategy.schema.json",
+      "sha256": "fceeb8b7277b50b1e8ccbdd5731118d44f2201faeed3dcc230071ab94b0fb47e"
+    }
+  ],
+  "checks": [
+    {
+      "details": "All listed Spec Lock paths hash current bytes.",
+      "name": "verify-spec-lock",
+      "result": "PASS"
+    }
+  ],
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ],
+  "contract_refs_satisfied": [
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-005",
+    "Gate:GATE-006",
+    "Gate:GATE-009",
+    "SchemaID:pm.evidence.schema.v1"
+  ],
+  "created_at_utc": "2026-06-10T04:05:00Z",
+  "events": {
+    "event_refs": [
+      {
+        "ref": "clean-repo-governance-seal-2026-06-10",
+        "source": "other"
+      }
+    ]
+  },
+  "evidence_id": "evidence.spec-lock-support-refresh-2026-06-09.clean-repo",
+  "files_changed": [
+    {
+      "change_type": "modified",
+      "path": "Plans/Spec_Lock.json"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/auto_decisions.jsonl"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/plan_graph.json"
+    }
+  ],
+  "node": {
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build",
+    "node_id": "pm.build-governance.spec-lock-support-refresh"
+  },
+  "reproducibility": {
+    "note": "Full transfer_state is intentionally not committed; compact certification evidence is stored under Plans/.evidence.",
+    "snapshot_ref": "clean-repo-generated-from-Puppet-Master-main-4-plus-Archive991-transfer_state991"
+  },
+  "schema_id": "pm.evidence.schema.v1",
+  "summary": "Clean repo Spec Lock/support verifier refresh after legacy artifact cleanup.",
+  "tool_calls": [
+    {
+      "count": 1,
+      "tool_id": "local-python"
+    }
+  ]
+}

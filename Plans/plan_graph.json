@@ -8,7 +8,7 @@
     "selection_rule": "lexicographic_node_id",
     "spec_lock_source": "Plans/Spec_Lock.json"
   },
-  "graph_id": "pm.build_governance_seal.2026-06-09",
+  "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
   "graph_scope": "puppet-master-repo-build",
   "nodes": [
     {
@@ -35,8 +35,7 @@
       "change_budget": {
         "allowed_paths": [
           "Plans/**",
-          "scripts/**",
-          "transfer_state/**"
+          "scripts/**"
         ],
         "forbidden_files": [
           "AGENTS.md"
@@ -62,7 +61,8 @@
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
-        "dec-2026-06-09-exact-build-governance-support-seal"
+        "dec-2026-06-09-exact-build-governance-support-seal",
+        "dec-2026-06-10-clean-repo-governance-seal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -134,7 +134,7 @@
       "verifier_result": {
         "message": "Spec Lock hashes, exact-case support validators, sharding support refs, and auto-decision duplicate policy refreshed under governance unlock.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-09T17:05:10Z"
+        "timestamp_utc": "2026-06-10T04:05:00Z"
       }
     },
     {
@@ -163,8 +163,7 @@
       "change_budget": {
         "allowed_paths": [
           "Plans/**",
-          "scripts/**",
-          "transfer_state/**"
+          "scripts/**"
         ],
         "forbidden_files": [
           "AGENTS.md"
@@ -188,7 +187,8 @@
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
-        "dec-2026-06-09-exact-build-governance-support-seal"
+        "dec-2026-06-09-exact-build-governance-support-seal",
+        "dec-2026-06-10-clean-repo-governance-seal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -230,7 +230,7 @@
       "verifier_result": {
         "message": "Shard regeneration completed for all registered sources with exact-case root index refs.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-09T17:05:10Z"
+        "timestamp_utc": "2026-06-10T04:05:00Z"
       }
     },
     {
@@ -240,10 +240,6 @@
           "commands": [
             {
               "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-              "expect_exit_code": 0
-            },
-            {
-              "cmd": "python3 codex_goal_transfer_kit/tools/pm_validate_transfer.py --allowed-only",
               "expect_exit_code": 0
             }
           ],
@@ -263,8 +259,7 @@
       "change_budget": {
         "allowed_paths": [
           "Plans/**",
-          "scripts/**",
-          "transfer_state/**"
+          "scripts/**"
         ],
         "forbidden_files": [
           "AGENTS.md"
@@ -292,7 +287,8 @@
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
-        "dec-2026-06-09-exact-build-governance-support-seal"
+        "dec-2026-06-09-exact-build-governance-support-seal",
+        "dec-2026-06-10-clean-repo-governance-seal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -317,11 +313,7 @@
         },
         {
           "kind": "file",
-          "ref": "transfer_state/final_100_percent_quality_seal.json"
-        },
-        {
-          "kind": "file",
-          "ref": "transfer_state/final_quality_certification.json"
+          "ref": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json"
         },
         {
           "kind": "file",
@@ -330,7 +322,7 @@
         }
       ],
       "node_id": "pm.build-governance.final-seal",
-      "objective": "Certify exact-case build-governance support artifacts while preserving the completed allowed ledger transfer and locked/deferred P6 state.",
+      "objective": "Certify exact-case build-governance support artifacts for the clean repo while preserving the completed allowed ledger transfer summary and locked/deferred P6 state.",
       "outputs": [
         {
           "kind": "file",
@@ -342,11 +334,11 @@
         },
         {
           "kind": "file",
-          "ref": "transfer_state/final_build_governance_seal.json"
+          "ref": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.json"
         },
         {
           "kind": "file",
-          "ref": "transfer_state/final_build_governance_seal.md"
+          "ref": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.md"
         }
       ],
       "policy_mode": "workspace-write",
@@ -362,9 +354,9 @@
       "status": "done",
       "unblocks": [],
       "verifier_result": {
-        "message": "Final exact-case build-governance support seal is certified by local gates.",
+        "message": "Clean-repo build-governance support seal is certified without transfer_state dependency.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-09T17:05:10Z"
+        "timestamp_utc": "2026-06-10T04:05:00Z"
       }
     }
   ],

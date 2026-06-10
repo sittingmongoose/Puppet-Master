@@ -1,8 +1,0 @@
-run_id: r-20260329-235630-15
-packet_path: Plans/.pipeline/research_packet.json
-issue_count: 0
-checked_failure_modes: non_insertable_packet_content, replace_section_content_starts_with_same_or_higher_heading, missing_heading_anchor_in_source, overlapping_anchor_application_order, structured_container_wrong_anchor, packet_not_canonicalizable_as_emitted, contractref_too_far_from_operational_requirement
-
-status: COMPLETE
-
-summary: emitted packet remains verifier-survivable as-shaped; all packet targets use heading-owned replace_section anchors, no live overlaps remain, and ContractRef locality stays compatible with the current verifier lookahead rules.
