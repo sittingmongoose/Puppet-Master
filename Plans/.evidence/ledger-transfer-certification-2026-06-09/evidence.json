@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
+      "sha256": "9bde27251ef69542370befa64fa7e2bd1d92632e034180f60b6f18943bcdc6e0"
+    }
+  ],
+  "checks": [
+    {
+      "details": "7,633/7,633 allowed rows terminal; P6 locked/deferred.",
+      "name": "allowed-ledger-transfer-summary",
+      "result": "PASS"
+    }
+  ],
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ],
+  "contract_refs_satisfied": [
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-005",
+    "Gate:GATE-006",
+    "Gate:GATE-009",
+    "SchemaID:pm.evidence.schema.v1"
+  ],
+  "created_at_utc": "2026-06-10T04:05:00Z",
+  "events": {
+    "event_refs": [
+      {
+        "ref": "clean-repo-governance-seal-2026-06-10",
+        "source": "other"
+      }
+    ]
+  },
+  "evidence_id": "evidence.ledger-transfer-certification-2026-06-09.clean-repo",
+  "files_changed": [
+    {
+      "change_type": "added",
+      "note": "Compacted final transfer certification summary.",
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json"
+    }
+  ],
+  "node": {
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build",
+    "node_id": "pm.ledger-transfer.final-certification"
+  },
+  "reproducibility": {
+    "note": "Full transfer_state is intentionally not committed; compact certification evidence is stored under Plans/.evidence.",
+    "snapshot_ref": "clean-repo-generated-from-Puppet-Master-main-4-plus-Archive991-transfer_state991"
+  },
+  "schema_id": "pm.evidence.schema.v1",
+  "summary": "Compact clean-repo evidence for the completed allowed ledger transfer. Full transfer_state is intentionally not committed.",
+  "tool_calls": [
+    {
+      "count": 1,
+      "tool_id": "local-python"
+    }
+  ]
+}

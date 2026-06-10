@@ -1,0 +1,67 @@
+{
+  "allowed_batch_results_passed": {
+    "passed": 1287,
+    "total": 1287
+  },
+  "allowed_rows_terminal": {
+    "terminal": 7633,
+    "total": 7633
+  },
+  "allowed_scope": {
+    "allowed_nonterminal_count": 0,
+    "allowed_rows_total": 7633,
+    "allowed_status_counts": {
+      "already_canonical": 935,
+      "deferred": 5,
+      "duplicate": 32,
+      "false_positive": 35,
+      "merged": 575,
+      "non_applicable": 438,
+      "obsolete": 35,
+      "transferred": 5553,
+      "wrong_target": 25
+    },
+    "p6_deferred_or_hold_rows_total": 479,
+    "p6_phase_counts": {
+      "P6_DEFERRED_ACTIVE_UNPACKETIZED": 34,
+      "P6_DEFERRED_PERSONAS_PAUSED": 445
+    }
+  },
+  "evidence_span_index": {
+    "canonical_hygiene": {
+      "batch_result_canonical_evidence_mismatch_count": 0,
+      "batch_result_missing_state_rows_count": 0,
+      "batch_result_semantic_certification_mismatch_count": 0,
+      "state_bad_canonical_evidence_count": 0,
+      "state_canonical_span_stale_or_mismatched_count": 0,
+      "state_content_rows_missing_live_plans_span_count": 0,
+      "state_duplicate_exact_span_count": 0
+    },
+    "certification_relevant_failures": 0,
+    "exact_span_counts": {
+      "blank": 0,
+      "duplicate": 0,
+      "forbidden_path": 0,
+      "malformed": 0,
+      "missing_path": 0,
+      "out_of_range": 0,
+      "parseable": 41078,
+      "raw_scaffold_overlap": 0,
+      "stale_excerpt_mismatch": 0,
+      "total": 41078
+    }
+  },
+  "generated_at_utc": "2026-06-10T04:05:00Z",
+  "p6_deferred_or_hold_rows_total": 479,
+  "p6_locked_deferred": true,
+  "p6_processed": false,
+  "quality_certification_passed": true,
+  "quality_certification_status": "post_governance_evidence_restamp_certified",
+  "schema_id": "pm.ledger_transfer_certification.report.v1",
+  "semantic_evidence_candidates": {
+    "processed": null,
+    "remaining": 0,
+    "total": null
+  },
+  "source": "Derived from final Codex transfer_state evidence supplied by Jared; compacted for clean repo governance evidence."
+}

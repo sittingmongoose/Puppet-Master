@@ -1,0 +1,120 @@
+{
+  "artifacts": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "103a8f4b5c193ecd359fa52f172f6e369f5a49fa4e4eb2827e4c06d46aca1192"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "84ccd67aba2f193bbe4299e47e5a6cfcf6a419c803c65573ea9828cad0e997f8"
+    },
+    {
+      "path": "Plans/plan_graph.json",
+      "sha256": "de1024b4b799b25bfd53b4c38742f052f3ea0f4ec975db1f7ca5b7b7a3875494"
+    },
+    {
+      "path": "Plans/sharding_config.json",
+      "sha256": "6105386c26c3c0f67911de5b51d72f5d27802dd0260d3acb1efc03d29003c328"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "65740018ed94ccf591cd600e615d4ded8348d408e071635c7acd22bec8566ef1"
+    },
+    {
+      "path": "scripts/pm-shard-plans.py",
+      "sha256": "9780096665150fbab6996cc599888ce3665ec93d513d1ea178d9c6e830df1434"
+    },
+    {
+      "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "sha256": "69e1101cce9986adbdd5829605f06b043e06b0a386c30ece5b53b6e50772e730"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "sha256": "055b35c6866cc4a774137cd1801e98533158742bd2486413d090591526bcb2c7"
+    },
+    {
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+      "sha256": "180924d2598ba1a3f7794048129602ce04e2861edd0567149a31b586600c8b0c"
+    },
+    {
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
+      "sha256": "9bde27251ef69542370befa64fa7e2bd1d92632e034180f60b6f18943bcdc6e0"
+    },
+    {
+      "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.json",
+      "sha256": "0b74f9efbdaf69452c818f22c253b14d8e428b74e920b39633a109811d1659f1"
+    },
+    {
+      "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.md",
+      "sha256": "0499ad4c3ba5cfd20e2f53b6ba081699dd0fab181ce22e566d89a98e8d5675bf"
+    }
+  ],
+  "checks": [
+    {
+      "details": "Expected to pass after regeneration.",
+      "name": "run-gates",
+      "result": "PASS"
+    },
+    {
+      "details": "P6 preserved as source ledgers only; not transferred or unlocked.",
+      "name": "p6-locked",
+      "result": "PASS"
+    }
+  ],
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ],
+  "contract_refs_satisfied": [
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-005",
+    "Gate:GATE-006",
+    "Gate:GATE-009",
+    "SchemaID:pm.evidence.schema.v1"
+  ],
+  "created_at_utc": "2026-06-10T04:05:00Z",
+  "events": {
+    "event_refs": [
+      {
+        "ref": "clean-repo-governance-seal-2026-06-10",
+        "source": "other"
+      }
+    ]
+  },
+  "evidence_id": "evidence.final-build-governance-seal-2026-06-09.clean-repo",
+  "files_changed": [
+    {
+      "change_type": "modified",
+      "note": "Regenerated current governance evidence bundles.",
+      "path": "Plans/.evidence/**"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/plan_graph.json"
+    }
+  ],
+  "node": {
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build",
+    "node_id": "pm.build-governance.final-seal"
+  },
+  "reproducibility": {
+    "note": "Full transfer_state is intentionally not committed; compact certification evidence is stored under Plans/.evidence.",
+    "snapshot_ref": "clean-repo-generated-from-Puppet-Master-main-4-plus-Archive991-transfer_state991"
+  },
+  "schema_id": "pm.evidence.schema.v1",
+  "summary": "Final clean-repo build-governance seal with self-contained Plans evidence and no transfer_state dependency.",
+  "tool_calls": [
+    {
+      "count": 1,
+      "tool_id": "local-python"
+    }
+  ]
+}

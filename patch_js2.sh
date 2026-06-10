@@ -1,1 +1,0 @@
-sed -i 's/document.getElementById('\''reqBuilderStart'\'').style.display='\''none'\''; document.getElementById('\''reqBuilderChat'\'').style.display='\''flex'\'';/document.getElementById('\''chatPanel'\'').classList.remove('\''hidden'\'');/g' Concepts/PuppetMasterDashComp.html
