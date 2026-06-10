@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+  "index_sha256": "3b6a436f7dc5f8f891cd64ae72b964a1871a068d3f1f82feae5b15cb98b55b4a",
+  "manifest_path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/rewrite-tie-in-memo/001-preamble.md",
+      "sha256": "064ff55f4dc49d87adf568048e99ab981e6591f8f1dfde5154715853e72e6136",
+      "shard_id": "001",
+      "source_line_end": 12,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Provided memo (verbatim)",
+      "path": "Plans/_shards/rewrite-tie-in-memo/002-provided-memo-verbatim.md",
+      "sha256": "7106d888207e08d1be5529b89e03bedfaf2fa2719fbe536f388d7eafebb2c487",
+      "shard_id": "002",
+      "source_line_end": 88,
+      "source_line_start": 13,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Impacts on existing Plans (deltas to keep consistency)",
+      "path": "Plans/_shards/rewrite-tie-in-memo/003-impacts-on-existing-plans-deltas-to-keep-consistency.md",
+      "sha256": "67876a71f572bd475cf32c5ae3345ad3e095d27711c22ef21772802dd53b7fe1",
+      "shard_id": "003",
+      "source_line_end": 140,
+      "source_line_start": 89,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Suggested \"single source of truth\" rule for the rewrite",
+      "path": "Plans/_shards/rewrite-tie-in-memo/004-suggested-single-source-of-truth-rule-for-the-rewrite.md",
+      "sha256": "9befc3ab2a86f3e31fbe3b745078d10c23be5ac9099be758ec060c23aeb6daeb",
+      "shard_id": "004",
+      "source_line_end": 151,
+      "source_line_start": 141,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Unified Document/Media Rendering Contract (2026-03-07)",
+      "path": "Plans/_shards/rewrite-tie-in-memo/005-unified-document-media-rendering-contract-2026-03-07.md",
+      "sha256": "ddb5d9de27d01147fdbbd55707e95e3fe641ba0abdad72e48db94ecd08929db1",
+      "shard_id": "005",
+      "source_line_end": 485,
+      "source_line_start": 152,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Scheduler Packet Tie-In Note (2026-03-08)",
+      "path": "Plans/_shards/rewrite-tie-in-memo/006-runtime-scheduler-packet-tie-in-note-2026-03-08.md",
+      "sha256": "288c0d096e018cc0d8f3115b75d3dceda69ec16526f1d1d1b96797e73c8737ce",
+      "shard_id": "006",
+      "source_line_end": 494,
+      "source_line_start": 486,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 494,
+    "path": "Plans/rewrite-tie-in-memo.md",
+    "sha256": "8086676ed9f42bcf0af1756544bcf56a0444046613af1bf0b372647f30ef45a0"
+  }
+}

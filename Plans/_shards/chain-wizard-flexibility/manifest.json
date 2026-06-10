@@ -1,214 +1,284 @@
 {
-  "source_path": "Plans/chain-wizard-flexibility.md",
-  "source_sha256": "9457d3dcfdf9f6e1e7f9f219f75c45f0d6fee7ba22f23ef9b85350be58626a8e",
-  "split_rule": {
-    "primary": "## outside fences",
-    "fallback": "line-count-200",
-    "applied": "## outside fences"
-  },
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/chain-wizard-flexibility/00-index.md",
+  "index_sha256": "c648f9193ad48dff90a61922be616e27b7ea0eeb8c79b3c02a222b74cd264327",
+  "manifest_path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/01-preamble.md",
-      "start_line": 1,
-      "end_line": 51,
-      "segment_sha256": "44c286d43d4a3497e031edf70d55e7e4518d159fe2b4a1623ee7e92ae34f6348",
-      "heading": null
+      "heading": "Preamble",
+      "path": "Plans/_shards/chain-wizard-flexibility/001-preamble.md",
+      "sha256": "f1cc36b9eca8f7b3154355f7e3e842fbea6f5aebdb3918e0a4228b4ea092291e",
+      "shard_id": "001",
+      "source_line_end": 6,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/02-change-summary.md",
-      "start_line": 52,
-      "end_line": 70,
-      "segment_sha256": "53cd21e3ef1ae0f3f60d75071d3ad52f7987591b0b4176c8533806a5b0d2c3ba",
-      "heading": "## Change Summary"
+      "heading": "Change Summary",
+      "path": "Plans/_shards/chain-wizard-flexibility/002-change-summary.md",
+      "sha256": "1266bdf0ae92cf735a053e96e72bcbdbbcbdd69b1caa57f2e7c4f7de20443404",
+      "shard_id": "002",
+      "source_line_end": 25,
+      "source_line_start": 7,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/03-plan-document-status.md",
-      "start_line": 71,
-      "end_line": 81,
-      "segment_sha256": "c0a9f0dafe5e6fe3062649bbb0f2e141b272cd667ae30d0688719c1dbb2807d7",
-      "heading": "## Plan Document Status"
+      "heading": "Plan Document Status",
+      "path": "Plans/_shards/chain-wizard-flexibility/003-plan-document-status.md",
+      "sha256": "7ceee9399ee3541bc03d431c2d9889a1d3242fdb68a105233ca02c7d5fb90233",
+      "shard_id": "003",
+      "source_line_end": 36,
+      "source_line_start": 26,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/04-rewrite-alignment-2026-02-21.md",
-      "start_line": 82,
-      "end_line": 89,
-      "segment_sha256": "4dbae9b97f8adacf361955e952b4ddcc6043e546cf7b204b84f46410b5bde5e7",
-      "heading": "## Rewrite alignment (2026-02-21)"
+      "heading": "Rewrite alignment (2026-02-21)",
+      "path": "Plans/_shards/chain-wizard-flexibility/004-rewrite-alignment-2026-02-21.md",
+      "sha256": "a87172c1fc57e96aa0a77c32dce41f530180936993bb281bebeae87149a09e35",
+      "shard_id": "004",
+      "source_line_end": 44,
+      "source_line_start": 37,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/05-ssot-references-dry.md",
-      "start_line": 90,
-      "end_line": 102,
-      "segment_sha256": "d6b2d5299da9eb1f2c12bdb15fa20766d1a0a93b186bce6447ba4d2eb3c237eb",
-      "heading": "## SSOT references (DRY)"
+      "heading": "SSOT references (DRY)",
+      "path": "Plans/_shards/chain-wizard-flexibility/005-ssot-references-dry.md",
+      "sha256": "876743b5fcec2affbdd3df06bb715e8fc978597e519ef5235e6ef507f349a3cb",
+      "shard_id": "005",
+      "source_line_end": 58,
+      "source_line_start": 45,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/06-executive-summary.md",
-      "start_line": 103,
-      "end_line": 122,
-      "segment_sha256": "cf8ecffe8edeebe67c6000ba9601326826328840eef8193ef010e8194fcb2e1e",
-      "heading": "## Executive Summary"
+      "heading": "Executive Summary",
+      "path": "Plans/_shards/chain-wizard-flexibility/006-executive-summary.md",
+      "sha256": "11c349257740699f4ed39250c24f9b1b8422bbf09316d58cfcfa32ac4d6940d8",
+      "shard_id": "006",
+      "source_line_end": 78,
+      "source_line_start": 59,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/07-table-of-contents.md",
-      "start_line": 123,
-      "end_line": 143,
-      "segment_sha256": "963a1e744a3cb18da1d76ab9860278746012e0777442e43babdc4dcbfc5b0abb",
-      "heading": "## Table of Contents"
+      "heading": "Table of Contents",
+      "path": "Plans/_shards/chain-wizard-flexibility/007-table-of-contents.md",
+      "sha256": "43f4eed4a00d2601237c3d8297fe12659ddc06342cbaad21030aacc8e12d6b70",
+      "shard_id": "007",
+      "source_line_end": 99,
+      "source_line_start": 79,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/08-1-intent-based-workflows.md",
-      "start_line": 144,
-      "end_line": 190,
-      "segment_sha256": "f1eeadfa5d7108ddb49b482f03b2b3505c42787f33a6c5f639929de654782eec",
-      "heading": "## 1. Intent-Based Workflows"
+      "heading": "1. Intent-Based Workflows",
+      "path": "Plans/_shards/chain-wizard-flexibility/008-1.-intent-based-workflows.md",
+      "sha256": "cbff817afe1942338e8d7f9403f8f1de5c8c860c88a980700608a48b1f1ffaa5",
+      "shard_id": "008",
+      "source_line_end": 146,
+      "source_line_start": 100,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/09-2-how-intent-affects-the-flow.md",
-      "start_line": 191,
-      "end_line": 439,
-      "segment_sha256": "ea666693f0b5f2f951c8027c4aa022db501204df16cb0da294eb38e33d985910",
-      "heading": "## 2. How Intent Affects the Flow"
+      "heading": "2. How Intent Affects the Flow",
+      "path": "Plans/_shards/chain-wizard-flexibility/009-2.-how-intent-affects-the-flow.md",
+      "sha256": "7fc3b232e404be786fe547d7a6cd7a3a0a62c0b8606d06a3ef54e10c1390362e",
+      "shard_id": "009",
+      "source_line_end": 387,
+      "source_line_start": 147,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/10-3-gui-updates.md",
-      "start_line": 440,
-      "end_line": 572,
-      "segment_sha256": "1ea5262678baaafcf13c6882f4fe942272786911c0955128da0fcf91eb88324e",
-      "heading": "## 3. GUI Updates"
+      "heading": "3. GUI Updates",
+      "path": "Plans/_shards/chain-wizard-flexibility/010-3.-gui-updates.md",
+      "sha256": "1379c8a9f624690349456fa2480e91c1c2c22130728fa81b559a0320fe118f32",
+      "shard_id": "010",
+      "source_line_end": 523,
+      "source_line_start": 388,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/11-4-requirements-multiple-uploads-and-storage.md",
-      "start_line": 573,
-      "end_line": 626,
-      "segment_sha256": "c9f7edd7045d966ad7fe8501367be24434f81e3cc5b1eb7c4844ba2a1e390a82",
-      "heading": "## 4. Requirements: Multiple Uploads and Storage"
+      "heading": "4. Requirements: Multiple Uploads and Storage",
+      "path": "Plans/_shards/chain-wizard-flexibility/011-4.-requirements-multiple-uploads-and-storage.md",
+      "sha256": "755f5dac746cd8105ecfbfae65b33bcc1cc6497537a20db9465bce853babd725",
+      "shard_id": "011",
+      "source_line_end": 577,
+      "source_line_start": 524,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/12-5-requirements-doc-builder-assistant-interview-handoff.md",
-      "start_line": 627,
-      "end_line": 887,
-      "segment_sha256": "363066daf07f941d9faff47fbdd73d88a5add4cdd149ca280808415652380e36",
-      "heading": "## 5. Requirements Doc Builder (Assistant \u2192 Interview Handoff)"
+      "heading": "5. Requirements Doc Builder (Assistant \u2192 Interview Handoff)",
+      "path": "Plans/_shards/chain-wizard-flexibility/012-5.-requirements-doc-builder-assistant-interview-handoff.md",
+      "sha256": "dff4f92586dfdb42f7fae7dab3ef6df427e102076520083dea35409cbbee4183",
+      "shard_id": "012",
+      "source_line_end": 849,
+      "source_line_start": 578,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/13-6-adaptive-interview-phases.md",
-      "start_line": 888,
-      "end_line": 1063,
-      "segment_sha256": "43a723240c267af46adc474f4b0c60c12be0b0e696e3e1d0617320c2d95c30d6",
-      "heading": "## 6. Adaptive Interview Phases"
+      "heading": "6. Adaptive Interview Phases",
+      "path": "Plans/_shards/chain-wizard-flexibility/013-6.-adaptive-interview-phases.md",
+      "sha256": "f9bde38bdec5e5f76798d5cebd11241456e912e3c808dd7f82800b01729ec99c",
+      "shard_id": "013",
+      "source_line_end": 1026,
+      "source_line_start": 850,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/14-7-project-setup-and-github-create-repo-fork-pr.md",
-      "start_line": 1064,
-      "end_line": 1130,
-      "segment_sha256": "7a468cc61da148a053c668546198c7ef12cabb5872cb203dc25388d5d8111370",
-      "heading": "## 7. Project Setup and GitHub: Create Repo, Fork, PR"
+      "heading": "7. Project Setup and GitHub: Create Repo, Fork, PR",
+      "path": "Plans/_shards/chain-wizard-flexibility/014-7.-project-setup-and-github-create-repo-fork-pr.md",
+      "sha256": "ba6e698414d1cd54f38eadc85c0cf9b3163a03defb302e2f6cf15009115021ca",
+      "shard_id": "014",
+      "source_line_end": 1093,
+      "source_line_start": 1027,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/15-8-relationship-to-other-plans.md",
-      "start_line": 1131,
-      "end_line": 1149,
-      "segment_sha256": "819addc18d5a41f6d347b29d6e1c3710629718ba86ca49e53a1f5ece79242a2e",
-      "heading": "## 8. Relationship to Other Plans"
+      "heading": "8. Relationship to Other Plans",
+      "path": "Plans/_shards/chain-wizard-flexibility/015-8.-relationship-to-other-plans.md",
+      "sha256": "404278d93efc8746662443a700a5c82d02bee4914af988b8eb4a9ee556e4a321",
+      "shard_id": "015",
+      "source_line_end": 1112,
+      "source_line_start": 1094,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/16-9-gaps-and-potential-problems.md",
-      "start_line": 1150,
-      "end_line": 1253,
-      "segment_sha256": "c4170171f0e2e0190a7a369f9e6e524482e1ab8ca41576b422194a362e0016a3",
-      "heading": "## 9. Gaps and Potential Problems"
+      "heading": "9. Gaps and Potential Problems",
+      "path": "Plans/_shards/chain-wizard-flexibility/016-9.-gaps-and-potential-problems.md",
+      "sha256": "e1d93a6c8e7b8fd36ed38ce234f39d14aef294582202eac404ff6f878347587b",
+      "shard_id": "016",
+      "source_line_end": 1219,
+      "source_line_start": 1113,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/17-10-implementation-readiness-checklist.md",
-      "start_line": 1254,
-      "end_line": 1317,
-      "segment_sha256": "5ce4dea29c0e4ca78794a772d4416a0082959a4bbc51be89101de5feb3fb148b",
-      "heading": "## 10. Implementation Readiness Checklist"
+      "heading": "10. Implementation Readiness Checklist",
+      "path": "Plans/_shards/chain-wizard-flexibility/017-10.-implementation-readiness-checklist.md",
+      "sha256": "e60748e35d4d84dca9ccc20b7d2fbd7ae9fa33adba793e87f74e6d45c3ea3476",
+      "shard_id": "017",
+      "source_line_end": 1283,
+      "source_line_start": 1220,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/18-11-user-project-output-artifacts-sharded-only.md",
-      "start_line": 1318,
-      "end_line": 1536,
-      "segment_sha256": "b28836af139bf7d6ba56075cd3418e820677c7a7f2e82d47cf5a1cab42fc38b3",
-      "heading": "## 11. User-Project Output Artifacts (Sharded-Only)"
+      "heading": "11. User-Project Output Artifacts (Sharded-Only)",
+      "path": "Plans/_shards/chain-wizard-flexibility/018-11.-user-project-output-artifacts-sharded-only.md",
+      "sha256": "f76a8e1eac2d9f34d3467c3101ab571e052800a0801149bdac1003f423667761",
+      "shard_id": "018",
+      "source_line_end": 1502,
+      "source_line_start": 1284,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/19-13-no-wizard-project-management-flows.md",
-      "start_line": 1537,
-      "end_line": 1634,
-      "segment_sha256": "8b75eb4580eacef56c2b34f8960e09e34a455d993a2411ca2f7052104dd63c9e",
-      "heading": "## 13. No-Wizard Project Management Flows"
+      "heading": "13. No-Wizard Project Management Flows",
+      "path": "Plans/_shards/chain-wizard-flexibility/019-13.-no-wizard-project-management-flows.md",
+      "sha256": "416cd64e38d82068a9005fbb908dd0412b7fa32d48e6aca30908877eeec6d2c6",
+      "shard_id": "019",
+      "source_line_end": 1581,
+      "source_line_start": 1503,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/20-14-requirements-completion-contract.md",
-      "start_line": 1635,
-      "end_line": 1731,
-      "segment_sha256": "bdd96588d052ac6d919e3c14e66fda1be74e932bedc01e9f9425d7442bb7617c",
-      "heading": "## 14. Requirements Completion Contract"
+      "heading": "14. Requirements Completion Contract",
+      "path": "Plans/_shards/chain-wizard-flexibility/020-14.-requirements-completion-contract.md",
+      "sha256": "04f54c57feb0a46f96d33512f122321354d72b293539ce28d13ae8e86f19c766",
+      "shard_id": "020",
+      "source_line_end": 1678,
+      "source_line_start": 1582,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/21-15-requirements-quality-escalation-semantics.md",
-      "start_line": 1732,
-      "end_line": 1855,
-      "segment_sha256": "8785e4ff12f22eea8f49c1f746d728a0b27a502925315c92390b194eb7c6d7bc",
-      "heading": "## 15. Requirements Quality Escalation Semantics"
+      "heading": "15. Requirements Quality Escalation Semantics",
+      "path": "Plans/_shards/chain-wizard-flexibility/021-15.-requirements-quality-escalation-semantics.md",
+      "sha256": "beb52ae91813c2b19c8b7f34e3b1f8db0549d9ae3a333d132215fe3b95d7caab",
+      "shard_id": "021",
+      "source_line_end": 1785,
+      "source_line_start": 1679,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/22-requirements-builder-persona-strategy-addendum-2026-03-06.md",
-      "start_line": 1856,
-      "end_line": 2035,
-      "segment_sha256": "a2385421a3119e2c3e12afb735f17d098fd357ff60435217f656bb827eec8067",
-      "heading": "## Requirements Builder Persona Strategy Addendum (2026-03-06)"
+      "heading": "Requirements Builder Persona Strategy Addendum (2026-03-06)",
+      "path": "Plans/_shards/chain-wizard-flexibility/022-requirements-builder-persona-strategy-addendum-2026-03-06.md",
+      "sha256": "1f00d8ac52a834a8d8c68ab32ef267e94e70d541a839e762aa831ad1b19bdde5",
+      "shard_id": "022",
+      "source_line_end": 1928,
+      "source_line_start": 1786,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/23-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
-      "start_line": 2036,
-      "end_line": 2192,
-      "segment_sha256": "5a9ce8e494d226648f631c2cf5f742c01f78a07961ad58f915b17f68ce797e26",
-      "heading": "## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)"
+      "heading": "17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)",
+      "path": "Plans/_shards/chain-wizard-flexibility/023-17.-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
+      "sha256": "367a75cd4b9258dfecc7a248f73aad5f41f5cc4fdb98da69b09e1e7630cbd7c3",
+      "shard_id": "023",
+      "source_line_end": 2086,
+      "source_line_start": 1929,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/24-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md",
-      "start_line": 2193,
-      "end_line": 2263,
-      "segment_sha256": "96357ccc67bcc016029e7ef4a0e3d7a1c390d0f4f597353528c6360d7e0af345",
-      "heading": "## Clarification Escalation and Draft Decomposition Addendum (2026-03-08)"
+      "heading": "Clarification Escalation and Draft Decomposition Addendum (2026-03-08)",
+      "path": "Plans/_shards/chain-wizard-flexibility/024-clarification-escalation-and-draft-decomposition-addendum-2026-0.md",
+      "sha256": "95bc06c21a6c87d5b253ef329afcaa791dd673ad2604c62b49103372f70edce5",
+      "shard_id": "024",
+      "source_line_end": 2135,
+      "source_line_start": 2087,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/25-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md",
-      "start_line": 2264,
-      "end_line": 2289,
-      "segment_sha256": "23c94bc957fb56819b6b4b42e060d5c3ceafed455ea83ef64194b06bfaf1fa81",
-      "heading": "## Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)"
+      "heading": "Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)",
+      "path": "Plans/_shards/chain-wizard-flexibility/025-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-.md",
+      "sha256": "9e0555ee7c38a118226ea3cda66250feff21192d4e09c9e2569e652abf2a8e99",
+      "shard_id": "025",
+      "source_line_end": 2161,
+      "source_line_start": 2136,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/26-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md",
-      "start_line": 2290,
-      "end_line": 2310,
-      "segment_sha256": "86ca423b6ab85d89f445c4a62ed7b1337a4c71322b78f89c5d750c236ecf4cde",
-      "heading": "## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)"
+      "heading": "Canonical Wizard Blocked-State Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/chain-wizard-flexibility/026-canonical-wizard-blocked-state-canonical-alignment-2026-03-09.md",
+      "sha256": "8d4297cdc20cfdad9c0c7c430adeade6817788d80bea7c2be22f3998beb650ed",
+      "shard_id": "026",
+      "source_line_end": 2182,
+      "source_line_start": 2162,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/27-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md",
-      "start_line": 2311,
-      "end_line": 2344,
-      "segment_sha256": "2402971284218a4bac816a5c45001c05b9fe53dca3658892ce65a185ebd9b3ca",
-      "heading": "## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)"
+      "heading": "Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)",
+      "path": "Plans/_shards/chain-wizard-flexibility/027-wizard-escalation-degradation-and-blocked-state-consolidation-ad.md",
+      "sha256": "702ceb953f3ded4ec73874138f864f27f01eebaa7f2453e954e9e2c61cd65269",
+      "shard_id": "027",
+      "source_line_end": 2216,
+      "source_line_start": 2183,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/28-canonical-wizard-blocked-lifecycle.md",
-      "start_line": 2345,
-      "end_line": 2397,
-      "segment_sha256": "61863863d7347ea50a4e27dffdf6a7b1fab602d79d93039b1601312810906db5",
-      "heading": "## Canonical Wizard Blocked Lifecycle"
+      "heading": "Canonical Wizard Blocked Lifecycle",
+      "path": "Plans/_shards/chain-wizard-flexibility/028-canonical-wizard-blocked-lifecycle.md",
+      "sha256": "e82cb8b196594c97b109d5c866bf9804e4fef14b9656a26f8cb1c9b8e5746054",
+      "shard_id": "028",
+      "source_line_end": 2247,
+      "source_line_start": 2217,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/29-wizard-status-enum-correction-addendum.md",
-      "start_line": 2398,
-      "end_line": 2404,
-      "segment_sha256": "a40e28867008ae105580ff4500f641485d09a67749e8199158407eaee9434efb",
-      "heading": "## Wizard Status Enum Correction Addendum"
+      "heading": "Wizard Status Enum Correction Addendum",
+      "path": "Plans/_shards/chain-wizard-flexibility/029-wizard-status-enum-correction-addendum.md",
+      "sha256": "16d61a0d4cc0d342515c313f43f83d0441911edf38c7e62ed225ef76ff794f17",
+      "shard_id": "029",
+      "source_line_end": 2255,
+      "source_line_start": 2248,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Identity, Route, and Audit Refinement Rules",
+      "path": "Plans/_shards/chain-wizard-flexibility/030-runtime-identity-route-and-audit-refinement-rules.md",
+      "sha256": "b8a04d70ce274708bf9cbc16ae92a43f25eb9db0e722113e11fd4b1e5245af0b",
+      "shard_id": "030",
+      "source_line_end": 2286,
+      "source_line_start": 2256,
+      "split_rule": "heading-##"
     }
-  ]
+  ],
+  "source": {
+    "line_count": 2286,
+    "path": "Plans/chain-wizard-flexibility.md",
+    "sha256": "7fe398ecdc74feba42525cfc2db2cd6b85c290462a39edaddb4f7ebc7d5e8bec"
+  }
 }

@@ -1,39 +1,50 @@
 {
-  "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "7f54ff0047b58f947b6175a0f5a959918dc6db562a57120c2c4bd310d9a68839",
-  "split_rule": {
-    "primary": "## outside fences",
-    "fallback": "line-count-200",
-    "applied": "## outside fences"
-  },
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/interview-subagent-integration/00-index.md",
+  "index_sha256": "cd1fedec3470cfc8b89ab7f21392e48121aee1a145288216a21c0b91e77fbf70",
+  "manifest_path": "Plans/_shards/interview-subagent-integration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/01-preamble.md",
-      "start_line": 1,
-      "end_line": 64,
-      "segment_sha256": "584a4e6065e179a76a2271611a5b026bc2080baafa3e20b5699f5ebdff6fa8f9",
-      "heading": null
+      "heading": "Preamble",
+      "path": "Plans/_shards/interview-subagent-integration/001-preamble.md",
+      "sha256": "7115a24e5ca75fb76f0f4e9a30cdb56d0f97ea820e2e62d98ccd4da1b13b647b",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/02-fidelity-recovery-addendum.md",
-      "start_line": 65,
-      "end_line": 83,
-      "segment_sha256": "5b0bf1dffb70586ca49ae4f4bb15fb34c24a0e4502775966c5b8f0a23d01bebd",
-      "heading": "## Fidelity recovery addendum"
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md",
+      "sha256": "165ea10615a874cd0dc8432705279a3aa68ded96b50b4c8089b4e1e524b66720",
+      "shard_id": "002",
+      "source_line_end": 11,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/03-change-summary.md",
-      "start_line": 84,
-      "end_line": 91,
-      "segment_sha256": "ff16c185cc1f6c626a897a07f352f28fceb422e0c0eb1334b22737a6f4b746dd",
-      "heading": "## Change Summary"
+      "heading": "Change Summary",
+      "path": "Plans/_shards/interview-subagent-integration/003-change-summary.md",
+      "sha256": "b20d2934c2dcdf7743a9ead0f2c49d7b92eb9dbc6a751a7d5e05d7e01ff25f54",
+      "shard_id": "003",
+      "source_line_end": 19,
+      "source_line_start": 12,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/04-interview-runtime-boundary-and-handoff-lineage.md",
-      "start_line": 92,
-      "end_line": 111,
-      "segment_sha256": "d70d64150e8e1439955fb6e805e0d29c65c22031cb578479c645ccb11672c6b4",
-      "heading": "## Interview runtime boundary and handoff lineage"
+      "heading": "Interview runtime boundary and handoff lineage",
+      "path": "Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md",
+      "sha256": "bfbfda8b191b6d2c35ad9e430bc289dc8ac7ee84408c6179c343b8d44c5c236b",
+      "shard_id": "004",
+      "source_line_end": 54,
+      "source_line_start": 20,
+      "split_rule": "heading-##"
     }
-  ]
+  ],
+  "source": {
+    "line_count": 54,
+    "path": "Plans/interview-subagent-integration.md",
+    "sha256": "a37ba96cc71a9c228151f80b446bc4037ca424e89484d2e58574674882e45efa"
+  }
 }

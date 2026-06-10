@@ -1,69 +1,5 @@
 # OpenCode Coverage Matrix (Audit)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0397
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/OpenCode_Coverage_Matrix.md`
-  - Plans/OpenCode_Coverage_Matrix.md
-  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.
-  - Phase/Task/Subtask/Iteration
-  - exact audit trail of requested/effective + reason + source snapshot refs
-  - There is still no canonical concern action matrix spanning:
-  - the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple
-  - Promote governance-relevant speaker/handoff selections out of `raw_observation` when they affect orchestration projections or audit reconstruction.
-  - raw_observation
-  - Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:
-  - validation_pass_report
-  - Audit `storage-plan.md` for other downstream-assumed families already discussed in research:
-  - storage-plan.md
-  - `FinalGUISpec.md` still overstates path-open coverage via `OpenFile`, while also separately documenting:
-  - FinalGUISpec.md
-  - OpenFile
-  - As written, GATE-010 can reasonably verify handler coverage and event emission for one-off command dispatch, but it cannot strongly verify a generalized route/subject navigation system.
-  - The wiring prose is drifting toward producer/consumer/runtime-trace coverage, while the machine-readable schema still only understands interactive-element dispatch rows.
-  - Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - command coverage
-  - The matrix schema cannot represent “this command is a wrapper over canonical route/open semantics” without smuggling that meaning into prose.
-  - The matrix schema limitation and the evidence schema limitation are different problems.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `GATE-010` still validates flat wiring coverage only. It does not validate:
-  - GATE-010
-  - extend `GATE-010` coverage so routing/wrapper normalization can be verified through command-definition metadata plus wiring evidence
-  - This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end.
-  - deterministic resolver matrix and actor→persona defaults
-  - `next_required_stage` remains `Audit Mode`.
-  - next_required_stage
-  - Audit Mode
-  - The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.
-  - summary: Ran two bounded internal audit waves against the remaining unresolved blocker set and hit the stop condition: both waves produced zero new exact missing items, zero new blocker families, and zero newly confirmed contradictory survivors.
-  - summary: Ran two bounded audit waves against the condensed blocker bundle after the failed Ready Check and both waves produced zero new findings, so the work item stops on the iterative-audit zero-finding condition and hands back to Ledger Condenser.
-  - The next useful stage is `Ledger Condenser`, not another immediate audit wave.
-  - Ledger Condenser
-  - This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).
-  - 17
-  - 3
-  - The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -81,14 +17,56 @@ This document audits every OpenCode-derived capability extracted in `Plans/OpenC
 | **Partial** | A target doc exists but is missing stable anchors, missing GUI wiring, or the capability is only described in `OpenCode_Deep_Extraction.md` without a dedicated SSOT section. |
 | **Missing** | No SSOT doc and no clear contract for this capability. The extraction doc records the baseline but nothing in `Plans/` owns it. |
 
+Provider-matrix confidence rule: OpenCode-derived provider-matrix rows must track confidence explicitly so downstream reconciliation does not accidentally treat partially researched direct providers as fully pinned. A direct provider row can be useful evidence while still remaining `Partial` until an SSOT owner doc locks the provider/runtime behavior.
+
 **Inspection corpus:** All files listed in `Plans/00-plans-index.md` plus subsystem SSOT docs (`Run_Modes.md`, `Personas.md`, `Permissions_System.md`, `Commands_System.md`, `Skills_System.md`, `Prompt_Pipeline.md`, `Formatters_System.md`, `Plugins_System.md`, `Models_System.md`) and `OpenCode_Deep_Extraction.md` itself.
+
+Self-review note: `Plans/OpenCode_Coverage_Matrix.md` (`/OpenCode_Coverage_Matrix.md`) audit statuses and `/notes` remain the coverage owner after packet changes to command, skill, LSP, and permission coverage; when those owner docs change, this matrix is rechecked as an audit/currentness surface rather than treated as a product-feature owner.
+
+Stale tier-era, Phase/Task/Subtask/Iteration, or legacy boundary notes in this matrix are anti-pattern markers and audit lineage only; they are not product-owner vocabulary unless a named SSOT owner doc adopts a replacement.
+
+Coverage audit rows may carry `supersedes_prior`, doc-discovery, owner-definition, and `17` resolved-count state when a later matrix pass replaces an older audit conclusion. Those fields are audit-state metadata and do not move ownership out of the named SSOT docs.
+
+Command coverage health tracks fix-status, command-coverage, self-invalidating IDs, DRY_Rules, DRY_Rules.md, alias-canonicalization, cross-checks, and `/uncategorized` routing so this matrix can distinguish stale aliases from unresolved owner gaps.
+
+Zero-finding waves and Ledger Condenser handoffs are audit terminal signals. A zero-finding result may supersedes_prior audit state only when no new exact blockers, contradictory survivors, or owner-definition gaps remain.
+
+Open gaps retain machine-readable stage fields: json.next_required_stage, open_gaps.json.next_required_stage, open_gaps, re-auditing, Audit Mode, and follow-on state must remain visible when another audit pass is requested.
+
+Adjacent owner references for this matrix include `Plans/Multi-Account.md`, `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/FinalGUISpec.md`, `/Multi-Account.md`, `/Models_System.md`, `/Prompt_Pipeline.md`, `/Personas.md`, and `/FinalGUISpec.md`; those references keep multi-account, model, prompt, persona, and GUI coverage aligned without duplicating their owner prose.
+
+automation-first provider-stream coverage keeps `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, `/Provider_Stream_Mapping_External_Reference_A2A.md`, `/seam`, and tier-boundary evidence tied to provider-stream mapping rather than treating it as local matrix behavior.
+
+Lane-aware worktree coverage references `Plans/WorktreeGitImprovement.md` and `/WorktreeGitImprovement.md` when a coverage row depends on lane-aware worktree semantics.
+
+Runtime-correlation and meta-docs coverage uses `/runtime-correlation`, meta-docs, DRY_Rules, DRY_Rules.md, `/additive`, doc-integrity, cross-checking, `/governance`, and multi-account fields to mark additive governance evidence without treating the matrix as the owner of those runtime contracts.
+
+GUI tab coverage references `Plans/FinalGUISpec.md`, `/FinalGUISpec.md`, `/tabs`, cross-reference, and widget-composed surfaces when the matrix audits tab or widget wiring.
+
+Package/seam/lane coverage references `/package/seam/lane-aware`, tier-bound, Personas.md, Models_System, Models_System.md, Prompt_Pipeline, Prompt_Pipeline.md, and `/override` when persona/model/prompt overrides intersect package or lane semantics.
+
+Orchestrator tab coverage references FinalGUISpec.md, Orchestrator_Page, Orchestrator_Page.md, `/tab`, cross-referencing, and Tiers when this matrix audits Orchestrator page navigation.
+
+Governance handoff observations are governance-relevant only when `/handoff` and raw_observation evidence affects audit reconstruction or orchestration projections.
+
+Coverage traceability rows keep stable coverage identifiers visible so downstream checks can trace each covered obligation to the exact source item without treating source-lineage labels as provider canon.
+
+High-signal model coverage records may cite six-model treatment when a later coverage pass checks whether additional broad passes are still useful.
+
+Later-model audit entries keep later-model and follow-on fields when the next step depends on a future model pass instead of immediate owner-doc edits.
+
+Iterative audit closure records preserve zero-finding and iterative-audit status when bounded audit waves produce no new exact blockers.
+
+### External Reference Landing Guidance
+
+External reference adoption uses owner categories before wording lands in canon. Tool/runtime contracts land in `Tools.md` and `Contracts_V0.md`; UI/UX patterns land in `FinalGUISpec.md`; permission/auth patterns land in `Permissions_System.md`; provider/integration patterns land in `CLI_Bridged_Providers.md` and `Provider_OpenCode.md`; storage/persistence patterns land in `storage-plan.md`; identity/persona patterns land in `Personas.md` and `Multi-Account.md`. Non-PM constraints remain external-only unless an owner doc explicitly adopts them.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ---
 
 ## 2. Coverage Matrix
-**Coverage status amendment (r-20260328-192850-06):** The following rows were revisited after the run-05 reconciliation pass. Rows 28, 29, 32, and 34 are `Covered`; row 32 no longer carries a synthetic-continue or loop-prevention gap because `Plans/Prompt_Pipeline.md` now preserves that canon directly.
+**Coverage status amendment (r-20260328-192850-06):** The following rows were revisited after the run-05 reconciliation pass. Rows 28, 29, 32, and 34 are `Covered`; row 32 no longer carries a synthetic-continue or loop-prevention gap because `Plans/Prompt_Pipeline.md` now preserves that canon directly. This amendment supersedes the `pre-run-05` matrix state for row 32 and the dependent summary counts below.
 
 | Row | Topic | Prior status | Current status | Basis |
 |---|---|---|---|---|
@@ -136,9 +114,9 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 | 33 | **LSP integration** | - (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |
 | 34 | **MCP integration** | §7D.1 (MCP prompts -> commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Covered** | Tools.md specifies MCP lifecycle, connection pooling, timeouts, and safe schema-cycle truncation. |
 | 35 | **GitHub API: Auth vs usage/tool** | - (not in extraction §7) | `Plans/GitHub_API_Auth_and_Flows.md` (auth contract), `Plans/GitHub_Integration.md` (Git panel + API usage) | FinalGUISpec.md, Architecture_Invariants.md #INV-002 | **Covered** | OAuth device-code default; no secrets in storage. Not part of OpenCode extraction scope. |
-| 36 | **GUI config wiring - Permissions** | - | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4.10 | - | **Covered** | Dedicated tab with all sub-sections. |
+| 36 | **GUI config wiring - Permissions** | - | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4 Settings and inspectors | - | **Covered** | Dedicated permissions surface is owned by Permissions_System and surfaced through Settings. |
 | 37 | **GUI config wiring - Commands** | - | `Plans/Commands_System.md` §6, `Plans/FinalGUISpec.md` §7.4.11 | - | **Covered** | Rules & Commands tab. |
-| 38 | **GUI config wiring - Skills** | - | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4 "Skills" row | - | **Partial** | Skills SSOT exists; a dedicated numbered Skills subsection in FinalGUISpec remains optional but recommended for symmetry. |
+| 38 | **GUI config wiring - Skills** | - | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4A Agent Config Skills tab | - | **Covered** | Agent Config > Skills is the canonical GUI surface; it mirrors Skills_System owner vocabulary. |
 | 39 | **GUI config wiring - Plugins** | - | `Plans/Plugins_System.md` §9, `Plans/FinalGUISpec.md` §7.4.12 | - | **Covered** | Dedicated tab cross-referencing SSOT. |
 | 40 | **GUI config wiring - Models** | - | `Plans/Models_System.md` §7, `Plans/FinalGUISpec.md` §7.4.14 | - | **Covered** | Model picker + Settings > Models tab. |
 | 41 | **GUI config wiring - Formatters** | - | `Plans/Formatters_System.md` §5, `Plans/FinalGUISpec.md` §7.4.13 | - | **Covered** | Dedicated tab cross-referencing SSOT. |
@@ -157,32 +135,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ### 3.2 SSOT docs missing stable anchors
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-039[retired-token-1]
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `CustomHeadlessTool` still has no stable registry/permission/config owner and now also conflicts with `STATE_FILES.md` over config-file naming and missing GUI-automation state paths.
-  - CustomHeadlessTool
-  - STATE_FILES.md
-  - This pass keeps all `[retired-token-1]` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.
-  - [retired-token-1]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 | SSOT Document | Missing Anchors |
 |---|---|
@@ -190,7 +142,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 | `Plans/Models_System.md` §4 | No anchor on the "Model availability and error handling" section (needs `#MODEL-ERRORS` — already present on inspection). No anchor on overflow detection or retry policy subsections. |
 | `Plans/Prompt_Pipeline.md` | No stable anchor on the context-assembly/cache-preservation subsection beneath `#ASSEMBLY-PIPELINE`; compaction-threshold rules should also carry a dedicated stable anchor beneath `#COMPACTION`. |
 | `Plans/Tools.md` | No `#MCP-INTEGRATION` anchor for MCP tool registration flow. |
-| `Plans/FinalGUISpec.md` | No `#SKILLS-TAB` anchor (the Skills row in the settings table has no `§7.4.X` numbered section). |
+| `Plans/FinalGUISpec.md` | Agent Config Skills content now lives at §7.4A; add a stable `#SKILLS-TAB` anchor only if future cross-reference tooling requires one. |
 
 ---
 
@@ -200,7 +152,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 | Check | Status | Detail |
 |---|---|---|
-| GUI surface in FinalGUISpec.md | ✅ | §7.4.10 — dedicated Permissions tab. |
+| GUI surface in FinalGUISpec.md | ✅ | §7.4 Settings and inspectors, with permission details owned by `Plans/Permissions_System.md` §10. |
 | Config keys/state storage | ✅ | TOML files at `~/.config/puppet-master/permissions.toml` and `<project>/.puppet-master/permissions.toml`; redb projection at `config:v1.tool_permissions`. |
 | No secrets in files | ✅ | Permission rules contain no secrets. |
 | Doctor/preflight checks | ⚠️ | No explicit Doctor check for invalid/conflicting permission rules. Consider adding a `doctor.permissions.valid` check. |
@@ -218,7 +170,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 | Check | Status | Detail |
 |---|---|---|
-| GUI surface in FinalGUISpec.md | ⚠️ | Skills tab row exists in §7.4 table but has **no dedicated §7.4.X subsection** (unlike Permissions, Commands, Plugins, Formatters, Models which all have one). |
+| GUI surface in FinalGUISpec.md | ✅ | §7.4A Agent Config Skills tab mirrors the `Plans/Skills_System.md` owner contract. |
 | Config keys/state storage | ✅ | Canonical storage and discovery roots are defined in `Plans/Skills_System.md` (project: `.puppet-master/skills/`, global: `~/.config/puppet-master/skills/`, plus legacy discovery roots for compatibility). |
 | No secrets in files | ✅ | Skills are Markdown files with no secret content. |
 | Doctor/preflight checks | ❌ | No Doctor check for skill validation. |
@@ -270,7 +222,7 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 5. **`Plans/Tools.md`** needs anchor `#MCP-INTEGRATION` on the section describing how MCP-discovered tools enter the central registry.
 
-6. **`Plans/FinalGUISpec.md`** needs a numbered `§7.4.X` subsection for the **Skills tab** (currently only a table row with no subsection body, unlike all other subsystem tabs which have `§7.4.10`–`§7.4.14`).
+6. ✅ **`Plans/FinalGUISpec.md`** now has §7.4A Agent Config Skills tab for the **Skills tab**; future work may add a stable `#SKILLS-TAB` anchor if needed.
 
 ### 5.3 Cross-Reference Corrections
 
@@ -284,6 +236,8 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 10. **`Plans/Models_System.md` §4.2 and §4.3** should add anchors `#OVERFLOW-DETECTION` and `#RETRY-POLICY` so that `Plans/Run_Modes.md` §5 kill conditions and `Plans/CLI_Bridged_Providers.md` can reference them by anchor.
 
+Provider/account/model reconciliation for OpenCode coverage stays linked to `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`), `Plans/Multi-Account.md` (`/Multi-Account.md`), and `Plans/Models_System.md` (`/Models_System.md`) so bridged-provider transforms, account routing, and model identity do not drift into separate local rules.
+
 11. **`Plans/Plugins_System.md` §7.3** references a future `disabled_plugins` field in PERSONA.md frontmatter. `Plans/Personas.md` §3.2 does not yet list this field. One of the two docs must be updated to be consistent.
 
 ### 5.5 Doctor/Preflight Gaps
@@ -296,7 +250,7 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 | Coverage Status | Count | Examples |
 |---|---|---|
 | **Covered** | 36 | Run modes, permissions, provider transform/error classification, context handling/compaction, MCP lifecycle, GitHub auth, models, subagents, LSP |
-| **Partial** | 3 | Skills agent surface as-commands (#17), GUI Skills tab subsectioning (#38), any future external-only bridge work not yet packetized |
+| **Partial** | 2 | Skills agent surface as-commands (#17), any future external-only bridge work not yet packetized |
 | **Missing** | 0 | - |
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md

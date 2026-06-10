@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/ui_command_catalog/00-index.md",
+  "index_sha256": "1107838302c6571ce6c1354e1a748c32849f2ab9c7e173a7ae142f367ac0b9f4",
+  "manifest_path": "Plans/_shards/ui_command_catalog/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/ui_command_catalog/001-preamble.md",
+      "sha256": "ff4fb36e51dc17284b3530bceb313a4540004fe499575f926b53532c257a359e",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
+      "sha256": "dfe798a3022b09614f145d2b89a00679b7c5b69e5d81fb40084f7ddea92be7ca",
+      "shard_id": "002",
+      "source_line_end": 22,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/ui_command_catalog/003-0.-scope.md",
+      "sha256": "fa443bf0c532104e9097d97d628c37a442c9634c1387de8c3e8196d10f67b6c8",
+      "shard_id": "003",
+      "source_line_end": 31,
+      "source_line_start": 23,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Naming rules",
+      "path": "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
+      "sha256": "1c5eca55099dddc508de7cb0275c14638041ad77a3d4112950512a550cfc723e",
+      "shard_id": "004",
+      "source_line_end": 41,
+      "source_line_start": 32,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Canonical command IDs",
+      "path": "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
+      "sha256": "b00dd451b7721e671f636942f6a506852cea44eddc8a8232ddf4efac3cf47634",
+      "shard_id": "005",
+      "source_line_end": 1111,
+      "source_line_start": 42,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "References",
+      "path": "Plans/_shards/ui_command_catalog/006-references.md",
+      "sha256": "bd1e73355f676738d11018a0008cbcf324fc7a8556f4dfb25545f627f7ea4a70",
+      "shard_id": "006",
+      "source_line_end": 1205,
+      "source_line_start": 1112,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1205,
+    "path": "Plans/UI_Command_Catalog.md",
+    "sha256": "de7fa9f47cbbaac910b668db4778c3faea7d2a32334ade64545dec448b22ac79"
+  }
+}

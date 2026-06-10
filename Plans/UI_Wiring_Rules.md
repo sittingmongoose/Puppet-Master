@@ -1,44 +1,5 @@
 # UI Wiring Rules (Canonical)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0531
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/UI_Wiring_Rules.md`
-  - Plans/UI_Wiring_Rules.md
-  - The current wiring contract is still element-centric and command-centric in a narrow sense: it can prove `ui_element_id -> ui_command_id -> handler_location -> expected_event_types`, but it cannot express or verify richer navigation semantics.
-  - ui_element_id -> ui_command_id -> handler_location -> expected_event_types
-  - Extend the wiring schema and rules with route-aware fields, likely along the lines of:
-  - Research Progress - 2026-03-16 - GATE-010 and evidence limits for route-aware wiring
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - The current wiring and gate docs are too command-ID-centric to express that difference well. Right now they mostly understand:
-  - The wiring layer should stay mostly unchanged. It already keys off `ui_command_id` and handler location. The important addition is gate logic that can understand the normalization metadata, not a large wiring-schema expansion.
-  - ui_command_id
-  - Keep wiring schema expansion minimal or zero if possible.
-  - keep `WiringEntry` after those sections so the wiring layer consumes, rather than owns, route/open semantics
-  - WiringEntry
-  - The wiring layer is still built around a simple command-binding contract:
-  - Keep normalization metadata owned by the command-definition side, not by wiring rows.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -56,7 +17,45 @@ ABSOLUTE NAMING RULE:
 This file is the canonical SSOT for UI wiring rules that guarantee the Puppet Master GUI is fully wired to backend behavior.
 All rules in this document are autonomously verifiable without paid UI tooling; verification relies exclusively on schema validation, deterministic lints, and scriptable checks.
 
-ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand, Primitive:Gate
+ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, Primitive:Gate
+
+### 0.1 GUI concept reconciliation input
+
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PuppetMasterDashComp.html` is the primary concept input for wiring review until superseded by a newer explicit concept artifact in the same packet. The path token `/PuppetMasterDashComp.html` is evidence lineage, not a live Plans owner path; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+
+`Concepts/PMConcept.html` is likewise a GUI concept-lineage input when cited by a transfer source; `/PMConcept.html` drives reconciliation targeting and wiring review but MUST NOT be copied verbatim into canon or treated as a live owner path.
+
+Annotation and targeted-revision work is a cross-surface GUI feature, not just a backend `note-schema` tweak. Wiring must cover the reusable GUI components in `Plans/FinalGUISpec.md` (`AnnotationActionMenu`, `AnnotationDrawer`, `ContextChipStrip`), their commands, projected state, status/live-region updates, and separate send-to-chat chip behavior across Assistant Deep Plan, Wizard/PRD review, Interview embedded document pane, and document viewer review surfaces.
+
+Cross-surface wiring reviews for Debug Mode and similar features must verify command IDs, overlays, attachments, and route/open wiring against non-derived owner-doc clusters, including `/runtime/permissions/storage/browser/artifacts/tools/UI`, `/prompt/command`, and `/index/terminology`, while keeping product semantics in the owner docs rather than in wiring rows.
+
+Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, and `correlation_passthrough?`. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
+
+The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts.
+
+`GATE-010` route-aware verification includes schema validation, command coverage, handler resolution, `expected-event` emission, unknown-command rejection, architectural lints, wrapper normalization, argument passthrough, correlation passthrough, and route target kind checks.
+
+Runtime action wiring reconciles old `cmd.graph` / `cmd.graph.*` recovery actions to canonical `cmd.runtime` / `cmd.runtime.*` command contracts. Package, lane, and `/package/lane` promotion controls must dispatch through cataloged command IDs rather than ad hoc UI confirms or untyped wiring shortcuts.
+
+Reserved slash-command override policy must resolve into one command-catalog rule: real `cmd.chat`, `cmd.chat.*`, `cmd.orchestrator`, and `cmd.orchestrator.*` IDs must be cataloged before UI wiring lands, and referenced-but-uncataloged IDs such as `cmd.chat.run_user_command`, `cmd.orchestrator.switch_tab`, and `cmd.chat.branch_from_restore` remain gate failures until cataloged, aliased, or retired.
+
+Runtime-artifact wiring consumes `Plans/Runtime_Artifacts_Panel.md` and `/Runtime_Artifacts_Panel.md` for envelope ownership; per-family behavior and bridge-governance semantics are verified by owner references, not by copying runtime-artifact payload rules into wiring rows.
+
+Weak-integration verification tracks dead-end GUI and end-to-end workflow risks when backend `/runtime` or `/governance` behavior exists but is not exposed in the operator control surface. Category labels include `wiring`, `workflow`, `state_contract`, `gui_alignment`, `design_architecture`, `quality`, `evidence_gap`, `corroboration`, `recovery`, `account_usage_pressure`, and `projection_trust`.
+
+Element-centric and command-centric wiring remains the baseline proof: `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proves dispatch coverage, while route-aware gates add navigation, subject, and `/consumer/runtime-trace` checks without replacing the row shape. The machine-readable wiring schema remains a set of `interactive-element` dispatch rows; producer/consumer trace evidence is layered above that schema rather than used as a substitute for it.
+
+The UI command envelope evidence keeps `command_id`, `issued_at`, `origin`, `correlation_id`, and `args` visible and references `Contracts_V0.md`; wiring rows may verify envelope passthrough but do not redefine the command contract.
+
+A broad public `cmd.nav` / `cmd.nav.*` family is optional alias surface, not the mandatory answer for every route. Wrapper commands can normalize to shared route contracts, and any `cmd.nav` prototype must carry alias `/deprecation`, handler-registration, and gate-maintenance consequences through `GATE-010`.
+
+`GATE-010` must verify that wrapper command IDs normalize to shared route primitives instead of treating every public command ID as independent. Generalized route `/subject` navigation cannot be reduced to one-off handler/event coverage; the gate evidence must prove argument passthrough, subject kind, route target kind, and wrapper normalization.
+
+Stale `Tiers` vocabulary from `FinalGUISpec.md` is compatibility lineage only; wiring rules do not reintroduce `Tiers` as a live route, object, or navigation vocabulary.
+
+Wiring SSOT / SSOTs integrity includes stale or `/degraded` action preconditions, owner-doc `/runtime` gating, dispatcher/runtime gating, and command registration. These are owner-doc blocking issues when they affect action availability; they are not cosmetic drift in wiring prose.
+
+Adjacent `GUI` usage controls such as `auth-mode` and `/effective-account` filtering remain consumer requirements until usage/account owners guarantee them. UI wiring may expose the `/UI` control only when the command and effective-account contract exists.
 
 ---
 
@@ -70,7 +69,7 @@ The UI layer MUST dispatch only typed `UICommand` messages whose `command_id` va
 - All user-initiated interactions flow through the UI Command Dispatcher boundary (see [§3](#section-3)).
 - No backend mutation may originate from the view layer; the view layer is a pure function of projected state plus outbound `UICommand` emissions.
 
-ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Architecture_Invariants.md#INV-004, ContractName:Architecture_Invariants.md#INV-011
+ContractRef: ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Architecture_Invariants.md#INV-004, ContractName:Architecture_Invariants.md#INV-011
 
 ---
 
@@ -118,35 +117,16 @@ UI Element ──► UICommand ──► Dispatcher ──► Handler ──► 
 - The UI MUST NOT hold a reference to any handler or service; it holds only a dispatch channel.
 - Handlers MUST be stateless with respect to UI concerns; they receive a command envelope and emit events.
 - The dispatcher MUST reject unknown `command_id` values with a structured error (not a silent no-op).
+- Webextract wiring rows must preserve the typed extraction controls: `schema` accepts JSON Schema `draft-07`, `schema_mode` is `strict` or `/lenient`, and `actions` plus `prompt` remain explicit command payload fields rather than UI-only hints.
+- Browser scenario `/acceptance` matrix rows MUST include `scenario_id`, `session_class`, `preconditions`, `user_or_agent_action`, `expected_visible_behavior`, `expected_artifacts_or_context`, `recovery_expectation`, and `platform_notes` so wiring gates can verify visible behavior, artifact/context output, recovery, and platform variance without turning UI wiring into the browser product owner.
 
-ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Contracts_V0.md#EventRecord, ContractName:Architecture_Invariants.md#INV-004
+ContractRef: ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Contracts_V0.md#EventRecord, ContractName:Architecture_Invariants.md#INV-004
 
 ---
 
 <a id="section-4"></a>
 ## 4. Wiring Matrix Concept
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0532
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - the wiring stack still has no hard reverse-coverage boundary, so ghost IDs survive simultaneously in Final GUI, Wiring Matrix, and command-owner docs.
-  - `resume_url` already appears as a deep-link/restore concept
-  - resume_url
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The **Wiring Matrix** is a verification artifact that binds every interactive UI element to its command handler and expected outcomes.
 
@@ -175,6 +155,10 @@ Machine-readable shape:
 - The matrix is both documentation and testable specification; GATE-010 defines the verifier checks.
 
 ContractRef: SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010
+
+### Search Index Acceleration Wiring Addendum
+
+`Plans/Wiring_Matrix.md` / `/Wiring_Matrix.md` keeps consumer wiring edges for Instant Grep current across `grep`, dirty-layer freshness indicators, build-pipeline status, Search panel controls, and command IDs, but it consumes rather than owns product semantics. Wiring rows and `/reconciliation` checks MUST point back to owner docs for lifecycle, `/publish/storage`, and `/runtime` canon: `Plans/Tools.md` owns grep and index-acceleration behavior, `Plans/storage-plan.md` owns dirty-layer storage and snapshot publication, and `Plans/UI_Command_Catalog.md` owns stable command payloads.
 
 ---
 

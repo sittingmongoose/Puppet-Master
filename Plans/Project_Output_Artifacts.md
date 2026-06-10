@@ -1,111 +1,5 @@
 # Puppet Master — User-Project Project Plan Package Outputs (SSOT)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0446
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Work Package`
-  - Work Package
-  - owning package
-  - `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.
-  - superseded
-  - revoked
-  - reopened
-  - `Overridden by Package override`
-  - Overridden by Package override
-  - main reason the project needs attention
-  - `project health`
-  - project health
-  - `project activity`
-  - project activity
-  - `project attention`
-  - project attention
-  - Recommended top-level project card fields
-  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state
-  - Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.
-  - archived/unregistered project
-  - project health and project attention are different things and should not share one overloaded dot
-  - the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override
-  - `activity` = is anything actively happening for this project
-  - activity
-  - severity and routing should not collapse into one generic red project badge
-  - Current docs do not yet define how unrelated concurrent or historical runs should roll up into one project badge/card.
-  - project summaries must preserve the distinction between user-attention problems and internal degraded-trust warnings
-  - project badges need aggregation; attention center rows need precision
-  - That means project summary and project attention should NOT be jammed into either:
-  - project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows
-  - follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects
-  - artifact_id
-  - linked_artifact_id
-  - do not conflate runtime artifacts with Project Plan Package artifacts
-  - Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.
-  - artifact:<artifact_id>
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache
-  - per-surface project state like `source_control.project_state.{project_id}`
-  - source_control.project_state.{project_id}
-  - `cmd.project.open` is already implicitly route-consuming navigation rather than shell-state mutation; the docs just do not say that in one shared place.
-  - cmd.project.open
-  - `cmd.project.open`
-  - work package:
-  - `PuppetMasterEvent::Output`
-  - PuppetMasterEvent::Output
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`
-  - tier_id
-  - project `activity_state` enum
-  - activity_state
-  - project `attention_state` enum
-  - attention_state
-  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
-  - Plans/Contracts_V0.md
-  - Plans/storage-plan.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Crosswalk.md
-  - Plans/Wiring_Matrix.md
-  - Plans/Progression_Gates.md
-  - Plans/FileManager.md
-  - Plans/Project_Output_Artifacts.md
-  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.
-  - Plans/Runtime_Artifacts_Panel.md
-  - Plans/interview-subagent-integration.md
-  - validation artifact lineage
-  - bridge-field viewer
-  - validation/report section
-  - `Plans/Project_Output_Artifacts.md:1-24`
-  - Plans/Project_Output_Artifacts.md:1-24
-  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.
-  - gap-003
-  - gap-004
-  - gap-005
-  - Plans/usage-feature.md
-  - `Plans/Project_Output_Artifacts.md:16-24`
-  - Plans/Project_Output_Artifacts.md:16-24
-  - `Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.
-  - phase_plan_ref
-  - requirements_quality_report_ref
-  - pass_verdict
-  - `Plans/Project_Output_Artifacts.md:485-530`
-  - Plans/Project_Output_Artifacts.md:485-530
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -127,6 +21,48 @@ This document is the SSOT for **Project Plan Package** artifacts (user-project o
 
 Optional runtime-analysis exports that summarize queue analysis, attempts, safe points, remediation, or blocked outcomes remain projections of canonical runtime data. When materialized, they MUST use canonical runtime identities (`scheduler_pass_id`, `attempt_id`, `safe_point_id`, `remediation_root_id`) and faithfully reflect blocked/local-work-preserved state rather than inventing separate artifact-local identity.
 
+Debug/runtime targets are workspace-bound for Project Plan Package linkage only when PM can map them to the current project through `project_id`, `dev_session_id`, workspace preview `/browser` identity, DAP session identity, or explicit user-confirmed project binding.
+
+### P5 project-output artifact recovery requirements
+
+- `Project_Output_Artifacts.md`, `FileManager.md`, `newtools.md`, and `assistant-memory-subsystem.md` now form a stronger artifact/event/runtime-observability gap cluster: - `validation_pass_report.pass_verdict` still conflicts with downstream `skipped` behavior. - project artifact events are under-keyed relative to the canonical EventRecord envelope and still lack project/run/thread/wizard/account lineage. - `glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table. - `FileManager.md`'s addendum requires open-by-identity and generated non-repo drafts, but `OpenFile { path: PathBuf }` plus root-path validation cannot satisfy it; no `OpenArtifact`-style contract, no `evidence_by_attempt` projection, and no artifact-index freshness/degraded fallback exist. - `newtools.md`, storage-plan, `/Assistant`, `/custom-headless`, `/AutoMilestone`, and assistant memory introduce uncataloged preview/build command IDs, unregistered `live.*`, `memory.gist`, `memory.gist.*`, `cmd.*`, and `/permissions` artifacts.
+- Artifact / persistence / lineage owner docs still have field-family holes that downstream passes kept surfacing: - `Project_Output_Artifacts.md` is now clearly under-keyed relative to the canonical EventRecord/runtime model: artifact events and validation pass reports still omit project/thread/run/attempt/account identity details, `pass_verdict` mismatches the wizard producer doc, and interview-emitted artifact types (`glossary`, `evidence/<node_id>.json`) still do not line up with the package SSOT. - `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required. - `assistant-memory-subsystem.md` and storage-plan surface a new storage-owner gap: memory event families, AutoRunBoundary/AutoMilestone tri; `/command`, `/dashboard`, and CTA routing remain part of this artifact lineage surface.
+- **`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`** - **Why impacted:** These are the executable graph contracts. - **Old assumption:** Lexicographic node selection, weak dependency duality (`depends_on` vs `blockers/unblocks`), no package/seam/worktree/account identity. - **New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.
+- Project artifact / file-management gaps continued to deepen: - `validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 also pinned missing `auto_fixes_applied[]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_run_id` vs canonical `run_id` identity. - `project_id` omission is now clearly a determinism problem in app-global seglog mode because artifact events cannot be partitioned safely by project otherwise. - `OpenFile { path }` is now unambiguously workspace-root-only, proving that generated/runtime opens need a separate open-by-identity router. - attempt-scoped evidence remains blocked not just by missing filters but by storage/UI keying that is still tier/node-centric instead of attempt-centric.
+- `Ledger` - must be exact, but exact does not mean fully materialized at once - filtered query + paging + stable sort are required - export can retrieve more than the viewport, but normal browsing should stay slice-based
+- Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.
+- The current lineage story is fragmented across multiple docs: - `chain-wizard-flexibility.md` ties reports to the three-pass sweep and wizard blocked/attention behavior - `Project_Output_Artifacts.md` owns the artifact type and `workflow_run_id` - wizard state elsewhere owns `wizard_id`, `phase_plan_ref`, staged bundle refs, and blocked report refs - no single pass-report contract currently ties those together cleanly
+- State the precedence rule directly in `Contracts_V0.md`. - Reject multi-selector route payloads as non-canonical.
+- Promote artifact/memory/live/runtime-observability records to full owner status: - align project-artifact events to EventRecord-level identity, - add missing artifact types, - define an `OpenArtifact`-style FileManager contract plus required supporting projections, - register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where they truly belong.
+- The canonical-storage side is already disciplined: - `seglog` is canonical - JSONL mirror is derived - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache - packaged document sets already have explicit `manifest.json` ownership
+- `Plans/FileSafe.md` - **Why impacted:** Defines the structure of the active plan and write scopes. - **Old assumption:** `Phase/Task/Subtask/Iteration` hierarchy is the only way to organize work; single active plan. - **New model pressure:** Needs to support "Pack" or "Seam" based scopes and potentially concurrent active contexts.
+- `acknowledged` concerns should reduce repeat in-app surfacing, but they must not mask an active blocked state if the underlying condition still blocks progress.
+- Source Control and artifact navigation surfaces are showing a broader object-identity problem: - `GitHub_Integration.md` still frames worktree ownership around `run/tier` - `FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first - `Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly
+- `workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.
+- Export correctness now depends on the earlier projection-trust work. - Recommended rule: - exports derived from stale/degraded projections must either: - disclose trust state in the export/manifest - or re-query from canonical/current backing data before export
+- `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.
+- Adjacent owner reference remains `Plans/Runtime_Artifacts_Panel.md` for this recovery seam.
+- Adjacent owner reference remains `Plans/Runtime_Artifacts_Panel.md` for this recovery seam.
+- Reserve system notifications for sparse, high-value events. - Keep blocked-state persistence semantically stronger than dismissible warning surfaces.
+- Artifact and file-opening semantics are not yet fully aligned with recovery/run-aware identity: - `FileManager.md` is moving toward identity-based opens - `Runtime_Artifacts_Panel.md` and related surfaces still need a tighter canonical id/trust/freshness contract
+- acknowledged concerns must reduce noise without suppressing true blockers - recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode
+- The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.
+- `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.
+- The current docs already contain several different export families: - config sync/export bundles (`.pm-bundle`) - render/preview exports (for example Mermaid `SVG` / `PNG`) - runtime artifact export from the Artifacts panel - Usage/Ledger CSV/JSON exports - project-output materialization and optional derived exports under `.puppet-master/project/**` - generic thread/run history export from seglog / JSONL mirror
+- Validation sweep and pass-report artifacts are upstream artifacts, not execution attempts, but they must bridge `/session`, `/node/attempt`, and `/history/ledger/search` views through wizard/session lineage, staged artifact bundle refs, promoted artifact tree refs, and launched `run_id?` when execution later starts from the validated output.
+- `validation-pass` reports are hard-gating canon for promotion and launch decisions, so weak identity in those upstream artifacts must block downstream export, History/Ledger, or run-handoff claims until the lineage bridge is explicit.
+- Artifact lineage fields include `linked_artifact_id?` and `logical_artifact_id?` when a renderable output points at another durable artifact or a stable logical artifact identity across materializations.
+- Generated and staged artifacts may enter the UI as `generated://<artifact_id>` or `artifact:<artifact_id>` non-path subjects before any backing file path exists; `artifact_id` remains the identity that open routes, previews, and manifests preserve.
+- `Runtime_Artifacts_Panel.md` depends on open-by-identity behavior, so Project Output artifact records must expose enough identity and resolver metadata that surfaces do not get re-invented as per-surface open contracts.
+- Project summary exports must keep `project health`, `project activity`, and `project attention` separate: health covers setup `/integrity/config`, activity covers active `/paused/queued/background` execution, and attention covers user/operator action needs.
+- event aliasing discipline applies to artifact event families: compatibility aliases may exist only as declared aliases to canonical event/artifact types, never as independent persistence identities.
+- Project identity must remain stable across path moves, `/rebinds`, and worktree-aware flows; exported records carry the project identity instead of deriving it from the current filesystem path.
+- CSV `/table` exports are convenience view exports, not canonical archival exports; when built from stale or `/degraded` projections they must disclose trust state or re-query canonical backing data before export.
+- Artifact and record exports preserve canonical IDs and `/refs`; they must not invent export-local shadow identity for artifacts, receipts, records, or related runtime refs.
+- Project display settings follow the already-emerging `app-default` plus project-specific `/override/effective` grammar so inherited defaults and effective overrides remain visible in exported state.
+- Negative ID rules are part of artifact lineage: do not invent feature-local receipt IDs, do not create artifact-local cost models, and do not conflate runtime artifacts with Project Plan Package artifacts.
+
+
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 
 - This spec applies **ONLY** to **user projects generated by Puppet Master**.
@@ -135,6 +71,7 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/s
 ## 1. Canonical persistence vs filesystem staging
 
 - **Canonical persistence:** seglog is the canonical store for Project Plan Package artifacts (see §8).
+- `seglog` is the storage-layer append-only event log for artifact persistence; `usage_event` remains a usage-domain object identity and is not a rename target for seglog references. When an artifact also has cost/accounting lineage, the bridge is `usage_event_ref`; that bridge never replaces `artifact_id`, `logical_path`, or the seglog event identity.
 - **Filesystem under `.puppet-master/project/**`:** staging/export/cache only.
   - It MUST be **regenerable** by replaying seglog artifact events.
   - A validator MUST be able to verify byte-identical reconstruction via hashes (see §9).
@@ -143,46 +80,6 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, Gate:GATE-001, ContractNam
 
 ## 2. Required artifact set (SSOT) — Project Plan Package
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0448
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - artifact previews should be demand-loaded, not pre-rendered for long lists
-  - Source Control and artifact navigation surfaces are showing a broader object-identity problem:
-  - The missing `attempt_id` in artifact surfaces is now a cross-surface correctness bug, not merely a future enhancement.
-  - attempt_id
-  - artifact identity still cannot satisfy adjacent attempt-native receipt/evidence pivots because the common ID set still omits `attempt_id`.
-  - Treat `[retired-token-1]` in artifact docs as legacy/decomposition wording unless a migration alias is explicitly needed.
-  - [retired-token-1]
-  - The docs clearly state that the post-pass artifact tree is the canonical final set, but they do not define a strong receipt/reference object that binds that finality to the sweep reports and later execution handoff.
-  - “not ready” no longer means “large conceptual uncertainty”; it now means “a small set of structural owner gaps plus some hard SSOT integrity failures”
-  - project artifact events are under-keyed relative to the canonical EventRecord envelope and still lack project/run/thread/wizard/account lineage.
-  - `preview_subject_id = doc:<document_id> | artifact:<artifact_id>`
-  - preview_subject_id = doc:<document_id> | artifact:<artifact_id>
-  - transient `generated://<artifact_id>` buffer / artifact viewer
-  - generated://<artifact_id>
-  - `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`
-  - preview_subject_id = doc:<document_id>
-  - artifact:<artifact_id>
-  - subject-first preview identity is already present through `doc:<document_id>` and `artifact:<artifact_id>`
-  - doc:<document_id>
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 These are the **required artifacts** (staging paths in the user workspace) and **must be persisted canonically in seglog**:
 
@@ -330,68 +227,12 @@ The schemas are authoritative; this doc defines **paths, sharding, DRY requireme
 
 ### A) Platform Contracts (internal SSOT; not copied into user projects)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0454
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `projects:v1` is too thin
-  - projects:v1
-  - `projects:v1` as overloaded status blobs
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Platform Contracts define Puppet Master-internal invariants (event model, tool IDs, policy semantics, decision policy, etc.).  
 They may be **referenced** from project artifacts by stable IDs (for example `PolicyRule:*`, `SchemaID:*`) but are **not embedded verbatim** in user projects.
 
 ### B) Project Contracts (generated per user project)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0455
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `attention` = does this project currently need user attention
-  - attention
-  - one current `project_summary` row per project
-  - project_summary
-  - many `project_attention_item` rows per project
-  - project_attention_item
-  - artifact-backed `generated://<artifact_id>`
-  - generated://<artifact_id>
-  - `generated://...`
-  - generated://...
-  - transient `generated://<artifact_id>` source buffer
-  - transient `generated://<artifact_id>` source buffers are a realization detail, not the canonical identity
-  - `generated://<artifact_id>`
-  - otherwise it resolves to transient `generated://<artifact_id>` source opening
-  - Keep `generated://<artifact_id>` as resolver output, not canonical subject identity.
-  - Keep `preview_subject_id` and `generated://<artifact_id>` where they belong:
-  - preview_subject_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Project Contracts are generated per user project and stored under:
 
@@ -401,33 +242,6 @@ They are the **canonical** source for project-specific specs/boundaries, and the
 
 #### Required: `contracts/index.json` (Project Contract Pack index)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0457
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `meta.json` now uses `pm.work_item_meta.v2`.
-  - meta.json
-  - pm.work_item_meta.v2
-  - `current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.
-  - current_state.md
-  - canon_inventory.json
-  - open_gaps.json
-  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.
-  - Ledger Condenser
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - Path: `.puppet-master/project/contracts/index.json`
 - Schema: `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
@@ -463,32 +277,6 @@ ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001, ContractN
 
 ### 5.3 Human plan may repeat summary, but must point to canonical contracts
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0451
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - workers may nominate but should not mint canonical concerns directly
-  - Current settings/inheritance may still be shown elsewhere, but must not overwrite history.
-  - should be chronological but windowed
-  - Those may overlap, but they are not the same field.
-  - but not an equally canonical `requested_account_id`
-  - requested_account_id
-  - But it should not try to encode:
-  - Owner docs were updated, but **consumer docs were not canon-collapsed**.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 `plan.md` is for humans; it may summarize for readability, but any repeated spec text MUST include a canonical pointer:
 
@@ -511,33 +299,11 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7
 
 ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§4
 
-- Optional HITL approvals are supported (mid-tier and/or boundary nodes) but are not required:
+- Optional HITL approvals are supported at approval-boundary nodes but are not required:
   - use node `tool_policy_mode: "ask"` (schema: `pm.project-plan-node.v1`) to mark approval boundaries.
 
 ## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0449
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `view export`
-  - view export
-  - Optional derived `decomposition_context` can still carry:
-  - decomposition_context
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Puppet Master MUST produce user-project plans as a **sharded-only plan graph** under:
 
@@ -597,35 +363,6 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executo
 
 ### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0452
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `node_id?`
-  - node_id?
-  - monotonic per `{ run_id, node_id }`
-  - { run_id, node_id }
-  - that `request_id` maps 1:1 to the underlying `{ run_id, node_id, blocked_sequence }`
-  - request_id
-  - { run_id, node_id, blocked_sequence }
-  - `object_id = <node_id>`
-  - object_id = <node_id>
-  - `blocked_projection.{run_id}.{node_id}.{blocked_sequence}`
-  - blocked_projection.{run_id}.{node_id}.{blocked_sequence}
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - Path: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 - Schema: `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
@@ -674,25 +411,6 @@ ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 7.4 Optional derived export: `plan_graph/exports/plan_graph.monolithic.json` (non-canonical)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0453
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - monolithic plan-graph export remains derived, never canonical
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Puppet Master MAY export a monolithic graph for convenience:
 
@@ -708,25 +426,6 @@ ContractRef: SchemaID:pm.project-plan-graph.v1, ContractName:Plans/Project_Outpu
 
 ## 8. Seglog canonical persistence contract (artifact events)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0450
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Artifact / persistence / lineage owner docs still have field-family holes that downstream passes kept surfacing:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All Project Plan Package artifacts are **canonical in seglog**. The filesystem tree is a regenerable export/cache only.
 

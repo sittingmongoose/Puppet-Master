@@ -1,0 +1,59 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/github_integration/00-index.md",
+  "index_sha256": "6d18aaab99ebe41e5466bbf8462aa8994939ba0bea688c27b5bf8d491345d859",
+  "manifest_path": "Plans/_shards/github_integration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/github_integration/001-preamble.md",
+      "sha256": "4ec96562d8996ff9fa0d282c771bd234ed27fe8b97f0d3cbbcb3e71b5ff49b06",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
+      "sha256": "8f257b73c140c253da45048aadadc809284951148350179fea86f02d4102d52a",
+      "shard_id": "002",
+      "source_line_end": 31,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Change Summary",
+      "path": "Plans/_shards/github_integration/003-change-summary.md",
+      "sha256": "be71de022f86bb3dd0545a69cb02b39d7cf50f3f3629f3a5849b7cefe34166ad",
+      "shard_id": "003",
+      "source_line_end": 42,
+      "source_line_start": 32,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "SSOT References (DRY)",
+      "path": "Plans/_shards/github_integration/004-ssot-references-dry.md",
+      "sha256": "305a7e76c7cd99ced3cba2d0bb7bfb1bb2372c51da305f8529ba718fc98f2881",
+      "shard_id": "004",
+      "source_line_end": 79,
+      "source_line_start": 43,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner and consumer reconciliation",
+      "path": "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
+      "sha256": "75b2b813b556414ca370baa9c41ae2b5160a629a352eef4467c3471831769b1d",
+      "shard_id": "005",
+      "source_line_end": 227,
+      "source_line_start": 80,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 227,
+    "path": "Plans/GitHub_Integration.md",
+    "sha256": "83409aeac5a71e7400edf7a289fafd72d57317cc9693777bfa53107aa25bed59"
+  }
+}

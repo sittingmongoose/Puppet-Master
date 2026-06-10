@@ -1,0 +1,70 @@
+# Shard 032: Updated Implementation Architecture
+
+Source: `Plans/orchestrator-subagent-integration.md`
+
+Source lines: L5594-L5653
+
+Source SHA256: `989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb`
+
+---
+
+## Updated Implementation Architecture
+
+### Platform Capability Manager
+
+```rust
+// src/core/platform_capability_manager.rs
+
+pub struct PlatformCapabilityManager {
+    cursor_skills: Vec<SkillInfo>,
+    claude_plugins: Vec<PluginInfo>,
+    gemini_extensions: Vec<ExtensionInfo>,
+    codex_mcp_available: bool,
+    copilot_skills_available: bool,
+}
+
+impl PlatformCapabilityManager {
+    // DRY:FN:discover_capabilities — Discover platform-specific capabilities using platform_specs
+    pub fn discover_capabilities(&self, platform: Platform) -> Result<Capabilities> {
+        platform_specs::discover_platform_capabilities(platform)
+    }
+}
+```
+
+Capability snapshot rules:
+- Capability evaluation happens at run start and produces a frozen snapshot for the run/tier.
+- Precedence is: live runtime discovery -> provider policy snapshot -> static model/platform baseline.
+- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features.
+- This manager complements provider `capabilities.get`; it does not replace the provider-facing capability API.
+
+### Enhanced Subagent Invoker
+
+```rust
+// src/core/subagent_invoker.rs (enhanced)
+
+impl SubagentInvoker {
+    // DRY:FN:invoke_with_capabilities — Invoke subagent using platform-specific capabilities
+    pub async fn invoke_with_capabilities(
+        &self,
+        platform: Platform,
+        subagent_name: &str,
+        task: &str,
+        capabilities: &PlatformCapabilities,
+    ) -> Result<String> {
+        if !subagent_registry::is_valid_subagent_name(subagent_name) {
+            return Err(anyhow!("Invalid subagent name: {}", subagent_name));
+        }
+
+        let invocation_method =
+            platform_specs::get_subagent_invocation_method(platform, capabilities)?;
+
+        match invocation_method {
+            InvocationMethod::Mcp => self.invoke_via_mcp(platform, subagent_name, task).await,
+            InvocationMethod::Cli => self.invoke_via_cli(platform, subagent_name, task).await,
+        }
+    }
+}
+```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+

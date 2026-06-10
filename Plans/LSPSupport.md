@@ -1,54 +1,5 @@
 # LSP Support -- Plan (Rewrite)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0347
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Storage/project-state support appears incomplete for this seam:
-  - The help system should explicitly support related links.
-  - projection cannot currently support that surface; UI must fall back or disable
-  - The shared provider/runtime docs already support the newer requested/effective language well.
-  - a degraded concern rollup should not emit a fresh “3 new concerns” system notification unless canonical records support it
-  - Search should support:
-  - no canonical role enum or `actor_kind` / `execution_role` field exists to support role-by-provider and role-by-account overrides consistently across docs
-  - actor_kind
-  - execution_role
-  - `project_attention_item` rows should retain enough historical semantics to support active vs resolved/dismissed/quieted behavior without erasing audit lineage
-  - project_attention_item
-  - counts on `project_summary` should support compact badges, while `project_attention_item` supports precise lists and routing
-  - project_summary
-  - pressure episodes and switch events should support both provider-wide and account-specific views
-  - Require runtime-artifact envelope support for `attempt_id` plus bridge refs where applicable.
-  - attempt_id
-  - Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Keep any surviving `request_id` text explicitly labeled as compatibility lineage or historical replay support only.
-  - request_id
-  - with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.
-  - Plans/GUI_Rebuild_Requirements_Checklist.md
-  - Plans/Plugins_System.md
-  - Plans/Skills_System.md
-  - Plans/LSPSupport.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -85,6 +36,8 @@ LSP support will provide (all MVP):
 - **Fallback when LSP unavailable:** Heuristic symbol search and no diagnostics when no server available; optional one-time or dismissible hint to install the server.
 - **Diagnostics for LLM/Assistant (OpenCode-style):** Feed current LSP diagnostics (errors/warnings) into Assistant/Interview context so the agent sees linter/type errors and can suggest fixes.
 
+MVP LSP scope is `/cancellation-aware`, version-aware, and fallback-driven: live requests cancel or time out on navigation, edit, and version changes; fallback uses regex, `/grep/index`, and heuristic outline paths when a server is unavailable; formatting-adjacent actions such as format, rename, code actions, and apply-edit stay FileSafe/preview aware; chat code blocks and `@` symbol flows consume the same model.
+
 ### 1.1 Feature specification (inputs, outputs, behavior)
 
 For each feature below: **inputs** (what the client sends or user does), **outputs** (what the user sees or context receives), **success/failure behavior**, **config keys** where applicable, **edge cases/failure modes** and required behavior, and **fallback when LSP unavailable**.
@@ -112,6 +65,8 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 This plan is the single place for LSP design and implementation notes. **LSP is MVP** -- implement with the desktop editor and Chat Window from the start (FileManager.md, assistant-chat-design.md).
 
+For Debug Mode, LSP diagnostics may be part of the structured context when the user points PM at a debug target, e.g. a local app, dev server, website, or other runnable surface. The Assistant-facing flow supports a Cursor-like loop from hypothesis to target evidence to workspace fix, and may attach a session `/telemetry` snapshot when it helps the chat agent reason about PM's own run.
+
 ---
 
 ## 2. LSP Basics (Reference)
@@ -119,6 +74,7 @@ This plan is the single place for LSP design and implementation notes. **LSP is 
 - **Protocol:** [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (JSON-RPC 2.0). Current spec: 3.17.
 - **Roles:** Our app is the **LSP client**; we talk to existing **language servers** (e.g. rust-analyzer, pyright, gopls) that we spawn or connect to.
 - **Transport:** Typically stdio (spawn server process, stdin/stdout = JSON-RPC). Some setups use TCP/sockets.
+- **Product boundary:** For MVP, PM is the LSP client and lifecycle owner, not a `language-analysis` engine and not a custom `language-server` for mainstream languages. Default servers such as rust-analyzer, pyright, gopls, clangd, and slint-lsp run as local stdio RPC processes by default; pylsp-style alternatives remain custom/manual unless cataloged. Remote workspaces use the same model with `/SSH` placement, host-aware path mapping, and `/worktree-aware` server-root resolution instead of a remote web service or hidden local mirror. Semantic `/symbols` and diagnostics come from negotiated server capabilities, not from PM inventing analyzer logic.
 - **Document sync:** Client sends `textDocument/didOpen`, `textDocument/didChange`, `textDocument/didClose` (and optionally didSave). Server uses this to keep its view of the file in sync.
 - **Key features we care about:**
   - **Diagnostics:** Server sends `textDocument/publishDiagnostics` (params: uri, diagnostics[]). Client renders in editor (underlines, gutter, problem list).
@@ -132,36 +88,6 @@ Capabilities are negotiated at **initialize**: client and server declare what th
 
 ## 3. How OpenCode Does It (Reference for Rewrite)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0348
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - must be exact, but exact does not mean fully materialized at once
-  - `account_switch_reason` currently does too much work as a single field.
-  - account_switch_reason
-  - `provider_attempt_ref` does not replace `attempt_id`
-  - provider_attempt_ref
-  - attempt_id
-  - `inspector_target` does not replace `tab_id`.
-  - inspector_target
-  - tab_id
-  - `tab_id` does not replace `target_kind`.
-  - target_kind
-  - `tab_id` does not replace `inspector_target`.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 We are aligning with OpenCode-style architecture where useful; their LSP approach is a good reference.
 
@@ -219,6 +145,8 @@ We support the same set of built-in LSP servers as [OpenCode](https://opencode.a
 
 Servers are enabled when a file's extension matches and the requirement is met. Root discovery and spawn logic per server (e.g. Cargo.toml for Rust, package.json for eslint/TypeScript) are in OpenCode's server.ts; we align with that. See §3.3 for reinforced ESLint (JS/TS), §3.3.1 for Slint LSP, §3.4 for implementation notes, §3.5 for the root discovery table, and §3.6 for extension conflict rules.
 
+Broad catalog support includes common config/docs/container families such as GraphQL, Dockerfile / Docker config, TOML, YAML, and Markdown. The catalog must not under-call broad support: `/discovery/config` tracks server discovery/config support, while `/bundles/manages` records which entries PM actually bundles, auto-installs, downloads, or manages by default. The PM-managed/default first-class set is the out-of-box subset with mature cross-platform value: rust-analyzer; TypeScript/JavaScript through `typescript-language-server` when that server is selected; deno lsp for Deno roots; pyright; gopls; clangd; VS Code-equivalent JSON/HTML/CSS servers; YAML through yaml-language-server; Markdown through Marksman; Bash through bash-language-server; Dockerfile language server; TOML through Taplo; and slint-lsp. Broad support in the catalog does not mean every server is bundled or auto-download enabled: `/auto-install`, `/install`, `/download`, and auto-download behavior are governed per server by `/legal`, `/docs/container`, `/binary/toolchain`, toolchain-bound, and manual-provisioning constraints. Support target, shipping posture, and out-of-box default management are separate product decisions.
+
 ### 3.5 Root discovery (per-server rules)
 
 Root discovery is host-aware and context-driven.
@@ -259,29 +187,6 @@ Fallback rule:
 
 ### 3.6 Extension conflicts (multiple servers per extension)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0351
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Without a closed vocabulary, `inspector_target` will become a second untyped extension bag.
-  - inspector_target
-  - reject when `tab_id` conflicts with `target_kind`
-  - tab_id
-  - target_kind
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
 
@@ -301,6 +206,25 @@ Rules:
 - supplementary servers may coexist only when their capability families are declared compatible
 - effective overlap resolution must remain user-visible in Settings > LSP and status surfaces
 - remote/degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached
+
+### 3.6.1 Effective server selection metadata
+- Each effective `ServerSpec` records `language/extensions/selectors`, `/extensions/selectors`, `/files/conditions`, required markers/files/conditions, `context_exclude`, command `/env/init` options, `root-discovery` mode, optional platform restrictions, `/version` and `position-encoding` metadata, install `/provisioning` hints, and lifecycle status values for `/misconfigured/installing/error`.
+- Selection metadata uses the closed `selection_mode` vocabulary `standalone_primary`, `contextual_primary`, `supplementary_diagnostics`, and `standalone_diagnostics`. User-facing copy may hyphenate the primary modes as `standalone-primary` and `contextual-primary`, and may describe `standalone_diagnostics` as `/diagnostics-only`, but persisted registry values use the underscore spellings.
+- `capability_profile` declares whether a server provides `/full` `full_language` support, `diagnostics_actions`, diagnostics-only support, or other partial capability families. `may_attach_without_primary` states whether a supplementary diagnostics server may attach when no full primary exists.
+- `supplementary_for_families` lists the primary families a supplementary server may attach beside; supplementary attach is denied if the active primary family is absent from that list.
+- The generalized selection algorithm gathers enabled and available catalog entries whose selectors match the file, platform, and context; resolves root/context for each candidate; partitions candidates into full primary candidates and supplementary/diagnostics candidates; chooses one effective primary by filetype/framework specificity, satisfied `contextual_primary`, `primary_priority`, then stable `server_id`; then attaches only compatible supplementary servers.
+- JavaScript-family overlaps generalize through `/typescript/eslint/oxlint-style` rules rather than one-off Deno/TypeScript/ESLint exceptions. Diagnostics merge only from compatible servers, and code actions from multiple servers are surfaced with source attribution so one server cannot silently override another.
+- Selection examples are canonical rather than illustrative placeholders: `selection_mode = standalone_primary` plus `selection_family = ts-js` for generic TypeScript, `selection_mode = contextual_primary` with `context_require = [deno.json, deno.jsonc]` for Deno, `selection_mode = supplementary_diagnostics` with `supplementary_for_families = [ts-js, vue, svelte, astro]` and `may_attach_without_primary = true` for ESLint/Oxlint-style diagnostics, and family-specific `/composite-file` primaries for Vue, Svelte, and Astro. The `/specificity` rule is native filetype/framework first, then contextual markers, then `primary_priority`, then stable `server_id`; `/family` keys such as `/svelte/astro`, `vue`, `svelte`, `astro`, and `ts-js` remain named overlap families rather than one-off exceptions.
+- Diagnostics integration is source-preserving; `diagnostics-integration` is the merge/presentation contract, not a storage-flattening rule. Store diagnostics per `(server_id, session/root, uri)` or its normalized `(session, uri)` equivalent; merge only in presentation surfaces such as Problems, editor markers, and Assistant/Interview context. A diagnostics-first sidecar may expose `/actions/status` for its own diagnostics, but a `supplementary_diagnostics` or `standalone_diagnostics` attachment must not imply full `/completion/navigation`, hover, or semantic capability. `/cap/truncation` belongs to the presentation merge/reporting layer and must not erase per-server source identity.
+- `LspHost`, `LspSession`, and `DocumentStore` are first-class implementation concepts: the host owns local/remote placement and `/backoff/eviction`, the session owns lifecycle and restart behavior, and the document store owns URI normalization, pending-sync state, stale-result checks, and authoritative text versions.
+- PM owns a client-pattern LSP orchestration layer rather than analyzer implementations. The live architecture names `LspHost`, `LspSupervisor`, `LspSession`, `LspSessionRegistry`, `LspRegistry`, `WorkspaceResolver`, `DocumentStore`, `DocumentSyncEngine`, `LspRequestBroker`, `CapabilityRegistry`, `DiagnosticsStore`, `LanguageIntelligenceFacade`, and `LspTraceService`; `/VS` or other upstream client examples are inputs only, while the GUI calls the `/intelligence` facade rather than JSON-RPC plumbing. `LspHost` also owns `/SSH` placement and `/path-mapping`, with all LSP/process I/O off the UI thread and delivered through an event-loop-safe handoff.
+- Protocol guardrails are conservative by default: initialize -> initialized -> normal traffic -> shutdown -> exit is the strict lifecycle, dynamic registration stays disabled until PM can handle `/unregister`, and over-advertising unsupported snippets, resolve support, progress, `/code-action/workspace`, or workspaceFolders behavior is forbidden. Restart after `/crash` replays open documents, diagnostics are replacement-per-server plus URI rather than append-only, and rename, `/format/code-action`, and workspace edits always route through FileSafe.
+- OpenCode-style registry findings are retained as implementation input without copying weak behavior. PM keeps built-in and custom server definitions, local stdio transport, lazy spawn, per-server root discovery, and diagnostics into Assistant context, while avoiding `/full-buffer-or-disk-resync`, uncontrolled auto-downloads, server-specific fragility, session/process duplication, weak status visibility, and unbounded `/backoff/eviction`. `LspSession` reuse is keyed by `(server_id, discovered_root)` only as a compatibility reading; the canonical supervised key remains host-aware and root-aware. DocumentStore remains editor-authoritative, tracks buffer-version and position-mapping state, and uses per-discovered-root compatibility only as input to the canonical root_identity.
+- Native `/client-architecture` is PM-owned. There is no Microsoft-blessed Rust equivalent of `vscode-languageclient` to wrap the desktop-client; official/community inventory is input, not a design owner. The baseline Rust stack is `lsp-types`, `tokio`, `serde_json`, `tokio-util`, `tokio-util::sync::CancellationToken`, `CancellationToken`, and `tracing`, with `async-lsp` permitted only as an internal `/wire` helper if it fits PM's supervisor/session model. `tower-lsp` and `lsp-server` are server-oriented and rejected as GUI-side client foundations.
+- Internal-tool LSP boundaries are explicit: `LSPSupport.md` owns LSP `/tooling` behavior for plan-mode and `/interview` context, but `internal-tool` event records use `run_id`, `tool.invoked`, and `mutation_capable: bool`; mixed `lsp` actions remain under-owned until UI-session reads and mutation_capable apply-edit paths are separated.
+- Tool subsystem enforcement distinguishes formatter-vs-LSP ownership, DAE non-triggering host writes, and overlapping formatter detectors. `Formatters_System.md`, `Plugins_System`, `Plugins_System.md`, `Formatters_System`, `tool.*` telemetry, plugin tool IDs, TOML namespaces, name-based policy keys, post-permission mutation, run-scoped records, `/workspace-tab` routing, multi-project routing, mutation-capable modes, and apply-edit paths must not bypass one another.
+- Model-wave LSP seam evidence from GPT sweeps across `Plans/**` reinforces high-risk node-graph execution seams while retiring tier-centric ownership in LSP-facing contracts.
+- Resolver priority inputs are ordered: hard requirements from plan/tier/surface contracts, actor-type bias, operation-type bias, scope-level bias, language/framework/domain hints, `/framework/domain` hints, project default tendencies, and final fallback.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
 
@@ -374,6 +298,31 @@ UI integration rules:
 - diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation
 - when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state
 - remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
+- The PM-owned orchestration layer must `/discover` an effective server, `/restart/disable` sessions, bind project `/worktree/root`, sync open `/change/save` document events, and route diagnostics, `/symbols`, and `/navigation/results` into GUI and AI context without turning LSP into a separate AI surface.
+
+Fallback, index, and cross-reference rules:
+- Retrieval, `/search/autodetect`, `/search/chat`, and framework/project auto-detection treat project-detection output, code-index freshness/availability, and LSP session health/availability as separate inputs. A detected-language badge is a hint, not exact attached-server truth.
+- The code index remains a SEPARATE `/state-owning` subsystem from LSP: it is per-project, `/indexer` backed, watcher-driven, and useful for large-workspace navigation even when LSP is disabled, unavailable, or degraded; per-file LSP sessions attach through the editor document lifecycle and feed editing, diagnostics, semantic navigation, and code-action context. Index feeds search; LSP feeds editing.
+- When LSP is unavailable, Puppet Master falls back to code index/text search, `/regex` or heuristic outline where available, and optional `/download` or install hints. The fallback path must not claim diagnostics, semantic features, or healthy attached-server state.
+- Stale references to `FileManager.md §12.1.4`, `§12.1.4`, `§12.2.7`, `§12.4`, `§12.5`, `§12.6`, `§11`, `TOC`, and `Projects (§7.3)` / `§7.3` are legacy cross-reference residue. `FinalGUISpec` and FileManager consumers must route to the current FileManager §10 navigation/fallback contract or this LSPSupport section rather than keeping anchors that do not exist.
+- The semantic requirements formerly named `§12.1.4 Symbol search without LSP` and `§12.2.7 Symbol index staleness` are retained here as live obligations: fallback symbol search supports regex / heuristic outline and optional indexed-symbol paths; stale index labels, rebuild expectations, and remote degraded/unavailable interactions must be visible in the command palette, Go to symbol, Problems, Search, and chat consumers.
+- The LSP indexing/autodetect seam is research-locked around distinct GUI state layers. PM must keep `detected_languages` / project badges, selected preset, requested LSP enablement and server overrides, effective attached LSP sessions, and code index freshness/health separate in product language and state; a detected-language badge is advisory/project-scoped and must not collapse into "LSP ready." Later re-detection happens on project add/open and later project-signal changes, but actual attach remains `/path/root/context-driven`, based on extension, requirement/availability, root discovery, and primary/supplementary conflict resolution. `/cross-reference` consumers must distinguish `/opening` detection from later refresh, optional tool-download guidance, and `/retrieval/index` freshness.
+- The FileManager editor-surface map is explicit for LSP consumers: `§10.1 Breadcrumbs / outline` owns the breadcrumb strip and outline, with LSP using `documentSymbol` and fallback using heuristic / regex outline; `§10.2 Go to symbol` owns command-palette and quick-open symbols, with LSP using `documentSymbol` and `workspace/symbol`, while the legacy `§12.1.4` name survives only as a compatibility pointer to this fallback rule. `§10.10 LSP support (MVP)` is the editor-side owner for diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, definition/references, `/rename/applyEdit`, format, `document/workspace symbols`, editor/chat adjacency, and the finer `§10.10.5`, `§10.10.6`, `§10.10.7`, and `§10.10.8` responsibility split. FileManager remains the visible editor owner; LSPSupport owns the LSP protocol/client constraints.
+- Search remains text-first. The Search side panel consumes content-search / project code-search output with stable path, `/range/snippet`, and snippet identity, then routes open and `/highlight` through the same shell/editor path as chat, `/file-manager/LSP`, and LSP navigation opens. LSP symbol mode stays in Go to symbol, breadcrumbs, and semantic navigation; the Search panel must not become a second default symbol browser.
+- Status-bar /search-language copy in `Plans/LSPSupport.md` (`/LSPSupport.md`) keeps symbol search and regex grep non-conflicting: LSP may report server health, symbol navigation, and fallback state, while `grep` and Search regex acceleration remain text-search vocabulary and must not be labeled as LSP symbol health.
+- LSP command routing is route-aware and `/navigation-aware`: a flat `element -> command -> handler` contract is insufficient once diagnostics, symbols, references, code actions, and chat links open through route-target, navigation, and editor owners.
+- Storage and runtime consumers must not lag the execution-core rewrite: `storage-plan` and `storage-plan.md` record families consumed by LSP evidence, diagnostics, and apply-edit flows use current execution identity rather than stale route-only or tier-only records.
+- Orchestrator consumers of LSP data use `Orchestrator_Page`, `Orchestrator_Page.md`, `/event`, `Seams`, and `/package/seam/lane-native` execution objects; `Tiers` and tier-keyed widgets or event rows are compatibility inputs only.
+- rewrite-alignment references are routing inputs, not new LSP owners: `Decision_Log`, `Decision_Log.md`, `rewrite-tie-in-memo`, `rewrite-tie-in-memo.md`, `/packages/lanes/overseers`, `feature-list`, `feature-list.md`, `newfeatures.md`, projection-trust, `/effective`, promoted-feature, and tier-era wording must not misroute LSP or implementation readers.
+- Widget layout compatibility is narrow: keep `widget_layout:v1:dashboard`, `widget_layout:v1:usage`, and `widget_layout:v1:orchestrator:progress`; deprecate or remove `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` when LSP-facing Orchestrator surfaces project progress or diagnostics.
+- Event/addendum supersession is explicit: `/addendum` records cannot require implementers to diff multiple addenda to know the final field set for LSP event, diagnostic, evidence, or apply-edit flows.
+- External audit convergence did not invalidate the LSP direction; it reinforces collapsing overlapping canon and fixing exact broken references, payloads, and command contracts before implementation.
+- cross-doc LSP consumers must not inherit stale Orchestrator UI ownership: `Widget_System`, `Widget_System.md`, `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` references to `Tiers` or `/task/subtask` trees are compatibility inputs only; LSP-facing UI and diagnostics route through native `/specialized` tab surfaces and must carry `/corroboration/promotion/patch` lineage instead of under-specifies concern, corroboration, promotion, or patch provenance.
+- GUI and `FinalGUISpec.md` consumers of LSP status or Problems data must treat seam, package, and `/package/node` surfaces as first-class rewrite-era owners. Dashboard, Appendix C, and any 12-widget rewrite-era Progress set wording may remain source-lineage for `/task/subtask` and `Tiers`, but it cannot define the concrete LSP presentation home.
+- Runtime artifact and code-open consumers keep identity and location separate. `Runtime_Artifacts_Panel` / `Runtime_Artifacts_Panel.md` compatibility `task_id` vocabulary must resolve to `node_id`, package, seam, lane, and attempt identity before LSP evidence or diagnostics are attached; file/code open uses `OpenFile { path, line, range }` for concrete workspace `/code` locations, while route/open identity stays with the owning route contract.
+- Rewrite owner routing remains traceable before LSP consumers cite it: `Decision_Log`, `Decision_Log.md`, `Crosswalk.md`, and `/Crosswalk` provide the owner-traceability path for high-impact rewrite decisions, while LSPSupport records only how those decisions constrain language-intelligence consumers.
+- Runtime identity for LSP-facing execution context keys from node, `/packages/lanes`, package, seam, lane, and higher-level `/runtime` identity rather than active-tier heuristics. `/model/account`, execution-role, and operational-identity disclosure stay visible in diagnostics, Assistant context, and evidence joins when those joins affect attribution.
+- Project `/status` labels exposed beside LSP availability must not stay setup-centric. Project health/status, code-index state, LSP attach state, and runtime capability state remain separate so install/setup readiness does not masquerade as current project health or semantic intelligence.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
@@ -402,6 +351,9 @@ Limitations:
 Integration:
 - code blocks that map to project files use those real file URIs; other code blocks use the virtual-document contract in §14.8
 - when the relevant server is unavailable or degraded, chat surfaces must disclose that reduced state explicitly
+- GUI `/placement` stays explicit: `/Problems` is the canonical multi-file diagnostics panel, the status-bar indicator owns current session/runtime health, and chat is a context/navigation consumer. Chat may show diagnostics summaries, `@ symbol` results, code-block hover, `/definition` and `/go-to-definition` affordances, and a Problems footer link, but `/conflicts`, `/empty/error`, `/remote/status/chat`, and degraded states resolve back to editor, Problems, status-bar, or SSH reconnect destinations rather than creating another diagnostics owner.
+
+Diagnostic-to-chat pipeline behavior is a context-packaging contract, not a second diagnostics owner. The `to-chat` payload uses the same diagnostic entry shape as §17.2 (`path`, `line`, `character`, `severity`, `message`, `source`, optional `code`) plus refs to the originating LSP session and URI; severity mapping preserves `Error`, `Warning`, `Info`, and `Hint` labels when chat summarizes or filters diagnostics. Chat LSP remains read-only for MVP; when a separate later-phase chat workflow surfaces a quick fix, code action, rename, or workspace edit from this diagnostic context, it opens explicit preview/confirmation and applies only through FileSafe-backed `workspace/applyEdit`, preserving the code action approval flow rather than mutating directly from the message.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
@@ -418,6 +370,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fil
 ### 7.1 Registration-before-spawn invariant
 
 An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before its process is spawned. Spawning before registration creates a window where the process exists but cannot be found, tracked, or shut down.
+
+Any asynchronous LSP startup goroutine or background initialization task is lifecycle-tracked BEFORE spawn: it must register a cancellable `lifecycle-tracker` handle before subprocess creation or watcher launch, and failed handshakes must either mark the existing record `failed` or tear the handle down.
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
@@ -457,7 +411,8 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
 This section defines the canonical contract for this surface.
 
 Core rules:
-- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The canonical tool surface is nine read-only operations plus one write/approval-gated `rename`; the packetization label `10 read-only + 1 write-gated (lsp_rename)` is reconciled here by treating `lsp_rename` as a legacy alias for `rename`, not a second operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating.
+- `obl-064` owns this MVP LSP features summary and requires the missing-result envelope `status: ok | partial | unavailable | error`; stale aliases, short names, or ad hoc result envelopes are retired in favor of this section.
 
 Fields:
 - operation
@@ -473,16 +428,16 @@ Labels and values:
 - hover
 - documentSymbol
 - workspaceSymbol
-- rename
-
-Rules:
 - goToImplementation
 - prepareCallHierarchy
 - incomingCalls
 - outgoingCalls
+- rename
+
+Rules:
 - ok | partial | unavailable | error
 - `workspaceSymbol` requires `query`
-- Position-based operations use `path` + `position`.
+- Position-based operations use `path` + `position` (line/character).
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
 ## 10. Transport alternatives and bridge pattern
@@ -592,6 +547,9 @@ It MUST allow the user to:
 - inspect source/classification badges and effective overlap resolution
 - add custom servers
 - inspect requested vs effective attach state per server and project context
+- `Settings > LSP lists all servers and custom entries with validation`; that phrase is a product requirement, not a placeholder. The GUI includes a global master toggle, a searchable `/filterable` full-catalog list, per-server enable/disable, add custom server `/form`, edit custom server action, `/built-in` override/reset behavior, malformed command/config validation, visible distinction among catalog/built-in server, built-in server with user override, user-added custom server, disabled/enabled/misconfigured/unavailable states, command plus args, handled extensions/selectors, env/init options, root-discovery mode, install `/provisioning` notes, and global vs project-scope override. Requested state and effective state must both be shown when a global enablement is masked by a project override or missing binary.
+- Registry rows expose `/languages`, `/selectors`, source badges (`Microsoft`, `OpenCode`, `PM`, `Custom`), classification badges (`Default managed`, `Manual/toolchain`, `Experimental`), `/install` and `/toolchain` provenance, explicit `/effective-state`, path and `/exclusion` controls, and built-in `Override` plus `Reset to catalog defaults` actions. Custom rows keep full edit and remove controls; built-in rows keep read-only catalog metadata except for allowed overrides.
+- The LSP registry participates in the GUI Settings `/inspectors` pattern and the `two-level` Settings navigation model. Registry `/filtering` and `/filter/grouping` cover at least `/ecosystem`, language, source, requested state, effective state, support classification, and lifecycle state. Detail panes show canonical `/names`, aliases/source names, `/install/download/legal` and `/provisioning` posture, platform restrictions, command/env/init fields, and validation errors without turning Settings into the SSOT for runtime attachment.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
 
@@ -607,7 +565,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-cha
 
 ### 14.1 Worktree root_identity handling
 
-LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the worktree path.
+LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the canonical on-host worktree path, not a raw path copied across hosts.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
 
@@ -631,9 +589,23 @@ Rules:
 - transport is stdio over SSH; the remote LSP server stdin/stdout are tunneled through the SSH connection rather than exposed by port forwarding
 - connection lifecycle is: SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready
 - multiple LSP servers may share the same SSH connection via multiplexed channels
+- Remote paths preserve the user-visible SSH authority: examples such as `user@host:/path/to/project` and `/path/to/project` describe the same remote project identity, not a local mirror. Remote LSP is MVP for remote edit intelligence and diagnostics, but remote run/debug remains outside FileManager's edit contract unless another runtime owner enables it. On connection-loss, LSP state follows the FileManager/GUI pattern: show `Connection lost`, offer `Reconnect` or `Work offline (cached files only)` when a validated cache exists, keep credentials in system keychain/agent flows rather than config, and expose keep-alive/backoff state through `ssh_connections` compatibility lineage or the current SSH remote profile model.
 - if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe
 - remote LSP has higher latency by design; PM applies a timeout multiplier for remote operations (default `3x`)
 - remote LSP uses the remote filesystem directly; there is no hidden local sync or mirror for LSP operations
+
+Remote identity, SSH ownership, and degraded-state locks:
+- Remote LSP is part of the `remote-mode-project` model, not a `remote-edit-only` feature and not a broad-sweep local editor patch. This seam is research-locked for implementation transfer. `GitHub_Integration.md §C` is the SSH `/ownership` anchor for `/edit/test/remove`, validation `/auth/host-key`, add-existing-project, remote terminal, remote agents, remote `/providers`, and remote runtime execution. `GitHub_Integration.md §C.3-C.4` / `C.3-C.4` is the operational reconnect authority: keep the 30s keepalive, allow one bounded auto-retry (`one-auto-retry` in older notes), then require explicit `Reconnect`.
+- The canonical remote working-folder identity is `user@host:remote/path`; `remote-host`, `working-folder`, and path authority are part of the project/runtime identity. Puppet Master must not create a hidden local `/mirror`, must not silently retarget `/multi-context` work to the local host, and must fail unsupported remote/multi-context launches deterministically with a visible `/risk` reason.
+- `Settings > SSH` and GUI remote-editor surfaces expose remote capability, editor-state, and degraded copy, but they consume the SSH owner contract instead of redefining it. `file-editor`, FileManager, Terminal, Source Control, provider, `/debug`, and `/runtime` surfaces share the same `/read-only/offline/refresh`, `/offline/degraded`, `/enabled`, and unavailable vocabulary.
+- The stale local-only phrase `(server_id, root)` is retained only as migration contrast. Live LSP attach/session keys are `(host_id, server_id, root_identity)`, and remote documents use host-scoped `/path-mapping` so a file-local URI on host A cannot collide with the same path on host B.
+- Diagnostics storage remains per `(server/session, uri)` and per `(session, uri)` and is merged only in presentation. Editor markers and `/gutter` are file-local projections; Problems owns `/merging`; Assistant/Interview and Search consume `/completion/definition/diagnostics`, `/symbols`, and status summaries without becoming the LSP owner.
+- Remote install `/provisioning`, `/SSH` placement, large-workspace scaling, and change-annotation behavior are implementation-relevant MVP requirements. Remote LSP stays the same architecture as local LSP, with different host/provisioning/path identity, rather than becoming a second subsystem.
+- Remote mutation and availability modes are user-visible. Preview-worthy rename, multi-file code-action, and broad format operations require the same safe preview `/confirmation` path as other FileSafe edits; partial workspace-edit failure reports per-file results, and read-only, locked, unavailable, or `/degraded` targets fail with explicit reason copy. Remote effective modes include `full_remote_lsp`, `degraded_remote_diagnostics_only`, and `remote_edit_no_lsp`; unsupported local-LSP-on-remote-paths behavior must not masquerade as `on-remote-paths` correctness.
+- Remote host-placement is explicit: server-originated paths, diagnostics, code actions, and workspace edits are interpreted in the effective remote host context, then passed through host-aware `/path-mapping` before any editor/FileSafe projection. `/degraded/unavailable` remote states keep `/revert/editor`, save, rename, format, and code-action affordances visible only when the same FileSafe and remote write-availability checks would allow the mutation.
+- Remote outages affect adjacent consumers without redefining them. Prior Search results may remain as stale snapshots, while new queries that need remote round-trips block or show unavailable; Source Control may expose stale status or `/diff` but must not silently fall back to local Git; Problems and LSP diagnostics may remain visible only when marked stale or unavailable; open remote buffers may retain local text and `/offline/pending-sync` state without implying remote write success. Hunk-level `/diff` interaction, fallback-open actions, read-only reasons, and remote LSP disable/defer decisions use the same capability vocabulary.
+- Remote/local parity covers save/dirty state, file watches/reload, diff generation and compare targets, LSP execution/fallback, and rich previews `/renderers`; parity means explicit capability state, not hidden local fallback.
+- Browser and recovery residue must not be reintroduced through LSP wording: `Bottom Panel Browser tab (§7.20)`, `preview_mode = browser_panel`, and `preview_mode` are preview/browser migration tokens owned by FileManager/FinalGUISpec/storage-plan cleanup, while `recover-unsaved` remains an editor/storage recovery contract outside the LSP session key.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
 
@@ -682,6 +654,10 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integ
 
 LSP server lifecycle state machine:
 
+Canonical user/state names are `Starting`, `Initializing`, `Ready`, `RestartBackoff`, `Degraded`, `ShuttingDown`, and `Stopped`. Only `Ready` emits normal feature traffic; `Starting` and `Initializing` may queue sync work, `RestartBackoff` exposes countdown plus last error, and `Degraded` can mean paused recovery or diagnostics-only / diagnostics-only attachment. Each document is attached once per session, including virtual-doc buffers, and `didClose` is emitted when the final attachment for that `(session, uri)` disappears. The session/model boundary records `/URI` identity so virtual-doc and real-file URI values do not collide.
+
+The `/supervision` boundary is `LspSupervisor` plus `DocumentStore`: `/document-pane` surfaces, editor tabs, chat virtual documents, restore/reload, and `/revert` all consume the same authoritative buffer and pending-sync state. LSP never reads a second document authority for an open file, and `didSave` is emitted only after the shared document store records a successful save for the current version.
+
 States: `stopped → starting → initializing → ready → degraded → stopping → crashed`
 
 | From | To | Trigger | Action |
@@ -713,6 +689,19 @@ All LSP I/O on **async task** (tokio); route UI updates to the Slint event loop 
 
 **Stale response policy:** When a response arrives for a document-scoped request (hover, completion, definition, references, signatureHelp), the client must check whether the document version has changed since the request was sent. Store the document version (from `DocumentState.version` for that URI) at request time; when the response is received, compare to the current `DocumentState.version`. If the current version is **greater** than the version at request time, **discard** the response (do not show tooltip, do not apply completion, do not navigate). Optionally match by request id so only the correct response is discarded. **Do not** automatically re-request; the user can repeat the action (e.g. hover again, trigger completion again) to get a fresh result. For workspace-level requests (e.g. workspace/symbol), version check is per relevant document or omit if no single document applies.
 
+Document identity, freshness, and `/position` conversion are one contract. Before `didClose`, PM cancels in-flight document-scoped requests for `(session, uri)` and clears diagnostics per `(server/session, uri)`. Each document-scoped request carries `session_epoch`, `uri`, `document_version`, and `request_generation` or an equivalent latest-of-class marker; responses apply only for the same live session epoch, same URI, matching current document version, and latest relevant request class. Late replies are discarded in UX but remain visible in trace `/logs`.
+
+At open time, PM creates one canonical `DocumentUri` per document/host and reuses it consistently. The same physical file must not gain duplicate identities through case, `/slash/drive-letter`, URI spelling, `(session, uri)` pairing, or `/path/position` conversion differences. UI/editor surfaces stay 1-based where already planned; the LSP boundary remains 0-based and uses one position-mapper / position-mapping service backed by `DocumentStore`. `capabilities.positionEncoding` and `position_encoding` are negotiated per session; PM uses compatibility-first position-encoding, keeps UTF-16 as the guaranteed baseline, may prefer `utf-8` only after compatibility proof, and must not hard-code UTF assumptions into hover, `/completion/diagnostics/rename`, diagnostics, rename, or formatting handlers. Conversion uses fast per-line helpers/cache so multi-server correctness, remote `/SSH`, and performance tuning stay protocol-safe.
+
+LSP coordinates use the protocol's code-unit conventions at the boundary; the centralized conversion layer records whether a server uses UTF-16 code-unit offsets, another negotiated encoding, or compatibility fallback, so individual feature handlers never hand-roll code-unit math.
+
+Sync ordering and request-class rules:
+- Sync events are FIFO per session. A document-scoped request must not leave the queue until the target session is `Ready`, the prior `didOpen`/`didChange` work for that document in that session has flushed, and the document is no longer in pending-sync state.
+- Hover, `/completion/signatureHelp`, and similar soft requests keep only the newest pending request per document `/request-class`; older in-flight or not-yet-ready requests are canceled or dropped on `/close`, cursor movement, or newer input.
+- Explicit navigation and editing requests such as definition, references, rename, format, and `codeAction` wait behind the sync barrier once and then execute only if still relevant.
+- `didChange` debounce is resetting `/coalescing`, not fixed-window batching. All mutations since the last sent sync for that session/doc become one batch; if incremental confidence is lost, send a whole-document replacement to re-baseline; if confidence is still not trustworthy, restart the session and replay currently attached docs.
+- A successful save may emit `didSave` for the current document version/content state. Failed save does not emit `didSave`, and stale-result handling must not make the UI look saved or synchronized.
+
 ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 14.5 Config schema and storage
@@ -735,26 +724,6 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 14.8 Virtual documents (Chat code blocks)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0350
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - workspace-backed documents use `doc:<document_id>`
-  - doc:<document_id>
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Code blocks in Chat messages (§5.1) that are not backed by a project file use **virtual documents** so hover and go-to-definition can still call the LSP.
 
@@ -773,17 +742,31 @@ ContractRef: ContractName:Plans/LSPSupport.md
 Minimum fields:
 - `server_id`
 - `display_name`
-- `source_tags[]`
+- `sources[]` (`microsoft`, `opencode`, `pm` for catalog provenance; custom rows use `kind = custom`)
+- `source_names[]` / `aliases[]`
 - `kind` (`managed_builtin`, `managed_catalog`, `custom`)
 - `language_tags[]`
-- `file_globs[]`
+- `extensions[]`
+- `selectors[]` / `file_globs[]`
+- `platforms[]`
+- `requirements[]`
+- `root_rules`
+- `root_discovery_mode`
 - `selection_mode`
 - `selection_family`
 - `primary_priority`
-- `supplementary_families[]`
-- `context_markers[]`
+- `context_require[]`
+- `context_exclude[]`
+- `supplementary_for_families[]`
 - `capability_profile`
-- `root_rules`
+- `role_default` (`primary`, `supplementary`, `contextual`)
+- `support_classification` (`supported-by-registry`, `default-managed`, `toolchain-bound/manual`, `experimental/degraded`, `deprecated/replaced`)
+- `default_enabled`
+- `provisioning_strategy`
+- `availability_probe`
+- `command_template` / launch hint
+- `initialization_defaults`
+- `notes`
 - `host_support`
 - `degraded_attach_rules`
 
@@ -792,7 +775,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 Registry rules:
 - the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata
 - user enable/disable and custom-server settings layer on top of the catalog instead of replacing it
-- derived prose tables may be generated from this registry, but this structure remains the SSOT
+- derived prose tables and `/readable` `/settings/docs` views may be generated from this support-catalog registry, but this structure remains the SSOT and prevents the large union catalog from becoming duplicate-prone prose
+- Support scope and support classification stay separate in the `/catalog`: supported-by-registry, default-managed, toolchain-bound `/manual`, experimental `/degraded`, and deprecated or `/replaced` are classification outcomes layered over stable `server_id` identity, not reasons to fork the catalog SSOT. Effective resolution order is catalog base entry, global override, project override, then runtime availability and `/effective-state` evaluation.
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
 
@@ -868,26 +852,6 @@ No core runtime LSP behavior remains implementation-defined after this section.
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## Appendix: Implementation plan checklist (single ordered list for implementers)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0349
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - ordered `allowed_action_ids[]`
-  - allowed_action_ids[]
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.
 
@@ -1031,6 +995,8 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/feature-list.m
 
 ### 17.2 LSP snapshot in evidence
 
+Prompt-consumable LSP/debug evidence may auto-ingest at most the top five evidence items by current relevance `/severity`; after that cap, additional diagnostics or trace material enter summarization-only mode unless the user explicitly opens the full runtime artifact.
+
 #### Schema (per diagnostic entry)
 
 Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snapshot:
@@ -1057,26 +1023,6 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 
 #### File format and location
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0352
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `to_tier_id: Some(format!(\"interview-phase-...\"))`
-  - to_tier_id: Some(format!(\"interview-phase-...\"))
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Directory:** `.puppet-master/evidence/lsp-snapshots/`.
 - **Filename:** `lsp-snapshot-{gate_id}-{timestamp}.json` or `lsp-snapshot-{tier_id}-{session_id}.json` so it is unique and tied to the gate run.
@@ -1103,6 +1049,7 @@ ContractRef: ContractName:Plans/LSPSupport.md
   - **Node's file list** -- If the node has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
 - **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_node`: after building node context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or NodeContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+- `Plans/orchestrator-subagent-integration.md` / `/orchestrator-subagent-integration.md` remains the owner for subagent-selection wiring; its runtime structs must carry the rewrite execution identity and concern model when LSP diagnostics bias a node.
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
 

@@ -1,49 +1,11 @@
 # Run Modes (Canonical SSOT)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0485
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `chain-wizard-flexibility.md` introduces intent-specific execution modes
-  - chain-wizard-flexibility.md
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-159: Identity and blocked-policy transfer cluster
-- Coverage rows: cov-159
-- Fidelity gap refs: cov-159
-- Required fidelity items:
-- Exact required item: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
-- Exact required item: Carry usage switch-history and usage execution-role follow-through
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-159: Identity and blocked-policy transfer cluster` exists in `Plans/Run_Modes.md`.
-- Exact acceptance check: The `cov-159` repair states the exact requirement: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
-- Exact acceptance check: The `cov-159` repair states the exact requirement: Carry usage switch-history and usage execution-role follow-through
-- Exact acceptance check: The `cov-159` repair is in the owner section for `Plans/Run_Modes.md` and is not only a downstream consumer note.
-
+### Identity and blocked-policy transfer cluster
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -81,9 +43,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Com
 
 Rules:
 - `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+- The closed runtime-mode enum is `ask|plan|regular|yolo`; the closed workflow-overlay enum is `none|plan|deep_plan|debug|interview|brainstorm|crew`.
 - `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
 - overlay choice must not widen runtime authority.
 - children inherit the parent runtime ceiling and may narrow it only.
+- External IDE baselines such as JetBrains chat/agent modes and Junie validate that assistant modes may generate code, edits, and terminal commands with visible progress plus review/apply affordances in tool windows; PM still maps those affordances to `/agent`, `/apply`, operation-card/terminal surfaces, and the runtime authority enum here rather than treating the reference product as an owner.
 ### 1.1 `ask`
 `ask` is the read-only inspection and explanation posture.
 
@@ -124,6 +88,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 - Puppet Master asks for a structured plan or reasoning output, executes **all** actions itself via Puppet Master tools (subject to the permission model in `Plans/Tools.md`), and feeds results back to the provider.
 - HTE is a **host-owned action loop**: the provider may request the next hosted action or return a final answer, but Puppet Master executes every real tool call itself under the permission + FileSafe stack and feeds the structured result back into the next provider turn.
 - When `execution_strategy = "hte"`, the adapter MUST place the provider in the most restrictive available **no-tools / no-side-effect** posture for that provider, even when the higher-level runtime mode is `regular`.
+- The legacy `/plan/regular` shorthand maps to the canonical ask/plan/regular default: HTE is used for `ask`, `plan`, and `regular` unless `regular` explicitly selects DAE and provider policy allows it.
 - Any tool-call observation from the provider stream during HTE is a kill condition (see §5.2).
 
 <a id="STRATEGY-DAE"></a>
@@ -147,6 +112,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assista
 - Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise `dae_allowed = false` and cannot be selected for DAE.
 - The **actual jail diff** is authoritative for mutation accounting; provider-reported tool/file activity is advisory correlation data only.
 - Child/subagent runs inherit the parent selected strategy unless a higher-level SSOT explicitly narrows it.
+- Workspace isolation is per-subagent: HTE child/subagent turns inherit the parent write-scope because PM executes tools, while DAE child/subagent turns run in their own jail and reconcile back only after scans and FileSafe checks succeed.
 - End-of-run scans are mandatory (see §5.2).
 - FileSafe guards (`Plans/FileSafe.md`) apply to all DAE-originated mutations.
 
@@ -197,9 +163,22 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run
 
 Debug-specific resolution notes:
 - `effective_mode_overlay = debug` with `mode ∈ {ask, plan}` is an invalid automated-debug combination and MUST be normalized before run spawn; the runtime must not execute a Debug investigation in read-only posture
+- `Debug Mode + regular + HTE` is the recommended default runtime/execution model for Debug investigations
+- `Debug Mode + yolo` is an advanced opt-in only and MUST NOT become the default Debug posture
+- a visible `Debug` picker is a workflow overlay plus target/evidence package, not a brand-new runtime mode; it must normalize into `ask | plan | regular | yolo` rather than adding another runtime enum
+- Debug target binding uses target-discovery heuristics and adapter-selection defaults owned by the relevant GUI, evidence, and tool surfaces; file-by-file canonical doc changes must land in those owner docs instead of creating a generic runtime-mode bucket
 - the default Debug posture is `mode = regular` with HTE unless the user explicitly requests a DAE-capable posture and provider policy allows it
 - `yolo` still requires DAE; if the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE
 - `run.started` MUST persist `requested_mode_overlay`, `effective_mode_overlay`, `mode`, `strategy`, `strategy_resolution_reason`, and any active Debug Automation Profile snapshot
+
+### 3.1 P5 run-mode governance recovery requirements
+
+- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps: - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned. - `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, `/event` recovery, `attention_required` persistence, blocked semantics, or mid-run account-switch invalidation of committed strategy. - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering. - `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placement.
+- Runtime-governance docs continue to sharpen rather than stabilize: - startup recovery remains split across policy, executor, and storage docs with no single owner deciding how interrupted attempts become `stale_historical` vs rehydrated vs `startup_recovered`. - retry/backoff policy is now more clearly blocked on counter-family ownership because `retry_count` is display-only yet policy wording still acts like a generic “attempts” ceiling is enough. - recovery actions still leak unstable UI labels (`deny`, `manual fix`, `abort node`) even though HITL/runtime docs are closer to a canonical `allowed_action_ids[]` family. - Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context. - `yolo` is still overstated as approval-free even though non-bypassable step-7 guards remain in force.
+- ELI5/Expert currently risks becoming a synonym generator. - the safer rule is: simplify explanation depth, not canonical object names - for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer
+- Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy.
+- current work item posture remains `active`, but the center of gravity is shifting from exploration to owner-hardening
+
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
@@ -217,11 +196,15 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 | `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |
 | `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |
 
+Concurrency SSOT defaults are `max_concurrent_crews_per_platform=4`, `max_concurrent_agents_per_crew=8`, and `max_total_active_agents=32`; any 5-crews / 10-agents wording in downstream docs is stale drift and must be retired rather than treated as an alternate cap.
+
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
 ### 4.2 Run-envelope budget fields
 
 Budget limits are enforced by the run supervisor regardless of strategy. They are frozen into the run envelope and survive pause/resume for the same `run_id`.
+
+Legacy A2A/OpenCode gap wording may call these ceilings `max_tokens` and `max_wall_time`; the canonical run-envelope keys are `max_estimated_tokens` and `max_wall_ms`, and both feed the budget and kill-condition enforcement below.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
@@ -236,11 +219,13 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 | `max_write_thrashing` | 5 writes / 10 min | DAE / hosted mutation paths | Same normalized file identity rewritten too often in a sliding window. |
 | `max_retryable_errors` | 3 | All modes | Ceiling on retryable provider/executor failures before run termination. |
 | `task_timeout_ms` | inherit parent remaining budget | Subagent task envelope | Per-task cap; may narrow parent budget but MUST NOT exceed it. |
+| `warn_budget_pct` | 80 | Per-run and per-session budgets | Warning threshold for pre-request estimates and post-response actual cost tracking before budget enforcement terminates the run. |
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Interpretation rules:
 - `max_tool_rounds` is distinct from `max_nesting_depth`; one limits same-level iteration, the other limits recursive delegation depth.
+- Canonical run-envelope exact defaults are `max_nesting_depth=4`, `max_total_spawned_agents=99`, and `max_tool_rounds=200`; the kill table consumes those fields without inventing alternate caps.
 - Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.
 - Queueing at concurrency caps is deterministic; PM MUST NOT silently discard or auto-widen queued work.
 
@@ -251,6 +236,8 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storag
 <a id="KILL-CONDITIONS"></a>
 
 A kill condition triggers immediate run termination with outcome `done.failed` and a machine-readable reason code.
+
+Run outcome naming follows a two-family reason-code contract: `kill.*` names pre-dispatch or `/active-kill` supervisor triggers, while `done.*` names terminal outcomes recorded after shutdown, usage, or recovery finalization.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
 
@@ -274,7 +261,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permiss
 Rules:
 - `done.task_timeout` is the canonical terminal stop reason for elapsed-budget exhaustion after graceful teardown. Internal supervisor bookkeeping may classify the pre-terminal trigger as timeout exhaustion, but consumers MUST persist and inspect `done.task_timeout`; `kill.task_timeout` is retired as a consumer-facing terminal alias.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
-- `kill.budget_exceeded` remains pre-dispatch only. Post-response budget overruns use terminal `done.budget_exceeded` after usage has been durably recorded and MUST NOT be folded back into the pre-dispatch row above.
+- `kill.budget_exceeded` remains pre-dispatch only. Post-response budget-overrun cases use terminal `done.budget_exceeded` after usage has been durably recorded and MUST NOT be folded back into the pre-dispatch row above.
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 #### Exact-match doom-loop guard
@@ -291,7 +278,11 @@ PM entrypoints MUST establish the canonical shutdown root with `signal.NotifyCon
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-`SIGTERM` and `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped.
+`SIGTERM` and `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped to the `/process-group` rather than individual PIDs.
+
+Windows MCP subsystem shutdown uses `CREATE_NEW_PROCESS_GROUP`; graceful cancellation sends `CTRL_BREAK_EVENT`, waits 3 seconds, then uses `TerminateProcess` for the still-live child process group. Windows paths that may exceed ordinary path length limits are normalized with the `\\?\` long-path prefix before process launch or teardown bookkeeping.
+
+This lifecycle section replaces over-summarized process-shutdown wording by naming the entrypoint signal root, process-group rule, platform-specific teardown sequence, and orphaned-process RAM leak prevention rationale.
 
 Grace periods:
 - provider processes: 5 seconds, then force terminate
@@ -355,6 +346,7 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 - user-interface-only terminal actions such as reveal, pin, rename, clear-scrollback, or pane movement do **not** count as executed shell invocations
 - explicit terminal restart or explicit session replacement resets shell-failure continuity because a new `terminal_session_id` is created
 - success of the same fingerprint resets the streak to zero; a different executed fingerprint also resets the previous fingerprint's streak
+- Compatibility labels are canonicalized here: `shell-fingerprint` means the canonical shell fingerprint, `terminal-normalized` means the terminal normalized `done` and `/audit` outcome family, and `/replace/stop` covers explicit session replacement, restart, or user/parent stop paths.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
@@ -467,6 +459,10 @@ Interpretation rules:
 
 ## 9. Puppet Master deltas
 
+Mode selection does not remove read-only repository search: agents and delegated read-only children may use `grep` in every runtime mode subject to the tool registry and permission policy, while mutation remains bounded by the active mode's authority ceiling.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
 ### 9.1 `ask`
 
 `ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
@@ -481,6 +477,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-desi
 
 Rules:
 - read-only delegated child runs remain allowed when they stay within the parent mode ceiling
+- read-only planning tools such as `todoread`, `todowrite`, limited read-only `task`, read/navigation-only `lsp`, and external-read `/web` family operations go through the normal permission stack in Plan mode rather than being auto-denied as a family
 - `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` remain ask-gated rather than auto-denied
 - Deep Plan's question-driven loop feeds the same normalized TODO projection used by execution
 ### 9.3 `regular`
@@ -591,6 +588,22 @@ Required rule:
 - `ask`, `plan`, `regular`, and `yolo` all use the shared `failure_class` / `blocked_reason_code` taxonomy
 - mode may change which classes are likely, but not the meaning of those classes
 
+Failover reason codes are part of the shared runtime classification and remain stable across modes.
+
+Required failover reason codes:
+- `hard_exhaustion_failover`
+- `auth_failure_failover`
+- `workspace_deactivated_failover`
+- `model_unsupported_failover`
+- `provider_unhealthy_failover`
+
+Rules:
+- failover reason codes are recorded in `reason_codes[]` or the owning runtime/audit envelope for the attempt
+- changing from `ask` or `plan` to an execution-capable mode does not rewrite the original failover reason
+- provider/account routing surfaces may add selection, preemptive-switch, clamp/substitution, or blocked reasons, but those reason families do not replace failover classification
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
+
 ### 2. Ask/plan/headless interaction
 
 Existing headless behavior remains authoritative:
@@ -644,7 +657,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Exe
 
 ### Safe-point rule
 If policy requires rollback before rerun, changing mode alone is insufficient; the safe-point restore requirement still applies.
-## Runtime Mode / Recovery Reconciliation Addendum (2026-03-09)
+## Runtime Mode / Recovery Canonical Alignment (2026-03-09)
 
 Execution mode affects what can be shown immediately, but does not redefine the runtime taxonomy.
 
@@ -668,6 +681,8 @@ When `headless_ask_denied` blocks work in a non-interactive mode:
 - surface blocked node count in CLI/log status summaries
 - surface a dashboard badge if a UI session is attached
 - include the exact permission or approval that could not be presented interactively
+- return `status: "unavailable"` with `reason: "headless"` to tool and operation-card consumers when no interactive presenter exists
+- do not offer GUI-only recovery actions such as `Open in Terminal` from a headless context; provide resume guidance, permission-preset adjustment, interactive mode change, fallback strategy when policy allows it, or an orchestrator-facing blockage
 
 ### Safe-point applicability
 Run modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.
@@ -702,4 +717,3 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Tools.m
 - Carry usage switch-history and usage execution-role follow-through across mode changes and blocked recovery.
 - cov-159 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
 - cov-159 exact item present: Carry usage switch-history and usage execution-role follow-through
-

@@ -24,6 +24,333 @@
       "type": "string",
       "const": "pm.evidence.schema.v1"
     },
+    "web_activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional evidence for web/provider activity captured by a run.",
+      "properties": {
+        "websearch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "query",
+            "results"
+          ],
+          "description": "websearch query: string returns a results array.",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "query: string"
+            },
+            "results": {
+              "type": "array",
+              "description": "results array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "snippet": {
+                    "type": "string"
+                  },
+                  "source_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "provider_configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "description": "Provider configuration evidence preserves enabled: boolean and api_key?: string while keeping keys in global user settings, NOT project-scoped evidence content. enabled defaults false when not configured.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "enabled: boolean; default false when provider configuration is absent."
+            },
+            "api_key_configured": {
+              "type": "boolean",
+              "description": "api_key?: string is stored in global user settings, NOT project-scoped; evidence records only whether a cloud key is configured, never the raw secret."
+            },
+            "api_key_ref": {
+              "type": "string",
+              "description": "Optional non-secret reference to the global user setting that stores api_key?: string."
+            },
+            "base_url": {
+              "type": "string"
+            }
+          }
+        },
+        "provider_routing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provider_fallback_occurred"
+          ],
+          "description": "Provider routing evidence preserves adapter_selection_reason and provider_fallback_occurred.",
+          "properties": {
+            "adapter_selection_reason": {
+              "type": "string"
+            },
+            "provider_fallback_occurred": {
+              "type": "boolean"
+            },
+            "provider_fallback_summary": {
+              "type": "string"
+            }
+          }
+        },
+        "webfetch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "formats"
+          ],
+          "description": "webfetch evidence preserves URL validation, url, formats, change_tracking?: boolean, pdf_artifact, and returned format artifacts.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "url and URL"
+            },
+            "formats": {
+              "type": "array",
+              "description": "formats; valid JSON Schema representation for PM markdown, PM screenshot, and PM pdf format mappings.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "markdown",
+                      "html",
+                      "rawHtml",
+                      "screenshot",
+                      "pdf",
+                      "summary",
+                      "links",
+                      "images"
+                    ]
+                  }
+                }
+              }
+            },
+            "parsers": {
+              "type": "array",
+              "description": "Parser entries represent requested parser output formats such as pdf.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "pdf"
+                    ]
+                  }
+                }
+              }
+            },
+            "change_tracking": {
+              "type": "boolean",
+              "description": "change_tracking?: boolean; default false; when true, returns a diff against the previous fetch of the same URL."
+            },
+            "pdf_artifact": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "pdf_artifact?: { ref: string, page_count: number }",
+              "required": [
+                "ref",
+                "page_count"
+              ],
+              "properties": {
+                "ref": {
+                  "type": "string"
+                },
+                "page_count": {
+                  "type": "integer",
+                  "description": "page_count",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "webcrawl": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pages"
+          ],
+          "description": "webcrawl evidence preserves scope_summary?: string and pages: Array<{ url: string, title?: string, content_ref?: string, change_status?: string }>",
+          "properties": {
+            "scope_summary": {
+              "type": "string",
+              "description": "scope_summary?: string"
+            },
+            "pages": {
+              "type": "array",
+              "description": "pages: Array<{ url: string, title?: string, content_ref?: string, change_status?: string }>",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "content_ref": {
+                    "type": "string"
+                  },
+                  "change_status": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "change_summary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "new": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "changed": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "same": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "removed": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "webmap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "links"
+          ],
+          "description": "webmap evidence preserves map_ref?: string, map_ref, links: Array<{ url: string, title?: string, description?: string }>, and discovered URLs.",
+          "properties": {
+            "map_ref": {
+              "type": "string",
+              "description": "map_ref?: string"
+            },
+            "links": {
+              "type": "array",
+              "description": "links: Array<{ url: string, title?: string, description?: string }>",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URLs"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "runtime_route_action_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional route/action evidence for Run Graph, widget, workspace isolation, HITL, gate/audit, confirmation, and manual natural-language surfaces.",
+      "properties": {
+        "hitl_action_args": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Run Graph HITL actions consume Plans/Run_Graph_View.md and /Run_Graph_View.md command evidence: cmd.graph.approve_hitl and cmd.graph.deny_hitl use { node_id: string, rationale: string }.",
+          "properties": {
+            "node_id": {"type": "string"},
+            "rationale": {"type": "string"}
+          }
+        },
+        "widget_route_args": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "cmd.widget and cmd.widget.* must migrate away from generic page: string routing when native-surface vocabulary is available.",
+          "properties": {
+            "page": {"type": "string", "description": "page: string compatibility field"},
+            "native_surface": {"type": "string", "description": "native-surface target name"}
+          }
+        },
+        "workspace_isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Workspace isolation evidence preserves lane_id, worktree_id, workspace_ref, and snapshot_ref.",
+          "properties": {
+            "lane_id": {"type": "string"},
+            "worktree_id": {"type": "string"},
+            "workspace_ref": {"type": "string"},
+            "snapshot_ref": {"type": "string"}
+          }
+        },
+        "runtime_native_hitl": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Slint GraphNodeUI evidence must retire tier_type UI assumptions and hitl_action(node_id, action, rationale) callbacks in favor of runtime-native blocked action targets.",
+          "properties": {
+            "node_id": {"type": "string"},
+            "tier_type": {"type": "string"},
+            "hitl_action": {"type": "string", "description": "hitl_action(node_id, action, rationale) compatibility callback"}
+          }
+        },
+        "shared_payload_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Shared payload fields include /surface, project_id, focused_run_id, /gate, /audit, trace-through, /artifacts/history, light and strong confirmation, /manual user-driven natural-language request evidence.",
+          "properties": {
+            "project_id": {"type": "string"},
+            "focused_run_id": {"type": "string"},
+            "surface": {"type": "string"},
+            "confirmation_strength": {"type": "string", "enum": ["light", "strong"]},
+            "manual_request": {"type": "boolean", "description": "/manual user-driven natural-language request"}
+          }
+        }
+      }
+    },
     "evidence_id": {
       "type": "string",
       "minLength": 1

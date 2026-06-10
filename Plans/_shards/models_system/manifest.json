@@ -1,0 +1,194 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/models_system/00-index.md",
+  "index_sha256": "7f098e2e1687d19edcc2f56031369372d9f62502727ea7b47144d2400b7ad668",
+  "manifest_path": "Plans/_shards/models_system/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/models_system/001-preamble.md",
+      "sha256": "12b905e7e9c7584369bcf47d6f1f94032ca066d2a22e2d796f1de2a1020052ae",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/models_system/002-canonical-owner-section-requirements.md",
+      "sha256": "0c1589a3325c1576243945338d974bfac076d6376d004b0ff007edf1ecd3f900",
+      "shard_id": "002",
+      "source_line_end": 10,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope and SSOT status",
+      "path": "Plans/_shards/models_system/003-0.-scope-and-ssot-status.md",
+      "sha256": "f10a1bbdb3db4173f4fa185877ecc79ecfc7b804b3135e151864abdb9db6a7f6",
+      "shard_id": "003",
+      "source_line_end": 31,
+      "source_line_start": 11,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Provider/model precedence and settings resolution",
+      "path": "Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md",
+      "sha256": "7d47754267708fa3952dfbb97a7360cd644bc35487361a659af831cdce7a3bdb",
+      "shard_id": "004",
+      "source_line_end": 200,
+      "source_line_start": 32,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Canonical model identifier",
+      "path": "Plans/_shards/models_system/005-1.-canonical-model-identifier.md",
+      "sha256": "2b708220a4c8debb7e6c4e1861a8f0b21ccd4db21259dd88822ed898a627af73",
+      "shard_id": "005",
+      "source_line_end": 241,
+      "source_line_start": 201,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Model and runtime selection priority",
+      "path": "Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md",
+      "sha256": "c8ee7a3b6fdb4709d3a84f32c52e45a2f6ebcbd87909f493a049cd7654f0cec5",
+      "shard_id": "006",
+      "source_line_end": 265,
+      "source_line_start": 242,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Model options configuration",
+      "path": "Plans/_shards/models_system/007-3.-model-options-configuration.md",
+      "sha256": "9065342679891efd5d603ad34b47547b988d38a7709c92ead1806c3c6da8bb81",
+      "shard_id": "007",
+      "source_line_end": 380,
+      "source_line_start": 266,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Model availability and error handling",
+      "path": "Plans/_shards/models_system/008-4.-model-availability-and-error-handling.md",
+      "sha256": "f3176ec1d888e56e1e57de53f6655015d8e96e776f6c08f4bb2602f5f62d22d4",
+      "shard_id": "008",
+      "source_line_end": 500,
+      "source_line_start": 381,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Per-Persona runtime preferences",
+      "path": "Plans/_shards/models_system/009-5.-per-persona-runtime-preferences.md",
+      "sha256": "0552f53a515a9ca7d1efe70fa9d2f3bbbd9dfca1980ce16970210ee8cd413f1e",
+      "shard_id": "009",
+      "source_line_end": 539,
+      "source_line_start": 501,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Variants system",
+      "path": "Plans/_shards/models_system/010-6.-variants-system.md",
+      "sha256": "511330c340611b3186b730ae7a3a2eb403f4ca2fee6fe247f7224dc876b779b8",
+      "shard_id": "010",
+      "source_line_end": 650,
+      "source_line_start": 540,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. GUI requirements",
+      "path": "Plans/_shards/models_system/011-7.-gui-requirements.md",
+      "sha256": "ca97e8e127ecc990bb3214c433aad88ff9b674ec3adbfcb0ecfc1aec5a6e4f19",
+      "shard_id": "011",
+      "source_line_end": 703,
+      "source_line_start": 651,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. OpenCode baseline and Puppet Master deltas",
+      "path": "Plans/_shards/models_system/012-8.-opencode-baseline-and-puppet-master-deltas.md",
+      "sha256": "a94a9a31654a2729aef4cdc44403519245f9b4405700d197ed09440daf451f14",
+      "shard_id": "012",
+      "source_line_end": 727,
+      "source_line_start": 704,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. Acceptance criteria",
+      "path": "Plans/_shards/models_system/013-9.-acceptance-criteria.md",
+      "sha256": "9027494a36c39a03ef7dd2cb1048435ffe55b54908d0d4413aa54344b1318215",
+      "shard_id": "013",
+      "source_line_end": 762,
+      "source_line_start": 728,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
+      "path": "Plans/_shards/models_system/014-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md",
+      "sha256": "c61f79cea68dbe89f185f61e66460aca143bda1b4afdcd761272a9001aaa2663",
+      "shard_id": "014",
+      "source_line_end": 1087,
+      "source_line_start": 763,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Provider Failure-Class Alignment Addendum (2026-03-08)",
+      "path": "Plans/_shards/models_system/015-provider-failure-class-alignment-addendum-2026-03-08.md",
+      "sha256": "b68d375d2f6504fe8d307f3ea507d1528956f5762b9f34ed6c3b8f8fb1c0a917",
+      "shard_id": "015",
+      "source_line_end": 1095,
+      "source_line_start": 1088,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Retry / Fallback Ownership Addendum (2026-03-09)",
+      "path": "Plans/_shards/models_system/016-runtime-retry-fallback-ownership-addendum-2026-03-09.md",
+      "sha256": "fdb6e9a0861e6760ceb1eb6e1610aa8b789f366ee31f9fc264765084f5782e94",
+      "shard_id": "016",
+      "source_line_end": 1111,
+      "source_line_start": 1096,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/models_system/017-requested-effective-model-and-retry-ownership-canonical-alignmen.md",
+      "sha256": "1ae9fddc112d2f18378ab78506bae07c0692546c1d6fdb5227e224f968e9fccb",
+      "shard_id": "017",
+      "source_line_end": 1119,
+      "source_line_start": 1112,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)",
+      "path": "Plans/_shards/models_system/018-model-selection-versus-runtime-retry-ownership-consolidation-add.md",
+      "sha256": "286e5b19441f77fe3abcbee4e1fc4d7d90f794749610716e640dd5d883b85cf8",
+      "shard_id": "018",
+      "source_line_end": 1129,
+      "source_line_start": 1120,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Requested / Effective Model Snapshot Alignment",
+      "path": "Plans/_shards/models_system/019-requested-effective-model-snapshot-alignment.md",
+      "sha256": "45cf09568e3ec8879733ccc9877801ad2f6eb515af85664b630e96f71c25f122",
+      "shard_id": "019",
+      "source_line_end": 1159,
+      "source_line_start": 1130,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Provider/model selection policy and audit addendum",
+      "path": "Plans/_shards/models_system/020-provider-model-selection-policy-and-audit-addendum.md",
+      "sha256": "ac9280252dd6bc8644c8b1c63048d0810005b4e8d38f17fe1d0ef93dc2eeb28a",
+      "shard_id": "020",
+      "source_line_end": 1236,
+      "source_line_start": 1160,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1236,
+    "path": "Plans/Models_System.md",
+    "sha256": "10fe6fe1c4a9e31b624537b011c0b93e66a40ad7e68a7ee45eed589ae1abe66b"
+  }
+}

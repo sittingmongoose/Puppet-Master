@@ -1,169 +1,14 @@
 # CLI-Bridged Providers (Provider Facade)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0068
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime
-  - still too weak to support canonical account identity, switch-reason disclosure, or conversational-actor routing through the provider facade
-  - `CLI_Bridged_Providers.md` requires direct providers to declare multi-account/switch capability surfaces, but bridged providers are exempt by omission even though `Multi-Account.md` expects bridged routing support.
-  - CLI_Bridged_Providers.md
-  - Multi-Account.md
-  - still rely on mutable provider identity and thin degraded-capability UX even though per-realm stable account identity is now required
-  - `honored/skipped/clamped` from provider capability handling
-  - honored/skipped/clamped
-  - `Reason: provider does not support effort on this model`
-  - Reason: provider does not support effort on this model
-  - `Provider fallback from preferred persona model`
-  - Provider fallback from preferred persona model
-  - shared provider runtime does not imply shared execution ontology
-  - `Warning: provider pressure high`
-  - Warning: provider pressure high
-  - Source-qualified usage wording still matters for Gemini and other estimate-only providers; that requirement should survive the broader identity rewrite
-  - but canonical contracts want stable internal `account_id` plus display-only provider identity
-  - account_id
-  - `GitHub_API_Auth_and_Flows.md` still uses login-derived credential identity while multi-account/storage contracts require stable internal `account_id` plus disclosure-only provider metadata.
-  - GitHub_API_Auth_and_Flows.md
-  - still encode single-session/single-actor assumptions that break under shared provider runtime, multi-lane orchestration, and server-bridged transport
-  - `storage-plan.md` still models durable provider account snapshots for runs but not for other actor classes that use the same provider runtime.
-  - storage-plan.md
-  - Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes.
-  - Actor/runtime unification must preserve ontology separation: conversational actors share provider runtime without becoming orchestration-node objects.
-  - direct providers must expose capability metadata like multi-account support, switch boundary, quota signal sources/confidence, and role-scoped pools
-  - that means multi-account routing and pressure interpretation are currently stronger on paper for direct providers than for bridged providers
-  - but not requested/effective auth/account fields, upstream provider identity ownership, or switch attribution
-  - auth/account health, switch pressure, provider confidence, and projection freshness still do not flow through one reusable trust/concern contract
-  - now show a concrete parity gap on auth/account disclosure for conversational actors sharing provider runtime
-  - Bridged providers still lack the capability metadata already required of direct providers.
-  - Shared degraded-trust / concern escalation remains absent across provider, permissions, widgets, and conversational surfaces.
-  - The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity:
-  - `Models_System.md` still contains a concrete naming collision between **transport host** and **upstream provider**:
-  - Models_System.md
-  - canonical model IDs treat `provider_id` as upstream provider slug
-  - provider_id
-  - `Models_System.md` still mixes transport host and upstream provider in one `provider_id` vocabulary.
-  - GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added
-  - provider_attempt_ref?
-  - Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.
-  - If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission.
-  - `Models_System.md` still needs one explicit split between **transport host identity** and **upstream provider identity**, or requested/effective identity renderers will keep colliding those concepts
-  - Transport-vs-upstream provider identity remains ambiguous in model/runtime examples.
-  - Split transport host identity from upstream provider identity in model/provider contracts and downstream projection payloads.
-  - Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure
-  - The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics:
-  - Provider continuity can stay opaque, but only if opacity is explicit and projected as such.
-  - Artifact provenance/trust needs to work even when the live worktree or provider session is gone.
-  - provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere
-  - source_stage
-  - source_phase_ids[]
-  - persona_id
-  - provider
-  - model
-  - timestamp
-  - Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.
-  - required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`
-  - pass_number
-  - pass_name
-  - pass_verdict
-  - verdict_reason
-  - Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.
-  - `attempt.started` and the immutable provider handoff bundle should be isomorphic enough that one can be projected from the other without inventing new fields.
-  - attempt.started
-  - Those should not be collapsed into provider account identity because the same provider account may drive multiple operational targets, and the same operational target may be accessed by different provider accounts over time.
-  - `Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target context.
-  - Orchestrator_Page.md
-  - requested_persona_id
-  - effective_persona_id
-  - ) that does not expose
-  - which provider attempt and effective account/runtime identity it used
-  - `provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.
-  - provider_attempt_ref
-  - attempt_record
-  - Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Provider / Model`
-  - Provider / Model
-  - `00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.
-  - 00-plans-index.md
-  - `OpenCode_Coverage_Matrix.md` and `OpenCode_Deep_Extraction.md` now pin more exact OpenCode limits: session identity must stay provider-native, SSE correlation fields remain under-specified, and requested/effective identity parity is still weaker for server-bridged providers than for direct providers.
-  - OpenCode_Coverage_Matrix.md
-  - OpenCode_Deep_Extraction.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked
-  - tools / permissions / provider / identity integration
-  - storage-plan still lacks the practical join model from attempt → provider → usage → receipt
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Requested/effective account identity contract
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-010: Requested/effective account identity contract
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0069
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - requested/effective reviewer identity
-  - Requested/effective must remain runtime-facing and auditable.
-  - it carries requested/effective model IDs and permission snapshots
-  - Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:
-  - Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs.
-  - Upgrade permission snapshots to include requested/effective values, downgrade reasons, and identity context.
-  - requested/effective capability state is required conceptually
-  - Permission snapshots still do not project requested/effective identity richly enough for blocked/approval truth.
-  - Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and identity context.
-  - still needs scope-keyed approvals and richer requested/effective permission snapshots
-  - requested/effective persona refs or embedded snapshot refs
-  - requested/effective persona snapshot ref
-  - requested/effective permission snapshot ref
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-010
-- Fidelity gap refs: cov-010
-- Required fidelity items:
-- Exact required item: Add requested_account_id alongside requested_account_policy
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-010: Requested/effective account identity contract` exists in `Plans/CLI_Bridged_Providers.md`.
-- Exact acceptance check: The `cov-010` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-010` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-010` repair is in the owner section for `Plans/CLI_Bridged_Providers.md` and is not only a downstream consumer note.
-
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -182,36 +27,20 @@ This document owns bridged-provider transport normalization only. PM-internal ch
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 
-Canonical mapping SSOT for upstream external-framework and A2A bridge concepts is `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`. That document is external-reference guidance for adapter implementors. It MUST NOT be interpreted as approval to move PM-internal orchestration or child-run control onto A2A semantics.
+Canonical mapping SSOT for upstream external-framework and A2A bridge concepts is `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`. That document is external-reference and future-interop guidance for adapter implementors. It MUST NOT be interpreted as approval to move PM-internal orchestration or child-run control onto A2A semantics.
 
 ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+A2A seam warning: A2A bridge packet verification keeps `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` in the highest-risk verify-only omission lane unless its intro and `/non-goal` framing still read as external-reference and `/future-interop` only; otherwise, it must be promoted out of `MUST VERIFY`. Adjacent docs rechecked and kept out of the packet for now are `Plans/Models_System.md`, whose current capability and compaction-threshold fields already match the narrowed owner set, and `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, whose current intro/non-goal framing already keeps A2A external-only. Other `MUST VERIFY` watchers must confirm that `Plans/Section15_MVP_Promoted_Features_Spec.md` defers `terminate_session` / graceful shutdown to `Run_Modes.md`; `Plans/Runtime_Artifacts_Panel.md` keeps `cost_usage` and `reasoning_tokens` compatible with microdollars and usage canon; `Plans/Wiring_Matrix.md` terminal kill wiring and checksum-validation flows do not conflict with process-group kills or mandatory CRC recovery; `Plans/MiscPlan.md` SIGTERM, symlink, and multi-instance notes remain advisory and do not shadow the new SSOT; and `Plans/assistant-chat-design.md` concurrent-thread UI defaults are not misread as global subagent concurrency limits.
 
 ## Canonical data-shape reconciliation
 
 ### Required data shape
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+### Contract shape (facade)
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0070
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - But these are not all the same kind of data, and they should not all become first-class target identity.
-  - provider/account disclosure data
-  - data model still carries `hitl_request_id`
-  - hitl_request_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+The contract shape is the provider facade handoff record used by bridge launchers, HTTP adapters, and normalized stream consumers.
 
 The `BRIDGE_INVOKE_OPTIONS` record passed through the shell command line MUST preserve these fields:
 
@@ -238,3 +67,63 @@ BRIDGE_INVOKE_OPTIONS {
 ```
 
 ContractRef: Primitive:Provider, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+`ProviderRequestEnvelope` is the canonical provider-facade handoff record above provider-specific command-line or HTTP encodings. The expanded identity bundle in `ProviderRequestEnvelope` MUST include run/thread/parent/child lineage, attempt identity when present, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, and retry/approval context. Provider-specific projections such as `BRIDGE_INVOKE_OPTIONS` may encode a subset for launch, but they must remain derivable from `ProviderRequestEnvelope` and must not replace it as the ownership boundary.
+
+The existing `working_directory` passthrough is sufficient for assistant worktree context: when the executor launches a CLI-bridged provider from a bound thread, `working_directory` is the worktree path and no provider-specific worktree field is required beyond the canonical runtime envelope.
+
+When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. No additional provider-specific worktree configuration is required.
+
+Normalized output preservation (`normalized output preservation`) is mandatory for every bridge. CLI/server adapters must keep provider output, tool-call fragments, errors, truncation markers, ordering/repair evidence, usage/cost observations, and correlation ids in the normalized stream before UI, storage, or retry logic consumes them; adapters may redact secrets, but they must not collapse provider output into unstructured text or drop fields needed to replay, audit, or compare the request.
+
+### Provider guard rails
+
+Provider adapters MUST run bridge-side `/parsing/sanitization/payload-preflight` before admitting request envelopes, tool-call fragments, tool-event payloads, or provider stream events into the normalized event stream. The preflight validates schema shape, required identifiers, tool-call JSON, stream framing, usage/cost observations, and retry/correlation metadata; sanitization may redact secrets or unsafe control bytes, but it MUST NOT remove fields needed for replay, audit, permission review, usage attribution, or deterministic failure classification. Any adapter prose that over-summarizes normalization, parsing, sanitization, and payload preflight into generic "bridge handling" is non-canonical.
+
+Because OpenAI, Anthropic, MiniMax, Gemini, and Bedrock can format tool calls differently across JSON shape, parallel-tool layout, provider call identifiers, finish metadata, schema subsets, or stream framing, provider adapters MUST preserve those provider/runtime facts through parsing, sanitization, and payload preflight before normalizing them into PM's canonical tool-call event stream.
+
+For JSON, JSONL, and `/NDJSON` streams from LLM providers, including GLM-4.7, GLM-5, and Kimi, parser state is incremental and chunk-boundary aware. A bridge accumulates partial UTF-8 and line-delimited fragments until a complete JSON value is available; malformed or incomplete fragments become structured provider error events and never become fabricated tool calls, silently dropped history, or reserialized clean output.
+
+Stream resilience is a facade-level floor, with provider-specific constants allowed only when they preserve the shared retry taxonomy. Reconnect/resume attempts are bounded to `max_retries=3` unless a stricter provider policy applies, use exponential backoff `1s -> 2s -> 4s` with `+/-25%` jitter, and open a circuit breaker after `5` consecutive transient stream failures within `2 minutes`; the breaker stays open for `30s`, then moves through half-open probe state before close/reopen. `Plans/Provider_OpenCode.md` (`/Provider_OpenCode.md`) records the OpenCode-specific streaming-resilience owner details, but those details must remain compatible with this facade floor.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+### Bridged-provider capability projection
+
+CLI-bridged and server-bridged providers are not exempt from the shared provider capability metadata surface in Plans/Models_System.md. When a bridged provider participates in multi-account routing, account switching, or pressure interpretation, the facade MUST project the canonical account-routing capability fields, including `supports_multi_account`, `account_identity_kind`, `quota_signal_sources`, `quota_signal_confidence`, `supports_threshold_switch`, `supports_hard_exhaustion_detection`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, `supports_role_scoped_account_pools`, signal sources/confidence, cooldown/retry-budget support, and reset countdown support.
+
+If the bridge cannot observe a provider fact directly, it MUST mark the capability or signal as `unsupported`, `opaque`, `inferred`, or `stale` rather than copying direct-provider confidence. Bridge invoke options such as `account_id?`, `retry_policy?`, and `max_retries?` do not by themselves prove multi-account support; they only carry the selected request once the canonical resolver has accepted the provider capability snapshot.
+
+Provider eligibility filtering runs before adapter selection. The facade removes providers that are not configured, including missing API key, missing URL, or other required connection fields; providers currently rate-limited from a known recent 429; and providers temporarily unavailable from a known recent 5xx. If the filter removes every candidate, the facade returns `no_eligible_adapter` instead of silently falling back to an unrelated provider.
+
+Bridged-provider docs own adapter-facing capability, buffering, and role-mapping rules. The provider-facade must make adapter-facing role and capability projections explicit instead of leaving them implied by the ledger or by a provider CLI's native labels.
+
+`Plans/CLI_Bridged_Providers.md` / `/CLI_Bridged_Providers.md` is the facade owner for canonical account identity, `switch-reason` disclosure, and `conversational-actor` routing through bridged providers. `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` / `/Provider_Stream_Mapping_External_Reference_A2A.md` remains external-reference mapping only; before A2A introduces new actor/account/trust semantics, it must publish explicit `/migration` guidance and `/account/trust` versioning that the PM facade can project without moving PM orchestration identity into A2A.
+
+Bridged providers are not exempt from the multi-account/switch capability surface expected of direct providers: `CLI_Bridged_Providers` and `CLI_Bridged_Providers.md` must declare bridged multi-account support, `/switch` behavior, switch attribution, and account-routing limits in parity with `Multi-Account.md`. Omission is not a declaration that bridged routing is unsupported.
+
+For provider-facade `/auth/ingestion`, CLI/server bridges preserve credential precedence and proactive refresh-before-expiry behavior: explicit config wins over stored OAuth state unless the resolver records an override, `/expiry` evidence triggers refresh before a mid-session 401 stall, and credential refresh that changes the effective token/client requires client `/reconfigure` before reuse. Provider-specific cache markers, including cache-with-OAuth, cache-point, or cache-boundary annotations, remain positive adapter obligations when the provider requires them. `OC-PROV-009` keeps this as PROV evidence for Copilot and any bridge whose HTTP client caches auth state.
+
+Gemini/VertexAI adapter initialization is fail-fast: a nil/error client init result MUST propagate immediately as a provider error and must not be stored behind a typed-interface value that later appears valid.
+
+Bridged providers must map upstream termination metadata into PM's normalized event stream. A provider `finishReason=length` attached to an incomplete `tool_use` never becomes an `/execute` request; the bridge emits a closing `tool_result(ok=false, error=truncated_by_length)` event for downstream tool policy to record without synthesizing missing arguments.
+
+Provider-adapter finish-reason canon includes `FinishReasonUnknown`, `FinishReasonContentFilter`, and `FinishReasonSafety`; `finishReason=length` on an incomplete tool call is a `/no-dispatch` path, while empty-choices, nil-client, JSON, and bounds guards fail as structured provider errors before tool dispatch.
+
+Tool call identity for bridged providers is keyed by provider call IDs / UUIDs, never by `Name+Input` deduplication, so Gemini duplicate names or inputs do not collapse distinct tool calls.
+
+Provider retry and schema handling (`OC-EXEC-113`, `OC-PROV-003`) are structured, not string-matched: per-provider and `/per-status` retry decisions use provider error codes/HTTP status and failure class instead of fragile substring matching, unknown errors default to not retrying, Gemini stream retries MUST restart the underlying connection/iterator from an OUTER retry loop rather than breaking only out of a select inside the iterator, empty choice arrays are checked before indexing, and adapter-emitted tool schemas include required fields.
+
+Provider-facade ingestion owns adapter-facing `/schema` capability declarations for role surfaces. `system_role_name`, developer-role handling, and any provider-native role aliases must be declared as bridge capabilities and normalized before request construction; the bridge must not let a provider CLI's native label silently redefine PM roles.
+
+Buffering and stream ingestion must preserve provider ordering semantics while making any adapter-facing `/reordering` explicit. If a bridge buffers, batches, retries, or resumes stream segments, the provider-facade records the ordering boundary and exposes whether downstream consumers are seeing original order, replay order, or a repaired order. Any wording that under-specifies this bridge scope is non-canonical.
+
+Stream cancellation checks are fail-open only for live streams: adapter code must treat `ctx.Err() != nil` as cancellation, not invert the nil-check; cancellation emits `EventError` with the cancellation reason before the normalized stream closes.
+
+Malformed tool-call JSON is validated when the bridge stores or admits the tool-call event, not during later re-serialization. `OC-EXEC-109` keeps this as EXEC evidence: a malformed provider tool-call may be persisted only as a structured error event and MUST NOT be silently dropped from history.
+
+### CLI provider protocol and state surfaces
+
+Gemini CLI account, `/session/config`, subagents, extensions, model routing, telemetry, and `OTLP` output are CLI-bridged provider surfaces rooted under the selected `GEMINI_CLI_HOME`. PM must provision and launch the account root through the account resolver, then surface requested/effective model-routing evidence instead of collapsing Gemini CLI state into the direct Gemini provider entry. Gemini CLI probe evidence may include `ACP`, headless prompt mode, JSON `/stream-json` output, policy loading, MCP, extensions, hooks, and native skill management; PM records those as provider-protocol capabilities instead of assuming they are available for every account or auth family.
+
+`ACP` is tracked as provider-protocol capability metadata for CLI-bridged adapters. Cursor `ACP` support supersedes stale assumptions in `Plans/rewrite-tie-in-memo.md` that Cursor cannot expose ACP; PM still keeps provider ontology, account identity, and transport/runtime boundaries separate, so ACP support does not turn Cursor into a PM orchestration node and does not replace account-root isolation.

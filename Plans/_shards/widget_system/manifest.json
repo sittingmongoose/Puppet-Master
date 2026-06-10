@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/widget_system/00-index.md",
+  "index_sha256": "4dc5b8e90edf7aefc15e5e4ab50172a8faf16a5194cd9e6456ea52737461c1ed",
+  "manifest_path": "Plans/_shards/widget_system/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/widget_system/001-preamble.md",
+      "sha256": "097eb0fd9cd4aa9400c60d75f00b04260524df3f509ae9d73f9a367cb08da174",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/widget_system/002-canonical-owner-section-requirements.md",
+      "sha256": "8a3b0a910d6cb80f6655373cf22e3b2fc948368822088018c22f6e1c06e25534",
+      "shard_id": "002",
+      "source_line_end": 10,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Scope and non-scope",
+      "path": "Plans/_shards/widget_system/003-1.-scope-and-non-scope.md",
+      "sha256": "4e0316e3ef9cbffcc11671ab0351bebec120106bbf89b95347dce647d476c46a",
+      "shard_id": "003",
+      "source_line_end": 27,
+      "source_line_start": 11,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Hostability and data contracts",
+      "path": "Plans/_shards/widget_system/004-2.-hostability-and-data-contracts.md",
+      "sha256": "d6f6dd40ec078781f4cb7a63f22a3f31ca711caf7f2bb58fd922583fc408a3fd",
+      "shard_id": "004",
+      "source_line_end": 71,
+      "source_line_start": 28,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Layout persistence",
+      "path": "Plans/_shards/widget_system/005-3.-layout-persistence.md",
+      "sha256": "fd6b343bb49d917856d97885702ceca39cd2936825fbb5216df357cc6dd7220e",
+      "shard_id": "005",
+      "source_line_end": 82,
+      "source_line_start": 72,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Orchestrator Progress widget scope and catalog linkage",
+      "path": "Plans/_shards/widget_system/006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md",
+      "sha256": "79c9fcde84d164320394f828a222ac91db9554f2f64e508e37a717357bb9d72d",
+      "shard_id": "006",
+      "source_line_end": 122,
+      "source_line_start": 83,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 122,
+    "path": "Plans/Widget_System.md",
+    "sha256": "54df502ef51f5567df1d7d30a617130d3a869c86434886652c4a0434c1c61cfe"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/contracts_v0/00-index.md",
+  "index_sha256": "1fd8d3387f9221faf3b4a9dd26dc79ce4d5a9f901a0b6379e5fbbc7203a2b197",
+  "manifest_path": "Plans/_shards/contracts_v0/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/contracts_v0/001-preamble.md",
+      "sha256": "90356a0109861ec527d11abf8821762c695706370c68101cb9616edde9bfca98",
+      "shard_id": "001",
+      "source_line_end": 223,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md",
+      "sha256": "f25801af14bf4b23d8f1316838b977b071511fec059b2bad245ae6f60ea5bc15",
+      "shard_id": "002",
+      "source_line_end": 299,
+      "source_line_start": 224,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/contracts_v0/003-0.-scope.md",
+      "sha256": "484b0acd759b6af66f2081d70a258506b7998c759d0c8ee7f5a371490a0c1e38",
+      "shard_id": "003",
+      "source_line_end": 311,
+      "source_line_start": 300,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Cross-surface runtime, concern, and route/open contracts",
+      "path": "Plans/_shards/contracts_v0/004-cross-surface-runtime-concern-and-route-open-contracts.md",
+      "sha256": "d883bb7a1dc275537ab7d69977af4f1f931555d70a7219ab12327e8decc546eb",
+      "shard_id": "004",
+      "source_line_end": 815,
+      "source_line_start": 312,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Events (persisted)",
+      "path": "Plans/_shards/contracts_v0/005-1.-events-persisted.md",
+      "sha256": "d45d5ac8df975daef442773dda64cb28fbc9e7d1c96d1d7737a15fe045ce200b",
+      "shard_id": "005",
+      "source_line_end": 920,
+      "source_line_start": 816,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Provider normalized stream (non-persisted contract)",
+      "path": "Plans/_shards/contracts_v0/006-2.-provider-normalized-stream-non-persisted-contract.md",
+      "sha256": "fedb71483354f465a34e8bd6b51e6134e8da19715fd7dab72e10a13c723f556c",
+      "shard_id": "006",
+      "source_line_end": 971,
+      "source_line_start": 921,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Tool events (persisted)",
+      "path": "Plans/_shards/contracts_v0/007-3.-tool-events-persisted.md",
+      "sha256": "92164921f25f9f8d4d17bc77ba7256704fe45e290a9b4b2bcf7877a1fb11ff68",
+      "shard_id": "007",
+      "source_line_end": 1441,
+      "source_line_start": 972,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "path": "Plans/_shards/contracts_v0/008-5.-context-management-instruction-scoping-attempt-journaling-par.md",
+      "sha256": "ff4bfd47625639bb1b946a1e75645eb60584a8bd4e538618f8e7a7dc25febe5c",
+      "shard_id": "008",
+      "source_line_end": 1481,
+      "source_line_start": 1442,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. HITLRequest",
+      "path": "Plans/_shards/contracts_v0/009-6.-hitlrequest.md",
+      "sha256": "2b06e276770141cfa3b8bb4f17195ec692e94ebfcfc23cc386610054281feed0",
+      "shard_id": "009",
+      "source_line_end": 1527,
+      "source_line_start": 1482,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. UICommand",
+      "path": "Plans/_shards/contracts_v0/010-7.-uicommand.md",
+      "sha256": "a6f8567850ea28155de10ed090f4a2f3d14eaf7424ca09956a216b737ec12750",
+      "shard_id": "010",
+      "source_line_end": 1807,
+      "source_line_start": 1528,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. UI Scaling",
+      "path": "Plans/_shards/contracts_v0/011-8.-ui-scaling.md",
+      "sha256": "522cb7a73cbe8a825617bdfd2f85bd2d9003e1cafea05c2ccaeaf6e5c0fbf567",
+      "shard_id": "011",
+      "source_line_end": 1832,
+      "source_line_start": 1808,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Usage and Billing Contracts Addendum",
+      "path": "Plans/_shards/contracts_v0/012-usage-and-billing-contracts-addendum.md",
+      "sha256": "e25dde141c480aa967194fe88baeede9598b704b93d7c2549a6784baeca6b3cd",
+      "shard_id": "012",
+      "source_line_end": 1945,
+      "source_line_start": 1833,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "path": "Plans/_shards/contracts_v0/013-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md",
+      "sha256": "fd33ad8d359a7150e97f2d2b78400df2536bacb47fd28f1132cc835ecba945ea",
+      "shard_id": "013",
+      "source_line_end": 2184,
+      "source_line_start": 1946,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "path": "Plans/_shards/contracts_v0/014-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md",
+      "sha256": "0a3b81378e05541714e7dd6e28549941c21291bb0fb82f23523dc9d5a8e30398",
+      "shard_id": "014",
+      "source_line_end": 2279,
+      "source_line_start": 2185,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/contracts_v0/015-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md",
+      "sha256": "6d7b56d8acfa284cb19952b49cf0b8d72b3e46467977e20a4f4ba783d88d2253",
+      "shard_id": "015",
+      "source_line_end": 2392,
+      "source_line_start": 2280,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/contracts_v0/016-canonical-runtime-event-outcome-and-action-contract-canonical-al.md",
+      "sha256": "2c2bc405816555934e64aae3e699b204e96cc90839f770327c5455bb821a0ea4",
+      "shard_id": "016",
+      "source_line_end": 2536,
+      "source_line_start": 2393,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 2536,
+    "path": "Plans/Contracts_V0.md",
+    "sha256": "42abbe15109062453a0378c74f249cc2f0b399fd77da8be9000f1e95d09bcc27"
+  }
+}

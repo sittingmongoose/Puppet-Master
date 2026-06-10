@@ -1,0 +1,131 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/opencode_deep_extraction/00-index.md",
+  "index_sha256": "65c9b6a8b5a17b6af1a860f70548ce6e84842955f027227ac7d6dec99dda8104",
+  "manifest_path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/opencode_deep_extraction/001-preamble.md",
+      "sha256": "5edd6b4ddef78d231ae5a7ddda01a74086df5e7667cfbdbaf6661f2086c68279",
+      "shard_id": "001",
+      "source_line_end": 18,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Baseline Reference",
+      "path": "Plans/_shards/opencode_deep_extraction/002-baseline-reference.md",
+      "sha256": "baedaa88d57a11de6d5c31c446fec13354d8b01462536b9176d8bb55cb23badf",
+      "shard_id": "002",
+      "source_line_end": 28,
+      "source_line_start": 19,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Goal",
+      "path": "Plans/_shards/opencode_deep_extraction/003-1.-goal.md",
+      "sha256": "636af9ef1f7d661258eed106e8736490bf46ef0abdd552290c5e94d904cc8f24",
+      "shard_id": "003",
+      "source_line_end": 31,
+      "source_line_start": 29,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Hard constraints",
+      "path": "Plans/_shards/opencode_deep_extraction/004-2.-hard-constraints.md",
+      "sha256": "68c368470843ed953848a99ae84cd6db30f5bf9c5399ccd801b5ff66854a9237",
+      "shard_id": "004",
+      "source_line_end": 39,
+      "source_line_start": 32,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2A. Transfer Fidelity Notes",
+      "path": "Plans/_shards/opencode_deep_extraction/005-2a.-transfer-fidelity-notes.md",
+      "sha256": "099816468a07ed890cddf908f5f1491a334c503e178e1085637b4689d5a783c1",
+      "shard_id": "005",
+      "source_line_end": 87,
+      "source_line_start": 40,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Inputs",
+      "path": "Plans/_shards/opencode_deep_extraction/006-3.-inputs.md",
+      "sha256": "6e03d1dcf50150378aebe35c34285283450c15903e6ba7899eff309eb918f9c8",
+      "shard_id": "006",
+      "source_line_end": 91,
+      "source_line_start": 88,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Deterministic extraction procedure",
+      "path": "Plans/_shards/opencode_deep_extraction/007-4.-deterministic-extraction-procedure.md",
+      "sha256": "0428472e70efa58a30988896679e4678c879baba09e7ba29350eba04e48be454",
+      "shard_id": "007",
+      "source_line_end": 110,
+      "source_line_start": 92,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Output format (for downstream agents)",
+      "path": "Plans/_shards/opencode_deep_extraction/008-5.-output-format-for-downstream-agents.md",
+      "sha256": "7fe13fbf6a3f255ab10cff071fe41aeca6ab144c3cb67dbbf376a9ea25e29562",
+      "shard_id": "008",
+      "source_line_end": 121,
+      "source_line_start": 111,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Acceptance criteria",
+      "path": "Plans/_shards/opencode_deep_extraction/009-6.-acceptance-criteria.md",
+      "sha256": "5c48f0b3c204208dd2fdca7f93a667c05fae95e1f2e8ec13ba878d943ddbd499",
+      "shard_id": "009",
+      "source_line_end": 128,
+      "source_line_start": 122,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Expanded Extraction Coverage",
+      "path": "Plans/_shards/opencode_deep_extraction/010-7.-expanded-extraction-coverage.md",
+      "sha256": "a5bbd1de55c281e4d06adfa44553413eb5765f5ab1adc9db7ccb4a3b5eb0dc54",
+      "shard_id": "010",
+      "source_line_end": 635,
+      "source_line_start": 129,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Contract Mapping to Puppet Master SSOT (DRY)",
+      "path": "Plans/_shards/opencode_deep_extraction/011-8.-contract-mapping-to-puppet-master-ssot-dry.md",
+      "sha256": "8c9bc7028e47f3764c7edde969ce5680827783740798e9cdd72c359889bd6d24",
+      "shard_id": "011",
+      "source_line_end": 686,
+      "source_line_start": 636,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. Baseline -> Puppet Master Delta Hooks",
+      "path": "Plans/_shards/opencode_deep_extraction/012-9.-baseline-puppet-master-delta-hooks.md",
+      "sha256": "6af77f87097d0c0d570fc36a15a5dc97071e9b11b7a9704213917a5de6629c6e",
+      "shard_id": "012",
+      "source_line_end": 739,
+      "source_line_start": 687,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Upstream Notes Worth Capturing (DRY; file pointers + deltas)",
+      "path": "Plans/_shards/opencode_deep_extraction/013-10.-upstream-notes-worth-capturing-dry-file-pointers-deltas.md",
+      "sha256": "33df8048f7990d120a96a54c0bc9198f31c9afd242e144e52228949c164a8639",
+      "shard_id": "013",
+      "source_line_end": 778,
+      "source_line_start": 740,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 778,
+    "path": "Plans/OpenCode_Deep_Extraction.md",
+    "sha256": "5bac461d5373c11d1990980310ef3502de74ad5370c8b496d9cf1413a8df6409"
+  }
+}

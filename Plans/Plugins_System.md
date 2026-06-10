@@ -1,38 +1,5 @@
 # Plugins System (Canonical SSOT)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0431
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.
-  - Plans/00-plans-index.md
-  - Plans/GUI_Rebuild_Requirements_Checklist.md
-  - Plans/Plugins_System.md
-  - Plans/Skills_System.md
-  - Plans/Formatters_System.md
-  - with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.
-  - Plans/LSPSupport.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -55,6 +22,16 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Formatters system: `Plans/Formatters_System.md`
 - Models system: `Plans/Models_System.md`
 - GUI specification: `Plans/FinalGUISpec.md`
+
+### P5 plugin boundary recovery
+
+Plugin-owned Persona and model references must link through `Plans/Glossary.md`, `/Glossary.md`, `Plans/00-plans-index.md`, `/00-plans-index.md`, `Plans/Personas.md`, `/Personas.md`, `Plans/Models_System.md`, and `/Models_System.md` rather than defining duplicate terminology.
+
+Plugin UI and runtime references must also link through `Plans/FinalGUISpec.md`, `/FinalGUISpec.md`, `Plans/Glossary.md`, `/Glossary.md`, `Plans/Personas.md`, `/Personas.md`, `Plans/Models_System.md`, and `/Models_System.md` when presenting plugin-facing Persona or model metadata.
+
+Tooling enforcement boundaries are central policy, not plugin-private behavior: `Plans/Formatters_System.md`, Formatters_System, `Plans/Plugins_System.md`, Plugins_System, `Plans/Skills_System.md`, Skills_System, `Plans/LSPSupport.md`, LSPSupport.md, `/policy`, `/runtime`, `/DAE`, DAE, HTE, read-only, mutation-capable, env-var, bundling-off, internal-service, and multi-project-tab cases must all rejoin the same mutation and attribution model.
+
+Plugin hooks may expose package, seam, corroboration, and concern integration points through `Plans/Executor_Protocol.md`, Executor_Protocol, Executor_Protocol.md, and `/seam/corroboration/concern`, but those hooks remain subject to this plugin lifecycle and permission model.
 
 ---
 
@@ -129,7 +106,7 @@ If the same `id` appears in multiple sources, the **first-discovered instance wi
 
 ### 3.1 Auto-load prohibition
 
-PM MUST NOT auto-load executable plugin code from config without explicit user approval.
+PM MUST NOT auto-load executable plugin code from config without explicit user approval. This is the plugin no-auto-load executable-code rule.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
@@ -215,7 +192,7 @@ Required sequence:
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
 
-Plugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly elevated approval) than read-only hooks.
+Plugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly `/approved` elevated approval) than read-only hooks.
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md
 
@@ -238,26 +215,6 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Archit
 
 #### `tool.execute.after`
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0433
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:
-  - newtools.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 | Field | Value |
 |-------|-------|
@@ -416,6 +373,16 @@ All plugin-registered tools are added to the central tool registry (`Plans/Tools
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md#DEFAULTS
 
+### 6.4 Core-surface /extensibility and host-policy boundaries
+
+Plugin-added subviews/cards/actions (`/cards/actions`) may extend core surfaces, but they MUST NOT replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning. Plugin-added navigation into core surfaces must use the canonical context payloads owned by the target surface.
+
+Plugin-added tools, hooks, MCP bridges, and other `/extensibility` capabilities that contact external hosts, registry hosts, or Kubernetes clusters must declare contacted domains/hosts before execution. They inherit `registry_hosts[]`, `k8s_host_policy`, `/network/trust`, proxy, and permission policy checks before dispatch; policy denial uses canonical host-policy blocked reasons and ordered `allowed_action_ids[]`, not plugin-private recovery semantics.
+
+Hooks must not silently rewrite protected routing fields, including remote host/base URL, registry host, kube context, namespace, or receipt identity keys. If a plugin hook changes any protected routing field, the modified invocation is revalidated through the permission engine and may be blocked with canonical `/denied` outcomes.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
+
 ---
 
 ## 7. Plugin configuration
@@ -563,6 +530,7 @@ OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Plugin
 4. **Deterministic load order:** OpenCode deduplicates by function identity. Puppet Master defines strict priority-ordered discovery with lexicographic tiebreaking and documents the order for reproducibility.
 5. **Structured logging:** OpenCode plugin errors are logged but not structured. Puppet Master emits typed ledger events (`plugin.loaded`, `plugin.hook.invoked`, etc.) for auditability.
 6. **Per-Persona overrides:** OpenCode has no per-agent plugin controls. Puppet Master allows Personas to disable specific plugins via `disabled_plugins`.
+7. **CLI-backed provider plugin capability evidence:** When the `claude` local binary is used as a CLI-bridged provider, PM records native agents, effort selection, model selection, fallback model support, MCP, plugins, settings injection, and headless JSON/stream-json output as observed provider-protocol capability evidence; plugin support remains capability-scoped and does not imply every provider account can load PM plugins.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
@@ -624,7 +592,7 @@ Required behavior:
 Acceptance criteria:
 - plugin-driven blocks are visible as first-class blocked outcomes when they affect execution
 - plugin hooks do not become a side-channel that bypasses queue analysis or remediation observability
-## Plugin Block Runtime Reconciliation Addendum (2026-03-09)
+## Plugin Block Runtime Canonical Alignment (2026-03-09)
 
 Plugin-driven blocking must map into the canonical runtime blocked model.
 

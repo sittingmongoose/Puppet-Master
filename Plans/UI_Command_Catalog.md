@@ -1,274 +1,14 @@
 # UI Command Catalog (Canonical)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Cleanup Priorities
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0515
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Cleanup Priorities
-- Exact required items represented:
-  - Replace or demote [retired-token-1] widgets and layouts.
-  - Add package/seam/lane-aware identity, worktree, and attention surfaces.
-  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-5].
-  - `[retired-token-9]`
-  - [retired-token-9]
-  - `[retired-token-9]`, `Plans/[retired-token-7]`
-  - Plans/[retired-token-7]
-  - `FinalGUISpec.md` already defines a global command palette.
-  - FinalGUISpec.md
-  - command palette results
-  - The platform already has a strong shared command foundation:
-  - `Ctrl+K` / `Ctrl+P` command palette
-  - Ctrl+K
-  - Ctrl+P
-  - treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away
-  - then command palette and shortcut surfaces must still honor the same gating and preview requirements.
-  - Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links.
-  - command palette entries
-  - subtle mismatches between command palette, search, widgets, and deep links
-  - command payloads with generic `page: string` or tier-bound filters will quietly undermine any native-surface cleanup if they are not constrained at the same time
-  - page: string
-  - `[retired-token-9]` + `Plans/Runtime_Artifacts_Panel.md`
-  - Plans/Runtime_Artifacts_Panel.md
-  - `GitHub_Integration.md` still carries a split-brain command table that diverges from `UI_Command_Catalog.md`
-  - GitHub_Integration.md
-  - UI_Command_Catalog.md
-  - `[retired-token-9]` + `Plans/storage-plan.md`
-  - Plans/storage-plan.md
-  - GitHub Integration command IDs/args still diverge from the command catalog.
-  - The command catalog is already stronger than most surface docs:
-  - `cmd.panel.switch` also already acts like a coarse route command with `panel_id`, optional `project_id`, and context block
-  - cmd.panel.switch
-  - panel_id
-  - project_id
-  - Recommended command model:
-  - `cmd.panel.switch` can stay as a concrete command, but it should align with the richer route model rather than becoming a second navigation language
-  - UI / projection / command contracts are still structurally incomplete:
-  - Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership.
-  - Remove or alias stale/non-canonical `[retired-token-6]` and template/example command IDs so the catalog is truly the only stable command owner.
-  - [retired-token-6]
-  - Command / wiring ownership is materially weaker than the downstream surface docs assumed:
-  - `assistant-memory-subsystem.md` surfaces a new storage-owner gap: memory event families, AutoRunBoundary/AutoMilestone triggers, `attention_required` thread state persistence, and HITL/dashboard CTA command families still have no canonical event/command registration in storage-plan or the command catalog.
-  - assistant-memory-subsystem.md
-  - attention_required
-  - Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.
-  - The command catalog already contains many specific pivots:
-  - it reduces command sprawl
-  - add a canonical navigation/open command family to the command catalog
-  - The catalog gap is now structural, not just a few missing IDs.
-  - a surface-specific wrapper command that resolves to the same route target
-  - The matrix cannot encode whether a command is a canonical navigation primitive, a deprecated alias, or a surface wrapper over a shared route target.
-  - Clean stale/ghost command examples out of `[retired-token-7]` before relying on it for automated extraction or coverage.
-  - [retired-token-7]
-  - Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation
-  - surface-specific wrapper command
-  - Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes.
-  - The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload.
-  - Contracts_V0.md
-  - UICommand.args
-  - Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”
-  - The goal is not to delete every surface-specific command.
-  - The goal is to stop every surface-specific command from inventing its own private navigation semantics.
-  - `[retired-token-9]` (Gemini backfill)
-  - `[retired-token-8]` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.
-  - [retired-token-8]
-  - `Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.
-  - Containers_Registry_and_Unraid.md
-  - Some current command payloads and surface docs still blur destination intent with shell-state realization.
-  - The command layer wants a three-way split, not a binary split:
-  - `cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a side-panel destination. Its current optional `context` payload is the main drift risk because it makes a shell command look like an object-targeting navigation command.
-  - context
-  - `cmd.source_control.switch_subview` is also a pure shell/view-state command. It chooses a Source Control subview; it should not become the carrier for repo/worktree/compare target identity.
-  - cmd.source_control.switch_subview
-  - Formalize the three-way command taxonomy:
-  - The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them.
-  - An explicit public `cmd.nav.*` family is possible, but it would add catalog surface area, wiring rows, handler registration burden, and alias/deprecation work across the gate machinery.
-  - cmd.nav.*
-  - Add explicit wrapper/alias guidance so the wiring system can understand “different command ID, same canonical route primitive” without treating that as drift.
-  - The canonical primitive should live underneath the wrapper layer, not force every surface to speak one generic top-level command language.
-  - The command layer now needs two distinct patterns, not one:
-  - deprecated command aliases during migration
-  - a wrapper command may remain permanently because it is useful UX-facing vocabulary
-  - stable command ID
-  - dead command detection
-  - deprecated command alias
-  - stable wrapper command
-  - public command ID
-  - Keep the command catalog readable for UX and command-palette use; do not force users to think in canonical primitive names.
-  - command-definition metadata belongs in the command catalog / command contract layer
-  - `UI_Command_Catalog.md` currently carries command meaning in prose/tables only; it has no precise slot for wrapper-vs-alias classification.
-  - command catalog / command contract owns normalization metadata
-  - The catalog should describe what class of command this is, not become the full route schema.
-  - states that command catalog metadata, shell docs, storage docs, and surface docs consume that primitive rather than owning it
-  - Several command payloads and shell docs still mix destination class with lower-level shell realization details.
-  - Tooling / command / UI owner gaps are still strong enough to justify later-model continuation:
-  - `cmd.source_control.select_worktree` is still described like a local selection command even though it is now clearly an object-targeting route action.
-  - cmd.source_control.select_worktree
-  - `[retired-token-9]` is internally split:
-  - Stratum 2: command and shell adoption
-  - Keep the command layer wrapper-based and domain-facing while normalizing through the shared contracts underneath.
-  - Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points
-  - `[retired-token-9]` is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state:
-  - The command catalog still uses `layout/UI state only` for actions that now have canonical object routing meaning.
-  - layout/UI state only
-  - In `[retired-token-9]`:
-  - The catalog structure is not the problem. The command meaning labels are.
-  - That is enough for direct command dispatch verification, but it does not encode:
-  - command classification such as `shell_view` versus `navigation_wrapper`
-  - shell_view
-  - navigation_wrapper
-  - `[retired-token-9]` already says:
-  - This seam is now purely consumer-side. The runtime command layer already has the stronger model.
-  - replay/restore and command dispatch are deterministic across `request_id`
-  - request_id
-  - `[retired-token-9]` says:
-  - Both are already contradicted by the runtime command consolidation:
-  - The command catalog and the graph spec cannot both be correct.
-  - The highest-risk unresolved seams remain DAE/FileSafe enforcement, promoted-shell command ownership, execution-role / requested-effective identity disclosure, OpenCode provider-native identity mapping, and rewrite-root owner routing.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `[retired-token-9]` is still publishing hard stale command canon:
-  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `[retired-token-9]`
-  - Plans/Contracts_V0.md
-  - Plans/FinalGUISpec.md
-  - The **13-widget Progress catalog** is not just "underspecified" - it is effectively absent as a named catalog.
-  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `[retired-token-9]`, `Plans/Crosswalk.md`, `Plans/[retired-token-7]`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
-  - Plans/Crosswalk.md
-  - Plans/Progression_Gates.md
-  - Plans/FileManager.md
-  - Plans/Project_Output_Artifacts.md
-  - 6. `[retired-token-9]`
-  - `[retired-token-9]` already has a real command-normalization owner block, but `[retired-token-14]` and `[retired-token-15]` still preserve `[retired-token-12]`.
-  - [retired-token-14]
-  - [retired-token-15]
-  - [retired-token-12]
-  - `[retired-token-9]:67-91`
-  - [retired-token-9]:67-91
-  - `[retired-token-9]:224-246`
-  - [retired-token-9]:224-246
-  - `[retired-token-9]:617-622`
-  - [retired-token-9]:617-622
-  - `[retired-token-11]` is primarily a missing-owner-heading problem in `[retired-token-9]`; `[retired-token-10]` and `[retired-token-12]` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.
-  - [retired-token-11]
-  - [retired-token-10]
-  - `[retired-token-9]` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`.
-  - ### 2.0 Command entry contract (doc-level)
-  - Search-command routing
-  - Canonical runtime recovery command ownership
-  - ### 2.0A Promoted Section 15 command families
-  - `[retired-token-9]:29-90`
-  - [retired-token-9]:29-90
-  - Wave 1 targeted the structural/survivor subset around `[retired-token-11]`, `gap-006`, and `gap-007` (`[retired-token-9]`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `[retired-token-10]`, `[retired-token-12]`, `restore points`, and the broken `#11. Source Control boundary` reference.
-  - gap-006
-  - gap-007
-  - Plans/Glossary.md
-  - Plans/Orchestrator_Page.md
-  - Plans/GitHub_Integration.md
-  - `[retired-token-9]:29-92`
-  - [retired-token-9]:29-92
-  - `[retired-token-9]:617-623`
-  - [retired-token-9]:617-623
-  - `[retired-token-9]:29-95`
-  - [retired-token-9]:29-95
-  - `[retired-token-11]` sharpened: `[retired-token-9]` still points at the non-existent `[retired-token-13]`, and `[retired-token-12]` remains live in `[retired-token-14]` / `[retired-token-15]` args rather than appearing only as stale residue.
-  - [retired-token-13]
-  - `[retired-token-9]:214-223`
-  - [retired-token-9]:214-223
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Retire tier-era canon and shadow fields
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+### Canonical route payload
 
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-007: Retire tier-era canon and shadow fields
-- Coverage rows: cov-007
-- Fidelity gap refs: cov-007
-- Required fidelity items:
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-007: Retire tier-era canon and shadow fields` exists in `Plans/UI_Command_Catalog.md`.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-007` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
-
-### Fidelity recovery cov-072: Canonical route payload
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0525
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model
-  - Define one canonical internal route payload, separate from command IDs.
-  - route payload vs command args
-  - align command args with canonical route payload vocabulary once that payload is owned elsewhere
-  - The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-072
-- Fidelity gap refs: cov-072
-- Required fidelity items:
-- Exact required item: Treat resume_url as serialized transport of that route payload
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-072: Canonical route payload` exists in `Plans/UI_Command_Catalog.md`.
-- Exact acceptance check: The `cov-072` repair states the exact requirement: Treat resume_url as serialized transport of that route payload
-- Exact acceptance check: The `cov-072` repair is in the owner section for `Plans/UI_Command_Catalog.md` and is not only a downstream consumer note.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -283,157 +23,41 @@ ABSOLUTE NAMING RULE:
 ## 0. Scope
 This file is the SSOT list of stable UI command IDs.
 Command IDs are referenced by plans and tests; implementations MUST treat these IDs as stable.
+GUI labels for command IDs may clean casing or spacing, but this is cosmetic only: internal IDs remain stable and collision-safe, and label normalization must not destructively strip hyphens or other canonical command-id tokens.
 
-ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
+ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
 
 ## 1. Naming rules
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0516
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Reconcile event naming and command extraction rules across catalog/storage/wiring before trusting any automated gate based on doc parsing.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - IDs MUST be lowercase and dot-separated.
 - Prefix MUST be `cmd.`.
 
-ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
+ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
 
 ## 2. Canonical command IDs
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0517
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Keep canonical runtime command ids authoritative for blocked/recovery actions on every surface.
-  - Publish a GitHub command migration map from legacy IDs to canonical `[retired-token-1]` IDs and payloads.
-  - [retired-token-1]
-  - `[retired-token-1]` should own stable command IDs and command argument families, but not the deeper route ontology by itself
-  - keep stable command IDs
-  - ghost command IDs
-  - internal AC contradiction and uncataloged command IDs now directly threaten wiring verification.
-  - `newtools.md` introduces uncataloged preview/build command IDs, unregistered `live.*` and doctor/custom-headless event families, and a conditional `CustomHeadlessTool` lifecycle with no canonical Tools/permissions owner.
-  - newtools.md
-  - live.*
-  - CustomHeadlessTool
-  - command IDs plus ad hoc args
-  - The system now wants a routing contract, not just more command IDs.
-  - canonical command IDs versus deprecated aliases/wrappers
-  - `UI_Wiring_Rules.md` already treats `correlation_id` as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or correlation continuity into downstream events.
-  - UI_Wiring_Rules.md
-  - correlation_id
-  - The command/wiring system is biased toward stable user-facing command IDs with explicit surface meaning.
-  - wiring rows should reference command IDs and handlers, not restate the normalization model in full
-  - deprecated aliases resolve to real canonical command IDs
-  - `Containers_Registry_and_Unraid.md` still has uncataloged command IDs, unresolved publish-authority split, broken blocked-payload consistency, and unanchored publish-result lineage.
-  - Containers_Registry_and_Unraid.md
-  - update `UICommand` boundary text so command IDs stay stable while route/open semantics live in Contracts
-  - UICommand
-  - unresolved command IDs and promoted-shell persistence contradictions
-  - `[retired-token-3]`, `[retired-token-4]`, `[retired-token-5]`, and `[retired-token-6]` still contain exact phantom/superseded/missing command IDs, stale shell-surface assumptions, and persistence-identity contradictions against `[retired-token-1]`, `[retired-token-2]`, and promoted-shell canon.
-  - [retired-token-3]
-  - [retired-token-4]
-  - [retired-token-5]
-  - [retired-token-6]
-  - [retired-token-2]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 ### 2.0A Promoted Section 15 command families
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0520
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.
-  - Register/fix the missing command families and remove false catalog/wiring claims:
-  - canonical runtime recovery command consolidation in `[retired-token-1]`, where legacy command families become deprecated aliases but consumers map to one shared namespace
-  - [retired-token-1]
-  - it also lists command families that now need revalidation against the newer runtime recovery and route/open model
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Command families stay normalized around shared navigation, search routing, and runtime recovery ownership.
 
 ### 2.0 Command entry contract (doc-level)
 
-### Reconciliation addendum
+Live command rows must carry enough metadata for command-palette, shortcut, wiring, and permission gates to classify the action without reading the handler. The required metadata columns are `command_id`, `label`, `description`, `preconditions`, and `command_kind`; `command_kind` is one of `shell_view`, `navigation_wrapper`, or `domain_action`.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+Wiring/gate consumers read `command_kind`, normalization kind, and canonical target contract from catalog metadata; `/gate` checks must not infer those fields from handler names or row-local prose.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+Command-definition metadata belongs in the command catalog / command contract layer, the route schema remains owner of actual route-target structure, and wiring rows reference command IDs and handlers instead of restating the normalization model in full.
 
-#### Source target target-0518
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.
-  - That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.
-  - element -> command -> handler
-  - `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:
-  - Contracts_V0.md
-  - That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:
-  - keeps `OpenFile` as the path-based file-open contract reference point for UI command work
-  - OpenFile
-  - Remove the graph-specific approval command contract as a primary action model.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+Command metadata must not inline route payload shape, object kinds, or argument mapping rules; doing so duplicates the route contract and turns the catalog into a second routing schema.
+
+
 Required command metadata:
 - `command_kind`
 - `normalization.kind`
@@ -457,6 +81,8 @@ Rules:
 - User cannot take an action unless the approval_scope_key allows it AND the operation is not contradicted by blocked_sequence or DAE jail posture.
 - Run mode changes, approval decisions, and blocked recovery are Orchestrator-owned; UI surfaces them but does not make the decision locally.
 - Actions that trigger external side-effects (file mutations, provider calls, route/open ops) MUST route through Permissions and route/open contracts.
+- Mutating `domain_action` commands MUST apply the catalog-wide projection-freshness gating clause before dispatch: the source projection freshness/health must be current for the selected project, repo, worktree, run, workflow, container, or Kubernetes scope. Stale, missing, or degraded projection health makes the mutation unavailable or forces a refresh/revalidation step before the command can execute.
+- Catalog verification lenses include UX / flow / action-surface behavior, state / storage / command / audit-trail behavior, tools / permissions / provider / identity integration, and cross-doc consistency / precedence / terminology / routing ownership; a handler row is not complete if it satisfies only flat command-to-handler wiring while route or audit semantics remain unowned.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
@@ -475,34 +101,19 @@ Route side-effect rules:
 - Provider mutations (PRs, issue comments) go through Permissions and provider-identity checks.
 - Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.
 - If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation.
+- field-placement for UI command records is frozen at the command wrapper: command routing fields stay here, while provider/runtime identity and `/runtime` resolution fields stay in the runtime/provider owner contracts instead of being reintroduced by stale planning docs.
+- The common panel-context payload contract lets wrapper commands carry shared `panel-context` vocabulary for deep-link and cross-surface focus: `project_id`, `repo_id?`, `worktree_id?`, `branch_ref?`, `workflow_ref?`, `job_ref?`, `container_ref?`, `image_ref?`, `kubernetes_context?`, `run_id?`, `attempt_id?`, and `subview?`. This is shared wrapper vocabulary only; it is not a new `cmd.nav.*` family and does not replace `route_target` or `OpenSubject`.
+- Route `tab_id` is stable page-tab focus only; the Orchestrator tab family is the first canonical enum set for tab-focused command payloads.
+- Route-shaped payloads carry `route_target`, `OpenSubject`, and `panel-context` identity for cross-surface focus. Pure shell/view-state commands may carry `/view-state`, `/switch_subview`, or selected-subview hints, but those hints are not primary navigation identity and must not be used as `/runtime-local` mutation payloads.
+- Object-targeting payload semantics move out of `cmd.panel.switch`: it remains a side-panel shell/view command, and any context that becomes object-targeting must become a route-consuming wrapper command or normalized `route_target` argument. Do not promote a broad public `cmd.nav` / `cmd.nav.*` family merely to avoid owner-specific or domain-specific wrappers, and do not let domain wrappers invent private route args; `cmd.project.open`, `cmd.artifacts.show_in_*`, `cmd.artifacts.show_in_` compatibility aliases, chat Usage wrappers, and cross-surface Orchestrator pivots are `navigation_wrapper` commands over canonical route targeting rather than generic layout toggles.
+- Routing split cleanup treats `resume_url`, command IDs plus ad hoc args, artifact / `/usage/search` deep links, and the `FinalGUISpec.md` file-open contract as consumers of the same route/open model rather than four competing mechanisms.
+- Compact navigation aliases, if adopted, are limited to `cmd.nav.open_subject`, `cmd.nav.open_usage_subject`, and `cmd.nav.focus_route` or an equivalent compact family that normalizes to `route_target` and `OpenSubject`; they must not expand into a second catalog language.
+- `cmd.nav.open_subject` or an equivalent compact wrapper resolves file, document, artifact, generated, and report subjects by carrying normalized `route_target` plus `OpenSubject`; `/document/artifact/generated/report` is shorthand for those subject families, not a fourth command-payload language.
+- Public `cmd.nav` / `cmd.nav.*` IDs are optional migration aliases, not a replacement target language; wrapper-style `/focus` and open commands may remain user-facing when they normalize to `route_target` and `OpenSubject`.
+- Navigation compatibility is not a winner/loser or `/loser` alias table: legacy names can point to wrapper commands, but wrapper classification, route payload, and owner command IDs stay visible instead of hiding route ownership behind a preferred alias.
 
 ### Command normalization model
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0524
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows
-  - UI command / route normalization across existing commands
-  - `GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.
-  - GATE-010
-  - normalization metadata is internally consistent with the command kind
-  - Keep the matrix row itself relatively small; let it reference a command that already carries normalization meaning.
-  - command wrapper normalization
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:
 ```
@@ -536,29 +147,113 @@ ContractRef: ContractName:Plans/Contracts_V0.md §route_target and OpenSubject, 
 - Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
 - Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
 - This subsection stays limited to tier-era retirement under 2.0B and does not redefine route payload or command-normalization ownership.
+- Legacy event examples that use `run.started` or `usage.event` with `tier_id`, `run.tier_started`, `run.tier_completed`, `run.verification_result` keyed by `tier`, `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, or `allowed_actions`, and tier-start validation `/persona/QA` examples are tier-era compatibility only; current runtime events and approvals resolve through package/seam/lane execution identity and the blocked-state contract.
+
+### Stale command-family retirement guard
+
+Highest-risk stale-canon exact-token families must be handled explicitly rather than left as broad themes. `cmd.chat.delete_message` is not an active catalog command. The stale rule `Bare /web (with query argument) routes to cmd.web.search by default` is retired; `cmd.web.search` is not the implicit destination for bare `/web`. Legacy grouped `cmd.web.*` names such as `cmd.web.search`, `cmd.web.fetch`, `cmd.web.extract`, and `cmd.web.research` are compatibility-only retirement evidence; active slash dispatch uses `cmd.chat.web.search`, `cmd.chat.web.extract`, `cmd.chat.web.research`, `cmd.chat.web.fetch`, `cmd.chat.web.crawl`, or `cmd.chat.web.map`. External environment/config names such as `OPENCODE_DISABLE_LSP_DOWNLOAD` and `OPENCODE_LSP_TIMEOUT` are source-lineage examples only and must not become PM-visible command IDs, command labels, or catalog payload fields. `Open in Terminal` and `Show Terminal` may share a reveal/focus implementation for the same live `terminal_session_id`, but they must not both normalize to `cmd.terminal.show`; the catalog keeps distinct user-facing terminal action rows and does not collapse terminal actions into one normalized target. `QuestionInput` and `QuestionAnswer` are retired question-contract names; the live question tool contract owns the replacement shape. `requested_persona_id` and `effective_persona_id` are retired persona/runtime identity aliases and must not reappear as canonical command payload fields. `unblock_action_ids` and `unblock_action_ids[]` are stale blocked-recovery field names and normalize to the shared blocked-action contract. Legacy web error names `invalid_url`, `fetch_failed`, `provider_unavailable`, and `credit_cap_exceeded` must map to the canonical web error taxonomy instead of becoming UI command error canon. The stale web-action enum string `wait | screenshot | select | hover | evaluate | press | focus` is not the canonical WebAction enum; `wait`, `select`, `hover`, `evaluate`, `press`, and `focus` only survive as retired exact tokens unless a separate owner contract maps them to canonical actions.
+
+### Command-entry gap and owner-coverage guard
+
+`Search-command routing`, `### 2.0 Command entry contract (doc-level)`, and `### 2.0A Promoted Section 15 command families` are catalog discoverability anchors for `gap-003`; artifact drill-through commands must route through Usage and the shared route/open contract instead of storing `{ tool_name, invocation_summary, options }` as a live UI command payload. The tuple `{ tool_name, invocation_summary, options }`, standalone `invocation_summary`, and the conclusion `No remaining gaps` are source-lineage only for old tool summaries, not active command-catalog payload canon.
+
+Later-model command coverage must preserve `/projection-trust`, `/gating`, `MVP`, `GUI`, `IDs`, `later-model`, `promoted-feature`, `multi-project-tab`, `attention-center`, and runtime `cmd.runtime.*` ownership when a consumer doc claims command readiness. Runtime projections, promoted-feature command families, LSP mutators, and checklist surfaces must gate dispatch through stable command IDs and wiring rows before claiming user-visible completion.
+
+Cross-doc command ownership gaps remain concrete until resolved: `FinalGUISpec.md` `§4.1` versus `§5.1` navigation contradictions, the already-known `Orchestrator_Page.md` `TOC` promises for `UICommand IDs`, `Wiring_Matrix.md` references to `cmd.orchestrator.switch_tab`, `Commands_System.md` / `assistant-chat-design.md` override tension around `cmd.chat.run_user_command`, and account, concern, promotion, tab, window, catalog, dev, `/promoted-family`, and `/window/catalog/dev` command families must resolve to catalog rows or owner-documented retirement before `GUI` command readiness can pass; these are machine-breaking gaps, not editorial cleanup.
+
+Audit-survivor command gaps stay owner-scoped instead of becoming local proof of readiness: duplicate numbering and `ContractRef` failures remain owner-doc issues, unresolved command `IDs` and `promoted-shell` persistence contradictions remain catalog/wiring obligations, and mixed `execution-era` canon in storage or runtime docs must be retired by those owner contracts before command readiness can pass.
+
+Command/wiring/template drift is gate-breaking, not editorial: `/wiring/template`, internal AC contradiction, uncataloged command `IDs`, stable action IDs, and `Plans/Commands_System.md` / `/Commands_System.md` references must resolve through catalog IDs, wiring rows, and owner-documented retirement before wiring verification can pass.
+
+Canon-breaking owner defects stay visible until repaired: missing anchors, stale section references, unresolved command IDs, `/packaging` authority splits, and `naming-rule` claims without backing canon are command-readiness blockers, not summary cleanup.
+
+Uncataloged owner signals from `newtools.md`, assistant memory, and project-switch handoffs stay concrete registration obligations until resolved: `cmd.orchestrator.preview_`, `cmd.orchestrator.preview_*`, `cmd.orchestrator.push_image`, `/build/open-artifact`, `CustomHeadlessTool`, `ToolID`, `GATE`, `/tool/permission`, `/permission/config`, `config-file`, `redb-side`, `memory.gist`, `memory.gist.*`, `live.*`, `auto-trigger`, `doctor-check`, `multi-way`, `net-new`, `HITL`, `/project-switch`, `/handoff`, `non-durable`, `final-pass-worthy`, and CtAs must either become stable command/event/storage rows or be explicitly retired by their owner docs.
+
+Wiring and index backfill must keep extraction hazards visible: `/deprecated-ID`, `owner-doc-to-catalog`, `Wiring_Matrix.schema.json`, `cmd.*.json`, `non-catalog`, `filename-shaped`, `schema.json`, `under-describes`, `plans-index`, `00-plans-index.md`, `rewrite-critical`, and `workspace-tab` are not valid command IDs merely because they appear in prose, filenames, examples, or index summaries. Owner-doc-to-catalog coverage requires a deterministic alias/deprecated-ID rule and stale revalidation handshake before a `GUI` checklist or promoted-feature owner can treat those IDs as verified.
+
+`Wiring_Matrix.schema.json` stays intentionally lean: row-local metadata may point to catalog and route/open contracts for normalization expectations, but it must not repeat route payload or command-normalization rules in every wiring row.
+
+Usage and artifact summary drift is handled as a consumer/owner gap, not as a command payload shape. `gap-008`, `result_id`, `account-history`, `over-summarized`, `projection-health`, `missing_data_shape`, `restore points`, `TierContext`, `tier_id`, `detached_window`, `artifact_kind`, `task_id`, `tool_name`, and `invocation_summary` remain discoverable only as stale or consumer-side lineage unless their owner contracts bind a current route/open, artifact drill-through, or account-history projection.
+
+Legacy HITL and runtime-governance carry-through stays explicit. `HITLRequest`, `allowed_actions`, `allowed_actions[]`, and `approve_continue` are compatibility-only approval vocabulary once `cmd.runtime.*` and `blocked_sequence` own runtime recovery. Runtime governance must not leave `blocked_owner`, `GPT`, `DAE`, branch-ownership, isolated-execution-substrate, `/resume/restart`, `external_publish_side_effect`, `pre-dispatch`, `counter-family`, `non-bypassable`, or `yolo` as unowned command behavior; those terms resolve through permission, route/open, DAE, and blocked-runtime owners before dispatch.
+
+`high-consequence` runtime actions bind to canonical blocked-state and `/HITL` command contracts rather than ad hoc UI confirms.
+
+`Run_Graph_View.md` / `Run_Graph_View` consumes `UI_Command_Catalog.md` / `UI_Command_Catalog` HITL args and recovery command namespaces from this catalog; graph-local specs must not mint conflicting HITL payloads or recovery IDs.
+
+`UI_Command_Catalog.md` / `UI_Command_Catalog` is the sole stable action owner for command `/template/example` references: every referenced command must exist as a catalog row, compatibility alias, or explicit retirement note before wiring gates trust it.
+
+`execution_unit_context` is a runtime contract with a strict executor core, a conditional `/remediation/recovery` family for blocked recovery, and a disclosure-only `/audit` family for UI and evidence convenience.
+
+`Crosswalk.md` owns `Primitive:RouteTarget` and `Primitive:OpenSubject`; `RouteTarget` and `OpenSubject` references in this catalog are consumer links to that route/open primitive boundary.
+
+Thread search hits use `object_kind = message`, `object_id = <message_id>`, and `thread_id`; `object_kind`, `object_id`, and `message_id` must not be replaced by page-local search result identifiers.
+
+Command rows carry wrapper-vs-alias classification in metadata rather than only in prose or `/tables`, so wrappers, deprecated aliases, and canonical command IDs remain machine-verifiable.
+
+`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`; older route `/pivot` docs must move away from `tier_id` and one-off special-case ids toward canonical object, subject, and route identities.
+
+Tiers-tab widgets are compatibility-only: `widget.tier_tree` renders a Phase/Task/Subtask tree and `widget.progress_bars` renders phase-scoped bars, but neither becomes the package `/Task/Subtask` or `/seam/lane` command model.
+
+`History` commands that expose `Delete Run` require durable historical `/audit` semantics, confirmation strength, and retention/disposition behavior before deletion can be treated as a safe catalog action.
+
+The path-based `open_file` target uses `OpenFile { path, line?, range?, target_group? }`; `target_group` selects editor placement only and does not replace route_target, OpenSubject, or object identity.
+
+Subject-open and generalized route focus are first-class route/open behavior: `subject-open` wrappers cover `/route`, `/navigation`, `/focus/show`, and `routed-open` pivots so `cross-surface` commands do not keep accreting as `one-off` cases.
+
+Route identity can carry `message_id`, `workflow_run_id`, `scheduler_pass_id`, `safe_point_id`, and `remediation_root_id`; callers may resolve runtime-lineage `IDs` through indexes and `/projections` instead of knowing file paths.
+
+Route validation normalizes legacy `/special-case` IDs before dispatch; `family-specific` IDs that are unique only within run scope must not become ad hoc `top-level` route fields.
+
+`resume_url` is serialized route transport, not a member of the broader `*_ref` family or an independent route primitive.
+
+Command layers stay `wrapper-based` and `domain-facing`; `/wiring` keeps stable `user-facing` command `IDs` while wrapper metadata points to shared route/open contracts.
+
+Older tier `/HITL` `request-era` tables require an explicit `compatibility-label` and cannot stand as live canon beside runtime `cmd.runtime.*` sections.
+
+The catalog must not teach consumers how to persist approval state. Approval persistence belongs to blocked-state and storage owners, while old request-era sections are compatibility lineage only so they do not recreate storage and command drift.
+
+Route/open wrappers use one route-payload discipline. `/wrappers`, subject-open, `/open-subject`, `cmd.nav.open_subject`, route-payload, route-payload-driven, `/focus/show`, `/open/focus`, route-target, `OpenSubject`, `OrchestratorPage`, mutation-risk, and operational-identity are command-catalog classification and normalization concerns, not excuses to mint bespoke open/show/focus argument shapes.
+
+Ledger export and related show-in commands preserve canonical IDs and structured fields: `CSV` is a convenience projection, while JSON `/JSONL` stays close to canonical record structure.
+
+Operational-identity displays for GitHub, `/registry/Kubernetes`, and similar external contexts must not overload `/account` provider fields or become one-off surface widgets; they route through normalized `operational_identity` evidence.
+
+Runtime-artifact schema gaps, durable worktree `/record` and `/projections` families, and account `/concern/promotion` command families stay routed to their owner contracts; the catalog records command IDs and wrapper normalization without pretending to own those schemas.
+
+`UI_Command_Catalog.md` stays action-oriented for stable command `IDs`, while target-model-oriented `/routing`, subject-open, and route payload contracts live in route/open owners. A routing contract, not more command IDs, absorbs `resume_url` transport so navigation semantics are not redefined separately in the catalog, `GUI` docs, and storage docs.
+
+Route payloads avoid route-local surrogate IDs when a canonical domain ID exists: primary identity stays in `object_kind`/`object_id` or `subject_id`, while sub-selection uses `inspector_target` or a specialized verb instead of minting new command IDs.
+
+Crosswalk ownership stays explicit: the command catalog and command contract own normalization metadata, the route contract owns `route-target` structure, and wiring rows bind UI elements to command IDs plus `/handler` references only.
+
+`inspector_target` does not replace `tab_id`; `wizard_step`, `message_id`, `line`, `range`, and compare-target state are destination-local or OpenFile/detail anchors, not inspector target enum values.
+
+Object-first blocked and runtime routes use `run_id + node_id + attempt_id? + blocked_sequence?` as the identity tuple where needed; `tier_id` is compatibility/display grouping and not canonical route identity.
+
+Surface-specific `/wrapper` and wrapper-command entries keep stable public command IDs, but `/open-by-identity`, subject-open, and route-payload behavior sits under `UICommand.args` as a shared target object; wrapper metadata records `normalizes_to_contract` or `alias_of_command_id` instead of per-command payload tables.
+
+Route scope restores focused-run/thread/project context explicitly: `/thread/project`, `focused_run_id`, `thread_id`, and `project_id` travel with wrapper-command routing instead of being recovered from UI-local state.
+
+Object routes use canonical domain IDs directly. `object_id` covers `thread_id`, `message_id`, `wizard_id`, `run_id`, `attempt_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, `lane_id`, `worktree_id`, concern IDs, and `/promotion/graph-patch` IDs when the owner contract defines them.
+
+The `UICommand` envelope carries command-normalization metadata; `Contracts_V0.md` owns the small envelope and route/open target object, while the catalog records command IDs and normalization intent.
+
+Crosswalk primitive consumers such as `UICommand`, `DocumentPane`, and `DocumentCheckpoint` consume route-target and subject-open primitives; they do not own a competing route/open payload model.
+
+Orchestrator shell-view commands for top-level, full-page, run-scoped surfaces such as `/history/evidence`, Ledger, and graph views bind to upstream data-source owners and must not mint local compatibility fields.
+
+Source-lineage packet names and process inventory files remain noncanonical, not live command payloads. `exact_items`, `meta.json`, `pm.work_item_meta.v2`, `current_state`, `current_state.md`, `canon_inventory`, `canon_inventory.json`, `open_gaps`, `open_gaps.json`, `next_required_stage`, and `Audit Mode` may appear in evidence notes, but the catalog only carries them as stale/source-lineage markers unless another owner binds a user-facing command.
+
+Run Graph and page-ownership conflicts are resolved toward runtime and route primitives. `/action-gating`, `command-arg`, graph-local, page-ownership, template-level, runtime-minimum, `/events/tool`, `/token`, runtime-native, waiting_approval, `cmd.graph`, and `cmd.graph.*` consumers must not create competing UI command IDs when `cmd.runtime.*`, route/open identity, and the cataloged Orchestrator shell-view commands already define the dispatch surface.
+
+Command-system backfill must resolve ghost IDs and stale command-state claims without creating a second command system. `/wiring`, `/superseded`, command-state, command-system, `/fix`, `/mode`, `/HITL`, `/compact`, override_builtin, `cmd.chat.run_user_command`, and `cmd.chat.branch_from_restore` must either resolve to stable catalog IDs, explicit compatibility aliases, or owner-documented retirement before downstream wiring claims pass.
+
+Widget and shell-navigation consumers remain route-aware. `widget.tier_tree`, `widget.progress_bars`, load-bearing widget catalog entries, `/Task/Subtask`, `/seam/lane-aware`, `cmd.panel.switch`, and `panel_id` are compatibility or shell-view selectors unless they resolve through a concrete route/open payload; `cmd.panel.switch` must not become a hidden object-targeting command when a stable surface-specific route command exists.
 
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0519
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.
-  - The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
 
 1. **Handler registration**: The command MUST have a registered handler in the UI Command Dispatcher. The handler's module/function location MUST be recorded in the wiring matrix.
@@ -574,32 +269,9 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schem
 
 #### `cmd.github.connect`
 
-### Reconciliation addendum
+GitHub recovery binding note: `cmd.github.connect` remains arg-less only for a fresh device-code start locked by Spec Lock. Deferred reconnect and recovery wrappers must not stay `arg-less`, `under-keyed`, or `split-brain`; a blocked `/node/thread/wizard` recovery context binds `project_id`, `auth_realm`, actor context, effective-account snapshot/ref, and source `/ref` before resuming across `GitHub_Integration.md` and `UI_Command_Catalog.md`.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0530
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `cmd.nav.open_subject`
-  - cmd.nav.open_subject
-  - `cmd.nav.open_usage_subject`
-  - cmd.nav.open_usage_subject
-  - `cmd.nav.focus_route`
-  - cmd.nav.focus_route
-  - `cmd.source_control.select_worktree`
-  - cmd.source_control.select_worktree
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Start GitHub OAuth device-code flow.
 
 - **Args schema:** `{}` (no args; host/scope are locked by Spec Lock).
@@ -637,6 +309,35 @@ These IDs are required by `Plans/GitHub_Integration.md` section D and `Plans/cha
 | `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Chain Wizard |
 
 ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md
+
+---
+
+### 2.1B File Manager commands
+
+These IDs are required by `Plans/FileManager.md`.
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.file.new_file` | `{ project_id, parent_path, name }` | `file.created` | File Manager |
+| `cmd.file.new_folder` | `{ project_id, parent_path, name }` | `folder.created` | File Manager |
+| `cmd.file.rename` | `{ project_id, path, new_name }` | `file.renamed` or `folder.renamed` | File Manager, File Editor |
+| `cmd.file.delete` | `{ project_id, paths[] }` | `file.deleted` or `folder.deleted` | File Manager |
+| `cmd.file.copy_path` | `{ project_id, paths[], format?: "absolute"|"relative" }` | no persisted domain event (clipboard) | File Manager |
+| `cmd.file.copy_nodes` | `{ project_id, paths[] }` | no persisted domain event (clipboard intent) | File Manager |
+| `cmd.file.cut_nodes` | `{ project_id, paths[] }` | no persisted domain event (clipboard intent) | File Manager |
+| `cmd.file.paste_nodes` | `{ project_id, destination_path, mode?: "copy"|"move" }` | `file.copied` / `file.moved` / `folder.copied` / `folder.moved` | File Manager |
+| `cmd.file.open_with` | `{ project_id, path, target }` | no persisted domain event (navigation/open) | File Manager, File Editor, Preview surfaces |
+| `cmd.file.save_local_copy` | `{ project_id, paths[], destination_hint? }` | `file.exported` or `folder.exported` | File Manager |
+
+Rules:
+- The File Manager command family uses stable snake-case operation names (`new_file`, `new_folder`, `copy_nodes`, `cut_nodes`, `paste_nodes`, `save_local_copy`) so menu labels can vary without changing dispatch identity.
+- `cmd.file.new_file` and `cmd.file.new_folder` are valid only for the project root or a folder target; `cmd.file.rename`, `cmd.file.delete`, and path-copy actions are valid for files or folders, with multi-select allowed only where the owner contract permits it.
+- `cmd.file.open_with` is PM-native for MVP editor and preview targets owned by FileManager §11.4.
+- The `cmd.file.open_with` MVP-native target enum is exactly `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, and `diff_review`.
+- `system_default` is not part of this command's canonical MVP target enum. Future OS handoff must use a separate explicit command such as `cmd.file.open_in_system_default`.
+- `cmd.file.save_local_copy` is the explicit remote-to-local export command for file or folder nodes and remains separate from tree-node Copy / Cut / Paste.
+
+ContractRef: ContractName:Plans/FileManager.md#114-open-with-and-save-local-copy, ContractName:Plans/FinalGUISpec.md
 
 ---
 
@@ -682,7 +383,9 @@ These IDs are required by `Plans/Widget_System.md`.
 | `cmd.widget.move` | `{ page, instance_id, col, row }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.reset_layout` | `{ page }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 
-ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contracts_V0.md#UICommand
+Widget-hostability scope narrowing: widget-command affected-surface scope is limited to widget-hosted surfaces: Dashboard, Usage page, and Orchestrator widget-tab surfaces that are actually widget-hosted. `cmd.widget.*` rows do not imply that every Orchestrator tab is widget-composed.
+
+ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
 
@@ -691,7 +394,7 @@ ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contract
 Run Graph runtime recovery commands are defined canonically in `## Canonical Runtime Recovery Command Consolidation (2026-03-09)`.
 
 Rules:
-- graph approval and recovery commands target blocked/runtime identity, not `request_id`
+- graph-specific approval and recovery commands target blocked/runtime identity, not `request_id`
 - `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain canonical command IDs
 - any graph-facing wrapper command normalizes to the runtime command family and canonical `route_target` semantics
 
@@ -706,12 +409,36 @@ Canonical Orchestrator commands are:
 - `cmd.orchestrator.open_promotion`
 - `cmd.orchestrator.open_review`
 - `cmd.orchestrator.open_corroboration`
+- `cmd.orchestrator.open_receipt`
+- `cmd.orchestrator.compare_run_output`
+- `cmd.orchestrator.open_source_control`
+- `cmd.orchestrator.open_github_actions`
+- `cmd.orchestrator.open_docker_manager`
+- `cmd.orchestrator.open_kubernetes`
+- `cmd.orchestrator.open_conflict_assistant`
+- `cmd.orchestrator.restore_safe_point_then_retry`
 - `cmd.orchestrator.open_in_source_control`
+
+Concrete preview/build Orchestrator rows:
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.orchestrator.switch_tab` | Switch Orchestrator Tab | Selects an Orchestrator tab as shell/view state and does not replace runtime or route identity | `orchestrator_visible && tab_available` |
+| `cmd.orchestrator.preview_open` | Open Preview | Launches or reveals a preview session for the resolved visual target and records preview session evidence | `preview_target_resolvable` |
+| `cmd.orchestrator.preview_stop` | Stop Preview | Stops the selected preview session without changing build or run state | `preview_session_active` |
+| `cmd.orchestrator.open_preview_artifact` | Open Preview Artifact | Opens preview media or fallback artifact paths through the route/open contract | `preview_artifact_available` |
+| `cmd.orchestrator.build_run` | Build Run | Starts the selected build profile and records normalized build-result artifact metadata | `build_profile_resolvable && permission_allowed` |
+| `cmd.orchestrator.open_build_artifact` | Open Build Artifact | Opens a build output path, installer artifact, log, or normalized build result through the route/open contract | `build_artifact_available` |
+| `cmd.orchestrator.push_image` | Push Image | Dispatches the approved remote image push after a successful local build result exists | `build_result_successful && push_policy_after_build && permission_allowed` |
 
 Rules:
 - Orchestrator object opens are route-consuming navigation wrappers, not layout-only commands
 - cross-tab deep links preserve `project_id`, `focused_run_id`, object identity, and inspector focus
 - commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
+- The `cmd.orchestrator.open_*` pivots above are compatibility aliases for owner-surface route opens; runtime mutation recovery still maps through `allowed_action_ids[]` to `cmd.runtime.*`, including `restore_safe_point_then_retry`.
+- Legacy cross-surface pivot names `cmd.orchestrator.open_in_github_actions` and `cmd.orchestrator.open_in_docker_manager` are compatibility aliases for `cmd.orchestrator.open_github_actions` and `cmd.orchestrator.open_docker_manager`. They remain `navigation_wrapper` commands and normalize through `route_target` rather than carrying owner-doc state themselves.
+- `cmd.artifacts.show_in_usage`, `cmd.artifacts.show_in_ledger`, `cmd.source_control.select_worktree`, and `cmd.orchestrator.open_in_source_control` are object-targeting route actions, not `layout/UI state only` toggles. They carry `project_id`, route/OpenSubject identity, object kind, and scope evidence when they open Usage, Ledger, Source Control, worktree, artifact, receipt, or run context.
+- HITL and runtime route `/addressing` use `blocked_sequence`, `cmd.runtime.*`, and shared route identity. Page specs that still describe `node-only`, tier-era, or `/receipt/worktree/workflow` addressing are consumers that must migrate to the catalog route contract rather than invent local action payloads.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
 
@@ -759,110 +486,244 @@ Source Control (`cmd.source_control.*`), GitHub Actions (`cmd.actions.*`), and D
 - GitHub Actions commands manage workflow runs, jobs, logs, and pinned workflows.
 - Docker Manager commands manage images, containers, compose stacks, and runtime inspection.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+#### Operational command namespace rules
+
+- `cmd.source_control.*` covers tab selection, repo/worktree focus, history open, graph filter/focus, branch/stash UX, and other Source Control command-family pivots.
+- `cmd.git.worktree.*` covers open, compare, recover, prune, lineage, and conflict-resolution entrypoints for project-scope worktrees.
+- GitHub Actions uses the `cmd.github.actions` namespace family. `cmd.github.actions.*` includes rerun, cancel, pin, unpin, settings CRUD, current-branch pivots, and log drilldown; existing `cmd.actions.*` rows are compatibility aliases until migrated.
+- Docker Manager reserves `cmd.docker.container.*`, `cmd.docker.image`, `cmd.docker.image.*`, `cmd.docker.compose`, `cmd.docker.compose.*`, `cmd.docker.context`, `cmd.docker.context.*`, `cmd.docker.network`, `cmd.docker.network.*`, `cmd.docker.volume`, `cmd.docker.volume.*`, `cmd.docker.bake`, `cmd.docker.bake.*`, `cmd.docker.k8s`, and `cmd.docker.k8s.*`.
+- `cmd.docker.k8s` owns Kubernetes commands exposed inside Docker Manager. Existing `cmd.k8s.*` rows are compatibility aliases unless the catalog updates them to the `cmd.docker.k8s.*` namespace.
+- Core command-prefix reservation protects core-surface families from user command, `/custom/plugin`, and plugin override. Reserved prefixes include source_control, github_actions, docker, k8s, kubernetes, registry, and other first-party navigation families; custom/plugin commands may compose with these families only by using explicit extension verbs that do not replace canonical meaning.
+
+GitHub Actions command coverage must include authoring assistance, the explicit `current-branch` versus `workflow-library` split, deterministic `disabled-state` behavior for missing scopes, expired auth, or no GitHub remote, plus log drilldown and `branch-to-diff` pivots. Docker command terminology stays separated: `Docker Manager` is the command-surface umbrella, `Docker Hub` is a registry/provider capability inside that surface, `Podman` is an alternate runtime mode, and `Kubernetes` is a project-focused subview/family rather than a separate command owner.
+
+The accepted MVP surface breadth means the command catalog must not remain publish-centric or underdefined. Source Control command coverage includes navigation/history/graph/worktrees, `/history/graph/worktrees`, conflict graph pivots, `/conflict/graph`, and Git operations `/unstage/discard/diff/commit/push/pull/sync/fetch/branch/stash`. GitHub Actions coverage includes rerun, `/cancel/pin/admin/current-branch`, settings CRUD, current-branch focus, list/detail/logs, `/detail/logs`, and compatibility for `/detail/job-expand/view-logs/download-log`. Docker Manager coverage includes `/images/compose/build-bake/contexts/networks/volumes/runtime`, `/image/compose/context/network/volume/bake/Kubernetes`, Podman integration hooks, Kubernetes families, `/auth/Unraid`, `/auth/template`, `/publish/template`, and `/Actions/Docker/Kubernetes` remediation pivots through the owner surfaces. Existing Git basics, Actions list/detail/logs, and Docker publish/auth/template flows are well-covered but no longer sufficient; any `/underdefined` command family must resolve to a first-class owner command or a documented compatibility alias. Help/explainer commands are reserved for advanced surfaces so tooltips, banners, receipts, blocked states, and `/admin/help` links can reopen authored help rather than panel-local ad hoc copy.
+
+Implementation-ready operational wiring requires first-class route commands rather than panel-local labels. `Open in Source Control` carries exact `SCM` context payload for repo, worktree, compare target, baseline, and run/attempt lineage; compare-two-worktrees is a Source Control review route, not an Orchestrator-local diff. Runtime recovery remains restart-safe because `restore-before-rerun`, `baseline_target`, `worktree_id`, and `/attempt` identity are part of the canonical runtime command payload. Source Control persists `source_control.project_state.{project_id}` while GitHub Actions persists `github_actions.project_state.{project_id}`; Docker Manager persistence must cover `/context/compose-scenario/build-target/Kubernetes-focus` alongside runtime, context, compose scenario, build target, and Kubernetes focus. Feature-complete command families include Source Control, GitHub Actions `/cancel/pin/triage/readiness/admin`, Docker Manager operational subviews, and Kubernetes, with all mutating `CRUD` actions resolved through wiring and permission checks.
+
+Historical GUI concept labels are migration evidence, not owner names. `GITHUB ACTIONS`, `DOCKER MANAGE`, and `SOURCE CONTROL` map to canonical GitHub Actions, Docker Manager, and Source Control; `DOCKER` / `MANAGE` copy retires in favor of Docker Manager. The MVP shell still preserves visible workflows: GitHub Actions current runs, workflows, secrets, and manage-secrets; Docker Manager containers, images, volumes, `/networks`, registry push, and auth badge; Source Control branch selector, change list, AI commit generation, commit, and sync.
+
+Boundary language is explicit: `GitHub API` is backend plumbing and `/integration`, not a `GUI` or user-facing panel. GitHub Actions owns workflow-management, Source Control owns repo-control, and both consume shared command routing rather than inheriting a combined Git/GitHub surface.
+
+Broad-pass command and wiring reconciliation spans the command catalog plus its consumers and owner contracts: `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.md`, `Plans/Architecture_Invariants.md`, `Plans/Contracts_V0.md`, `Plans/Permissions_System.md`, `Plans/Commands_System.md`, `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/newtools.md`, `Plans/newfeatures.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/Widget_System.md`, `Plans/Run_Graph_View.md`, `Plans/FileManager.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/assistant-chat-design.md`, `Plans/usage-feature.md`, and `Plans/Glossary.md`.
+
+#### Source Control review and conflict commands
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.source_control.open_review` | Open Review Mode | Opens the Source Control review lens for a selected worktree, base branch, PR target, or commit range | `git_available && compare_target_resolvable` |
+| `cmd.source_control.review.open` | Open Review Mode | Compatibility alias for `cmd.source_control.open_review` | `git_available && compare_target_resolvable` |
+| `cmd.source_control.review.swap` | Swap Review Sides | Swaps left/right compare targets in Review mode | `review_mode_open && compare_target_resolvable` |
+| `cmd.source_control.review.filter` | Filter Review Files | Applies file filters, ignore-whitespace, or collapse-unchanged state in Review mode | `review_mode_open` |
+| `cmd.source_control.set_compare_target` | Set Compare Target | Changes the left/right review baseline or target for Review mode | `review_mode_open && compare_target_resolvable` |
+| `cmd.source_control.toggle_generated_filter` | Toggle Generated Filter | Shows or hides generated files in Review mode and related Source Control diffs | `source_control_visible` |
+| `cmd.source_control.open_conflict` | Open Conflict Assistant | Opens the Conflict assistant for the selected conflict group or file | `git_available && conflict_present` |
+| `cmd.source_control.open_merge_editor` | Open Merge Editor | Opens the structured merge editor for a selected conflicted file | `conflict_file_selected && merge_editor_available` |
+| `cmd.source_control.resolve_conflict_side` | Resolve Conflict Side | Applies the chosen ours/theirs/base/manual side for a selected conflict hunk or file after user confirmation | `conflict_file_selected && resolution_side_selected` |
+| `cmd.source_control.mark_conflict_resolved` | Mark Conflict Resolved | Marks a conflicted file as resolved after validation confirms no conflict markers remain | `conflict_file_selected && no_conflict_markers` |
+| `cmd.git.diff_open` | Open Git Diff | Payload `cmd.git.diff_open { project_id, repo_id, repo_relative_path?, compare_target? }`; opens a path-level or repo-level diff through Source Control review, not a chat-local diff | `git_available && compare_target_resolvable` |
+| `cmd.git.diff_toggle_mode` | Toggle Diff Mode | Payload `cmd.git.diff_toggle_mode { mode: "side_by_side"|"unified" }`; switches the in-buffer or review diff presentation without changing the compare identity | `diff_view_open` |
+| `cmd.git.diff_set_compare_target` | Set Git Compare Target | Payload `cmd.git.diff_set_compare_target { target_kind: "head"|"index"|"merge_base"|"branch"|"commit"|"parent", ref? }`; changes the low-level diff baseline without replacing Source Control Review mode | `git_available && compare_target_resolvable` |
+| `cmd.git.diff_search` | Search Current Diff | Payload `cmd.git.diff_search { query, direction?: "next"|"prev" }`; runs diff-local search inside the current git diff/review surface, not project-wide Search | `diff_view_open && query_present` |
+| `cmd.git.stage_hunks` | Stage Hunks | Payload `cmd.git.stage_hunks { path, hunk_ids: string[] }`; stages selected hunks after FileSafe and Source Control validation | `git_available && hunk_ids_selected` |
+| `cmd.git.unstage_hunks` | Unstage Hunks | Payload `cmd.git.unstage_hunks { path, hunk_ids: string[] }`; unstages selected hunks after validation | `git_available && hunk_ids_selected` |
+| `cmd.git.discard_hunks` | Discard Hunks | Payload `cmd.git.discard_hunks { path, hunk_ids: string[] }`; discards selected hunks only through explicit destructive confirmation | `git_available && hunk_ids_selected && discard_confirmed` |
+| `cmd.git.conflict_apply_resolution` | Apply Conflict Resolution | Payload `cmd.git.conflict_apply_resolution { path, conflict_id, resolution: "ours"|"theirs"|"both" }`; applies one conflict resolution choice while preserving conflict_id evidence | `conflict_file_selected && conflict_id_resolvable` |
+| `cmd.source_control.graph.focus` | Focus Graph Object | Focuses a branch, commit, worktree, or run-linked graph node in Source Control Graph | `git_available && graph_object_resolvable` |
+| `cmd.source_control.graph.filter` | Filter Graph | Applies branch, worktree, ownership, or status filters to Source Control Graph | `source_control_graph_visible` |
+| `cmd.source_control.graph.layout` | Set Graph Layout | Changes compact/expanded graph density or layout mode | `source_control_graph_visible` |
+| `cmd.source_control.graph.focus/filter/layout` | Graph Focus/Filter/Layout | Compatibility alias family for graph focus, filter, and layout commands | `source_control_graph_visible` |
+| `cmd.source_control.graph_focus` | Focus Graph Object | Compatibility alias for `cmd.source_control.graph.focus` | `git_available && graph_object_resolvable` |
+| `cmd.source_control.graph_filter` | Filter Graph | Compatibility alias for `cmd.source_control.graph.filter` | `source_control_graph_visible` |
+| `cmd.source_control.history_open_commit` | Open Commit In History | Opens a selected commit in Source Control History | `git_available && commit_resolvable` |
+| `cmd.source_control.select_tab` | Select Source Control Tab | Selects `Changes`, `History`, `Graph`, `Worktrees`, or `Branches / Stash` without changing repository state | `source_control_visible` |
+
+| `cmd.source_control.stash` | Open Stash Controls | Opens Source Control `Branches / Stash` controls for the current repo/worktree | `git_available` |
+| `cmd.source_control.stash.*` | Stash Command Family | Compatibility family for stash list/create/apply/drop flows | `git_available` |
+| `cmd.source_control.suggest_commit_batches` | Suggest Commit Batches | Generates advisory commit groupings and draft messages from staged/unstaged diff clusters | `git_available && changes_present` |
+| `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters | `git_available && changes_present` |
+| `cmd.source_control.accept_commit_group` | Accept Commit Group | Accepts one suggested commit group for reviewable staging/message preparation without making it canonical history until the user commits | `git_available && suggested_commit_group_selected` |
+| `cmd.source_control.generate_commit_message` | Generate Commit Message | Generates a draft commit message for the selected commit group or current staged diff | `git_available && diff_context_available` |
+
+Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
+
+Rules:
+- Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.
+- Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.
+- `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.
+- `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### GitHub Actions command family
 
-### Reconciliation addendum
+| Command ID | Label | Description | Keybind | Preconditions |
+|---|---|---|---|---|
+| `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | none | `actions_panel_visible && selected_run` |
+| `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | none | `actions_panel_visible && selected_run && has_failed_jobs` |
+| `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | none | `actions_panel_visible && selected_run && run_in_progress` |
+| `cmd.github.actions.pin` | Pin Workflow | Pins a workflow to the GitHub Actions Workflows surface for quick access and health-badge tracking; `cmd.actions.pin` is a compatibility alias | none | `actions_panel_visible && selected_workflow` |
+| `cmd.github.actions.unpin` | Unpin Workflow | Removes a pinned workflow from the GitHub Actions Workflows surface; `cmd.actions.unpin` is a compatibility alias | none | `actions_panel_visible && pinned_workflow_selected` |
+| `cmd.github.actions.open_run` | Open Run | Opens a GitHub Actions run detail in the GitHub Actions surface | none | `actions_panel_visible && selected_run` |
+| `cmd.github.actions.open_job` | Open Job | Opens the selected job within a run detail | none | `actions_panel_visible && selected_run && selected_job` |
+| `cmd.github.actions.open_step_logs` | Open Step Logs | Opens logs for the selected job/step, preserving `/job/step` context | none | `actions_panel_visible && selected_job && selected_step` |
+| `cmd.github.actions.open_related_diff` | Open Related Diff | Opens Source Control review/diff context correlated from an Actions run, job, or failing step | none | `selected_run && related_diff_available` |
+| `cmd.github.actions.open_related_worktree` | Open Related Worktree | Opens the worktree correlated from an Actions run, job, or failing step | none | `selected_run && related_worktree_available` |
+| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | none | `actions_panel_visible && selected_job` |
+| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | none | `actions_panel_visible && selected_run` |
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+Rules:
+- Actions-to-code commands bridge GitHub Actions to Source Control without moving ownership of hosted runs into Source Control.
+- `open_related_diff` and `open_related_worktree` use receipt-backed run id, commit range, changed files, branch, and worktree refs when available.
+- If exact correlation is unavailable, commands show candidate commit ranges, workflow file diffs, or related worktrees with an uncertainty label instead of auto-opening a guessed target.
+- Legacy underscore commands `cmd.github_actions.show`, `cmd.github_actions.switch_subview`, `cmd.github_actions.rerun_workflow`, `cmd.github_actions.cancel_workflow`, `cmd.github_actions.pin_workflow`, `cmd.github_actions.open_run_log`, and `cmd.github_actions.open_run_diff` are compatibility-only names for the current GitHub Actions command family. They normalize respectively to GitHub Actions route/show state, GitHub Actions `/switch_subview` view-state, `cmd.actions.rerun`, `cmd.actions.cancel`, `cmd.github.actions.pin`, `cmd.github.actions.open_step_logs` or `cmd.actions.view_logs`, and `cmd.github.actions.open_related_diff`; `cmd.github_actions.*` must not become a second primary namespace.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
 
-#### Source target target-0529
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions
-  - attention-center rows, project cards, command palette actions, and search results all need to restore precise scope and target
-  - wiring/gate verification will stay noisy if every new surface invents another special-case open command instead of binding to a reusable navigation family.
-  - There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands.
-  - `UI_Wiring_Rules.md` and `Wiring_Matrix.md` reinforce the cost of over-expanding the public command family: every stable command ID becomes part of handler coverage, dead-command detection, and gate expectations.
-  - UI_Wiring_Rules.md
-  - Wiring_Matrix.md
-  - `[retired-token-1]` contains both the stale graph-HITL command family and the newer canonical `[retired-token-2]` family in the same file.
-  - [retired-token-1]
-  - [retired-token-2]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 | Command ID | Label | Description | Keybind | Preconditions |
 |---|---|---|---|---|
 | `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | — | `actions_panel_visible && selected_run` |
 | `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | — | `actions_panel_visible && selected_run && has_failed_jobs` |
 | `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | — | `actions_panel_visible && selected_run && run_in_progress` |
-| `cmd.actions.pin` | Pin Workflow | Pins a workflow to the actions panel header for quick access | — | `actions_panel_visible && selected_workflow` |
-| `cmd.actions.unpin` | Unpin Workflow | Removes a pinned workflow from header | — | `actions_panel_visible && pinned_workflow_selected` |
+| `cmd.github.actions.pin` | Pin Workflow | Pins a workflow to the GitHub Actions Workflows surface for quick access and health-badge tracking; `cmd.actions.pin` is a compatibility alias | — | `actions_panel_visible && selected_workflow` |
+| `cmd.github.actions.unpin` | Unpin Workflow | Removes a pinned workflow from the GitHub Actions Workflows surface; `cmd.actions.unpin` is a compatibility alias | — | `actions_panel_visible && pinned_workflow_selected` |
+| `cmd.github.actions.open_run` | Open Run | Opens a GitHub Actions run detail in the GitHub Actions surface | — | `actions_panel_visible && selected_run` |
+| `cmd.github.actions.open_job` | Open Job | Opens the selected job within a run detail | — | `actions_panel_visible && selected_run && selected_job` |
+| `cmd.github.actions.open_step_logs` | Open Step Logs | Opens logs for the selected job/step, preserving `/job/step` context | — | `actions_panel_visible && selected_job && selected_step` |
+| `cmd.github.actions.open_related_diff` | Open Related Diff | Opens Source Control review/diff context correlated from an Actions run, job, or failing step | — | `selected_run && related_diff_available` |
+| `cmd.github.actions.open_related_worktree` | Open Related Worktree | Opens the worktree correlated from an Actions run, job, or failing step | — | `selected_run && related_worktree_available` |
 | `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |
 | `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |
 
+Rules:
+- Actions-to-code commands bridge GitHub Actions to Source Control without moving ownership of hosted runs into Source Control.
+- `open_related_diff` and `open_related_worktree` use receipt-backed run id, commit range, changed files, branch, and worktree refs when available.
+- If exact correlation is unavailable, commands show candidate commit ranges, workflow file diffs, or related worktrees with an uncertainty label instead of auto-opening a guessed target.
+
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
 
-#### Docker Manager command family
+### 2.5A Docker Manager command family
 
 | Command ID | Label | Description | Preconditions |
 |---|---|---|---|
-| `cmd.docker.build` | Build Image | Builds a Docker image from selected Dockerfile | `docker_available && dockerfile_selected` |
+| `cmd.docker.build` | Build Image | Compatibility alias for the selected `cmd.docker.build.*` path | `docker_available && build_target_selected` |
+| `cmd.docker.build.select_target` | Select Build Target | Selects Dockerfile, context, target stage, platform, and build mode before build or bake | `docker_available && build_candidate_present` |
+| `cmd.docker.build.run` | Run Build | Runs the selected Docker build path and records last successful build target plus validation snapshot | `docker_available && build_target_selected` |
+| `cmd.docker.bake.preview` | Preview Bake | Previews resolved Bake targets and platforms without publishing | `docker_available && bake_file_resolved` |
+| `cmd.docker.bake.run` | Run Bake | Runs the selected `cmd.docker.bake.*` target | `docker_available && bake_target_selected` |
 | `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |
 | `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |
 | `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |
 | `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |
-| `cmd.docker.logs` | View Logs | Shows container log output | `docker_available && container_selected` |
-| `cmd.docker.exec` | Exec Shell | Opens interactive shell in container | `docker_available && container_running` |
-| `cmd.docker.compose_up` | Compose Up | Runs docker-compose up for selected compose file | `docker_available && compose_file_selected` |
-| `cmd.docker.compose_down` | Compose Down | Runs docker-compose down | `docker_available && compose_running` |
-| `cmd.docker.inspect` | Inspect | Shows detailed container/image info | `docker_available && resource_selected` |
+| `cmd.docker.container.open` | Open Container Access | Opens a resolved URL or access target for a running container when confidence is sufficient | `docker_available && container_running && access_target_resolved` |
+| `cmd.docker.container.view_logs` | View Container Logs | Opens container logs with follow, paused snapshot, and historical modes | `docker_available && container_selected` |
+| `cmd.docker.container.attach_shell` | Attach Shell | Starts an audited `docker exec/attach` shell session in a running container | `docker_available && container_running && permission_allowed` |
+| `cmd.docker.container.stats` | View Stats | Shows live or cached container stats with freshness markers | `docker_available && container_selected` |
+| `cmd.docker.container.inspect` | Inspect Container | Shows structured inspect output with secret and redaction policy applied | `docker_available && container_selected` |
+| `cmd.docker.logs` | View Logs | Compatibility alias for `cmd.docker.container.view_logs` | `docker_available && container_selected` |
+| `cmd.docker.exec` | Exec Shell | Compatibility alias for `cmd.docker.container.attach_shell` | `docker_available && container_running` |
+| `cmd.docker.inspect` | Inspect | Compatibility alias for `cmd.docker.container.inspect` | `docker_available && resource_selected` |
+| `cmd.docker.compose_up` | Compose Up | Compatibility alias for a full-compose scenario run | `docker_available && compose_file_selected` |
+| `cmd.docker.compose_down` | Compose Down | Compatibility alias for full-compose down | `docker_available && compose_running` |
+| `cmd.docker.compose.up_subset` | Compose Up Subset | Starts selected services/profiles/env files/ports from a compose scenario | `docker_available && compose_subset_valid` |
+| `cmd.docker.compose.down_subset` | Compose Down Subset | Stops selected services from a compose scenario | `docker_available && compose_subset_running` |
+| `cmd.docker.compose.scenario.save` | Save Compose Scenario | Saves selected services, `/profiles/env` files, port mappings, detached mode, and log-follow defaults | `compose_file_selected` |
+| `cmd.docker.compose.scenario.run` | Run Compose Scenario | Runs a saved scenario and records the scenario id on the preview or development run | `docker_available && compose_scenario_valid` |
+| `cmd.docker.compose.scenario.edit` | Edit Compose Scenario | Edits a saved scenario or repairs degraded scenario validation | `compose_scenario_selected` |
+| `cmd.docker.compose.scenario.delete` | Delete Compose Scenario | Deletes a saved scenario without deleting compose files | `compose_scenario_selected` |
+| `cmd.docker.create_repository` | Create Repository | Starts the protected DockerHub repository creation confirmation flow for the proposed namespace/repository/privacy tuple | `registry_target_missing && permission_allowed` |
+| `cmd.docker.create_repository.confirm` | Confirm Repository Creation | Confirms the protected repository creation request after showing namespace, repository name, privacy, and private-by-default notice | `repository_creation_confirmation_visible` |
+| `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |
+| `cmd.docker.registry.promote` | Promote Registry Artifact | Promotes, copies, or retags a digest-first artifact to a selected target registry/repo/tag | `registry_source_resolved && registry_target_allowed` |
+| `cmd.docker.registry.tag_push` | Tag And Push | Applies the approved `/tag/push` action to a digest-first artifact | `registry_target_allowed && permission_allowed` |
+| `cmd.docker.image.push` | Push Image | Compatibility alias for an approved image push through Docker Manager registry publish authority | `image_selected && registry_target_allowed && permission_allowed` |
+| `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
+| `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
+| `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
+
+The grouped command token `cmd.docker.compose.scenario.save/run/edit/delete` denotes the scenario command family; payloads use the concrete ids above. Legacy Docker rows normalize into canonical `cmd.docker.container.*`, `cmd.docker.compose.*`, `cmd.docker.bake.*`, or registry command families and MUST NOT introduce new payload shapes.
+`cmd.docker.show` and `cmd.docker.switch_subview` are shell/view-state compatibility wrappers for opening Docker Manager and selecting a Docker Manager subview. They do not replace concrete Docker Manager domain-action rows such as build, compose, registry, cleanup, or Kubernetes commands.
+Docker `/publish/repo-management` and `/lineage` routes preserve the authority split: `cmd.orchestrator.push_image` is the Orchestrator after-build remote side-effect step, while `cmd.docker.image.push` and `cmd.docker.registry.tag_push` are Docker Manager registry publish commands that must share the same permission, account, receipt, and lineage checks rather than claiming a separate event family.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
-### 2.5B Kubernetes command family
+### 2.5B Docker Manager Kubernetes command family
 
 | Command ID | Label | Description | Preconditions |
 |---|---|---|---|
-| `cmd.k8s.get_pods` | Get Pods | Lists pods in selected namespace | `k8s_connected` |
-| `cmd.k8s.describe` | Describe Resource | Shows detailed resource description | `k8s_connected && resource_selected` |
-| `cmd.k8s.logs` | View Pod Logs | Shows log output for selected pod | `k8s_connected && pod_selected` |
-| `cmd.k8s.exec` | Exec Shell | Opens shell in selected pod/container | `k8s_connected && pod_running` |
-| `cmd.k8s.apply` | Apply Manifest | Applies a Kubernetes manifest file | `k8s_connected && manifest_selected` |
-| `cmd.k8s.delete` | Delete Resource | Deletes selected Kubernetes resource | `k8s_connected && resource_selected` |
-| `cmd.k8s.scale` | Scale Deployment | Adjusts replica count for deployment | `k8s_connected && deployment_selected` |
-| `cmd.k8s.port_forward` | Port Forward | Sets up port forwarding to selected pod | `k8s_connected && pod_selected` |
-| `cmd.k8s.switch_context` | Switch Context | Changes active Kubernetes context | `k8s_available` |
-| `cmd.k8s.switch_namespace` | Switch Namespace | Changes active namespace | `k8s_connected` |
+| `cmd.docker.k8s.apply` | Apply Manifest | Applies a selected manifest or Helm-rendered manifest inside the selected project scope | `k8s_connected && manifest_selected && permission_allowed` |
+| `cmd.docker.k8s.diff` | Diff Manifest | Diffs selected manifests against the selected context, namespace, or workload where supported | `k8s_connected && manifest_selected` |
+| `cmd.docker.k8s.logs` | View Workload Logs | Opens workload or pod logs with follow, paused snapshot, and historical modes | `k8s_connected && workload_selected` |
+| `cmd.docker.k8s.exec` | Exec In Workload | Starts an audited privileged exec session in the selected pod/container | `k8s_connected && workload_running && permission_allowed` |
+| `cmd.docker.k8s.port_forward` | Port Forward | Starts an audited port-forward with local bind address/port recorded | `k8s_connected && workload_selected && permission_allowed` |
+| `cmd.docker.k8s.select_context` | Select Context | Selects the project-focused Kubernetes context and revalidates capability | `k8s_available` |
+| `cmd.docker.k8s.select_namespace` | Select Namespace | Selects the namespace within the selected context and refreshes workload focus | `k8s_connected` |
+| `cmd.docker.k8s.helm_preview` | Preview Helm | Renders Helm output for the selected release/chart without applying it | `k8s_project_detected && helm_source_selected` |
+| `cmd.docker.k8s.helm_install` | Install Helm | Installs or upgrades the selected Helm release after permission and diff review | `k8s_connected && helm_source_selected && permission_allowed` |
+
+The grouped command token `cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace` denotes the canonical Docker Manager Kubernetes family. Existing `cmd.k8s.*`, `set_context`, and `set_namespace` rows are compatibility aliases until migrated; canonical payloads use `cmd.docker.k8s.*`.
+
+Docker Manager and `/Kubernetes` command availability copy uses the shared disabled-state taxonomy from the containers and worktree owner docs: `Unsupported`, `Not configured`, `Unauthorized`, `Unreachable`, `Degraded`, and `Partial capability`. UI command rows surface those canonical `/UX-state` reason families from runtime projection state instead of inventing panel-local Docker/Kubernetes disabled wording; legacy `cmd.container.*` references are retired to the active `cmd.docker.*` and `cmd.docker.k8s.*` namespaces.
+
+Docker and Kubernetes side-effect commands use domain-bound approval scoping: registry promotion binds approval to the exact registry/namespace/repository, digest/tag target, and publish action; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation. Cross-surface receipts retain `docker_refs` and `kubernetes_refs` lineage, and runtime drift-detection or `/trust/proxy` blockers must refresh effective capability before mutation.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md
 
 ### 2.5C Project-scope git worktree commands
 
-These commands manage repository-level worktree inventory and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in §2.6.1.
+These commands manage repository-level worktree inventory, ownership, safe actions, and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in section 2.6.1. The grouped tokens `cmd.git.worktree.list/select/open/compare/prune/recover`, `cmd.git.worktree.open|compare|recover|prune|focus_lineage`, and `cmd.git.worktree.recover/prune/remove/reuse` denote the canonical project-scope safe-worktree command set; payloads use the concrete IDs below.
 
 | Command ID | Label | Description | Preconditions |
 |---|---|---|---|
+| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo, including stale/blocked ownership projection state | `git_available` |
+| `cmd.git.worktree.select` | Select Worktree | Selects a worktree row and persists selected worktree/filter state per project | `git_available && worktree_row_available` |
+| `cmd.git.worktree.open` | Open Worktree | Opens or focuses the selected worktree root | `git_available && worktree_selected && worktree_path_resolvable` |
+| `cmd.git.worktree.open_files` | Open Worktree Files | Compatibility alias for opening the selected worktree root/files through `cmd.git.worktree.open` plus File Manager focus; does not create a separate assistant-thread worktree command | `git_available && worktree_selected && worktree_path_resolvable` |
+| `cmd.git.worktree.compare` | Compare Worktree | Opens Review mode for the selected worktree against a base branch, another worktree, PR target, or commit range | `git_available && worktree_selected && compare_target_resolvable` |
 | `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |
-| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing worktree | `git_available && worktree_selected && worktree_clean` |
-| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo | `git_available` |
-| `cmd.git.worktree.switch` | Switch to Worktree | Opens/focuses the selected worktree | `git_available && worktree_selected` |
+| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree after confirmation, lineage, safe-point, blocked-state, and cleanup gates pass | `git_available && worktree_selected && worktree_clean && prune_policy_allows && lineage_gate_passed` |
+| `cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata after active-run, blocked, safe-point, and lineage gates pass | `git_available && worktree_selected && prune_policy_allows && lineage_gate_passed` |
+| `cmd.git.worktree.request_prune` | Request Worktree Prune | Compatibility alias for approval-gated prune/remove request flows | `git_available && worktree_selected` |
+| `cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner after reuse gates pass | `git_available && worktree_selected && ownership_resolvable && worktree_clean && lineage_gate_passed` |
+| `cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage; if ownership cannot be resolved after restart, marks `unknown ownership` rather than unlocking silently | `git_available && worktree_selected` |
+| `cmd.git.worktree.focus_lineage` | Focus Worktree Lineage | Focuses the selected worktree's owner run, branch lineage, receipt, or `/orphaned` tombstone context without mutating it | `git_available && worktree_selected` |
+| `cmd.git.worktree.release` | Release Worktree Ownership | Releases runtime ownership after lineage-safe completion, archival, or an explicit recorded override | `git_available && worktree_selected && ownership_resolvable` |
 | `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |
 | `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |
+| `cmd.git.worktree.switch` | Switch to Worktree | Compatibility alias for select plus open until callers migrate | `git_available && worktree_selected` |
 
 Rules:
-- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, and navigation.
+- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, navigation, ownership release, recovery, prune/remove, and reuse entrypoints.
 - `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.
+- Manual prune/remove/reuse is forbidden while the worktree is `active` or `blocked_preserved` unless explicit override policy allows it and records the override.
+- Safe worktree action commands carry enough `repo_id`, `worktree_id`, optional `safe_point_id`, lane/run/package refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session safety.
+- `show-unsafe-actions` expert mode may reveal disabled choices but must not make them executable while active run, blocked, safe-point, or lineage gates fail.
+- Optional confirmation strictness applies before destructive or ownership-changing actions, including remove, prune, and reuse.
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
 ### 2.6 Chat context usage commands
 
+#### 2.6A Chat thread lifecycle commands
+
+The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denotes chat thread lifecycle and discovery commands, not message-level delete or file-restore behavior.
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |
+| `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |
+| `cmd.chat.delete` | Delete Thread | Deletes the selected thread from ordinary navigation after retention/worktree cleanup confirmation | `thread_selected && delete_confirmed && !active_run_in_thread` |
+| `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |
+| `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |
+| `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |
+| `cmd.chat.search` | Search Thread | Searches within the selected thread and restores focus to exact message matches | `thread_selected` |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 #### Context Lens commands
+
+Context Lens command IDs stay in lockstep with `Plans/assistant-chat-design.md`, `Plans/Wiring_Matrix.md`, and `Plans/FinalGUISpec.md` for placement, mode activation, message-selection toggles, multi-select behavior, Subcompact apply/revert, clear/reset behavior, and the dropdown `Turn Off` label.
 
 | Command ID | Purpose | Notes |
 |---|---|---|
@@ -878,25 +739,29 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wir
 
 #### 2.6.1 Assistant worktree commands
 
-Six commands for assistant thread-level worktree operations. All share `when:activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`.
+Six commands for assistant thread-level worktree operations. All share the base when-clause `activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`; each row adds its own visibility and enablement when-clause.
 
-| Command ID | Label | Description | Extra when clause |
-|---|---|---|---|
-| `cmd.chat.worktree.create` | Create Worktree | Creates worktree for active thread, opens bind dialog | `!activeThreadHasWorktree` |
-| `cmd.chat.worktree.remove` | Remove Worktree | Removes active thread's worktree (confirmation dialog if dirty) | `activeThreadHasWorktree` |
-| `cmd.chat.worktree.bind_existing` | Bind Existing Worktree | Opens picker of unowned worktrees to bind to active thread | `!activeThreadHasWorktree` |
-| `cmd.chat.worktree.open_files` | Open Worktree Files | Opens worktree root in file manager | `activeThreadHasWorktree` |
-| `cmd.chat.worktree.merge` | Merge Worktree | Opens merge-back dialog for active thread's worktree | `activeThreadHasWorktree` |
-| `cmd.chat.worktree.create_pr` | Create PR | Opens PR creation panel for active thread's worktree branch | `activeThreadHasWorktree && projectHasGitHubRemote` |
+| Command ID | Slash command | Label | Description | Extra when-clause |
+|---|---|---|---|---|
+| `cmd.chat.worktree.create` | `/worktree create` | Create Worktree | Creates a worktree for the active thread and opens the create/bind dialog | visible when `!activeThreadHasWorktree`; enabled when visible |
+| `cmd.chat.worktree.unbind` | `/worktree unbind` | Unbind Worktree | Detaches the active thread from its worktree while keeping the worktree on disk | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |
+| `cmd.chat.worktree.remove` | `/worktree remove` | Remove Worktree | Detaches and prunes the active thread's worktree, with confirmation if dirty | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |
+| `cmd.chat.worktree.merge` | `/worktree merge [--squash|--rebase]` | Merge Worktree | Opens the merge-back dialog for the active thread's worktree | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun && !worktreeDirty && !worktreeHasConflicts && !worktreeDetachedHead && !mergeLockHeld` |
+| `cmd.chat.worktree.pr` | `/worktree pr` | Create PR | Opens the PR creation panel for the active thread's worktree branch | visible when `activeThreadHasWorktree && projectHasGitHubRemote`; enabled when `!activeThreadHasActiveRun && !worktreeDetachedHead` |
+| `cmd.chat.worktree.info` | `/worktree` | Worktree Info | Shows the active thread's current worktree binding and status without mutation | visible when `activeThreadHasWorktree`; enabled when visible |
+
+`Open Files` routes through the project-scope `cmd.git.worktree.open` command. Arbitrary Bind Existing remains outside the Assistant thread-worktree MVP and must not be exposed as `cmd.chat.worktree.bind_existing`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md
 
 **Context variable definitions:**
 - `activeThreadExists`: a chat thread is selected in the assistant panel
 - `activeThreadHasWorktree`: active thread has a non-null worktree binding in redb
+- `activeThreadHasActiveRun`: active thread has a run in progress against the bound worktree
 - `projectIsGitRepo`: active project has a `.git` directory
 - `projectIsRemoteNonSSH`: project is remote-mode but not SSH-tunneled (worktrees unsupported)
 - `projectHasGitHubRemote`: project git config contains a `github.com` remote URL
+- `worktreeDirty`, `worktreeHasConflicts`, `worktreeDetachedHead`, and `mergeLockHeld`: projection-backed guards from the bound worktree and merge lock state
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
 
@@ -912,6 +777,7 @@ Rules:
 - choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
 - clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
 - `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+- Legacy callers that still cite `cmd.chat.open_thread_usage` or `cmd.chat.focus_thread_usage` normalize to route/open Usage context and are not pure shell or layout toggles.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ### 2.6A Render / browser preview commands
@@ -919,25 +785,13 @@ Browser, terminal, and dev-session commands share one shell/runtime interaction 
 
 #### Browser preview and browsing commands
 
-### Reconciliation addendum
+Rules:
+- Browser export can retrieve more than the viewport, but normal browsing stays slice-based.
+- Browser automation commands for Debug investigations carry the chosen URL plus normalized `/domain/session` identity so command routing can bind the browser session, permission scope, and evidence bundle without relying on a freeform label.
+- Browser command inventory is expanded beyond the older `/focus/detach/share/revoke` shorthand. That shorthand maps only to the concrete focus, detach, share, and revoke rows below; `/screenshot/devtools/automation` maps to screenshot capture, DevTools, automation takeover, promotion, and recovery command rows in this table.
+- This `Plans/UI_Command_Catalog.md` browser section is canonical and packetizable only when consumers reference concrete `cmd.browser.*` command IDs, payloads, and emitted events from this catalog plus the behavior owner in `Plans/Section15_MVP_Promoted_Features_Spec.md`, rather than stale aggregate browser labels.
+- `Research_session` permission is gated by the parent web tool permission; e.g., `webfetch` permission covers browser actions performed within the owning `webfetch` call.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0527
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - export can retrieve more than the viewport, but normal browsing should stay slice-based
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
 | `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
@@ -963,6 +817,10 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 | `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
+Capture event rules:
+- `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
+- `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command.
+
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Terminal session and layout commands
@@ -970,17 +828,32 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 This section defines the canonical contract for this surface.
 
 Core rules:
-- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal promotion and handoff are LOCKED so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal-handoff routing is the canonical bridge from chat/tool cards into live terminal sessions; it preserves session identity and must not re-own the terminal session under an individual tool.
+- The `/terminal` surface consumes the command identities in this section; callers use these stable command IDs rather than inventing terminal-local aliases.
 - Terminal action canon must preserve the distinct terminal actions in owned command-table rows. Distinct terminal actions must keep owned command-table rows and do not collapse terminal actions into one normalized target.
+- chat-callable one-shot tools such as bash, grep, codesearch, chatsearch, logsearch, and logread stay in-chat by default with concise expandable audit/result blocks; interactive, long-running, or stdin-requiring shell/PTY work promotes to Terminal, Output, or Ports surfaces with chat retaining pointers and bounded `/previews`.
+- One-shot bash/command cards retain the exact command text in the chat message, expose bounded expandable `/output`, and keep full large output behind refs/blobs owned by the runtime surface.
+- Command cards label completed shell work as `Ran: <command>` and active shell work as `Running: <command>`; web/search operation cards label discovery summaries as `<operation>: <query/url> — N sources`.
+- PM built-in agents performing shell-like automation default to PTY-backed terminal execution when work is user-inspectable, multi-step, long-running, or likely to need intervention; non-PTY hidden execution is reserved for infrastructure-like helper work where shell semantics are irrelevant. Agent-originated Output and agent-originated inline `/summaries` must not impersonate a pseudo-console; when a canonical terminal session exists they expose a compact-audit pointer plus `live-terminal` reveal/focus controls.
+- Terminal-originated work and terminal-originated secondary artifacts can emit `/Problems/Ports`, `/Ports/Output`, and `/port/output` items without surrendering terminal ownership of the live session. Those items carry `/linkback`, reveal-origin, and same-session routing to the originating terminal when one exists; preview surfaces may link to the preview-driving dev session or terminal, but reveal is navigation rather than surface replacement.
+- Historical command and audit details show the frozen permission/runtime snapshot that actually governed execution, including policy/mode/project changes; current Settings state must not replace historical `/policy/mode/project` evidence.
+- Dedicated log and audit surfaces provide richer search plus `/filter/drill-down`, `/changes`, `/summaries`, `/transparency`, and `/logging/subagents` over event-log summaries and blobs, while in-thread transparency remains concise and user-facing.
 
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 | --- | --- | --- | --- |
-| Open in Terminal | `terminal_session_id`; reveal existing session context | terminal session reveal/focus | command cards, terminal surfaces |
-| Show Terminal | `terminal_session_id`; focus the same live session already associated with the card | terminal session reveal/focus | command cards, terminal surfaces |
-| Rerun in Terminal | command replay payload plus terminal session launch context | new terminal launch; command replay | command cards, terminal surfaces |
-| Detach/Pop-Out | `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
+| `cmd.terminal.open` | label `Open in Terminal`; `terminal_session_id`; reveal existing session context; optional `origin_surface`, `reveal-origin`, and `/linkback` refs | terminal session reveal/focus | command cards, terminal surfaces, Problems, Ports, Output, previews |
+| `cmd.terminal.show` | label `Show Terminal`; `terminal_session_id`; focus the same live session already associated with the card or route context | terminal session reveal/focus | command cards, terminal surfaces |
+| `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | new terminal launch; command replay | command cards, terminal surfaces |
+| `cmd.terminal.detach` | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
+| `cmd.terminal.focus` | `terminal_session_id?`, `terminal_pane_id?`, `dev_session_id?`, `/last-relevant` fallback mode | terminal reveal/focus | command cards, command palette, terminal surfaces |
+| `cmd.terminal.split_pane` | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |
+| `cmd.terminal.move_pane` | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
+| `cmd.terminal.close_pane` | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
+| `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |
 
 Fields:
+- stable command IDs
 - terminal_session_id
 - Open in Terminal
 - Show Terminal
@@ -996,11 +869,18 @@ Rules:
 - Commands requiring stdin/TTY start Terminal immediately
 - Background/watch/server actions create terminal-owned session
 - One-shot commands remain chat-inline by default
+- Terminal shortcut metadata records interaction-mode eligibility, focus context, suppressed binding disclosure, and whether the action preempts shell/TUI input; unsafe `terminal-search` entries must be unavailable instead of stealing TUI keystrokes.
 - Every promoted command card binds to stable terminal session identity
+- Command-card terminal affordances include command-output and copy-output actions, reliable `/copy/paste` in output and input areas, mouse-driven selection/copy/paste support, keyboard-selection, wrapped-line input navigation, TUI capture guidance, remote-context and shell/profile diagnostics, and automation `/focus/reuse` hooks for opening, focusing, reusing, interrupting, resizing, and capturing structured terminal state.
 - Large payloads store full data behind refs/blobs
 - non-interactive work may promote if it becomes long-running
 - attach failure recovery differs for live process, ended process, and inline-only completed command
 - `Open in Terminal` and `Show Terminal` must focus the same live session
+- Reuse precedence is exact `terminal_session_id`, then explicit `/pane/session`, then workflow-bound `/thread/tool` or dev-session binding, then workspace-bound most-recent terminal context only for `Show Terminal`; commands that imply same-session continuity must not fall back to a fresh shell silently.
+- `/moving/detaching/reattaching` terminal UI is layout presentation over the same underlying session; focusing or moving a terminal must preserve `/tab/pane/session` identity unless the command explicitly asks for a new terminal.
+- Agent follow-up actions for shell-like work continue targeting the same bound session; if no appropriate binding exists, PM creates a clearly scoped new session, records the binding, and later follow-up actions use it. An exited-session or `/exited` session may be revealed for review, copy-output, or `/restart/replace` rather than being treated as a live shell.
+- Chat-owned terminal command cards distinguish compact-audit ownership from live-terminal ownership: `/assistant-chat-design.md` consumers may render bounded audit previews, but any live PTY intervention, takeover, or same-session reveal routes through `Open in Terminal` or `Show Terminal`.
+- Inline terminal cards keep `/collapse` and expand controls local to the chat preview; `/background` moves long-running work into terminal-owned session state without changing the owning `terminal_session_id`.
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
@@ -1020,28 +900,10 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wir
 
 #### Catalog lifecycle commands
 
-### Reconciliation addendum
+Rules:
+- Missing referenced commands must become concrete catalog rows or explicit compatibility/retirement notes.
+- Wrapper-style open/focus commands may remain user-facing wrappers when they normalize to shared route/open contracts; avoid too many public `cmd.nav.*` commands when existing wrappers preserve clearer UX.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0528
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - missing catalog rows for referenced commands
-  - The catalog already contains a number of wrapper-style open/focus commands. Replacing them quickly with public `cmd.nav.*` IDs would create churn without much user-facing clarity benefit.
-  - cmd.nav.*
-  - too many public `cmd.nav.*` commands added to the catalog
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
@@ -1054,18 +916,22 @@ Rules:
 - `cmd.terminal.clear_scrollback` preserves runtime identity
 - close commands are layout actions unless `termination_policy` requests runtime shutdown
 - `cmd.dev.show_output`, `cmd.dev.show_problems`, and `cmd.dev.show_ports` reveal surfaces linked to the owning `dev_session_id`
+- Debug recovery or rerun commands for a linked `dev_session_id` degrade to `attention_required` when no canonical rerun command exists, the failure depends on local hardware `/device/manual` interaction, or the environment is too flaky to classify automatically.
+- Command catalog updates alone are not complete until corresponding `Plans/Wiring_Matrix.md` and `/Wiring_Matrix.md` rows bind stable command IDs to handlers, UI surfaces, and acceptance checks; otherwise terminal reveal and handoff coverage is a false positive.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
 
-#### Chat message action commands
+#### 2.6B Chat message action commands
 
 | Command ID | Parameters | Behavior |
 |---|---|---|
 | `cmd.chat.copy_message` | `{ thread_id, message_id }` | Copy the rendered message content. |
 | `cmd.chat.retry_message` | `{ thread_id, message_id }` | Re-run the selected failed/cancelled assistant turn. |
-| `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only; does not restore files. |
+| `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only (`conversation-only`); does not restore files. |
 | `cmd.chat.revert` | `{ thread_id, target_message_id? }` | Restore persisted file mutations from one assistant turn; omitted `target_message_id` resolves to the latest assistant turn in the thread with persisted file mutations. |
 | `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only in MVP; folder references are out of scope. |
+
+Canonical signature lock: `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
 
@@ -1083,12 +949,21 @@ Message-level availability and code-block actions:
 
 Revert rules:
 - when the resolved assistant turn touched multiple files, `cmd.chat.revert` reverts the whole turn across all affected files
+- `cmd.chat.revert` routes through the canonical FileSafe file-restore pipeline and uses the absolute file paths recorded in the assistant turn's file mutation log; it must not reinterpret relative paths through the current `working_directory`
 - after a successful revert, affected editors refresh from the canonical mutation pipeline
 - `cmd.chat.rewind` MUST NOT be used as a file-restore alias
 - `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
 - `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body
+- Stop/edit/delete message availability is exposed through existing stop, edit/resend, rewind/revert, and retention-policy surfaces; `/edit/delete` is an availability shorthand and not a new delete-message command ID.
+- GUI question surfaces support multiple-choice and multi-choice interactions with a freeform `Other` path, while logging and activity metadata remain sliceable across `/agent/tool/model/persona/subagent/token` dimensions.
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 2.6.5 Debug Mode UICommand bridge
+
+Debug Mode uses the canonical `cmd.debug.*` UICommand family owned by `Plans/Commands_System.md`; these are internal wiring IDs, not User Commands. The catalog bridge preserves the concrete IDs `cmd.debug.start`, `cmd.debug.stop`, `cmd.debug.pause`, `cmd.debug.resume`, `cmd.debug.add_breakpoint`, `cmd.debug.remove_breakpoint`, `cmd.debug.clear_breakpoints`, `cmd.debug.view_evidence`, `cmd.debug.step`, and `cmd.debug.collect_snapshot`, while leaving investigation lifecycle semantics, preconditions, and evidence behavior in `Commands_System.md`.
+
+ContractRef: ContractName:Plans/Commands_System.md#5.2.8-debug-mode-uicommand-family
 
 ### 2.7 Chat slash commands (reserved)
 
@@ -1098,6 +973,22 @@ Core rules:
 - The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
 - Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
 - Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
+- Exact named obligations that must survive in this reserved family are the six-tool web family, reserved slash-command set, Agent Config and Skills ownership, and the question, TODO, and visualizer terms.
+- `/skill use`, `/skill list`, and `/skill show` are not MVP subcommands. Bare `/skill` lists available skills, while `/skill <skill_name> [args]`, the Skills panel, and natural language all invoke the same `invoke_skill` contract.
+- Web command GUI help/autocomplete exposes `/web` sub-operations as one reserved built-in family: `/web search <query>`, `/web extract <url>`, `/web research <task-or-question>`, `/web crawl <url>`, and `/web map <url>`. Bare `/web` dispatches `cmd.chat.web.help` as a non-executing help entry; it does not default to top-level `/search` or `/crawl`.
+- Legacy top-level tool-name spellings such as `/webfetch` and `/webresearch` are compatibility/tool-key lineage, not active slash-command prototypes; user-facing slash input stays under `/web fetch <url>` and `/web research <task>`.
+- The `/web` family is a surface-bound reserved-command family; `/provisional` or catch-all entries remain help/autocomplete affordances until promoted into concrete subcommand IDs.
+- Web `/activity` and history rows use assistant-chat-design-style operation cards: top-level requested/effective runtime snapshot fields plus web-operation child payloads, with large `sources_ref`, `content_ref`, and `map_ref` material dereferenced on demand from refs/blobs or `/blob` storage rather than loaded eagerly.
+- Web-source transparency is first-class for cited-web-search and agent-web-research: cards and history expose `/sources`, source counts, `Web search: {query}`, and the six distinct labels (LOCKED) `Searching Web: <query>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, `Mapping Site: <root_url>`, and `Reading Site: <url>`, with `Reading Site: <url>` reserved for the PM-native Site Reader path.
+- Final answers prefer `/extract-backed` or read-backed provenance over bare snippets.
+- Reserved built-in slash commands are non-overridable in the override-policy; user commands remain under `/x-...` or another custom namespace, and `/web <subop>` IDs stay stable for multi-operation/provider behavior.
+- Legacy `/reconciliation` references are process-only and must not become user-facing command IDs.
+- Provider option visibility in `/web` help and settings includes support-tier, provider health, fallback disclosure, `/credit` usage, pay-as-you-go warnings, and advanced controls such as `search_depth`, `max_results`, `include_domains`, `exclude_domains`, `time_range`, `start_date`, `end_date`, `include_images`, conservative `include_raw_content`, `/summarization`, `chunks_per_source`, `ultra-fast`, `fast`, `basic`, and `advanced`; best-practices text favors concise queries, sub-queries for complex asks, and a two-step Searching Web then Reading Site flow.
+- Provider category help may expose `categories?: string[]` with options `"github"`, `"research"`, and `"pdf"` when the effective web provider supports category filters.
+- Do-not-overfit rules apply to command-catalog imports and reference `/baselines`: `/catalog/import`, preview-safe visual-module contracts, and in-chat rendering stay PM-native and must not inherit plugin-specific, `/MCP/container-specific`, xeditor-specific, or external baseline implementation nouns as user-visible command language.
+- Web approval cards use operation-specific scope wording: `search` and `research` use the `*` wildcard because the host is not known upfront, while `extract`, `crawl`, `map`, and `read` are `host-scoped` to `https://host.example/*`; scheme-relative input such as `//host.example/` is normalized to an explicit scheme before permission-scope evaluation.
+- Web command help and operation-card previews may show lightweight result-shape hints: `query_preview` for search, `url` and `content_format` for fetch/extract, and `task_preview` for research. For crawl help, `/web crawl <url>` parses `url: string` and previews `crawl results + traversed refs`; detailed crawl limits, dedup, and filtering stay owned by `Plans/Tools.md`.
+- Extract-format help may describe `links` as `Array<{ url, text?, rel? }>` and `images` as `Array<{ url, alt?, dimensions? }>` when those extraction formats are requested; the command catalog owns the visible help/prototype text while the tool contract owns payload validation.
 
 Fields:
 - slash prototype
@@ -1121,6 +1012,12 @@ Labels and values:
 - /compact
 - /stop
 - /resume
+- /rewind
+- /revert
+- /share
+- /settings
+- /doctor
+- /help
 - /web
 - /skill
 - /cancel
@@ -1155,6 +1052,11 @@ ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash co
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings
 - /cancel resolves internally to cmd.chat.stop
+- /rewind dispatches `cmd.chat.rewind` and remains conversation-only
+- /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
+- /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
+- /clear stays removed and must not return as a `thread-clear` command
+- Source cleanup shorthand `/de-duplication`, `/research-focused`, `/risky`, and `thread-clear` normalizes to reserved-command alias policy plus ask-gated web permission posture; it does not create extra slash commands.
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
@@ -1176,30 +1078,20 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 | `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
 | `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
 
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#UICommand
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
 ### 2.8A Side-panel and artifacts navigation commands
 
-### Reconciliation addendum
+| Command ID | Payload | Behavior |
+|---|---|---|
+| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/usage subject using artifact drill-through and shared route/open identity. |
+| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, ledger_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, or run context using shared route/open identity. |
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+### Search Command Catalog
 
-#### Source target target-0522
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+#### Search commands
 
 | Command ID | Parameters | Behavior |
 | --- | --- | --- |
@@ -1208,13 +1100,17 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 | `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview or apply flow in the Search panel. |
 | `cmd.search.open_result` | `{ project_id, query_session_id, subject_id, disposition? }` | Open a Search result through `route_target` and the canonical file-open path. |
 | `cmd.search.replace_selected` | `{ project_id, query_session_id, subject_id }` | Apply replacement to one selected result identified by canonical subject identity. |
+| `cmd.search.replace_all` | `{ project_id, query_session_id, replacement }` | Apply the replacement across the entire preserved query session after the Search owner validates the current result snapshot and mutation path. |
+| `cmd.search.rebuild_index` | `{ project_id }` | Triggers Search-owned index rebuild while preserving `/replacement` routing for replace-in-files state. |
+| `cmd.search.evict_remote_cache` | `{ project_id, remote_cache_id? }` | Opens confirmed remote cache eviction for `/eviction/search` without bypassing FinalGUISpec indexing settings copy. |
 
 Rules:
 - Search command routing resolves through `route_target`.
-- Search commands remain side-panel scoped and preserve query-session state.
+- Search commands remain side-panel scoped and preserve run-aware search scope, query-session state, and open-disposition / reuse policy through `disposition?` and route/open owner resolution.
+- The source command shape `cmd.search.replace_all { query_session_id, replacement }` is the required query-session payload core; `project_id` scopes dispatch in the canonical table row.
 - Search routing policy is owned by `Plans/Orchestrator_Page.md#search-routing-and-action-policy`.
 ## References
-- `Plans/Contracts_V0.md#UICommand`
+- `Plans/Contracts_V0.md#7-uicommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`
 - `Plans/LSPSupport.md`
 - `Plans/Widget_System.md`
@@ -1231,19 +1127,22 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 | --- | --- | --- |
 | `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
 | `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |
+| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id, repo_id?, worktree_id?, baseline_target? }` |
 | `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |
-| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |
+| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target }` |
+| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id?, repo_id?, worktree_id?, baseline_target? }` |
 | `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
 | `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
 | `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
 | `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
 
+SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is the closed candidate enum `safe_point | historical_commit | worktree_head`. When a recovery command carries `repo_id`, `worktree_id`, or `baseline_target`, runtime dispatch must validate the targeted worktree and baseline exactly and must reject the command rather than silently substitute another worktree or baseline.
+
 ### Navigation commands
 - `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
 - `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`
 - `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
+- These runtime navigation commands are route identity examples owned by the catalog and the shared route contract; `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` must not be treated as local graph shortcuts whose route identities are implied but unregistered.
 
 ### Pre-attempt blocked rule
 When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.
@@ -1252,25 +1151,15 @@ ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode ap
 
 ### Recovery command definitions
 
-### Reconciliation addendum
+Recovery verb semantics are canonical command copy:
+- `Retry` repeats the already resolved operation target and parameters under the current validation rules.
+- `Resume` continues an existing blocked, paused, or waiting episode after its prerequisite, approval, or recovery condition is satisfied.
+- `Recover` invokes a canonical remediation flow advertised by `allowed_action_ids[]`; it does not imply a full rerun.
+- `Restore` applies an explicit restore point or preserved state and must disclose the target state before mutation.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+Surfaces may add context qualifiers, but they must not use these verbs interchangeably across worktrees, GitHub Actions, Docker publish, Kubernetes, `/Unraid`, or Orchestrator recovery flows.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
 
-#### Source target target-0526
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - widget-local definitions of blocked/completed/integration status
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 All blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.
 
 No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.

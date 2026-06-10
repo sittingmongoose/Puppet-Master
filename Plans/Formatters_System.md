@@ -1,42 +1,13 @@
 # Formatters System (Canonical SSOT)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0323
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.
-  - Plans/00-plans-index.md
-  - Plans/GUI_Rebuild_Requirements_Checklist.md
-  - Plans/Plugins_System.md
-  - Plans/Skills_System.md
-  - Plans/Formatters_System.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
 
 This document is the **single canonical source of truth** for the Puppet Master formatter system — how formatters run, when they trigger, how they are configured, and how formatting changes are tracked. All other plan documents MUST reference this document by anchor (e.g., `Plans/Formatters_System.md#FORMATTER-CONFIG`) rather than restating formatter definitions or lifecycle rules.
+
+Support-system SSOTs must surface runtime and safety gaps instead of hiding them: `Plans/Formatters_System.md` / `/Formatters_System.md` owns `format.*` event registration, HTE formatter delivery, and formatter `/schema`; `Plans/Plugins_System.md` / `/Plugins_System.md` owns `mutation_capable`, in-process execution, subprocess-sandbox expectations, and prompt `/param` hooks; `Plans/Skills_System.md` / `/Skills_System.md` owns DAE `/bundling`, runtime skills `/listing`, and HTE reachability; `/FileSafe` owns file-safety boundaries when formatter subprocesses touch project files. Under-specified gaps must be visible in the owning SSOTs before implementation treats them as safe defaults.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
@@ -51,6 +22,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Plugin system: `Plans/Plugins_System.md`
 - OpenCode baseline (formatters): `Plans/OpenCode_Deep_Extraction.md` §7E
 - GUI specification: `Plans/FinalGUISpec.md`
+- Document packaging: `Plans/Document_Packaging_Policy.md` / `/Document_Packaging_Policy.md`
+- File safety: `Plans/FileSafe.md` / `/FileSafe.md`
+- Formatter owner path: `Plans/Formatters_System.md` / `/Formatters_System.md`
 
 ---
 
@@ -85,30 +59,12 @@ Formatters run **after every file write/edit performed by hosted tools** (HTE st
 
 Rule: Formatters MUST NOT run during Delegated Agent Execution (DAE). In DAE mode, the provider CLI manages its own formatting; Puppet Master performs no post-hoc formatting.
 
+DAE analytics and `/blocked` truth still require a post-hoc `tool-event` story in the provider/run-mode event owners; the formatter subsystem records only HTE formatter events and must not synthesize DAE tool-event history after the fact.
+
 ContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE
 
 ### 2.2 Formatting changes in diffs and evidence
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0324
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - cannot continue meaningfully until required action/precondition changes
-  - owner changes
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When a formatter modifies a file beyond whitespace-only changes, the diff between the tool's output and the formatted output is recorded in the evidence ledger as a `format.applied` event:
 

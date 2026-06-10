@@ -1,104 +1,11 @@
 # GUI Rebuild Requirements Checklist (2026-02-23)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0325
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/Run_Graph_View.md
-  - Plans/Widget_System.md
-  - Plans/GUI_Rebuild_Requirements_Checklist.md
-  - Add `resolution_kind` and rationale requirements for dismiss/resolve paths.
-  - resolution_kind
-  - requested/effective Persona display requirements
-  - Only hard requirements should force stronger handling.
-  - command discoverability does not weaken confirmation requirements
-  - Requirements Builder must show effective Persona, selection reason, effective platform/model, and [retired-token-3] unsupported Persona controls for the active stage/pass
-  - Add trust-state disclosure or canonical revalidation requirements for exports built from projections.
-  - adapters currently have no canonical way to satisfy both requirements at once
-  - Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model.
-  - `[retired-token-4]` still conflicts with workflow-required `[retired-token-3]`, but GPT-5.2 also pinned missing `[retired-token-1]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_[retired-token-2]` vs canonical `[retired-token-2]` identity.
-  - [retired-token-4]
-  - [retired-token-3]
-  - [retired-token-1]
-  - workflow_[retired-token-2]
-  - [retired-token-2]
-  - There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Plans/GUI_Rebuild_Requirements_Checklist.md`
-  - with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.
-  - Plans/00-plans-index.md
-  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.
-  - Plans/Plugins_System.md
-  - Plans/Skills_System.md
-  - Plans/Formatters_System.md
-  - Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.
-  - requested_persona_id
-  - effective_persona_id
-  - with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.
-  - Plans/LSPSupport.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `GUI checklist`, `feature-list`, `newfeatures`)
-  - Section15
-  - FinalGUISpec
-  - GUI checklist
-  - feature-list
-  - newfeatures
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:
-  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.
-  - cov-034
-  - obl-016
-  - active
-  - acknowledged
-  - resolved
-  - dismissed
-  - accepted_risk
-  - `Plans/GUI_Rebuild_Requirements_Checklist.md:31`
-  - Plans/GUI_Rebuild_Requirements_Checklist.md:31
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-166: Coverage blocker concern lifecycle owner section
-- Coverage rows: cov-166
-- Fidelity gap refs: cov-166
-- Required fidelity items:
-- Exact required item: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
-- Exact required item: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-166: Coverage blocker concern lifecycle owner section` exists in `Plans/GUI_Rebuild_Requirements_Checklist.md`.
-- Exact acceptance check: The `cov-166` repair states the exact requirement: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
-- Exact acceptance check: The `cov-166` repair states the exact requirement: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
-- Exact acceptance check: The `cov-166` repair is in the owner section for `Plans/GUI_Rebuild_Requirements_Checklist.md` and is not only a downstream consumer note.
-
+### Coverage blocker concern lifecycle owner section
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -123,6 +30,31 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 - [ ] Owner, creator, and resolver roles remain separately testable so ownership reassignment does not change concern identity.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Remaining high-value Orchestrator blind spots stay in scope for checklist verification: exact Source Control/worktree handshake, widget-system hostability and persistence, command palette / shortcut / context-menu / bulk-action integration, large-graph and many-record `/performance`, multi-run behavior in one project, object `/text` search across Seams / Graph / Evidence / History / Ledger, notification `/escalation` beyond in-page alerts, accessibility for dense `/records`, and safety `/confirmation` for user-facing actions.
+
+Orchestrator tab redesign is explicit: `Progress` is the widget-hosting operational summary; `Seams` replaces `Tiers` as seam-first, package-second, node-on-drill-in hierarchy; `Node Graph`, `Evidence`, `History`, and `Ledger` remain native tabs; `History` is the chronological runtime story and `Ledger` is structured exact-record inspection.
+
+`Orchestrator_Page` / `Orchestrator_Page.md` must retire `Tiers`, keep only `Progress` widget-composed, treat `Evidence`, `History`, and `Ledger` as native tabs, replace `tier_id` filters with canonical node `/attempt/runtime` identity, and elevate blocked/runtime event sources over request-centric HITL and `TierChanged` assumptions.
+
+Non-Progress Orchestrator widget layouts are retired: `/Tiers`, `Orch/Tiers`, `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, `widget_layout:v1:orchestrator:ledger`, and `widget.tier_tree` remain migration evidence only while active Orchestrator layout uses the current `widget_layout` family.
+
+Impacted Orchestrator rebuild surfaces are `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, and `Plans/GUI_Rebuild_Requirements_Checklist.md` / `/Orchestrator_Page.md`, `/Run_Graph_View.md`, `/Widget_System.md`, and `/GUI_Rebuild_Requirements_Checklist.md`; checklist verification must ensure first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces rather than restoring `Tiers` as the mental model.
+
+Exact record inspection in `Ledger` uses paging: exactness does not require eager full materialization of every record.
+
+`Run_Graph_View` / `Run_Graph_View.md` performance verification covers 500-node render targets, 1000-node stretch targets, 60 fps pan `/zoom`, layout under 500ms at 500 nodes, and initial load under 1s at 500 nodes.
+
+Runtime artifact and command-surface checks reference `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, `Plans/Runtime_Artifacts_Panel.md`, `/FinalGUISpec.md`, `/UI_Command_Catalog.md`, and `/Runtime_Artifacts_Panel.md`.
+
+Tooling and memory-adjacent checklist rows reference `Plans/newtools.md`, `Plans/assistant-memory-subsystem.md`, `/newtools.md`, and `/assistant-memory-subsystem.md`.
+
+Container packaging checklist rows reference `Plans/Containers_Registry_and_Unraid.md`, `Plans/Document_Packaging_Policy.md`, `/Containers_Registry_and_Unraid.md`, and `/Document_Packaging_Policy.md`.
+
+Usage artifact checklist rows reference `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, `/FinalGUISpec.md`, `/usage-feature.md`, and `/Runtime_Artifacts_Panel.md`.
+
+Orchestrator artifact checklist rows reference `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/Runtime_Artifacts_Panel.md`, `/FinalGUISpec.md`, `/Orchestrator_Page.md`, and `/Runtime_Artifacts_Panel.md`.
+
 ## Verification Table
 
 | Area | Required canonical state | Verification status rule |
@@ -136,6 +68,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec
 | Source-open behavior | `route_target`, `OpenSubject`, `OpenFile` split | Fail if path-only open is still treated as universal |
 | Source Control boundary | narrow worktree-first Source Control; operational lane/package/seam Orchestrator | Fail if Source Control becomes lane-first canon or Orchestrator duplicates raw worktree inventory |
 | Graph lineage | graph patches create new generations and retain superseded visible paths | Fail if graph patching still rewrites in place conceptually |
+| Instant Grep rebuild concurrency | Regex-index rebuilds write to a new generation directory and publish the live snapshot through one `ArcSwap::store()` pointer swap; reader queries remain wait-free and continue on their held snapshot | Fail if an index rebuild mutates the current generation in place, blocks live queries, or bypasses the `Plans/storage-plan.md` and `Plans/Wiring_Matrix.md` publication contract |
 | Concern model | first-class concern lifecycle and lineage | Fail if concerns remain buried in reviews/alerts only |
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/FileManager.md
@@ -169,39 +102,28 @@ ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_V
 |---|---|---|
 | Source Control surface | Separate first-class Source Control surface with Changes, History, Graph, Worktrees, and Branches / Stash; not merged into GitHub Actions | `Plans/GitHub_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/FinalGUISpec.md` |
 | GitHub Actions surface | Separate first-class GitHub Actions surface with Current Branch, Workflows, Settings, rerun/cancel/pin, and secrets/variables/environments CRUD | `Plans/GitHub_Integration.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/newtools.md` |
-| Docker Manager visibility | Contextual Docker Manager surface shown for Docker-related projects, with `Hide Docker Manage when not used in Project.` defaulting to enabled | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| Docker Manager visibility | Contextual Docker Manager surface shown for Docker-related projects, with `Hide Docker Manager when not used in Project.` defaulting to enabled; the older `Hide Docker Manage when not used in Project.` key is a migration alias only | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
 | Docker Manager breadth | Containers, images, compose, registries, build/bake, Publish / Unraid, networks/volumes/contexts, and project-focused Kubernetes | `Plans/Containers_Registry_and_Unraid.md`, `Plans/newtools.md` |
 | DockerHub auth UX | Browser login plus PAT, requested-vs-effective capability display, and disabled-with-explanation controls when capability is partial | `Plans/Containers_Registry_and_Unraid.md`, `Plans/newtools.md` |
 | Repo creation safety | Missing-repo creation is explicit, non-bypassable, and distinct from image-push approval | `Plans/Containers_Registry_and_Unraid.md`, `Plans/Permissions_System.md` |
 | Orchestrator pivots | Orchestrator exposes `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` with preserved context | `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md` |
 | Usage/Ledger linkage | cost-bearing receipts from these surfaces deep-link into canonical Usage/Ledger, not a feature-local cost view | `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md` |
+| GitHub auth boundary | Git transport auth and GitHub API auth are separate; `github_api` tokens never transfer to SSH remotes, and GitHub API auth failure is a canonical blocked/runtime condition rather than a panel-local refresh | `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`, `Plans/Permissions_System.md` |
+| Actions readiness | Opening `GitHub Actions > Current Branch`, dispatch forms, `GitHub Actions > Settings`, workflow-file saves, branch/worktree changes, and secrets/variables/environments CRUD re-evaluate readiness; readiness is event-driven plus bounded refresh, not timer-only or manual-only, and stale snapshots cannot authorize Actions-gated Orchestrator steps | `Plans/GitHub_Integration.md`, `Plans/storage-plan.md`, `Plans/Orchestrator_Page.md` |
+| Runtime payload lineage | Runtime-analysis exports, receipts, and artifacts reuse scheduler `/attempt/safe-point/remediation` identities and canonical route `/payload` shapes rather than feature-local receipt IDs; `docker_manage_surface_state` migrates into Docker Manager state, and runtime blocked payloads use `allowed_action_ids[]` rather than legacy `recovery_options[]` | `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/Containers_Registry_and_Unraid.md` |
+| Container-runtime ownership | Docker Manager is the canonical `container-runtime` surface for Docker, Podman, Compose, Build / Bake, Registries, Publish / Unraid, and project-focused Kubernetes; a project is `container-related` when any of those owner inputs or persisted runtime receipts exist | `Plans/Containers_Registry_and_Unraid.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md` |
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
 
+Stale checklist proof text is not a readiness signal. Checklist consumers must use the first-class `Source Control`, `GitHub Actions`, and `Docker Manager` surfaces; `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/GUI_Rebuild_Requirements_Checklist.md` are runtime consumers of those owner docs rather than alternate owners. Persona-related checklist references use canonical `requested_persona` and `effective_persona` naming from runtime contracts. Older generated-actions-settings, combined Git/GitHub, `Docker Manage`, and side-panel occupant lists are migration evidence only when they conflict with the accepted IA above.
+
+## Derived evidence regeneration
+
+`Plans/.evidence/**` is not live canon. After GUI rebuild checklist verification, evidence artifacts under `Plans/.evidence/**` / `/.evidence/` must be re-generate / re-generated from the current SSOT docs rather than edited or cited as canonical requirements.
+
 ## 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0326
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - follow `usage_event_ref` to canonical Usage/Ledger identity
-  - usage_event_ref
-  - `cost_usage` already routes to canonical Usage/Ledger identity
-  - cost_usage
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).
 - [ ] Panel toggling: Git, Docker, Source Control, Unraid, Artifacts, Chat, Files (single side-panel slot, last-click wins).
 - [ ] Usage/Ledger linkage from cost_usage artifact (Show in Ledger / Show in Usage actions).
@@ -215,28 +137,11 @@ Before shipping the rebuilt Orchestrator GUI, verify the following concern lifec
 - [ ] The concern_id is stable across restarts and re-entries; a new concern_id is only minted for root-cause changes.
 - [ ] The blocked_episode_id increments monotonically for each episode within a concern_id.
 - [ ] The escalation_stack accumulates frames; frames are never removed or reordered.
+- [ ] Dismiss `/resolve` paths record `resolution_kind` and rationale while keeping concerns separate from review findings, annotations, blocked episodes, and recovery records, with explicit cross-linking where relationships exist.
 
 ### Concern visibility and filtering
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0328
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Active concerns are visible to users with execute permission on the execution_unit_context.
 - [ ] Escalation stack internals are hidden unless audit mode is active.
 - [ ] Help/notification surfaces show concern_id and general guidance without exposing sensitive escalation details.
@@ -247,6 +152,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 - [ ] An approval at node scope gates only that node; sibling nodes proceed independently.
 - [ ] An approval at delegated_subagent scope gates the subagent call but not the parent orchestrator.
 - [ ] Approval scope is tied to execution_unit_context level, not to concern_id; multiple concerns can exist within the same scope.
+- [ ] HITL checkpoints do not use `checkpoints.hitl.{run_id}` or `checkpoints.hitl` as the sole key; approval identity includes run_id plus the finer approval/blocked scope.
 
 ### Restart and recovery
 - [ ] If a unit restarts (restart_count increments), the blocked_episode_id is preserved and rebound to the same concern_id.
@@ -256,30 +162,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### Concern cleanup and retention
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0327
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane/package complete and no retention reason remains
-  - `[retired-token-1]` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.
-  - [retired-token-1]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Resolved concerns remain visible for inspection but are marked with resolution metadata (resolved_at, resolved_by, resolution_reason).
 - [ ] Dismissed concerns are retained per retention policy (default: 7 days, configurable per concern_class).
 - [ ] Archived concerns are moved to a separate ledger; do not delete them.

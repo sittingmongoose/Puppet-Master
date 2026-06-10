@@ -2,7 +2,7 @@
   "$id": "pm.requirements_quality_report.schema.v1",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Puppet Master Requirements Quality Report",
-  "description": "Schema for the output of the Puppet Master requirements quality analysis pass. Captures verdict, detected issues, auto-applied fixes, and questions requiring user clarification. Verdict is PASS when no blocking issues remain after autofixes; FAIL when any blocking issue is unresolved (not covered by auto_fixes_applied and has a corresponding entry in needs_user_clarification).",
+  "description": "Schema for the output of the Puppet Master requirements quality analysis pass. Captures verdict, detected issues, auto-applied fixes, and questions requiring user clarification. Verdict is PASS when no blocking issues remain after autofixes; FAIL when any blocking issue is unresolved (not covered by auto_fixes_applied and has a corresponding entry in needs_user_clarification). Clarification question choices use canonical object-array options: Array<{id, label, description?}>; legacy string[] choices are auto-expanded at ingestion before persistence or rendering.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,7 +17,10 @@
     "verdict": {
       "description": "Overall quality verdict. PASS = no blocking issues remain after autofixes have been applied. FAIL = at least one blocking issue is unresolved (not in auto_fixes_applied; question surfaced in needs_user_clarification).",
       "type": "string",
-      "enum": ["PASS", "FAIL"]
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
     },
     "requirements_touched": {
       "description": "List of requirement IDs that were inspected during this quality analysis pass.",
@@ -61,7 +64,7 @@
   "definitions": {
     "Issue": {
       "title": "Issue",
-      "description": "A single quality issue detected on a requirement.",
+      "description": "A single quality issue detected on a requirement. Owner-doc contradictions are recorded here when consumer or GUI wording conflicts with an owner-doc rule rather than merely needing GUI copy edits; for blocked runtime resumes, assistant-chat-design.md / assistant-chat-design anti-bypass rules are owner evidence. The schema also separates ledger-to-plan transfer misses from broader plan-doc quality gaps.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -78,7 +81,7 @@
           "type": "string"
         },
         "category": {
-          "description": "Classification of the issue type detected on the requirement.",
+          "description": "Classification of the issue type detected on the requirement. Use owner_doc_contradiction when an owner-doc contradiction, not just a GUI wording issue, must be resolved against owner evidence such as assistant-chat-design.md anti-bypass rules. Use ledger_to_plan_transfer_miss for ledger-to-plan transfer misses and plan_doc_quality_gap for broader plan-doc quality gaps.",
           "type": "string",
           "enum": [
             "vagueness",
@@ -87,7 +90,10 @@
             "missing_anchor",
             "missing_boundary",
             "missing_research",
-            "contradiction"
+            "contradiction",
+            "owner_doc_contradiction",
+            "ledger_to_plan_transfer_miss",
+            "plan_doc_quality_gap"
           ]
         },
         "requirement_id": {
@@ -101,11 +107,18 @@
         "severity": {
           "description": "Impact of this issue on the overall verdict. 'blocking' causes a FAIL verdict if unresolved; 'warning' is informational and does not affect the verdict.",
           "type": "string",
-          "enum": ["blocking", "warning"]
+          "enum": [
+            "blocking",
+            "warning"
+          ]
         },
         "auto_fixable": {
           "description": "Whether the system can resolve this issue deterministically without user input. If true, a corresponding entry will appear in auto_fixes_applied.",
           "type": "boolean"
+        },
+        "diff_summary": {
+          "description": "When a changed requirement or issue is reported, includes diff_summary?: string with a concise description of what changed.",
+          "type": "string"
         }
       }
     },
@@ -149,7 +162,10 @@
         },
         "before": {
           "description": "The original text or field value before the fix was applied. Null or empty string if the fix adds content from nothing (e.g. inserting a new node).",
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "after": {
           "description": "The replacement or appended text after the fix was applied.",
@@ -157,6 +173,15 @@
         },
         "rationale": {
           "description": "Explanation of why this fix was safe to apply deterministically without user input.",
+          "type": "string"
+        },
+        "order_index": {
+          "description": "Optional stable ordering index for deterministic display or replay of applied fixes.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "description": "Optional reviewer or execution notes for this applied fix; notes do not change fix status or canonical semantics.",
           "type": "string"
         }
       }
@@ -208,14 +233,32 @@
           ]
         },
         "choices": {
-          "description": "Enumerated answer options. Required (non-null) when answer_format is 'single_choice' or 'multi_choice'. Must be null for all other answer_format values.",
+          "description": "Enumerated answer options. Required (non-null) when answer_format is 'single_choice' or 'multi_choice'. Canonical choices use Array<{id, label, description?}> object-array options; legacy string[] choices are auto-expanded at ingestion. Must be null for all other answer_format values.",
           "oneOf": [
             {
               "type": "array",
               "minItems": 2,
               "items": {
-                "type": "string",
-                "description": "A single selectable answer option."
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "label"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Stable option identifier submitted as the selected value."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Visible option label."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional explanatory copy for the option."
+                  }
+                }
               }
             },
             {

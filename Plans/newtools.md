@@ -1,100 +1,5 @@
 # GUI Testing Tools & Framework Options -- Implementation Plan
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-
-#### Source target target-0613
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-- Exact required items represented:
-  - Define lane↔worktree mapping
-  - Specify [retired-token-12] detection and cross-lane reuse rules
-  - Define [retired-token-9] restore for lane/package context
-  - Resolve [retired-token-2] vs [retired-token-1] contradiction
-  - Register PM-managed worktrees in source control visibility
-  - Remove legacy `[retired-token-7]` / `[retired-token-8]` drift and [retired-token-13].
-  - Normalize [retired-token-9] / [retired-token-10] / [retired-token-11] / [retired-token-12] terminology into one authoritative mapping and event taxonomy.
-  - `ask/plan -> deny` for mutating tools still conflicts with `external_publish_side_effect` being a non-bypassable ask/approval path
-  - ask/plan -> deny
-  - external_publish_side_effect
-  - adjacent owner docs pulled for contradiction checks (`[retired-token-19]`, `[retired-token-21]`, `[retired-token-14]`, `[retired-token-22]`, `[retired-token-15]`, `[retired-token-20]`, `[retired-token-17]`, `[retired-token-16]`, `[retired-token-18]`)
-  - [retired-token-19]
-  - [retired-token-21]
-  - [retired-token-14]
-  - [retired-token-22]
-  - [retired-token-15]
-  - [retired-token-20]
-  - [retired-token-17]
-  - [retired-token-16]
-  - `framework?`
-  - framework?
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - Exact stale survivors still to retire include `[retired-token-24]`, `[retired-token-30]`, `[retired-token-26]`, `[retired-token-28]`, `[retired-token-25]`, `[retired-token-29]`, `[retired-token-31]`, `[retired-token-23]`, and `[retired-token-27]`.
-  - [retired-token-24]
-  - [retired-token-30]
-  - [retired-token-26]
-  - [retired-token-28]
-  - [retired-token-25]
-  - [retired-token-29]
-  - [retired-token-31]
-  - [retired-token-23]
-  - Exact stale contradictory survivors still confirmed: `[retired-token-23]`, `[retired-token-27]`, `[retired-token-24]`, `[retired-token-30]`, `[retired-token-28]`, `[retired-token-25]`, `[retired-token-29]`, `[retired-token-31]`.
-  - [retired-token-27]
-  - Exact stale contradictory survivors remain confirmed: `[retired-token-24]`, `[retired-token-30]`, `[retired-token-26]`, `[retired-token-28]`, `[retired-token-25]`, `[retired-token-29]`, `[retired-token-31]`, `[retired-token-23]`, `[retired-token-27]`.
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -115,10 +20,17 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
 - tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
-- auth policy remains subscription-first, with Gemini API key as the explicit allowed exception; Gemini itself is one provider with mixed OAuth/API-key account pools and requested/effective auth/account identity that must remain consistent with the shared provider runtime
+- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording is retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) and Gemini CLI (`gemini_cli`, mode-dependent OAuth/API-key/Google-credential rows), with requested/effective auth/account identity kept consistent with the shared provider runtime
 - for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+### Route, view-state, and automation-default alignment
+Tooling summaries must not let shell view commands become target identity owners. `cmd.source_control.switch_subview` is a `/view-state` command for Source Control subview selection; repo, worktree, and `/worktree/compare` target identity stays in the route/open contract and its runtime object envelope. Stored `resume_url` fields in storage-plan and storage-plan.md remain valid resumability hints, but last-opened-view convenience state inside `project_state:v1:{project_id}`, project_state, and project_id must not become operational truth.
+
+Open-resolution and route focus are GUI consumer behavior. `Project_Output_Artifacts`, `Project_Output_Artifacts.md`, Plans/Section15_MVP_Promoted_Features_Spec.md, /Section15_MVP_Promoted_Features_Spec.md, Plans/Tools.md, /Tools.md, Plans/newtools.md, /newtools.md, Plans/Orchestrator_Page.md, /Orchestrator_Page.md, and `/action` references remain adjacent owner or consumer docs; newtools summarizes only that concern-specific records, GUI open affordances, and `/open-resolution` focus must resolve through the shared object/surface route rather than through local tool prose.
+
+Automation defaults are automation-first. `regular`, `visual_mode`, `visual_mode = auto`, Run_Modes, Run_Modes.md, optional HITL, and manual confirmations must map into one coherent mode policy where local visual runs are allowed but do not defeat the automation-first posture or `/HTE-by-default` migration rule. Surface rows should prefer one strong primary line, compact status chips, `/icons`, expandable `/detail`, deep-link pivots, canonical `/surface` target identity, and secondary `/sub-selection` focus rather than overloading the primary command.
 ## DRY Method Compliance
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
@@ -228,7 +140,7 @@ This plan extends the **interview** and **test strategy**; it does not replace t
 - **Offer options to the user:** Present: use existing tools only, plan/build custom headless tool only, or both. User choice is stored and drives what gets written into execution plans and test strategy.
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation
 - **Custom headless tool option:** When chosen, execution plans MUST include: build (or adopt) a project-specific tool that supports headless GUI navigation and emits a **full debug log** after runs so agents can verify behavior and debug failures.
-  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md#automation
+  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md
 - **Integrate into testing:** Selected tools (existing and/or custom) MUST be reflected in test strategy (e.g. test-strategy.md, test-strategy.json) and in PRD/execution plan language so **agents use the tools** during iterations for smoke and deeper GUI tests.
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading
 - **DRY:** One place for framework→tool data; reuse existing interview phase flow, test strategy generator, and prompt/context loading.
@@ -307,7 +219,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-ca
 - **All platforms:** MCP-backed tools MUST be supported and configurable for **all supported providers** (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). Canonical MCP configuration lives in Puppet Master; per-platform files are **derived adapters only** where a platform requires them (see §8.2). Implementation MUST ensure that when the user selects a catalog tool that uses MCP, Puppet Master can **set up and verify** that the tool is available and callable for the node's platform.
   ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager, Gate:GATE-005
 - **Setup and verification:** Implementation MUST provide a way to configure MCP servers (including API keys where required) and to verify that tools are callable (e.g. Doctor check or pre-run check per §11 checklist item **Doctor (MCP)**). Implementation MUST document or implement how MCP config (including Context7 API key and enable/disable state) is passed into the runner or agent environment so that platform CLIs see the correct MCP servers when executing.
-  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
+  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005
 - **Catalog metadata:** In the GUI tool catalog (§6.1), implementation MUST tag tools that require MCP (via `requires_mcp: bool` and `mcp_servers: Vec<String>` fields per §12.6.2 structured handoff) so the UI can show requirements (e.g. "Requires Context7 MCP" or "Requires Browser MCP"). When such a tool is selected, the run config or prompt builder MUST ensure the corresponding MCP settings are enabled and configured.
   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
 
@@ -360,12 +272,15 @@ This GUI/settings alignment section mirrors the linked owner contract and stays 
 ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing
 
 Core rules:
+- Legacy `#8.2 GUI/settings alignment` references normalize to this section, with owner-routing back to `Plans/Tools.md` for provider stack, Firecrawl, and web-routing canon.
+- This section is the consumer-only GUI/settings alignment landing for `Plans/newtools.md` §8; provider-capability canon lives in Plans/Tools.md sections 11 and 12, while MCP canon lives in `Plans/MCP_Integration.md`.
 - global provider stack is user-changeable in Settings.
 - per-operation priority reordering is NOT MVP.
 - global MVP provider priority is not immutable product policy.
 - row-level health/error disclosure and last-failure messaging remain visible in Settings.
-- availability plus support-tier visibility in Settings and availability plus support-tier visibility in `/web` help/autocomplete remain mirrored here.
+- availability plus support-tier visibility in Settings and availability plus support-tier visibility in `/web help/autocomplete` remain mirrored here.
 - MCP availability vocabulary points back to `Plans/MCP_Integration.md`.
+- `/retire` for this consumer section means stale PM/OpenCode terminology residue is rewritten into PM-native web tool / MCP framing, with repaired owner references to `Plans/Tools.md` and `Plans/MCP_Integration.md`; OpenCode remains reference/provenance only.
 
 Fields:
 - authenticated | expired | not_authenticated
@@ -388,7 +303,7 @@ Rules:
 - below Exa, Tavily; above DDG (user-adjustable)
 - Default state
 - disabled (requires API key or self-hosted URL)
-### 8.2.1 Cited-search and search-provider note
+### 8.2.1 Cited-search landing
 
 This cited-search and search-provider note is non-normative consumer guidance.
 
@@ -396,10 +311,18 @@ ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclo
 
 Required note:
 - cited-search wording does not replace provider capability, routing, provenance, or billing canon owned elsewhere.
-- The cited web search contract from §8.2.1 cited web search remains a consumer note only.
+- Legacy cited-search references, including the heading alias `### 8.2.1 Cited-search and search-provider note`, the `§8.2.1 cited web search` shorthand, and the `cited web search contract`, resolve to this now-written Cited-search landing; these aliases are cross-reference compatibility only, not active search-provider canon.
+- The MCP SSOT cross-reference and research session variant cross-reference remain consumer pointers to their owners, not local `newtools.md` canon.
+- MCP/web-tooling (`/web-tooling`) guidance in this section is consumer alignment only; owner canon remains `Plans/Tools.md` and `Plans/MCP_Integration.md`.
 - See Plans/newtools.md §8 for full list.
 - Plans/MCP_Integration.md is live canon now; it is not future-tense planned work.
+- Legacy TOC and ENTIRELY MISSING audit wording resolves to this now-written landing; keep that phrase as retired gap history, not active product canon.
 - this section is non-normative consumer guidance, not the owner landing for search-provider canon.
+- GUI/settings guidance for web-tool providers uses PM product language first: user-facing activity stays `Searching Web`, `Reading Site`, and `Site Reader`, while backend/provider names stay in support, routing, and recovery details.
+- Exa-style search may expose a hosted/free-tier path that does not require an API key by default; an optional user API key belongs in global user settings, and rate-limit/fails or 429 states should show user-facing recovery guidance and fallback to another enabled provider before stopping.
+- Agent web-search expectations are search, then read top results before answering; PM must not degrade LLM/web-research flows into search-only or instant-answer behavior by default.
+- DuckDuckGo/DDG is not treated as a first-party-style full web-search provider unless an official/public full-search API is available; practical DDG wrappers or scraping-based adapters are fallback/compatibility options, not the primary provider contract.
+- Site Reader v1 includes full browser interaction capability, not just passive structured reading.
 ### 8.3 Research session variant reference
 
 Research-session behavior references the shared `research_session` contract in `Plans/Section15_MVP_Promoted_Features_Spec.md`; MCP settings do not redefine it.
@@ -409,65 +332,27 @@ When the user chooses **"plan/build custom headless GUI tool"**:
 
 ### 9.1 Requirement: full-featured (like Puppet Master's automation)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0614
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - It should answer questions like:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The custom headless GUI tool must be **fully featured**, not minimal. Use **Puppet Master's** automation as the reference (`src/automation/`: headless runner, action catalog, evidence layout). The tool must provide:
 
 - **Headless execution:** Runs without display (CI-friendly); uses software rendering or framework-specific headless mode (e.g. Iced tiny-skia, or framework's own headless API).
 - **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.
-  ContractRef: ContractName:AGENTS.md#automation-action-catalog
+  ContractRef: ContractName:AGENTS.md-action-catalog
   - **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step), and the canonical manifest described in **§13**. **Consistent paths:** Evidence under `.puppet-master/evidence/gui-automation/<run_id>/`. Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.
-  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md#automation-evidence
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md-evidence
 
 ### 9.2 What gets written into plans
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0615
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - canonical target identity gets you to the right object/surface
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **If get existing tool** (e.g. Iced headless runner already in repo that meets §9.1): Plan steps to **ensure the tool is available** (install/setup), document how to run it and where evidence is written, and reference it in test strategy.
 - **If build custom:** Plan steps to **design and implement** a **full-featured** project-specific automation that meets §9.1 (headless runner, action catalog, full evidence: timeline, summary, artifacts). Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner) when the project uses that stack. No minimal smoke harness -- the deliverable is a tool that matches the capability and evidence depth of Puppet Master's automation.
-  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md#automation
+  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md
 - **If both:** Plan to use existing tools where they fit, and add or extend the custom tool for full coverage and evidence.
 
 ### 9.3 Reuse of existing automation (Puppet Master reference implementation)
 
 Puppet Master's **headless runner** and **action catalog** in `src/automation/` (AGENTS.md) are the **reference implementation**. For **Iced projects**, the plan should reference reusing or porting that pattern. For other frameworks, the plan describes building or adopting a system that meets the **same contract**: action catalog, timeline + summary + artifacts, standard evidence paths.
-ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
+ContractRef: ContractName:AGENTS.md, SchemaID:evidence.schema.json
 
 ---
 
@@ -530,7 +415,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 ### 12.2 Custom tool scope
 
 - Building a custom headless GUI tool is a substantial task. The plan frames it as **full-featured** from the start (headless runner, action catalog, full evidence: timeline, summary, artifacts), using Puppet Master's automation as the reference. Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner from Puppet Master) when the project uses that stack; for other frameworks, the plan describes building or adopting an analogous **full-featured** system with the same contract. Do not frame the deliverable as a minimal smoke harness -- the goal is a tool that matches the capability and evidence depth of Puppet Master's automation.
-ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
+ContractRef: ContractName:AGENTS.md, SchemaID:evidence.schema.json
 
 ### 12.3 DRY and AGENTS.md
 
@@ -595,7 +480,7 @@ ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2
 **Doctor check**
 
 - Implementation MUST add a Doctor check that verifies the headless tool exists and runs when `plan_custom_headless_tool` was true (in scope for this plan; see checklist item **Doctor** in §11). The check MUST be conditional: run only when the project planned a custom headless tool (see "Doctor check input" for detection contract).
-  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
+  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **YAML and config field names**
 
@@ -623,7 +508,7 @@ Detection is deterministic and has explicit ownership:
 4. If key does not exist: skip (not an error). Emit `tool.custom_headless.skipped` seglog event on first Doctor run.
 5. **Evidence:** Doctor check emits a seglog event (`doctor.custom_headless.checked`) recording the detection outcome. This event serves as the implementation evidence.
 
-  ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
+  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
 
 **Test strategy schema duplication**
 
@@ -635,7 +520,7 @@ Detection is deterministic and has explicit ownership:
 
 **MCP config injection timing and cwd**
 
-- `CliBridge` platform CLIs (Cursor/Claude Code) are spawned with a working directory (project or worktree). Derived MCP adapter config (no secrets) MUST be present in the actual spawn cwd (preferred) or a user-level location before the CLI starts. Implementation MUST document: (1) whether adapter generation happens once at run-config build time (project root) OR at spawn time (actual cwd used by platform runner), AND (2) how worktrees are handled so adapters are visible to the agent when running in a worktree. Preferred per PolicyRule:Decision_Policy.md§2 and Plans/WorktreeGitImprovement.md: generate adapters at spawn time into the actual run directory (cwd) so worktree runs get correct MCP config. `DirectApi` providers do not use provider-side MCP config files.
+- `CliBridge` platform CLIs (Cursor/Claude Code) are spawned with a working directory (project or worktree). Derived MCP adapter config (no secrets) MUST be present in the actual spawn cwd (preferred) or a user-level location before the CLI starts. Implementation MUST document: (1) whether adapter generation happens once at run-config build time (project root) OR at spawn-time generation for the actual cwd used by the platform runner, AND (2) how worktrees are handled so adapters are visible when project-local files are required. Preferred per PolicyRule:Decision_Policy.md§2 and Plans/WorktreeGitImprovement.md: generate adapters at spawn-time into the actual run directory (cwd) so worktree runs get correct MCP config; long-lived user/profile config may also be maintained where the provider supports it, but the central registry remains authoritative. `DirectApi` providers do not use provider-side MCP config files.
   ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2, SchemaID:evidence.schema.json
 
 **API Key Storage (Resolved — credential-store-only):**
@@ -651,7 +536,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 **Catalog detection hints and Iced**
 
 - The catalog table suggests "detection hints (e.g. Cargo.toml crate name, package.json deps)." For Iced, Puppet Master's in-repo headless runner lives in `src/automation/` and is not a crate name; detection may need to scan for `headless_runner` or automation modules, or for a known path. Implementation MUST define detection rules per framework in the catalog so the interviewer reliably sets `detected_gui_frameworks`. For Iced, preferred detection: check `Cargo.toml` for `iced` dependency OR scan for `src/automation/headless_runner` or `src/automation/action_catalog.rs` (Puppet Master's pattern). The detection rules MUST be documented in the catalog module and MUST NOT miss Iced when the project uses Puppet Master's automation pattern.
-  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:AGENTS.md#automation, PolicyRule:Decision_Policy.md§2
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:AGENTS.md, PolicyRule:Decision_Policy.md§2
 
 **Playwright vs "web" and test strategy generator**
 
@@ -666,7 +551,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 **Version compatibility and platform churn**
 
 - §8.2 notes that platforms change rapidly. Implementation MUST add a Doctor check or a small "platform config" report that records the CLI version per platform (e.g. `agent --version`, `codex --version`) when Doctor runs, so support and debugging can correlate behavior with specific versions. **In scope:** implement per checklist item **Doctor (platform versions)** in §11.
-  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
+  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Backward compatibility for existing projects**
 
@@ -676,7 +561,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 **MCP Doctor check (in scope)**
 
 - Implementation MUST add a dedicated Doctor check that verifies configured MCP servers (e.g. Context7) are reachable or can list tools, per selected platform; complements the headless-tool check. See checklist item **Doctor (MCP)** in §11.
-  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
+  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Catalog version or last-updated (in scope)**
 
@@ -845,6 +730,8 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 - **Web apps (local browser run/attach):**
   - Primary product path: PM built-in browser `automation_session` for visible browser execution and watchable automation.
   - Backend/compat attach path: external Playwright/CDP attach when the user explicitly wants to watch an already-open browser/profile or when the implementation uses Playwright as a backend adapter.
+  - Browser adapter lineage from `/browser-stack` research is reference material only: `wry`, platform engines `WebView2`, `WKWebView`, and `WebKitGTK` with `/X11/Wayland` constraints, `microsoft/playwright`, `Playwright MCP`, `playwright-mcp`, `packages/playwright/src/mcp`, `/playwright/src/mcp`, `cdpEndpoint`, attach-to-existing-browser, file-access, `/eval`, and `IPC` may inform backend adapters, evidence capture, profile/CDP options, and accessibility-snapshot practice; `/playwright` remains test/automation adapter lineage, not PM's visible browser product foundation.
+  - The same reference-only lineage preserves Wry child webviews, JS init/eval, custom protocols, and DevTools support by feature/build mode; Playwright contributes navigation, clicks, typing, multi-tab flows, screenshots, tracing, and browser contexts across Linux/macOS/Windows; Playwright MCP provenance includes README/config/tests, capability buckets `core`, `network`, `pdf`, `storage`, `testing`, `vision`, `devtools`, and `config`, default core tools, optional capability-gated tools, persistent vs isolated profiles, snapshot modes, and output/session persistence knobs.
   - Evidence: screenshots/video/trace/structured snapshot semantics must map into the shared artifact contract regardless of backend implementation.
 - **Desktop apps (native launch + visible state capture):**
   - Windows: Appium Windows Driver with `appium:app` (launch) or `appium:appTopLevelWindow` (attach existing window).
@@ -873,6 +760,11 @@ Add Doctor preflight categories:
   - PM-managed bundled browser runtime is present, healthy, and version-matched
   - PM browser startup path is healthy for the current desktop session
   - editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+  - packaging/update/install metadata declares how the selected bundled runtime is installed, updated, verified, cached, removed, and remediated
+  - Installer evidence must distinguish current full `/offline` app packaging from "download browser runtime during install" orchestration: Windows `NSIS` copies `puppet-master.exe`, `macOS` `DMG` wraps the app binary/resources, and Linux `DEB`/`/RPM` packages the built binary, desktop entry, and icon until an explicit browser-runtime `/install` bundle policy replaces that baseline.
+  - if PM uses `wef`/`cargo-wef`, the auto-downloaded CEF binary distribution is version-pinned and integrity-checked before PM advertises visible browser capability
+  - package-size budget for the selected CEF runtime is recorded; roughly ~1 GB additions are surfaced as release/installer metadata rather than hidden Doctor surprises
+  - upstream experimental status for a browser wrapper is captured as implementation risk and does not create user-facing experimental runtime toggles
   - target dev server or requested page origin is reachable when the run expects local web content
 - **Desktop**
   - Appium server reachable
@@ -948,7 +840,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
    - `test_type` includes `visual_web`, `visual_desktop`, `visual_ios`, `visual_android`
    - optional `visual_launch_command`, `attach_command`, and `evidence_capture_mode`
 
-ContractRef: ContractName:Plans/test-strategy.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+ContractRef: SchemaID:pm.test_strategy.schema.v1, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 4. **Seglog events**
    - `live.session.started`
@@ -1135,6 +1027,8 @@ Required Docker Manager contract coverage:
 - Docker as default runtime mode, Podman as alternate runtime mode inside the same surface
 - requested vs effective auth capability disclosure for Docker Hub
 - protected missing-repository creation and publish-side-effect separation
+- doctor/preflight scopes must differentiate build-only, `compose-run`, and publish workflows, and receipt/deep-link attribution must stay app-wide for Source Control, GitHub Actions, Docker Manager, and Orchestrator surfaces in worktree-heavy projects
+- `Plans/Containers_Registry_and_Unraid.md` owns the `Preflight and approval ordering contract`, `Kubernetes enablement rules`, `Kubernetes doctor checks`, `Future-scope placeholders` for registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage, and the `Event registration contract`; `Plans/Contracts_V0.md` remains the registration authority for Docker/Unraid events and Kubernetes event names.
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
@@ -1172,6 +1066,8 @@ Required GitHub Actions surface alignment:
 - current-branch run behavior and workflow dispatch use the same repository and branch context
 - admin readiness for secrets, variables, and environments reuses the same capability/auth model as the live GitHub Actions Settings subview
 - `doctor.actions.workflow-ready` remains the canonical readiness gate for workflow generation/apply flows
+- repository workflow files under `.github/workflows/` / `github/workflows/` are the runtime source of truth after preview `/save` or apply; `generated-workflow` and generated required-secrets `/configuration` lists are historical hints and must not override current repo `/worktree` workflow `YAML`, hosted `/variables/environments`, or `GitHub Actions > Current Branch` context
+- repo-level Actions `/admin` operations create project-scoped `/receipt` records for secret `/update/delete`, variable `/update/delete`, environment `/update/delete/update-rules`, workflow pin `/unpin`, and readiness-check execution; receipts may `/link` a `run_id` through `github_api` evidence but never store secret values or reversible `value-derived` material
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 
@@ -1198,20 +1094,38 @@ The Slint rebuild must expose deterministic readiness checks before Preview/Buil
 | `doctor.mobile.android-emulator` | mobile Android | Emulator/ADB reachable | Mark Android preview/test path unavailable; suggest fallback target |
 | `doctor.docker.engine` | docker local | Docker daemon reachable and responsive | Block docker preview/build path; show remediation steps |
 | `doctor.docker.compose` | docker local | Compose config resolves and service graph validates | Block compose launch; show config error details |
-| `doctor.registry.auth` | docker publish | Registry auth validated for selected provider (`dockerhub` default) | Block publish; preserve local build results |
+| `doctor.dockerhub.auth.capability` | docker publish | DockerHub auth validated into the requested effective capability set | Block publish; preserve local build results |
 | `doctor.actions.workflow-ready` | GitHub Actions | Workflow template validates and required secrets are declared | Block workflow apply; show missing/invalid fields |
 | `doctor.evidence.media` | evidence/chat | Manifest + media artifacts are readable and hash-valid | Keep run result, mark evidence degraded with explicit fallback message |
+| `doctor.browser.runtime` | PM built-in browser | PM-managed bundled CEF-class runtime is present, healthy, version-matched, and backed by packaging/update/install metadata; `wef`/`cargo-wef` auto-downloaded CEF cache passes integrity checks when that path is selected | Mark visible browser sessions unavailable with `runtime_unavailable`; show remediation and keep source/native surfaces usable |
 | `doctor.mcp.context7` | MCP / docs | Context7 enablement is on and a usable key resolves from env or credential store; server can list tools | Keep run usable, but mark Context7-backed tools unavailable and surface remediation |
 | `doctor.mcp.provider-ready` | MCP / provider bridge | For each selected provider, MCP bridge/adapters are present and the configured server set exposes the expected tool names | Mark MCP-backed tools unavailable for that provider; do not silently advertise missing tools |
 | `doctor.websearch.cited` | cited web search | `websearch_cited` result contract passes a dry-run/provider health check for the configured provider order | Keep run usable, but disable cited web search with explicit config/auth/timeout reason |
 | `doctor.gui.custom-headless` | custom GUI tool | When `plan_custom_headless_tool = true`, configured tool path exists, is executable, and produces canonical evidence layout | Mark custom headless path unavailable and point to config/evidence contract remediation |
 | `doctor.gui_tool_catalog.freshness` | framework tool catalog | Base catalog version plus overlay `last_updated` metadata are present and readable | Keep run usable, but warn that tool recommendations may be stale and show the recorded snapshot date |
 
-ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
+ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
 
 ### 14.10A Debug automation and diagnostic tooling
 
 Tool discovery for Debug Mode must cover more than browser automation. The platform needs enough metadata to select reproduction, instrumentation, trace, and verification tooling automatically.
+
+Debug target mapping rules:
+- When the user points Debug Mode at an app or website, PM classifies the target as workspace-built (/workspace), browser/website, or black-box binary/app before choosing tooling. Workspace-built targets may combine temporary server/workspace instrumentation with the local collector; browser/website targets combine server/workspace instrumentation with PM-controlled built-in browser repro automation and capture of console, network summaries, DOM, and /screenshot-style evidence. For black-box targets or user-pasted artifacts where source instrumentation is unavailable, fallback inputs are attach logs, DAP/session tooling, external captures, and attach-to-chat bundles, but PM's native browser stack remains preferred over OSS-style agent-plus-browser patterns for permissions, session identity, and assistant-side evidence packaging.
+- The Debug target registry records the selected target shape, including launch config, URL, attach PID, browser session, or imported evidence bundle; PM routes each registered target to the collector through log sink, built-in browser session plus agent tools, DAP adapter, or manual attach intake as applicable.
+- The grounded PM Debug core is **H + I + J + E + A**: H points PM at a target; I keeps debug inside the overlay/runtime architecture instead of creating a new runtime mode; J sends evidence through the existing runtime-artifact and seglog pipeline; E covers assistant/session inspection in a Copilot-like way; and A allows temporary instrumentation in MVP only under an explicit instrumentation contract. For MVP web/debug repro, the preferred path is **PM built-in browser + `automation_session`**; process/test/dev-server correlation uses `dev_session_id` / existing `output-problems-ports` linkage, including `/test/dev-server` loops. Classical DAP debugging remains a separate related adapter/surface rather than the primary web repro mode. Cursor-like temporary instrumentation remains in MVP only when the instrumentation contract covers visibility, cleanup, rollback, failure handling, evidence routing, and failed-cleanup escalation.
+- Research-grade adapters are explicit advanced options: DAP/session tools with debugger perturbation in the InspectCoder direction, and execution trace to LLM analysis in the snooper-style direction. They are useful evidence and remediation accelerators, but higher novelty and implementation risk keep them behind normal target-registry and policy checks.
+- Browser/session automation defaults to an ephemeral automation profile/session. If a target requires authentication and no valid automation session exists, Debug moves to `attention_required` rather than silently reusing an unrelated user profile.
+- External Playwright or Browser MCP tooling remains documented for newtools, interview-subagent-integration, interview, test strategy, and generic tool discovery; it is orthogonal to the promoted named-action browser contract unless a product surface explicitly bridges it.
+- tool-emitted debug evidence enters chat only through a bounded, user-visible attach model. Ordinary browser capture remains explicit-user-attach, while active Debug investigations may attach agent/session traces and runtime bundles automatically or semi-automatically only when the visible debug-context rules allow it.
+
+#### Enterprise host/trust policy, host declaration preflight, and governance denials
+
+Debug, MCP, custom-plugin, networked-tool, `/shell/debugger`, and `/tunnel/browser` actions run through shared `/trust/proxy/governance` preflight before execution. Every `/custom/plugin/networked` tool profile declares contacted hosts and `/domains` before dispatch; if a run expands to an undeclared host, domain, proxy target, or remote authority, the action returns `blocked_preflight` rather than silently broadening the session permission. Governance denials preserve a machine-readable `deny-code` family for GitHub, registry, Kubernetes, and runtime host-policy checks, while the older permission-era source wording is lineage only. Host/trust decisions that are meant to survive restart must be explicit `/durable` permission or trust records, not inferred from a transient debug run.
+
+#### Debug automation profile instrumentation scope
+
+The Debug automation profile classifies temporary instrumentation scope as exactly `env_config_activation`, `ephemeral_tool_install`, `wrapper_launcher`, `temporary_source_patch`, and `debugger_or_profiler_attach`. Each scope records whether the change is temporary or durable, the expected cleanup path, the sensitive-runtime impact, and the recovery behavior if cleanup fails. `wrapper_launcher` and `debugger_or_profiler_attach` are stricter than read-only inspection because they can perturb process timing, credentials, environment, or attach permissions; `temporary_source_patch` requires a revert path before execution; `ephemeral_tool_install` requires an install location, provenance, and cleanup path before dispatch.
 
 Required discovery outputs are:
 - preferred local or remote dev/test runner
@@ -1220,14 +1134,16 @@ Required discovery outputs are:
 - source-map or symbolization support where relevant
 - DAP adapter availability for the target language/runtime
 - temporary instrumentation install / rollback path when framework-native tracing is missing
+- target discovery / environment preparation capability that detects stack/runtime, prepares dev session, browser session, debugger attach, or imported bundle intake, and installs/activates tracers or debug tooling when required by the selected policy
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
 
 Selection order:
 - project-native or repo-declared tooling first
 - already-installed environment tooling second
-- temporary, investigation-scoped tooling install only when a cleanup path exists and policy allows it
+- temporary, investigation-scoped tooling /install only when a cleanup path exists and policy allows it
 - imported evidence bundles and manual attach remain fallback inputs, not the primary happy path
+- escalation continues through non-invasive readback/capture, permitted non-invasive tracers or debugger attachments, temporary instrumentation patches only after lower tiers are insufficient, tentative durable fix, automated verification, and instrumentation removal; unresolved cleanup enters explicit cleanup-recovery before any new mutation-capable loop starts
 
 ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
 

@@ -1,0 +1,233 @@
+# Shard 001: Preamble
+
+Source: `Plans/Contracts_V0.md`
+
+Source lines: L1-L223
+
+Source SHA256: `42abbe15109062453a0378c74f249cc2f0b399fd77da8be9000f1e95d09bcc27`
+
+---
+
+# Contracts V0 (Canonical)
+
+
+  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.
+  - active_subview
+  - `focus_thread_usage`
+  - focus_thread_usage
+  - `navigation_wrapper`
+  - navigation_wrapper
+  - `domain_action`
+  - domain_action
+  - contracts own canonical route identity
+  - `backing_document_id`
+  - backing_document_id
+  - `last_saved_path`
+  - last_saved_path
+  - Those fields belong elsewhere:
+  - The narrow scope-restoration fields are:
+  - The narrow focus-refinement fields are:
+  - Good serialized fields
+  - Bad serialized fields
+  - `object_kind = blocked_episode`
+  - object_kind = blocked_episode
+  - `focused_run_id = run_id`
+  - focused_run_id = run_id
+  - `object_id = blocked_sequence`
+  - object_id = blocked_sequence
+  - It must stay small.
+  - `object_kind = usage_event`
+  - `agent-rules-context.md` still under-enumerates callers, omits execution-role input, conflicts with Personas/Prompt_Pipeline on bundle ordering, and has weaker disclosure/help contracts than adjacent systems.
+  - agent-rules-context.md
+  - `project_id = <project_id>`
+  - project_id = <project_id>
+  - `thread_id = <thread_id>`
+  - thread_id = <thread_id>
+  - `focused_run_id = <run_id>`
+  - focused_run_id = <run_id>
+  - `object_id = <attempt_id>`
+  - object_id = <attempt_id>
+  - `object_id = <blocked_sequence>`
+  - object_id = <blocked_sequence>
+  - `object_kind = scheduler_pass`
+  - object_kind = scheduler_pass
+  - `object_id = <scheduler_pass_id>`
+  - object_id = <scheduler_pass_id>
+  - `object_id = <safe_point_id>`
+  - object_id = <safe_point_id>
+  - `object_id = <remediation_root_id>`
+  - object_id = <remediation_root_id>
+  - `object_kind = graph_generation`
+  - object_kind = graph_generation
+  - `object_id = <graph_generation_id>`
+  - object_id = <graph_generation_id>
+  - `object_kind = graph_patch`
+  - object_kind = graph_patch
+  - `object_id = <graph_patch_id>`
+  - object_id = <graph_patch_id>
+  - `object_id = <worktree_id>`
+  - object_id = <worktree_id>
+  - `object_id = <lane_id>`
+  - object_id = <lane_id>
+  - `object_kind = feature_seam`
+  - object_kind = feature_seam
+  - `object_id = <feature_seam_id>`
+  - object_id = <feature_seam_id>
+  - `object_kind = work_package`
+  - object_kind = work_package
+  - `object_id = <work_package_id>`
+  - object_id = <work_package_id>
+  - `object_id = <concern_id>`
+  - object_id = <concern_id>
+  - `object_id = <promotion_id>`
+  - object_id = <promotion_id>
+  - `seams`
+  - seams
+  - `node_graph`
+  - node_graph
+  - `object_id = scheduler_pass_id`
+  - object_id = scheduler_pass_id
+  - `object_id = safe_point_id`
+  - object_id = safe_point_id
+  - `object_id = remediation_root_id`
+  - object_id = remediation_root_id
+  - `object_id = attempt_id`
+  - object_id = attempt_id
+  - Stratum 1: owner docs
+  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.
+  - subsection `7.2 WiringEntry`
+  - 7.2 WiringEntry
+  - `handler_location`
+  - handler_location
+  - `expected_event_types`
+  - expected_event_types
+  - unknown-command rejection
+  - report/evidence refs
+  - `workflow_refs`
+  - workflow_refs
+  - `docker_refs`
+  - docker_refs
+  - `kubernetes_refs`
+  - kubernetes_refs
+  - `attempt_record` with scheduler/safe-point/remediation/runtime identity fields
+  - they correctly carry blocked/wizard state
+  - wizard-blocked keeps wizard-specific clarification/report fields
+  - usage_record
+  - tier-adjacent `evidence_record`
+  - `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`
+  - resume_url?
+  - exact command-arg mismatches
+  - `requested_platform`
+  - requested_platform
+  - `effective_platform`
+  - effective_platform
+  - `requested_model`
+  - requested_model
+  - `effective_model`
+  - effective_model
+  - `worker_provider`
+  - worker_provider
+  - `worker_model`
+  - worker_model
+  - `verifier_provider`
+  - verifier_provider
+  - `verifier_model`
+  - verifier_model
+  - `request_id`
+  - request_id
+  - `request_kind = tier_boundary_approval`
+  - request_kind = tier_boundary_approval
+  - Strong aligned owner:
+  - with `request_id` args
+  - `PuppetMasterEvent::TierChanged`
+  - PuppetMasterEvent::TierChanged
+  - `PuppetMasterEvent::IterationStart`
+  - PuppetMasterEvent::IterationStart
+  - `PuppetMasterEvent::EvidenceStored`
+  - PuppetMasterEvent::EvidenceStored
+  - `IterationStart`
+  - `GateStart`
+  - GateStart
+  - `GateComplete`
+  - GateComplete
+  - `EvidenceStored`
+  - EvidenceStored
+  - Strong owner docs:
+  - `hitl_request_id`
+  - hitl_request_id
+  - Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.
+  - GraphNode
+  - GraphNodeUI
+  - `Orchestrator_Page.md`
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `3.13` appears twice
+  - 3.13
+  - `3.14` appears twice
+  - 3.14
+  - `3.15` appears twice
+  - 3.15
+  - `DRY_Rules.md` second
+  - DRY_Rules.md
+  - `Decision_Log.md` third
+  - Decision_Log.md
+  - `DRY_Rules.md` needs:
+  - `Decision_Log.md` needs:
+  - `plan_or_tier_default`
+  - plan_or_tier_default
+  - `Orchestrator_Page.md` needs:
+  - mixed-canon owner docs
+  - MUST RECONCILE
+  - MUST VERIFY
+  ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
+  - `Plans/_shards/**`
+  - Plans/_shards/**
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - 1. Reconcile owner contracts and schemas first.
+  - Plans/Decision_Policy.md
+  - The rerun confirms that these were not just vague "help gaps", but concrete missing contracts:
+  - pressure-summary field
+  - Plans/Crosswalk.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Progression_Gates.md
+  - Plans/FileManager.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Executor_Protocol.md
+  - execution_unit_context
+  - ### 5.1B Persona/Runtime Snapshot Payload Contract
+  - gap-001
+  - requested_account_binding
+  - requested_account_policy
+  - operational_identity
+  - cov-034
+  - obl-016
+  - active
+  - acknowledged
+  - resolved
+  - dismissed
+  - resolution_kind
+  - accepted_risk
+  - `working_ledger.md:L806`
+  - working_ledger.md:L806
+  - `working_ledger.md:L1030`
+  - working_ledger.md:L1030
+  - `working_ledger.md:L1035-L1036`
+  - working_ledger.md:L1035-L1036
+  - `working_ledger.md:L1283-L1290`
+  - working_ledger.md:L1283-L1290
+  - `working_ledger.md:L1539`
+  - working_ledger.md:L1539
+  - `working_ledger.md:L3070-L3092`
+  - working_ledger.md:L3070-L3092
+  - `working_ledger.md:L3170-L3182`
+  - working_ledger.md:L3170-L3182
+  - `working_ledger.md:L5990-L6015`
+  - working_ledger.md:L5990-L6015
+  - `working_ledger.md:L6442-L6490`
+  - working_ledger.md:L6442-L6490

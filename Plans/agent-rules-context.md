@@ -1,42 +1,5 @@
 # Application- and Project-Level Agent Rules -- Plan
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0552
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Projects page should summarize from canonical project-level projections rather than inventing its own status model.
-  - There is no obvious current project-level rollup for blocked-owner and primary attention reason.
-  - `handoff` uses bare agent names with no package/seam/lane context
-  - handoff
-  - Project-level attention should remain object-first, not notification-first.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Plans/agent-rules-context.md`
-  - Plans/agent-rules-context.md
-  - with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active.
-  - Plans/Plugins_System.md
-  - Plans/Skills_System.md
-  - Plans/LSPSupport.md
-  - Plans/Media_Generation_and_Capabilities.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -44,7 +7,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
-- Two-tier rules model: Application (Puppet Master) level and Project level
+- Two durable rule scopes: Application (Puppet Master) level and Project level
 - Where each is stored and how they are fed into every agent
 - DRY: single rules pipeline consumed by orchestrator, interview, and Assistant
 
@@ -64,7 +27,7 @@ This rules model remains authoritative, and becomes more important under the rew
 
 ## Executive Summary
 
-Rule: Agents invoked by Puppet Master (orchestrator iterations, interview, Assistant) MUST receive **two layers of rules** so that global and project-specific policies are always applied.
+Rule: Agents invoked by Puppet Master (orchestrator iterations, interview, Assistant) MUST receive **two durable rule scopes** so that global and project-specific policies are always applied.
 ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§4
 
 1. **Application-level rules (Puppet Master)** -- e.g. "Always use Context7 MCP." Apply to **every agent, everywhere**. Stored and configured at the **application** (Puppet Master) level and injected into every agent invocation regardless of project.
@@ -80,12 +43,15 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 | **Plans/orchestrator-subagent-integration.md** | Orchestrator builds iteration prompts and injects context (e.g. context injection hook, coordination context). The **rules block** (application + project) must be included when building every iteration prompt or system prompt. Use the shared rules pipeline; do not duplicate rule content in the orchestrator. |
 | **Plans/interview-subagent-integration.md** | Interview builds prompts for research, validation, and phase Q&A. Application rules always injected; project rules injected when the interview is run for a specific (target) project. Use the shared rules pipeline. |
 | **Plans/assistant-chat-design.md** | Assistant chat sends context to the platform CLI. When the user is working in the context of a project, application rules + project rules must be included. When no project is selected, application rules only. Use the shared rules pipeline. |
-| **AGENTS.md** | Today the Puppet Master repo's AGENTS.md contains rules like "Always use Context7 MCP." That content can be **one source** for default application rules (e.g. on first run or when no application rules file exists). Long term, application rules are a **configurable** list so the user can add/edit without editing AGENTS.md in the app repo. |
+| **AGENTS.md** | Today the Puppet Master repo's AGENTS.md contains rules like "Always use Context7 MCP." That content can be **one source** for default application rules (e.g. on first run or when no application rules file exists). Long term, application rules are a **configurable** list so the user can add/edit without editing AGENTS.md in the app repo. Current OpenAI Codex product docs support `AGENTS.md` as a native guidance surface for Codex tasks, so PM's AGENTS-centered canonical instruction model remains aligned with Codex. |
+
+Rules-context assembly consumes cache-friendly prompt assembly from `Plans/Prompt_Pipeline.md` and treats `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` as the external V0-to-A2A event mapping reference; this document does not re-own either contract.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
-## Two-Tier Rules Model
+<a id="two-tier-rules-model"></a>
+## Rule Scope Model
 
-Despite the legacy heading name, the normative model is **not** a Phase/Task/Subtask/Iteration hierarchy. The durable instruction layers are:
+The normative model is not a Phase/Task/Subtask/Iteration hierarchy and does not create runtime role policy. The durable instruction scopes are:
 
 ### Application-Level Rules (Puppet Master)
 - **Scope:** every agent run under Puppet Master, regardless of whether the work is Assistant, Interview, Orchestrator, or a delegated child run
@@ -162,7 +128,7 @@ Rules:
 
 ## Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)
 
-This plan's durable rules pipeline remains the user-editable source of rules text, but every agent invocation assembles a deterministic **Instruction Bundle** instead of relying on tier-era injector naming.
+This plan's durable rules pipeline remains the user-editable source of rules text, but every agent invocation assembles a deterministic **Instruction Bundle** instead of relying on legacy injector naming.
 
 **Instruction Bundle order:**
 1. Application rules
@@ -172,9 +138,11 @@ This plan's durable rules pipeline remains the user-editable source of rules tex
 Rules:
 - the shared rules pipeline outputs rules content only; it does not inject attempt journals, parent summaries, or assistant-only memory
 - Assistant memory, Attempt Journal, and Parent Summary are separate memory/context injectors and MUST NOT masquerade as rules text
+- provider cache controls such as `copilot_cache_control` and Anthropic-like cache-marker eligibility are resolved by Prompt Pipeline/provider owners using explicit provider and model-id evidence; the rules pipeline must not infer cache behavior from rule text or model-id heuristics
 - within the scoped `AGENTS.md` chain, closest scope wins and identical content is deduplicated deterministically
 - Application rules outrank Project rules and all scoped `AGENTS.md` content; Project rules outrank scoped `AGENTS.md`
 - prompt builders for Assistant, Interview, Orchestrator, and delegated child runs all use the same assembly order and names
+- provider-native instruction loaders may be configured to read equivalent context files; for Gemini, settings can override `context.fileName` so `AGENTS.md` is included alongside or instead of the native Gemini context filename
 
 ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
@@ -214,52 +182,12 @@ Define deterministic, low-bloat context management for Puppet Master's node-grap
 
 #### D) Promotion (Controlled, optional)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0556
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `target_kind` must stay coarse and controlled.
-  - target_kind
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Promotion moves stable, reusable learnings into the nearest appropriate `AGENTS.md` when the learning is non-obvious, stable, and scope-relevant.
 
 ### Context Assembly Semantics (Deterministic Cone)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0553
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `context help`: richer popover, side panel, or surface-local explainer with examples and related concepts
-  - context help
-  - `stage/tier/task/repo context`
-  - stage/tier/task/repo context
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Puppet Master constructs explicit bundles for each agent run:
 1. **Instruction Bundle**
 2. **Work Bundle**
@@ -270,26 +198,7 @@ Always includes top-level `AGENTS.md` when present. When scoped `AGENTS.md` is e
 
 #### Work Bundle
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0557
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Work Packages`
-  - Work Packages
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Contains only what is needed to execute the current node/attempt: objective, acceptance criteria, inputs, allowed tools, and explicit constraints.
 
 #### Memory Bundle
@@ -299,7 +208,7 @@ When enabled, inject the most recent node-lineage Attempt Journal and/or the bou
 - coordinating runs/packages see coordinating objectives and summaries, not every child attempt journal by default
 - node execution sees the current node objective, scoped instruction chain, and node-relevant memory only
 - delegated child attempts inherit the same Instruction Bundle ordering plus child-specific Work/Memory Bundles
-- verification/review attempts use the same assembly semantics; they do not reintroduce deprecated tier vocabulary
+- verification/review attempts use the same assembly semantics; they do not reintroduce deprecated execution-hierarchy vocabulary
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/DRY_Rules.md
 ---
@@ -344,6 +253,8 @@ GUI must show an “Injected Context” breakdown per run:
 - which AGENTS.md were included (paths + byte counts)
 - whether parent summary and attempt journal were included (byte counts)
 - whether truncation occurred (and why)
+
+Each instruction/rules target has exactly one control mode: `PM Controlled` or `Manual Override`. A `PM Controlled` target is regenerated only from the saved canonical instruction source. A target can switch from `Manual Override` back to `PM Controlled` only after the canonical instruction source is saved and the target is refreshed from that source.
 ---
 ## AGENTS.md Light Enforcement (Product)
 ### Authoring-time lint
@@ -379,3 +290,12 @@ Before a run:
 ---
 
 *Document created for planning only; no code changes.*
+
+---
+## Route Context and Attention Destination Rules
+
+The existing `resume_url` pattern is the precedent for precise recovery routes: wizard and thread flows preserve a stored deep link, and the same internal payload model must generalize beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings. Agent rules context records the instruction-bundle consequences of those routes; the route contract layer owns the controlled coarse destination enum/family.
+
+Concern-specific future record/action docs are not instruction-rule sources yet. `Plans/Orchestrator_Page.md` and `/Orchestrator_Page.md` remain `/action` consumers for concern and attention workflows, while this doc only carries the context needed for scoped instructions, route-aware recovery, and project-level handoff.
+
+Historical `/current` run switching must not change layout identity. Layout scope remains project-level rather than run-level, so route context may focus a historical or current run without rewriting the instruction/rules target identity.

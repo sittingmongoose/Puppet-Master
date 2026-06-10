@@ -1,0 +1,140 @@
+{
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/multi-account/00-index.md",
+  "index_sha256": "e2f8f1a2e534553e953a971fb2f1b66a90d4270e2411290f1fc43c02f02db49c",
+  "manifest_path": "Plans/_shards/multi-account/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/multi-account/001-preamble.md",
+      "sha256": "cb27686e848a6bef2496292e1acde99e75484def1f77508fc04493e3515eed62",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/multi-account/002-canonical-owner-section-requirements.md",
+      "sha256": "ded49744fe899eec3e2a6719550db347fd49d286324f4d70a9b112a31dc41c36",
+      "shard_id": "002",
+      "source_line_end": 20,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Purpose and scope",
+      "path": "Plans/_shards/multi-account/003-1.-purpose-and-scope.md",
+      "sha256": "ffc98ce5d73e422a770fed25f9124b28439e3ae79dd3ecd06b9e7cacd5de702a",
+      "shard_id": "003",
+      "source_line_end": 65,
+      "source_line_start": 21,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. References",
+      "path": "Plans/_shards/multi-account/004-2.-references.md",
+      "sha256": "b7a9636d066f8c834d4274f8f69bc142e1954f08d02eb8a4e76498fd896d18a0",
+      "shard_id": "004",
+      "source_line_end": 79,
+      "source_line_start": 66,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical data-shape reconciliation",
+      "path": "Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md",
+      "sha256": "3b59c8061ca4a2c7887fa819bba94345806b07efe6c640c9360ed1ee3035186f",
+      "shard_id": "005",
+      "source_line_end": 108,
+      "source_line_start": 80,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Assessment: what we have and gaps (filled)",
+      "path": "Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md",
+      "sha256": "2d01fcbd41f18a9c50195da8efbf92e497c20fbf10176ee13cdb5b1e75ed19b1",
+      "shard_id": "006",
+      "source_line_end": 353,
+      "source_line_start": 109,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Auto-rotation",
+      "path": "Plans/_shards/multi-account/007-5.-auto-rotation.md",
+      "sha256": "46cb22f0a8175f5b9f7a3214c125766f4b743d141f0f529bdf6379b98b0ddf66",
+      "shard_id": "007",
+      "source_line_end": 419,
+      "source_line_start": 354,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Provider-specific behavior",
+      "path": "Plans/_shards/multi-account/008-6.-provider-specific-behavior.md",
+      "sha256": "48a31881664c1ed1cd1f4c58864cc68ee93badc8c97004ef2bbd0e5eee044fcd",
+      "shard_id": "008",
+      "source_line_end": 483,
+      "source_line_start": 420,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Runner / orchestration contract",
+      "path": "Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md",
+      "sha256": "10d7efffffd2fb99a7af06143f1ad1fefeaab36938a092b1d817009deb354906",
+      "shard_id": "009",
+      "source_line_end": 520,
+      "source_line_start": 484,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Usage and pick-best",
+      "path": "Plans/_shards/multi-account/010-8.-usage-and-pick-best.md",
+      "sha256": "eea5b742280d08b6d8613023108138cecbd963528c8bdf4c58a017b8610d2d6d",
+      "shard_id": "010",
+      "source_line_end": 543,
+      "source_line_start": 521,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. GUI requirements (UX only)",
+      "path": "Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md",
+      "sha256": "39ab751897b4105013323ed4a420e7ceea965c742fb9764fcf9d32cf56b22623",
+      "shard_id": "011",
+      "source_line_end": 739,
+      "source_line_start": 544,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Phase 2 (native auth) -- when available",
+      "path": "Plans/_shards/multi-account/012-10.-phase-2-native-auth-when-available.md",
+      "sha256": "ab7aa0dac1caf1a6d52101599fd8d1a98688c90cf6e0c313649e3de22dc7d0da",
+      "shard_id": "012",
+      "source_line_end": 750,
+      "source_line_start": 740,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "11. Open points for implementer",
+      "path": "Plans/_shards/multi-account/013-11.-open-points-for-implementer.md",
+      "sha256": "fad0fef1bb35fcf9316cd4631408c9d4544c3078876b918cb2bbb8e2c14f4f0a",
+      "shard_id": "013",
+      "source_line_end": 756,
+      "source_line_start": 751,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)",
+      "path": "Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md",
+      "sha256": "c08abda5c1b5bd67da933377311592f804b53fcd5a5732b3e08c2dc898d552eb",
+      "shard_id": "014",
+      "source_line_end": 771,
+      "source_line_start": 757,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 771,
+    "path": "Plans/Multi-Account.md",
+    "sha256": "44aa62f786c236bd90ea4a00cb250c8dd0666ed982b4facf60d5088b93b9754e"
+  }
+}

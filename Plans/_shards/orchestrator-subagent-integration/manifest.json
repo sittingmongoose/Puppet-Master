@@ -1,270 +1,392 @@
 {
-  "source_path": "Plans/orchestrator-subagent-integration.md",
-  "source_sha256": "8978e573c56e8231670a4529e508a30deb0f4a0e99b59f2dd260e3a2de8147df",
-  "split_rule": {
-    "primary": "## outside fences",
-    "fallback": "line-count-200",
-    "applied": "## outside fences"
-  },
+  "generated_at_utc": "2026-06-09T18:44:53Z",
+  "index_path": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+  "index_sha256": "9b26c6215930518b1c22460673ef13b447e642b9780ccdc6e15e580f2062d3e5",
+  "manifest_path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/01-preamble.md",
-      "start_line": 1,
-      "end_line": 131,
-      "segment_sha256": "9479c4c16d59f951f007d19dcca82347075d8bba9e25f855511c38e6818f9ca1",
-      "heading": null
+      "heading": "Preamble",
+      "path": "Plans/_shards/orchestrator-subagent-integration/001-preamble.md",
+      "sha256": "0efdbb7a95b3b7d91eaa7925bd42af66ae5b74b6f3208e27ab08ab55386fa8c2",
+      "shard_id": "001",
+      "source_line_end": 3,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/02-fidelity-recovery-addendum.md",
-      "start_line": 132,
-      "end_line": 192,
-      "segment_sha256": "37f73a2ffadfb79033418de19f3d462af3d20022fb55f87263bca552829beb09",
-      "heading": "## Fidelity recovery addendum"
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md",
+      "sha256": "905e1b7b3650f84c197453e317c5b316c70055c5375fa92d507637b3be541fe1",
+      "shard_id": "002",
+      "source_line_end": 16,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/03-plan-document-status.md",
-      "start_line": 193,
-      "end_line": 201,
-      "segment_sha256": "9ae1e9ede0cd7573798d80cc19827190ee91d7ec654560db983cbdec75ef76ba",
-      "heading": "## Plan Document Status"
+      "heading": "Plan Document Status",
+      "path": "Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md",
+      "sha256": "a49e82a52aea3d2618c1666acb8284b20f8bd4ca66620596e44297d94533eb17",
+      "shard_id": "003",
+      "source_line_end": 27,
+      "source_line_start": 17,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/04-executive-summary.md",
-      "start_line": 202,
-      "end_line": 213,
-      "segment_sha256": "997a01e5190ffdf5a5016a855cf325b39f7bd05279b32a5031ef6d5c92a3f5de",
-      "heading": "## Executive Summary"
+      "heading": "Executive Summary",
+      "path": "Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md",
+      "sha256": "c169a394cc152b3a40b16d3901a456461c7d066a6361597eea02720995e2c888",
+      "shard_id": "004",
+      "source_line_end": 76,
+      "source_line_start": 28,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/05-rewrite-alignment-2026-02-21.md",
-      "start_line": 214,
-      "end_line": 274,
-      "segment_sha256": "0b05a08379e7991d487adbedfeeedb9901ca941aa19449cb5586fddfe425a24f",
-      "heading": "## Rewrite alignment (2026-02-21)"
+      "heading": "Runtime scheduler, identity, and worktree reconciliation",
+      "path": "Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md",
+      "sha256": "bc5f7c62fd395ece8aeaaac35a27ce33a516ab89681880ab0a2a6c123a5b05c6",
+      "shard_id": "005",
+      "source_line_end": 122,
+      "source_line_start": 77,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/06-relationship-between-the-two-plans.md",
-      "start_line": 275,
-      "end_line": 291,
-      "segment_sha256": "850077a51a254f79be6dc3abb636162af98f02da7ccfbfad1d2adecfd9b2b624",
-      "heading": "## Relationship Between the Two Plans"
+      "heading": "Rewrite alignment (2026-02-21)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md",
+      "sha256": "af0357a57ba9d92b7aa188cc39cecc4c5eb499e1755076c20777acd54993f8aa",
+      "shard_id": "006",
+      "source_line_end": 160,
+      "source_line_start": 123,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/07-tier-level-subagent-strategy.md",
-      "start_line": 292,
-      "end_line": 304,
-      "segment_sha256": "6423884a8b2aca75eea215bd75124774da19349cdccebd64abf9391c1bc2aee7",
-      "heading": "## Tier-Level Subagent Strategy"
+      "heading": "Relationship Between the Two Plans",
+      "path": "Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md",
+      "sha256": "aa62bd6421cd57616714fbe8fb4688e1faa11d41c0fce9a7fc574a805e2dadb0",
+      "shard_id": "007",
+      "source_line_end": 177,
+      "source_line_start": 161,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/08-debug-capable-investigation-orchestration.md",
-      "start_line": 305,
-      "end_line": 336,
-      "segment_sha256": "de80d0e8a8353cfb7ec4f3bd929bbac6c03d93bef7fd5fcf0e8d7236a7a8a413",
-      "heading": "## Debug-capable investigation orchestration"
+      "heading": "Tier-Level Subagent Strategy",
+      "path": "Plans/_shards/orchestrator-subagent-integration/008-tier-level-subagent-strategy.md",
+      "sha256": "05353b018e112ccc0e27eb1d4623a02b3730616637c6e11e8ede37c9de8aa560",
+      "shard_id": "008",
+      "source_line_end": 190,
+      "source_line_start": 178,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/09-dynamic-subagent-selection-architecture.md",
-      "start_line": 337,
-      "end_line": 393,
-      "segment_sha256": "023d6e3aef009333c2baa47e6f90568ee40f21ed401dd97e257119f555f107ee",
-      "heading": "## Dynamic Subagent Selection Architecture"
+      "heading": "Debug-capable investigation orchestration",
+      "path": "Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md",
+      "sha256": "5c5599594beda5c7b71f1a4b027ead471939453ae4932413567915bdfce01dab",
+      "shard_id": "009",
+      "source_line_end": 203,
+      "source_line_start": 191,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/10-integration-with-orchestrator.md",
-      "start_line": 394,
-      "end_line": 972,
-      "segment_sha256": "39e5a02657dcfa43cdbb6f6e17af548058525e960a0c463323b7ca943877c4c0",
-      "heading": "## Integration with Orchestrator"
+      "heading": "Dynamic Subagent Selection Architecture",
+      "path": "Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md",
+      "sha256": "c81381da330081c8a773a03efb5ceedfbedcd8704d24cf921fa82596b8fd7587",
+      "shard_id": "010",
+      "source_line_end": 261,
+      "source_line_start": 204,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/11-plan-mode-strategy-defaults.md",
-      "start_line": 973,
-      "end_line": 987,
-      "segment_sha256": "2340685b57ff96d225290dc989390cc999a4b157eed0ed9056dc75a48778bb48",
-      "heading": "## Plan Mode Strategy & Defaults"
+      "heading": "Integration with Orchestrator",
+      "path": "Plans/_shards/orchestrator-subagent-integration/011-integration-with-orchestrator.md",
+      "sha256": "731b312dd1b4346c1afd03d9ce311c4b8f32a232212600ee4a380273bdaca66c",
+      "shard_id": "011",
+      "source_line_end": 565,
+      "source_line_start": 262,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/12-gui-and-backend-scope-all-in-scope-now.md",
-      "start_line": 988,
-      "end_line": 1095,
-      "segment_sha256": "f200f081624ebd122d75b935787519863fa4b87c2ff6f66745e666bd1dd67603",
-      "heading": "## GUI and Backend Scope (All In-Scope Now)"
+      "heading": "Execution unit context and worktree allocation strategy",
+      "path": "Plans/_shards/orchestrator-subagent-integration/012-execution-unit-context-and-worktree-allocation-strategy.md",
+      "sha256": "4c90d241d8139689010fd7fd828374fa4a2b49aabe2c6bba65e7ff8a7bea9b9c",
+      "shard_id": "012",
+      "source_line_end": 599,
+      "source_line_start": 566,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/13-gaps-and-clarifications.md",
-      "start_line": 1096,
-      "end_line": 1235,
-      "segment_sha256": "6570390bd383be8d26c4a2928cd40463dc0141d769a95af3dc8bb9ce2012a5fd",
-      "heading": "## Gaps and Clarifications"
+      "heading": "Benefits",
+      "path": "Plans/_shards/orchestrator-subagent-integration/013-benefits.md",
+      "sha256": "93cd8bcf1d24cf7aa4a31f789add0adf8e41d46b6da91a1d87af206a6563c03a",
+      "shard_id": "013",
+      "source_line_end": 608,
+      "source_line_start": 600,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/14-dry-method-compliance.md",
-      "start_line": 1236,
-      "end_line": 1327,
-      "segment_sha256": "87b893a6e0bc4c606ff3f383216133026ea22edf4d0a9a943d97e9384f724141",
-      "heading": "## DRY Method Compliance"
+      "heading": "Implementation Phases",
+      "path": "Plans/_shards/orchestrator-subagent-integration/014-implementation-phases.md",
+      "sha256": "222d7f09015c8b25fdfa325af3570c8e2a7f5d87149660b88ea70044db4cc81e",
+      "shard_id": "014",
+      "source_line_end": 641,
+      "source_line_start": 609,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/15-potential-issues.md",
-      "start_line": 1328,
-      "end_line": 1456,
-      "segment_sha256": "09dae9c59894af737ac91ef32a7ba1e77b28d75ec5f757c0bdaed5bbeda49b8e",
-      "heading": "## Potential Issues"
+      "heading": "Provider Connectivity Smoke Tests & Subagent Invocation Testing",
+      "path": "Plans/_shards/orchestrator-subagent-integration/015-provider-connectivity-smoke-tests-subagent-invocation-testing.md",
+      "sha256": "90c39ad26de67797cecea469176627f574b15f334ca054ca89c2d45710bffbcc",
+      "shard_id": "015",
+      "source_line_end": 852,
+      "source_line_start": 642,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/16-interviewer-enhancements-and-config-wiring.md",
-      "start_line": 1457,
-      "end_line": 1528,
-      "segment_sha256": "1ac79a9e3af20bc55e3a5f77d9dbb259a362c0e1d387da85b041c861fc7f175c",
-      "heading": "## Interviewer Enhancements and Config Wiring"
+      "heading": "Plan Mode Strategy & Defaults",
+      "path": "Plans/_shards/orchestrator-subagent-integration/016-plan-mode-strategy-defaults.md",
+      "sha256": "240cc74b6358ae8a03cc40bba27534c5244517aae930e2a947a06cc78e64fcb0",
+      "shard_id": "016",
+      "source_line_end": 868,
+      "source_line_start": 853,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/17-avoiding-built-but-not-wired.md",
-      "start_line": 1529,
-      "end_line": 1597,
-      "segment_sha256": "3b4509be38c8d28c7d106d9e5a26419a7ce0f1545b60321dc81121e68fac5aac",
-      "heading": "## Avoiding \"Built but Not Wired\""
+      "heading": "GUI and Backend Scope (All In-Scope Now)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/017-gui-and-backend-scope-all-in-scope-now.md",
+      "sha256": "50266e87b6ea4efcda84a4de2aeb4c749211644dae31603d2f0a97b942b2e941",
+      "shard_id": "017",
+      "source_line_end": 934,
+      "source_line_start": 869,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/18-start-and-end-verification-at-phase-task-and-subtask.md",
-      "start_line": 1598,
-      "end_line": 3632,
-      "segment_sha256": "6a62475adc7df383575fcca5ed816c2c2ac946d575c8be33544c6177bc5eca7d",
-      "heading": "## Start and End Verification at Phase, Task, and Subtask"
+      "heading": "Gaps and Clarifications",
+      "path": "Plans/_shards/orchestrator-subagent-integration/018-gaps-and-clarifications.md",
+      "sha256": "52d41513d7ff551551cc5b640c509d3f7ef0ca7e38346fb57e21c78afecb4c0a",
+      "shard_id": "018",
+      "source_line_end": 1040,
+      "source_line_start": 935,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/19-considerations.md",
-      "start_line": 3633,
-      "end_line": 3641,
-      "segment_sha256": "1e6b6b29f8caed8d85a8f41497a4c124ec26e3a7c12b190c6dd6bf9d32dd60ca",
-      "heading": "## Considerations"
+      "heading": "DRY Method Compliance",
+      "path": "Plans/_shards/orchestrator-subagent-integration/019-dry-method-compliance.md",
+      "sha256": "9eea8d1cc3f4e7a228e51196db23bf6482ce042c395a27d92b9ca13c774a619b",
+      "shard_id": "019",
+      "source_line_end": 1113,
+      "source_line_start": 1041,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/20-platform-capability-next-steps.md",
-      "start_line": 3642,
-      "end_line": 3659,
-      "segment_sha256": "98c99b96ca4ce3a8aeba179ada9af650272facc029c927ba89cf015004e98e61",
-      "heading": "## Platform capability next steps"
+      "heading": "Potential Issues",
+      "path": "Plans/_shards/orchestrator-subagent-integration/020-potential-issues.md",
+      "sha256": "cba19222b31ba4d8146e40cf32bc2a365ddf78896a29b276ccac0e1871fe9c97",
+      "shard_id": "020",
+      "source_line_end": 1204,
+      "source_line_start": 1114,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/21-considerations-2.md",
-      "start_line": 3660,
-      "end_line": 3668,
-      "segment_sha256": "1e6b6b29f8caed8d85a8f41497a4c124ec26e3a7c12b190c6dd6bf9d32dd60ca",
-      "heading": "## Considerations"
+      "heading": "Interviewer Enhancements and Config Wiring",
+      "path": "Plans/_shards/orchestrator-subagent-integration/021-interviewer-enhancements-and-config-wiring.md",
+      "sha256": "56aa36aae37cf83cffbdbfcd73ca8f668efa1671e8ef3c20be3042cdc7eb3d59",
+      "shard_id": "021",
+      "source_line_end": 1276,
+      "source_line_start": 1205,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/22-platform-capability-next-steps-2.md",
-      "start_line": 3669,
-      "end_line": 3678,
-      "segment_sha256": "149528a6f52c29aba8263214a20c596093bef2f3016c2fa728f877a8d273d7a9",
-      "heading": "## Platform capability next steps"
+      "heading": "Avoiding \"Built but Not Wired\"",
+      "path": "Plans/_shards/orchestrator-subagent-integration/022-avoiding-built-but-not-wired.md",
+      "sha256": "243dedfeda33f8588b0b4ce1aa6aa9cfdb04a8b96252f91685adfcce09517eaa",
+      "shard_id": "022",
+      "source_line_end": 1345,
+      "source_line_start": 1277,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/23-implementation-notes-where-code-lives-and-what-to-add.md",
-      "start_line": 3679,
-      "end_line": 3737,
-      "segment_sha256": "567eb71da1eda08157629d3611de53422daa6e228c3fe8eacfc726105aaa3ee5",
-      "heading": "## Implementation Notes (Where Code Lives and What to Add)"
+      "heading": "Start and End Verification at Phase, Task, and Subtask",
+      "path": "Plans/_shards/orchestrator-subagent-integration/023-start-and-end-verification-at-phase-task-and-subtask.md",
+      "sha256": "ff6e4035a21a960e119ae74bf91b6ddaab403321ca7518c8e43467c85a9ba5e5",
+      "shard_id": "023",
+      "source_line_end": 3323,
+      "source_line_start": 1346,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/24-parallel-execution-subagent-integration.md",
-      "start_line": 3738,
-      "end_line": 5857,
-      "segment_sha256": "a95430f7550a3ac2e13495bdc368844ed184dbc7220cc677ae5686a6a48063bc",
-      "heading": "## Parallel Execution & Subagent Integration"
+      "heading": "Considerations",
+      "path": "Plans/_shards/orchestrator-subagent-integration/024-considerations.md",
+      "sha256": "09959039f27c4c8927c7ad208042f983fd25c14b27c08227fcbd01f987ee8622",
+      "shard_id": "024",
+      "source_line_end": 3332,
+      "source_line_start": 3324,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/25-platform-specific-capabilities-extensions.md",
-      "start_line": 5858,
-      "end_line": 5897,
-      "segment_sha256": "28c684b4c9393d3e4469008a6132f3b9c4e8c3ba9985d9fff83e707f9cbc3853",
-      "heading": "## Platform-Specific Capabilities & Extensions"
+      "heading": "Platform capability next steps",
+      "path": "Plans/_shards/orchestrator-subagent-integration/025-platform-capability-next-steps.md",
+      "sha256": "d884ed46216f6a575a02a63e93eb185ed221985177b72cd1dbd6475306e387d4",
+      "shard_id": "025",
+      "source_line_end": 3350,
+      "source_line_start": 3333,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/26-leveraging-platform-capabilities-for-subagent-integration.md",
-      "start_line": 5898,
-      "end_line": 5915,
-      "segment_sha256": "70d213ca37624e9cea7df6f0486602f1cf5a7d9ac73e6a13fc7055c167c3f31f",
-      "heading": "## Leveraging Platform Capabilities for Subagent Integration"
+      "heading": "Considerations",
+      "path": "Plans/_shards/orchestrator-subagent-integration/026-considerations.md",
+      "sha256": "accb68caa694093c111a53434fccad26b93539b0b160b41a99bcc7b0cd2f66f6",
+      "shard_id": "026",
+      "source_line_end": 3359,
+      "source_line_start": 3351,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/27-updated-implementation-architecture.md",
-      "start_line": 5916,
-      "end_line": 5975,
-      "segment_sha256": "d1a7e22169a05f8ca08a47335090440c22656558b38b3ad237f4b8034c8e5cd1",
-      "heading": "## Updated Implementation Architecture"
+      "heading": "Platform capability next steps",
+      "path": "Plans/_shards/orchestrator-subagent-integration/027-platform-capability-next-steps.md",
+      "sha256": "04c5b899249223ea369a6d93601326fbf79bb5f427a8d2c6b37e4f32a9e6fb8d",
+      "shard_id": "027",
+      "source_line_end": 3369,
+      "source_line_start": 3360,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/28-benefits-of-platform-capabilities.md",
-      "start_line": 5976,
-      "end_line": 5984,
-      "segment_sha256": "cdd5978ba1a5acb73c7accf951e17e921650ae6d7e27e49eab6f1ee9e487c9b7",
-      "heading": "## Benefits of Platform Capabilities"
+      "heading": "Implementation Notes (Where Code Lives and What to Add)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/028-implementation-notes-where-code-lives-and-what-to-add.md",
+      "sha256": "b07fe4adb3d363f613510e61c4951236d688fa0e93d97cc1c70acdc8cb34767d",
+      "shard_id": "028",
+      "source_line_end": 3428,
+      "source_line_start": 3370,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/29-implementation-considerations.md",
-      "start_line": 5985,
-      "end_line": 5993,
-      "segment_sha256": "d6b367222e4e034faf8df59e7cb7f93d29259c91b9c91cd4977ba6480bd28df0",
-      "heading": "## Implementation Considerations"
+      "heading": "Parallel Execution & Subagent Integration",
+      "path": "Plans/_shards/orchestrator-subagent-integration/029-parallel-execution-subagent-integration.md",
+      "sha256": "ca7dcf65781e64143242ec3adc3a934232aaf3f835c47f0554b54b1be17f4b8b",
+      "shard_id": "029",
+      "source_line_end": 5532,
+      "source_line_start": 3429,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/30-next-steps.md",
-      "start_line": 5994,
-      "end_line": 6001,
-      "segment_sha256": "11ce0688bf9a832da4371b09b50062cf34844aa200e7e5037545feb9e91500bc",
-      "heading": "## Next Steps"
+      "heading": "Platform-Specific Capabilities & Extensions",
+      "path": "Plans/_shards/orchestrator-subagent-integration/030-platform-specific-capabilities-extensions.md",
+      "sha256": "afe7f47223b7c5b26f3a623712fd4b00148265504f43933ce3c6934b47a32522",
+      "shard_id": "030",
+      "source_line_end": 5575,
+      "source_line_start": 5533,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/31-autonomous-qa-loop-pattern-integration.md",
-      "start_line": 6002,
-      "end_line": 6392,
-      "segment_sha256": "e7bff44bb858131155db934707807ec007fa798d47e439a72585d2d910e7d84d",
-      "heading": "## Autonomous QA Loop Pattern Integration"
+      "heading": "Leveraging Platform Capabilities for Subagent Integration",
+      "path": "Plans/_shards/orchestrator-subagent-integration/031-leveraging-platform-capabilities-for-subagent-integration.md",
+      "sha256": "d83de5e78ee3224ba02a1b730f0739e8308a47d3df372544f05946dada2ac935",
+      "shard_id": "031",
+      "source_line_end": 5593,
+      "source_line_start": 5576,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/32-change-summary.md",
-      "start_line": 6393,
-      "end_line": 6399,
-      "segment_sha256": "7dddeffc50fe88395bb58aa6e67c0bae1d6cb8a69d18050118266e87e909f52d",
-      "heading": "## Change Summary"
+      "heading": "Updated Implementation Architecture",
+      "path": "Plans/_shards/orchestrator-subagent-integration/032-updated-implementation-architecture.md",
+      "sha256": "fe9bd1f55df543c75ef3ede037882a53bdd7092ef46b25245d9e703579620a83",
+      "shard_id": "032",
+      "source_line_end": 5653,
+      "source_line_start": 5594,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
-      "start_line": 6400,
-      "end_line": 6511,
-      "segment_sha256": "4ce51dd40a4c11f4424ecc7b99aa47d6816ed322aa9de68acacdf84c195d2e9c",
-      "heading": "## Persona and Effective Runtime Resolution Addendum (2026-03-06)"
+      "heading": "Benefits of Platform Capabilities",
+      "path": "Plans/_shards/orchestrator-subagent-integration/033-benefits-of-platform-capabilities.md",
+      "sha256": "4ae552788b069ab1e8a19557a01c010e55f0d12f3a19b9da502afeae8d440122",
+      "shard_id": "033",
+      "source_line_end": 5662,
+      "source_line_start": 5654,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
-      "start_line": 6512,
-      "end_line": 6671,
-      "segment_sha256": "5e17213259c91799f2071b3086d7bede961d873e52137be601efdf2c26f45044",
-      "heading": "## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)"
+      "heading": "Implementation Considerations",
+      "path": "Plans/_shards/orchestrator-subagent-integration/034-implementation-considerations.md",
+      "sha256": "790542473f4c9cc441070aac382c2288e2804ad8e390ac945e44878e72df164b",
+      "shard_id": "034",
+      "source_line_end": 5671,
+      "source_line_start": 5663,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
-      "start_line": 6672,
-      "end_line": 6711,
-      "segment_sha256": "6ebaa206d91d026cf131d6c25551c129a1baad370c9764dcdb5044e94e843b4b",
-      "heading": "## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)"
+      "heading": "Next Steps",
+      "path": "Plans/_shards/orchestrator-subagent-integration/035-next-steps.md",
+      "sha256": "75a9f0ec2ae037c95082501da6581833edfcc54d8282490f254692d018e57ffb",
+      "shard_id": "035",
+      "source_line_end": 5679,
+      "source_line_start": 5672,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
-      "start_line": 6712,
-      "end_line": 6736,
-      "segment_sha256": "071b41c01831178c140c2f668f3cdf5a22f3d91672ee260508fb80a5e2a52957",
-      "heading": "## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)"
+      "heading": "Autonomous QA Loop Pattern Integration",
+      "path": "Plans/_shards/orchestrator-subagent-integration/036-autonomous-qa-loop-pattern-integration.md",
+      "sha256": "85ee16c196e9e51eda2ae452942003a4586764350b778af856b4307ce05fe1f2",
+      "shard_id": "036",
+      "source_line_end": 6070,
+      "source_line_start": 5680,
+      "split_rule": "heading-##"
     },
     {
-      "dest_path": "Plans/_shards/orchestrator-subagent-integration/37-runtime-enum-and-counter-alignment-addendum.md",
-      "start_line": 6737,
-      "end_line": 6749,
-      "segment_sha256": "05b40da845ed24a1ed40fdb5f6228555eb5fcafe55b0dea770727adf9fe5d3bb",
-      "heading": "## Runtime Enum and Counter Alignment Addendum"
+      "heading": "Change Summary",
+      "path": "Plans/_shards/orchestrator-subagent-integration/037-change-summary.md",
+      "sha256": "5c81e03c17b1d07adf1f09ab01fe48be53e51ac06bbfc8b5acb3e36e03833493",
+      "shard_id": "037",
+      "source_line_end": 6077,
+      "source_line_start": 6071,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Persona and Effective Runtime Resolution Addendum (2026-03-06)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/038-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
+      "sha256": "0b06c6f2d98060a4496a0dcef3a2f9535db4b959febf749a0c4e551a876bdaa2",
+      "shard_id": "038",
+      "source_line_end": 6192,
+      "source_line_start": 6078,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/039-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-0.md",
+      "sha256": "7faa413674dcd56e120df617f8db50917a62626f91387feb9efcd6a6e6b40571",
+      "shard_id": "039",
+      "source_line_end": 6348,
+      "source_line_start": 6193,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Scheduler Consumer / Subagent Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/040-runtime-scheduler-consumer-subagent-canonical-alignment-2026-03-.md",
+      "sha256": "8652d607473676babe6db47561fadc56a1615f2751be3eef0cc12220a97dfc44",
+      "shard_id": "040",
+      "source_line_end": 6388,
+      "source_line_start": 6349,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Orchestrator Runtime Consumer and Remediation Execution Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/orchestrator-subagent-integration/041-orchestrator-runtime-consumer-and-remediation-execution-canonica.md",
+      "sha256": "53e82d3176ae278fb336312c8a78fb47f374f527a2ed13e4517cc22becc4af17",
+      "shard_id": "041",
+      "source_line_end": 6413,
+      "source_line_start": 6389,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Enum and Counter Alignment Addendum",
+      "path": "Plans/_shards/orchestrator-subagent-integration/042-runtime-enum-and-counter-alignment-addendum.md",
+      "sha256": "914022d50a683baa88de208bd3a7ffa4b051b6f0de4d5d4f9df4a8fd8ed1fa25",
+      "shard_id": "042",
+      "source_line_end": 6426,
+      "source_line_start": 6414,
+      "split_rule": "heading-##"
     }
-  ]
+  ],
+  "source": {
+    "line_count": 6426,
+    "path": "Plans/orchestrator-subagent-integration.md",
+    "sha256": "989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb"
+  }
 }

@@ -1,46 +1,5 @@
 # Document Packaging Policy (Canonical)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0189
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.
-  - allowed_actions[]
-  - allowed_action_ids[]
-  - if file-backed canonical document exists:
-  - artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet
-  - generated://<artifact_id>
-  - `chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.
-  - chain-wizard-flexibility.md
-  - interview-subagent-integration.md
-  - FinalGUISpec.md
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - may realize as workspace document, transient `generated://` buffer, or routed non-editor surface
-  - generated://
-  - Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:
-  - evidence source document:
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - the duplicated headings appear after the `## References` block, which breaks the document’s own structure and weakens deterministic anchor targeting
-  - ## References
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. Deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -48,6 +7,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 This policy defines deterministic packaging for long Markdown/text artifacts under `.puppet-master/**` into **Document Sets**.
 It governs runtime/project artifacts only and does not redefine repository plan-shard generator outputs under `Plans/_shards/**`.
+Shard mirrors under `Plans/_shards/{FileManager,FinalGUISpec,assistant-chat-design,storage-plan,newtools,...}/**` may echo the same themes as owner docs, but they remain process mirrors and are not canonical Document Set sources or live edit targets.
 
 Plan graph stays unchanged: user-project plan graph remains canonical sharded JSON at `.puppet-master/project/plan_graph/index.json` with node shards under `nodes/<node_id>.json` as defined in `Plans/Project_Output_Artifacts.md`. Document Sets are a parallel mechanism for large text artifacts and follow the same sharded set + index + manifest concept.
 
@@ -113,46 +73,50 @@ ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-014
 
 ## 2. Deterministic split rules
 
+### 2.0 Local auth detection packaging note
+
+Document packaging and local detection bundles may record Gemini auth evidence such as `google_accounts.json.active`, `json.active`, and `google_accounts`, but those file hints are not sufficient readiness by themselves. If OAuth is present but `/project` selection, `/onboarding`, or account/project context is incomplete, the packaged evidence must preserve that incomplete state and defer interpretation to `Plans/Multi-Account.md`.
+
+Provider/account packaging keeps `provider_definition`, `provider_account`, and `provider_account_policy` as separate data-model classes so account evidence, provider capability definitions, and policy overlays do not collapse into one ambiguous package record.
+
+`Launch/Connect` and `/Connect` attached-server packages validate endpoint `/auth/health` before `Discovery` freshness; discovery evidence is secondary to the connection/auth-health prerequisite.
+
+Document packages may carry runtime lifecycle evidence, but they do not own runtime resource-disposal behavior. If packaged evidence contains ledger-only cleanup facts such as `/disposal`, resource-disposal discipline, termination/disposal state, or RSS growth monitoring, the package preserves those facts as evidence and routes interpretation to `Plans/Run_Modes.md`.
+
+Document packages that carry runtime, storage, or provider evidence preserve owner references for `/durability` and `/attribution`: mutation durability routes through `Plans/FileSafe.md` and `Plans/storage-plan.md`, runtime/context routing through `Plans/Run_Modes.md` and `Plans/Prompt_Pipeline.md`, attribution through `Plans/Contracts_V0.md` plus usage/storage owners, and provider-facade evidence through `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`) without redefining those contracts locally.
+
+### 2.0a Runtime seam evidence and consumer-routing packages
+
+Document packages that preserve command and event seam evidence must keep naming contradictions visible instead of flattening them into copied lists. The chat seam distinguishes canonical namespace and payload-shape conflicts: `chat.thread.created` and `chat.thread_created` are not interchangeable, terminal-state names such as `run.cancelled` and `run.completed` must be reconciled explicitly, and a single `{ mode }` field cannot carry the requested `/mode`, `/effective`, overlay, and `/runtime` split. `reserved-name` ownership remains split across three docs, and `/compact` evidence must identify the owning docs instead of copying unsafe command/event lists.
+
+Worktree evidence packages preserve surface ownership. `Source Control` is the primary operational surface for worktree inventory and user actions; `Orchestrator` consumes worktree identity, ownership, blocked state, lineage, and `/history/recovery` views; `Settings > Branching` and `Settings > Health` expose configuration and `/diagnostics`, not primary `active-worktree` management.
+
+Consumer-drift packages must flag mechanical stale examples. `Wiring_Matrix.md` (`Wiring_Matrix`) rows such as `cmd.orchestrator.switch_tab` can reinforce an older command shape and therefore carry ghost and `/stale-ID` risk even when the issue looks editorial. Packaging / evidence / artifact lineage also spans beyond `Project_Output_Artifacts`: `Document_Packaging_Policy.md` (`Document_Packaging_Policy`) must preserve glossary artifacts, `requirements-staging` seglog artifacts, `package-generation` lineage states, and the distinction between packaging evidence and execution evidence when both use `evidence/` naming.
+
+UI command evidence packages preserve consumer splits without turning this policy into the command owner. `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) remains internally split on blocked and `/HITL` mutator ownership and still needs command families for account, `/concern/promotion`, and promotion flows. `wizard_step` is operationally meaningful, but the base target object must not become `wizard-shaped`; `Plans/human-in-the-loop.md` (`/human-in-the-loop.md`) must retain the distinction between older base text and later canonical correction addenda.
+
+Migration and reversible-action evidence must keep deterministic owner alignment. `Plans/Widget_System.md` and `Plans/FinalGUISpec.md` must use one migration rule, mirrored as `/Widget_System.md` and `/FinalGUISpec.md`, so package evidence does not fork UI policy. `immediate_undo` is limited to direct undo or `/revert` within a practical window for reversible local presentation `/layout` actions and some `editor-level` reverts; it is not a general rollback contract.
+
+Provider/account and event/command routing packages must expose identity boundaries. `/account` snapshots must not become a dumping ground for `non-provider` identity. Event and `/command` naming/routing remain unresolved enough that two local `SSOTs` can still disagree materially while both seem correct. `assistant-chat-design.md` (`assistant-chat-design`) proves the `subject-open` split is required, while `FileManager.md` remains the stale consumer for that seam.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Widget_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+
+### 2.0b Canonical-scope reconciliation and consumer-split packages
+
+Document packages that reconcile owner and consumer evidence must preserve the split between modern canonical field names and stale canonical scope language. The package records the field names as live evidence while making stale scope boundaries explicit, so transfer cleanup does not mistake newer labels for complete owner alignment.
+
+Attention and blocked-state evidence remains scoped. A project can be `background_active` with `attention_required` while still not globally `blocked`; package evidence must preserve that distinction instead of collapsing every attention reason into a blocked project. `blocked_episode` is a real scope signal, but it does not expand this policy or any contract into a `blocked-episode-shaped` payload family.
+
+Command evidence packages preserve consumer-facing identity splits. `UI_Command_Catalog.md` (`UI_Command_Catalog`) still exposes the `request_id` versus `blocked_sequence` split directly in `user-facing` command rows; the package must name that split without turning this policy into the command catalog owner.
+
+Re-audit packages distinguish overstated absence from remaining defects. Some `exact-missing` lists were broader than the live docs justify because receipt, `glossary-label`, and `account-history` canon already exists elsewhere, but the remaining failures still need precise labels such as `partial-transfer`, `structural-heading`, and `stale-survivor` when those are the actual defect shapes.
+
+Generated-doc and preview evidence must not leak path assumptions back into routing. If the owner split is not explicit, generated docs, `/artifacts`, and `preview-backed` opens can keep reintroducing `path-based` routing assumptions. The consumer split is concrete: `FileManager` still treats `path-open` as universal, while `assistant-chat` already behaves as if `/open-by-identity` exists even when the primitive is not named directly.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+
 ### 2.1 Primary split rule
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0193
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - make package/lane state primary
-  - primary blocked/attention reason
-  - primary blocked/attention owner
-  - primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)
-  - linked_artifact_id?
-  - usage_event_ref?
-  - `wizard_step` as the primary object identity
-  - wizard_step
-  - reject when both `subject_id` and `object_kind/object_id` are supplied as competing primary selectors
-  - subject_id
-  - object_kind/object_id
-  - Primary owner-gap docs:
-  - Primary owner docs:
-  - `Tiers` as a primary page/tab concept
-  - Tiers
-  - Make canonical route/object identity primary in owner docs.
-  - Primary owner-gap doc:
-  - Primary owner doc:
-  - section `7.7 Tiers` still exists as a primary content surface
-  - 7.7 Tiers
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Primary split MUST occur at Markdown headings that begin with `## ` and are outside fenced code blocks.
 
@@ -201,29 +165,6 @@ ContractRef: Gate:GATE-014, PolicyRule:Decision_Policy.md§2
 
 ## 5. Three independent audits (full coverage, no sampling)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0191
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - it links the three passes together with `workflow_run_id`
-  - workflow_run_id
-  - Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.
-  - GPT-5.3-Codex
-  - GPT-5.2
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Every packaging run MUST execute all three audits:
 
@@ -275,28 +216,6 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ## 7. On-disk path convention and pointer stub contract
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0192
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a new opaque `usage_event_id`
-  - usage-feature.md
-  - usage_event_ref
-  - usage_event_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="7"></a>
 
@@ -356,28 +275,6 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 ### 7.4 Canonical truth rules
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0194
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `superseded` = replaced by newer truth
-  - superseded
-  - no canonical blocked/attention truth
-  - canonical execution-unit refs for truth
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 1. When a `.docset/` directory exists for an artifact, the `.docset/` directory is canonical and the pointer stub file is derived.
 2. When no `.docset/` directory exists, the `.md` (or `.txt`) file at the logical path is canonical.
@@ -386,25 +283,6 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 ### 7.5 Verification discovery rules
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0195
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The evidence model is currently too generic to express route/wrapper/alias verification failures in a structured, machine-readable way.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Verification MUST treat a pointer stub as compliant only if:
 - the `.docset/` directory exists
@@ -422,26 +300,6 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 ### 7.6 Example
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0196
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `wizard_step` is a strong example of a field that matters operationally but should not force the base target object to become wizard-shaped.
-  - wizard_step
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Source artifact: `.puppet-master/project/requirements.md`
 

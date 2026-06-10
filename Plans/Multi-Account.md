@@ -1,255 +1,15 @@
 # Multi-Account Specification
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
-  - Suggested Research Follow-Ups
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0391
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
-  - Suggested Research Follow-Ups
-- Exact required items represented:
-  - Add node_id
-  - Add package_id
-  - Add seam_id
-  - Add lane_id
-  - Add attempt_id
-  - Add effective_identity
-  - Normalize requested/effective account identity shapes
-  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
-  - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.
-  - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.
-  - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.
-  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.
-  - project-owned multi-account policies plus run snapshots and effective account selection
-  - Multi-account implication
-  - Multi-account adds a second layer of confusion if not presented carefully:
-  - multi-account pressure
-  - supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `Executor_Protocol.md`, and current ledger findings
-  - Prompt_Pipeline.md
-  - Multi-Account.md
-  - FinalGUISpec.md
-  - Executor_Protocol.md
-  - Multi-account history and role scoping remain structurally under-modeled:
-  - `Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`, `Prompt_Pipeline.md`, and bridged-provider stream contracts still cannot represent durably.
-  - storage-plan.md
-  - but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - DockerHub auth/account identity remains structurally isolated from Multi-Account and still lacks a coherent receipt/lineage bridge.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
-  - Plans/Multi-Account.md
-  - Plans/Personas.md
-  - Plans/Prompt_Pipeline.md
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Requested/effective account identity contract
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-008: Requested/effective account identity contract
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0396
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.
-  - run_id
-  - node_id
-  - project_id
-  - attempt_id
-  - package_id
-  - seam_id
-  - lane_id
-  - worktree_id
-  - Settings / Provider / Persona / Account Impacts
-  - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.
-  - Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too.
-  - 2. **Extend requested/effective runtime identity to include account and overseer role.**
-  - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled.
-  - what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization.
-  - likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.
-  - requested_persona
-  - effective_persona
-  - _id
-  - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.
-  - why it matters: canonical persona field names already disagree before account identity is added.
-  - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.
-  - no canonical requested concrete-account anchor exists when a user pins a specific account
-  - The account identity chain is still split across incompatible concepts:
-  - still internally contradicts canonical field naming and still has no overseer Persona model or account disclosure rule
-  - The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis.
-  - requested/effective account identity is still asymmetric
-  - GitHub account identity is still not aligned with the canonical account model:
-  - `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces
-  - GitHub_Integration.md
-  - manual preferred account is not the same as guaranteed selected account
-  - `Effective account: gemini-oauth-2`
-  - Effective account: gemini-oauth-2
-  - `Account switch active`
-  - Account switch active
-  - canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor
-  - requested_account_policy
-  - downstream docs therefore improvise or omit requested account selection semantics
-  - Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.
-  - `recent_switch_reason` appears in account health state
-  - recent_switch_reason
-  - no append-only `account.switched` / threshold / exhaustion event family exists yet for History, Ledger, Usage, or Orchestrator
-  - account.switched
-  - still mis-handle stable account identity and do not yet expose effective GitHub account / degraded capability clearly enough for runtime/UI parity
-  - still need stronger switch-history, requested/effective linkage, project-scoped account sourcing, and trust-state rules
-  - carrying old/new effective account identity, reason, scope, and timeline semantics
-  - `provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to stable internal account identity.
-  - provider_account_id
-  - permission snapshots still have no account-switch invalidation rule even though account changes can affect effective tool availability
-  - still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals
-  - Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch.
-  - `provider_account_id` remains dangerous unless it is explicitly treated as audit/display-only metadata subordinate to stable internal account identity.
-  - cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` to avoid cross-root or cross-account ambiguity
-  - {project_id, selected_repo_id, effective github_api account}
-  - `auth_state` carries no pool-member / account context for failover rotation
-  - auth_state
-  - requires per-interaction account attribution and switch/failover reasoning that the stream cannot currently express
-  - Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them.
-  - but requested/effective account resolution already spans thread/chat/interview/wizard/non-run actors
-  - requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set
-  - widget view models still lack requested/effective account, switch-history, and projection-trust envelope requirements
-  - now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure
-  - Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.
-  - Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.
-  - github_api
-  - copilot_github
-  - The missing requested-side concrete account field is now clearly blocking multiple downstream contracts, not just storage purity:
-  - worker/verifier identity still lacks auth mode, account, project context, switch reason, and applied/skipped control visibility
-  - Account pressure and switching are still modeled as current state plus per-attempt reason, not durable shared history:
-  - GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family
-  - The missing role dimension is now clearly the link between account routing and auditability:
-  - without it, role-based account choices cannot be explained after the fact even when requested/effective account fields exist
-  - but there is still no canonical requested concrete-account field, so explicit account pinning cannot be shown truthfully when runtime falls back or switches
-  - there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context
-  - but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context
-  - requested concrete account
-  - but there is still no canonical way to represent a requested concrete account on the requested side
-  - “use account X if possible”
-  - “must use account X”
-  - it is not the same as the requested account on a particular run/attempt/message
-  - is the requested account a soft preference or a hard requirement?
-  - `required`: a concrete account was explicitly pinned; fallback is not silent and must surface as blocked or explicit override failure if unmet
-  - required
-  - it does not replace the concrete account pin when one exists
-  - per-run requested concrete account
-  - `requested_account_id` must use the stable internal account id, not provider-native display identity
-  - requested_account_id
-  - Codex confirmed the final missing connective tissue between account routing and truthful projections is now **durable actor/role projection**:
-  - without it, requested/effective account decisions remain only partially auditable even after adding account fields
-  - this means Usage can display current account context but still cannot natively explain switch lineage or join it safely to History/Ledger
-  - provider account identity is not enough
-  - Current runtime snapshots can explain which provider account was used, but not which operational identity the action was actually aimed at.
-  - operational identity is not the same as provider account identity
-  - Research Progress - 2026-03-16 - account switch-history and pressure-episode cluster
-  - `recent_switch_reason` on account health state
-  - artifact envelopes still have no producer identity, role, account, or switch lineage
-  - account fields, requested concrete-account truth, role/actor identity, operational identity, switch-history, and trust-state are still missing from many user-facing surfaces that claim to show runtime truth
-  - downstream wizard handoff still lacks requested/effective account, actor/role, and explicit isolation/worktree mode
-  - account pressure / switch history
-  - account pressure/switch episode records
-  - requested concrete account semantics
-  - missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.
-  - blocked_sequence
-  - Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.
-  - execution_role
-  - Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.
-  - thread_id
-  - no requested/effective account disclosure
-  - requested/effective account fields are not carried through the concrete handoff/provenance requirements
-  - but even here the payload remains too wizard-local and still does not connect cleanly to the broader execution-unit / account / role model
-  - catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.
-  - account pressure and switch history
-  - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering.
-  - account-aware strategy ordering remains underdefined when run-level DAE strategy and attempt-level account re-resolution disagree.
-  - Provider/runtime capability and account seams continued to widen in useful ways:
-  - `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.
-  - OpenCode_Deep_Extraction.md
-  - `Media_Generation_and_Capabilities.md` still lacks requested/effective account disclosure in `media.generate`, leaves transient disabled-state recovery under-specified, and has no event model for capability-change refresh behavior.
-  - Media_Generation_and_Capabilities.md
-  - media.generate
-  - requested concrete account binding fields
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-008
-- Fidelity gap refs: cov-008
-- Required fidelity items:
-- Exact required item: Add requested_account_id alongside requested_account_policy
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-008: Requested/effective account identity contract` exists in `Plans/Multi-Account.md`.
-- Exact acceptance check: The `cov-008` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-008` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-008` repair is in the owner section for `Plans/Multi-Account.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-066: Shared conversational/runtime boundary
-- Coverage rows: cov-066
-- Fidelity gap refs: cov-066
-- Required fidelity items:
-- Exact required item: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
-- Exact required item: They remain distinct actor/run kinds rather than package/seam/node execution objects
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-066: Shared conversational/runtime boundary` exists in `Plans/Multi-Account.md`.
-- Exact acceptance check: The `cov-066` repair states the exact requirement: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
-- Exact acceptance check: The `cov-066` repair states the exact requirement: They remain distinct actor/run kinds rather than package/seam/node execution objects
-- Exact acceptance check: The `cov-066` repair is in the owner section for `Plans/Multi-Account.md` and is not only a downstream consumer note.
-
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+### Shared conversational/runtime boundary
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -261,7 +21,8 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 ## 1. Purpose and scope
 - **Purpose:** Support multiple accounts per provider so users can sign into several identities for Claude Code, Codex, Gemini, GitHub Copilot, Cursor, and OpenCode, with conservative account stickiness, threshold-based switching when supported, and provider-specific recovery behavior.
 - **Scope:** Multi-account routing is shared provider-runtime behavior for every provider-using role, including assistant, interviewer, requirements builder, PRD builder, package/seam overseers, node workers, and overseer-spawned workers. It is not an Orchestrator-only feature.
-- **Gemini scope:** Gemini Direct (`gemini`) and Gemini CLI (`gemini_cli`) are separate provider entries. Gemini Direct is the direct API surface and is API-key only. Gemini CLI is the CLI-wrapped surface and may use OAuth-backed, API-key, or Vertex/Google-credential account rows under its own policy.
+- **Provider/runtime scope:** Provider-touched `/web` work must map through the provider capability registry / adapter contract rather than a brittle provider-doc layout; shared runtime identity applies across Assistant, Interviewer, Requirements / PRD / document builders, package/seam workers, and `/governance/execution` actors while preserving their separate actor ontologies.
+- **Gemini scope:** Gemini Direct (`gemini`) and Gemini CLI (`gemini_cli`) are separate provider entries. Gemini Direct is the direct API surface and is API-key-only. Gemini CLI is the CLI-wrapped surface and may use OAuth-backed, API-key, or Vertex/Google-credential account rows under its own policy.
 - **Provider-entry count:** The current planning model contains 7 provider entries: Gemini Direct, Gemini CLI, Cursor CLI, Claude Code CLI, Codex, GitHub Copilot, and OpenCode.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
@@ -270,10 +31,36 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 - **Policy ownership:** Multi-account policy is primarily project-owned. Runs snapshot the effective policy space at run start, and each attempt/message records the effective account actually used.
 - **Requested/effective identity:** Requested provider/model/effort/persona/auth mode/account policy and effective provider/model/effort/persona/auth mode/account MUST remain visible and queryable.
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#AuthPolicy, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#42-authpolicy, ContractName:Plans/storage-plan.md
 
 - **Rewrite alignment:** Account selection and env/config wiring are part of the Provider contract. State lives in seglog + redb; secrets remain outside canonical storage. GUI requirements remain UX-only with no Iced/Slint lock-in inside this document.
 - **Non-goal:** Same-provider accounts are not treated as an interchangeable bucket. Provider-aware, account-aware, and execution-role-aware policy is required.
+
+- **Account-pool runtime shape:** account-pool routing includes `/code`, `/model`, `/config`, `/request`, `/failover`, `/namespace`, `/providers`, `/expiry`, `/OAuth-specific`, first-class account-scoped policy, per-request selection, max-attempt failover caps, async-local context, auto-relogin behavior, toast-centric recovery signals, active-account state, operator-visible history, and TUI surfaces.
+- **Cross-owner recovery references:** `Plans/Executor_Protocol.md#5. Node execution fields`, `Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy`, `Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)`, and `Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)` are consumer references for account recovery. `github_api:github.com/<login>`, `github_api`, `github.com`, `approve_continue`, `TierContext`, and the slash-path references `/Executor_Protocol.md`, `/UI_Command_Catalog.md`, `/GitHub_API_Auth_and_Flows.md`, and `/orchestrator-subagent-integration.md` must remain auditable in recovery records.
+- **Provider product shape:** provider account modeling preserves `/OAuth-specific`, `/product-shape`, `/providers`, `/available`, `/exhaustion`, `/UI`, `/usage`, `/failover`, per-account state, first-class provider-specific records, core-architecture constraints, profile-file-based setup, log-watcher-driven recovery, filesystem-profile ownership, and automation-first recovery behavior.
+- **Pool and fallback state:** account pools expose `/pool`, `/UI`, `/runtime`, `/account`, `/fallback`, retry-budget, multi-account, quota-pressure, and `effective_account_id` without treating account selection as a generic provider flag.
+- **Settings-spec and GUI coverage:** multi-account support is both a runtime-policy seam and a settings-spec / GUI coverage requirement. `/runtime-side` behavior may exist at the `/concept` level before the settings `/GUI` is complete, but provider account selection, account pool policy, and switch thresholds must not stay under-specced or hidden from the account settings concept.
+- **Usage-owned account pressure:** multi-account failover, account-threshold rules, and effective-account projection extend the existing Usage model; do not invent a second independent account pressure or quota subsystem beside Usage.
+- **Actor/run kind coverage:** multi-account requested/effective account identity applies to assistant conversation turn/run, interview phase/document/review run, builder stage/review run, and orchestrator node/attempt/run kinds. `/attempt/run`, `/document/review`, `/run`, and `/review` records share account truth while preserving their distinct actor ontologies.
+- **Recovering provider control:** `/recovering`, as-provider, `/control`, provider-backed, `/usage`, `/rotation`, browser-based, OpenCode, multi-account, and set active states remain account lifecycle states rather than separate provider identities.
+- **Project/worktree account context:** `Plans/Multi-Account.md`, `Plans/GitHub_Integration.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `/Multi-Account.md`, `/GitHub_Integration.md`, `/GitHub_API_Auth_and_Flows.md`, `/project/worktree`, `/effective`, and multi-account state must stay joined when account selection affects a project or worktree.
+- **GitHub auth disclosure:** GitHub_API_Auth_and_Flows, GitHub_API_Auth_and_Flows.md, login-derived, disclosure-only, `/storage`, account_id, and multi-account fields must make GitHub account identity visible without replacing the stable internal account identity.
+- **Switch availability state:** `/switch`, switch-trigger, `/package/worktree`, availability-state, `/runtime`, `/pressure`, auth-state, stop-reason, bridged-provider, `/event`, usage, `Plans/CLI_Bridged_Providers.md`, and `/CLI_Bridged_Providers.md` fields describe why an account switch did or did not occur.
+- **Serialization and persona account scope:** `/serialization`, `/account/persona`, `/runtime`, resume_url, and generated:// artifacts carry account/persona runtime identity rather than inventing feature-local account state.
+- **Requested/effective account gap closure:** requested_account and effective_account must not remain under-specified; `/effective` records preserve both requested and effective account truth.
+- **Role-scoped confidence:** `/confidence`, role-scoped policy, multi-account, direct-provider, and bridged-provider records preserve confidence and role scope for account routing.
+- **Current effective account state:** current effective account displays include recent switch reason, `/account`, current-state, and signal_confidence so current health does not erase switch lineage.
+- **Switch policy thresholds:** `/thresholds`, requirements-doc, `/policy`, real-world, auto-switch, multi-account, same-provider, provider-using, and user-configurable policy values govern when account switching is allowed.
+- **Actor and target identity:** actor-role and external-target are separate from effective_provider_identity, provider-native identity, and provider_identity; runtime records must keep those fields joinable without treating provider-native labels as the actor.
+- **Storage-facing audit identity:** `/storage-facing`, `/audit`, effective_provider_identity, provider_account_id, and effective_account_id expose storage/audit views while keeping provider_account_id subordinate to stable account identity.
+- **Behavior-driving audit flags:** behavior-driving account facts are distinct from audit-only facts; bridged-provider origin metadata must disclose which fields can change runtime behavior.
+- **Pre/post-send control loop:** pre-send, post-send, control-loop, requirements-doc, `/attempt`, multi-account, provider-using, and account-health records govern whether account state is checked before send, after send, or during retry.
+- **GPT account fields:** requested_account, effective_account, GPT, first-class, and multi-account fields remain explicit for GPT-backed provider entries instead of hiding account truth inside a generic provider row.
+- **Active versus historical identity:** active-vs-historical account state keeps live account context separate from historical switch records and prior attempt identity.
+- **Shared runtime boundary:** shared-runtime account behavior consumed by CLI_Bridged_Providers, CLI_Bridged_Providers.md, and multi-account records does not make the CLI bridge the account owner.
+- **Builder/runtime account scope:** /document-production, /interviewer/builders, shared-runtime, /account/runtime, and /seam/node scopes inherit the same requested/effective account contract as assistant and package/seam actors.
+- **Rewrite-era decision references:** Decision_Log, Decision_Log.md, and rewrite-era entries are decision-history references for account routing, not substitutes for this live Multi-Account contract.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/FinalGUISpec.md
 ## 2. References
@@ -321,25 +108,6 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts
 
 ## 3. Assessment: what we have and gaps (filled)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0393
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The owner docs already have the stronger source model.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Question:** Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all covered providers?
 
@@ -372,6 +140,8 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 | **Cursor config-dir** | No CURSOR_CONFIG_DIR; multi-account = multiple config paths or manual switch; no session migration. |
 | **Codex CLI multi-account** | PR #8536 uses in-process tokens + wham/usage; for CLI-only confirm config-dir env via Context7/Codex docs or use native auth when it lands. |
 | **Rust idioms** | Use explicit context or thread-local for current account (no AsyncLocalStorage). |
+
+Current-canon correction for this inventory: sections `3. Assessment` and `3.2/3.3` must not revive stale CLI-centric assumptions for Codex or GitHub Copilot. Codex and GitHub Copilot are direct providers in PM; Cursor account-isolation uses the runnable `cursor-agent` account boundary under PM-owned `HOME` / `XDG_*` roots; Gemini quota project-context can affect the effective quota identity even when the selected provider entry remains unchanged.
 
 ### 3.4 Rewrite alignment
 
@@ -409,31 +179,44 @@ Examples:
 
 Each provider entry MUST also declare the allowed `auth_surface` values its runtime accepts so PM can validate account compatibility before scheduling and so the HTTP/client layer knows how credentials must be attached or delegated.
 
+Provider-entry identity fields are part of Agent-Config/provider registry canon:
+- `provider_entry_id`
+- `provider_family_id`
+- `transport_kind = direct_api | cli_runtime | server_bridge`
+
+`provider_entry_id` identifies the concrete runtime surface, `provider_family_id` groups compatible entries for policy and pooling, and `transport_kind` records whether PM calls the provider through a `direct_api`, `cli_runtime`, or `server_bridge` path. These fields are additive; they do not rename requested/effective runtime handles owned by Orchestrator or Prompt Pipeline snapshots.
+
+The same raw vendor model may be reachable through different runtime surfaces such as `gemini`, `gemini_cli`, or an `opencode` bridge. PM preserves that overlap with provider-entry and requested/effective runtime fields instead of collapsing the rows into one vendor-family account.
+
+Account records may carry `provider_identity` for upstream identity display, but that value is descriptive `/provider-native` metadata only; the stable PM key remains the account/profile id.
+
+Direct coding-plan provider entries keep their own provider-entry metadata. `MiniMax Coding Plan` links to `https://platform.minimax.io/docs/coding-plan/intro` and stores separate zero-cost model metadata under the coding-plan provider entry. `Z.AI Coding Plan` links to `https://docs.z.ai/devpack/overview` and likewise stores separate zero-cost model metadata under the coding-plan provider entry.
+
+Coding-plan provider identity must preserve vendor-specific API boundaries instead of collapsing them into a generic OpenAI-compatible or pay-as-you-go bucket. `MiniMax Coding Plan (minimax.io)` uses `https://api.minimax.io/anthropic/v1`, `MiniMax Coding Plan (minimaxi.com)` uses `https://api.minimaxi.com/anthropic/v1`, `Z.AI Coding Plan` uses `https://api.z.ai/api/coding/paas/v4`, and `Zhipu AI Coding Plan` uses `https://open.bigmodel.cn/api/coding/paas/v4`. `Alibaba Coding Plan` uses dedicated Coding Plan keys such as `sk-sp-...` and dedicated coding-plan base URLs distinct from the pay-as-you-go DashScope base URLs.
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
 
 ### 4.2 Account record (canonical)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0395
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Account-backed providers store ordered account rows with stable ids.
+
+Locked `account-profile` schema minimum:
+- `account_id`
+- `label`
+- `auth_surface` = `oauth | api_key` or the provider-specific canonical auth surface
+- `enabled`
+- `priority`
+- `threshold_override?`
+- `switch_mode_override?`
+- `cooldown_policy?`
+- `retry_budget?`
+- `quota_profile_ref?`
+- `allowed_roles?`
+- `disallowed_roles?`
+- `configured_project_id?` when project context affects quota or routing
+- `display_identity?`
+- `credential_locator` or `credential_ref` as the non-secret handle to OS credential storage
 
 Minimum fields:
 - `account_id`
@@ -455,8 +238,8 @@ Minimum fields:
 
 Rules:
 - `account_id` is the internal stable key.
-- `provider_identity` is descriptive metadata only.
-- secrets remain outside config/state stores.
+- `provider_identity` is descriptive provider-native metadata only.
+- secrets remain outside config/state stores; actual `/tokens/keys` remain only in OS credential storage.
 - separate auth families that change quota semantics remain separate account rows.
 - the canonical account-registration shape is `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`; additive runtime/health fields may extend this shape without replacing the canonical keys.
 - `status` is the user-facing lifecycle summary and closes to `active | expired | revoked | error`.
@@ -484,6 +267,7 @@ Field definitions:
 
 Examples:
 - Codex `ChatGPT` and Codex `API key` rows are separate account rows.
+- many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same Codex provider entry; switching, usage display, cooldown behavior, and preferred-account logic must preserve the auth-family identity.
 - Gemini direct API-key accounts are separate rows from Gemini CLI auth-backed rows because they live on different provider entries.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md
@@ -491,6 +275,8 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.m
 ### 4.5 Selectable unit and runtime resolution
 
 ContractRef: Plans/Contracts_V0.md#4. Auth contracts, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules), Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical), Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/assistant-chat-design.md#Canonical navigation model
+
+The canonical `account-profile` row schema includes `account_id`, `label`, `auth_surface`, `enabled`, `priority`, `threshold_override`, `switch_mode_override`, `cooldown_policy`, `retry_budget`, `quota_profile_ref`, `allowed_roles`, `disallowed_roles`, `configured_project_id`, `display_identity`, and `credential_locator` or `credential_ref` as the non-secret OS credential handle. Actual `/tokens/keys` never enter project config, redb state, or logs.
 
 Required fields:
 - requested_account_id
@@ -503,6 +289,36 @@ Required fields:
 - effective_provider_identity
 - execution_role
 - operational_identity
+- selectable_unit_id
+- resolution_outcome
+- reason_codes[]
+- requested_provider_family_id?
+- effective_provider_family_id?
+- requested_transport_kind?
+- effective_transport_kind?
+- requested_connection_profile_id?
+- effective_connection_profile_id?
+- effective_health_state?
+- effective_pressure_state?
+- instruction_projection_state?
+
+Selectable-unit identity fields:
+- `selectable_unit`
+- `unit_id`
+- `provider_entry_id`
+- `provider_family_id`
+- `unit_kind = direct_account | cli_account_root | server_profile`
+- `root_path`
+- `health_state`
+- `pressure_state`
+- `last_usage_snapshot`
+- `last_cooldown_snapshot`
+
+`selectable_unit` is the runtime candidate PM can actually choose for an attempt. `unit_id` is stable within the provider registry, `provider_entry_id` links the unit back to the concrete runtime surface, `provider_family_id` preserves family-pooling context, and `unit_kind` distinguishes `direct_account`, `cli_account_root`, and `server_profile` candidates without treating those shapes as interchangeable. Runtime state snapshots also preserve the unit's `root_path`, `health_state`, `pressure_state`, `last_usage_snapshot`, and `last_cooldown_snapshot`.
+
+Provider-registry-only discovery timestamps and `/status` caches stay in provider-registry internals, not canonical run snapshots. Per-account shared-overlay advanced knobs may influence candidate preparation, but they remain provider-registry state unless copied into requested/effective runtime evidence.
+
+Requested/effective resolver output must keep provider-family, transport, and connection-profile intent distinct from the selected unit. `requested_provider_family_id`, `requested_transport_kind`, and `requested_connection_profile_id` record the explicit or policy-derived request; `effective_provider_family_id`, `effective_transport_kind`, and `effective_connection_profile_id` record the provider family, transport, and profile that actually executed after fallback, substitution, pressure, health, or policy filtering. `effective_health_state`, `effective_pressure_state`, and `instruction_projection_state` are effective runtime states for the selected unit/projection at dispatch time, not replacements for account `status`, generic availability, or provider-native drift records.
 
 Canonical terms and values:
 - requested_account_id
@@ -518,6 +334,7 @@ Canonical terms and values:
 - effective_provider_identity
 - execution_role
 - operational_identity
+- `reason_codes` is the persisted reason-code family; `reason_codes[]` records the ordered concrete reasons for the selected `selectable_unit_id` and `resolution_outcome`.
 
 Labels:
 - requested account
@@ -536,10 +353,22 @@ Permission carry-through:
 - effective account identity must remain available to permission and approval consumers
 ## 5. Auto-rotation
 - **Switch boundary:** Switching happens only at attempt/message boundaries. Never switch mid-attempt.
+- **Soft-threshold boundary:** soft-threshold auto-switch behavior must not switch mid-turn; for soft-threshold pressure, PM waits until a turn/attempt boundary unless hard exhaustion, cooldown, unhealthy account, or another hard failover condition requires in-run retry.
 - **Completed ownership rule:** A completed message/attempt always belongs to the account it actually used. The next message/attempt re-resolves and may switch immediately.
 - **Sticky behavior:** Routing is conservative and sticky. A recovered higher-priority account does not immediately steal traffic back unless policy and health justify it.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+Scheduler switch records MUST persist stable reason codes rather than UI-only text. The canonical account-selection reason set includes `soft_threshold_preemptive_switch`, `threshold_preemptive_switch`, `cooldown_preemptive_switch`, `preferred_recovered`, `hard_exhaustion_failover`, `cooldown_active`, `account_unhealthy`, `profile_unhealthy`, `credentials_expired`, `needs_configuration`, `provider_disconnected`, and `model_incompatible`. Provider adapters may surface raw provider conditions such as `unsupported-model`, `workspace-deactivated`, or `provider-unhealthy`, but the scheduler stores the normalized PM reason in the requested/effective runtime snapshot and keeps the raw condition as evidence.
+
+GUI and `/runtime` projections MUST keep selectable-unit `health`, `cooldown`, `usage pressure`, and per-attempt `resolution outcome` as separate `/state` dimensions. A cooldown can be healthy evidence of a provider-reported block, usage pressure can exist without an auth failure, and resolution outcome records why the resolver chose or skipped a unit without overwriting account health.
+
+Provider adapters surface raw health, `/pressure/usage`, and other runtime facts, but PM owns final selectable-unit resolution, requested `/effective` disclosure, and cross-provider switching policy.
+Provider-auth account operations include `/set-active/delete/update` routes for selecting, deleting, or updating account records; these mutate provider-auth metadata and must preserve requested/effective history rather than silently rewriting past runs.
+
+The `/hard` no-fallback rule is explicit: no-fallback applies when the request names an explicit `auth-mode`, when manual preferred-account override or `Set Preferred` is active as `/control`, when policy disallows fallback, when the current selectable unit is in cooldown or hard block, when account readiness is `needs_configuration` or `validation_required`, when credentials are invalid or missing, or when no eligible backup account exists. In those cases PM records the blocked/no-fallback reason instead of silently crossing to another auth surface, provider entry, or account family.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
 Auto-switch is allowed when policy permits and one of these occurs:
 - hard exhaustion
@@ -552,8 +381,17 @@ Signal weighting order:
 2. direct provider/account telemetry
 3. explicit structured runtime output
 4. provider-specific heuristics
-5. log-derived heuristics
-6. local counters only
+5. provider-doc/default expectations for that product/account class
+6. log-derived heuristics or heuristic/inferred local pressure only
+
+For authoritative remaining counters, PM drives `threshold_reached` at `<= configured switch threshold` and drives `exhausted` at `0 remaining` or explicit provider exhaustion. Provider `/accounts` may override these defaults, but the scheduler must not leave the state transition undefined when authoritative remaining quota is available.
+Default threshold-aware policy uses warning threshold `20% remaining` and default auto-switch threshold `10% remaining` unless provider/account overrides say otherwise. Per-account observed `/provider-reported` effective limits outrank generic provider-doc defaults, while provider docs preserve documented/default expectations when effective observed state differs. Providers with named windows preserve provider window keys such as `fiveHour` and `weekly`, and authoritative Gemini quota or `/reset` data outranks runtime token stats when deciding whether to recover back to a primary account. For coding-plan direct providers, official `/reset` and `/remains` endpoints and documented windows are authoritative defaults until observed account-specific divergence wins. Runtime token stats alone can influence pressure, but they must not become a `hard_block` or exhausted state without explicit quota, refusal, cooldown, or equivalent authoritative evidence.
+Default account routing prefers `sticky-primary`, `threshold-based-preemptive-switch`, and `reason-coded-failover`; naive `round-robin` may exist only as an advanced/debug strategy and is not PM's main provider-account routing policy.
+Vertex/Gemini dynamic shared quota without a stable remaining counter stays in the softer `pattern_only_or_inferred` bucket until stronger provider evidence appears.
+For softer provider/runtime evidence, one weak signal is informational, repeated soft signals move the account/profile to `approaching_threshold`, and explicit refusal, cooldown, or lockout moves it to `exhausted` or a blocked state.
+PM must not auto-switch purely on one soft `plan-warning`; repeated `plan-pressure` signals can move the account/profile to `approaching_threshold` before stronger refusal or cooldown evidence marks exhaustion.
+When a known provider `reset_at` passes, PM moves the affected account/profile to `validating` or `eligible_pending_recheck` rather than blindly marking it `ready`.
+GUI copy for an account/profile in `exhausted` pressure may use the title `Usage exhausted` and the subtext `Puppet Master will use another eligible account until this one resets` when fallback is available and policy permits.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
 
@@ -569,6 +407,7 @@ Cooldown / retry-budget rules:
 - retry budget is first-class provider/account state
 - on exhaustion or severe rate limit, mark cooldown and avoid bouncing back immediately
 - retry budget prevents thrashing the same account repeatedly
+- an authoritative cooldown with `cooldown_until` sets `hard_block=true` and state `cooldown` until revalidation after expiry
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
 
@@ -577,14 +416,14 @@ Manual controls:
 - manual control does not redefine the default operating model
 - manual control still records requested vs effective account identity and switch reason
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#AuthPolicy
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#42-authpolicy
 ## 6. Provider-specific behavior
 | Provider entry | Identity shape | Usage / health signals | Recovery and switching notes |
 |---|---|---|---|
-| **Gemini** | Direct API-key account rows only | provider/runtime usage, quota APIs, project attribution, error hints | project context may affect effective quota identity; media capability follows the same requested/effective account model |
+| **Gemini Direct** | Direct API-key account rows only | provider/runtime usage, quota APIs, project attribution, error hints | project context may affect effective quota identity; media capability follows the same requested/effective account model |
 | **Gemini CLI** | CLI-backed account rows across OAuth, API-key, and Vertex/Google credential families | provider settings, CLI/runtime signals, trust-gated MCP visibility, softer or authoritative counters depending auth family | PM pre-creates account roots, validates auth/config separately, and may observe provider-side model rerouting |
 | **Cursor CLI** | `cursor-agent` profile/account rows; browser login default, API key advanced/non-default | provider-reported, team-admin-reported, or inferred runtime/editor refusal signals | PM-owned `HOME`/`XDG_*` roots define account isolation; API-key path is advanced only |
-| **Claude Code CLI** | CLI-backed account rows across subscriber, console/API, and SSO families | API-backed accounts can use stronger authoritative usage; subscriber accounts may rely on softer or inferred pressure | scope-aware config overlays and softer threshold behavior for subscriber paths |
+| **Claude Code CLI** | CLI-backed account rows across subscriber, console/API, and SSO families | API-backed accounts can use stronger authoritative usage/cost `/token`; subscriber accounts may rely on softer `/stats/cooldown` inference plus PTY/runtime health signals | scope-aware config overlays and softer threshold behavior for subscriber paths |
 | **Codex** | Direct-provider account rows separated by `ChatGPT` and `API key` auth families | plan-backed included usage vs API-billed usage are separate buckets | PM must not merge plan-backed and API-billed usage/cooldowns |
 | **GitHub Copilot** | one GitHub-auth-backed account row with one or more billing/entity contexts | premium-request quotas, org policy blocks, entitlement validation, runtime errors | blocked states may be policy-based rather than timer-based; billing entity selection can gate readiness after login |
 | **OpenCode** | server profiles only (`Managed Server` or `Attach to Existing Server`) | health, discovery, and server-managed provider/model state | PM owns lifecycle only for managed profiles; attached profiles remain partially reflect-only |
@@ -592,11 +431,54 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipel
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md
 
 Provider rules:
+- Claude Code CLI account probing may expose native subscriber/account shape directly. When `claude auth status` reports `loggedIn: true`, `authMethod: "claude.ai"`, `apiProvider: "firstParty"`, and `subscriptionType: "pro"`, PM records those values as account evidence for auth-family and account-type distinction instead of inferring them blindly.
+- Claude Code profile switching is driven by `CLAUDE_CONFIG_DIR`; account-specific auth lives in profile-specific `.claude.json` / `claude.json` state, while shared config, plugins, MCP, and settings may be overlaid only when the account boundary remains explicit.
+- The `clausona` pattern is allowed only as evidence for selective Claude Code sharing: PM may share supported mutable assets by `symlink` when the account boundary remains explicit, while `.claude.json` and usually `projects/` stay isolated account-local state.
+- Claude Code import/probe may seed only `credentials.json` / `.credentials.json` into an isolated `CLAUDE_CONFIG_DIR`; `Import Existing Claude Auth` copies only the auth-bearing subset into the PM-managed `CLAUDE_CONFIG_DIR`, and a successful `claude auth status` plus authenticated headless execution prove the account root without importing unrelated Claude history or caches.
+- Claude Code setup must expose the native login variants `--email`, `--sso`, `--claudeai`, and `--console` where supported, with user-facing setup actions including `Sign In to Claude`, `Sign In to Console/API`, `Use SSO`, and `Import Existing Claude Auth`. `claude auth login --help` is the canonical setup probe for those distinct login surfaces; `--claudeai` represents subscription login and `--console` represents Anthropic Console / API billing login. `Use SSO` maps to `claude auth login --sso`, and `claude auth login --console` keeps its product-label distinction in PM setup copy. A fresh isolated `CLAUDE_CONFIG_DIR` returning clean JSON auth status with `loggedIn: false` and `authMethod: "none"` is valid logged-out account evidence rather than a provider failure.
+- Claude Code config-dir-per-account remains valid through `CLAUDE_CONFIG_DIR`, but earlier canon that treated it as sufficient for every provider is `/incomplete` for the newer Gemini/Cursor direction.
+- Account-level rule variance is modeled explicitly in provider/account matrices. Current high-confidence integration shapes include Gemini CLI, OpenCode, Claude Code memory/hooks/subagents, and Cursor CLI rules/MCP/headless usage shape; medium- or lower-confidence direct-provider shapes remain partial until primary-source evidence promotes them.
+- PM-owned provider account roots are keyed by `provider_entry_id`. Linux account data uses `$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/`; macOS account data uses `~/Library/Application Support/Puppet Master/providers/<provider_entry_id>/`. Windows account data uses `%APPDATA%\\Puppet Master\\providers\\<provider_entry_id>\\`; the family root may also be displayed as `%APPDATA%\\Puppet Master\\providers\\`. The portable path family is `/puppet-master/providers/`, with `/Puppet` and `/providers/` path segments treated as exact platform spelling, not semantic provider-family labels. PM MUST keep account-isolation path ownership concrete for Linux/macOS/Windows and must not hand-wave filesystem ownership for CLI-backed providers.
+- Each selectable account-like unit gets a stable PM-owned child root under that provider base: direct-account-like roots use `.../accounts/<account_id>/` and the `/accounts/<account_id>/` path family, while CLI account roots use `.../accounts/<account_id>/root/`, with `/root/` as the runnable CLI home segment under `/accounts/`.
+- Gemini CLI account roots are created before first launch. A `fresh-home` probe showed the CLI can crash when `GEMINI_CLI_HOME` points to a missing directory, so PM MUST precreate the `GEMINI_CLI_HOME` home path and then seed managed auth/settings state rather than relying on pristine-home first run. Headless setup errors that name `/.gemini/settings.json`, `GEMINI_API_KEY`, `GOOGLE_GENAI_USE_VERTEXAI`, or `GOOGLE_GENAI_USE_GCA` are setup evidence for the active Gemini CLI account root. Gemini can work with a narrower auth/settings core than its full generated home, but its home remains state-heavy and coupled enough that PM treats it as a managed account root instead of a trivial credential file.
+- A Gemini CLI `fresh-profile` with pristine `GEMINI_CLI_HOME` can hit a project-registry save error before returning the expected auth error; PM treats this first-run provider `/quirk` as managed provisioning and precreates the bootstrap directories/files before auth probing.
+- Gemini CLI provider-native profile locations remain anchored under `GEMINI_CLI_HOME`: the profile-global durable base lives in `GEMINI_CLI_HOME` user settings, the user/profile settings path is `~/.gemini/settings.json` within that home, and workspace/project setup evidence may name `/.gemini/settings.json`. Gemini state under that home includes OAuth credentials, account records, history, temp/bin, policies, skills, commands, and other persistent state.
+- Gemini CLI auth-bearing import/provisioning tracks `oauth_creds.json`, `oauth_creds`, `settings.json`, `state.json`, `installation_id`, and `projects.json` as provider-native state; PM imports only the minimum necessary subset into the managed account root, and uses per-account state roots to avoid CLI-home history, credential, settings, or project-state bleed-through.
+- Gemini auth states are richer than a binary logged-in flag. `oauth_logged_out`, `oauth_logged_in`, `oauth_needs_project_context`, `oauth_needs_configuration`, and `api_key_configured` are distinct setup/readiness states. `oauth_needs_configuration` may be account-scoped when the selected account lacks project, billing, trust, or credential context; provider-scoped setup state is allowed only when every account under that provider entry shares the same missing configuration.
+- Gemini OAuth project-context handling is tier-aware. Free-tier onboarding can proceed without a configured Google Cloud project id when the provider-managed project path is valid; non-free tiers can require an explicit configured Google Cloud project id before the account reaches `Ready`. `validation_required` is surfaced before onboarding continues when PM cannot prove the selected project/account context; provider-facing `validation-required` wording maps to that canonical state. A configured project id takes precedence over any previously persisted `managed-project` id from provider-native state.
+- Gemini OAuth and API-key paths are different auth, billing, and `/quota` planes, not interchangeable labels over one key-centric `/bucket`. Gemini Direct remains API-key-only, while Gemini CLI can expose OAuth, API-key, or Vertex/Google credential families. OAuth uses browser auth, localhost callback, `PKCE`, refresh-token handling, and Code Assist-style endpoint plus `/project-context` logic; project context and effective project can differ from merely having an OAuth token.
+- Claude Code account roots isolate generated `settings.json`, `projects/`, `plans/`, `plugins/blocklist.json`, and `mcp-needs-auth-cache.json`. These are account-local provider artifacts unless a later owner contract explicitly promotes one of them into a PM-managed overlay. PM treats generated `projects/`, `plans/`, `settings.json`, plugin state, and stats caches as account-local runtime state by default.
+- Cursor Agent state isolation is tied to PM-owned `HOME` and `XDG_*` / `XDG_` roots, not the narrow `CURSOR_USER_DATA_DIR` knob by itself; home `/XDG` isolation must be treated as the runnable account boundary until an owner contract proves a narrower Cursor-specific root is sufficient.
+- Cursor account design may include `browser-auth profile roots`, `API-key accounts`, or both, but PM must define the actual `/launch` contract against `cursor-agent` rather than only the editor-facing `cursor --user-data-dir` workaround.
+- `cursor-agent login` is treated as a minimal browser-oriented login flow that may require `NO_OPEN_BROWSER`; PM records that as setup behavior and not as proof of a broad account-switch API.
+- Cursor login probes MUST treat a fresh `HOME` and fresh `XDG_CONFIG_HOME`, `XDG_DATA_HOME`, and `XDG_CACHE_HOME` as account-boundary inputs. If `cursor-agent status` reports `Not logged in` under those roots, PM records that as evidence for the isolated account row rather than as global Cursor state.
+- Cursor executable control uses `cursor-agent` under PM-managed `HOME` / `XDG_*` roots in both desktop-launched and CLI-launch scenarios. PM should not rely on editor-oriented launch-time `cursor --user-data-dir=...`, `--user-data-dir`, `user-data-dir`, `CURSOR_USER_DATA_DIR`, or other editor-side assumptions as the core account-isolation mechanism for `cursor-agent`; those flags may be provider/desktop `/runtime` or `/config/data` profile detail only when explicitly supported, but they are not PM's multi-account isolation contract and Cursor isolation is not a config-path/manual switching model. `Import Existing Cursor Auth` copies only the minimum auth-bearing state into the PM-managed home `/XDG` profile root. Cursor auth-bearing state is narrow: seeding only `~/.config/cursor/auth.json` (`/.config/cursor/auth.json`, `config/cursor/auth.json`, or `/cursor/auth.json` under the isolated home/XDG root) can be enough for `cursor-agent status`, `models`, and authenticated CLI use; related provider-native files such as `~/.config/cursor/cli-config.json`, `/.config/cursor/cli-config.json`, `~/.config/cursor/statsig-cache.json`, `/.config/cursor/statsig-cache.json`, `~/.cursor/projects/`, and `/.cursor/projects/` remain Cursor-owned account/profile state unless explicitly promoted. Cursor ACP support is a real provider-protocol surface when available, but it is not an account-root boundary and does not replace PM-owned `HOME` / `XDG_*` isolation. Cursor profile-local/native state remains Cursor-owned and account-local unless a later PM owner contract explicitly promotes a file into a managed projection.
+- Cursor `/its` CLI context is resolved by launching `cursor-agent` inside the selected PM-owned user-data/profile roots; PM does not model a clean in-process account switch contract for Cursor accounts.
+- Projected instruction files live in the workspace, but provider `/account-local` config that points at, augments, or launches them remains `selectable-unit-local` account/profile state unless an owner contract promotes it.
+- Codex account roots are isolated with `CODEX_HOME`. A fresh `CODEX_HOME` probe that reports `Not logged in` is clean account-sandbox evidence for that home root rather than global Codex state. Upstream Codex runtime artifacts such as `sessions/`, `models_cache`, `models_cache.json`, `logs_1.sqlite`, `state_5.sqlite`, `logs_1`, `state_5`, shell snapshots, generated system skills under `skills/.system/` / `/.system/`, sandbox helper binaries, and temp assets under `tmp/` are account-local provider state and MUST NOT be shared across PM account rows by default; their SQLite filenames are upstream-provider artifacts, not PM storage technology. A `fresh-home` probe may still reveal local install health issues such as `state-db` migration warnings, websocket fallback, or 401s; PM records those as provider/root health evidence rather than assuming Codex installs are pristine.
+- Codex import/probe may seed only `auth.json` into an isolated `CODEX_HOME`; `codex login status` proves login state, and authenticated `codex exec --json` provides structured event output such as `thread.started`, `turn.started`, `error`, and `item.completed` for account/root validation.
+- Codex account-model implication: many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same Codex provider entry; auth family remains material for switching, usage display, cooldown behavior, and preferred-account logic.
 - same-provider rows are not interchangeable when auth family, billing/entity context, or profile mode changes quota or recovery behavior.
-- `Gemini` direct and `Gemini CLI` are separate provider entries and may still participate in one family pool when policy allows.
+- Codex OAuth/subscription rows preserve the `/ChatGPT` auth-family marker separately from API-key rows so setup, quota, cooldown, and preferred-account policy do not collapse both families into one generic Codex account.
+- In PM's provider-model, `Gemini` is not `direct-only`: `Gemini Direct` and `Gemini CLI` are separate provider entries and may still participate in one family pool when policy allows.
+- Gemini CLI capability gating is provider + account + auth-family aware: OAuth-only, API-key, and Vertex-backed accounts may differ in media/tool capability, and internal model-routing /fallback behavior must be constrained or surfaced as requested/effective model-routing evidence.
+- Gemini-specific capability declarations must fit the shared provider capability model in Plans/Models_System.md. Both `gemini` and `gemini_cli` provider entries MUST declare `supports_multi_account`, `account_identity_kind`, `quota_signal_sources`, `quota_signal_confidence`, `supports_threshold_switch`, `supports_hard_exhaustion_detection`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` rather than using Gemini-only capability flags.
+- Gemini account and runtime records use requested/effective storage vocabulary, including `requested_auth_mode` and `effective_*` snapshots for auth, `/capability`, billing/quota plane, project context, and usage source. Non-secret preferences can live in project/account settings; OAuth/API credentials stay out of redb and `/seglog`.
 - Codex and GitHub Copilot are direct providers, not CLI-backed execution surfaces in PM.
 - GitHub API auth used for repository operations remains independent from GitHub Copilot provider auth.
-- OpenCode skills and MCP behavior sit above the provider list exposed by OpenCode; PM should not invent Codex- or Copilot-specific skill plumbing inside the OpenCode server profile.
+- GitHub Copilot provider accounts have their own auth-realm; switching GitHub Copilot accounts for provider multi-account must not change Git transport, local Git/worktree state, git remotes, worktree ownership, repository transport state, or GitHub API account binding. Those are independent surfaces in storage, GUI, and runtime routing.
+- GitHub Copilot usage rows stay billing-entity-aware: API-key-style accounts that are billed by request use `Usage Bucket: API billed`, while Copilot premium-request and organization policy states remain tied to the selected GitHub login and billing/entity context.
+- GitHub Copilot entitlement state preserves `effective_entitlement_class = org_subscription | enterprise_subscription | individual_subscription` so organization, enterprise, and individual subscription buckets do not collapse into one generic Copilot account class.
+- Copilot blocked and cooldown mapping preserves reason codes such as `billing_entity_required`, `included_premium_exhausted`, `paid_overage_disallowed`, `copilot_org_policy_blocked`, and `copilot_entitlement_missing`.
+- `GitHub Copilot Advanced` is the provider-native instruction/agent surface for Copilot-specific configuration; it sits beside shared instruction panes and keeps `/agent` controls provider-native without absorbing GitHub API or Git transport identity.
+- In Agent-Config, `GitHub Copilot Advanced` has managed target groups: `Repository Instructions` maps to `.github/copilot-instructions.md` / `/copilot-instructions.md` / `github/copilot-instructions.md`; `Path Instructions` maps to `.github/instructions/*.instructions.md` / `github/instructions/*.instructions.md`; and `Custom Agents` maps to `.github/agents/*.agent.md`. Each advanced target group carries its own `PM Controlled` / `Manual Override` state, drift state, last sync, and repair actions.
+- Codex and GitHub Copilot provider config projections are `native_projected` when PM writes provider-native instruction/config artifacts; failure-behavior must be explicit, including whether PM blocks launch, falls back to bundled/shared PM instructions, or reports a projection repair action.
+- OpenCode skills and MCP behavior sit above the provider list exposed by OpenCode; for Codex, GitHub Copilot, MiniMax Coding Plan, Z.AI Coding Plan, Alibaba-family providers, and other direct-provider entries, PM should not invent provider-specific skill plumbing inside the OpenCode server profile, because provider differences belong in auth, `/model/runtime`, and capability transforms rather than replacing PM-native skill delivery.
+- OpenCode account/cooldown evidence is per-account when exposed; a `429` or equivalent provider refusal sets `rateLimitedUntil` on that account/server-profile candidate before failover, without converting OpenCode into a direct-provider account store.
+- OpenCode-normalized pressure signals must retain whether the block was `OpenCode-observed` or `upstream-authoritative`; PM may use either as evidence, but the source authority stays visible in pressure and recovery records.
+- Across all CLI-backed providers, `auth_state`, `history`, `mcp_oauth_tokens`, `extensions runtime state`, `project registry`, `temp chats`, `workspace_trust`, `runtime_cache`, `cooldown_residue`, and `telemetry_state` are denied from sharing by default. PM-managed overlays may be projected separately, but account-bearing state and residue from one profile must not leak into another account's runnable profile.
+- Runtime sharing defaults allow PM-managed overlays for instructions, skills, selected `mcp_definitions`, and selected bridge config only when target-specific; auth_state, trust/workspace_trust, cooldown `/usage` state, transcripts `/history`, temp chats, provider-generated session DBs, sessions, state db, model cache, projects, plans, stats cache, and runtime caches remain account-local/provider-generated unless an owner contract explicitly promotes them.
+- Provider account sharing policy records include `share_classes[]`, `deny_classes[]`, and `projection_mode = copy | symlink | generated | provider_api`; `deny_classes[]` wins for account-bearing state, and any `provider_api` projection must remain a provider adapter boundary rather than a filesystem sharing shortcut.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md
 ## 7. Runner / orchestration contract
@@ -610,6 +492,10 @@ Rules:
 - manual set-active is an override/debug control rather than the main execution model
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/usage-feature.md
+
+### 4.6 Owner/consumer boundary alignment
+
+Runtime-account consumers defer to this owner contract for requested/effective account selection. `requested_account_binding` and `operational_identity` stay shared runtime fields rather than feature-local aliases.
 
 Required account-binding/runtime fields are:
 - `requested_account_policy`
@@ -628,14 +514,17 @@ Rules:
 - `requested_account_policy` alone is not enough to explain concrete account selection
 - failed or blocked switch decisions remain historically material even when `effective_account_id` does not change
 - durable switch and pressure history is persisted through `account_switch_event` and `account_pressure_episode`
+- normalized pressure-state trigger tables include `nominal` as the healthy/available state for rows with capacity above threshold, no active cooldown, and no higher-confidence hard block.
+- Authoritative account-specific `hard_block=true` or `hard_blocked` evidence makes that account ineligible for routing, even when provider docs say the reset window should have elapsed; PM must preserve the documented-vs-observed mismatch as diagnostic context and wait for successful revalidation before routing to that account again.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Models_System.md
 ## 8. Usage and pick-best
 - Usage/account pressure plugs into the shared usage model; do not create a parallel quota system for multi-account routing.
 - Every provider-using interaction may update account health.
 - Pick-best uses the strongest available account-health signals plus configured policy; it does not treat all signals as equally authoritative.
+- Any Gemini `/quota/status` projection that only reports provider-level state is incomplete: Gemini family summaries must preserve the account-level state that produced the current usage, pressure, cooldown, and source-confidence labels.
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#AuthPolicy
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#42-authpolicy
 
 Canonical Gemini usage/source expectations:
 - show one shared Gemini-family usage surface rather than separate top-level Gemini Direct vs Gemini CLI pages
@@ -645,7 +534,7 @@ Canonical Gemini usage/source expectations:
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
-Priority and stickiness rules:
+Priority, GUI ordering, and stickiness rules:
 - lower numeric priority wins (`1` before `2` before `3`)
 - prefer the current effective account if it remains healthy enough
 - otherwise choose the highest-priority eligible account inside the highest-ranked viable auth surface
@@ -672,22 +561,36 @@ A persistent `Effective Runtime` inspector remains visible in the provider detai
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
 
+The Agent-Config GUI includes a `Provider Pooling` / `Family Pooling` section wherever a provider entry can participate in family-level account or runtime pooling. `Provider Pooling` also surfaces add/import/login/bootstrap actions per provider-specific account type instead of forcing one generic account-setup flow across incompatible providers.
+
+Gemini setup no longer uses a one-card mixed OAuth/API grouping. The `9. GUI requirements` owner direction is that Agent-Config presents Gemini Direct and Gemini CLI through the current provider-entry/account model, with direct API-key setup separated from CLI auth families and with requested/effective disclosure when family pooling selects a different backend.
+
+Family-pool guardrails: PM may only auto-select a unit when its effective capabilities satisfy the requested model/media/effort/tooling needs, including `/media/effort/tooling` capability checks. The run record must preserve the requested provider entry and effective provider entry explicitly, and PM must never silently route a request that depends on Gemini CLI-only features to Gemini Direct or route a direct-only request into Gemini CLI without requested/effective disclosure.
+
+The anti-duplication rule from the older one-card direction is preserved as a no-`pseudo-providers` rule: the GUI may group related Gemini rows under a family surface, but it MUST NOT mint fake OAuth/API-key pseudo-providers that compete with the real `gemini` and `gemini_cli` provider entries. Within each real entry or family grouping, account rows expose auth-surface badges and derived auth `/configuration/availability` state rather than hiding readiness inside a provider-level card.
+
+Agent-Config field-placement and `/runtime` rules are frozen: provider detail exposes `Overview`, `Defaults`, `Accounts / Profiles`, `Models`, `Instructions`, `Skills`, and `Advanced Runtime`, while the `Effective Runtime` inspector remains persistently visible as a side or bottom inspector instead of being hidden in diagnostics.
+
 ### 9.2 Account and profile rows
 
 Each row shows:
 - label
 - auth family or profile mode
 - current state
+- derived auth/configuration/availability state
 - pressure/cooldown summary
 - entitlement/billing secondary line when relevant
 - last validation or health timestamp
 - primary actions appropriate to the row type
 
 Row rules:
+- provider `/account/profile` list rows stay dense for scan-friendly `/layout`; detailed usage `/cooldown` and requested `/effective` explanation belongs in the persistent inspector rather than overloading the list row.
 - Codex `ChatGPT` and `API key` rows remain separate top-level rows.
 - GitHub Copilot shows one auth-backed account row and exposes available billing entities in the inspector rather than minting fake top-level accounts.
-- OpenCode shows server-profile rows labeled as `Managed Server` or `Attach to Existing Server`.
-- row actions include `Add Account`, `Add Profile`, `Set Preferred`, `Refresh Usage`, `Revalidate`, and profile-specific repair/reconnect actions where applicable.
+- OpenCode shows server-profile rows labeled as `Managed Server` or `Attach to Existing Server`, and the Agent-Config GUI exposes process `/connect` state on the OpenCode profile row or inspector rather than hiding connection readiness in logs.
+- row actions include `Add Account`, `Add Profile`, `Set Preferred`, `Refresh Usage`, `Revalidate`, `Edit Threshold`, `Open Provider Settings`, and profile-specific repair/reconnect actions where applicable; `Add Account` / `Add Profile` opens a provider-specific setup drawer.
+- The Agent-Config GUI keeps the row as the auth identity while the expanded inspector owns billing-entity selection, premium-request state, and `fallback-to-included-model` disclosure.
+- provider-level `Enable/Disable Provider` changes future eligibility only and must not destroy account/profile rows or saved defaults.
 
 ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
@@ -696,8 +599,8 @@ ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contrac
 Provider/account setup flows must distinguish authentication from readiness.
 
 Required states:
-- `Logged out`
-- `Logging in`
+- `Logged out` / `Logged Out`
+- `Logging in` / `Logging In`
 - `Logged in`
 - `Needs setup`
 - `Validating`
@@ -705,13 +608,20 @@ Required states:
 - `Auth expired`
 - `Validation failed`
 - `Logging out`
+- `Disabled`
 
 Rules:
+- The account/profile GUI `/state-machine` must retain enough provider-specific state to render these labels plus provider-specific degraded states rather than collapsing them into one generic error chip.
 - `Logged in` is not the same as `Ready`.
+- setup-state labels MUST treat `Logged In` as distinct from `Ready`; a `Use API Key` path can save credentials but still requires auth/config/entitlement validation before the row reaches `Ready`, selected `/account/profile` readiness requires `/config/entitlement` validation for the active provider/account/profile type, and unresolved entitlement/billing context keeps direct-provider setup in a `partial-setup` / configuration state rather than treating auth alone as sufficient.
+- Provider-specific entitlement or `/billing` resolution can keep an account in `Needs setup` after auth succeeds; PM must not collapse that state into `Ready`, `partial-setup`, or `Logging Out`.
 - Copilot may require `Choose Billing Entity` before reaching `Ready`.
 - Vertex/Google Cloud Gemini CLI setups may require credentials, project/location selection, and trust validation before reaching `Ready`.
+- `Use Vertex AI` setup for Gemini CLI uses helper text `Best for Google Cloud project-based usage with ADC, service accounts, or Google Cloud API keys`; it branches into `Application Default Credentials (ADC)`, `Service Account JSON`, and Google Cloud API key credential paths before the row can be validated as `Ready`. Gemini CLI setup also exposes `Sign In with Google` and `Use Gemini API Key` as distinct account-auth choices; the Vertex branch is the `Vertex ADC/service-account/API-key` family and preserves the `/service-account/API-key` spelling in evidence.
+- Gemini CLI validation runs after every setup path using the PM-owned `GEMINI_CLI_HOME`, then separately surfaces project context, workspace trust, and `/trust/MCP` readiness before declaring the account/profile fully ready.
 - Cursor CLI browser login is the default path; API key is exposed as an advanced optional path only.
-- provider-reported cooldowns remain read-only facts; PM pause and recheck controls are separate overlays.
+- Official/current Cursor docs direction treats Project Rules (`.cursor/rules/*.mdc`) as the primary/native rules path, so Cursor docs/rules projection generates `.cursor/rules/*.mdc` first; `Cursor Rules` is the user-facing label, while `.cursorrules` remains supported but legacy/deprecated and root compatibility files remain compatibility targets rather than the primary managed artifact.
+- provider-reported cooldowns remain read-only facts with source `/confidence`; PM pause and recheck controls are separate overlays.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
 
@@ -722,21 +632,35 @@ Provider settings MUST expose account lifecycle controls in a consistent locatio
 Required flows:
 - **Add account:** `Settings -> Providers -> [Provider] -> Add Account`.
 - **Edit account:** allow `display_name` changes and credential rotation; rotating a credential MUST trigger the provider's re-auth or revalidation flow before the updated row returns to `Ready`.
-- **Remove account:** present a confirmation dialog, remove the credential from the OS/store indicated by `credential_ref`, remove the account record, then reassign any threads or defaults pointing at that account to the provider's default account.
+- **Remove account/profile:** present a confirmation dialog with `Remove from PM only` and `Remove and archive PM-managed data` choices. Both choices remove the account/profile record and reassign any threads or defaults pointing at that account/profile; only the archive choice captures PM-managed artifacts first.
 - **Default account:** each provider has exactly one default account. PM uses that default whenever no explicit account selection is made by policy, role, or manual override.
 
 Registration rules:
 - account creation mints a stable `account_id` as a ULID.
 - new account rows use the canonical schema `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`.
 - `status` closes to `active | expired | revoked | error`.
+- Codex add-account entry choices are `Sign in with ChatGPT` and `Use API Key`; setup copy must not revive the stale browser/device-code/API-key matrix as the primary Codex account model. The ChatGPT path helper text is `Uses Codex through your ChatGPT plan limits`; Codex account identity is auth-family-sensitive for `/quota`, because a `ChatGPT account` bucket and an API-key bucket remain separate entitlement pools even for the same human owner.
+- `Switching to ChatGPT-backed access may require signing out first`: switching a Codex account from API-key-backed use to subscription-backed ChatGPT use may require `codex logout` and rerunning Codex to re-enter the ChatGPT-backed path.
+- The baseline GUI account-add flow exposes the provider-by-provider availability matrix for setup methods that are actually available: `Fresh Login`, `Import Existing Auth`, and `Environment/API-Key Setup`. MVP implementations may hide unavailable methods per provider, but they MUST keep the baseline GUI/state transitions deterministic and provider-specific rather than collapsing every provider into one generic setup path.
+- Provider-specific setup availability must remain explicit for root-backed providers: Cursor, Claude Code, Codex, and Gemini may expose both `Fresh Login` and `Import Existing Auth`; `Import Existing Auth` seeds only narrow `auth-bearing` state into the PM-owned root and is a first-class setup mode when the provider probe proves it works.
+- Direct coding-plan provider entries use provider-specific setup rows: `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` each expose `Use API Key` as their baseline setup mode. `MiniMax` and `Z.AI` product labels remain visible where a coding-plan entry resolves vendor identity, not collapsed into a generic OpenAI-compatible bucket.
+- Common remediation actions are `Retry Sign-In`, `Edit Auth Settings`, `Repair Home`, and `Revalidate`; provider setup surfaces expose only the actions valid for the selected provider entry and account state.
+- Claude Code CLI remediation actions include `Retry Login`, `Switch Login Method`, `Repair Config`, and `Revalidate` after auth validation records the effective account class (`subscriber` versus `api/org-backed`, with `/org-backed` as the display alias for organization-backed API usage).
+- Codex and billing/entitlement recovery surfaces include `Retry Sign-In`, `Edit API Key`, `Repair MCP/Rules`, `Refresh Entitlements`, `Revalidate`, and `Disable` where applicable; providers that do not expose API-key, rules/MCP repair, entitlement refresh, or disable paths must hide the invalid actions rather than generalizing them.
+- Billing-entity refresh cadence is explicit: refresh billing entities after login, after `Refresh Entitlements`, and after a Copilot entitlement/policy failure.
+- Row-level setup actions use an explicit button-state contract: `Sign In` -> `Signing In...`, `Save Key` -> `Saving...`, `Import` -> `Importing...`, `Validate` -> `Validating...`, `Refresh Usage` -> `Refreshing...`, and `Log Out` -> `Logging Out...`; this applies equally to direct-provider actions and CLI/server providers. Successful `Sign In`, `Save Key`, or `Import` must auto-transition to `Validating...` when no further user input is required. Canonical terminal-label examples remain explicit: `Sign In` -> `Signing In...` -> `Logged In`, `Save Key` -> `Saving...` -> `Saved`, `Refresh Usage` -> `Refreshing...`, and `Log Out` -> `Logging Out...` -> `Logged Out`, with `Logged Out` as the `/post-success` state for `Log Out`.
 - removing a non-default account MUST preserve requested/effective history for past runs even though the live row is deleted.
 - removing the current default account MUST atomically promote another eligible account or leave the provider in an explicit no-default state that blocks new runs until resolved.
+- disabling an account/profile MUST NOT delete its root.
+- removal MUST avoid deleting non-PM-managed provider data outside the owned root; backups and archives are for PM-managed artifacts only, not whole provider-home snapshots by default.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 9.3.2 Authentication flow walkthroughs
 
 Authentication walkthroughs define the expected PM-side orchestration around provider-native auth mechanisms.
+
+Every account setup/auth flow must surface its active auth path explicitly: OAuth browser flows show the redirect, verification URL, or localhost callback state; API-key flows show a secure API key entry step; token refresh is either PM-managed or delegated to the provider runtime with that delegation visible; and credential expiry produces a user-visible notification plus recovery action instead of silently degrading the account row.
 
 #### API key flow
 1. User opens `Settings -> Providers -> [Provider] -> Add Account`.
@@ -761,6 +685,7 @@ Authentication walkthroughs define the expected PM-side orchestration around pro
 3. The Gemini CLI performs its native OAuth/browser flow.
 4. PM reads the resulting token or credential handle from the CLI credential cache and records it through the account row's `credential_ref`.
 5. Ongoing token refresh remains delegated to the Gemini CLI runtime rather than reimplemented inside PM.
+6. `Import Existing Gemini CLI Auth` copies only the minimum auth-bearing state into the PM-owned `GEMINI_CLI_HOME` root, after PM has precreated and validated that root.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md
 
@@ -774,6 +699,8 @@ Usage and status surfaces MUST show:
 - source-confidence, stale, or estimated labels when data is not authoritative
 - switch/failover reason when PM changed the selected unit
 
+`Plans/usage-feature.md` (`/usage-feature.md`) consumes this account/provider owner contract for its `Cursor`, `Codex`, `Copilot`, `Gemini`, and summary-table sections; those Usage sections must not reintroduce stale provider buckets or flatten direct-provider quota context into one generic `account` label.
+
 Usage rows should prefer plain-language statuses such as `Working` or a concrete failure reason instead of transport-internal terminology.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
@@ -781,42 +708,37 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpe
 ### 9.5 Instructions, skills, and MCP in Agent-Config
 
 Agent-Config must expose:
-- shared instruction panes (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`)
+- shared instruction panes sourced from PM's `AGENTS` / AGENTS-layer intent (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`)
 - provider-native advanced panes for GitHub Copilot
 - PM-native skills with readiness/fix text/actions
 - PM-native MCP servers with per-provider/runtime effective status in inspectors
 
 Rules:
 - provider-native files under PM control expose `In Sync`, `PM Outdated`, `Provider Modified`, `Projection Failed`, or `Unknown` drift states with `Repair`, `Detach`, and `View diff` actions.
+- Provider-native rule/settings files, including `/settings` surfaces, are generated artifacts derived from one canonical instruction model; if users edit them directly, PM reports drift instead of treating the edited provider-native file as the new source of truth.
+- Provider-native projection records carry `control_mode = pm_controlled | manual_override`, `drift_state = in_sync | pm_outdated | provider_modified | projection_failed | unknown`, `last_projected_at`, and `projection_targets` / `projection_targets[]`.
+- Instruction projection records use `instruction_projection` with `canonical_revision`, `projection_target_kind = agents_md | claude_md | gemini_md | cursor_rules`, `target_path`, `preview_hash`, `requested_runtime_snapshot`, `last_projected_at`, and `last_drift_check_at` so PM can prove what source revision was projected to which provider-native target.
+- Per-target projection GUI records expose `last_projected_at`, `last_drift_check_at`, visible last sync time, drift state, and effective rendered contents/preview; editing a provider-native pane directly while it is PM-controlled marks that target `Provider Modified` rather than silently overwriting it on the next refresh, then requires manual override or editing the canonical source and regenerating sibling projections.
+- Projection conflict handling is explicit: `conflict_policy = pm_wins | manual_review | provider_wins`, and `drift_detection = hash | mtime | disabled` records how PM decides whether the provider target has diverged.
+- Repair and `/drift` handling may `/overwrite` only the PM-managed portions of profile `/config` surfaces that PM owns; drift repair must preserve manual/provider-owned sections and never clobber an entire provider profile merely because one PM-controlled target diverged.
+- user-edit rule in GUI: editing a `PM Controlled` provider-native target directly requires first flipping that target to `Manual Override`; editing the canonical source is the only path that keeps semantic sync across controlled targets.
+- launch-time drift rule: `Provider Modified` must not auto-overwrite at launch; PM warns and requires explicit repair or manual override before claiming the target is in sync.
+- Each instruction target GUI record carries `last_projected_at` and `last_drift_check_at` so projection freshness and drift checks remain inspectable instead of hidden behind a generic state label.
+- Cursor rule projection is lossy compared with plain markdown instruction files: `.mdc` adds metadata and scope semantics, so PM must use a deliberate translation policy rather than naive file-copy sync.
+- projection-path rule: workspace projections such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/*.mdc`, `cursor/rules/*.mdc`, `.mcp.json`, `.github/copilot-instructions.md`, `/copilot-instructions.md`, `github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, `github/instructions/*.instructions.md`, `.github/agents/*.agent.md`, `github/agents/*.agent.md`, `agent.md`, `instructions.md`, provider-local config files, and `/rules/`, `/instructions/`, and `/agents/` path families are tracked separately from provider account roots.
 - skill rows use plain-language statuses, fix text, and a primary remediation action.
 - MCP rows are server-centric at the top level; per-provider/runtime state appears in the inspector rather than pretending every provider has a literal install state.
+- Separate user-visible provider entries are acceptable where runtime `/auth/control` differences are meaningful, even when PM keeps an internal shared vendor `/family` layer.
+- Provider entries expose `display_name`, `enabled`, `supports_family_pooling`, and `default_model_id_raw` so family pooling and defaults can be inspected without deriving them from labels.
+- OpenCode server profiles use a per-profile PM sidecar layout under the profile root: `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+- `Import Existing Auth` copies or seeds only the minimum auth-bearing material needed into the PM-owned root; it must not wholesale clone unrelated provider history, caches, logs, projections, or backups by default.
+- `/migration`, `/caches`, `/logs/`, and `/backups/` path families from an existing provider home are source-side context by default, not automatic wholesale imports.
+- import metadata preserves the source path for audit/debug, but the imported account or server profile runs from the PM-owned root after import.
+- `Import Existing Codex Auth` is optional/non-MVP and may import only the minimum auth-bearing Codex state into the PM-owned account root. The baseline Codex setup paths remain `Sign in with ChatGPT` and `Use API Key`.
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## 10. Phase 2 (native auth) -- when available
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0392
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `project_id` / `project_path` when available
-  - project_id
-  - project_path
-  - must carry `usage_event_ref` whenever available
-  - usage_event_ref
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When the new auth system for Codex, Copilot, Gemini (and optionally Claude) lands (in-process tokens, HTTP calls):
 
@@ -834,25 +756,6 @@ When the new auth system for Codex, Copilot, Gemini (and optionally Claude) land
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 ## Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0394
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - no operational identity or permission posture
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The current multi-account model must explicitly distinguish provider accounts from operational identities needed by this packet.
 

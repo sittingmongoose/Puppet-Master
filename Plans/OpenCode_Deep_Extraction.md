@@ -1,45 +1,5 @@
 # OpenCode Deep Extraction (for Puppet Master)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0399
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.
-  - `resume_url` deep links for wizard/interview recovery
-  - resume_url
-  - URL deep links and in-app search routes should decode to the same internal navigation model
-  - search results, deep links, and inspector panes should reuse the same canonical term labels as help entries
-  - project attention rows should route through the same internal payload model as deep links/search/palette results
-  - URL deep links decode into the same route model used by in-app command dispatch
-  - search results and command-palette results should restore the same target context as deep links, not a watered-down approximation
-  - `cost_usage` still does not require a durable usage/switch join key strongly enough to back the promised Usage/Ledger deep links
-  - cost_usage
-  - Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Plans/OpenCode_Deep_Extraction.md`
-  - Plans/OpenCode_Deep_Extraction.md
-  - `resume_url` is currently described as a deep link that restores exact app context, but no owner doc states that it serializes route identity rather than source-open identity.
-  - stop treating `resume_url` or page-local deep links as stronger than generic navigation
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -73,6 +33,57 @@ Extract reusable, implementation-grade guidance from OpenCode (run modes, agents
 - Puppet Master's locked stack decisions always win over OpenCode's choices.
 - Extraction must be autonomous and deterministic (no mid-run human decisions).
 - Output must be actionable: findings must map to an existing Puppet Master plan doc section (or be explicitly discarded with a reason).
+- Generated adapter config remains derived and `/no-secrets`; extracted provider/tool findings land in `Plans/Tools.md` (`/Tools.md`), `Plans/FinalGUISpec.md` (`/FinalGUISpec.md`), or a dedicated MCP `SSOT` when one is created, rather than making this OpenCode reference doc the owner.
+- OpenCode material is baseline-only reference lineage. Session-wide approval examples remain external baseline observations unless an owner doc explicitly adopts them; live PM runtime and permission canon stay in `Plans/Permissions_System.md`, `Plans/Run_Modes.md`, `Plans/Tools.md`, and `Plans/Contracts_V0.md`.
+- Permission-preset deltas must not narrow PM planning/research defaults below the product tool surface; read-only and Plan modes retain `/question/skill/LSP/todo/subagent` assistance through the owning Tools and permission contracts while keeping mutation tools gated.
+
+## 2A. Transfer Fidelity Notes
+
+Hook and formatter references stay cross-runtime. hook-name, HTE, DAE, /DAE, format.*, /rotated, under-owned, actor-scope, bundling-off, bundled-skill, provider-affinity, FileSafe, Skills_System, Skills_System.md, Plugins_System, Plugins_System.md, Formatters_System, Formatters_System.md, `/tool`, claude/, shell.env, file.edited, permission.ask, and mutation_capable details are lineage inputs for the owning Skills, Plugins, Formatters, Tools, and permission docs.
+
+Runtime agent state is /event-sourced. active-agents and active-agents.json describe derived runtime state for `Plans/orchestrator-subagent-integration.md` and `/orchestrator-subagent-integration.md`, not a local owner in this extraction document.
+
+Usage linkage preserves usage.event, storage-plan, storage-plan.md, usage-feature, usage-feature.md, /account/model, and UsageRecord references so account/model usage lineage can be reconciled without moving the UsageRecord owner here.
+
+Prompt, HITL, and permission references preserve `Plans/Prompt_Pipeline.md`, `Plans/human-in-the-loop.md`, `Plans/Permissions_System.md`, `/Prompt_Pipeline.md`, `/human-in-the-loop.md`, and `/Permissions_System.md` as the owning docs for prompt, human-in-loop, and permission behavior.
+
+Runtime persona compatibility keeps _persona_id, Contracts_V0, Contracts_V0.md, and /runtime visible as extraction evidence while requested/effective persona ownership remains in the contract/runtime docs.
+
+Run graph and artifact references preserve `Plans/Run_Graph_View.md`, `Plans/Prompt_Pipeline.md`, `Plans/Orchestrator_Page.md`, `Plans/human-in-the-loop.md`, `Plans/Runtime_Artifacts_Panel.md`, `/Run_Graph_View.md`, `/Prompt_Pipeline.md`, `/Orchestrator_Page.md`, `/human-in-the-loop.md`, and `/Runtime_Artifacts_Panel.md` as downstream owners.
+
+Coverage extraction hazards include /examples, filename-shaped strings, cmd.*, and /false values; extraction verifiers must not treat those as product commands without an owning command or coverage record.
+
+Coverage matrix handoff references preserve `Plans/OpenCode_Coverage_Matrix.md`, `/OpenCode_Coverage_Matrix.md`, `Plans/Skills_System.md`, `Plans/Plugins_System.md`, `/Skills_System.md`, and `/Plugins_System.md` when this extraction doc hands audit state to the matrix.
+
+Promoted-feature references preserve `Plans/Section15_MVP_Promoted_Features_Spec.md`, `/Section15_MVP_Promoted_Features_Spec.md`, `Plans/Skills_System.md`, `Plans/Plugins_System.md`, `/Skills_System.md`, and `/Plugins_System.md` for MVP/promoted-feature linkage without making this extraction document the feature owner.
+
+Historical run lineage preserves /successor, /package/node, and historical run labels when extraction evidence describes relationships among package/node work and prior runs.
+
+Projection references preserve /projection, storage-plan, and storage-plan.md evidence while keeping projection ownership in storage and downstream owner docs.
+
+Wiring ghost hazards preserve /ghost, Wiring_Matrix, and Wiring_Matrix.md labels so extraction verifiers do not mistake ghost wiring for live command ownership.
+
+Long-running remediation evidence preserves /reviewer/remediation, super-agent, control-plane, graph-construction, /state, /replan, graph-patch, and long-running labels as extraction evidence for orchestration and remediation owners.
+
+Provider-key examples preserve GPT and /key as evidence of key-shaped provider references, not as a local account schema.
+
+Node attempt lane evidence preserves /node/attempt/lane, orchestrator-subagent-integration, orchestrator-subagent-integration.md, and TierContext compatibility references.
+
+Executor package/seam/lane evidence preserves /package/seam/lane, Executor_Protocol, Executor_Protocol.md, orchestrator-subagent-integration, and orchestrator-subagent-integration.md as downstream owner references.
+
+Owner-of-owners evidence preserves DRY_Rules, owner-of-owners, newfeatures, OpenCode_Coverage_Matrix, Decision_Log, feature-list, and rewrite-tie-in-memo references as extraction lineage for audit routing.
+
+Runtime owner-level evidence preserves /runtime, owner-level, and tier as compatibility labels when older extraction language is compared with current owner docs.
+
+Run relationship labels preserve shares feature seam with run, retry of run, derived from run, and continuation of run as extraction phrases that require explicit relationship modeling before use.
+
+Legacy tier-construction snippets preserve `CrewCreator::Orchestrator { tier_id: format!("interview-phase-...") }`, `CrewCreator::Orchestrator { tier_id: format!(\"interview-phase-...\") }`, CrewCreator, `to_tier_id: Some(format!("interview-phase-..."))`, `to_tier_id: Some(format!(\"interview-phase-...\"))`, thread_id: None, /ownership, to_tier_id, /coordination, tier_id, tier-era, thread_id, and interview-phase as extraction hazards rather than current package/lane owners.
+
+Run graph handoff references preserve Run_Graph_View, Run_Graph_View.md, Orchestrator_Page, Orchestrator_Page.md, human-in-the-loop, and human-in-the-loop.md as downstream owner references.
+
+Reconciliation-readiness evidence preserves `/Crosswalk` and `/routing` dispute risk: Glossary/Crosswalk remain too weak to resolve term/routing disputes cleanly, which keeps downstream addenda accumulating instead of reconciling; this extraction baseline carries enough owner-routing, contradiction, and cleanup-order detail to proceed with downstream reconciliation without restarting discovery.
+
+Multi-model coverage evidence preserves Sonnet-confirmed downstream cohort drift and high-signal, multi-model, and later-model continuation posture: stopping at Opus+Sonnet would leave the user's requested multi-model breadth visibly unfinished, and the remaining partial surface is still high-signal enough to justify later-model continuation.
 
 ## 3. Inputs
 - OpenCode repository: https://github.com/anomalyco/opencode
@@ -99,26 +110,7 @@ Extract reusable, implementation-grade guidance from OpenCode (run modes, agents
 
 ## 5. Output format (for downstream agents)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0400
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - GPT-5.2 mostly confirmed and sharpened the downstream contradictions into exact field/key mismatches.
-  - This is the upstream language source for several downstream consumer drifts already logged.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 For each extracted item, emit a record with:
 - `source`: file path + snippet
 - `category`: tools | permissions | provider_stream | ui_commands | storage
@@ -136,26 +128,6 @@ For each extracted item, emit a record with:
 
 ## 7. Expanded Extraction Coverage
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0401
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.
-  - cmd.*.json
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 7A. Run Modes and Enforcement
 
@@ -229,26 +201,6 @@ User-defined agents from config: processed at lines ~205-231 in `agent.ts`. A us
 
 #### 7B.2 Subagent invocation mechanism
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0402
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `resume_url` as a strong standalone deep-link mechanism
-  - resume_url
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - Task tool (subagent launcher): `packages/opencode/src/tool/task.ts`
@@ -273,26 +225,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 #### 7B.4 Prompt assembly pipeline
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0403
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - assembly stages still say `tier/mode/platform/model`
-  - tier/mode/platform/model
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - System prompt construction: `packages/opencode/src/session/system.ts` -> `SystemPrompt.environment()`
@@ -313,26 +245,6 @@ The prompt assembly pipeline (executed per loop iteration in `SessionPrompt.loop
 
 #### 7B.5 Compaction triggers and continuation summaries
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0404
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - evidence summaries
-  - canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - Compaction logic: `packages/opencode/src/session/compaction.ts`
@@ -396,28 +308,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 #### 7C.5 Ask UI semantics (once / always / reject)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0405
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - reject when `object_kind` is present without `object_id`
-  - object_kind
-  - object_id
-  - reject when `object_id` is present without `object_kind`
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - Reply enum + `reply()` function: `packages/opencode/src/permission/next.ts` (lines ~89-233)
@@ -790,7 +680,7 @@ This section is the canonical mapping from OpenCode extraction categories to Pup
 
 All file paths above are relative to `packages/opencode/src/` in the upstream OpenCode repository (https://github.com/anomalyco/opencode).
 
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
 ---
 
@@ -843,6 +733,7 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md
 2. **Provider transform layer**: The extensive per-provider normalization (Anthropic empty content filtering, Claude toolCallId normalization, etc.) must be replicated in the Puppet Master provider layer.
 3. **Model priority list**: The hardcoded priority list `["gpt-5", "claude-sonnet-4", "big-pickle", "gemini-3-pro"]` should be configurable in Puppet Master.
 4. **Overflow detection**: The regex-based overflow detection patterns (12+ provider-specific patterns) must be maintained and extended as new providers are added.
+5. **Debug model/memory boundary**: Debug or OpenCode-derived extraction must verify model assumptions against `Plans/Models_System.md` (`/Models_System.md`) and Assistant-only memory assumptions against `Plans/assistant-memory-subsystem.md` (`/assistant-memory-subsystem.md`); this baseline reference does not re-own those budgets, injection rules, or retention boundaries.
 
 ---
 

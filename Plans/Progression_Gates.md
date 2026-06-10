@@ -1,97 +1,12 @@
 # Progression Gates (Canonical)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0434
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Research Progress - 2026-03-17 - Wrapper/alias contract in wiring and gates
-  - `Plans/Progression_Gates.md` and `UI_Wiring_Rules.md` still assume command verification is:
-  - Plans/Progression_Gates.md
-  - UI_Wiring_Rules.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - section `7` uses `Plans/Progression_Gates.md#GATE-009` while the references block later lists `Plans/Progression_Gates.md#GATE-011`; the doc is mixing path-only and path-plus-anchor styles inside its own canon examples
-  - 7
-  - Plans/Progression_Gates.md#GATE-009
-  - Plans/Progression_Gates.md#GATE-011
-  - Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates
-  - Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify.
-  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
-  - Plans/Contracts_V0.md
-  - Plans/storage-plan.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Crosswalk.md
-  - Plans/Wiring_Matrix.md
-  - Plans/FileManager.md
-  - Plans/Project_Output_Artifacts.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Promotion classes and gate evidence
 
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-034: Promotion classes and gate evidence
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0442
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - None of these cleanly map to package/seam promotion or lane-pool capacity.
-  - what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.
-  - what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.
-  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.
-  - Tiers
-  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.
-  - `Promotion Revoked`
-  - Promotion Revoked
-  - revoke promotion / seam completion
-  - `Re-request Promotion`
-  - Re-request Promotion
-  - concern that blocks seam completion, promotion, or recovery
-  - `object_kind = promotion`
-  - object_kind = promotion
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-034
-- Fidelity gap refs: cov-034
-- Required fidelity items:
-- Exact required item: Define lane_to_package, package_to_seam_available, and seam_complete promotions
-- Exact required item: Attach exact gate/evidence expectations to each promotion class
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-034: Promotion classes and gate evidence` exists in `Plans/Progression_Gates.md`.
-- Exact acceptance check: The `cov-034` repair states the exact requirement: Define lane_to_package, package_to_seam_available, and seam_complete promotions
-- Exact acceptance check: The `cov-034` repair states the exact requirement: Attach exact gate/evidence expectations to each promotion class
-- Exact acceptance check: The `cov-034` repair is in the owner section for `Plans/Progression_Gates.md` and is not only a downstream consumer note.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -106,27 +21,61 @@ ABSOLUTE NAMING RULE:
 
 ## 0. Scope
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0435
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam is about ownership and scope, not renaming `requested_persona` back into older field families. The field names are already mostly right.
-  - requested_persona
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 This file defines deterministic gates used to validate plan quality and implementation evidence.
+
+### P5 progression owner recovery requirements
+
+- Supporting docs with narrower surface area still feed gate ownership: BinaryLocator_Spec.md, BinaryLocator_Spec, OpenCode cli_launcher, non-existent four-tier ContractRef `/false` cases, Containers_Registry_and_Unraid.md, Containers_Registry_and_Unraid, publish-authority, blocked-payload, command IDs, publish-result, Document_Packaging_Policy.md, Document_Packaging_Policy, GATE, agent-rules-context.md, agent-rules-context, under-enumerates callers, execution-role input, `/Prompt_Pipeline`, and `/help` disclosure must be represented in progression evidence when they affect gate status.
+- Graph and evidence schema gates must track `Plans/plan_graph.schema.json`, `/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `/test_strategy.schema.json`, `Plans/evidence.schema.json`, `/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`, `/gui_automation_manifest.schema.json`, `/node/tier-scoped`, `/package/lane/promotion/account`, `/runtime/storage`, safe-point, contamination, and restore provenance.
+- ContractRef syntax inside `Plans/Progression_Gates.md`, `/Progression_Gates.md`, `Plans/Architecture_Invariants.md`, `/Architecture_Invariants.md`, `Plans/DRY_Rules.md`, `/DRY_Rules.md`, evidence.schema.json, SchemaID, INV, and ContractName references must use the ContractName taxonomy that `Plans/DRY_Rules.md` requires; - This bypasses the accepted taxonomy that gates are allowed to verify.
+- Orchestrator-facing gate UI references through `Plans/FinalGUISpec.md`, `/FinalGUISpec.md`, `Plans/Run_Graph_View.md`, `/Run_Graph_View.md`, `Plans/Widget_System.md`, `/Widget_System.md`, widget.tier_tree, grouped-by-phase graph layouts, `/worker`, `/worker/worktree`, package, seam, lane, contamination state, promotion state, and multiple overseer/worker identities must remain visible in gate expectations.
+- Gate and evidence integrity includes Progression_Gates, run-gates, plan-shard freshness, pm.evidence.schema.v1, `/status`, `/evidence`, tri-state, machine-readable arrays, GATE, `/GATE-012`, GATE-011, GATE-012, attention_required, and blocked escalation without collapsing true blocked state into attention-only evidence.
+- Cross-owner seam docs include `Plans/Wiring_Matrix.schema.json`, `/Wiring_Matrix.schema.json`, `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/FileManager.md`, `/FileManager.md`, `Plans/Decision_Policy.md`, and `/Decision_Policy.md`.
+- Later-model high-risk routing keeps `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/FileManager.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `/Run_Modes.md`, `Plans/Progression_Gates.md`, `/Progression_Gates.md`, `Plans/newtools.md`, `Plans/assistant-memory-subsystem.md`, `Plans/Glossary.md`, `/Glossary.md`, `Plans/Crosswalk.md`, SSOT, `/term`, and later-model ownership failures in the gate-risk inventory.
+- Wiring seam owners `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, and `Plans/Wiring_Matrix.schema.json`, `/Wiring_Matrix.schema.json` are required gate references.
+- Primary owners `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/Wiring_Matrix.schema.json`, `/Wiring_Matrix.schema.json`, `Plans/UI_Wiring_Rules.md`, `/UI_Wiring_Rules.md`, `Plans/Progression_Gates.md`, `/Progression_Gates.md`, and `Plans/Crosswalk.md`, `/Crosswalk.md` must be represented when command and wiring gates are evaluated.
+- `Plans/Wiring_Matrix.schema.json` and `/Wiring_Matrix.schema.json` must carry command-kind and normalization metadata when command wrappers or aliases are gate inputs.
+- Primary wiring owners `Plans/UI_Wiring_Rules.md`, `/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.md`, `/Wiring_Matrix.md`, `Plans/Wiring_Matrix.schema.json`, `/Wiring_Matrix.schema.json`, and `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md` are part of the same gate seam.
+- Gate evidence seams across `Plans/Progression_Gates.md`, `/Progression_Gates.md`, `Plans/evidence.schema.json`, `/evidence.schema.json`, `Plans/UI_Wiring_Rules.md`, `/UI_Wiring_Rules.md`, and `Plans/Wiring_Matrix.md`, `/Wiring_Matrix.md` must stay consistent.
+- Runtime-native approval records use `blocked_reason_code = waiting_approval`, blocked_reason_code, waiting_approval, blocked_sequence, `/runtime`, runtime-native, and runtime-facing action families instead of generic paused state.
+- Primary owner sets for command/wiring continuation include `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/Glossary.md`, `/Glossary.md`, `Plans/FileManager.md`, `Plans/Crosswalk.md`, `/Crosswalk.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `Plans/Progression_Gates.md`, `/Progression_Gates.md`, `Plans/newtools.md`, and `Plans/assistant-memory-subsystem.md`.
+- GPT continuation risk keeps GPT, `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/FileManager.md`, `Plans/Crosswalk.md`, `/Crosswalk.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `Plans/Progression_Gates.md`, `/Progression_Gates.md`, `Plans/newtools.md`, `Plans/assistant-memory-subsystem.md`, and `Plans/Glossary.md`, `/Glossary.md` in the same owner-risk list.
+- Run graph and orchestrator docs `Plans/Run_Graph_View.md`, `/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `/catalog`, compatibility-era identity, `/action`, and command/catalog normalization must be verified before affected gates pass.
+- Widget gates include `Plans/Widget_System.md`, `/Widget_System.md`, project-scoped layouts, terminal-widget normalization, projection-trust chrome, `/lane-aware`, and attempt/lane-aware live data contracts.
+- Normalization ownership across `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/storage-plan.md`, and `/storage-plan.md` must make surface docs converge before gates rely on them.
+- Account/trust gate ownership keeps `Plans/Multi-Account.md`, `/Multi-Account.md`, requested-account, `/history/trust`, design-open, and SSOTs in scope until adjacent ownership is resolved.
+- Permission and HITL gate seams include `Plans/Permissions_System.md`, `/Permissions_System.md`, `Plans/Tools.md`, `/Tools.md`, `Plans/human-in-the-loop.md`, and `/human-in-the-loop.md`.
+- Gate closeout treats duplicate addenda as `/mechanical`; pm.evidence.schema.v1, run-gates, `/evidence`, tri-state, and structured payloads must be represented by numbered gate mappings.
+- Backfill and architecture docs `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/00-plans-index.md`, `/00-plans-index.md`, `Plans/Architecture_Invariants.md`, and `/Architecture_Invariants.md` remain gate-adjacent sources.
+- UI command, contracts, crosswalk, and wiring references `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/Crosswalk.md`, `/Crosswalk.md`, and `Plans/UI_Wiring_Rules.md`, `/UI_Wiring_Rules.md` must be gate-visible.
+- GATE-010 verifies wrapper commands, deprecated aliases, canonical command IDs, command-kind, normalization metadata, GATE, and command IDs without expanding wiring schema more than necessary.
+- Binary locator and architecture owner docs `Plans/00-plans-index.md`, `/00-plans-index.md`, `Plans/Architecture_Invariants.md`, `/Architecture_Invariants.md`, `Plans/BinaryLocator_Spec.md`, and `/BinaryLocator_Spec.md` remain implicated when progression gates depend on binary location semantics.
+- HITL, UI command, and storage owners `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/storage-plan.md`, and `/storage-plan.md` must align before route or approval gates depend on them.
+- Progression_Gates.md owner normalization requires `/wrapper`, command-definition metadata, ContractRef taxonomy, numbered gate canon, GATE, GATE-010, deterministic gate language, routing/wrapper normalization, and wiring evidence.
+- Related owner docs `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/Permissions_System.md`, `/Permissions_System.md`, and `Plans/Decision_Policy.md`, `/Decision_Policy.md` are progression gate inputs when packaging or permission decisions affect promotion.
+- Stewardship refresh artifacts meta.json, mode_rules.md, mode_status.md, mode_rules, mode_status, fresh-agent, and existing packet/run metadata are gate-state references, not a replacement for canonical gate evidence.
+- Actor, receipt, and usage normalization connects `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Runtime_Artifacts_Panel.md`, `/Runtime_Artifacts_Panel.md`, and `/receipt/usage`.
+- Adjacent account/runtime owners include Multi-Account.md, Permissions_System.md, Permissions_System, Glossary.md, Contracts_V0, Contracts_V0.md, Run_Graph_View, Run_Graph_View.md, Prompt_Pipeline, Prompt_Pipeline.md, Orchestrator_Page, Orchestrator_Page.md, storage-plan, and storage-plan.md.
+- Graph-local wrappers may remain for UX readability only when graph-local, cmd.runtime.approve, cmd.runtime.decline, normalization target, and arg derivation are explicit.
+- GATE-010 must relate to `/open` route primitives in Contracts_V0.md, Contracts_V0, wrapper metadata in UI_Command_Catalog.md, UI_Command_Catalog, GATE, and evidence structures that encode normalization and alias failures.
+- `Plans/orchestrator-subagent-integration.md`, `/orchestrator-subagent-integration.md`, and split-brain body/addenda contradictions remain gate-risk inputs.
+- allowed_actions in canonical-looking HITL `/storage` shapes is a gate risk until the deprecation addendum is reflected in owner docs.
+- `Plans/human-in-the-loop.md` and `/human-in-the-loop.md` remain the primary owner for HITL route, approval, and blocked identity semantics referenced by progression gates.
+- The executor-facing contract is mostly normalization across existing owner docs, not a greenfield schema invention.
+- UI_Wiring_Rules, UI_Wiring_Rules.md, Wiring_Matrix, Wiring_Matrix.md, dead-command detection, and over-expanding public command families become gate expectations once a command ID is stable.
+- GATE-010 `/reporting` evidence captures wrapper normalization target, deprecated alias target, and mismatch detection when wrapper commands claim one primitive but wire to different semantics.
+- Wrapper normalization metadata describes canonical primitive family, not serialized route payload.
+- inspector_target and `inspector_target = evidence` are required when the target object is already selected and detail focus must land on evidence.
+- GUI_Rebuild_Requirements_Checklist, GUI_Rebuild_Requirements_Checklist.md, and stale upstream PASS conditions cannot create false confidence in progression gates.
+- Transfer coverage blockers cov-034, cov-511, cov-526, transfer-coverage, owner-definition, and evidence-collection are owner-definition gaps until resolved, not just missing evidence-collection gaps.
+- Widget catalog refresh must replace widget.tier_tree and widget.progress_bars with package, seam, lane, and parallel execution visualizations before the Tiers tab can be renamed or replaced.
+- automation-first defaults must be reconciled with HITL, `/schema`, mandatory gates, optional boundaries, and settings/schema flips.
+- Shared progression states are info, warning, attention_required, blocked, and system_notification.
+- GATE-010 route-aware verification must be explicit, either inside GATE-010 or as a sibling GATE boundary.
+- GATE-011, GATE-012, GATE-010, machine-readable failure arrays, and generic check rows must not diverge across gate patterns.
+- append-only addenda in high-value owner docs are risk signals when stale canonical text remains unreconciled.
+- Deprecated aliases should eventually disappear, while wrapper commands may remain as permanent UX-facing vocabulary when their primitive family is explicit.
 
 ContractRef: Primitive:Gate
 
@@ -167,35 +116,12 @@ Packet verification gates check:
 
 ### Compatibility fallback and contradiction-fail rules
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0441
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover/cascade rules.
-  - still needs actor/lane/account identity, approval provenance, and concurrency-safe queue/scope rules
-  - Keep any surviving `request_id` only as lineage or compatibility metadata for historical replay, not as the primary approval action target.
-  - request_id
-  - `request_id` can survive as compatibility lineage. It cannot remain the primary approval identity.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - If a route_target becomes unreachable between build and promotion, the promotion enters HELD state instead of failing silently.
 - If an OpenSubject resolution contradicts the prior intent (e.g., the issue was closed externally), the gate emits a REJECTION with `rejection_reason: 'subject_state_contradiction'`.
 - Waiver paths: project admins may waive route reachability or subject contradiction using a durable `gate_waiver_rule` in the project config.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/decision_policy.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
 
 ## 1. Verifier role (AI-only; deterministic)
 The Verifier is an AI role that runs these gates and returns a progression decision.
@@ -226,25 +152,6 @@ ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GA
 
 ### Verifier scope boundary
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0445
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam reinforces the earlier boundary:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 `python3 scripts/pm-plans-verify.py run-gates` is the canonical repo-local verifier command for build-governing Puppet Master repository artifacts.
 
@@ -255,30 +162,16 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate
 
 ### Verifier result normalization
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0444
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.
-  - This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Verifier result normalization canonical rules
 
 - Individual gates MAY expose machine states beyond `PASS` / `FAIL` for workflow or UI purposes.
 - For the Verifier's top-level progression decision, any gate state other than `PASS` MUST be treated as a blocking non-pass outcome.
 - The original gate-specific state MUST still be preserved in machine-readable evidence.
+- Model-label normalization keeps raw IDs exact for runtime/API use; normalized labels are display-only and do not replace machine-readable model IDs in verifier evidence.
+- Recovery pass results that launch or resume a packetized run preserve a pointer to the original work item/run; for post-audit recovery of `r-20260312-203855-07`, the verifier treats the existing `packetized` work item as the recovery target instead of requiring a new work item.
+- Route result evidence distinguishes routing/deep-link normalization from FileManager UI conveniences; FileManager open/copy behavior can consume the route result, but it is not the owner of the normalized route identity.
+- Corroboration and review results preserve participant outputs, quorum result, accepted / not accepted / advisory-only classification, and resulting concern, `/promotion/patch`, or graph-patch implications in machine-readable evidence.
 
 ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2
 
@@ -302,6 +195,7 @@ Pass condition:
 - the source package is complete
 - target package prerequisites are resolved
 - cross-package transition readiness validates prerequisite resolution, context handoff preparation, and contract compatibility
+- feature-seam overseer evidence validates cross-package coherence, integration correctness across package boundaries, style/architecture consistency, seam-level "did we actually build the intended thing" judgment, and authority to withhold seam completion when integration quality is weak even if constituent packages passed
 
 ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
@@ -334,25 +228,7 @@ ContractRef: SchemaID:plan_graph.schema.json, SchemaID:evidence.schema.json, Sch
 <a id="GATE-002"></a>
 ## GATE-002 -- Spec Lock integrity
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0436
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane scheduler integrity
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 **Pass condition:**
 - `Plans/Spec_Lock.json` pins schema versions and locked decisions, and
 - every `canonical_ssot_hashes.files[*].sha256` matches the current file contents for the listed SSOT files.
@@ -386,33 +262,14 @@ ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invari
 <a id="GATE-004"></a>
 ## GATE-004 -- Forbidden deps + drift phrases
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0437
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - If `cmd.nav.*` is adopted later, this seam will need reconciliation early, or the catalog/wiring/gate stack will drift immediately.
-  - cmd.nav.*
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 **Pass condition:**
 - No build-governing doc introduces forbidden dependencies from Spec Lock, and
 - no drift phrases exist in build-governing docs: `TBD`, `Open Questions`, `ask later`.
 
 **Script enforcement status:** `run-gates` currently enforces the drift-phrase half of this gate.
 
-ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4
+ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4-forbidden-patterns-drift-accelerators
 
 ---
 
@@ -459,8 +316,11 @@ The gate must fail when any of the following are true:
 - a public wrapper command lacks declared normalization metadata
 - a deprecated alias is treated as an independent canonical command
 - a routed command bypasses the canonical `route_target` / `OpenSubject` contract family
+- routing-adjacent owner docs contain unresolved spec-integrity defects that make route/open verification ambiguous or contradictory
 - a command row claims layout-only semantics while actually targeting a runtime object, usage object, or cross-surface focus action
 - a command/action payload still keys approval or usage correlation by `request_id` or `tier_id` where blocked/runtime or usage identity is canonical
+- command-family expansion is a broad-pass change: Source Control `git*`, GitHub Actions `actions*`, Docker Manager, and Docker `/registry/Kubernetes` command-family additions also require wiring-matrix expansion and renewed `GATE-010` coverage
+- built-in chat command namespaces such as `git*` and `actions*` stay reserved; chat and file-tree surfaces are consumers of Source Control and GitHub Actions command contracts, not independent feature-owner command namespaces
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md
 
@@ -475,25 +335,6 @@ Evidence for this gate must capture:
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json
 ## GATE-011 -- Requirements traceability coverage
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0438
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - owner-doc supersession and traceability failures are now the dominant risk
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Pass conditions (ALL must hold; deterministic, no soft thresholds, no flag-driven overrides):**
 
@@ -637,26 +478,6 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 <a id="GATE-014"></a>
 ## GATE-014 -- Document Set packaging verification
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0439
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The real seam is no longer “path vs not path”; it is “workspace document open vs subject/identity open.”
-  - This seam is what makes the route-target work practical to reconcile across the existing doc set.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 `GATE-014` verifies packet completeness against the reconciled impacted-doc set.
 
@@ -666,10 +487,17 @@ The gate must fail when any of the following are true:
 - a packet uses append-only placement where canon replacement/retirement is required
 - a packet targets a structured container indirectly instead of replacing the owning headed section with the final canonical content
 - a packet preserves stale tier-era, request-era, or legacy tier-level gate text as a peer option rather than collapsing to the canonical `package_complete_gate`, `seam_complete_gate`, and `lane_complete_gate` model
+- For Debug Mode and Investigation Context packetization, GATE-014 treats `Plans/Commands_System.md` (`/Commands_System.md`), `Plans/Glossary.md` (`/Glossary.md`), `Plans/FileManager.md` (`/FileManager.md`), and `Plans/human-in-the-loop.md` (`/human-in-the-loop.md`) as MUST RECONCILE docs whenever the packet touches debug dispatch commands, canonical debug/runtime terms, workspace-file attach/open behavior, or run-scoped investigation approvals.
 
 ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
+### 14.1 Packet Document Set Rule
+
+`GATE-014` treats the packet document set as exactly the MUST CHANGE plus MUST RECONCILE docs. `MUST VERIFY` docs are pre-emit consistency checks, not primary packet docs. `protocol/checklist/reference` docs may be `MUST VERIFY` when they are mostly aligned but likely to become misleading if overlooked; they must be checked before packet emission even when they do not become packet write targets. Derived-only regen-only outputs such as `Plans/_shards/**` stay out of the packet intent set.
+
 Verification-only docs may be absent from the packet only when the reconciliation pass explicitly confirmed they do not require edits for the current change set.
+
+Instant Grep packet verification treats `Plans/Architecture_Invariants.md`, `Plans/BinaryLocator_Spec.md`, and `Plans/usage-feature.md` as impacted verification-only references; they may stay out of the packet only when reconciliation confirms their invariants, binary/helper discovery, and usage analytics contracts require no canonical edit.
 
 ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/00-plans-index.md, ContractName:Plans/feature-list.md
 ## References
@@ -755,29 +583,15 @@ Progression gates for this feature set must confirm:
 - blocked outcomes are not mislabeled as generic failures
 - draft decomposition fallback is scoped to pre-lock stages only
 - queue-analysis visibility exists in at least one canonical UI surface
+- a recovery-plan leaves active blockers unresolved by choosing `append` or `verify_only` when `replace_section` is required to repair or retire stale owner canon
+- a Scribe packetization plan uses a standalone `replace_section` for a trailing subsection that has no later same-level peer heading; for example, when re-packetizing `Plans/Media_Generation_and_Capabilities.md`, `### 5.2 Disabled-reason messages` is not a safe standalone anchor because there is no later `###` before `## 6. Acceptance criteria`, so the plan targets `## 5. UI copy strings` or another true owner section instead of the trailing `### 5.2`
+- Missing-spec recovery verifies all impacted topics, not only a narrow web-related subset, before the recovery work can be called complete.
+- secondary buildability findings remain behind the ledger-backed missed-transfer set in packet verification priority and cannot be used to declare missed-transfer recovery complete
+- Crosswalk and `/Progression` structural repair adds rewrite-era runtime/governance primitives/gates to canonical gate sections instead of leaving those requirements stranded in prose addenda
 
 The gate should fail when any of the above are contradicted by packetized docs.
-## Runtime Scheduler Packet Verification Reconciliation Addendum (2026-03-09)
+## Runtime Scheduler Packet Verification Canonical Alignment (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0440
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Reconciliation order for this seam should be:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Add verification checks for:
 - canonical event-name precedence (`scheduler.pass` and related canonical names win over legacy aliases)
@@ -802,25 +616,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 
 ### Gate rule clarification: canonical blocked-payload field name
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0443
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam reinforces a rule already visible elsewhere:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The verification sweep rule that flags docs using `recovery_options[]` or `allowed_actions[]` as the canonical shared blocked-payload field now also flags any prescriptive usage (payload definition, schema, storage shape, or contract) of these deprecated names. The sole canonical name is `allowed_action_ids[]`.
 

@@ -1,355 +1,23 @@
 # Worktree & Git Improvement -- Implementation Plan
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - worktree behavior
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-  - Suggested Research Follow-Ups
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0540
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - worktree behavior
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-  - Suggested Research Follow-Ups
-- Exact required items represented:
-  - how are worktrees assigned for parallel nodes within the same package or seam
-  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work
-  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result
-  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism
-  - Define lane↔worktree mapping
-  - Specify [retired-token-14] detection and cross-lane reuse rules
-  - Define [retired-token-11] restore for lane/package context
-  - Resolve [retired-token-4] vs [retired-token-3] contradiction
-  - Register PM-managed worktrees in source control visibility
-  - Remove legacy `[retired-token-9]` / `[retired-token-10]` drift and [retired-token-15].
-  - Normalize [retired-token-11] / [retired-token-12] / [retired-token-13] / [retired-token-14] terminology into one authoritative mapping and event taxonomy.
-  - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.
-  - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.
-  - Specify package-based worktree lane pools, including lane ownership, pool sizing, [retired-token-14] detection, [retired-token-11] restore behavior, and Source Control visibility.
-  - Worktree / SCM / Parallelism Impacts
-  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.
-  - ownership is still described as run/tier/subtask worktree ownership
-  - Worktree plan cleanup = removing worktree directories after merge/completion
-  - `removed` means the live worktree directory is gone
-  - removed
-  - open worktree
-  - prune/remove worktree
-  - historical run/package/node/lane references MUST survive after live worktree cleanup
-  - still references `Tiers` and per-tier worktree ownership.
-  - Tiers
-  - has `worktree_id` and historical receipt linkage, but likely needs lane/package/seam linkage added so worktree records do not remain stranded as flat Git objects.
-  - worktree_id
-  - `worktree filesystem state`
-  - worktree filesystem state
-  - cleanup of files inside a worktree is not the same thing as removing the worktree itself.
-  - worktree health/state badges
-  - keep worktree references contextual, actionable, and deep-linkable
-  - backing worktree may be removed
-  - `Worktree Removed`
-  - Worktree Removed
-  - removing a worktree directory
-  - remove/prune/archive worktree
-  - whether the backing worktree will be removed
-  - Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.
-  - live worktree existence
-  - worktree = concrete Git/filesystem backing object
-  - Recommended worktree row posture:
-  - explicit destructive removal of live worktree backing after confirmation and eligibility checks
-  - remove on a worktree with blocked/recovery lineage may approach `hard_gate`
-  - hard_gate
-  - worktree archived vs removed are distinct
-  - `GitHub_Integration.md` still frames worktree ownership around `run/tier`
-  - GitHub_Integration.md
-  - run/tier
-  - Workflow entry and worktree rules are no longer globally uniform:
-  - Source Control emphasizes worktree as concrete Git object
-  - still missing core persistence/acceptance sections and still under-specifies historical mode, worktree partitioning, and precise usage/deep-link behavior
-  - Lane-aware scheduling still does not flow into worktree and active-agent tracking.
-  - Worktree blocked reasons and historical lineage preservation still lack a single clear owner/emitter model.
-  - `WorktreeGitImprovement.md` now has a sharper ownership split: `worktree_id` is first-class in `storage-plan.md` and `GitHub_Integration.md`, while the worktree plan still centers `tier_id`/filesystem path; it also still splits `base_branch` ownership across run config vs Git panel state and still returns raw git-hook errors instead of canonical blocked episodes.
-  - WorktreeGitImprovement.md
-  - storage-plan.md
-  - tier_id
-  - base_branch
-  - durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.
-  - durable worktree identity / filesystem / git backing
-  - current lifecycle/status projection for the worktree
-  - active worktree refs
-  - historical worktree refs
-  - `selected_worktree_id?` in project UI state is not a substitute for a durable worktree record family.
-  - selected_worktree_id?
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - worktree detail:
-  - `object_kind = worktree`
-  - object_kind = worktree
-  - consume worktree object routing rather than inventing a separate SCM-local navigation identity
-  - Reclassify worktree selection and open-in-SCM flows as object navigation, not pure layout state.
-  - Research Progress - 2026-03-17 - Worktree and SCM routing consumers
-  - historical runs must preserve historical worktree references after prune/remove
-  - Replace tier-bound worktree identity in SCM/runtime flows with the newer lane/worktree plus execution-context model.
-  - reclassify worktree selection and thread Usage focus/open as navigation wrappers
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - still mirrors worktree ownership through `tier_id`
-  - Git/worktree sections still use `tier_id` as worktree ownership glue
-  - summary: Re-audited the already-condensed blocker bundle in smaller target passes and found one more precision improvement: assistant-chat blocked-state headings are real, so that blocker is now more clearly a skeletal consumer-payload problem rather than a missing-section problem.
-  - `[retired-token-24]` sharpened: the broken `[retired-token-21]` reference survives not only in `[retired-token-20]` but also in `[retired-token-23]` and `[retired-token-22]`, while `[retired-token-19]` still preserves the `[retired-token-25]` contradiction.
-  - [retired-token-24]
-  - [retired-token-21]
-  - [retired-token-20]
-  - [retired-token-23]
-  - [retired-token-22]
-  - [retired-token-19]
-  - [retired-token-25]
-  - `[retired-token-22]:704-708`
-  - [retired-token-22]:704-708
-  - This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `[retired-token-22]` into the unresolved blocker set, and raised the underlying evidence count to fifty-four.
-  - `[retired-token-31]` sharpened: `[retired-token-27]` still points at the missing `[retired-token-23]#[retired-token-26]` anchor, and both `[retired-token-28]` and `[retired-token-22]` still point at the missing `[retired-token-23]#Restart and stale history` anchor in addition to the already-carried missing `[retired-token-26]` heading.
-  - [retired-token-31]
-  - [retired-token-27]
-  - [retired-token-23]#[retired-token-26]
-  - [retired-token-28]
-  - [retired-token-23]#Restart and stale history
-  - [retired-token-26]
-  - `[retired-token-22]:134-150`
-  - [retired-token-22]:134-150
-  - `[retired-token-22]:142-144`
-  - [retired-token-22]:142-144
-  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus [retired-token-14]/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `[retired-token-22]:62-66` and `[retired-token-22]:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
-  - cov-526
-  - obl-222
-  - Plans/Crosswalk.md:88-94
-  - [retired-token-22]:62-66
-  - [retired-token-22]:78-80
-  - Plans/orchestrator-subagent-integration.md:28-41
-  - working_ledger.md:L806
-  - working_ledger.md:L1036
-  - `[retired-token-22]:62-66`
-  - `[retired-token-22]:78-80`
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Source Control and worktree handshake
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+### Lane vs worktree lifecycle split
 
-### Fidelity recovery cov-041: Source Control and worktree handshake
 
-### Reconciliation addendum
+### Historical semantic consistency
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0548
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.
-  - Research Progress - 2026-03-16 - Source Control / Worktree Handshake
-  - Reword Source Control worktree rows from `owner run/tier` to something like:
-  - owner run/tier
-  - Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:
-  - Source Control / worktree implication
-  - no unresolved blocked recovery requiring that exact worktree
-  - Because Source Control is narrow, it should default to compact current/live worktree rows with filters/toggles for:
-  - safe-point and blocked recovery lineage can keep an old worktree relevant even after supersession
-  - Orchestrator-owned worktree partitioning still exists only as row metadata (`owner run/tier`) in Source Control docs, not as a canonical grouping/partition contract
-  - Move worktree docs onto node/lane-aware vocabulary and define projection authority between Source Control and Orchestrator receipt lineage.
-  - Move worktree ownership to lane/worktree plus canonical run/node/attempt references, with Source Control remaining worktree-first at the UI level and Orchestrator remaining lane/package/seam/node-first operationally.
-  - Source Control / worktree docs still describe boundary ownership in prose only; they still do not anchor one shared projection object or route payload that other surfaces can rely on.
-  - Source Control and worktree docs still lack one durable object family for worktree ownership, restart authority, and historical lineage preservation.
-  - Normalize Source Control worktree selection through `object_kind = worktree`.
-  - object_kind = worktree
-  - Source Control worktree selection is still described as UI state only even though worktree identity is now a first-class routed object in the broader model.
-  - Keep Source Control worktree-first, but route by canonical worktree object identity rather than treating worktree selection as shell state or tier metadata.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-041
-- Fidelity gap refs: cov-041
-- Required fidelity items:
-- Exact required item: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
-- Exact required item: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-041: Source Control and worktree handshake` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-041` repair states the exact requirement: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
-- Exact acceptance check: The `cov-041` repair states the exact requirement: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
-- Exact acceptance check: The `cov-041` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
-
-### Fidelity recovery cov-059: Lane vs worktree lifecycle split
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0549
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical.
-  - 5. **Specify package-based worktree lane pools end-to-end.**
-  - what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery.
-  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.
-  - a lane may preserve historical identity after the live worktree has been cleaned up, archived, or removed.
-  - archive lane worktree
-  - lane / worktree
-  - recreate a pruned worktree lane only via new runtime action, not true undo
-  - Research Progress - 2026-03-16 - Lane / Worktree Cleanup Lifecycle
-  - a lane may remain historically important after its live worktree is archived or removed
-  - a live worktree may be operationally suspect even while the lane remains active in orchestration terms
-  - Orchestrator should continue to present the lane state and show worktree status in context.
-  - Define distinct lane and worktree lifecycle states, with explicit mapping but no forced identity collapse.
-  - Worktree lane binding and historical lineage preservation are now correctness requirements, not nice-to-have source-control polish.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-059
-- Fidelity gap refs: cov-059
-- Required fidelity items:
-- Exact required item: Gate cleanup on runtime/recovery/lineage checks rather than age alone
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-059: Lane vs worktree lifecycle split` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-059` repair states the exact requirement: Gate cleanup on runtime/recovery/lineage checks rather than age alone
-- Exact acceptance check: The `cov-059` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-076: Historical semantic consistency
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0550
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - restore attempts and recovery episodes need current vs historical semantics
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-076
-- Fidelity gap refs: cov-076
-- Required fidelity items:
-- Exact required item: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-076: Historical semantic consistency` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-076` repair states the exact requirement: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
-- Exact acceptance check: The `cov-076` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-169: Coverage blocker provider/model precedence owner section
-- Coverage rows: cov-169
-- Fidelity gap refs: cov-169
-- Required fidelity items:
-- Exact required item: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
-- Exact required item: Tie that section to parallel-node worktree assignment and ownership transitions
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-169: Coverage blocker provider/model precedence owner section` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-169` repair states the exact requirement: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
-- Exact acceptance check: The `cov-169` repair states the exact requirement: Tie that section to parallel-node worktree assignment and ownership transitions
-- Exact acceptance check: The `cov-169` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-171: Coverage blocker worktree allocation strategy
-- Coverage rows: cov-171
-- Fidelity gap refs: cov-171
-- Required fidelity items:
-- Exact required item: Define concrete worktree allocation strategy
-- Exact required item: Define contamination, reuse, and cleanup rules for that strategy
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-171: Coverage blocker worktree allocation strategy` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-171` repair states the exact requirement: Define concrete worktree allocation strategy
-- Exact acceptance check: The `cov-171` repair states the exact requirement: Define contamination, reuse, and cleanup rules for that strategy
-- Exact acceptance check: The `cov-171` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-189: Projection fields for startup rehydration
-- Coverage rows: cov-189
-- Fidelity gap refs: cov-189
-- Required fidelity items:
-- Exact required item: Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery
-- Exact required item: Carry dirty_state and conflict_state in worktree projections
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-189: Projection fields for startup rehydration` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-189` repair states the exact requirement: Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery
-- Exact acceptance check: The `cov-189` repair states the exact requirement: Carry dirty_state and conflict_state in worktree projections
-- Exact acceptance check: The `cov-189` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
-### Fidelity recovery cov-206: Lane cleanup lineage fields
-- Coverage rows: cov-206
-- Fidelity gap refs: cov-206
-- Required fidelity items:
-- Exact required item: Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-206: Lane cleanup lineage fields` exists in `Plans/WorktreeGitImprovement.md`.
-- Exact acceptance check: The `cov-206` repair states the exact requirement: Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families
-- Exact acceptance check: The `cov-206` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
-
+### Coverage blocker provider/model precedence owner section
+### Coverage blocker worktree allocation strategy
+### Projection fields for startup rehydration
+### Lane cleanup lineage fields
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -413,25 +81,6 @@ The orchestrator reads **PuppetMasterConfig** from `ConfigManager::discover()` (
 
 ### GUI updates needed
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0551
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This should stay short and deep-link into Usage/Authentication/Orchestrator as needed.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Yes.** All Git/worktree-relevant settings must be visible and wired. Required: Branching tab (Enable Git, Auto PR, Branch strategy, optional Use worktrees/Parallel note); optional worktree list and "Recover orphaned worktrees" (placement: **Health** tab per FinalGUISpec); Git info for **active project**; tooltip cleanup. See [Section 4](#4-gui-for-git--worktrees) and Phase 4 checklist. Align with FinalGUISpec §7.4 (Branching and Health) and MiscPlan §7.5 (project path, Option B, cleanup ownership).
 
@@ -449,32 +98,12 @@ The plan is **ready to implement** with the following in mind:
 
 ### 2.0 Symlink resolution in worktree paths
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0543
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Align worktree docs around `worktree_id` as durable identity and `lane_id` as operational lineage, rather than continuing to let tier IDs or raw paths carry canonical meaning.
-  - worktree_id
-  - lane_id
-  - open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.
-  - worktree paths and branches keyed by `tier_id`
-  - tier_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### 2.0.1 Worktree path guard rules
 
 Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.
+
+Search/index paths that interact with worktrees or remote caches are canonicalized before use and validated with `starts_with(project_root)` or `starts_with(cache_root)`. This includes paths derived from `.gitmodules`/gitmodules, dirty staging notifications, remote file-change notifications, and file watcher events; submodule paths containing `..` are rejected with a logged warning before affecting a project tree or remote `cache_root`. Index-build walks and ripgrep verification default to `--no-follow` / `no-follow`; a "Follow symlinks" indexing setting is OFF by default, and when enabled PM still canonicalizes the resolved target and reapplies `starts_with(project_root)` before indexing or verifying it.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
 
@@ -484,6 +113,16 @@ Required:
 - The `working_directory` passed to FileSafe `check_file_write` MUST be the real path of the worktree root, not a symlinked alias.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+
+### 2.0A Assistant worktree command and ownership rules
+
+- Compare buttons for assistant/worktree rows open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`, with `compare_origin` set to the base branch ref (e.g. `main`).
+- `cmd.chat.worktree.create` and `cmd.chat.worktree.remove` delegate to `WorktreeManager`; worktree creation/removal is user/system-initiated infrastructure, not agent-tool-gated, and agents do not run raw `bash` `git worktree add` or removal commands.
+- Git-aware tools such as `git status` auto-scope to the worktree through process `cwd`.
+- Branch rename follows `chat.thread_title_generated`; merge and PR command when-clause checks require the worktree not be on detached HEAD.
+- Branch existence checks use `git rev-parse --verify refs/heads/{branch}` before create; existing branch reuse uses `git worktree add <path> <branch>`.
+- Detached transitions refresh `worktree_projection.v1`; Source Control rows for orch-owned worktrees show `Open Lane` instead of `Open Thread`.
+- `Permissions_System.md` remains unaffected by this worktree creation/removal contract because worktree creation and removal are routed through Source Control and `WorktreeManager`.
 
 
 ### 2.1 Base branch for worktree creation
@@ -503,31 +142,6 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.3 Merge conflicts: worktree kept but re-run can destroy it
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0544
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.
-  - tier_id
-  - Evidence items can be exported
-  - These can be linked, but should not be collapsed into one object model.
-  - `cmd.source_control.select_worktree` still claims `layout/UI state only`, which conflicts with object-first routing and worktree identity
-  - cmd.source_control.select_worktree
-  - layout/UI state only
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
@@ -543,47 +157,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 2.5 Branch already exists when recreating worktree
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0545
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `source_control.project_state.{project_id}` already has `selected_worktree_id?`
-  - source_control.project_state.{project_id}
-  - selected_worktree_id?
-  - `requested_account_policy` exists
-  - requested_account_policy
-  - `effective_account_id` exists
-  - effective_account_id
-  - canonical docs already model `requested_account_policy`
-  - canonical docs already model `effective_account_id`
-  - `trust_tier` already exists in preview/browser state
-  - trust_tier
-  - `usage_record` already carries `attempt_id?`
-  - usage_record
-  - attempt_id?
-  - `attempt_record` already has `provider_attempt_ref?`
-  - attempt_record
-  - provider_attempt_ref?
-  - This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered places.
-  - `object_id` should use the canonical domain identity already present in the docs:
-  - object_id
-  - Owner docs already implicated:
-  - owner docs already contain stronger rewrite-era addenda
-  - The doc is already ahead on identity in some places:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Gap:** If the branch (e.g. `subtask/ST-001-001-001`) already exists (e.g. after incomplete cleanup), `git worktree add -b <branch> <path>` fails with "fatal: A branch named '...' already exists."
 - **Fix:**
@@ -596,27 +169,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0546
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Recommended lane/worktree lifecycle vocabulary:
-  - Some families clearly need local lifecycle terms, and the docs do not yet sharply separate “cross-family historical overlays” from “family-local workflow states.”
-  - still cannot support durable historical worktree lineage or multi-identity SCM audit without new record families.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Lane and worktree lifecycle
 - Lanes own worktrees through explicit allocation and handshake.
@@ -663,7 +215,37 @@ Allocation rules:
 - parallel nodes receive distinct worktree allocations unless they explicitly reuse an existing clean allocation owned by the same effective scope
 - contamination, dirty-state, conflict-state, blocked recovery, or lineage mismatch disqualify reuse and force a new allocation or explicit repair
 - cleanup only occurs after lineage-safe completion or archival and MUST preserve the historical record of the lane/worktree pair
+- run-completion cleanup waits for the owning cleanup grace period before deletion; the cleanup worker records `grace_period_ms`, performs a file-lock check, and refuses deletion while active locks, safe-point refs, terminal/editor sessions, or blocked recovery lineage still reference the worktree
+- `worktree.deleted` may be emitted only after the grace-period and file-lock checks pass; `worktree.created` records the allocation path, branch, lane/run/package lineage, and source-control owner before a node begins work in that tree
 - ownership transitions between scopes MUST update the effective provider/model choice together with the lane/worktree assignment record
+
+#### Runtime lineage transfer and restore targeting
+- Worktree ownership transfer requires an explicit runtime lineage event; replan must either rebind explicitly to new attempt lineage or allocate new worktree lineage, never silently inherit prior ownership.
+- Manual prune/remove stays forbidden while the worktree is `active` or `blocked_preserved` unless the explicit override policy permits it and records the override.
+- Restore and retry payloads, including `cmd.runtime.restore_safe_point_then_retry`, carry exact SCM targeting: `repo_id`, `worktree_id`, and `baseline_target`.
+- `baseline_target` is a closed candidate enum for restore/retry targeting: `safe_point`, `historical_commit`, and `worktree_head`.
+- Retry and `/fresh-attempt` commands must support the same SCM targeting and reuse policy; runtime rejects restore/retry when the targeted worktree or baseline cannot be validated instead of substituting another worktree.
+- Legacy `git_panel/*` and `git_panel` state is one-time migration input into `source_control.project_state.{project_id}` only. Settings-owned policy such as `branching.base_branch` remains canonical settings policy, followed by canonical Source Control project state, with legacy `git_panel/*` consulted only when the canonical key is absent; no new build writes both legacy and canonical keys.
+
+#### Worktree identity, active context, and copy contracts
+
+Source Control owns the live SCM truth for current repo/worktree state, while Health is a read-only diagnostic and `/validation` mirror unless a repair utility deep-links back into Source Control. Worktree projection keys use `project_id/repo_id/worktree_id`; the compact `/repo_id/worktree_id` display is allowed only as a label over canonical IDs. `repo_id` is stable per project repo root, `worktree_id` is stable per concrete worktree instance, `worktree_path` is display/navigation state, and a `/recovered` or recreated path gets a new durable instance marker rather than inheriting stale identity. Every `multi-worktree` and multi-active-worktree view reads these IDs from durable-storage state before rendering live SCM affordances.
+
+Remote-mode and `/SSH` projects still use the same canonical IDs. Remote `worktree_path` is a remote path string, not a local-path-oriented mirror path. `Open in Source Control` opens a remote-aware Source Control context; if connectivity is lost, Source Control stays visible in degraded read-only mode with exact disabled reason. Historical remote worktrees that no longer exist open a synthetic `/lineage` review context from receipts and commit range instead of pretending current live state is historical.
+
+Historical and active links must declare state scope: `historical_snapshot`, `live_state`, or `compare_historical_to_live`. Active attempts default to live state; completed-run review defaults to compare_historical_to_live; `worktree-to-worktree` review has no implicit second target and the user must choose one. Compare target defaults are deterministic: active attempt uses attempt baseline commit; blocked `dirty_worktree` uses the last safe reusable baseline; blocked `worktree_conflict` uses merge target branch tip plus conflict file set; retry from safe point uses `safe_point_id`; fresh attempt uses `Base branch`; historical run review compares run commit range against recorded base commit. The `compare_target` source must always be labeled.
+
+Orchestrator multi-active-worktree presentation uses `primary_active_context` and `additional_active_context_count`. The primary context is selected by explicit user-selected run/node/attempt, then most recently state-changed running attempt, then stable fallback. `Current Task` shows the primary context plus `+N parallel contexts`; the drilldown lists every active-worktree with `run_id + node_id + attempt_id`, `/tier`, worktree, branch, status, and blocked or `/conflict` indicator. Blocked CTA cards are episode-specific and remain tied to the blocked episode; `blocked_preserved` and safe-point-preserved worktrees stay reserved until explicit `/release`.
+
+`Progress > Current Task` and `Progress > Orchestrator Status` consume the same first-class SCM status strip instead of assistant-chat-local worktree summaries. The status payload includes `repo_id`, `repo_root`, `worktree_id`, `worktree_path`, compatibility `worktree_id/path`, `worktree_status`, `branch_name`, `base_branch`, `upstream_remote`, `upstream_branch`, `head_commit_oid`, `baseline_commit_oid`, optional `compare_target`, `ahead_count`, `behind_count`, `dirty_file_count`, `conflict_file_count`, `owner_run_id`, `owner_node_id`, compatibility `owner_tier_id`, `owner_attempt_id`, optional `safe_point_id`, `requires_safe_point_restore`, and optional `active_git_operation`; `dirty_worktree`, `/worktree`, and `/conflict` deep-link end-to-end through Source Control and Orchestrator owner routes.
+
+Lifecycle state names are reserved: `reserved`, `active`, `blocked_preserved`, `released`, and `Orphaned` or `orphaned`. Attachment and `/detachment` happen at run start, attempt start/end, blocked episode start/end, safe-point restore, replan, abort, restart recovery, and manual recover/prune/reuse (`/prune/reuse`). Manual `/prune/reuse` remains blocked while ownership is active or blocked_preserved unless override policy records the ownership change.
+
+User-facing copy distinguishes action nouns across Source Control, GitHub Actions, Docker publish, Kubernetes, and Orchestrator: `Rebind`, `Start fresh`, retry, resume, recover, and restore are not interchangeable. Receipt nouns are also reserved: `Receipt`, `History`, `Evidence`, `Log`, and `Ledger` are different surfaces or artifacts, and a receipt row must not become generic History or Evidence by loose copy drift. Worktree glossary terms `Repo`, `Worktree`, `Branch`, `Base branch`, `Compare target`, `Owner`, `Lineage`, `Safe point`, `Restore point`, and `Orphaned` are reserved because each can have both Git-native and Puppet-Master-specific meaning.
+
+Blocked-state copy has a `reason-family` translation layer with structured-copy templates and typed placeholders for target identity, missing capability, blocked step, recovery action, and timestamp. Canonical families include approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, and stale-data-blocked. Docker and `/Kubernetes` availability copy distinguishes Unsupported, Unavailable, Not configured, Unauthorized, Unreachable, Degraded, and Partial capability, and every `/explainer` derives from canonical reason/state keys instead of ad hoc English.
+
+SCM `/receipt` lineage records include worktree path/worktree id, branch, commit range, base branch, PR number and URL when applicable, GitHub Actions run/job/step refs, preview/container/compose runtime refs, image tag/digest/registry host, template repo/push status, and Kubernetes context/namespace/workload/rollout identity. This receipt data supports historical review, `Current Branch`, `/branches/background`, and owner-surface CTAs without turning the Worktree doc into the owner for GitHub Actions, Docker Manager, or Kubernetes behavior.
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
@@ -700,7 +282,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSaf
 | Exit 0 | success | proceed normally |
 | Exit 1 with `nothing to commit` on stdout | informational | proceed (not an error for commit operations) |
 | Exit 1 (generic failure) | fatal | fail the operation with structured error; do not retry |
-| Exit 128 + signal (e.g., SIGKILL, SIGTERM) | fatal | fail immediately; report the signal in the error |
+| Exit 128 + signal (e.g., SIGKILL, SIGTERM) | fatal | fail immediately (`/fail-immediately`); report the signal in the error |
 | Exit 128 (ambiguous) | fatal | fail the operation; log full stderr for diagnosis |
 | Lock contention (`index.lock` exists) | retryable | retry once after 500ms backoff; fail on second attempt |
 | Network timeout (fetch/push/clone) | retryable | retry with exponential backoff (max 3 attempts, base 1s) |
@@ -711,7 +293,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
 Rules:
 - Retryable scenarios MUST use bounded retry with backoff. Maximum 3 retry attempts for network operations; maximum 1 retry for lock contention.
-- Fatal scenarios MUST NOT be retried. The operation fails with a structured error that includes the git command, exit code, and stderr content.
+- Fatal scenarios MUST NOT be retried or skipped (`skip-silently-never`). The operation fails with a structured error that includes the git command, exit code, and stderr content.
 - The `nothing to commit` case is the only exit-1 scenario that is not treated as a hard error. All other non-zero exits follow the hard-error rule from §3.0.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
@@ -720,9 +302,11 @@ Every git subprocess that mutates or validates PM-managed state MUST treat a non
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md
 
+The pre-write and post-stage git checks are session-scoped to the active PM-managed worktree. FileSafe snapshots and recoverable backups must align with `FileSafe.md#11.1.2a` and this hard-error rule rather than masking a failed `git status --porcelain` or git mutation subprocess.
+
 Required behavior:
-- after `git add`, verify staged state with `git status --porcelain`
-- do not silently swallow non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent mutation-sensitive commands
+- after `git add`, run a post-add `git status --porcelain` verification before accepting any `/commit-sensitive` staged-state transition
+- do not silently swallow non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent `/commit/stash/checkout` mutation-sensitive commands
 - distinguish `nothing to commit` from generic failure, but do not treat genuine git command failure as informational noise
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
@@ -787,9 +371,33 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 ## 4. GUI for Git & Worktrees
 `Source Control` remains the Git/worktree owner surface.
 
+### 4.2 GUI improvements
+
 Rules:
 - The GUI model stays `worktree-first` when it hands off to Source Control.
 - Cross-references now point at `Plans/Orchestrator_Page.md#Source Control boundary` rather than the stale numbered anchor.
+
+### 4.0 Worktree topology and safe actions
+
+This feature-by-feature wiring contract for `Worktree topology view` makes worktrees first-class instead of hidden plumbing. Its primary placement is `Source Control > Worktrees`; it may also expose an optional graph overlay badge in `Source Control > Graph`. The panel state includes selected worktree, sort mode, `hide-stale` toggle, ownership display mode, and persisted worktree panel filters. Topology `/events/storage` behavior is backed by the worktree ownership projection and by `cmd.git.worktree.list/select/open/compare/prune/recover`; every active run, lane, or package with a worktree binding must resolve to a worktree row and deep link. If the repo is not git or worktrees are unsupported, the panel still shows repo state with an explicit disabled reason. To avoid noise on projects with many short-lived worktrees, defaults collapse stale groups and apply ownership filters.
+
+`Safe worktree actions` and `Worktree safety / ownership` prevent prune/remove/reuse mistakes when runs or safe points still depend on a worktree. The entrypoints live in the worktree row action menu and Orchestrator blocked cards. State includes optional confirmation strictness, `locked`, `prunable`, `dirty`, and `repairable` flags, plus `show-unsafe-actions` expert mode, but unsafe actions remain disabled with explanation rather than hidden when lineage says they are not allowed. Safe-action `/events/storage` uses `cmd.git.worktree.recover/prune/remove/reuse`, carries blocked reason payloads using `dirty_worktree` and `worktree_conflict`, and makes blocked rows/recovery cards target the exact worktree/safe-point lineage. Worktree `/remove/repair`, `/move/delete`, and git worktree repair flows must preserve per-worktree `HEAD` and `index` context; the UI must distinguish `blocked by policy` from `blocked by unresolved lineage`; over-aggressive safety and over-automation are UX risks, but run/safe point dependencies take precedence.
+
+Source Control mirrors Orchestrator's SCM lineage acceptance details for worktree recovery. A blocked worktree row must show the exact worktree, affected files summary, safe-point relation, and recovery target from the canonical blocked payload, and any partial lineage badge must mean the repo/worktree/branch/head or receipt chain is incomplete rather than hidden or synthesized.
+
+### 4.1 Review mode and Conflict assistant
+
+Source Control owns two GUI task modes above the ordinary staged/unstaged diff list.
+
+- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.graph_focus`, and `cmd.source_control.graph_filter` compatibility aliases resolve to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter`, and `cmd.source_control.graph.layout`; the `/filter/layout` state is project scoped. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos.
+- `AI commit batching` suggests logical commit groupings and draft messages from diff clusters in `Source Control > Changes` near staged and `/unstaged` groups. Required `/settings` include auto-suggest on/off, batching aggressiveness, message tone/style, and cross-directory grouping. `cmd.source_control.suggest_commit_batches` produces advisory candidate batches only; no grouping, staging, or `/commit` is canonical until the user accepts it. Accepted batches preserve run/tier attribution in receipts where available, while manual staging/commit remains the canonical fallback. `/tradeoffs`: incorrect grouping can damage history, so batching is advisory, reviewable, and never automatic.
+- External Source Control UX baselines reinforce dense owner-surface behavior without making the panel side-panel-only. JetBrains Git log and conflict-resolution references validate roomy history/log tabs, strong filtering, and a dedicated conflict-resolution surface; GitLens and `/GitKraken` validate commit-graph-centric workflows, `/compare` discovery, and worktree compare affordances. These references justify letting dense Source Control `/resources` expand beyond a cramped side panel when needed.
+- `Review mode` compares a worktree against a base branch, another worktree, a PR target, or a selected commit range in a roomy diff-centric Source Control GUI lens. `Source Control > History` and `Worktrees` both expose `Open Review Mode`; dense compares may take over the editor-area while staying a Source Control task mode rather than ordinary file editing. Required `/settings` include left/right compare targets, preferred diff mode, ignore-whitespace, file filter, collapse-unchanged, generated-file visibility, and review-comments/notes local state. Required `/events/storage` behavior: `cmd.source_control.review.open/swap/filter` compatibility aliases resolve to `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, and `cmd.source_control.toggle_generated_filter`; these commands persist the last compare target and filter choices per-project without turning review notes into canonical history before user acceptance. Run receipts and blocked cards open directly into a compare target when review is the remediation step. `/disabled` fallback: when the compare target is gone, pruned, or otherwise a `stale-target`, open the nearest valid baseline when one exists, explain the stale-target downgrade, and offer alternate pivots. `/tradeoffs`: direct comparison between worktrees requires robust baseline selection so the GUI does not present confusing or misleading diffs.
+- `Conflict assistant` turns merge, `/rebase/worktree`, and worktree conflict-caused blocked episodes into a guided repair flow instead of leaving users only with raw file markers. The primary placement is the `Source Control > Changes` conflict group plus a dedicated conflict flyout; blocked worktree cards should include affected file list, safe-point context, and an `Open Conflict Assistant` action into the same surface. Required `/settings` include conflict presentation mode, show base/origin annotations, open external merge tool preference, AI assist enabled/disabled, and an `auto-open` first conflicted file toggle. Required `/event/storage` behavior: `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, and `cmd.source_control.mark_conflict_resolved` persist per-project presentation preference, not conflict content; resolution events and blocked-state handoff outcomes are recorded separately. `/disabled` fallback: if the structured merge view cannot load, show the file list, textual diff/conflict markers, and an explicit warning rather than hiding the conflict. `/tradeoffs`: assistant guidance must explain choices and propose repairs, but it must not silently resolve semantic conflicts or auto-write a side selection without explicit approval.
+- Source Control owns the canonical compare/diff identity contract for reuse across chat, file surfaces, and Source Control. Hunk-level actions are explicit review commands: `stage`, `unstage`, `discard`, `apply`, `expand/collapse`, and conflict-resolution actions. Grouped undo/redo for diff-driven mutations must explain whether a change is buffer-local, restore-history, or git/source-control history. Search-within-diff is scoped to the active compare identity, and diff heat-map/change-marker behavior is a review projection over that same identity.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/storage-plan.md
+
 ## 5. Config Wiring (Prerequisite)
 
 ### 5.1 Problem
@@ -1108,32 +716,6 @@ Worktree/branch status surfaces should be able to explain whether a pending retr
 - Worktree-oriented status surfaces can explain retry posture.
 ## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0542
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Retry from Safe Point`
-  - Retry from Safe Point
-  - attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state
-  - `retry from safe point` vs `start fresh attempt`
-  - retry from safe point
-  - start fresh attempt
-  - `safe point vs restore point`
-  - safe point vs restore point
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Worktree-native isolation remains canonical, but runtime recovery must integrate with it.
 
@@ -1142,31 +724,8 @@ Worktree-native isolation remains canonical, but runtime recovery must integrate
 - restore-before-rerun operations must specify which worktree/baseline they target
 - merge/conflict or dirty-state detection may block resume and must surface an explicit reason rather than silently reusing a changed worktree
 - worktree isolation does not replace runtime blocked classification; it complements it
-## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)
+## Runtime Worktree Conflict Canonical Alignment (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0541
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - newer model: scored ready set, `scheduler_lane`, `replan_generation`, runnable-unit fields like `attempt_id`, blocked reason codes, worktree conflict classification
-  - scheduler_lane
-  - replan_generation
-  - attempt_id
-  - worktree conflict / dirty-worktree block
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This addendum is retained as historical context only.
 
@@ -1202,3 +761,35 @@ Behavioral rules:
 
 Permission carry-through:
 - remediation actions must surface only through the allowed-action set
+
+## Worktree Lane Allocation and Source Control Reconciliation
+
+`Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md` converge on `/worktree` and `/worktrees` ownership, but the worktree owner must make the allocation strategy concrete. Worktree allocation is package/lane based: Orchestrator owns the active run's lane-pool truth, while Source Control owns repo/worktree execution and inspection operations. The old run/tier/subtask, branch-per-run, subtask-per-worktree, wizard-centric, /iteration-scoped, and /seam-aware SCM assumptions are compatibility context only until they map to package-based lane pools, shared Source Control visibility, and per hosted side-effect effective-account recording.
+
+Source Control is the primary operational surface for worktree inventory and actions, and Orchestrator consumes worktree identity, blocked state, and lineage. `dirty_worktree` and `worktree_conflict` route back to Source Control with the correct worktree in scope; historical runs preserve historical worktree references after prune `/remove`. Orchestrator records which package owns which lane pool, which lane is baseline, active, suspect `/restoring`, historical, or `/retired`, why a lane is blocked, weakly integrated, or cleanup-eligible, and which action is allowed from runtime `/governance` state. Source Control owns open, compare, diff `/history/graph`, recover, archive, prune, and remove when policy permits.
+
+`Lane` is the primary operational object in Orchestrator, and `Worktree` remains the concrete filesystem `/Git` backing for a lane instance. A lane may preserve historical identity after the live worktree has been cleaned up, archived, or removed. Source Control can list worktrees directly, but it must also expose `/package` lane ownership and lifecycle state when known. Worktree rows therefore show owning package, owning lane, run reference when relevant, lane lifecycle state, worktree lifecycle state, and blocked `/recovery` state, treating `lane lifecycle` and `worktree lifecycle` as related but non-identical.
+
+The tier-era low-level ownership model is no longer canonical. Examples such as `get_tier_worktree(tier_id)`, worktree paths and branches keyed by `tier_id`, recovery or `/conflict` persistence phrased in `tier_id`, future crew `/message` examples, and `tier_type` / `worker_provider` / `worker_model` / `verifier_provider` / `verifier_model` / `hitl_request_id` in base `GraphNode` and `GraphNodeUI` contracts must reconcile to lane, node, attempt, runtime-lineage, and worktree identity. Worktree coordination examples must stop carrying `tier_id` as the operational identity anchor.
+
+Parallel execution must not confuse snapshot-based single-context concurrency with multi-lane worktree isolation. `newfeatures.md` background agent queues and snapshot-based recovery are single-context mechanisms unless they allocate isolated lanes with dedicated worktrees. The Source Control view treats `Lane` as ownership `/context` metadata for a worktree, not a replacement for worktree as the primary Source Control object.
+
+Terms that drift together must remain separately defined: `lane` vs `worktree`, safe point vs restore point, `historical` vs `superseded`, `acknowledged` vs `dismissed` vs `resolved`, and `history` vs `ledger`. These pairs are drift-prone unless package-level worktree state is visible and navigable. Orchestrator continues to present lane state and shows worktree status in context, while Source Control remains the concrete filesystem/Git owner.
+
+Cross-surface openings must not pollute base route identity. `Orchestrator_Page.md` / `Orchestrator_Page.md` Evidence pivots into workflow `/Docker/Kubernetes` detail through an explicit receipt `/attempt` join path. `line` / `range` belong to path `/document-open` specialization rather than the canonical base route object, and `wizard_step` is sub-selection in serialized `deep-link` detail or a narrower subtarget contract.
+
+Historical audit anchors stay visible only as owner references for the worktree allocation defect: `cov-526`, `obl-222`, `Plans/Crosswalk.md:88-94`, `Plans/WorktreeGitImprovement.md:62-66`, `Plans/WorktreeGitImprovement.md:78-80`, `Plans/orchestrator-subagent-integration.md:28-41`, `/Crosswalk.md:88-94`, `/WorktreeGitImprovement.md:62-66`, `/WorktreeGitImprovement.md:78-80`, and `/orchestrator-subagent-integration.md:28-41`. The rewrite-aligned fix replaces tier-based branch naming with package/lane allocation, contamination, /reuse/cleanup, and /subtask-native compatibility handled as explicit lifecycle policy. Formal state vocabulary distinguishes `lane lifecycle`, `worktree lifecycle`, `worktree filesystem state`, and `runtime blocked/recovery state`.
+
+Cross-lane reuse is not a best-effort cleanup path. A `safe-point` restore may make a suspect worktree eligible for `cross-lane` reuse only after contamination checks pass; `contamination-triggered` shrink can reduce a package's lane-pool, and flat `provider-only` limits never replace `per-package` lane ceilings. `package-based` pools are the SCM-facing source of truth, so `tier-keyed` path or registry assumptions are compatibility inputs until migrated to `lane-named` worktrees.
+
+Source Control row ownership is explicit even when the UI stays worktree-first. Legacy `owner run/tier` or `/tier` labels are compatibility, while current rows expose owner run, `/package/lane`, `/lane`, and `/package/node-first` execution-context metadata beside `worktree` identity. `Feature Seam`, `Work Package`, `Lane`, and `Worktree` stay user-visible as an object stack, but `tier_id` must not propagate through future crew `/message` examples or `/worktree` coordination as the canonical ownership key.
+
+Historical retry lineage can preserve exact audit labels without turning them into ownership. `Decision_Log` records may keep `agent-314` as the failed attempt and `agent-331` as the canonical successful run, while worktree state still keys recovery by lane, node, attempt, safe point, and runtime lineage.
+
+The lane-pool model is end-to-end across Orchestrator, Source Control, recovery policy, and SCM. `package-based` lane-pool allocation unifies former per-run branches, per-subtask worktrees, branch-per-run flows, `/tier`, and `/PR` assumptions without treating those compatibility patterns as current ownership.
+
+Action ownership remains split: Orchestrator may inspect lane state, request restore, request graph patch, request reopen `/revocation`, and open a lane in Source Control; Source Control owns open worktree, compare against baseline `/target`, inspect changed files and `/history/graph`, recover orphaned worktree, archive, prune `/remove`, and cleanup current `/all` eligible worktrees.
+
+Cleanup and route identity stay explicit. Bulk `/archive/remove` operations are preview-heavy, not one-button destructive `/worktree` actions; `Orchestrator_Page.md` / `Orchestrator_Page` retry posture remains richer than a fake `one-button` retry. `shell-tab` and `panel-subview` identities stay outside the base route contract.
+
+Allocation strategy is `/owned` by package/lane policy for scale `/manageability`: it may allocate per-node only when the effective scope requires it, while `package-based` worktrees remain the default scale posture.

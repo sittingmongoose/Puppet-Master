@@ -1,150 +1,18 @@
 # Prompt Pipeline (Canonical SSOT)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0459
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
-- Exact required items represented:
-  - Add node_id
-  - Add package_id
-  - Add seam_id
-  - Add lane_id
-  - Add attempt_id
-  - Add effective_identity
-  - Normalize requested/effective account identity shapes
-  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
-  - Consolidate Prompt Pipeline onto one canonical handoff/runtime object that preserves thread/auth/account/switch data across dispatch boundaries.
-  - Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:
-  - Prompt Pipeline still has one last schema ownership hole: it requires explicit blocked/degraded behavior when no eligible account exists, but the canonical effective-resolution record still lacks a first-class blocked/degraded reason family and still only carries singleton `account_switch_reason?`
-  - account_switch_reason?
-  - Prompt Pipeline still requires blocked/degraded behavior without owning a matching canonical field family.
-  - this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline
-  - `interview-subagent-integration.md` claims Prompt Pipeline alignment while truncating auth/account identity from its requested/effective contract, still writes blocked bundles as `attention_required` in earlier sections, and still splits interview execution identity between `tier_id = None` and synthetic `interview-phase-*` pseudo-tier ids.
-  - interview-subagent-integration.md
-  - attention_required
-  - tier_id = None
-  - interview-phase-*
-  - Extend canonical runtime snapshots with `execution_role` and carry that through Prompt Pipeline, Contracts, storage, wizard/interview, and UI owners.
-  - execution_role
-  - if the blocked reason needs an approval prompt surface, the system may also mint a stable `request_id`
-  - request_id
-  - executor/runtime/UI surfaces all need the same truth; these should be carried by stable refs or canonical embedded snapshot fragments, not rederived from prompt text or surface config later
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `[retired-token-9]` is mostly aligned on field names, but it still carries stale scope wording:
-  - [retired-token-9]
-  - orchestration rules still say the prompt flow must not create new execution tiers
-  - Reconcile Prompt Pipeline scope terms and override-owner wording at the same time as graph/Orchestrator identity cleanup.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - `agent-rules-context.md` still under-scopes actor coverage and execution-role inputs relative to Prompt Pipeline, Multi-Account, and Assistant chat identity disclosure requirements.
-  - agent-rules-context.md
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift
-  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `[retired-token-9]`
-  - Plans/Orchestrator_Page.md
-  - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
-  - Plans/Multi-Account.md
-  - Plans/Personas.md
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Requested/effective account identity contract
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-009: Requested/effective account identity contract
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0467
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - compact requested/effective summary for live context
-  - Treat worktree/lane binding and requested/effective account/runtime identity as mandatory parts of the canonical execution context, not optional downstream embellishments.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-009
-- Fidelity gap refs: cov-009
-- Required fidelity items:
-- Exact required item: Add requested_account_id alongside requested_account_policy
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-009: Requested/effective account identity contract` exists in `Plans/Prompt_Pipeline.md`.
-- Exact acceptance check: The `cov-009` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-009` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-009` repair is in the owner section for `Plans/Prompt_Pipeline.md` and is not only a downstream consumer note.
-
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0460
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `thread_id` when thread scope is required
-  - thread_id
-  - resolver context comes from existing scope fields such as `project_id`, `focused_run_id`, and the destination’s canonical object store
-  - project_id
-  - focused_run_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This document is the **single canonical source of truth** for:
 - prompt assembly stages (system + instructions + compiled context + conversation + tools)
@@ -155,7 +23,7 @@ This document is the **single canonical source of truth** for:
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md
 
-Other plans MAY describe how they consume compiled output, but they MUST NOT redefine context-selection, delta-context, cache, marker-file, skill-bundling, or compaction algorithms as separate SSOTs. `Plans/FileSafe.md` owns safety checks over compiled output; it does not own prompt/context compilation policy.
+Other plans MAY describe how they consume compiled output, but they MUST NOT redefine context-selection, delta-context, cache, marker-file, skill-bundling, or compaction algorithms as separate SSOTs. `Plans/FileSafe.md` owns safety checks over compiled output; it does not own prompt/context compilation policy, and rewrite-era fallback wording must not turn FileSafe into a second context-compilation SSOT.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 
@@ -188,6 +56,7 @@ The prompt pipeline consumes the following deterministic inputs:
 - Discovered Skills registry (`Plans/Skills_System.md`) and any Persona `default_skill_refs`
 - Tool registry definitions (`Plans/Tools.md`) and permission state (`Plans/Permissions_System.md`)
 - Conversation history + evidence context (`Plans/storage-plan.md` projections)
+- LSP diagnostics context from `Plans/LSPSupport.md` may enter compiled context only through the permission, FileSafe, and event-contract boundaries in `Plans/Permissions_System.md`, `Plans/FileSafe.md`, and `Plans/Contracts_V0.md`; Prompt Pipeline consumes that context but does not own LSP behavior.
 - Compiled context artifacts produced by the prompt pipeline context compiler
 
 Canonical run envelope fields:
@@ -209,25 +78,6 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### 1.2 Stage ordering (canonical)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0463
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="ASSEMBLY-PIPELINE"></a>
 
@@ -274,51 +124,10 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md
 
 ### 1.2A Structured attachment normalization for browser element context
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0464
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane/worktree summary in package context
-  - generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall
-  - open inspector/detail/history/ledger/evidence context
-  - Because Source Control is worktree-first and physically narrow, it should lean more on context menus and focused commands than on dense inline action bars.
-  - Search results should not merely open a page; they should reconstruct context.
-  - cross-surface pivots into Source Control/GitHub still do not carry lane/package/degraded-trust context cleanly
-  - `effective_project_id` remains useful correlation context, but it is not a substitute for operational identity
-  - effective_project_id
-  - cross-surface route/open commands still do not carry the identity/trust context the ledger now recommends
-  - lane/worktree-aware scheduling context
-  - That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object.
-  - That context should be strict enough to support:
-  - `attempt_record` when side-effect context exists
-  - attempt_record
-  - route to that surface with exact identity context preserved
-  - The issue here is less missing identity than missing normalization; the local docs already know what context they need.
-  - The problem is not lack of context. The problem is that these attention surfaces still encode it as card-local or notice-local fields instead of as one normalized route target.
-  - Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.
-  - route_target
-  - which project/workspace context should be activated
-  - must land in Source Control with the relevant run/worktree/repo context available
-  - must not preserve unrelated current primary-view context just because it was last open
-  - if a caller needs navigation context, it uses `route_target`
-  - explicit owner placement for the execution-unit context replacing `TierContext`
-  - TierContext
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by chat/composer surfaces, browser surfaces, and native document review surfaces.
+
+Browser capture normalization consumes only explicit chip-based attachment records from composer prep. Text-selection chips and element-pick chips remain distinct so `browser_selection_context` and `browser_element_context` preserve their separate capture paths through serialization.
 
 For `browser_element_context` attachments:
 - normalization occurs after context compilation and before final conversation serialization
@@ -326,6 +135,8 @@ For `browser_element_context` attachments:
 - bounded fields are serialized first: `tag_name`, `element_ref?`, bounded `text_content?`, `role?`, `rect`, `parent_path?`
 - optional truncated HTML excerpt is included only if still within attachment budget
 - attachment metadata MUST record when truncation occurred
+- raw unbounded DOM dumps or page bodies MUST NOT be injected into the prompt through this attachment path
+- blocked or expired chips MUST NOT be serialized as successful user attachments
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
@@ -344,6 +155,10 @@ For `document_selection_context` attachments:
 - bounded fields are serialized first: `source_surface`, `bundle_id?`, `doc_id`, `doc_path/display_name`, bounded `selected_text`, anchor data, `requested_target`, `effective_target?`, `sensitivity_state`, and `truncation_state`
 - raw unbounded document bodies MUST NOT be injected into the prompt through this attachment path
 - blocked or expired chips MUST NOT be serialized as successful user attachments
+- `requested_target` and `effective_target` must be preserved for annotation and send-to-chat handoff so the UI can show requested-vs-effective routing.
+- `sensitivity_state` is forwarded into revision-prompt payloads and structured-output validation metadata so downstream providers and local validators receive the same disclosure boundary that context compilation used.
+- When the user requests targeted revision, the revision-prompt payload is a deterministic list ordered by `doc_id`, source position, and `annotation_id`; each record includes `annotation_id`, `operation`, `intent_kind`, bounded `selected_text`, `operation_payload`, `anchor`, and provenance.
+- Providers with transport-native `/structured-output` may use `schema_enforced_structured_revision`; providers without that guarantee may use `validated_structured_revision` only after local validation of ids, `/order/shape`, and anchor applicability.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
@@ -353,34 +168,13 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-cha
 
 ### 1.2C Investigation Context normalization for Debug Mode
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0465
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object focus belong to the page/router state
-  - project_id
-  - focused_run_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-
 Before final conversation payload emission, the prompt pipeline MUST normalize visible Investigation Context items for active Debug investigations.
 
 Required normalization rules:
 - normalization occurs after context compilation and before final conversation serialization
 - the investigation header summary is serialized before individual evidence items
 - items are sorted deterministically by operational priority (`target summary`, `baseline`, `active instrumentation`, `latest repro evidence`, `verification summary`) and then by capture time
+- the higher-level `investigation_id` / `bundle_id?` grouping identity travels with each Debug prompt payload: `investigation_id` groups evidence across `terminal_session_id`, `dev_session_id`, `browser_session_id`, and DAP-style debug identity; `bundle_id?` applies to imported or exported evidence bundles and does not replace those source anchors
 - only bounded summaries, refs, and structured fields are inlined; raw logs, traces, screenshots, and recordings remain external artifact refs
 - revoked, blocked, expired, and omitted items must not be serialized as successful prompt content
 
@@ -399,6 +193,7 @@ Minimum serialized fields are:
 - `truncation_state`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
 
 ### 1.3 Instruction Bundle structure
 
@@ -423,7 +218,8 @@ Rules:
 - Debug investigations include bounded header fields and bounded item summaries only
 - revoked, blocked, expired, and omitted investigation items remain visible in UI history but do not serialize as successful prompt inputs
 - imported bundles use the same structured Investigation Context shape as live investigations, with provenance indicating imported origin
-- external instruction files and policy documents (for example `AGENTS.md` or `CLAUDE.md`-style sources) are compiled under a bounded instruction-source budget instead of being injected in full by default
+- external instruction-file sources and policy documents (for example `AGENTS.md` or `CLAUDE.md`-style sources) are compiled under a bounded instruction-source budget instead of being injected in full by default
+- PM-owned `AGENTS.md` content remains the canonical instruction source for PM-managed provider projections; provider-native instruction files are generated/import/export projections, not peer authorities
 - when an instruction source would exceed the current budget, PM includes a bounded excerpt plus provenance (`path`, byte count, truncation reason) and loads additional segments only on demand through context selection or explicit reads
 - system prompt, persona instructions, and active tool schemas remain in the untouchable set even when oversized instruction sources are clipped
 
@@ -431,6 +227,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 
 ## 2. Compaction and pruning
 ### 2.0 Compaction-immune content
+
+Post-compaction prompt reconstruction MUST preserve system, persona, and instruction-source commitments such as `AGENTS.md` or `CLAUDE.md`; a compaction LLM or summary pass must never replace those commitments with an empty or weakened system prompt.
 
 The following content MUST survive compaction unchanged unless the user explicitly removes it:
 - system prompt and persona instructions
@@ -456,9 +254,9 @@ The compaction-immune set is partitioned into two tiers with distinct truncation
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
 
-**Truncatable set** (trimmed only when total immune content exceeds `max_compaction_immune_pct`):
+**Truncatable set** (`/truncatable`, trimmed only when total immune content exceeds `max_compaction_immune_pct`):
 - user-pinned context
-- blocks tagged `compaction_immune: true`
+- blocks tagged `compaction_immune: true` (`/compaction-immune`)
 - current and recent reasoning blocks required for correct continuation
 - ordered lowest-priority first and FIFO within each priority tier
 
@@ -476,7 +274,7 @@ Prompt assembly preserves cache-friendly stable prefixes. PM keeps role-specific
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
 
-Provider-specific cache strategy is explicit:
+Provider-specific / per-provider cache strategy is explicit:
 - **Anthropic:** ephemeral/cache-control marker strategy. PM emits `cache_control: { type: "ephemeral" }` on eligible message blocks. Anthropic's server-side cache handles TTL and invalidation transparently; PM does not manage Anthropic cache state.
 - **Google/Gemini family:** provider-native `cachedContent` strategy. PM creates a `cachedContent` resource via the Gemini Caching API with a configurable TTL (default: 5 minutes). The returned `cachedContent` resource name is passed in subsequent `generateContent` requests via the `cachedContent` field. PM tracks the resource TTL and proactively refreshes cached content before expiry when the underlying context has not changed. Token savings are calculated as the difference between the full context token count and `cachedContentTokenCount` reported in provider usage metadata. When `cache_with_oauth` is `false` for the active Gemini surface, cache-marker emission is suppressed entirely.
 - **OpenAI family:** metadata or adapter-controlled cache-hint strategy. PM sets cache-hint headers or metadata per OpenAI conventions. Server-side cache behavior is provider-managed; PM does not track cache state for OpenAI surfaces.
@@ -484,14 +282,22 @@ Provider-specific cache strategy is explicit:
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-Reasoning blocks MUST be preserved through replay and compaction. PM MUST first prefer provider-compatible replay or conversion of reasoning/assistant state; lossy summarization is allowed only when the target surface cannot accept the original form, and the summary MUST remain explicit about being synthesized from prior reasoning.
+Reasoning-block payloads MUST be preserved through replay and compaction. PM MUST first prefer provider-compatible replay or conversion of reasoning/assistant state; lossy summarization is allowed only when the target surface cannot accept the original form, and the summary MUST remain explicit about being synthesized from prior reasoning.
+
+`/reasoning` blocks are `/replay`-safe state: PM preserves or converts them before compaction, records provider `reasoning_tokens` on each `UsageEvent`, and MUST NOT silently strip thinking/reasoning content merely because an adapter lacks a native replay field.
+
+Out-of-order reasoning-block delivery through LiteLLM/Bedrock-style proxies is tolerated by the replay state machine: PM buffers or reorders provider-compatible reasoning state instead of crashing or collapsing it into lossy summary by default.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+Context-compression references such as Xeditor `_context_updates` are implementation references only. PM preserves the referenced behavior as incremental per-tool-call tool-result compression evaluated at every tool-call boundary rather than whole-session compaction; summaries retain causal replay metadata and canonical tool/result lineage.
+
+OpenCode replay evidence from `message-v2` / `message-v2.ts` is a compatibility hazard, not PM canon: synthetic compaction text such as "What did we do so far?" must be tagged as synthetic continuation or compaction metadata and must not replay as a user-authored instruction.
 
 Historical assistant serialization rules:
 - historical turns serialize the final user-visible assistant answer plus any tool/result or lineage metadata needed for causal replay
 - transient progress/status chatter, partial streaming fragments, and superseded intermediate assistant states are omitted unless they remain unresolved or are explicitly pinned
-- message boundaries remain explicit across user, assistant, system, and synthetic-continue turns so replay cannot merge stale assistant progress into a new request
+- message boundaries remain explicit across user, assistant, system, and synthetic-continue turns so replay cannot merge stale assistant progress into a new request; the compatibility marker `/assistant/system/synthetic` resolves to these boundary markers only
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 
@@ -521,7 +327,7 @@ State machine:
 2. **Eligible** -> provider stopped for `length` or equivalent incomplete-output condition and PM still needs continuation.
 3. **ContinueInjected** -> PM injects one canonical continuation turn using the prior assistant tail and current run lineage.
 4. **ContinueObserved** -> provider emits new assistant content after the synthetic continue.
-5. **Suppressed** -> PM blocks further synthetic continue because loop-prevention rules fired.
+5. **Suppressed** -> PM blocks further synthetic continue because /loop-prevention rules fired.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 
@@ -530,6 +336,8 @@ Loop-prevention rules:
 - PM MUST compare the latest assistant tail hash against `last_assistant_tail_hash`; if the tail is unchanged after a synthetic continue, PM suppresses further auto-continue
 - PM suppresses further auto-continue if the provider returns effectively empty continuation output or repeats the same continuation prompt hash without net new content
 - suppression emits `diag.synthetic_continue_loop_prevented` with the reason and leaves the run to normal failure or rotation handling instead of silently retrying forever
+
+Task-based checkpoint markers in seglog preserve prompt/session recovery points for long sessions; this recovery lesson keeps checkpoint recovery separate from synthetic-continue injection.
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
@@ -542,28 +350,32 @@ Thresholds are model-owned metadata:
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
 
-Low-context warning rule: if remaining context falls below 15% of the effective window after adding tool output or injected context, PM emits a diagnostic warning so the agent can adapt before hard compaction.
+Low-context warning rule: if remaining context falls below 15% of the effective window after adding tool output or injected context, PM emits a model-visible diagnostic warning so the agent can adapt before hard compaction. This is based on post-execution accounting, not pre-flight prediction, and large tool-output markers use the 512 KiB policy boundary where truncation is applied.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
-Agent-visible context budget contract:
+Agent-visible context-budget contract:
 - the instruction bundle or equivalent runtime metadata exposes the effective context window, latest estimated used tokens/bytes, remaining percent, current pressure state, and whether compaction ran on the previous turn
 - after large tool output or injected context, PM updates this snapshot before the next provider turn so the agent can choose shorter replies, narrower reads, or earlier summarization
 - the budget snapshot is advisory rather than a perfect preflight predictor, but it MUST reflect the latest post-assembly estimate rather than a stale earlier value
+- per-tool default context policies for tool-result shaping use the enum `full`, `summarize`, `meta_only`, and `exclude`; these policies guide effective context assembly and never rewrite canonical tool-call or tool-result history
+- token-budget allocation reserves budget in this order: provider/system/persona instructions, tool definitions, current user turn, required runtime identity and safety state, selected/retrieved context, then optional tool-result context. When the post-assembly estimate exceeds the effective window, optional blocks are summarized, marked `meta_only`, or excluded according to their owner policy; required identity and safety state cannot be silently dropped.
+- Default `/token/budget` allocation targets are `immune(30%)`, `history(30%)`, `current_turn(15%)`, `tool_results(20%)`, and `contingency(5%)`; model metadata MAY override percentages, but the live snapshot must name each bucket and preserve deterministic truncation order across priority classes `P0`-`P3`.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Architecture_Invariants.md
 
 ### 2.3 Post-filter integrity rules
 
-After filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms MUST NOT delete system or persona content, reorder messages in a way that breaks alternation, or modify immune content.
+After filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms (`plugin-transform` surfaces) MUST NOT delete system or persona content, reorder messages in a way that breaks alternation, or modify immune content.
 
 ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md
 
-Repair behavior when filtering would leave malformed history:
+Repair behavior when filtering would leave malformed history (`warn + placeholder if needed`):
 - if filtering, pruning, or transform output empties a required message position, PM emits an explicit warning diagnostic before serialization continues
 - PM then injects the smallest placeholder or structural no-op needed to preserve canonical role alternation and replay-safe message boundaries
 - placeholder repair preserves structure only; it MUST NOT invent substantive user intent, assistant claims, tool calls, or hidden policy content
 - if no safe placeholder exists for the target surface, PM aborts serialization and surfaces a structured error instead of emitting malformed history
+- This path is `warn-and-repair`, not `validation-only`: validation detects malformed post-filter history, and the owner pipeline either repairs it with an audited placeholder or aborts before provider serialization.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 ## 3. Rotation (follow-up run spawning)
@@ -611,27 +423,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/Run_Modes.md
 ## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0461
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.
-  - node_id
-  - attempt_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 This section locks the final requested/effective runtime pipeline for provider family selection, account or server-profile resolution, billing/entity attribution, and PM-native skills/MCP assembly.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md
@@ -649,6 +441,17 @@ Before final prompt payload emission, the runtime MUST resolve the following in 
 8. PM-owned MCP/tool availability
 9. instruction bundle assembly
 10. final run snapshot freeze and provider handoff
+
+PM-native skill and tool readiness uses explicit dependency metadata instead of heuristics from skill body text. `required_tool_refs` and `optional_tool_refs` use canonical PM tool registry names and can refer to MCP-backed tools, built-in PM tools, or provider-exposed tools when those tools are canonically registered. The resolver computes per-skill `/runtime`, `/readiness`, and `/effective` state from skill validity, permission state, required-tool availability, and effective provider/runtime tool availability.
+
+Runner contract for PM-native skills during provider execution:
+1. call `list_skills_for_agent(project_root, permissions)` to resolve the allowed-skill universe;
+2. permission-filter that universe before prompt compilation;
+3. bundle selected skill content into compiled `/context/tool` material before provider execution;
+4. expose the PM `skill` tool for on-demand lookup during the run;
+5. send the provider request envelope with `prompt_parts`, context files, and `tool_policy` like any other run.
+
+This flow is transport-agnostic. CLI-backed providers, direct providers, and server-bridged providers receive PM skill context through normal compiled prompt/context assembly rather than through a mandatory provider-native install path or by passing raw skill names/paths to platform CLIs/SDKs.
 
 ### 6.2 Selection-source enumeration
 
@@ -688,30 +491,12 @@ Provider/runtime resolution rules:
 Examples:
 - `Gemini` direct and `Gemini CLI` are separate runtime surfaces that may belong to the same family pool
 - `Codex` resolves separate account rows for `ChatGPT` and `API key` auth families
+- For OpenAI/Codex setup, `Sign in with ChatGPT` is an account-linking authentication path that connects a ChatGPT identity to an API account and stores local credentials; prompt/runtime evidence keeps that ChatGPT-backed identity separate from API-key-backed accounts.
 - `GitHub Copilot` resolves one auth-backed account row plus a selected billing entity when premium-request semantics require it
 - `OpenCode` resolves a managed or attached server profile rather than an account row
 
 ### 6.2A Settings, persona, and resolver model
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0466
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Persona resolver text still refers to stage/tier/task context
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Runtime resolution freezes a requested/effective identity envelope before provider/model execution begins.
 
@@ -719,6 +504,7 @@ Runtime resolution freezes a requested/effective identity envelope before provid
 - Add `requested_account_id` alongside `requested_account_policy`.
 - Model `requested_account_id` separately from `requested_account_policy` so account choice and policy posture never collapse into one field.
 - Add `requested_account_binding` and govern `provider_account_id` as subordinate provider-native metadata.
+- `requested_account_binding` uses the exact value set `none | preferred | required`.
 - Add `requested_account_binding` with `none` / `preferred` / `required` semantics and display `Requested account / Requested binding / Effective account / Switch reason`.
 - Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes.
 - Retire `provider_account_id` from canonical account-identity naming; it stays as a provider-native echo field only.
@@ -730,14 +516,59 @@ The shared identity envelope emitted before prompt assembly contains at least `r
 - `source` records where a candidate value came from, `request` records what the caller asked for, and `execution` records what the runtime actually receives after capability and policy checks.
 - The display grammar preserves requested versus effective values for provider, model, variant, auth mode, account identity, and worker policy.
 - Resolver inputs include Persona choice, run-envelope overrides, surface defaults, scope policy, capability snapshot, account/profile availability, worktree assignment, and execution-role context.
+- Assistant worktree execution remains cwd-based: prompt assembly may reference the canonical `execution_unit_context`, but it does not inject a separate worktree prompt block merely to make tools operate in the worktree. `working_directory`, FileSafe, tool `cwd`, and provider handoff carry the worktree context.
 - Deterministic resolver matrix order: explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default.
 - Resolver emit shape includes `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_variant`, `effective_variant`, `requested_auth_mode`, `effective_auth_mode`, `requested_account_id`, `effective_account_id`, `execution_role`, `selection_reason`, `resolver_matrix_entry`, and `worker_policy_display`.
+
+### P5 prompt/runtime identity recovery requirements
+
+- `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md` - The rerun confirms additional concrete misses: - three-way export taxonomy (`record` / `bundle` / `view`) - shared Orchestrator export manifest contract - export-family distinctions (Evidence / Artifact / Ledger / Run / Record) - three-axis settings model (`source` / `request` / `execution`) - named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`) - explicit source-layer enumeration - worker-policy display under the same requested/effective grammar - Orchestrator actor-type and operation-type resolver inputs - deterministic resolver matrix and actor→persona defaults - resolver emit shape (ranked candidates, winner, fallback reason)
+- `newtools.md` and assistant-memory still ended with unresolved canonicalization gaps: - the remaining missing orchestrator command gap set is now tight and explicit. - doctor-ID canonicalization is still broken internally. - `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT. - `live.*` remains plan-local instead of contract-registered. - `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.
+- required for all provider-executed attempts: - requested/effective persona snapshot ref - requested/effective model snapshot ref - requested/effective permission snapshot ref - `requested_auth_mode?` - `effective_auth_mode?` - `requested_account_policy?` - `effective_account_id?` - `account_switch_reason?`
+- The highest-risk Prompt Pipeline ownership cleanup is requested/effective runtime identity duplication: Prompt Pipeline owns prompt-assembly handoff shape, storage owns durable records, and tier context survives only as compatibility/derived grouping, not a third runtime identity authority.
+- Prompt Pipeline MUST NOT teach `tier-tree` or `active-tier` widget semantics as reusable widget `SSOT`; prompt examples and context bundles may reference derived tier labels only as compatibility display metadata while Widget_System owns widget taxonomy.
+- Conversational/shared-runtime and actor-scoped permission consequences are still under-modeled: - `Permissions_System.md` resolves by tool/context/mode but not by invoking runtime entity, lane, or account - session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime
+- `Contracts_V0.md` - add/own canonical snapshot field names such as: - `requested_account_id` - `requested_account_binding` - `execution_role` - operational-identity snapshot block names - own stable event names for: - account pressure / switch history - any new blocked/recovery/governance event families - own route-payload envelope name only if it becomes a generic cross-cutting contract
+- `Plans/Personas.md` - still violates canonical field naming in its own SSOT and still has no structural slot for overseer-class actor types
+- `Plans/Prompt_Pipeline.md` - still the highest-leverage SSOT for requested/effective identity, but still carries tier-era persisted values, missing scope fields, and no durable account-switch history model
+- `Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text: - run envelope still says `tier` - assembly stages still say `tier/mode/platform/model` - orchestration rules still say the prompt flow must not create new execution tiers - Persona resolver text still refers to stage/tier/task context - `persona_override_owner_id` still allows `tier_id`
+- `Prompt_Pipeline.md` and `Contracts_V0.md` carry `requested_account_policy`, but no parallel requested-side concrete account field exists, so downstream docs are forced to guess how explicit account pinning is represented.
+- Storage/usage contracts still carry tier-era runtime assumptions in places the broader second sweep now makes more obviously risky: - `storage-plan.md` still leans on `tier_id` / `run.tier_*` - `usage-feature.md` still treats `tier_id` as a core attribution dimension and does not yet pivot to `seam_id` / `package_id` / `lane_id` - neither doc is yet explicit enough about graph-patch lineage or degraded projection-trust states
+- `Plans/Contracts_V0.md` - still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership
+- Prompt Pipeline has become internally split on what the dispatch boundary actually carries: - §6.5 defines a rich runtime identity record with auth/account/switch fields - later handoff/addenda collapse the bundle back to IDs + model/permission refs and even lose `thread_id` - this now creates a concrete SSOT fracture between Prompt Pipeline, bridged providers, and conversational surfaces
+- Replace worker/verifier/page contracts with canonical runtime snapshot refs or inline canonical runtime bundles instead of ad hoc persona/provider/model strings.
+- Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth: - `requested_account_policy` exists - `effective_account_id` exists - but there is still no canonical requested concrete-account field, so explicit account pinning cannot be shown truthfully when runtime falls back or switches
+- Prompt Pipeline still has one last schema ownership hole: it requires explicit blocked/degraded behavior when no eligible account exists, but the canonical effective-resolution record still lacks a first-class blocked/degraded reason family and still only carries singleton `account_switch_reason?`
+- Tool/runtime surface gaps also remain sharply defined: - `Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees. - `agent-rules-context.md` still under-scopes actor coverage and execution-role inputs relative to Prompt Pipeline, Multi-Account, and Assistant chat identity disclosure requirements.
+- But the owner doc still frames those fields through stale scope vocabulary: - `Run envelope (tier, mode, selected Persona ID(s), selected model/variant)` - `Active mode and tier` - `plan_or_tier_default` - `Orchestrator tier override` - `stage/tier/task/repo context` - `persona_override_owner_id` still allows `tier_id`
+- Introduce `execution_role` / `actor_role` into effective-resolution, event, and usage contracts.
+- Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing: - `wizard_id` - `project_id` - `thread_id?` - `phase_plan_ref?` - input/output artifact-bundle refs - `requirements_quality_report_ref?` when applicable
+- `Plans/Orchestrator_Page.md` - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure
+- `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT. - destructive Git/worktree actions should resolve through Source Control semantics, even if launched from Orchestrator.
+- The gap is real and now very concrete: - canonical docs already model `requested_account_policy` - canonical docs already model `effective_account_id` - but there is still no canonical way to represent a requested concrete account on the requested side
+- 5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.
+- The remaining work splits cleanly into two buckets: - **structural gaps still needing research decisions** - **reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**
+- Extend the shared effective-resolution/runtime identity model with: - `execution_role` - `requested_operational_identity?` - `effective_operational_identity?`
+- But it is still not safe to call this `ready_for_reconciliation` because at least a few remaining gaps are not just stale wording; they are missing canonical owners or broken SSOT integrity.
+- Topic is known: `Orchestrator`. - User asked to hold off on substantive work until the follow-up prompt arrived; this initialization prompt is the first explicit action request after topic confirmation.
+- `blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings - `attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids
+- Recommended `requested_account_binding` values: - `none` - `preferred` - `required`
+- The repo still lacks a coherent owner for several rewrite-era operational nouns and primitives, so adjacent docs can cite terms (`Overseer`, `attempt`, `Seglog`, promotion senses, handoff kinds) that no SSOT doc actually defines.
+- This is a cross-cutting SSOT problem, not just a page-local doc issue. - `Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.
+- `FinalGUISpec.md` aligns with only one of those outcomes. - Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this contradiction is more than editorial drift.
+- `manual_preferred_account_id` now exists as a concrete preferred-account override, but it still does not solve the broader missing `requested_account_id` asymmetry in the shared runtime identity grammar.
+- After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4`.
+- After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2`.
+- **Prompt pipeline carries tier identity.** `Prompt_Pipeline.md` §1.2 embeds tier/mode in the run envelope and instruction bundle. No node-identity, package-identity, or lane-identity fields exist.
+
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md
 
 ### 6.3 Natural-language Persona invocation in prompt assembly
 
 Natural-language Persona invocation remains conservative and applies only to Persona resolution.
+
+Assistant worktree execution is cwd-based. Prompt assembly may reference the canonical `execution_unit_context`, but it does not inject a separate worktree prompt block merely to make tools operate in the worktree; `working_directory`, FileSafe, tool `cwd`, and provider handoff carry that context.
 
 It MUST NOT be used to silently rewrite:
 - the requested provider entry
@@ -784,14 +615,16 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V
 
 ### 6.5 PM-native skills, MCP, and instruction assembly
 
-Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought.
+Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought. /web/skills/runtime packets are implementation-ready reconciliation inputs only; they do not become a second `SSOT` for prompt assembly, tool contracts, skill resolution, or runtime identity.
 
 Required rules:
 - PM resolves skills from the PM registry and compatibility roots before provider execution begins
 - skill readiness is computed from `required_tool_refs` and `optional_tool_refs` plus permission state
 - PM-owned MCP availability is computed before run handoff and may generate CLI adapter config for bridged runtimes when required
 - provider-native skill or MCP files are optional projections and are never the canonical runtime source of truth
-- bundling the selected PM-native skill content is mandatory for runtime correctness; the `skill` tool is the on-demand augmentation path
+- provider-native skill files, `/systems`-style compatibility trees, and other external surfaces are optional `/projection` layers for interoperability; they are not the canonical MVP runtime path and do not replace PM registry/bundling/`skill` `/tool` delivery
+- the optional compatibility layer is not mandatory by default because it can introduce duplication and drift against the PM skill registry, projection failures can make a provider look misconfigured even when PM-native skills remain ready, CLI multi-account sandboxes would duplicate projected state unless projection is centralized, and provider-specific provider-native files can imply semantics weaker or different than canonical PM skill/tool behavior
+- skill resolution/bundling happens before provider execution; bundling the selected PM-native skill content is mandatory for runtime correctness, and the `skill` tool is the on-demand augmentation path
 
 ### 6.6 UI transparency requirement
 

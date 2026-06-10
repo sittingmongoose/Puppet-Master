@@ -1,53 +1,5 @@
 # Provider: OpenCode (Server-Bridged)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0471
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/Provider_OpenCode.md`
-  - Plans/Provider_OpenCode.md
-  - `Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`
-  - Plans/Permissions_System.md
-  - Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries.
-  - GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split now needs explicit ownership
-  - OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity.
-  - Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules.
-  - OpenCode must preserve its split between transport realm and upstream provider/account realm.
-  - OpenCode session ID is still being treated as if it were that canonical field
-  - Move OpenCode session IDs into provider-native correlation fields.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.
-  - BinaryLocator_Spec.md
-  - cli_launcher
-  - OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:
-  - `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.
-  - Spec_Lock
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - OpenCode limits and provider identity seams are now final-pass concrete:
-  - `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity.
-  - OpenCode_Deep_Extraction.md
-  - OpenCode_Coverage_Matrix.md
-  - Provider_OpenCode
-  - OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -90,6 +42,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 Rules:
 - PM terms such as `websearch`, `webfetch`, `requested_persona`, and `effective_persona` remain canonical
 - OpenCode terms may be referenced for alignment, adoption notes, or external context, but not as PM's canonical owner vocabulary
+- PM-native `/web-tool` and provider-capability ownership language stays aligned to `Plans/Tools.md`; OpenCode consumer text must not flatten provider capability differentiation to `native for all` or replace PM-native ownership boundaries.
 ## 3. SSOT References (DRY)
 
 - **Provider facade contract:** `Plans/CLI_Bridged_Providers.md` (extended for server transport)
@@ -118,6 +71,31 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_
 - Describe approval reuse through one `approval_scope_key` shared with permissions, HITL, doom-loop protection, and session approval caching.
 - Define `approval_scope_key` over actor, lane/package/run, and account/server-profile context rather than provider session identity.
 
+#### P5 OpenCode provider identity recovery requirements
+
+- `Plans/assistant-chat-design.md` is healthier than the other three: - thread blocked-state addenda already align to blocked/runtime actions - per-thread usage is already one canonical detail surface - search/log APIs already key to `thread_id`, `run_id`, `message_id`, and `event_id` - remaining drift is concentrated around compatibility-era fields like `resume_url?` in blocked-notice persistence rather than broad ontology problems
+- Codex confirmed the sharpest provider-side contract bug is still the **OpenCode `thread_id` collision**: - canonical `thread_id` remains PM correlation - OpenCode session ID is still being treated as if it were that canonical field - this must move into provider-native correlation before shared-runtime event joins become trustworthy
+- The cross-cutting canonical runtime fields already exist elsewhere: - `Contracts_V0.md` and `Prompt_Pipeline.md` already own the requested/effective persona/platform/model/auth/account snapshot contract - `storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `attempt_id`, blocked projections, and attempt/runtime records - newer scheduler addenda already expect runnable-unit fields like `replan_generation`, `scheduler_lane`, and queue-analysis refs
+- `Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md` - still encode single-session/single-actor assumptions that break under shared provider runtime, multi-lane orchestration, and server-bridged transport
+- Provider/runtime identity findings are still active: - `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim. - `Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` all still under-specify caller scope, execution-role capture, identity disclosure, or currently-usable-vs-instance-enabled capability semantics. - `OpenCode_Coverage_Matrix.md` and `OpenCode_Deep_Extraction.md` now pin more exact OpenCode limits: session identity must stay provider-native, SSE correlation fields remain under-specified, and requested/effective identity parity is still weaker for server-bridged providers than for direct providers.
+- Later addenda already require the stronger model: - `attempt_id` - `blocked_reason_code` - `allowed_action_ids[]` - `safe_point_id` - remediation lineage identifiers - `replan_generation` - queue-analysis and blocked-state rendering rules keyed to canonical runtime records
+- `Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level: - it maps canonical `thread_id` to an OpenCode session ID - while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers - GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`
+- OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes: - `OpenCode_Deep_Extraction.md` sharpens the server-global SSE / fixed working-directory / session-scoped compaction and approvals / ephemeral session identity issues into direct PM obligations. - `Media_Generation_and_Capabilities.md` and `OpenCode_Coverage_Matrix.md` both show that caller-scoped identity and transient runtime capability state still lack proper request/event surfaces.
+- `Plans/storage-plan.md` - `Plans/Glossary.md` - `Plans/Contracts_V0.md` - `Plans/FinalGUISpec.md`
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` - `Plans/LSPSupport.md` - `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` - `Plans/LSPSupport.md` - `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` - `Plans/LSPSupport.md` - `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` - `Plans/LSPSupport.md` - `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md` - still cannot faithfully render the runtime identity bundle or pivot by the newer attempt/receipt/usage anchors
+- `Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.
+- The docs imply multiple identity families that must stay distinct: - conversation identity: - `thread_id` - wizard/builder identity: - `wizard_id` - builder stage/run ids - bundle/review ids - orchestration identity: - `run_id` - package/seam/node ids - attempt ids
+- `thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct
+- Add `actor_kind` / `execution_role` and actor-scoped refs to the shared runtime identity bundle, snapshots, and handoff objects.
+- `Runtime_Artifacts_Panel.md` is stronger about canonical runtime identity, but its canonical ID set is still artifact-centric: - `artifact_id` - `run_id` - `thread_id` - `task_id` - `linked_artifact_id` - `logical_artifact_id`
+- `chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.
+- OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity.
+
+
 ## 4. Architecture Overview
 
 ### 4.1 OpenCode Server Model
@@ -127,7 +105,7 @@ OpenCode uses a **client/server architecture**:
 1. The user runs `opencode serve` (or the TUI, which starts a server internally).
 2. The server exposes an **OpenAPI 3.1** HTTP API on `http://<hostname>:<port>` (default: `http://127.0.0.1:4096`), and serves interactive API docs at `/doc`.
 3. Clients interact via REST endpoints and an SSE event stream.
-4. OpenCode is **provider-agnostic**: it supports Anthropic, OpenAI, Google, Azure, AWS Bedrock, OpenRouter, xAI, Mistral, Groq, and more — all configured through its own config.
+4. OpenCode is **provider-agnostic**: it supports Anthropic, OpenAI, Google, Azure, AWS Bedrock, OpenRouter, XAI, Mistral, Groq, DeepInfra, Venice, ZAI, Alibaba-compatible transports, and more — all configured through its own config.
 
 **Puppet Master connects to OpenCode as a client**, sending prompts and receiving responses through the HTTP API.
 
@@ -159,6 +137,10 @@ Each OpenCode row in PM is a `Server Profile` with one of two modes:
 - `Managed Server`
 - `Attach to Existing Server`
 
+This profile model replaces the older single-instance connection assumption. PM may track multiple OpenCode server profiles at once, and every request freezes the chosen `connection_profile_id` before execution.
+
+Profile roots may be represented as `/profiles/<connection_profile_id>/` or a concrete provider-root `.../profiles/<connection_profile_id>/`; each profile is a per-unit runtime surface with PM sidecar state under `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 Required profile fields:
@@ -166,6 +148,12 @@ Required profile fields:
 - `label`
 - `profile_mode`
 - endpoint summary (`host`, `port`, or explicit base URL)
+- `endpoint`
+- `server_auth_ref`
+- `config_root`
+- `enabled`
+- `priority`
+- `discovered_upstream_provider_ids[]`
 - optional credential refs for HTTP auth
 - health state
 - discovery state
@@ -177,6 +165,9 @@ Connection rules:
 - `Attach to Existing Server` means PM owns endpoint/auth configuration and health/discovery polling only.
 - all runtime calls remain HTTP/SSE server-bridge calls regardless of whether PM launched the process.
 - profile selection freezes into `connection_profile_id` in the requested/effective runtime snapshot before execution.
+- The `managed-vs-attached` split is part of the OpenCode `/transport` contract: PM supports one-or-many OpenCode server-profile and `/config` profiles instead of a single global connection record.
+- For `Managed Server`, PM may launch OpenCode with a PM-selected `OPENCODE_CONFIG_DIR` and owns the `long-lived` MCP configuration state in the provider-profile config root where the provider requires local config files; run start may perform only a lightweight `last-mile` worktree-specific sync rather than a full install/`/setup` on every call.
+- For `Attach to Existing Server`, the selected endpoint is an `attached-server`. PM reflects server-side MCP and tool configuration as `External / Not Managed` unless the OpenCode server API exposes a deliberate PM-managed `/config` path.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 5.2 Health Check
@@ -205,6 +196,8 @@ Rules:
 - if health succeeds but discovery fails, the profile remains connected but degraded.
 - if a previously ready profile disconnects, PM preserves the last-known discovery snapshot and marks it stale rather than blanking the provider/model surface.
 - attached profiles may be healthy while still `ExternalNotManaged` for some management affordances.
+- discovery state covers provider, model, and auth refresh together. GUI/status projections may label that grouped readiness as `/models/auth` or `/discovery/auth`; if a cached discovery snapshot is reused after a failed refresh, the row must keep explicit `/stale` labeling alongside the last-known provider/model/auth facts.
+- Upstream auth exposed by OpenCode is labeled `Connected in OpenCode`; it is not converted into a PM-owned account row. When a profile is disconnected or unhealthy, PM preserves last-known `/providers`, models, and auth facts with explicit `stale-state` labeling rather than blanking the upstream surface.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### 5.3 Auth realms and sign-in surfaces
@@ -239,9 +232,24 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Too
 
 Mapping rules:
 - PM `thread_id`, `run_id`, `parent_run_id`, and `child_run_id` remain canonical PM lineage fields.
+- The server-bridged OpenCode projection mirrors the expanded correlation `/identity` bundle from `ProviderRequestEnvelope`, including run/thread/parent/child lineage, attempt identity, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, retry/approval context, normalized output/correlation ids, and provider-native session ids as additive metadata only.
 - OpenCode session ids are additive provider correlation fields only.
 - PM must not rewrite `thread_id` into an OpenCode session id.
 - PM preserves requested versus effective runtime/model/effort state even when OpenCode internally uses agent/session configuration.
+- PM records the runtime platform as `opencode` while model IDs preserve upstream provider namespaces such as `anthropic/...`; the transport host and upstream provider identity must remain distinct in requested/effective runtime disclosure.
+- OpenCode's provider-entry mapping participates in PM's provider-first and transport-aware `/transport` model, which distinguishes `cli-bridged`, `direct-provider`, and `server-bridged` lanes; OpenCode itself remains `server-bridged`, and the `/backend` effective-state owner remains the OpenCode runtime, while model IDs and `IDs` preserve upstream provider identity such as `anthropic/...`, `google/...`, `anthropic/claude-sonnet-*`, and the model-family fragment `/claude-sonnet-`.
+- OpenCode provider discovery may expose Alibaba provider entries as `alibaba` and `alibaba-cn`; both use `DASHSCOPE_API_KEY` and OpenAI-compatible DashScope endpoints. PM records those entries as OpenCode-discovered provider facts and does not invent a separate `alibaba-coding-plan` OpenCode provider entry unless discovery or an owner contract later proves it exists.
+- OpenCode is a concrete near-term implementation-reference path for long-tail provider coverage because its provider docs and transforms cover MiniMax and Z.AI explicitly and handle Alibaba/DashScope quirks, but PM must still evaluate discovered provider entries as data. PM cannot assume OpenCode already split Alibaba Coding Plan into a separate OpenCode provider entry the same way MiniMax Coding Plan, MiniMax, or Z.AI may be represented in provider docs, transforms, or direct-provider plans. Zhipu AI Coding Plan external evidence is tracked at `https://docs.bigmodel.cn/cn/coding-plan/overview`; the historical source spelling `//docs.bigmodel.cn/cn/coding-plan/overview` normalizes to that HTTPS URL.
+- OpenCode-native skill tool behavior appears shared across OpenCode-discovered MiniMax, Z.AI, Alibaba-family provider entries, Codex, and GitHub Copilot where the OpenCode server exposes the same tool surface; PM still treats that as OpenCode server-profile behavior rather than direct-provider skill canon.
+- OpenCode's aggregator/bridge role covers upstream vendors PM may not support natively; on app `boot-refresh`, PM refreshes OpenCode provider/model discovery in the background, keeps last-known connected upstream models visible until refresh finishes, and reports progress or per-provider failure in the shell `/status-bar` without blocking runtime selection.
+- `OPENCODE_CONFIG_DIR` can point to a custom config directory that overrides OpenCode agent/command/plugin discovery. PM treats that `/command/plugin` discovery effect as OpenCode provider configuration, not as PM User Command ownership.
+- OpenCode provider-session identifiers remain provider-native correlation metadata; they never replace PM `thread_id`, `run_id`, `parent_run_id`, `child_run_id`, or attempt lineage.
+
+OpenCode cache/request metadata is adapter evidence, not PM storage canon:
+- When OpenCode config exposes `options.setCacheKey`, PM records `setCacheKey` / `options.setCacheKey` as session-scoped provider-side cache metadata and keeps the prompt-cache key tied to the OpenCode session correlation handle.
+- OpenCode may set `store = false` for OpenAI and GitHub Copilot SDK paths; PM preserves that as provider request metadata and must not infer durable PM storage from it.
+- OpenCode `provider.ts` strips OpenAI item ids from request bodies by default and keeps them only for Azure when `store=true`; PM treats this as Codex-style provider request-shape evidence, not as PM transcript deletion or durable storage policy.
+- OpenCode cache markers may be message-level or `/content-level` and provider-specific; Anthropic/Bedrock enablement must preserve `/Anthropic` detection evidence such as `#9803` when it affects cache behavior.
 
 Required preserved envelope fields:
 - `run_id`
@@ -265,6 +273,9 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, Co
 Mapping rules:
 - OpenCode `task_id` is a resumable provider correlation handle for the PM child run.
 - OpenCode `parentID` is additive provider lineage, not PM’s only parent-child truth.
+- OpenCode `@agent-name` shorthand is adapter input only: PM translates `@agent-name` / `agent-name` mentions into the canonical task-tool launch path and does not treat them as a special runtime bus.
+- OpenCode TUI/root-session aggregation of child permissions or `/questions` normalizes into PM parent-mediated question/HITL handling and does not create child-local user-question authority.
+- OpenCode child-session behavior is not evidence for native peer-to-peer subagent messaging or PM `/message-board` behavior; PM crew coordination remains owned by the canonical orchestrator message-board contract.
 - PM retry, reroute, resume, and replacement semantics remain PM-owned regardless of how OpenCode resumes a child session.
 - completed disposable children are not treated as durable reusable actors merely because OpenCode can reopen session history.
 
@@ -304,6 +315,7 @@ OpenCode MUST emit `auth_state` events and follow the canonical bridged-provider
 - In-run — **provider auth realm (inside OpenCode)**:
   - `ProviderAuthError` (from upstream provider inside OpenCode) → `AuthExpired`
   - upstream rate-limit/outage errors → emit diagnostics (e.g. `rate_limited`, `provider_outage_or_network`) and/or `done.stop_reason`; MUST NOT expand the auth state enum.
+  - in-run failover uses PM reason codes in the requested/effective runtime snapshot: `hard_exhaustion_failover`, `rate_limit_failover`, `auth_failure_failover`, `provider_outage_failover`, and `transport_failure_failover`.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md#AuthState
 
@@ -316,14 +328,15 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions
 Required adapter behaviors:
 - preserve PM requested/effective runtime and capability disclosure.
 - keep provider-native agent files and provider-native invocation syntax in the interoperability lane only.
-- support additive provider correlation for child sessions and billing-sensitive behaviors.
-- preserve prompt-cache-friendly separation between stable static prompt content and dynamic environment or instruction content.
+- support additive provider correlation for child-session mapping and billing-sensitive behaviors.
+- preserve prompt-cache-friendly separation between stable static agent/provider prompt content and dynamic environment or instruction content; OpenCode PR `#14203` is implementation-reference evidence for avoiding prompt-cache misses when agent/provider prompt text is concatenated with dynamic `/instruction` material.
 - avoid synthetic fake-user replay messages as PM’s continuity mechanism.
 
 OpenCode/Copilot-specific notes:
 - OpenCode uses `x-initiator` classification for Copilot-sensitive requests.
 - PM may use equivalent additive provider metadata where billing classification depends on whether a call is user- or agent-initiated.
 - that adapter-specific behavior does not weaken the PM strict-deny rule for non-Copilot parents attempting Copilot-native child routing.
+- Adapter-specific billing or `/caching` evidence from OpenCode does not satisfy the Copilot TOS constraint; Copilot-native child routing remains available only when the active provider/root path is Copilot-compatible under PM policy.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 ## 7. Model Discovery
@@ -352,13 +365,17 @@ The model picker for OpenCode MUST:
 4. Cache the model list with a configurable TTL (default: 5 minutes)
 5. Use the same Provider-contract model selection UI surface used by all providers (no OpenCode-specific model-picker logic beyond the discovered model source)
 
+ACP model listing can supply model IDs, names, and descriptions (`IDs/names/descriptions`), but that response is not by itself a rich effort-capability contract. PM must obtain or infer effort-capability from the shared provider capability matrix before presenting effort controls as supported.
+
+ACP agent streams may emit `usage_update`. When available, PM maps that usage into the shared provider usage event shape with input/output/reasoning/cache token breakdown (`/output/reasoning/cache`) plus cost, preserving ACP as the source protocol rather than treating the update as an OpenCode-only GUI counter.
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs
 
 ### 7.3 Fallback Models
 
 If dynamic model discovery fails (server unreachable), Puppet Master MUST NOT hardcode fallback models for OpenCode. Instead, surface an error: "Cannot discover models — OpenCode server unreachable."
 
-ContractRef: ContractName:Plans/DRY_Rules.md#2, PolicyRule:Decision_Policy.md§4
+ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, PolicyRule:Decision_Policy.md§4
 
 **Rationale:** Unlike CLI-bridged providers where Puppet Master knows the platform's model catalog, OpenCode's available models depend entirely on the user's OpenCode configuration and authenticated providers. Hardcoding would be incorrect.
 
@@ -372,6 +389,7 @@ OpenCode-specific capability requirements (normative):
 - Transport remains `http` (server-bridged).
 - **Plan mode:** When `mode=plan`, Puppet Master MUST use the OpenCode `plan` agent (read-only). When `mode=execute`, use the `build` agent.
 - **Provider-tool capability reporting:** OpenCode-discovered tools (from `GET /provider` and session tool lists) MUST be reported through `capabilities.get` with `category: "provider_tool"`. Each tool entry includes the same `enabled` / `disabled_reason` / `setup_hint` shape defined in `Plans/Media_Generation_and_Capabilities.md` [§1.2](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). This enables agents and users to discover all available OpenCode tools via capability introspection.
+- **Provider capability aliases:** OpenCode-native declarations such as `supportsParallelTools`, `supportsAssistantMessagePrefill`, and `maxPayloadSize` normalize into the shared provider capability fields before PM routing, request shaping, or model-effort UI decisions consume them.
 - **Media tools are NOT OpenCode-provided:** Media generation (`media.image`, `media.video`, `media.tts`, `media.music`) remains a Puppet Master internal capability backed by the Gemini API key (or Cursor-native for images). OpenCode MUST NOT expose or proxy media-generation tools. The media capability picker dropdown does not include OpenCode tools; see `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER).
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
@@ -434,6 +452,8 @@ UI rules:
 - the inspector shows connection mode, endpoint summary, discovery freshness, and PM ownership mode.
 - skills and MCP settings shown under an OpenCode profile must preserve the distinction between PM-owned canon and OpenCode-reflected state.
 - attached profiles must not expose lifecycle actions that imply PM owns the remote process.
+- for `opencode`, PM may share PM instructions/skills through OpenCode-native projection, but it isolates `/runtime` state, server auth, discovered upstream auth/runtime state, and server-side session residue from PM-native canonical state.
+- OpenCode skill discovery is global to the selected server-profile, not attached to only one upstream provider. The environment toggle `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS` is recorded as OpenCode server behavior evidence, and PM still routes canonical skills/tools through the PM skill and tool contracts.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
 ### 10.2 Tier Configuration
@@ -459,7 +479,7 @@ Minimum OpenCode constraints the spec MUST encode (normative):
 - CLI path is **optional** and used only for launcher/discovery fallback (not as runtime transport)
 - No hardcoded fallback models (dynamic discovery only)
 
-ContractRef: ContractName:Plans/DRY_Rules.md#2, CodePath:puppet-master-rs/src/platforms/platform_specs.rs
+ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, CodePath:puppet-master-rs/src/platforms/platform_specs.rs
 
 ---
 
@@ -581,6 +601,10 @@ OpenCode runs persist to seglog using the same event types as other providers:
 - `usage.event` from message metadata (input/output tokens)
 - `run.completed` with `{ run_id, status }` on session completion
 
+Do not copy OpenCode visuals directly or overclaim OpenCode-derived cost certainty. OpenCode cost handling carries provider-cache and provider-normalization caveats, so PM surfaces OpenCode-style cost as `estimated-cost` unless provider-authoritative pricing is available, and raw/debug evidence preserves the upstream cache/input reporting caveat.
+
+OpenCode persistence is provider-local reference state, not PM canonical state: non-atomic writes, shared snapshot indexes, SQLite stores, and NFS-incompatible filesystem assumptions MUST NOT be used as the authoritative PM ledger, event log, or recovery source.
+
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
 ---
@@ -613,28 +637,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - OpenCode server docs: https://opencode.ai/docs/server/
 - OpenCode repository: https://github.com/anomalyco/opencode
 
-## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)
+## OpenCode Runtime Retry / Blocked-State / Packet Canonical Alignment (2026-03-09)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0472
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle:
-  - There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 OpenCode-specific runtime behavior must remain aligned with the canonical runtime scheduler, retry taxonomy, safe-point contract, remediation lineage, runtime packet, and usage pipeline.
 
 ### Required OpenCode runtime fields

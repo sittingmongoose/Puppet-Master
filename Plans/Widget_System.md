@@ -1,211 +1,12 @@
 # Widget System -- Cross-Cutting Specification
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Highest-Impact Docs
-  - GUI / UX Impacts
-  - Cleanup Priorities
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0533
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Highest-Impact Docs
-  - GUI / UX Impacts
-  - Cleanup Priorities
-- Exact required items represented:
-  - Replace tier-rooted execution with package/seam/lane model
-  - Define package overseer + seam overseer roles
-  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
-  - Redefine gates to package-complete / seam-complete
-  - Rename or retire Tiers UI/tab and tier_tree/progress bars
-  - Replace Tiers-first navigation
-  - Define Dashboard→Orchestrator→thread routing contract
-  - Add package/seam/lane visualization widgets
-  - Define which overseer's thread opens on click
-  - Make worktree/lane state visible and navigable
-  - Replace or demote [retired-token-13] widgets and layouts.
-  - Add package/seam/lane-aware identity, worktree, and attention surfaces.
-  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-17].
-  - `Plans/[retired-token-18]`
-  - Plans/[retired-token-18]
-  - `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/[retired-token-18]`, `Plans/GUI_Rebuild_Requirements_Checklist.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/Run_Graph_View.md
-  - Plans/GUI_Rebuild_Requirements_Checklist.md
-  - `Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition
-  - Orchestrator_Page.md
-  - Tiers
-  - `Plans/[retired-token-18]` is still heavily aligned to the older orchestrator model:
-  - `[retired-token-6]` is still canonical for `Orch/Tiers`
-  - [retired-token-6]
-  - Orch/Tiers
-  - `widget.[retired-token-12]`, `widget.completed_prose`, and `widget.agent_terminal` all read as tier/task/subtask oriented
-  - widget.[retired-token-12]
-  - widget.completed_prose
-  - widget.agent_terminal
-  - those non-Progress tabs may internally use reusable view components, but they should not expose general add/remove/move/resize widget behavior
-  - This matters because the widget layer should not have to relearn seam/package/node/lane semantics independently.
-  - distinguish `page/tab filters` from `widget presentation config`
-  - page/tab filters
-  - widget presentation config
-  - `Plans/[retired-token-18]` currently defines layout keys for multiple Orchestrator tabs.
-  - widgets should consume compact projections, not live-scan huge record sets per widget
-  - `[retired-token-18]` implies broader widget portability
-  - [retired-token-18]
-  - `Orchestrator_Page.md` still treats multiple tabs as widget containers
-  - Sonnet reinforces that historical-run rendering, idle widget rendering, and degraded projection gating are still missing from the surface-level specs rather than only from storage docs
-  - The current widget contract mixes three different things that now need to stay separate:
-  - `widget config`: presentation settings and safe subfilters only
-  - widget config
-  - widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions
-  - Usage and widget surfaces are still incomplete for requested-vs-effective and trust semantics:
-  - `Plans/usage-feature.md` + `Plans/[retired-token-18]`
-  - Plans/usage-feature.md
-  - `[retired-token-18]` still splits terminal widgets between `widget.terminal_output` and `widget.agent_terminal`
-  - widget.terminal_output
-  - widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces
-  - Live widget and page contracts still need attempt-/lane-/session-aware attribution rather than tier-only routing:
-  - Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control.
-  - `widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical `provider_accounts.*` storage family
-  - widget.multi_account
-  - settings/multi_account.*
-  - provider_accounts.*
-  - Widget multi-account data sourcing still points at pre-rewrite namespaces.
-  - Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.
-  - `cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move toward stronger native-surface vocabulary and typed routing.
-  - cmd.widget.*
-  - page: string
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - widget layout slot positions
-  - widget layout
-  - `tier`, `[retired-token-4]`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.
-  - tier
-  - [retired-token-4]
-  - object_kind
-  - If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local.
-  - `FinalGUISpec.md` is still a major drift amplifier because it combines shell, page taxonomy, widget, and deep-link language in one doc.
-  - FinalGUISpec.md
-  - `widget.[retired-token-12]` = active tier title/objective/platform/model
-  - `[retired-token-7]` = [retired-token-8] completion bars
-  - [retired-token-7]
-  - `widget.agent_terminal` = current worker output
-  - `widget.completed_prose` = completed tier summaries
-  - `widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.
-  - `Plans/[retired-token-18]` is still carrying a broad pre-rewrite Orchestrator widget model.
-  - `widget.[retired-token-12]` = active tier title/objective/elapsed
-  - `widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`
-  - widget.cta_stack
-  - PuppetMasterEvent::UserInteractionRequired
-  - `widget.agent_terminal` filtered by `[retired-token-4]`
-  - `widget.completed_prose` = finished phases/tasks
-  - `[retired-token-6]` hosted on `Orch/Tiers`
-  - The widget data contract section is also still sourced from:
-  - The widget layout migration contract now has an exact persistence-rule contradiction.
-  - `Plans/[retired-token-18]` says in section 7.3:
-  - widget layout takes precedence
-  - Because `[retired-token-18]` claims SSOT precedence for widget layout key handling, this contradiction is more than editorial drift.
-  - It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche.
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - still makes `Tiers` the second tab and centers `[retired-token-6]`
-  - still defines Evidence, History, and Ledger as widget tabs rather than native tabs
-  - `widget.[retired-token-12]`
-  - `[retired-token-7]`
-  - `Plans/[retired-token-18]` remains a major stale hostability owner:
-  - still includes `[retired-token-6]` for `Orch/Tiers`
-  - widget data-source language updated away from `TierChanged` / `[retired-token-4]` assumptions
-  - TierChanged
-  - it explicitly says it is not the storage, command, permission, or widget SSOT
-  - `[retired-token-6]`
-  - `[retired-token-7]` as [retired-token-8] bars
-  - `widget.[retired-token-12]` as active tier
-  - The **default widget drill-target mappings** are also absent.
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Progress-only widget hostability
 
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-048: Progress-only widget hostability
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0536
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.
-  - Dashboard
-  - Progress
-  - Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots.
-  - its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`
-  - Orch/Tiers
-  - Orch/Evidence
-  - Orch/History
-  - Orch/Ledger
-  - `Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity and broader Progress/Dashboard hostability details.
-  - Widget_System.md
-  - Orchestrator_Page.md
-  - terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`
-  - widget.terminal_output
-  - widget.agent_terminal
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-048
-- Fidelity gap refs: cov-048
-- Required fidelity items:
-- Exact required item: Restrict widget-composed Orchestrator surface to Progress
-- Exact required item: Persist orchestrator:progress layout separately from Dashboard and Usage
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-048: Progress-only widget hostability` exists in `Plans/Widget_System.md`.
-- Exact acceptance check: The `cov-048` repair states the exact requirement: Restrict widget-composed Orchestrator surface to Progress
-- Exact acceptance check: The `cov-048` repair states the exact requirement: Persist orchestrator:progress layout separately from Dashboard and Usage
-- Exact acceptance check: The `cov-048` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 ## 1. Scope and non-scope
 Widget composition remains important, but it is no longer a blanket page-model for every major surface.
@@ -230,7 +31,41 @@ Widgets consume stable projections and canonical records. They do not define pag
 Rules:
 - widget config changes presentation, local filtering, and layout only
 - widget-level filters inherit page/project/focused-run context and do not invent independent run scope
+- Route vocabulary is cross-cutting, not page-local; widget reconciliation starts from owner docs before surface docs so widgets consume the route/open contract instead of recreating route terms locally.
+- `tab-level` filters live in tab scope, `widget-level` filters are safe subfilters, and `page-native` actions stay with route/open or page owner docs; `/package` hostability consumes package/seam projections without turning widgets into page owners.
 - a widget action routes through canonical commands and route/open contracts rather than bypassing them
+- widget surfaces consume cross-cutting `/state` and `/runtime` owner contracts rather than reopening already-locked seams: SSH retry-budget/reconnect behavior is owned by GitHub Integration, and stale cross-references must point to the owning contract before widget drill-downs are implementation-ready
+- Widget_System consumes, but does not own, the FinalGUISpec anchors `#### 7.4.4 Settings (Unified) panel specification`, `#### 7.4.7 Agent-Config panel specification`, and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)`: those anchors own provider class/settings disclosure, web/plan/question/approval widget ownership, and the inline visual/web-tool rendering split.
+- Widget hostability treats `/settings/widget`, `/plan/question/approval`, and `/web-tool` as routed GUI consumer paths over FinalGUISpec and UI command owners; Widget_System owns only whether those widgets can be hosted by Dashboard, Usage, or Orchestrator `Progress`, plus layout and projection inheritance.
+- Stale or incomplete widget summaries are `/retire` or `/incomplete` instead of being reintroduced as live catalog entries; the older source shorthand `### 15.1` through `### 15.9` is source-lineage only, with active promoted widget sections resolved by named FinalGUISpec headings rather than by minting a missing `### 15.9` section.
+- Legacy Orchestrator widget inputs such as `/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, and `TierChanged` are compatibility evidence only. Live hostability does not restore `Dashboard, Usage, Orchestrator widget tabs`; non-Progress Orchestrator surfaces use native views, while `Progress` may host widgets over canonical projections.
+- Layout migration SSOT keeps `dashboard_layout:v1` only as an import source or rollback backup; canonical Dashboard writes go to `widget_layout:v1:dashboard`, and the legacy `dashboard_layout` / `dashboard_layout:v1` keys are not updated or retained as peer layout state after migration completes. Retired Orchestrator layout namespaces `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` remain compatibility-only import evidence, not live widget layout targets.
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` / `/GUI_Rebuild_Requirements_Checklist.md` is a follower, not a source. Any `PASS` for `/open`, cross-cutting widget coverage, or `Tiers` is valid only after current owner docs pass the Progress-only, route/open, and runtime-recovery model.
+- `Plans/Widget_System.md` / `/Widget_System.md` removal remains lightweight and locally undoable, but canonical concern actions and `/governance` records do not inherit Widget_System / `Widget_System.md` removal policy.
+- Settings scope follows this hierarchy: `App / Global` owns broad product defaults and `/catalogs/capabilities`; `Project` owns primary execution policy; `Seam` carries meaningful feature-level overrides; `Package` carries local `/recovery` overrides; `Node` is rare and targeted; `Actor / Role` covers cross-cutting `/account/persona/worker` policy; `Runtime only` is computed truth, not user configuration.
+- The older `Progress / Tiers / Node Graph / Evidence / History / Ledger` page list, plus `tier_id`, tier-scoped data-source rows, and `/task/subtask` framing, is compatibility lineage. Widget_System consumes `Orchestrator_Page` / `Orchestrator_Page.md` for the page model and does not treat `Tiers` as a live widget tab.
+- Orchestrator `/Widget` hostability gaps such as missing `TOC` sections, split `widget.terminal_output` versus `widget.agent_terminal`, `/partition` and owner run/tier row metadata, under-owned project-heavy surfaces, `/page` and `/tier` filters, `/Evidence/History/Ledger` legacy layout claims, and implicit global layouts resolve through project-scoped layout keys and owner-doc routes.
+- Performance and fallback rules cover `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`, Progress widgets, and cross-tab inspectors. A projection-derived inspector falls back to `Ledger` / `History` or an exact record view via `detail_ref`.
+- The Progress widget catalog keeps `/core` candidates visible while allowing users to `/hide` optional widgets; candidate families include run status, current activity, blockers, seam health, package activity, promotion queue, worktree lanes, account pressure, recent major events, overseer activity, corroboration queue, recovery state, and throughput/capacity.
+- Widgets consume stable orchestrator projections and canonical record `/query` contracts. They must not define meaning by subscribing directly to legacy event names or tier-specific objects, and `Progress` remains the only widget-composed Orchestrator tab.
+- `historical-run` rendering follows the active `/page` route context: `Progress` widgets render against the current `focused_run_id`, and moving between live and historical mode must not require per-widget manual retargeting or preserve stale per-widget scope.
+- Canonical Orchestrator route vocabulary uses lower-case object names: `progress`, `seams`, `node_graph`, `evidence`, `history`, and `ledger`. These are high-value route targets and do not make Widget_System / `Widget_System.md` a tier-era Orchestrator owner.
+- Widget data contracts retire `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `UserInteractionRequired`, tier-targeted filters, and PTY filtering as live data roots; widgets consume canonical runtime and attention projections instead.
+- `Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` and `Plans/Widget_System.md` / `/Widget_System.md` share the 13-widget Progress catalog and its default drill-target mappings. Widget_System owns hostability and layout, not the target page behavior behind each drill action.
+- `/tab` filters stay separate from `page/tab filters` and `widget presentation config`: widget config may adjust presentation and local emphasis only, and it cannot diverge from the tab's canonical projection rules.
+- The native-tab versus widget-heavy boundary is explicit: `Progress` is widget-heavy, while `Seams`, `Evidence`, `History`, `Ledger`, and `Node Graph` remain native-tab surfaces owned with `Orchestrator_Page` / `Orchestrator_Page.md`.
+- Widget scope has three layers: `router/page scope` carries `project_id`, `focused_run_id`, `/live` or historical mode, `/scope`, and deep-link targets; `tab scope` owns tab-native filters and pivots; `widget config` owns presentation settings, safe subfilters, and widget-local `/filter` state only.
+- Widget trust chrome uses shared projection-trust `/freshness` semantics. Individual widgets must not invent stale-state copy or local stale-state categories outside the common projection-trust model.
+- The GUI widget appendix must follow the same boundary: `Progress` is widget-composed, while `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native views; broad Orchestrator widget tabs in GUI prose are compatibility signals only.
+- Progress widgets are reconciled away from active-tier-first semantics and bind to active work objects, `/attention` items, lane `/worktree` state, and record-backed summaries.
+- `widget.tier_tree` is retired as a first-class Orchestrator widget in favor of native `Seams` and native graph `/history/evidence/ledger` tabs.
+- Widget shell data-contract fields are widget identity `/type`, scope, filter `/sort/display` config, and projection ref; widgets consume shared projections instead of raw event streams or bespoke queries.
+- `Dashboard` may host a curated subset of `Progress` widgets and some `Usage` widgets, while deep inspection surfaces remain non-hostable native tabs.
+- As a cross-cutting owner, Widget_System must prevent stale hostability drift into `/Usage`, `FinalGUISpec.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` reconciliation.
+- `Source Control` is a constrained side-panel and `/small` surface, not a broad widget canvas; widget usage stays focused on wider surfaces such as `Dashboard` and `Orchestrator / Progress`.
+- `Progress` widgets consume compact projections rather than live-scan huge record sets per widget, and dense detail uses a deep-link to the native tab.
+- GUI deep-link compatibility treats `resume_url`, `Tiers`, `/tab`, and broad Orchestrator widget tabs as legacy navigation inputs; active behavior routes through `Progress` and current route/deep-link contracts.
+- Tier-era operator surfaces in Widget_System / `Widget_System.md`, Orchestrator_Page / `Orchestrator_Page.md`, and Run_Graph_View / `Run_Graph_View.md` must not preserve multi-tab widget composition, weak hostability, or missing `/effective` governance-object identity as live canon.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
 
@@ -247,65 +82,12 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Pol
 
 ## 4. Orchestrator Progress widget scope and catalog linkage
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0535
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Research Progress - 2026-03-16 - Widget System Contract
-  - Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.
-  - Dashboard
-  - Orchestrator / Progress
-  - page-global widget layout keys may be too coarse for project/run-centric Orchestrator usage
-  - but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`
-  - Progress
-  - compact widget headers are not a good place to explain semantic scope; that needs page-level context and deep-link clarity
-  - Orchestrator ledger widget semantics still center tier-era filters rather than attempt/account/receipt-aware routing
-  - Orchestrator `Progress` widget layout persistence should use **app-default with project override**.
-  - effective `Progress` widget layout should be computed as:
-  - Add one shared degraded-trust / projection-health / concern bridge that provider, permissions, Orchestrator, Usage, and widget surfaces can all consume.
-  - the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`
-  - FinalGUISpec.md
-  - Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas, and bind all projection-state UX to `projection_freshness` + `projection_health` rather than overloaded trust language.
-  - projection_freshness
-  - projection_health
-  - Orchestrator widget tabs broadly enough to conflict with the newer `Progress`-only widget composition rule
-  - Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:
-  - `Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.
-  - Widget_System.md
-  - Narrow Orchestrator widget hostability to `Progress` only.
-  - Retire `[retired-token-2]` as a first-class Orchestrator widget in favor of native `[retired-token-1]` and native graph/history/evidence/ledger tabs.
-  - [retired-token-2]
-  - [retired-token-1]
-  - Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsistent
-  - `Primitive:WidgetCatalog` still says `Orchestrator widget tabs`
-  - Primitive:WidgetCatalog
-  - Orchestrator widget tabs
-  - widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite direction that only `Progress` remains widget-composed in Orchestrator
-  - still defines `Dashboard, Usage, Orchestrator widget tabs`
-  - Dashboard, Usage, Orchestrator widget tabs
-  - `Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old “all Orchestrator tabs are widget canvases” model.
-  - Orchestrator_Page.md
-  - non-Progress Orchestrator tabs removed from widget layout persistence
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Progress-only widget hostability
 
 Only the Orchestrator `Progress` surface is widget-composed. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views, and no other Orchestrator tab may opt into widget composition.
+
+Tier-first widget catalog assumptions are compatibility-only; Widget_System hostability follows the Orchestrator Progress-only rule and must not broaden widgetization across native Orchestrator tabs.
 
 The Orchestrator UI composes exactly one consumer widget: the `Progress` widget with ID `widget-orchestrator-progress`. This widget occupies a dedicated layout space within the Orchestrator UI and receives orchestrator-native runtime events, progress markers, and node-level state.
 

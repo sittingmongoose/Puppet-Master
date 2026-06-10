@@ -1,0 +1,23 @@
+# Shard 014: Shared approval-ladder alignment (2026-04-04)
+
+Source: `Plans/human-in-the-loop.md`
+
+Source lines: L401-L413
+
+Source SHA256: `1d422c28121f5136cf861604a3df266fb3bb96deca8fc1dd177205c530863fb9`
+
+---
+
+## Shared approval-ladder alignment (2026-04-04)
+
+HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Required alignment:
+- approval choices are `deny`, `once`, `for session`, `always`
+- batch web review may present one domain-grouped approval surface
+- `question` defaults to `allow` only when HITL is available; otherwise it remains ask-gated
+- HITL surfaces do not create a competing approval vocabulary
+- As an approval/ask-flow consumer, HITL MUST preserve repaired permission/question/terminal block handling exactly: permission prompts, question prompts, and terminal blocked states all resolve through the shared permission ladder and blocked-episode model rather than drifting into local-only action names or terminal-only approval behavior.
+- The same alignment applies to `/ask-flow` and `/question/terminal` routes: they are consumer labels over the shared question, permission, and terminal blocked-episode model, not independent HITL-only state machines.

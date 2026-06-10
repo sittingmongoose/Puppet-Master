@@ -1,102 +1,11 @@
 # Models System (Canonical SSOT)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0372
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Runtime / Storage / Contract Impacts
-- Exact required items represented:
-  - Add node_id
-  - Add package_id
-  - Add seam_id
-  - Add lane_id
-  - Add attempt_id
-  - Add effective_identity
-  - Normalize requested/effective account identity shapes
-  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
-  - The biggest GPT-5.4 value-add was not just "tier drift exists"; it was showing where old and new models are both still treated as canonical in the same surface area.
-  - Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models.
-  - `orchestrator-subagent-integration.md` now contains both old and new models at once:
-  - orchestrator-subagent-integration.md
-  - Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs plus secondary labels:
-  - tier_id
-  - Continue the same owner-doc tranche through later models because GPT-5.4 is still finding real new contradictions, especially around routing/registry/governance ownership.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
-  - Plans/Multi-Account.md
-  - Plans/Personas.md
-  - Plans/Prompt_Pipeline.md
-  - `[retired-token-13]` / `[retired-token-15]` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `[retired-token-11]` defines run/persona/surface/default priority only, `[retired-token-10]` defines `[retired-token-9]` / `[retired-token-14]` without precedence rules, and `[retired-token-12]` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `[retired-token-16]`, `[retired-token-17]`, and `[retired-token-18]`.
-  - [retired-token-13]
-  - [retired-token-15]
-  - [retired-token-11]
-  - [retired-token-10]
-  - [retired-token-9]
-  - [retired-token-14]
-  - [retired-token-12]
-  - [retired-token-16]
-  - `[retired-token-11]`
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-167: Coverage blocker provider/model precedence owner section
-- Coverage rows: cov-167
-- Fidelity gap refs: cov-167
-- Required fidelity items:
-- Exact required item: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
-- Exact required item: Tie that section to parallel-node worktree assignment and ownership transitions
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-167: Coverage blocker provider/model precedence owner section` exists in `Plans/Models_System.md`.
-- Exact acceptance check: The `cov-167` repair states the exact requirement: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
-- Exact acceptance check: The `cov-167` repair states the exact requirement: Tie that section to parallel-node worktree assignment and ownership transitions
-- Exact acceptance check: The `cov-167` repair is in the owner section for `Plans/Models_System.md` and is not only a downstream consumer note.
-
+### Coverage blocker provider/model precedence owner section
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -122,26 +31,6 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ## Provider/model precedence and settings resolution
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0376
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - it links to provider/model settings
-  - Export / settings / persona transfer gaps are broader than first summarized
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Scope and owner boundaries
 
@@ -201,6 +90,114 @@ The resolver MUST emit one shared record containing at least:
 
 That emit shape is consumed by runtime snapshots, inspectors, and owner transitions; later sections in this document elaborate, but do not replace, this owner section.
 
+Provider/model concern surfaces share the concern lifecycle vocabulary used by runtime owners: `active`, `acknowledged`, `resolved`, and `dismissed` remain separate states; `resolution_kind` includes `accepted_risk`; and any concern-action confirmation matrix must disclose whether model/provider selection may proceed, block, retry, or require user confirmation. `Plans/GUI_Rebuild_Requirements_Checklist.md` consumes those first-class concern lifecycle and lineage requirements without becoming the provider/model owner.
+
+Dispatch context and worktree precedence are part of this owner section. `DispatchContext.provider_id`, `model_id`, and provider/model precedence must cover run, seam, package, node, overseer, delegated-subagent, parallel-node worktree assignment, and ownership transitions. `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md` consume this policy, including `/persona/surface/default` compatibility wording, but do not replace it.
+
+Node execution settings use requested-vs-effective disclosure across `/model/effort/persona`, `/model/effort`, `/settings`, `/type`, runtime-model policy, node-worker policy, and per-node execution. `feature seam`, `work package`, node, work-package overseers, and overseer-spawned subagents may each carry provider/model/effort defaults and overrideability; auto-selected defaults may use `/easiest` policy only when it is explicit in the resolver record. package-based worktrees require `/ordering` and lane rules for dependent-node execution, and safe-point-like state handoff must remain tied to the canonical safe-point contract.
+
+Run Graph consumers must map worker and /verifier identity back to the requested/effective snapshot. `Plans/Run_Graph_View.md` / `/Run_Graph_View.md` may display `Provider / Model`, `worker_provider`, `worker_model`, `verifier_provider`, and `verifier_model`, but those are compatibility labels over the canonical `/effective` provider/model record.
+
+GitHub and project account context are separate selection inputs: `GitHub_Integration`, `GitHub_Integration.md`, `storage-plan`, and `storage-plan.md` consume current-repo, current-account, selected_repo_id, and project-scoped account policy state without moving the provider/model precedence owner out of this document.
+
+Adjacent owner references repeatedly implicated in provider/model cleanup include `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/Multi-Account.md`, `Plans/Widget_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Executor_Protocol.md`, `Plans/Orchestrator_Page.md`, `Plans/Provider_OpenCode.md`, `Plans/UI_Command_Catalog.md`, `Plans/Permissions_System.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/assistant-chat-design.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, `Plans/Tools.md`, `Plans/Glossary.md`, and `Plans/Personas.md`; they are consumers or adjacent owners, not substitutes for this provider/model precedence section.
+
+Runtime/storage identity fields must keep `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`, `/Contracts_V0.md`, and `/Orchestrator_Page.md` aligned: `requested_persona` and `effective_persona` are canonical, `_id` variants are compatibility labels, and `/runtime/storage` account fallback fields must not disappear from requested/effective disclosure.
+
+Owner-of-owners cleanup is implementation-relevant: 00-plans-index.md, plans-index, Decision_Log, Decision_Log.md, rewrite-tie-in-memo, rewrite-tie-in-memo.md, feature-list, feature-list.md, newfeatures.md, addendum-to-plan-map, SSOT rows, highest-value owner-of-owners routing, promoted-feature phasing, `/packages/lanes/overseers`, `/tab`, tier-era execution, `/effective` identity, and rewrite-critical contracts must not amplify drift for provider/model selection.
+
+Run Graph event-update vocabulary is historical input only. `Plans/Run_Graph_View.md` / `/Run_Graph_View.md` event-update rows such as `TierChanged`, `IterationStart`, `GateStart`, `GateComplete`, `UserInteractionRequired`, and `EvidenceStored` must be mapped to current execution-unit and requested/effective model events before they drive provider/model UI.
+
+Provider account snapshots are runtime-wide. `storage-plan` and `storage-plan.md` must model durable provider account snapshots for runs and for other actor classes that use the same provider runtime, not only the run actor class.
+
+Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from preferred persona model`.
+
+Requested/effective runtime identity uses the `requested_*` and `effective_*` field families as canonical cross-system IDs. `Contracts_V0`, `Contracts_V0.md`, `_id` compatibility fields, and `/runtime` consumers may expose those IDs, but they must not collapse requested, effective, account, provider, model, execution role, or operational identity into one value.
+
+Provider IDs and model IDs remain explicit in effective snapshots: `anthropic/` namespace prefixes, `provider_id: cursor`, `provider_id`, `model_id`, and `/effective` values are retained as data, not rewritten into display-only names.
+
+Pre-run chain configuration keeps isolation explicit. `Plans/chain-wizard-flexibility.md` / `/chain-wizard-flexibility.md` consumers may expose `pre-run` setup, but `/isolation` remains part of the model/runtime selection record when it affects provider or execution behavior.
+
+Storage-backed model selections are canonical-record entries. `Plans/storage-plan.md` / `/storage-plan.md` must preserve the durable selection record rather than treating model choice as transient UI text.
+
+Model selection surfaces expose `Workers`, `Providers & Models`, `Execution Identity`, and `HITL` as first-class labels. `/model`, multi-account context, orchestrator-only recovery, `Recovery`, and `Governance` states may drive those surfaces, but the labels must stay tied to the shared model owner contract.
+
+Node and package settings must preserve `node-effective` and `overseer-effective` snapshots when graph-patch-triggered work changes provider behavior. `/package/node`, provider-model, overseer-controlled, `/model`, `/config`, `/review`, and delegated-subagent records all resolve through the same requested/effective model contract.
+
+Execution object copies are execution-object-level records, not loose GUI hints. The GUI must not-forget node-worker and `/model` ownership when it renders or copies provider/model state for execution objects.
+
+Legacy tier-scoped references from `Plans/feature-list.md`, `Plans/00-plans-index.md`, `/feature-list.md`, `/00-plans-index.md`, and feature-list material are compatibility inputs only and cannot override the current provider/model owner contract.
+
+Resolution receipts may preserve exact explanatory labels such as `Requested model: claude/sonnet`, `Effective model: claude/sonnet`, `Reasoning effort: requested high -> skipped`, `/sonnet`, `Inherited from Project policy`, `Overridden by Package override`, and `Reason: provider does not support effort on this model`; those labels describe the /source of a requested/effective decision rather than becoming a separate resolver schema.
+
+Provider integration references across `Plans/Provider_OpenCode.md`, `Plans/Permissions_System.md`, `Plans/CLI_Bridged_Providers.md`, `/Provider_OpenCode.md`, `/Permissions_System.md`, and `/CLI_Bridged_Providers.md` remain adjacent implementation surfaces for model/provider execution.
+
+Cross-system account rows marked already-canonical must keep `Models_System`, `Models_System.md`, `/account`, and cross-system provider/account behavior aligned with this owner contract.
+
+Adjacent UI and persona compatibility references preserve both full paths and legacy aliases for `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/Orchestrator_Page.md`, `Plans/Personas.md`, `/FinalGUISpec.md`, `/storage-plan.md`, `/Orchestrator_Page.md`, and `/Personas.md`.
+
+Blocked model/runtime state records preserve `blocked_reason_code = waiting_approval` without losing `tier_id`, `tier_type`, `request_id`, `blocked_sequence`, `waiting_approval`, `human-in-the-loop`, `blocked_reason_code`, `human-in-the-loop.md`, or blocked-episode context.
+
+Selection and execution receipts keep three trace axes distinct: execution/result axis, source axis, and request axis. For example, `/result`, `/attempt`, `/runtime`, and `/skipped/clamped` values describe the receipt location and skip/clamp outcome rather than redefining model identity.
+
+Multi-account and persona compatibility references preserve `Plans/Multi-Account.md`, `Plans/Orchestrator_Page.md`, `Plans/Personas.md`, `/Multi-Account.md`, `/Orchestrator_Page.md`, and `/Personas.md` when provider/account context is displayed beside model selection.
+
+Runtime artifact panels may expose `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, `Show in Usage`, and `Show in Ledger`, but those labels are views over the provider/model snapshot and receipt state.
+
+Help and explanation copy must preserve copy-depth and concept-governance metadata. `Personas.md`, `Models_System`, `Models_System.md`, `FinalGUISpec.md`, `/help`, authored-copy, `Expert`, and `ELI5` outputs may simplify presentation, but they must not simplify the underlying provider/model contract.
+
+Executor integration requires execution-scoped provider/model context. `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `/runtime`, `/executor`, and execution-unit identity are the minimum anchors for dispatch, retry, blocked handling, and receipts.
+
+Cost and receipt views must remain canonical. `/Ledger`, deep-link targets, `cost_usage`, and artifact-local UI state must resolve to shared Usage/Ledger identity instead of creating artifact-local cost or receipt models.
+
+Repository-wide catalog references may cite `Plans/*.md`, top-level plan coverage, and the current `61` plan-file inventory, but those references do not move provider/model ownership out of this document.
+
+Execution settings preserve distinct execution-settings defaults and overrides for run/global context, feature seams, work packages, nodes, work-package overseers, feature-seam overseers, and overseer-delegated node workers. `/model`, `/global`, and `/override` values all remain visible as requested/effective provider/model state.
+
+Node worker policy is dynamic-by-default from node scope and `/type`. node-worker, `/package/node`, per-node, and `/model/effort` settings are configuration inputs, not ad hoc per-node manual model names.
+
+Delegation policy remains explicit. delegation-policy settings decide whether overseers may use subagents for node work and, if allowed, which provider/model policy governs delegated node workers.
+
+Lifecycle transitions require an event model: the event that causes each state transition must be represented with the execution-unit, provider/model snapshot, blocked-state, and receipt identity that made the transition valid.
+
+The legacy four-tier hierarchy from newfeatures.md and the canonical chain-wizard-flexibility / chain-wizard-flexibility.md node-graph model are incompatible execution models; compatibility text must name four-tier and node-graph explicitly instead of blending them.
+
+Simple help must simplify explanation, not rename the model: canonical names stay stable, ELI5 mode explains them more plainly, and friendly labels cannot create parallel object names that drift away from contracts.
+
+Interview routing keys must reject duplicated phase words: interview-phase-phase and interview-phase-phase-* are routing-key bugs, not alternate model identifiers.
+
+Route-target records must make resume_url concrete. A route-target may point back to a resume_url, but the resolver still records the target owner and route reason.
+
+Tab identity is scoped. `tab_id` must not be reused for side-panel subviews, browser tab IDs, workspace tab IDs, widget slots, or compare-target variants.
+
+Runtime-control support receipts use explicit support chips or rows: `Temperature: 0.2 -> Honored`, `Top-p: 1.0 -> Clamped to 0.9`, and `Reasoning effort: High -> Skipped` are display labels over the requested/effective model capability check.
+
+Artifact-opening surfaces consume the same subject-open resolver. Runtime_Artifacts_Panel, Runtime_Artifacts_Panel.md, subject-open, artifact-bearing, and artifact-opening state do not create bespoke provider/model opening rules.
+
+Model selection can be lane-aware when lane policy requires it. lane-level, security-focused, lane-aware, package-level, and `/graph` constraints must be represented in the model binding if a lane enforces a provider/model.
+
+Worktree visibility records may expose `/worktree/branch/tier` and `/lane`, but package/lane ownership, contamination, restore eligibility, and promotion posture must not stop at legacy tier status.
+
+Scope labels must distinguish app, project, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
+
+Provider/model settings are never single-project by assumption: runtime-affecting overrides may be app, project, `/per-package`, seam, `/package/seam/node`, overseer, or delegated-subagent scoped, and the resolver must preserve the scope that selected or constrained the value.
+
+The owner-doc cleanup rule is strict: if anchor tables, `/body` prose, addenda, or compatibility examples leave old and new provider/model models both canonical in the same surface, this document must collapse the split-brain rule into one requested/effective resolver statement instead of treating audit value-add wording as product canon.
+
+Concern and `/corroboration` state for provider/model selection is operational, not surface-level decoration. Execution-core owners must record whether concern evidence changes selection, blocks execution, permits accepted risk, or only annotates the requested/effective receipt.
+
+Routing, `/registry/governance`, and provider/model ownership contradictions stay with this owner-doc until resolved; adjacent docs may consume registry or routing outcomes, but they cannot define a second provider/model authority.
+
+Planning and `/output` surfaces consume the same subject-open model as artifact-opening flows. file-opening documentation may realize a chosen subject, but it must not replace the shared subject-open resolver or create provider/model-specific open rules.
+
+Transport-vs-upstream identity remains visible: vs-upstream provider/runtime examples must disclose whether `/runtime` identity belongs to the transport wrapper or the upstream provider.
+
+Executor compatibility keeps `Executor_Protocol`, `Executor_Protocol.md`, `/seam`, `/execution`, execution-unit, and TierContext references mapped to the current execution-unit context and package/seam overseer governance model.
+
+GUI/help labels keep expert and canonical terms stable. GUI, `/Expert`, `/help`, `/loaded`, and `/canonical` views may simplify loaded terms, but canonical names remain the source of truth.
+
+Tier-native ingestion and active-agent tracking are legacy compatibility inputs. tier-native, active-agent, lane-aware scheduling, and worktree tracking must resolve through package/lane ownership rather than reviving tier-native execution semantics.
+
 ## 1. Canonical model identifier
 <a id="MODEL-ID"></a>
 
@@ -212,6 +209,8 @@ Rules:
 - split on the first `/` only.
 - `provider_id/model_id` remains the stored and runtime-canonical model identifier.
 - label cleanup, grouping, family pooling, and runtime-platform grouping must never rewrite the canonical identifier.
+- GUI indexing and grouping may use a normalized internal key for `/collision-safe` behavior, but user-facing dropdowns/cards still display the cosmetic label and never rewrite the stored canonical model id.
+- Canonical model IDs align with persisted vocabulary in `Plans/Contracts_V0.md` (`/Contracts_V0.md` in legacy path references); contracts may cite the model provider namespace, but they do not redefine this identifier grammar.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -223,6 +222,11 @@ Required fields:
 - `requested_model` / `effective_model` keep the canonical model id
 - `requested_runtime_platform_id` / `effective_runtime_platform_id` disclose the concrete runtime surface
 - `requested_model_provider_id` / `effective_model_provider_id` disclose the model vendor namespace when that differs from the runtime surface label
+- `provider_usage_source_kind?` records the usage-evidence source family for the selected runtime surface
+- when model/runtime selection is shown beside usage data, `provider_usage_source_kind?` maps to the Usage/Contracts `usage_source_kind` field and preserves whether the evidence is project-local, provider/API-backed (`/API-backed`), API-key-derived, OAuth-quota-derived, or estimated instead of flattening all model rows into one source label
+- `provider_signal_confidence?` records confidence for provider-derived signals that affect model/runtime availability or usage disclosure
+- `model_id_raw`, `effort`, `compact_threshold`, `auth_family`, `pool_scope`, `effective_runtime`, and `effective_runtime_snapshot` remain inspectable runtime/model fields when they affect selection, compatibility, or requested/effective disclosure.
+- In `/OpenCode-era` multi-platform availability, platform-mapping is additive: raw IDs and `provider_id/model_id` stay exact, while runtime-platform fields distinguish surfaces such as `gemini_direct`, `gemini_cli`, OpenCode bridges, and Cursor CLI without renaming the canonical model ID.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 
@@ -231,6 +235,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 GUI labels may clean spacing or casing for readability, but they must preserve meaningful tokens such as version, `mini`, `pro`, `flash`, `thinking`, and coding-plan suffixes.
 
 Duplicate runtime availability remains runtime-qualified. If the same canonical model appears through multiple runtime surfaces, the UI disambiguates with secondary runtime-platform context instead of minting a fake new canonical model id.
+
+GUI `/disambiguation` uses secondary text such as `/runtime/auth-family/billing` context when a `cleaned-label` collision occurs. Cosmetic display labels, normalized internal keys, and collision-safe grouping must not mutate the stored `provider_id/model_id`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
 ## 2. Model and runtime selection priority
@@ -254,6 +260,7 @@ Selection rules:
 - `provider_family_id` may influence pooling or fallback, but it does not replace the concrete provider entry selection.
 - if the runtime internally reroutes to another effective model or model variant, that deviation is captured as runtime evidence; it does not rewrite the frozen requested selection.
 - model availability and capability checks must consider the concrete runtime surface, not just the vendor model namespace.
+- Gemini CLI deterministic selection precedence is explicit: `--model`, then `GEMINI_MODEL`, then `settings.json` `model.name`, then a local model router when enabled, then the provider default. PM-owned run setup uses that chain to force the requested model where possible, and any Gemini CLI `general.plan.modelRouting` value that remains `true` must be reflected as requested/effective routing evidence instead of silently changing the model. Even when PM passes `--model`, Gemini CLI plan/sub-agent routing can choose internal models, so PM must record requested/effective model evidence instead of equating `/model` or `--model` with every internal choice.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 ## 3. Model options configuration
@@ -262,25 +269,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 
 ### 3.1 Per-provider options
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0380
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - per-provider caps
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Provider-specific options are configured under `config.provider.<provider_id>.options`:
 
@@ -324,10 +312,18 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 | `max_payload_bytes` | integer | Hard payload ceiling |
 | `pricing_version` | string | Versioned pricing metadata key used for cost calculation |
 | `billing_entity_mode` | enum | whether billing attribution is account-only or requires billing-entity keying |
+| `billing_entity` | string? | Billable quota or tenant dimension used in `(model_id, provider_id, billing_entity)` cost keys when applicable |
+| `billing_source` | string? | Display/evidence label for the pricing source, including free-tier, server-authoritative, user override, or estimate-only paths |
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
 
+Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Gemini CLI keep distinct capability entries, and Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
+
+Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
+
 #### 3.3.2 `system_role_name` values
+
+Role-mapping is data-driven through `system_role_name`. OpenAI reasoning surfaces use developer-role semantics by setting `system_role_name = "developer"`, and bridged-provider adapters must stay aligned with `Plans/CLI_Bridged_Providers.md` rather than inventing local role names.
 
 | Provider family | `system_role_name` |
 |---|---|
@@ -346,6 +342,7 @@ Per-model defaults are part of the model metadata and MAY be overridden by model
 - `pressure_start_pct = 70`
 - `pressure_aggressive_pct = 85`
 - `large_block_threshold = 1200`
+- per-model `compact-threshold` override when defined; unknown capability state must be shown explicitly rather than guessed.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
@@ -357,6 +354,26 @@ Per-provider normalization and options injection is handled by the provider tran
 - Schema transformation for tool definitions.
 - Max output token enforcement.
 
+Provider-side context caching, cache-key / cache-TTL support, and large-context / 1M beta handling are model/runtime capability facts, not PM web-content-cache behavior. When a provider SDK exposes `setCacheKey` or an equivalent cache-key hook, PM records the provider-side cache semantics in provider capability and request metadata so reuse, billing, and debugging remain tied to the effective runtime surface.
+
+Provider cache-config remains internal `/automatic` behavior for MVP: PM may surface raw/debug evidence for reuse, billing, and troubleshooting, but it does not expose provider-cache controls as a general user-facing settings surface.
+
+Provider cache marker names are provider/runtime-specific and must stay explicit in capability evidence. Anthropic and `/OpenRouter` surfaces may expose `cacheControl`, Bedrock may expose `cachePoint`, OpenAI-compatible surfaces may expose `cache_control`, and Copilot-style surfaces may expose provider-native variants such as `copilot_cache_control`; PM maps those names into the canonical `cache_control` capability/billing vocabulary without pretending the upstream wire fields are identical.
+
+Compatibility evidence that labels a Google Vertex AI/Google AI cache-marker gap as `cachePoint` is treated as a `cache_control`/`cachedContent` capability issue; PM must emit the native cache marker for the selected route or repeated 5-15K-token prompt spans may be BILLED again instead of reusing cache.
+
+Anthropic/Bedrock cache support must preserve message/cache marker placement and provider metadata support such as `metadata.user_id` where available; OpenCode issue evidence `#11083`, `#11276`, and `#8138` remains reference evidence for deployments where that support affects cache behavior.
+
+Provider-specific request shaping remains capability evidence rather than generic runtime logic. OpenCode-discovered Alibaba entries such as `alibaba-cn` may require `enable_thinking=true` for reasoning models, so PM records `enable_thinking` as provider-specific request metadata for that runtime surface instead of treating it as a universal model option.
+
+Google Vertex Anthropic 1M-context support is runtime-path-specific. PM must not hardcode one universal 1M-context signal because implementation-reference issues disagree on whether the correct signal is a header or a body field depending on endpoint and /runtime path (`#14003`, `#17494`, `#14055`). The capability snapshot must keep the endpoint/runtime-path evidence, effective context window, and any required model-id suffix, shadow variant, or model-id rewrite rules explicit.
+
+Reasoning/effort controls must be resolved per runtime surface across direct providers, bridged CLIs, and subagents because OpenCode evidence shows provider-specific behavior across OpenAI, Copilot, Anthropic, Bedrock, Gemini, Groq, Azure, OpenRouter, Venice, Alibaba-compatible, and ZAI-compatible surfaces.
+
+OpenAI/Azure-family API-family selection and API path selection are per-model and `/per-provider` model/runtime compatibility facts. Azure loaders that switch between `responses()` and `chat()` based on `useCompletionUrls` must preserve that choice in provider capability and request metadata; non-OpenAI Azure-hosted models must not be forced down the wrong OpenAI API path because upstream hangs have been observed when `useCompletionUrls` selects an incompatible route (`#12949`, `#17552`).
+
+OpenCode reference evidence prefers the Responses API for OpenAI, while Chat-Completions-only proxies have known compatibility issues (`#15016`, `#7793`); PM records the selected OpenAI/Azure API family per model/runtime instead of assuming a universal route.
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
 
 ---
@@ -367,6 +384,10 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 A model is available only when its provider/runtime surface is registered, authenticated, reachable, and compatible with the requested run posture.
 
+Model catalog entries carry `model_lifecycle_state` with closed values `active | deprecated | sunset_pending | sunset | removed`. Deprecated models may continue for compatible existing work with a `deprecation_notice_ref?`; `/sunset` or `sunset` models require `sunset_at_utc?` and `replacement_model_id?` when known and are not eligible for new dispatch unless an explicit compatibility policy permits them. Removed models are retained only for history, receipts, and migration lineage.
+
+Provider stop reasons and finish-reason normalization rules are not sufficient tool-loop completion evidence. Gemini and OpenAI-compatible providers can emit tool calls while also reporting `finish_reason = stop`; PM's `/control-flow` logic must continue through tool execution, tool-result ingestion, and response continuation checks instead of treating `finish_reason` or `finish_reason = stop` as final by itself (`#14972`).
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
 ### 4.2 Pricing metadata and stale-pricing behavior
@@ -375,13 +396,25 @@ Pricing metadata is versioned. `pricing_version` identifies the pricing table us
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 
-Cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when the provider's quota semantics depend on a billing entity; account-only providers omit the billing-entity dimension.
+Cost attribution is keyed by `(model_id, provider_id, billing_entity)` when the provider's quota semantics depend on a billing entity; persisted records may expose a stable `billing_entity_id` or alias, but `billing_entity` is the canonical dimension for model pricing. Free-tier rows show `$0` with a `billing_source` label so cost displays do not flatten provider/runtime billing provenance.
+
+AWS Bedrock pricing uses the same `pricing_version`, stale-pricing warning, and user-override path as other providers; AWS-specific region-prefix or price-drift evidence is handled by the Bedrock lookup below rather than hardcoded price branches.
+
+OpenCode product pricing is a reference formula, not an authoritative PM cost source. PM may cite `packages/opencode/src/session/index.ts:getUsage` and `/opencode/src/session/index.ts:getUsage` when explaining the baseline estimate: normalize `/input` and `/output/reasoning/cache` buckets, then apply `input_rate`, `output_rate`, `cache_read_rate`, and `cache_write_rate` to `cache_read`, `cache_write`, and output/reasoning token buckets, using `over-200k` tiers when pricing metadata provides them. Provider-sensitive cache heuristics and provider caveats such as OpenRouter cache/input reporting differences remain visible in raw/debug cost evidence.
+
+The explanatory formula is per 1M token pricing units: `input * input_rate`, `output * output_rate`, `cache_read * cache_read_rate`, `cache_write * cache_write_rate`, and `reasoning * output_rate`; the estimate may still be inaccurate for some providers such as OpenRouter because of cache/input reporting differences.
+
+Provider-sensitive token counting uses `token_counting_adapter_id` and `token_counting_basis` before cost or budget enforcement reads canonical token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens`.
+
+Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
 ### 4.3 Bedrock region prefix lookup
 
 Region-prefix mapping MUST use an explicit lookup table rather than string slicing.
+
+For Bedrock, region and `/model-id` rewrite rules are deterministic provider-runtime compatibility facts: PM may add the required regional prefix only through the table below and must honor no-rewrite exemptions for ARNs and provider-native ids that are already canonical.
 
 | Region family | Prefix |
 |---|---|
@@ -395,43 +428,27 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 4.4 Two Gemini providers
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0381
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The docs now have two simultaneous identity drifts:
-  - That leaves the system with two competing approval/blocked ontologies:
-  - After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4`.
-  - Gemini + Opus + Sonnet + GPT-5.4
-  - After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2`.
-  - Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 4.5 Web tool provider capability alignment
 
-This section mirrors the linked owner contract and stays aligned with it.
+This consumer-capability section mirrors the linked owner contract and stays aligned with it.
 
 Core rules:
 - The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+- Site Reader is the DEFAULT and PRIMARY webfetch routing path; Firecrawl, Tavily, Exa, and other provider routes remain fallback/alternative paths that require explicit configuration, Site Reader failure, or an operation-specific override.
 - Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.
+- The two-class provider model, model-native vs backend/API, is a DESIGN PRINCIPLE for provider settings and routing disclosure, not just a display classification.
 - DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
 - Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
 - The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
 - The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
 - Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl; deployment mode, requested/effective adapter identity, and capability differences remain visible before fallback or recovery.
+- Tavily heavy-mode settings are never defaults: `search_depth: "advanced"`, `include_raw_content: true`, and high `chunks_per_source` values are reserved for precision needs or fallback scenarios. Default runtime behavior uses lighter Tavily modes such as `search_depth: "basic"` or `"fast"` and lets PM's search-then-read heuristic handle depth through native Site Reader; heavier provider-side retrieval activates only after an insufficient lighter pass or an explicit user request.
+- DuckDuckGo / DDG remains the enabled-by-default best-effort `/no-key` fallback. It has no official API, uses HTML scraping only, and is poor for JavaScript-heavy SPAs, so provider-capability disclosure must show the fallback/partial nature instead of presenting it as equivalent to API-backed providers.
+- When Exa is primary but the user specifically wants keyword search, `adapter_hint: "firecrawl"` or `adapter_hint: "google"` may override the selected adapter for that operation. This hint is per-operation routing input, not a global provider-stack reorder.
+- Models_System mirrors the web-operation input/capability surface without owning payload validation: `websearch` includes `sources` and `categories` for multi-source routing; `webfetch` exposes `pdf_mode: fast|auto|ocr` with default `auto`; `webextract` accepts JSON Schema draft-07 `schema` with a 50KB maximum and no external `$id` references; and webfetch/webcrawl change detection reports diff status on re-fetch.
+- `webresearch` defaults `autonomous` to false and has three support tiers: PM-composed default, enhanced PM recipe, and provider-native agent. The research-session variant of `automation_session` follows the browser capability and three-tier permission model in `Plans/Section15_MVP_Promoted_Features_Spec.md` and `Plans/Tools.md`.
 
 Fields:
 - proxy_mode
@@ -458,6 +475,9 @@ Rules:
 - Firecrawl `webfetch` capability is not erased by Site Reader primacy
 - Tavily `webfetch` capability is not erased by Site Reader primacy
 - Exa `webfetch` capability is not erased by Site Reader primacy
+- Firecrawl webfetch capability is not erased by Site Reader primacy
+- Tavily webfetch capability is not erased by Site Reader primacy
+- Exa webfetch capability is not erased by Site Reader primacy
 - fallback-only
 - Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
 - native (model)
@@ -519,28 +539,6 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_
 
 ## 6. Variants system
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0374
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - expert and ELI5 variants should share the same concept skeleton
-  - The app already has a strong authored-copy mechanism for `Expert` vs `ELI5` variants.
-  - Expert
-  - ELI5
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="VARIANTS"></a>
 
@@ -604,25 +602,6 @@ When a variant is selected, its `model` field is used as the active model for su
 
 ### 6.6 Per-Persona variant overrides
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0383
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - scoped override lifecycle for Persona overrides
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 A Persona MAY specify a preferred variant via a `default_variant` field in PERSONA.md frontmatter:
 
@@ -636,28 +615,6 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
 
 ### 6.7 Model aliases (friendly names)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0384
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - non-canonical persona field names
-  - `alias_of_command_id` for deprecated aliases
-  - alias_of_command_id
-  - This is now a direct owner-versus-consumer mismatch. The canonical field names already exist.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Model aliases are optional friendly names that resolve to canonical model identifiers (`provider_id/model_id`) during model override parsing (for example, natural-language `model_override` in media generation).
 
@@ -670,25 +627,6 @@ Aliases and variants are distinct concepts: aliases are lookup keys for model re
 
 ### 6.8 Canonical media model alias table
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0385
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - a deprecated alias should eventually disappear
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="MEDIA-ALIASES"></a>
 
@@ -738,31 +676,13 @@ Settings must show:
 - concrete runtime surface availability
 - current defaults and their source
 - availability or capability gaps without inferring unsupported when discovery is merely silent or stale
+- model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.
+- explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.
+- `Edit Threshold` opens the most-local applicable override and discloses whether that value overrides the provider default or model default.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
 ### 7.3 Variant and effort controls
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0386
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Reasoning effort: High -> Skipped`
-  - Reasoning effort: High -> Skipped
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Variant and effort controls remain runtime-qualified capability data.
 
@@ -770,8 +690,11 @@ Rules:
 - effort support is never inferred solely from model-name similarity.
 - unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.
 - the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.
+- Provider/model `/features` metadata may expose thinking-related controls as provider-specific option names, including Gemini CLI `thinkingLevel` for Gemini 3-style model features and `thinkingBudget` for 2.5-style flows; PM records these as runtime-qualified capability data rather than hardcoding a universal effort enum.
+- Any legacy consumer wording in `Plans/assistant-chat-design.md` or `/assistant-chat-design.md` that treats Gemini effort or Cursor effort as universally unsupported is superseded by this runtime-qualified capability rule.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
 
 ### 7.4 Detailed inspectors
 
@@ -839,39 +762,6 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression
 *Document created for planning only; no code changes.*
 ## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0373
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy
-  - execution/governance persona biased toward package-local delivery and readiness truth
-  - implementation persona biased by language/framework/work type
-  - review persona distinct from drafting/implementation persona
-  - review/challenge persona distinct from original claimer
-  - troubleshooting/recovery persona
-  - planning/architecture persona
-  - do not block solely because a preferred Persona is unavailable
-  - skipped Persona controls where relevant
-  - historical runs keep their frozen effective Persona state
-  - historical runs must preserve the resolved effective Persona and reason from the time of execution.
-  - skipped vs honored/clamped Persona controls
-  - Persona display is not a substitute for actor/role identity.
-  - The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family.
-  - operational_identity
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This addendum expands the Models system so Persona-driven runtime control is explicit, provider-aware, and visible to the user.
 
@@ -890,25 +780,6 @@ These Persona preferences participate in effective run assembly but MUST pass th
 
 ### 10.2 Effective selection fields (cross-system runtime contract)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0378
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - permission snapshots do not carry effective auth/account or operational identity context
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Effective model/runtime selection is part of the shared requested/effective identity contract.
 
@@ -917,10 +788,17 @@ Required cross-system fields are:
 - `effective_platform`
 - `requested_model`
 - `effective_model`
+- `model_id_raw`
 - `requested_variant`
 - `effective_variant`
+- `effort`
 - `requested_auth_mode`
 - `effective_auth_mode`
+- `auth_family`
+- `compact_threshold`
+- `pool_scope`
+- `effective_runtime`
+- `effective_runtime_snapshot`
 - `requested_account_policy`
 - `requested_account_id?`
 - `requested_account_binding?`
@@ -954,6 +832,21 @@ The effective model/runtime selection chain is:
 
 Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
 
+### 10.3A Direct coding-plan provider surfaces
+
+`Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are direct-provider architectural surfaces in PM's provider/model selection model.
+
+Rules:
+- direct-provider architectural direction for `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` is strong enough to model now by using OpenCode as the implementation reference while confirmatory post-build verification remains pending
+- these are coding-plan-branded products, so PM must preserve the product label such as `Alibaba Coding Plan` as a selectable/runtime-facing surface instead of collapsing it into an unbranded vendor family
+- if the same provider family offers both coding-plan and pay-as-you-go products, GUI recommendation and picker surfaces must keep both products visible as separate selectable/runtime-facing account or provider entries rather than smoothing them into one vendor label
+- each surface still resolves through requested/effective runtime, model, effort, account, and capability disclosure rather than through a loose vendor-family `platform` label
+- implementation-reference status does not make OpenCode session identity, provider discovery, or provider-specific request shaping the PM canonical runtime identity
+- direct-provider implementation follow-up must collect official primary-source auth and `/usage/quota` docs for Alibaba direct, MiniMax direct, and Z.AI direct; this confirmatory follow-up refines provider detail but does not block the core direct-provider architecture.
+- `Z.AI Coding Plan` readiness validates both API key state and provider reachability/model-discovery readiness (`/model-discovery`) before PM treats the surface as ready.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md
+
 ### 10.3.1 Interview GUI/UI/UX Gemini preference (surface default)
 
 The Gemini preference for Interview is a **surface/stage default**, not a Persona-wide default.
@@ -976,31 +869,12 @@ Persistence / visibility:
 <a id="PERSONA-CAPABILITY-MATRIX"></a>
 ### 10.4 Provider Persona Capability Matrix (canonical support states)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0379
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Introduce a canonical account-health / pressure / degraded-trust family rather than overloading auth lifecycle states.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Capability and effort evaluation must be performed per runtime surface, not by loose provider-family assumptions.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
 
-Supported surfaces for this change set:
+Day-one supported runtime/API-family surfaces for this change set:
 
 | Surface | Class | Key notes |
 |---|---|---|
@@ -1008,8 +882,8 @@ Supported surfaces for this change set:
 | `copilot` direct | direct-provider | Native subagent billing/routing behavior is special and not freely mixed from non-Copilot parents. |
 | `opencode` server | server-bridged | PM child runs map to OpenCode session lineage additively. |
 | `alibaba-coding-plan` direct | direct-provider | Effort and API-family behavior must be treated as provider-specific, not assumed OpenAI-equivalent. |
-| `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply. |
-| `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply. |
+| `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; `zai-coding-plan` is the product label while `zai_coding_plan` is the family mapping token. |
+| `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`. |
 | `gemini` direct | direct-provider | Distinct runtime surface from Gemini CLI. |
 | `gemini-cli` | CLI-bridged | Distinct auth/control/cache/runtime surface from Gemini direct. |
 | `claude-code-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
@@ -1034,6 +908,19 @@ The matrix in §10.4 defines the **transport-level baseline** only. Effective Pe
 3. **runtime constraint support** from the selected variant or provider runtime path.
 
 This is required because a control may be supported by a provider transport in general but unavailable for a specific model.
+
+Provider-family transforms, provider-specific API-shape mismatch handling, and API routing follow the same granularity:
+- PM must keep adapter policy explicit and must not assume one generic direct-provider loop is sufficient for all model families; OpenAI-like providers therefore use per-surface API-family routing, including explicit `responses` vs `chat` vs `model-language` / plain language model primitive selection, rather than one universal OpenAI-compatible surface.
+- `Gemini/Vertex` surfaces need stricter `tool-schema` normalization and schema sanitization requirements than generic JSON Schema before PM treats tool calls as equivalent across transports; sanitizer evidence must preserve `anyOf`/combiners and numeric enums with issue refs `#14788`, `#12908`, `#12827`, and `#12911`.
+- upstream provider identity remains explicit where relevant; examples include `google`, `anthropic`, and `openai-compatible`, and bridge/runtime adapters freeze that identity in effective disclosure instead of collapsing it into the PM runtime platform label.
+- for Gemini CLI and other provider-side routers, PM should prefer explicit model selection, disable or constrain provider-side routing where feasible, tolerate/observe any remaining internal routing, and surface any `/observe` state rather than allowing silent provider-side model changes without requested/effective model disclosure.
+
+Direct coding-plan provider identities:
+- `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are user-visible provider names in the same direct-provider `/runtime` bucket as `GitHub Copilot`, `Codex`, and `Gemini`; they are not CLI-bridged surfaces merely because they use provider SDK adapters.
+- `MiniMax` direct coding-plan entries `minimax-coding-plan` and `minimax-cn-coding-plan` use env `MINIMAX_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/anthropic` through the `/anthropic` adapter family.
+- `Z.AI`/Zhipu direct coding-plan entry `zhipuai-coding-plan` uses env `ZHIPU_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/openai-compatible` through the `/openai-compatible` adapter family.
+- The Z.AI base API is `https://api.z.ai/api/coding/paas/v4`; historical source spelling `//api.z.ai/api/coding/paas/v4` normalizes to that HTTPS URL. Z.AI Coding Plan also has a coding-plan-specific endpoint and plan-dependent quota/reset behavior, so `/reset` timing and quota displays must be treated as provider-plan facts rather than generic OpenAI-compatible defaults.
+- Provider-family mappings include `zai_coding_plan` / `zai-coding-plan` -> `direct_api` family `zai`, `gemini_direct` -> family `gemini`, `alibaba_coding_plan` -> `direct_api` family `alibaba`, and `minimax_coding_plan` -> `direct_api` family `minimax`; MiniMax Coding Plan source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`.
 
 Examples:
 - `reasoning_effort` may be supported by a provider transport but unavailable for the selected model.
@@ -1103,10 +990,30 @@ Canonical snapshot shape:
 
 Rules:
 - The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
+- Provider/model catalog snapshots carry `boot_refresh_enabled`, `model_catalog_status`, `last_model_refresh_at`, and `selectable_unit_ids[]` / `selectable_unit_ids` so boot-time refresh, stale catalog state, and the selectable units tied to a catalog entry remain inspectable.
+- Capability resolution records may include `resolved_capability_deltas[]`, `pool_scope`, and `provider_entry`; `pool_scope` can be `provider_entry` when capability differences must be pinned to the concrete runtime surface rather than a provider family.
 - Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
 - A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
 - Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
 - `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
+
+Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:
+- `supports_multi_account`
+- `account_identity_kind`
+- `quota_signal_sources[]`
+- `quota_signal_confidence`
+- `supports_threshold_switch`
+- `supports_hard_exhaustion_detection`
+- `supports_rate_limit_detection`
+- `supports_reset_countdown`
+- `supports_manual_set_active`
+- `supports_cooldown`
+- `supports_retry_budget`
+- `supports_role_scoped_account_pools`
+- `switch_boundary`
+- `provider_limit_notes?`
+
+The generic signal axes remain `signal_source_kinds[]` and `signal_confidence` for signal sources/confidence. `quota_signal_sources[]` plus `quota_signal_confidence` are the quota/account-pressure specialization of those axes for account-pressure interpretation. The resolver treats these as provider capability metadata, not account state. `retry_budget?`, `cooldown_until?`, and `reset_at?` may appear on account-health records only when the capability snapshot says the provider path supports or can infer those facts. A provider path that lacks cooldown/retry-budget support or reset countdown support MUST disclose `unsupported`, `opaque`, `inferred`, or `stale` rather than pretending the provider account pool is safely switchable.
 
 Bridge note:
 - `talkativeness` remains governed by the derived-control rule in §10.4.2 and therefore only appears in the snapshot when a concrete prompt-construction policy records the effective value for disclosure/debugging.
@@ -1173,6 +1080,7 @@ Puppet Master follows that structure conceptually, but uses Persona as the canon
 ### 10.9 Acceptance criteria addendum
 
 - Effective runtime state must distinguish requested vs effective vs skipped Persona controls.
+- Runtime support outcomes must preserve the `requested_runtime` alongside whether the request was `substituted`, `clamped`, `blocked`, or `retried_on_fallback`.
 - Unsupported controls must be visible in both editor UI and runtime UI.
 - Provider capability matrix must be the shared source for editor gating and runtime disclosure.
 - Chat/Interview/Builder/Orchestrator history/event views must show effective Persona/model/platform rather than only stored preferences.
@@ -1196,31 +1104,12 @@ Model fallback and runtime retry are separate concerns.
 
 ### Required attempt snapshots
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0388
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables
-  - Permission snapshots remain thinner than rewrite needs:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Each attempt MUST retain requested and effective model/provider identifiers so users can later explain why a blocked or failed attempt ran under a specific effective configuration.
 
 ### Fallback rule
 Model fallback may change the effective model only through the shared model-selection contract, never as an implicit side effect of provider transient handling inside an already-running attempt.
-## Requested/Effective Model and Retry Ownership Reconciliation Addendum (2026-03-09)
+## Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)
 
 Requested/effective model resolution remains separate from runtime retry policy.
 
@@ -1230,27 +1119,6 @@ Rules:
 - providers/adapters must not hide model-local retry loops inside an already-running attempt
 ## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0375
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT.
-  - Contracts_V0.md
-  - still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Model selection and retry ownership remain separate concerns.
 
@@ -1261,29 +1129,6 @@ Rules:
 - UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
 ## Requested / Effective Model Snapshot Alignment
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0377
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Separate `source`, `requested`, and `effective` in UI language and data models.
-  - source
-  - requested
-  - effective
-  - effective permission snapshot id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requested and effective model/runtime fields must stay visible for child runs, crew members, and surfaced planning/runtime decisions.
 
@@ -1308,7 +1153,7 @@ Minimum Default Crew settings model:
 - ordered list of crew members
 - per-member model selector
 - per-member provider/runtime surface selector
-- immediate normalization of the whole crew to Copilot when any member selects Copilot
+- immediate normalization of the whole crew to `Copilot` when any member selects Copilot, because Copilot is a crew-level provider selection constraint and is not a per-member freely mixed provider in the default crew editor
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
 
@@ -1318,25 +1163,6 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 
 ### Persona, execution-unit, and scope policy inputs
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0387
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - canonical execution-unit refs
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
@@ -1356,25 +1182,6 @@ When a unit needs to select a provider and model, resolve in this order:
 
 ### Settings resolution and override semantics
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0390
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - needs a versioned correlation/context block and account-health semantics stronger than auth lifecycle alone
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
 - **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
@@ -1383,35 +1190,33 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 ### Provider capability and cost gating
 
 - **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
+- **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
 - **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
 - **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
 
+Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.
+
+Required `clamp/substitution` reason codes:
+- `model_unavailable`
+- `model_routed_by_provider`
+- `model_substituted`
+- `effort_unsupported`
+- `effort_clamped`
+- `auth_family_capability_clamped`
+- `capability_unknown`
+- `instruction_projection_partial`
+- `skill_projection_partial`
+
+Rules:
+- `model_unavailable` and `model_routed_by_provider` distinguish PM inability to select a requested model from provider-side rerouting after PM dispatch.
+- `model_substituted`, `effort_clamped`, and `auth_family_capability_clamped` are explicit `/substitution` evidence for requested/effective differences caused by model fallback, narrowed effort, or auth-family capability limits.
+- `effort_unsupported` and `effort_clamped` distinguish unsupported effort controls from accepted-but-narrowed effort controls.
+- `capability_unknown`, `instruction_projection_partial`, and `skill_projection_partial` remain inspectable so the UI does not present a fully honored model/capability/instruction state when PM only has partial or unknown evidence.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
+
 ### Selection reason and audit trail
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0389
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Switch reason: rate_limit_pressure`
-  - Switch reason: rate_limit_pressure
-  - `Switch reason`
-  - Switch reason
-  - `recent switch reason`
-  - recent switch reason
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When a provider and model are selected, emit a `selection_reason` object:
 ```typescript
