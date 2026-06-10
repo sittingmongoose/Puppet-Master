@@ -1,45 +1,5 @@
 # Puppet Master Feature List (Reference)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0599
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/feature-list.md`
-  - Plans/feature-list.md
-  - `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`
-  - Plans/newfeatures.md
-  - Plans/MiscPlan.md
-  - Source Control can still list worktrees directly, but should also expose lane/package ownership and lifecycle state when known.
-  - Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.
-  - Worktrees
-  - `projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides
-  - projects:v1
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - The earlier `object_kind` list is directionally correct, but it now needs a firmer canonical refresh against the rewrite-era object set and the newer runtime lineage objects.
-  - object_kind
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - the primitive list still lacks named ownership for `route_target` and `OpenSubject`
-  - route_target
-  - OpenSubject
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -61,14 +21,18 @@ This document exists to avoid losing features when writing rewrite implementatio
 <a id="assistant-chat-design-ref"></a>
 - **assistant-chat-design** — `Plans/assistant-chat-design.md`; canonical Assistant Chat behavior, modes, thread UX, and slash-command semantics.
 
+<a id="media-generation-capabilities-ref"></a>
+- **Media generation and capabilities** — `Plans/Media_Generation_and_Capabilities.md`; canonical for capability discovery and media generation routing. Feature summaries MUST defer Gemini media/account capability wording to the owner docs: Gemini Direct is key-only/API-key-backed, Gemini CLI is mode-dependent across OAuth/API-key/Google-credential rows, and stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
+
 <a id="feature-debug-mode"></a>
 ### 6A. Debug Mode and shared debug-capable tooling
 Debug Mode is the rewrite-era assistant investigation workflow: it treats diagnosis, instrumentation, evidence capture, verification, and cleanup as one coherent thread-scoped operation rather than as disconnected debugger gestures. The feature matters because Puppet Master must support automated, evidence-first debugging without collapsing Debug Mode into classical DAP debugger semantics or into opaque agent-only behavior.
 
 **Key capabilities**
-- Assistant Chat exposes `Debug` as a first-class primary mode distinct from the classical `Debugger` / DAP surface
+- Assistant Chat exposes `Debug` as a first-class assistant-led primary mode distinct from the classical `Debugger`, `DAP Debugger`, and `/DAP` surface
 - Debug-capable tools remain shared platform capabilities across Assistant, Orchestrator, Interview, and delegated runs
 - investigations use canonical `investigation_id`, `instrumentation_id`, visible Investigation Context, and runtime-artifact linkage rather than hidden evidence ingress
+- instrumentation lifecycle states are explicit: `planned`, `active`, `collecting`, `cleanup_pending`, `cleaned`, and `cleanup_failed`
 - default Debug behavior is fully automated, evidence-first reproduction / diagnosis / fix / verification / cleanup under a run-scoped Debug Automation Profile
 - remote Debug MVP applies to local projects and PM-managed remote-mode projects only; no arbitrary ad-hoc remote attach and no silent local fallback
 
@@ -94,6 +58,8 @@ The chat-and-assistant feature family ensures Assistant Chat is a consumer of sh
 **Key capabilities**
 - assistant chat consumes shared requested/effective runtime identity rather than defining local schema
 - chat navigation, usage pivots, and source-open behavior align to `route_target`, `OpenSubject`, and `OpenFile`
+- document annotation and selection-to-chat review is a cross-surface feature with runtime `/safety` boundaries: prompt determinism, provider variance handling, audit/event clarity, precedence/conflict handling, thread isolation, resume/recovery, and sensitivity/privacy boundaries remain owned by the detailed contracts rather than by this feature index
+- external `open-plan-annotator` research is background only: it demonstrated a browser-based local review UI opened from a hook/plugin flow, with deletion/comment/insertion/replacement actions, approve vs deny/request changes, and structured markdown feedback, but Puppet Master keeps the stronger review grammar in native in-app document/chat surfaces instead of browser mediation
 
 **Detailed spec:** [assistant-chat-design](#assistant-chat-design-ref), `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`
 
@@ -105,6 +71,9 @@ The GUI layout and shell feature family describes the product's high-level works
 - Orchestrator remains tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
 - `Progress` is the only widget-composed Orchestrator tab
 - Source Control remains narrow and worktree-first
+- Orchestrator shell summaries are tab-first rather than widget-first: `Progress` is widget-hosting, `Seams` is the `/package-oriented` replacement for stale `Tiers` language, `Node Graph Display` is preserved as the graph-patch lineage surface, and `Evidence`, `History`, and `Ledger` remain peer tabs rather than hidden composite-reference details.
+- `Plans/Orchestrator_Page.md` may still explain widget-based Tiers as historical scaffolding, but feature copy treats `Tiers` as `/superseded` display vocabulary and keeps `Seams` plus package-oriented ownership as the live object model.
+- Crosswalk-level summaries must name routing/open primitives directly: `route_target`, `OpenSubject`, `/open-by-identity`, FileManager `open-by-identity`, runtime-artifact envelopes, and artifact-opening behavior are shared cross-surface contracts rather than local GUI conveniences.
 
 **Detailed spec:** `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, [Crosswalk](#crosswalk-ref)
 
@@ -131,6 +100,15 @@ Usage, recovery, and analytics are modeled as runtime-native records rather than
 
 **Detailed spec:** `Plans/usage-feature.md`, [storage-plan](#storage-plan-ref), `Plans/Contracts_V0.md`
 
+### Runtime storage and feature-summary alignment
+Feature summaries must describe the runtime/storage/schema backbone as attempt-scoped execution state, not as mutable plan-shard state. `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `/plan_graph.schema.json`, `/project_plan_node.schema.json`, `/storage-plan.md`, and `/usage-feature.md` remain the detailed owners; this reference keeps only the feature-level consequences. The legacy `/phase/iteration`, `tier_runtime_record`, and `tier_id` vocabulary is compatibility history, while live behavior uses `attempt_id`, `scheduler_lane`, safe-point recovery, blocked lineage, package/seam/lane promotion, and the `/storage/schema` separation between immutable plan structure and mutable runtime projections. The `/seam/lane/promotion` summary is a feature alias for package completion, seam transition, lane/worktree identity, and promotion records owned by the runtime contracts.
+
+Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch. Feature copy may name `node_id` for correlation, but dispatch is based on the scored ready-set, `attempt_id`, `scheduler_lane`, first-class safe-point metadata, remediation child lineage, `worktree-conflict` handling, graph-local retry lineage, blocked/runtime outcomes, and the `/runtime/storage` event stream. Any `tier-era` or lexical-dispatch phrasing is explicitly historical and must not own the current scheduler contract.
+
+Account-switching summaries preserve both latest-state and append-only event requirements. Runtime identity features include `account.switched`, `recent_switch_reason`, `account_switch_reason`, effective/requested account fields, and account-pressure history as first-class `/runtime` records, so usage views can reconstruct the switch-history rather than reading only the newest account label.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md
+
 <a id="feature-git-worktree"></a>
 ### 6. Git and worktree
 The Git/worktree feature family separates orchestration truth from concrete repository operations so that historical execution lineage survives even when a live worktree is cleaned up or re-bound. This prevents Source Control actions from erasing the audit trail that Orchestrator, Assistant Chat, and recovery flows rely on.
@@ -154,12 +132,14 @@ This addendum captures the rewrite's document and preview rendering model: sourc
 - Mermaid export as SVG (canonical) and PNG (derived).
 - Full Markdown support centered on source-canonical editing plus rendered preview, not on replacing Markdown with a hidden WYSIWYG model.
 - HTML files support both source editing and full rendered browser-like viewing.
+- Built-in browser, rendered preview, and click-to-context are separate from web/read tool lineage: `web_search`, `web_fetch`, `read-website`, and `/site-reader` remain discovery or Site Reader/read-path concepts and must not own the visible editor-tab/detached browser product surface.
 - Image files render natively in the Slint app surface.
 - Detached preview/browser windows are first-class, cross-platform guaranteed behavior.
 - Embedded webviews are optional optimizations, not required product invariants.
 - Generated Markdown/Mermaid previews use a restricted trust tier; full HTML/browser mode uses a separate trust tier.
 - Preview-mode edits are limited to validated structured commands and otherwise fall back to source editing.
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
+- `xeditor-monorepo` is useful as interaction inspiration only; it is not a strong candidate for direct adoption as an MVP-native PM core feature.
 
 **Detailed spec:** `Plans/FinalGUISpec.md`, `Plans/PMConcept.html`, [Crosswalk](#crosswalk-ref)
 
@@ -172,11 +152,14 @@ This consolidation addendum defines the rewrite-era MVP for repository operation
 - first-class `Source Control` side-panel surface with Changes, History, Graph, Worktrees, and Branches / Stash
 - first-class `GitHub Actions` side-panel surface with Current Branch, Workflows, and Settings
 - first-class `Docker Manager` side-panel surface with Containers, Images, Compose, Registries, Build / Bake, Publish / Unraid, and project-focused Kubernetes
+- external `/current` reference research validates these as parity-plus feature families, not speculative extras: Source Control carries `/history/stash/merge-editor/worktree` expectations, GitHub Actions readiness is split into name/scope-based sub-capabilities, and Docker/Kubernetes scope is project-focused rather than cluster-administration.
+- Source Control keeps `Worktrees` as the primary subview and `/object` list; lane-first is an overlay or filter when lane/package ownership is known, not the replacement object model.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
 
 ### Orchestration and recovery
 - run-to-repo lineage and worktree ownership surfaced across Orchestrator tabs
+- `Run-to-repo lineage` remains a GUI cross-surface differentiator, not optional polish: Orchestrator run detail and history rows show `to-repo` pivots into Source Control, GitHub Actions, and Docker Manager `destination-panel` views so users can trace which worktree, branch, commits, PR, Actions runs, publish artifacts, `/deploy` outputs, and Operation receipts came from a given run or `/attempt`.
 - run-to-workflow and workflow-to-diff correlation
 - publish/runtime/template and Kubernetes rollout linkage surfaced in Orchestrator and Run Graph
 - cross-surface `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` pivots
@@ -185,6 +168,7 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 
 ### State and commands
 - Source Control, GitHub Actions, and Docker Manager panel state persisted per project where applicable
+- Run-to-repo lineage state includes lineage detail level, derived artifact category visibility, and retain-after-cleanup `/settings`; `/event/storage` receipt joins preserve SCM, Actions, publish, and Kubernetes identifiers across restarts, while partial chains remain visible with unresolved labels instead of hiding known lineage. `/disabled` fallback and `/tradeoffs` are explicit: lineage must survive cleanup and restarts without overclaiming incomplete joins.
 - new canonical command families for Source Control, GitHub Actions, Docker Manager, and cross-surface pivots
 - blocked-state and requested-vs-effective rules remain product-wide behavior, not panel-local polish
 
@@ -211,14 +195,17 @@ Remove or revise older summary phrasing that implies lexical dispatch, node-cent
 
 **Artifacts panel and panels (from GUI/Artifacts/Usage scope):** Artifacts panel (runtime artifacts, 19 types, cost_usage, Show in Ledger/Usage); side-panel toggling for Git, Docker, Unraid, Artifacts, Chat, Files (single slot, last-click wins); layout save per project; OpenCode-style usage-on-message reference; AI in Git; multi-repo source control (or explicit deferral).
 
-## Web tools, skills, planning, and approval reconciliation note (2026-04-04)
+## Web tools, skills, planning, and approval owner alignment (2026-04-04)
 
-Rewrite-era feature summaries must align to the owner docs updated by the Firecrawl / lost-spec recovery packet.
+Rewrite-era feature summaries must align to the current owner docs for web tools, skills, planning, permissions, and approval surfaces.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Skills_System.md
 
 Summary:
 - PM owns a six-tool web family plus `batch_webfetch` and `batch_webextract`
-- slash-command canon uses the reconciled built-in set with bare `/web` help/autocomplete and `/skill` discovery/invocation behavior
+- slash-command canon uses the final reconciled built-in set with bare `/web` help/autocomplete, `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, `/web map`, `/skill` discovery/invocation behavior, and deprecated `/cancel` alias handling
 - Agent Config owns Personas + Skills while Settings owns providers/accounts/models/permissions
-- planning/TODO, question, operation-card, and visualizer summaries defer to their repaired owner sections
+- provider/server-profile feature summaries preserve `connection_profile_id` while deferring the profile model to `Plans/Provider_OpenCode.md`, `Plans/Multi-Account.md`, and shared runtime identity contracts
+- refined tool behavior for web, LSP, skill, permission, planning/TODO, question, operation-card, and visualizer summaries defers to the repaired owner sections
+- Feature-list summaries remain consumers of those owner docs for repaired web, question, tool, TODO, permission, operation-card, and visualizer behavior; summary copy must stay accurate to the owner sections instead of restating lower-level contracts.
+- Help and teaching surfaces may expose `Feature Seam` through user-facing ELI5 language in `/help`, but that aliasing cannot rename the canonical graph object or hide the owning feature-seam contract.

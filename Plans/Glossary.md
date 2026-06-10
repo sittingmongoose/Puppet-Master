@@ -1,228 +1,15 @@
 # Glossary (Canonical)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Highest-Impact Docs
-  - Cleanup Priorities
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0337
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Highest-Impact Docs
-  - Cleanup Priorities
-- Exact required items represented:
-  - Replace tier-rooted execution with package/seam/lane model
-  - Define package overseer + seam overseer roles
-  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
-  - Redefine gates to package-complete / seam-complete
-  - Rename or retire Tiers UI/tab and tier_tree/progress bars
-  - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.
-  - Clarify which docs own [retired-token-11] vs UI-only overlays.
-  - `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`
-  - Plans/00-plans-index.md
-  - Plans/Crosswalk.md
-  - Plans/Glossary.md
-  - `[retired-token-12]`
-  - [retired-token-12]
-  - There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`.
-  - historical
-  - superseded
-  - revoked
-  - reopened
-  - archived
-  - removed
-  - `canonical term system`
-  - canonical term system
-  - Glossary = canonical short definitions
-  - Keep canonical term names stable across Expert and ELI5.
-  - Use Glossary as the canonical short-definition inventory.
-  - Terms that now need canonical glossary ownership
-  - glossary owns short canonical definitions
-  - when a more precise canonical term is required
-  - `Glossary.md` is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary.
-  - Glossary.md
-  - canonical concept definition / glossary entry
-  - canonical term names do not change between Expert and ELI5
-  - `attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items.
-  - attention center
-  - `Executor_Protocol.md` still has a broken Glossary forward reference, an incomplete wake-reason set, no real `blocked_reason_code` table, no `blocked_sequence` integration, and no actor/lifecycle model for reviewer/corroboration flows.
-  - Executor_Protocol.md
-  - blocked_reason_code
-  - blocked_sequence
-  - missing advertised sections and dead glossary references
-  - `Overseer` is currently a dead glossary reference in multiple rewrite-owner docs.
-  - Overseer
-  - `glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table.
-  - glossary
-  - multiple adjacent docs cite `Plans/Glossary.md §2` for `Overseer`, but no such entry exists.
-  - Plans/Glossary.md §2
-  - `attempt` / `attempt_id`, `safe point`, `lane`, `work package`, and related rewrite-era vocabulary still have no Glossary owner.
-  - attempt
-  - attempt_id
-  - safe point
-  - lane
-  - work package
-  - Glossary's broad `effective state` wording now shadows the narrower requested/effective execution-identity model used elsewhere.
-  - effective state
-  - add missing Glossary entries for rewrite-era terms,
-  - with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.
-  - `Glossary.md` is still being cited as the owner of `Overseer` while not defining it, and `effective state` is now clearly too broad to safely stand in for requested/effective runtime identity.
-  - runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.
-  - safe_point_id
-  - scheduler_lane
-  - provider_attempt_ref
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/FinalGUISpec.md
-  - `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`
-  - Plans/storage-plan.md
-  - Plans/usage-feature.md
-  - `Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.
-  - `Plans/Glossary.md:34-67`
-  - Plans/Glossary.md:34-67
-  - `Plans/Glossary.md:102-126`
-  - Plans/Glossary.md:102-126
-  - `Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.
-  - why it matters
-  - what it is not
-  - related concepts
-  - gap-006
-  - `Plans/Glossary.md:30-127`
-  - Plans/Glossary.md:30-127
-  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.
-  - gap-002
-  - gap-007
-  - Plans/UI_Command_Catalog.md
-  - Plans/GitHub_Integration.md
-  - `Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.
-  - ### Orchestrator rewrite terms
-  - ### Runtime and routing terms
-  - `Plans/Glossary.md:30-67`
-  - Plans/Glossary.md:30-67
-  - `Plans/Glossary.md:30-70`
-  - Plans/Glossary.md:30-70
-  - `gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).
-  - Term | Definition
-  - canonical_name
-  - short_definition
-  - why_it_matters
-  - `Plans/Glossary.md:34-85`
-  - Plans/Glossary.md:34-85
-  - `gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.
-  - Plans/Glossary.md#Orchestrator rewrite terms
-  - `Plans/Glossary.md:30-85`
-  - Plans/Glossary.md:30-85
-  - Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.
-  - Plans/Orchestrator_Page.md#11. Source Control boundary
-  - `Plans/Glossary.md:30-90`
-  - Plans/Glossary.md:30-90
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_[retired-token-12]_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Glossary and help governance
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+### Help entry template and related-concept clusters
 
-### Fidelity recovery cov-061: Glossary and help governance
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0340
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `contextual help system`
-  - contextual help system
-  - Simple help must simplify explanation, not rename the model.
-  - Which concepts need dedicated help entries
-  - exact records first, but should still offer concept help links for unfamiliar states/actions
-  - contextual help can simplify wording, but must not mutate the underlying semantics
-  - Use glossary definitions as the canonical short-definition source for future help entries.
-  - Expand `Glossary.md` so it becomes the owner for the stable term list, while longer help entries can explain:
-  - Glossary.md
-  - Rewrite-era governance and runtime terms still have no canonical glossary owner, even while multiple docs explicitly point readers there.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-061
-- Fidelity gap refs: cov-061
-- Required fidelity items:
-- Exact required item: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-061: Glossary and help governance` exists in `Plans/Glossary.md`.
-- Exact acceptance check: The `cov-061` repair states the exact requirement: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
-- Exact acceptance check: The `cov-061` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
-
-### Fidelity recovery cov-194: Help entry template and related-concept clusters
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0341
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `help entry system`
-  - help entry system
-  - each dedicated help entry should have a small fixed template
-  - Good template fields:
-  - clicking or hovering a term/badge/state should know whether to show a short tooltip, a richer side explanation, or route to a dedicated help entry
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-194
-- Fidelity gap refs: cov-194
-- Required fidelity items:
-- Exact required item: Define a dedicated help-entry template and related-concept linking clusters
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-194: Help entry template and related-concept clusters` exists in `Plans/Glossary.md`.
-- Exact acceptance check: The `cov-194` repair states the exact requirement: Define a dedicated help-entry template and related-concept linking clusters
-- Exact acceptance check: The `cov-194` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -255,25 +42,6 @@ ContractRef: Invariant:INV-010
 
 ### Orchestrator rewrite terms
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0344
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The rewrite now depends on canonical terms that do not yet have canonical glossary ownership.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Execution Unit Context** -- the canonical runtime-facing object that names `execution_unit_id`, `execution_unit_type`, parent lineage, and the `execution_role` that owns execution.
 - **Concern Record** -- the durable record for a concern lineage, including `concern_id`, `blocked_episode_id`, `blocked_sequence`, escalation frames, and recovery posture.
@@ -282,6 +50,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 - **Inline Help** -- lightweight help rendered directly beside the active control, row, or blocked state without changing the canonical term name.
 - **Context Help** -- a resolved help payload scoped to the active concern, execution context, route target, or inspector surface.
 - **Canonical Help Entry** -- the durable help record keyed by canonical concern and state terms; inline help and context help both point back to this entry instead of minting new synonyms.
+- **Worktree owner node (`owner_node_id`)** -- the orchestration-node lineage field used when a worktree is owned by a run/node rather than by an Assistant thread or manual workspace. Older tier-rooted ownership field names are migration/source-lineage aliases only.
 
 Use these canonical names verbatim in rewrite docs so execution objects, states, trust semantics, and help layers stay stable across Orchestrator, inspectors, and recovery surfaces.
 
@@ -289,45 +58,46 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator
 
 ### Runtime and routing terms
 
-### Reconciliation addendum
+Runtime and routing help entries use `help-entry` records with `canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, and `surface_examples`; avoid two-column `Term | Definition` tables for durable glossary ownership. The wave-one `gap-006` and `gap-007` repairs keep `/chat/routing`, `/receipt/usage`, `Plans/Orchestrator_Page.md#11. Source Control boundary`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/Glossary.md` routed through the live owner docs and their `/storage-plan.md`, `/FinalGUISpec.md`, `/Orchestrator_Page.md`, `/GitHub_Integration.md`, `/WorktreeGitImprovement.md`, and `/Glossary.md` aliases rather than stale broken anchors.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+Glossary gap governance records `exact_items` for `gap-001`, `gap-002`, `gap-003`, `gap-004`, `gap-005`, `gap-006`, `gap-007`, and `gap-008`, including missing `5.1B`, `/help/blocked/storage`, `Plans/Glossary.md#Orchestrator rewrite terms`, `Plans/Orchestrator_Page.md#11. Source Control boundary`, `result_id`, `execution_unit_context`, `orchestrator.project_state`, `orchestrator.project_state.{project_id}`, `project_id`, usage-side account history, `/receipt`, `/orchestrator`, and broken-anchor cleanup evidence.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+Canonical runtime and provider wording:
+- **Requested/effective identity fields** -- runtime identity uses the shared requested/effective vocabulary from the owner contracts. Persona fields are `requested_persona` and `effective_persona`; legacy `_id` substitutes such as `requested_persona_id` and `effective_persona_id` are migration/source-lineage aliases only.
+- **Runtime vocabulary** -- use platform, model, auth, account policy, and effective account for requested/effective runtime state. Do not create duplicate top-level nouns such as `chat_model`; use the owner-owned field, for example `effective_model`.
+- **Runtime identity consumers** -- `Plans/storage-plan.md` (`/storage-plan.md`) persists runtime identity fields and `Plans/FinalGUISpec.md` (`/FinalGUISpec.md`) displays `/displayed` runtime identity after the core contracts are updated; assistant/chat surfaces consume this owner boundary rather than redefining runtime identity semantics.
+- **Provider Layer (`provider-layer`)** -- the web execution layer made of the provider capability registry and adapters. Provider-layer terms describe capability, routing, fallback, and adapter behavior; they must not be conflated with runtime identity terms.
+- **Bare command (`bare-command`)** -- a slash-command invocation without a required subcommand or argument. Bare `/web` opens help/autocomplete and performs no default web operation.
+- **provider_unavailable** -- a provider-routing state where the selected provider cannot execute the requested operation. The runtime falls back to the next eligible provider in priority order; if no fallback is available, the UI surfaces provider health, auth, and recovery guidance.
+- **Raw finding (`raw-finding`)** -- an audit input, not a runtime state. Raw-finding clusters from `Plans/assistant-memory-subsystem.md` (`/assistant-memory-subsystem.md`) may identify delegated-run identity or persistence gaps, but the canonical fix must land in the owner contracts before delegated-run behavior is treated as wired end to end.
+- **Browser automation handoff** -- the Debug workflow pause when PM needs user help with auth, CAPTCHA, one-off repro, or a blocked modal flow. PM pauses the live `automation_session`, focuses the exact browser tab and `/step`, moves the investigation to `attention_required`, and resumes only from the paused step pointer or an explicit retry of the current repro step after the user finishes the requested action.
+- **Package/lane/worktree attribution** -- canonical attribution treats `/package/lane/worktree` lineage as first-class across `/usage` and `/storage`; `tier_id`, `/grouping`, and canonical-ish runtime-data labels are migration/source-lineage hints until mapped to package, seam, lane, worktree, and execution identity owners.
+- **Derived decomposition context (`decomposition_context`)** -- optional derived context may carry human-readable `/titles`, language `/domain/framework`, former tier grouping for help or migration, `subtask-focus` heuristics, and `parent-summary` or `/dependency` prompt conveniences, but it must not override canonical node, package, seam, lane, worktree, or attempt identity.
+- **Storage route identity** -- `Plans/storage-plan.md` / `/storage-plan.md` owns `usage_event_ref`, projection freshness, receipt pivots, bridge semantics, and project-scoped UI state naming for runtime/routing help entries.
+- **Runtime artifact help** -- `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md` consumes `/Ledger`, `/link`, `task_id`, `cost_usage`, and cross-surface receipt linkage; artifact-panel and task-granularity wording are legacy/source-lineage aliases unless a current owner doc keeps them.
+- **Orchestrator page help** -- `Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` owns historical mode, worktree partitioning, precise usage behavior, `/deep-link`, and `/acceptance` help entries consumed by runtime/routing glossary terms.
+- **Final GUI route copy** -- `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` consumes `route_target` semantics; `resume_url` is not a stronger ad hoc primitive. Stale `Tiers` primary-surface wording is a source-lineage alias for the rewrite Orchestrator tab model, and widget-composition means only `Progress` is widget-composed inside Orchestrator.
+- **Assistant chat runtime controls** -- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` maps resume and `/retry` controls to canonical runtime actions and must not invent thread-local resume paths.
+- **Provider/persona orchestration wording** -- prompt, model, provider, and `/persona` docs retire `/task/subtask/iteration` ownership language in favor of runtime records with `node_id`, `attempt_id`, package, seam, lane, and execution identity.
+- **Runtime account attempt context** -- `/account/attempt` binds account/runtime disclosure to attempt identity, so usage, worker identity, and per-node wording must resolve to account plus attempt context rather than lagging as worker-only or per-node shorthand.
+- **Runtime-era gate and tombstone checks** -- runtime-era `/gate` schemas are machine-verifiable only when preconditions, freshness, mutation risk, deprecation `/tombstone` status, reverse coverage, and dispatcher obligations are explicit.
+- **Tier-shaped compatibility** -- `tier` and tier-shaped glossary terms are migration/source-lineage aliases; live owner docs must map them to package, seam, lane, worktree, or Orchestrator tab concepts before consumer docs reconstruct tier-shaped surfaces or payloads.
+- **Legacy Orchestrator surface vocabulary** -- consumer docs must not revive stale `tier-era` execution terms, `widget-era` non-`Progress` Orchestrator assumptions, `standalone-surface` page models, non-canonical persona fields, or `tier_type` as a core node UI field. `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` keeps `Tiers` only as source-lineage/page-level compatibility wording for the tab-first Orchestrator rewrite, while `/phase` and tier/phase labels remain derived or `compatibility-only` view context.
+- **Widget hostability terms** -- `widget-hostability` and `widget-layout` are compatibility-only vocabulary for non-`Progress` Orchestrator surfaces; `/native` specialized tabs are not widget pages and must not be rebuilt as widget-hosted layouts.
+- **Projection-era event vocabulary** -- rewrite migration replaces `TierChanged`, `IterationStart`, and `TierTree` terms with current run summary, current activity projection, attention `/blocker` projection, seam health projection, package activity projection, promotion queue projection, lane `/worktree` projection, `/usage` account-pressure projection, and recent major events projection.
+- **Projects page runtime status** -- project list cards expose project name and `/path`, language badges, last-opened data, health indicator, and Orchestrator status values `idle/running/paused`; `/running/paused` is a source-lineage shorthand, not a separate state axis.
+- **Provider/account runtime machinery** -- `/account/model/runtime` is shared provider/account/model/runtime machinery; object families keep different lifecycle semantics and UI surfaces while consuming common `/account`, `/builder`, `/effective`, auth-account visibility, and requested/effective runtime identity.
+- **Plan/runtime projection split** -- GPT audit notes provide historical transfer context for the rule that plan structure and mutable runtime state stay separate; runtime truth lives in events, JSON sidecars, and `/projection` docs rather than plan-shard prose.
+- **Post-rewrite Glossary anchor** -- `Glossary.md` is not a `pre-rewrite` platform-name stub; it anchors `/runtime` and cross-doc meaning for Orchestrator, Source Control, search, history, ledger, and help.
+- **Route payload vocabulary** -- route payloads use canonical surface, `/tab/object`, and object terms; generic `page: string` payloads are retired or constrained when they hide non-canonical tab naming.
+- **Evidence wrapper alias terms** -- `/wrapper/alias` evidence records route, wrapper, and alias verification failures in a structured machine-readable form so a generic evidence model does not hide whether a wrapper command normalized to the canonical target.
+- **Glossary/Crosswalk rewrite routing** -- `Glossary.md` owns short term definitions and `/Crosswalk` owns primitive routing; both must absorb rewrite-era terms before downstream specs continue as append-only, contradictory consumer notes.
+- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab or `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the rewrite tab model.
+- **Blocked sequence runtime identity** -- runtime/blocking state uses node, attempt, `/attempt/blocked-sequence`, and `/blocking` identity; storage `tier_id` fields are compatibility aliases until mapped to node/attempt identity.
+- **Attempt attribution migration** -- replace `tier-first` aggregation and event anchoring in `/storage/UI`, usage, and storage docs with `/node/lane/package/seam-aware` attempt/node/lane/package/seam-aware attribution; tier terms remain compatibility aliases.
+- **Projects registry scope** -- `projects:v1` is project registry only: path, display metadata, detection metadata, `last-opened`, and stable config references. Free-form `health status` wording is sharply narrowed or removed from that registry scope.
+- **Assistant chat compatibility drift** -- `assistant-chat-design` / `assistant-chat-design.md` is not broadly stale; remaining drift is local and `compatibility-oriented`.
 
-#### Source target target-0346
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - search/routing can reuse common routing fields
-  - how blocked-owner influences message routing
-  - likely routing owner:
-  - Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evidence join fields to first-class owners in the artifact/file/storage docs.
-  - project_id
-  - attempt_id
-  - wrapper-command routing to a canonical target
-  - Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.
-  - Project_Output_Artifacts.md
-  - This is one of the most actionable owner fixes found in this routing tranche.
-  - `resume_url` does not define a second routing ontology
-  - resume_url
-  - If `subject_id` expands carelessly, the whole routing model becomes muddy again.
-  - subject_id
-  - Owner docs already identified in the routing tranche:
-  - `Decision_Log.md` and rewrite-root routing gaps
-  - Decision_Log.md
-  - `rewrite-tie-in-memo.md` first as rewrite-root routing
-  - rewrite-tie-in-memo.md
-  - `rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:
-  - 1. Owner docs and rewrite-root routing
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Route Target**: A destination for output or side-effects (file://, github://, workspace://, share://, etc.). Resolved through a cascading resolver and permission checks.
 
@@ -339,35 +109,49 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 **Artifact**: An output or byproduct of execution (log, diff, output, input, trace). Indexed by (concern_id, route_target, artifact_type, timestamp) and tied to the execution unit that produced it.
 
+### Shell and workspace terms
+
+**Source Control**: The Git-first repo/worktree surface for local SCM state: changes, history, graph, worktrees, branches/stash, review/compare, conflicts, and worktree-native recovery. Hosted workflow/admin behavior stays under GitHub Actions.
+
+**GitHub Actions**: The GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, repository Actions settings, secrets, variables, environments, and readiness. It is separate from Source Control.
+
+**Docker Manager**: The container/runtime operations surface for Docker, Unraid, and Kubernetes state, including unhealthy containers, restart loops, rollout health, and runtime attention items before Dashboard or Orchestrator mirrors.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+### Terminal runtime terms
+
+**Terminal Section**: A docked or detached terminal component that owns section-level presentation continuity, visibility, and the tab strip it contains.
+
+**Terminal Tab**: A terminal workspace inside a terminal section. It owns title, order, pin state, section membership, and selected-pane state, but it is not the same thing as a runtime PTY session.
+
+**Terminal Pane**: A split-tree slot inside a terminal tab. It owns the visible binding location for one live or historical terminal session at a time.
+
+**Terminal Session**: The runtime PTY continuity object identified by `terminal_session_id`; it owns shell process continuity, transcript identity, and live-versus-historical state.
+
+**Dev Session**: A higher-level development workflow identity identified by `dev_session_id`. It may link terminal, output, problems, debug-console, and ports surfaces, but it must not replace `terminal_session_id` when exact shell reuse matters.
+
+### Provider and account terms
+
+**Provider Entry ID (`provider_entry_id`)**: The concrete provider-registry identifier for a runtime surface. In provider-registry and scheduler internals, `provider_entry_id` replaces ambiguous generic `platform` fields when the record must identify the actual selectable runtime entry rather than a vendor family or UI label.
+
+**Projection Policy Fields**: Internal provider-registry or scheduler fields that describe how PM projects provider-facing configuration. `conflict_policy`, `drift_detection`, `overlay_policy`, `share_classes[]`, `deny_classes[]`, `projection_mode`, `selectable_unit`, and `root_path` stay internal/provider-registry/scheduler-only by default unless an owner doc proves a specific field must be audit-visible; provider-entry `/family/transport` mapping remains additive compatibility metadata over canonical runtime fields.
+
+**Per-account `CODEX_HOME` sandbox**: An isolated account-scoped Codex home used for limit probing and account separation. Per-account `CODEX_HOME` sandboxes keep probe residue out of other accounts and reinforce that health state, usage-pressure state, and resolution outcome are separate concepts.
+
+**Usage-pressure state**: The account/provider pressure signal derived from quota, cooldown, rate-limit, or usage-window evidence. It is distinct from general health state and from the final resolution outcome of a run or switch attempt.
+
 ### Projection freshness and health terms
 
-### Reconciliation addendum
+- **Remote-state vocabulary** -- shared surface vocabulary for File Manager, Search, Source Control, Terminal, Problems, and LSP remote-backed projections. Freshness is `current | refreshing | stale` (`current`, `refreshing`, or `stale`); health is `healthy | degraded | unavailable` (`healthy`, `degraded`, or `unavailable`); write availability is `writable`, `pending_write`, `blocked`, or `read_only`. Do not flatten these axes into one generic `offline` badge.
+- **Projection-trust clusters** -- current ledger projection-trust clusters are shared by `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Glossary.md`, `/storage-plan.md`, `/Contracts_V0.md`, and `/Glossary.md`.
+- **ProjectionHealth** -- the shared user-facing `/trust` record that spans Usage, Orchestrator, Source Control, widgets, `storage-plan`, and `storage-plan.md`; it records freshness, health, stale-data mitigation, and whether an action may read, route, or mutate.
+- **Degraded-trust fallback** -- cross-doc projection consumers such as `Widget_System`, `Widget_System.md`, `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` use event-driven `/freshness`, degraded-trust, `/direct-record` Ledger fallback, and shared trust records rather than surface-local freshness rules.
+- **Runtime-trust command layer** -- `UI_Command_Catalog.md` / `UI_Command_Catalog` command surfaces attach runtime-trust, direct-record, degraded-trust, projection-freshness, `/open`, `/surface`, `/recovery`, and `/provenance` context to cross-surface routing and mutation commands; any under-specified command must block mutation until these fields are known.
+- **Blocked-state presentation** -- blocked-state and `dismissed` remain separate: `dismissed` is presentation state, not semantic resolution, and active blockers must not be dismissed into fake health.
+- **Progress trust copy** -- `Progress` is summary-heavy and vulnerable to stale `/degraded` projection confusion, so it shows visible freshness state and routes users to native exact-record tabs for inspection when projection trust drops.
+- **Concern trust contract** -- degraded-trust and `/concern` escalation across provider/runtime/UI must share one reusable trust/concern contract that carries auth/account health, switch pressure, provider confidence, projection freshness, the `/runtime/UI` boundary, under-owned ownership drift, and requested/effective auth-account visibility between assistant chat and interview/builder docs.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0345
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - remove or sharply narrow free-form `health status` wording there
-  - health status
-  - project-summary freshness should disclose projector trust/freshness separately from the underlying owner state
-  - provider/account health snapshots
-  - health axis: `healthy | degraded | unavailable`
-  - healthy | degraded | unavailable
-  - freshness, mutation-risk, or blocked-action preconditions
-  - `Architecture_Invariants.md` still lacks concrete invariant ownership for execution-role identity, run-scoped requested/effective snapshots, graph-lock degradation boundaries, projection freshness, blocked/failure classification, role-scoped account-pool contamination, and safe-point vs restore-point immutability rules.
-  - Architecture_Invariants.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Projection Freshness** -- the recency of the projection relative to the live runtime source. It answers "how old is this copy?" and is evaluated with states such as `fresh`, `warm`, `stale`, and `expired`.
 - **Projection Health** -- the quality and executability of the projection. It answers "is this state safe and complete enough to act on?" and is evaluated with states such as `healthy`, `degraded`, `blocked`, or `unknown`.
@@ -379,25 +163,20 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 
 ### Help architecture and project status terms
 
-### Reconciliation addendum
+- **History/Ledger help links** -- `History` and `Ledger` keep exact records first while exposing concept help links for unfamiliar states and `/actions`.
+- **Three-depth help contract** -- the three-depth help contract keeps inline help, context help, and canonical help entry as distinct layers: `inline help` is short tooltip, badge, or field helper text; `context help` is richer surface-local or popover guidance with examples and related concepts; `canonical help entry` is the durable cross-surface `/help` article for stable concepts.
+- **Help-system ownership** -- `help-system` routing keeps `Glossary.md` as the owner for short canonical definitions, while richer help entries own examples and `related-concept` links; contextual help may simplify wording, but it must not mutate the underlying semantics.
+- **Glossary concept inventory** -- `Glossary.md` and `/glossary` are the canonical concept inventory backbone for runtime, help, and `/provider` vocabulary even when richer help entries live in another surface.
+- **Widget help entry ownership** -- `Plans/Widget_System.md` / `/Widget_System.md` may consume future Orchestrator help-entry copy, but the canonical `help-entry` term inventory remains owned here.
+- **Deep-object help-linking** -- `help-linking` for deep objects decides whether clicking or hovering a term, `/badge/state`, badge, field, or state shows inline tooltip, context help, or routes to a dedicated canonical help entry.
+- **Gap inventory supersession** -- `supersedes_prior` marks current gap artifacts when `canon_inventory.json` keeps only surviving canon clusters and `open_gaps.json` keeps unresolved blocker families plus exact missing items; the legacy `canon_inventory` and `open_gaps` names are source-lineage aliases unless a live owner requires them.
+- **Stability sweep vocabulary** -- local stability sweeps across `/usage`, `/help/blocked/storage`, help, blocked, and storage clusters only transfer when they produce exact fields, headings, affected targets, or blocker families; otherwise they serve as no-new-gap evidence.
+- **High-risk canonical word pairs** -- high-risk word pairs require explicit distinction guidance, and `FinalGUISpec.md` plus related UX docs must avoid informal synonyms when canonical terms are required.
+- **Orchestrator contextual help** -- `Orchestrator` help remains concept-heavy; core concepts in `Seams`, `Progress`, and inspectors need clickable help affordances that route to canonical help entries when surface-local explanation is insufficient.
+- **Tooltip and copy depth** -- help `/copy` may be `tooltip-oriented` for short labels and field helpers, but `tooltip-only` help is insufficient for dense rewrite concepts that need context help, examples, related concepts, or a canonical help entry.
+- **Expert/ELI5 and chat-style copy** -- app-level Expert and `/ELI5` display is independent from `chat-style` simplification; simple help can change reading level, but it must not rename runtime truth or alter contract semantics.
+- **First-class object help** -- as concepts become first-class `/objects`, stable `related-concept` links become part of the canonical help record rather than loose prose references.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0342
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - At the same time, the canonical model is getting denser, so “simple help” must not mutate the underlying terms or invent alternate semantics.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Help Entry Architecture** -- the dedicated help-entry architecture with related-concept linking. Each help entry is keyed by canonical concern/state terms and can expose related concepts without renaming the underlying canon.
 - **Project `activity_state`** -- the project-wide activity summary (`planning`, `running`, `waiting`, `blocked`, `cooling_down`, `archived`) that answers what the project is doing now.
@@ -412,25 +191,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator
 
 ### Help-entry template and related-concept clusters
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0343
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 A dedicated help-entry template and related-concept linking cluster uses this canonical shape:
 
@@ -449,8 +209,24 @@ Related-concept clusters group help entries by canonical concern/state families 
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
 
+### Runtime operation vocabulary and copy boundaries
+
+The `/glossary` owns reserved runtime and operation wording for the blind-spot family where terminology discipline, provenance, `/legal` hold, and bulk `/undo/cost` semantics can otherwise blur together across user-facing surfaces.
+
+- `Review` must be qualified by surface and required action: Source Control `Review Mode`, Docker/Unraid `needs_review`, GitHub Actions environment reviewer approval, and Orchestrator human review or `/final` approval are not interchangeable labels.
+- Requested-vs-effective `/copy` uses the exact labels `Requested`, `Effective`, and `Why different?` for the vs-effective explanation model. Surfaces must not use `Actual`, `Resolved`, `Current`, `Available`, or `Fallback` as synonyms for the same requested/effective concept.
+- `Health` means system or `/runtime/connectivity` condition. `Capability` means what provider, runtime, permission, auth, and `/runtime/policy` allow. `Readiness` means whether the requested action can proceed now. `Validation` means the act of checking schema, prerequisites, evidence, or proof.
+- `Retry`, `Resume`, `Recover`, and `Restore` are distinct recovery verbs. `Retry` repeats the resolved operation; `Resume` continues a blocked or paused episode after a prerequisite or approval clears; `Recover` follows a canonical remediation flow; `Restore` uses an explicit restore point or preserved state.
+- `wake reason` is the user/help label for the canonical `wake_reason` scheduler field. `queue analysis` names the scheduler or queue-state interpretation that led to a wake, and `remediation lineage` names the durable chain of blocked outcome, allowed action, retry/resume, and evidence refs.
+- Provenance, `/legal` hold, receipt retention, and bulk `/undo/cost` disclosure remain separate blockers or explanations and must not be collapsed into generic Health, Capability, Readiness, or Validation copy.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 ## 4. Evidence
 - **Evidence bundle** -- a structured record of commands/checks/artifacts that demonstrates a requirement is met.
+- **Wrapper and alias evidence** -- `evidence.schema.json` stores `/fail` checks plus wrapper-normalization and alias-resolution evidence when command wrappers or compatibility aliases prove a canonical action mapping.
+- **Spec-integrity evidence** -- `spec-integrity` failures are separate from runtime health: ghost command IDs, missing catalog rows, missing `runtime-artifact` schema family or storage registration, duplicated executor canon, missing advertised sections, and dead glossary references block reconciliation until core owners are mechanically consistent.
+- **Interview artifact evidence** -- `Project_Output_Artifacts` / `Project_Output_Artifacts.md` aligns interview-emitted `glossary` artifacts with `evidence/<node_id>.json` and `node_id` evidence records instead of treating those artifact types as generic output.
 
 ContractRef: SchemaID:evidence.schema.json
 
@@ -458,25 +234,7 @@ ContractRef: SchemaID:evidence.schema.json
 
 ## 5. Secret handling
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0339
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - still needs explicit auth/account/role disclosure and thread-level switch/trust handling
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - **Secret** -- any credential/token or material that could authenticate/authorize.
 - **Credential store** -- OS-backed keychain/credential manager; the only allowed persistence for secrets.
 
@@ -499,15 +257,21 @@ ContractRef: Primitive:PatchPipeline, ContractName:Plans/WorktreeGitImprovement.
 ### SessionStore
 The persistent storage boundary for sessions, runs, events, and artifacts. Implementation uses seglog (append-only event ledger), redb (durable KV state/projections), and Tantivy (full-text search). Secrets are forbidden.
 
+`seglog` is canonical; redb, `/Tantivy/JSONL`, and search indexes are disposable projections. Replay and `/rebuild` target a deterministic `target_seq`, while freshness notifications derive from committed projection state instead of ad-hoc polling.
+
+Runtime persistence records distinguish `attempt_record`, `tier_runtime_record`, `blocked_projection`, and `usage_record`; storage-plan and storage-plan.md own the durable overlay shape while glossary terms name the records consistently.
+
+Runtime state is not stored in plan-node shards or project-local JSON sidecars; GPT audit context points mutable runtime truth to seglog, redb, and `/redb/projections` owned by storage projections.
+
 ContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
 
 ### InstantGrep
-The promoted feature name for transparent regex-grep acceleration. Instant Grep is not a second tool name and not a separate index family; it is the user-facing name for the SparseNgramIndex plus its `grep` and Search-panel integration.
+The promoted feature name for transparent regex-grep acceleration. Instant Grep is not a second tool name and not a separate index family; it is the user-facing name for the sparse-n-gram SparseNgramIndex plus its `grep` and Search-panel integration.
 
 ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
 ### SparseNgramIndex
-The per-project sparse n-gram regex index that transparently accelerates `grep` and Search-panel regex queries. Build time extracts all sparse n-grams from normalized content; query time extracts only a minimal covering set. Posting lists are Roaring Bitmaps keyed by xxh3 hashes; snapshots live in generation-numbered directories and publish via ArcSwap. The index narrows candidate files only; ripgrep verifies final correctness.
+The per-project sparse-n-gram regex index that transparently accelerates `grep` and Search-panel regex queries. Build time extracts all sparse n-grams from normalized content; query time extracts only a minimal-covering set. Posting lists are Roaring Bitmaps keyed by xxh3 hashes; snapshots live in generation-numbered directories and publish via ArcSwap. The index narrows candidate files only; ripgrep verifies final correctness.
 
 ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
@@ -517,7 +281,7 @@ The generation-aware in-memory map of dirty paths used by the SparseNgramIndex f
 ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### SearchDomainSplit
-`grep` owns raw regex matching over file content, accelerated by SparseNgramIndex when possible. `codesearch` owns Tantivy and LSP-backed keyword, snippet, and symbol retrieval. File Manager search remains a local tree filter, and LSP symbol/reference surfaces keep their own semantics.
+SearchDomainSplit is the search-domain boundary for `grep-vs-keyword`: `grep` owns raw regex matching over file content, accelerated by SparseNgramIndex when possible. `codesearch` owns Tantivy and LSP-backed keyword, snippet, and symbol retrieval. File Manager search remains a local tree filter, and LSP symbol/reference surfaces keep their own semantics.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 

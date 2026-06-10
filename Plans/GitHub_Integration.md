@@ -1,178 +1,15 @@
 # GitHub Integration -- Spec
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0333
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - live mutating / decision-bearing actions must tighten on trust state
-  - `current`: all normal actions allowed
-  - current
-  - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth
-  - Seams
-  - `Show in ...` actions
-  - Show in ...
-  - example class: reversible local presentation/layout actions, some editor-level reverts
-  - integration/governance persona biased toward cross-package integration truth
-  - `Weak Integration`
-  - Weak Integration
-  - recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules
-  - bulk actions should be far narrower than bulk navigation
-  - when actions must be gated
-  - `Live actions unavailable until refresh`
-  - Live actions unavailable until refresh
-  - `acknowledged` and `dismissed` are operator/user presentation/governance actions
-  - acknowledged
-  - dismissed
-  - concern actions never hard-delete canonical concern history in normal operation
-  - GitHub integration still lacks the project/repo/account scoping contract the rewrite now needs:
-  - still lack the concrete receipt/usage identity and projection-trust hooks their cross-surface actions now depend on
-  - Bind GitHub Integration to project-scoped `selected_repo_id` and `provider_accounts.*` state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths.
-  - selected_repo_id
-  - provider_accounts.*
-  - degraded or unavailable should gate mutating actions much more aggressively
-  - `Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.
-  - Prompt_Pipeline.md
-  - TierContext
-  - Owner docs still describe runtime-era actions and records that require stricter registration/verification/routing machinery than the current catalog/matrix/gate stack can express.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model.
-  - This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration.
-  - canonical target/scope object used by navigation/open/focus actions
-  - GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job
-  - active_subview
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `[retired-token-2]` still points to a non-existent `[retired-token-3]`, which sharpens `[retired-token-6]`'s owner-heading defect.
-  - [retired-token-2]
-  - [retired-token-3]
-  - [retired-token-6]
-  - `[retired-token-2]:251-258`
-  - [retired-token-2]:251-258
-  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `[retired-token-6]` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `[retired-token-2]`, `[retired-token-1]`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `[retired-token-7]`, and the broken `#11. Source Control boundary` reference.
-  - gap-002
-  - gap-006
-  - Plans/UI_Command_Catalog.md
-  - Plans/Glossary.md
-  - Plans/Orchestrator_Page.md
-  - [retired-token-1]
-  - `[retired-token-6]` sharpened: the broken `[retired-token-3]` reference survives not only in `[retired-token-2]` but also in `[retired-token-5]` and `[retired-token-4]`, while `[retired-token-1]` still preserves the `[retired-token-7]` contradiction.
-  - [retired-token-5]
-  - [retired-token-4]
-  - [retired-token-7]
-  - `[retired-token-2]:258-258`
-  - [retired-token-2]:258-258
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Source Control and worktree handshake
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+### GitHub stable account identity
 
-### Fidelity recovery cov-040: Source Control and worktree handshake
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0335
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - impacted surface: Source Control and GitHub worktree views.
-  - clearly separates Source Control from GitHub Actions and places worktree management in Health/Settings, but does not yet express the stronger Orchestrator-vs-Source-Control lane/worktree boundary.
-  - worktree prune/remove and cleanup actions should disclose:
-  - worktree actions must preserve safe-point and remediation lineage
-  - Source Control owns concrete worktree actions and compact inventory display
-  - Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree cleanup lifecycle.
-  - active-run ownership must be visible before destructive worktree actions
-  - Add the missing schema/record families that docs already require in practice: runtime-artifact schemas, durable worktree records/projections, and command families for account/concern/promotion actions.
-  - Source Control is the primary operational surface for worktree inventory and actions
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-040
-- Fidelity gap refs: cov-040
-- Required fidelity items:
-- Exact required item: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
-- Exact required item: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-040: Source Control and worktree handshake` exists in `Plans/GitHub_Integration.md`.
-- Exact acceptance check: The `cov-040` repair states the exact requirement: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
-- Exact acceptance check: The `cov-040` repair states the exact requirement: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
-- Exact acceptance check: The `cov-040` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
-
-### Fidelity recovery cov-098: GitHub stable account identity
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0336
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` as provider-native disclosure metadata.
-  - login
-  - account_id
-  - Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.
-  - the GitHub realm split is still correct; the fix is stable account identity inside each realm, not realm collapse
-  - Repair GitHub account identity handling end-to-end:
-  - Deferred GitHub Recovery Binding now fits more naturally as blocked-episode `detail_ref` / wizard-blocked attachment than as a new standalone runtime object
-  - detail_ref
-  - GitHub recovery and command ownership remain under-keyed:
-  - GitHub durable identity is still keyed by `login`, conflicting with the stable internal account model.
-  - Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.
-  - credential_ref
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-098
-- Fidelity gap refs: cov-098
-- Required fidelity items:
-- Exact required item: Add recovery context payload and trust/degraded-state gating for GitHub mutations
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-098: GitHub stable account identity` exists in `Plans/GitHub_Integration.md`.
-- Exact acceptance check: The `cov-098` repair states the exact requirement: Add recovery context payload and trust/degraded-state gating for GitHub mutations
-- Exact acceptance check: The `cov-098` repair is in the owner section for `Plans/GitHub_Integration.md` and is not only a downstream consumer note.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -236,6 +73,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 > - Architecture invariants apply, especially secrets and naming (ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010).
 > - Ambiguity resolved deterministically via `Plans/Decision_Policy.md` §2 (ContractRef: PolicyRule:Decision_Policy.md§2).
 > - GitHub API operations use `github_api` realm only; not `copilot_github` (ContractRef: Plans/GitHub_API_Auth_and_Flows.md §auth-realm-split).
+> - `github_api` and `copilot_github` tokens and `/state` are never cross-consumed; GitHub Copilot provider account switching must not change GitHub API, Git transport, or local worktree authority.
 
 ---
 
@@ -243,17 +81,138 @@ ContractRef: ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 
 This section reconciles GitHub integration consumer semantics with the canonical owner specifications in Plans/Contracts_V0.md, Plans/Executor_Protocol.md, and Plans/Models_System.md.
 
+### Source Control and GitHub Actions surface split
+
+GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control.
+
+Four GitHub-adjacent concepts stay separate. `GitHub Copilot` is a provider capability and is out of scope as a user-facing GitHub Integration GUI surface for this research pass. `GitHub API` is internal integration plumbing for GitHub-hosted features, not a visible GUI panel. `GitHub Actions` is the user-facing hosted workflow surface and may use the GitHub Actions VS Code extension as a functional parity baseline without copying its visual design. `Source Control` is the user-facing repo-control surface and may use VS Code Source Control as a functional parity baseline without copying its visual design.
+
+Source Control is the canonical SCM panel contract, even when GitHub-hosted features are nearby. Its `Changes` subview includes staged/unstaged/untracked groups, diff preview mode, stage/unstage/discard/commit/push/pull/fetch/sync, stash flows, branch switch/create, incoming/outgoing status, `/committing`, `/outgoing`, `/fetch/pull/push`, merge-conflict handling with inline actions, and multiple SCM providers while Git remains built-in. `History`, `Graph`, and `Worktrees` are dedicated sub-tabs, not buried health/settings utilities; worktree review, recovery, and conflict flows deep-link back to this Source Control surface. The high-level Source Control ownership chain includes `/compare/stage/unstage/discard/stash/history/graph/worktrees` rather than scattering those git-native flows across chat, FileManager, or Progression Gates.
+
+Source Control accordion section headers are interactive controls with `accessible-role: button` and `accessible-label: "{section_name}, {item_count} items, {expanded|collapsed}"`, where `section_name` is the visible section name and `item_count` is the current filtered count.
+
+Source Control compare-target defaults are deterministic: opening a file diff from the unstaged list defaults to `index <-> working tree`; opening from the staged list defaults to `HEAD <-> index`; opening an untracked file defaults to `empty <-> working tree`; opening from commit history defaults to `selected commit <-> first parent`; and opening a conflicted file defaults to three-way conflict review with `base`, `ours`, `theirs`, and `result`.
+
+Compare/open identity consumption and run-aware compare-origin forwarding: GitHub compare/open pivots carry canonical compare identity instead of reconstructing targets from local UI state. The `compare_origin` value is closed to `changes.unstaged`, `changes.staged`, `history.commit_parent`, `conflict.review`, `worktree.branch_compare`, `actions.run_commit_range`, `blocked.dirty_worktree`, and `recovery.safe_point_retry` for GitHub Integration consumers. Each origin records the relevant `project_id`, `repo_id`, `worktree_id`, branch/head/baseline or run commit-range refs, and owner run/node/attempt refs when available; if an origin cannot be revalidated, the UI opens review in a degraded historical mode or blocks mutation rather than silently substituting the current branch.
+
+Project/repo/account scoping is explicit: cache, route, and recovery records key on `{project_id, selected_repo_id, effective github_api account}` plus `/repo/account` so GitHub Integration does not confuse cross-root or cross-account state. `selected_repo_id`, `provider_accounts`, and `provider_accounts.*` consume project-scoped `Plans/storage-plan.md` / `storage-plan.md` policy state; wizard-blocked recovery stores blocked-episode `detail_ref` attachments rather than a standalone integration object.
+
+The multi-context Source Control model never assumes a single repo context: multi-lane execution may span worktrees, branches, or hosted refs pointing at different states, and GitHub Integration carries the active repo/worktree/run binding instead of flattening those contexts into one current branch.
+
+Requested/effective identity propagation into GitHub docs: GitHub auth, admin, readiness, and history surfaces disclose requested versus effective execution identity by consuming `Plans/Contracts_V0.md` runtime identity fields. Source Control, GitHub Actions Current Branch, Workflows, Settings, run history, compare/review, and recovery views show Requested account, Requested binding, Effective account, Switch reason, and execution role whenever an account or hosted-admin capability affects availability, mutation authority, audit history, or recovery. GitHub Integration does not redefine those fields locally; it stores only the GitHub resource refs, capability/readiness refs, and route/open context needed to display and audit the same identity snapshot.
+
+`Plans/GitHub_Integration.md` / `/GitHub_Integration.md` consumes `Plans/GitHub_API_Auth_and_Flows.md` / `/GitHub_API_Auth_and_Flows.md` identity and degraded-capability contracts in `/UI` surfaces so stable account identity, effective GitHub account, and degraded capability state stay visible in runtime/UI parity.
+
+The owner-level gaps in GitHub Integration require live canonical repair or explicit retirement evidence before a row can be treated as transferred; annotations alone are not sufficient.
+
+Identity display and audit records expose the stronger requested/effective/provider/account split as `/effective/provider/account` and `/record` views; non-runtime `/integration` and `/page/artifact` surfaces disclose the same identity snapshot instead of inventing local display-only account fields.
+
+Search result routing in multi-run seams preserves `focused_run_id` or records an explicit user/runtime change to that focus; it must never switch focused run context silently.
+
+`recovery.safe_point_retry` opens a confirmation before restore or retry mutation. The confirmation names the repo, worktree, branch, expected baseline/head, `safe_point_id`, affected files summary, owner run/node/attempt, and the action that will follow restore, such as `restore_safe_point_then_retry`; declining leaves the blocked episode unchanged. FileSafe remains the mutation guard owner, and `Plans/Contracts_V0.md` remains the owner for `safe_point.created`, `safe_point.restored`, and restore outcome events.
+
+Run-aware `compare-origin` forwarding applies when GitHub Integration opens `/admin/readiness/history`, the Worktree topology view, or Dedicated review mode and guided conflict assistant: the surface preserves the same `compare_origin` payload, requested/effective identity snapshot, and origin-specific refs from Source Control or GitHub Actions into the opened review, conflict, safe-point retry, or run commit-range context.
+
+The GitHub Actions IA has three stable subviews: `Current Branch`, `Workflows`, and `Settings`; `Current Branch / Workflows / Settings` is the SSOT split for hosted workflow/admin behavior, and the legacy route token `/Workflows/Settings` maps to the GitHub Actions Settings subview. `Current Branch` shows branch-scoped workflow readiness, latest runs, status checks, rerun/cancel/pin controls, and links back to Source Control branch state. `Workflows` owns workflow inventory, run history/detail, log follow, dispatch, `workflow_dispatch` forms, generated workflow visibility, and workflow authoring help. `Settings` owns Actions readiness and admin state, including secrets, variables, `/environments`, permissions, runner labels, pinned workflows, and capability/auth diagnostics. The legacy `/local-repo` and `Git (GitHub)` labels are compatibility entrypoints that route to Source Control for local repository state and GitHub Actions for hosted workflow state.
+
+GitHub Integration owns GitHub Actions and hosted-repo ConfigKey schema details only for GitHub-specific Settings, readiness, workflow, admin, and source-control preferences. Shared storage key catalog rules remain imported from `Plans/storage-plan.md`, and ConfigKey entries here must not duplicate Contracts event names, Permissions policy schema, usage rollup logic, or FileSafe safe-point behavior.
+
+`Pinned critical workflows` and `Critical workflow pinning / health badges` are owned by `GitHub Actions > Workflows`. Users can pin or unpin high-value workflows with `cmd.github.actions.pin` and `cmd.github.actions.unpin`; compatibility `cmd.actions.pin` aliases must resolve to the canonical commands. Pinned workflow records store workflow id/path/name, repo binding, branch/worktree context when relevant, health badge window, noisy-workflow suppression preference, `notify-on-failure` preference, and `/event/storage` provenance. `/build/deploy`, `/deploy`, release, and other critical workflow badges may appear in Current Branch, dashboards, receipts, and Orchestrator mirrors, but they link back to GitHub Actions as owner. `/tradeoffs`: over-pinning can turn the surface into noise, so pinned-workflow health badges must expose stale or `/renamed` workflow state and let the user unpin without hiding historical receipts.
+
+`Replay from last known good` belongs to GitHub Actions failure triage and workflow history. It compares a failed run against the last successful run on the same workflow and branch, records the known-good run id, cached comparison target id, comparison window length, and `run-history` comparison command, and can `/include` commit diff, env, and `/config` metadata when the user enables those details. If no known-good run exists, the UI says so and offers same-branch history or manual compare selection. GitHub reruns use original commit/ref semantics; replay UI must not imply that a rerun tests the latest branch head unless a new dispatch actually occurs.
+
+`Current Branch` semantics are explicit when multiple worktrees, branches, or background runs exist (`/branches/background`). The active branch/worktree binding is shown, background run status remains visible without stealing focus, and Actions readiness distinguishes requested admin/runtime action vs effective scopes, `/rate-limit/repo` linkage, and repository capability. Environment-gated readiness has canonical blocked reasons and recovery CTAs. Workflow generation/template defaults do not override live-admin state: workflow generation owns authored defaults, while live GitHub Actions Settings owns repository-level secrets, variables, environments, permissions, and runner state. Workflow generation vs `live-admin` precedence follows explicit source-of-truth rules: generated files are source-of-truth for authored workflow content, while hosted repository settings are source-of-truth for admin capability. `Settings > Advanced > CI / GitHub Actions` owns project-global workflow template defaults and generated YAML defaults only; `GitHub Actions > Current Branch` owns branch-context readiness plus run-trigger controls, `GitHub Actions > Workflows` owns workflow inventory and run detail, and `GitHub Actions > Settings` owns context-bound hosted admin state. Actions-specific recovery CTAs route to the owning subview rather than duplicating admin controls in Source Control or a project-global settings page. Repository-level Actions admin changes create durable audit receipts even when not tied to a run.
+
+Actions readiness refreshes on project open, branch/worktree switch, `workflow-file` save, panel open, dispatch-form open, and pre-dispatch only when no fresher event-driven observation exists. Manual refresh remains available, but readiness is not timer-only and not `/timer` driven. The `Local-to-remote workflow loop` validates dispatchability before and after push by preserving required inputs, required secrets, branch eligibility, generated template mapping, cached `dispatch-form` state, `to-remote` status, and `/dispatch` readiness without persisting secret values. The `Actions-to-code correlation` pivot (`to-code`) links a run, `/job/step`, failing-step card, or failed check back to commit range, changed files, branch/worktree mapping, active worktree, source line context, and related Source Control review/diff context when available.
+
+Actions readiness triggers are concrete: opening `GitHub Actions > Current Branch`, opening a dispatch form, opening `GitHub Actions > Settings`, saving a workflow file under `.github/workflows/`, changing worktree or branch context, and completing secrets/variables/environments CRUD all re-evaluate readiness before mutation. Readiness is event-driven plus bounded refresh, not timer-only and not manual-only. Stale readiness snapshots are visibly labeled stale and cannot authorize rerun, dispatch, or an Orchestrator step that depends on Actions dispatch or an Actions-gated release flow. Fixing Actions auth from any surface routes to `GitHub Actions > Settings`; `Current Branch` always reveals the active branch/worktree context; environment approval wait states are wait/blocked states rather than failures; manual workflow-file edits affect readiness without requiring template regeneration; and admin changes such as secret updates create durable receipts without storing secret values. Readiness stores `/status/last`, `admin-scope`, `hidden-value` handling, selected scope, and `cmd.github.actions.validate_dispatch_readiness`; when admin or `hosted-admin` scopes are missing, the GUI shows read-only inventory, browser handoff, and `/scope-based` limits rather than implying values can be read.
+
+Actions-to-code correlation is a remediation bridge, not canonical proof by log parsing. Required state includes preferred diff target, auto-open failing file hints, show heuristic matches toggle, correlation confidence threshold, changed-files source preference, and auto-open nearest worktree toggle. Receipts for workflow runs, jobs, and steps join `run_id`, `/commits`, commit range, changed files, branch refs, worktree refs, and `/failing` step metadata. Commands include `cmd.github.actions.open_run`, `cmd.github.actions.open_job`, `cmd.github.actions.open_step_logs`, `cmd.github.actions.open_related_diff`, and `cmd.github.actions.open_related_worktree`; `cmd.github.actions.open_related_diff/open_related_worktree`, `/open_related_worktree`, `open_related_diff`, and `open_related_worktree` are canonical quick pivots from GitHub Actions into Source Control. `/event/storage` and `/events/storage` store the run/job/step ref, last-opened run/job/step focus, correlation candidates, selected branch-diff, and worktree mapping, but never turn log-to-file inference into canonical truth. Orchestrator blocked or failing workflow cards that cite workflow refs use this as the default remediation bridge. If exact file correlation is unavailable, fall back to commit range plus workflow file diff with an explicit uncertainty label; if there are multiple candidates, show candidate worktrees/commits rather than auto-opening one. `/tradeoffs`: log-to-file and monorepo attribution are probabilistic, especially after force-pushes, so heuristic matches must stay labeled.
+
+`Run impact mapping` is owned by GitHub Actions run detail and mirrored by Orchestrator receipts. A run impact map shows `/branch/commit/PR`, branch, PR, worktree, container publish, deploy chain, and `Secrets / variables / environments readiness` implications for the selected run/job/step. Related objects may auto-pin only as view state, never as an `auto-write` to repository or workflow state. If mapping evidence is incomplete, GitHub Actions shows a `partial impact map` with the derived-artifacts toggle, preferred impact categories, retention boundary, and `/download` fallback instead of presenting heuristic linkage as complete truth.
+
+GitHub Actions capability and readiness uses GitHub `APIs` for rerun, `/cancel/secrets/variables/environments`, workflow dispatch, logs, and related-diff pivots. Secret readiness is name/scope-based and scope-based; GitHub-hosted secret values are not value-inspection-based after creation, so `Secrets / variables readiness` reports missing names, scopes, and environment linkage rather than pretending to inspect secret values.
+
+`Failure triage view` is the GitHub Actions run-detail GUI pane for compressing a failed run into the failing job, failing step, last relevant logs, changed files, likely next action, and retained metadata. It owns `step-log`, `fail-step`, `log-download`, job-level and step-level log access, `/collapsed` versus expanded log state, `auto-expand` failing-step behavior, and `/open-in-browser` fallback when logs are unavailable, truncated, or rate-limited. `/tiers` determine how much log detail is fetched by default before the user expands or downloads more evidence. `/events/storage` records the last failing run/job/step ref, log timestamp, truncation state, and downloaded artifact ref without treating log excerpts as canonical product state.
+
+GitHub Actions repro loops share the Debug investigation budget rule: a strategy-tier change resets `repro_attempts_per_strategy_tier` only and does not reset `wall-clock` or `no-new-evidence` budgets.
+
+`Replay from last known good` and failure comparison use `cmd.github.actions.compare_last_success`. The command records the baseline run id and exposes same-branch history, manual compare selection, and `/include` options for commit diff, environment, and `/config` metadata. If no prior success exists, the GUI says so rather than fabricating a known-good baseline.
+
+`Workflow authoring assistance` is a GitHub Actions Settings and workflow-editor capability, not a generic YAML textarea. It provides `language-service` validation, completion, syntax hints, integrated docs, `remote-repo` support disclosure, `/proxy` behavior where provider access is mediated, and `/generation` links back to workflow template generation. The GUI may assist YAML authoring and preview `/apply`, but `/event/storage` must store validation/completion metadata only, not canonical workflow contents before the user accepts an edit.
+
+Actions readiness blocked-state taxonomy is canonical. Candidate GitHub Actions readiness reason details include `actions_no_github_remote`, `actions_auth_required`, `actions_auth_expired`, `actions_missing_scope_runtime`, `actions_missing_scope_admin`, `actions_workflow_not_dispatchable`, `actions_missing_secret`, `actions_missing_variable`, `actions_missing_environment`, `actions_environment_review_required`, `actions_environment_wait_timer`, `actions_branch_rule_mismatch`, `actions_dispatch_input_invalid`, and `actions_workflow_file_invalid`. These hosted readiness details layer onto shared blocked payload metadata; they do not redefine `blocked_reason_code`, and `actions_auth_expired` maps to the shared `failure_class = auth_expired` posture when auth refresh cannot recover. Every blocked state exposes ordered `allowed_action_ids[]`, preserves the active workspace-tab repo/branch or detached HEAD context, and prevents the view from silently aggregating multiple worktrees into one branch stream.
+
+`attention_required` and `blocked` remain distinct presentation and runtime states; resurfacing responds to meaningful state change, not every scheduler tick or unchanged hosted readiness refresh.
+
+Hosted Git governance blockers use policy-specific reasons rather than a generic branch-rule mismatch. Direct push denied by protected branch or `branch-rule`, force-push denied, required PR or merge queue required, required status checks not satisfied, required signed commits or `/tags` not satisfiable by the current flow, and actor bypass not granted each produce distinct blocked reasons. This closes the governance blind-spot for retired or `/renamed` target lifecycle states where stale refs would otherwise look like ordinary branch mismatch. Each receipt records `policy_snapshot_ref`, original target ref/resource, whether a create-branch fallback or PR/hosted-flow handoff was offered, and whether the attempted mutation was left blocked or transformed into a governance-compliant fallback.
+
+Source Control remains worktree-native. It exposes `/compare/lineage/recovery` pivots for each repo or worktree row, including review mode, conflict assistant, blocked-state presentation, and deep links to the Orchestrator lane/run/package context. Rerun, cancel, pin, and workflow-admin controls stay in GitHub Actions unless the Source Control row is only mirroring a deep link to the hosted owner.
+
+The Source Control worktree topology view layers worktree ownership/status over branch lineage rather than duplicating a plain commit graph. It must show which worktree, branch, owner, and run/package context owns or blocks each topology row, while still allowing commit-graph navigation to remain a lower-level lineage tool.
+
+Worktree safety and ownership are visible in Source Control. `Worktrees` rows show ownership badges, admin override policy, prune protection defaults, safe-point awareness, and `cmd.git.worktree.request_prune`, `cmd.git.worktree.release`, and `cmd.git.worktree.recover` actions; `Changes` shows warnings when the active worktree is blocked or owned elsewhere. Receipts and run state carry explicit worktree ownership references, Orchestrator run lifecycle claims/releases worktree ownership, recovery flows preserve lineage to blocked episodes, and restart recovery marks `unknown ownership` rather than silently unlocking a worktree when ownership cannot be resolved.
+
+`strong` Source Control actions that may discard local state, remove artifacts or `/worktrees`, revoke accepted state, or materially change live execution show scope, consequence, and confirmation boundaries before execution.
+
+`Worktrees` rows are first-class Source Control objects, not settings-only utilities. Each row preserves compare/open/recover/prune/lineage actions as `/open/recover/prune/lineage`, displays dirty plus `/conflict/orphaned/stale` state, and keeps recoverable lineage visible even when the row points to a historical or orphaned checkout. `Changes`, `History`, and `Graph` may deep-link into that row state, but Source Control remains the owner for GUI worktree recovery and compare review.
+
+The Source Control Worktrees section uses single-column expandable rows in narrow panes. A compact row shows the theme worktree glyph, branch name, expand chevron, and status plus owner label (`Thread: <thread_title>`, `Orch: <tier_label>`, or `Manual`); expanded rows add Path, Base, Age, and actions for Open Files, Compare, Merge, Remove, Create PR, and Open Thread/Open Lane as applicable. The Worktrees filter bar offers `All | Threads | Orchestrator | Manual`, defaults to `All`, persists `worktree_filter` per project, and does not share that filter across projects. The Source Control accordion uses a two-level scroll model: expanded sections scroll internally under max-height while the outer accordion scrolls when combined sections exceed the panel; below narrow widths, filter controls may degrade to icon-only controls while preserving accessible labels.
+
+Hosted-repo, remote, and workflow lifecycle states are first-class. GitHub Actions records `active`, `renamed_redirected`, `transferred`, `deleted`, `archived`, `remote_mismatch`, and workflow-level `historical_only` without collapsing them into a generic missing state. An archived repo is a canonical hosted-state reason: read-only history `/surfaces` remain available, mutating actions disable deterministically, and blocked-by-archive actions are marked historical/non-resumable (`/non-resumable`); `/recreate` remains disabled unless the repo later unarchives. Workflow receipts retain immutable workflow/run ids plus the last-known workflow path/display name, original hosted ref, and latest resolved ref when available. Deleted workflow definitions surface `historical_only` and never silently bind to a different current workflow with the same filename. Deep links reopen through the latest validated ref when it is safe; otherwise they show the historical target with a relink CTA.
+
+Actions capability disclosure separates hosted-only mutation boundaries from local file editing. The UI can show can view runs but cannot dispatch, can dispatch but cannot manage secrets, and readiness checks are name/scope based and do not verify secret values. These limitations are shown as effective capability state, not as hidden controls.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md
+
+### Runtime status and owner cross-references
+
+GitHub Integration is a consumer of runtime status, bridge classification, tool dispatch, FileSafe, and storage startup contracts. It keeps explicit `/cross-ref` anchors to `### HTTP/status to failure-class mapping`, `### 5.1 Universal kill conditions (all strategies)`, `### 5.2 HTE-specific kill conditions`, `### 8.3 Startup and shutdown`, `## 6. Potential problems and solutions`, and the historical `### 15.12 Integration Checklist` so Actions, Source Control, and hosted-repo controls do not invent local status taxonomies.
+
+Hosted Git and GitHub Actions surfaces display canonical runtime outcomes from their owners. Legacy `stop.*` wording is stale or compatibility-only where it conflicts with the canonical `kill.*` family; pre-dispatch denial remains `kill.*`, post-response overrun remains `done.*`, and GitHub UI labels must not collapse those classes into generic failure.
+
+Bridge-side GitHub flows consume provider-facade status mapping rather than redefining it locally: rate-limit and quota statuses preserve the failure-class mapping, bridge-side replay/cancel state keeps required usage-field attribution, and GitHub receipts keep `/path` plus `/status` evidence without discarding usage, account, model, or run identity.
+
+Usage and cost displays mirrored into GitHub run, receipt, or readiness surfaces defer to `Plans/FinalGUISpec.md` for adaptive sub-dollar precision and `/truncation` display rules; GitHub Integration stores the relevant refs and status evidence rather than inventing alternate rounding.
+
+Tool and storage gates apply before hosted mutation. GitHub Actions dispatch, rerun, cancel, secret/variable/environment mutation, and Source Control hosted actions must respect the Tools `/listener` and OAuth/listener failure semantics, FileSafe path checks, storage logical-root selection, startup lock-path, and read-only degraded state when the active store cannot safely open for writes.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
 ### Consumer propagation
 
 **Route and open integration**:
 - GitHub Integration is a consumer of route_target and OpenSubject semantics.
 - When a route_target resolves to a GitHub resource (e.g., `github://owner/repo/file.md`), GitHub Integration interprets the path, fetches the resource, and emits it to the active route (local file, artifact storage, etc.).
 - When an OpenSubject references a GitHub concern (e.g., `github://owner/repo/issues/123`), GitHub Integration opens the issue and propagates its metadata (title, labels, state) to the orchestrator's concern record for unified help/escalation.
+- GitHub `/jump` and search-result routes reuse the stable object identity model already proven by `assistant-chat-design.md`; they carry the object route target through GitHub Integration instead of degrading into text-search, path-only, or page-local jump state.
+- `Orchestrator_Page.md` references in GitHub Integration are same-file supersession pointers to the current Orchestrator owner surface, not evidence that an outdated page spec can override the live route, concern, or Source Control consumer contract.
+- Graph patch flows use explicit `graph_patch_request` and `graph_patch_result` records: the request carries patch point, triggering `/concern` refs, requested structural change summary, affected generation, and requester identity before GitHub Integration exposes review or apply actions.
+- GitHub HITL consumers treat `HITL`, request-centric `tier-boundary`, and older approval wording as compatibility inputs; live GitHub workflow actions project the blocked `/runtime` overlay with canonical blocked episode and allowed-action identity before approval or mutation.
 
 **Approval scope in GitHub workflows**:
 - GitHub Integration respects the active execution_unit_context's approval_scope.
 - If approval_scope is 'require_approval' and a GitHub PR review is pending, the approval_id is tied to the GitHub PR review ID so resumption can query the PR status.
 - GitHub check runs and CI status are tied to execution_unit_id so the orchestrator can correlate CI outcomes with execution units.
+
+**Actions observation freshness**:
+- GitHub Integration treats a scheduled workflow with no fresh observation as stale or unknown until GitHub reports a concrete run, skipped outcome, failed outcome, or missed-run signal.
+- Absence of a fresh Actions observation MUST NOT by itself mark the workflow `skipped/failed`, and the resulting receipt keeps the shared `wait_state_class?`, `timeout_class?`, and observation timestamps from Plans/Contracts_V0.md.
+
+**Generalized security carry-through**:
+- Legacy target `GitHub_Integration.md ### C.3` is represented by this owner section after section compaction. FID-04 generalized security behavior applies to GitHub remote, SSH, Actions, and repository operations: no GitHub consumer flow may bypass FileSafe, permission, credential, redaction, or projection-trust gates merely because the action is initiated from a GitHub surface.
+- Reserve `hard_gate` for exceptional concern-affecting operations: admin repair, privacy `/redaction`, cross-run lineage rewrites, and cross-scope lineage rewrites that could materially change audit interpretation.
+- Remote path guard for `GitHub_Integration.md ### C.3`: all paths received from remote file-change notifications, dirty-staging writes, file watcher events, or `.gitmodules`/gitmodules parsing are canonicalized and validated with `starts_with(project_root)` or `starts_with(cache_root)` before filesystem use. This applies to all inbound path sources, not just submodule paths, and treats `cache_root`, `project_root`, `file-change`, and `dirty-staging` as security-relevant inputs.
+- SSH remote execution and reconnect authority for `GitHub_Integration.md §C` is live in this owner section: GitHub remote operations use the remote SSH subprocess model, keep the 30s keepalive, allow one bounded auto-retry (`one-auto-retry` legacy token), then require explicit `Reconnect` before more remote execution or mutation. LSP and FileManager consumers may display the degraded state, but they do not redefine this reconnect budget.
+- Remote-search is transport-only in GitHub Integration: hosted and SSH-backed remote flows consume the storage-owned staging, verification, and re-anchor rules in `Plans/storage-plan.md`, and do not define alternate remote-search layout, dirty-layer clearing, or search-snapshot authority locally.
+
+### C.3 Remote Project Context
+
+Remote Git/non-Git search acceleration is remote-admin/user-visible transport, not a fallback path. GitHub Integration owns remote cache/admin disclosure and consumes the storage-owned `/staging/verification/re-anchor/remote-admin` contract from `Plans/storage-plan.md`; no-silent-local-fallback remains mandatory.
+
+### C.4 Tool & Provider Execution on Remote
+
+Remote tool/provider execution uses the same GitHub remote context, remote SSH/reconnect budget, path guard, and storage verification anchors before mutating or reporting search/cache state.
 
 **Account identity and GitHub permissions**:
 - GitHub Integration consumes the runtime identity's GitHub_AuthContext (see Plans/GitHub_API_Auth_and_Flows.md).

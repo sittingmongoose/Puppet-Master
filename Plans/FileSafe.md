@@ -1,67 +1,5 @@
 # FileSafe -- Implementation Plan
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - worktree behavior
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-
-#### Source target target-0220
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - worktree behavior
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-- Exact required items represented:
-  - how are worktrees assigned for parallel nodes within the same package or seam
-  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work
-  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result
-  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism
-  - Define lane↔worktree mapping
-  - Specify [retired-token-14] detection and cross-lane reuse rules
-  - Define [retired-token-11] restore for lane/package context
-  - Resolve [retired-token-4] vs [retired-token-3] contradiction
-  - Register PM-managed worktrees in source control visibility
-  - Remove legacy `[retired-token-9]` / `[retired-token-10]` drift and [retired-token-15].
-  - Normalize [retired-token-11] / [retired-token-12] / [retired-token-13] / [retired-token-14] terminology into one authoritative mapping and event taxonomy.
-  - `Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:
-  - Runtime_Artifacts_Panel.md
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - Missing field schemas will cause different implementation agents to invent incompatible shapes.
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -97,6 +35,36 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes
 
 Any UI or storage examples in this plan are illustrative unless they describe guard behavior, fail-closed execution, canonical logging, or explicit FileSafe-owned payload contracts.
 
+Plans review synthesis informs FileSafe applicability without creating a new process artifact owner: `plans_review_findings` and `plans_review_summaries` recorded highest-confidence strengths in FileManager shared-buffer `/file-tree` behavior, preview `/file-type` behavior, source-canonical editors, and local LSP/editor coverage, while the FileSafe-owned reconciliation `/gaps` are the incomplete mutation contract across user edits, agent edits, preview edits, and FileSafe, plus under-specified remote `/cache/offline/LSP/degraded-state`, `/watchers/degraded-state`, stale `/snapshot` wording, and preview `/trust/fallback` rules. FileSafe consumes `/FinalGUISpec/storage-plan` and FileManager open/reveal ownership as adjacent contracts; it only owns whether mutations, restore-before-rerun, and guard outcomes fail closed against those contracts.
+
+File rename, delete, duplicate, bulk file-manager operations, refresh-after-operation, and `/transaction/conflict` handling are FileSafe-relevant when they mutate workspace files or claim rollback. Session view-state prompts such as `Don't ask again` remain shell/UI state, but FileSafe must treat any saved preference that changes mutation or restore prompting as auditable guard input rather than invisible view-state.
+
+FileSafe implementation guidance keeps a hard boundary between portable product ideas and implementation patterns tied to Electron/DOM-heavy stacks. Guard logic, canonicalization, mutation-safety, /durability, atomic write, optimistic concurrency, and event logging must remain safe for a Rust + Slint, macOS/Linux/Windows product instead of depending on DOM process, browser storage, or Electron-only lifecycle behavior.
+
+External implementation-reference findings refine this boundary without creating FileSafe ownership over FileManager, FinalGUI, preview/browser, terminal, platform-adapter, diff/review, SSH/remote, preview/media, drag/drop, or file explorer correctness. FileSafe consumes those adjacent contracts only when they provide guard-visible inputs for mutation authorization, rollback, reveal/open routing, runtime dispatch, recovery, or event logging; durable workspace identity, generated-vs-workspace state, and gitignore-aware traversal must be supplied by their owner docs before FileSafe treats an action as safe.
+
+Guard-visible inputs include typed resource identity, `/open/reveal/save`, `/dirty/recovery/on-disk`, external-change detection, grouped `/undo` / `/redo`, `/symlink/case-sensitivity`, `/IME/accessibility`, `/browser/session`, `/webview`, search-in-diff, heat-map, `/change-marker`, and requested-vs-effective/degraded-state evidence from remote, preview/runtime, terminal, and LSP/indexing seams. FileSafe must fail closed when those inputs are absent or stale, but packet-level elaboration stays non-authoritative until the owner docs expose guard-ready contracts.
+
+Cross-surface commands such as `cmd.orchestrator.open_in_source_control` are meaningful UX actions only when their arguments derive from the shared route schema; FileSafe treats custom arg shapes as guard-visible inputs, not a separate command contract.
+
+Projection trust and hostability are guard-visible when FileSafe-relevant actions launch from `FinalGUISpec`, `Widget_System.md`, or `Orchestrator_Page.md`: the reusable `trust-state` UI contract must cover projection-backed tabs, `/widgets/panels`, terminal widget identity, `/Dashboard`/Progress hostability, page/tab/global and `/tab/global` filters, `focused-run` scope, and widget-local display config before FileSafe treats the action context as safe.
+
+Orchestrator `live-status` dependencies must bind FileSafe-relevant actions through canonical runtime blocked identity: request-centric `HITL` bindings and blocked-projection bindings cannot compete or decide recovery authority independently.
+
+Routing/open seams stay owner-doc inputs but become FileSafe verification inputs when they gate mutation or reveal behavior: `route_target` must not carry `source-buffer` realization details, `/file/evidence` and `/attempt/generated` surfaces must expose first-class project/attempt/generated identity, and `/open-by-identity` plus `/wiring` normalization must come from owner-doc contracts rather than addendum-only concepts.
+
+FileSafe treats the routing/open-by-identity tranche as ordered reconciliation rather than broad invention: first close the one owner-doc structural gap, then the one command/wiring normalization gap, and only then accept the bounded set of stale consumer reconciliations as guard-ready inputs.
+
+`runtime-era` concepts in adjacent docs are not sufficient until registration/verification/routing owners expose them as guard-ready contracts; if owner docs lag, FileSafe records the seam as a `/verification/routing` or `spec-integrity` failure instead of accepting broad claims from `Orchestrator_Page.md`, runtime-artifact schemas, or command catalog references.
+
+An advertised missing section in `Orchestrator_Page.md` is a `spec-integrity` failure, not merely a content gap, when FileSafe must rely on that owner claim for guard-visible routing or verification.
+
+`Decision_Policy.md` (`Decision_Policy`) remains the authority for who can acknowledge concerns, revoke promotions, confirm corroboration outcomes, or own blocked states under the overseer model; FileSafe consumes that authority before allowing guard recovery or promotion-related actions.
+
+Shell/view restore fields such as `active_subview`, compare target, widget configuration, panel docking state, split ratios, and per-project restore state are shell-state inputs layered under canonical routing; FileSafe may audit them only when they change mutation prompting, recovery, or guard-visible destination state.
+
+Execution/runtime transport remains a separate seam with explicit request/response/error ownership before spawn. FileSafe may block terminal-first, Unix-native, single-snippet, and `/browser-runner` flows that depend on direct `/bin/sh`, Unix signals, VTE/TTY, `/input/cursor/selection`, IME, platform-specific `/reveal`, `/compile`, runtime `/auth` or `/polling`, asset serving, persistence, remote `/bootstrap`, packaging/startup, or macOS/Linux/Windows portability assumptions when those paths would bypass canonical scope, recovery, or event logging.
+
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
 
 ## Executive Summary
@@ -105,33 +73,14 @@ FileSafe is the canonical guardrail layer that blocks destructive commands befor
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Prompt/context compilation is adjacent but separately owned. `Plans/Prompt_Pipeline.md` owns role-specific context selection, delta compilation, cache heuristics, skill bundling, and compaction behavior. FileSafe consumes compiled output as an input to safety checks; it does not own those algorithms.
+Prompt/context compilation is adjacent but separately owned. `Plans/Prompt_Pipeline.md` owns run/work-package/node/attempt-scoped context selection, delta compilation, cache heuristics, skill bundling, and compaction behavior. FileSafe consumes the compiled prompt, structured attachments, and run/node/attempt identity as safety inputs; it does not own those rewrite-era algorithms or classify guard policy by legacy execution hierarchy.
+
+Doc-change mutation surfaces are narrowed to the shared `Plans/Contracts_V0.md` payload contract plus FileSafe guard outcomes; other docs may consume those records but must not mint a competing doc-change authority.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Part A -- FileSafe
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0241
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Several current docs still blur “which object” and “what part of that object’s UI should be shown.”
-  - `blocked_sequence` is part of the runtime-facing identity
-  - blocked_sequence
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands before they run.
 2. **FileSafe: Write scope** -- Restricts writes to the canonical allowed-file scope for the execution.
@@ -176,27 +125,30 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-p
 
 **Layer 1 is the fix.** It blocks destructive commands before they execute, regardless of what the model decides to do.
 
+### 1.1A Runtime and GUI configuration boundary
+
+FileSafe GUI configuration recomputes predicted requested/effective state for effective-runtime interactions when the user changes provider/account/model/threshold/effort settings, preserving the `/account/model/threshold/effort` context instead of showing stale state.
+
+Configuration rendering keeps `inherit/override`, `requested/effective`, and provider `honored/skipped/clamped` states visually distinct; `/override`, `/effective`, and `/skipped/clamped` labels must not be collapsed into one toggle state.
+
+Runtime snapshots may include `/model/auth/account` credentials, but FileSafe also records non-provider operational identities when write-scope, prompt-safety, or recovery behavior depends on the account, instruction bundle, runtime binding, lane, or policy layer that sits beside those credentials.
+
+Model and provider enforcement is lane-aware: e.g., a Security Lane may require a specific model from `Plans/Models_System.md` (`/Models_System.md`) before FileSafe allows execution.
+
+Identity normalization for `provider_account_id` is cross-doc; FileSafe consumes the shared identity contract instead of minting local provider/account IDs for guard logs or runtime snapshots.
+
+Execution correlation must not drift back to tier-era labels: `tier_id` is human-readable grouping metadata only, and treating it as a canonical execution key is surface-drift.
+
+Worktree strategy is resolved by `Plans/WorktreeGitImprovement.md`: source labels such as `chain-wizard-flexibility` / `chain-wizard-flexibility.md`, explicit `no-worktrees`, and per-subtask worktrees cannot override FileSafe's guard-visible isolation contract.
+
+FileSafe write scope is multi-node and role-specific: sharded node scopes under `puppet-master/project/plan_graph/` and `/project/plan_graph/` map by `/Task/Subtask/Iteration`, active node/work package, and allowed-file metadata rather than one monolithic `puppet-master` plan file.
+
+Agent-Config shell ownership remains in `Plans/FinalGUISpec.md`, but FileSafe configuration must carry the fuller `/account/instruction/runtime` contract when write-scope or prompt-safety decisions depend on account, instruction bundle, or runtime binding.
+
+provider-specific divergence requires an explicit `Manual Override` toggle before FileSafe allows behavior that departs from the shared state model. provider-specific GUI wording/flows are reconciliation cleanup against the now-frozen account/runtime model, not a reason to fork FileSafe policy.
+
 ### 1.2 Integration Point
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0229
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This means the branch is past the point where isolated consumer cleanup would be reliable.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The guard integrates into `BaseRunner::execute_command()` in `puppet-master-rs/src/platforms/runner.rs`:
 
@@ -214,25 +166,6 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
 
 ## 2. Implementation Details
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0226
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - provider/account disclosure details that are attributes of the target, not the target itself
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 2.0 Initialization Flow
 
@@ -492,26 +425,6 @@ fn commands_match(approved: &str, command: &str) -> bool {
 
 ### 2.3 Pattern Loading
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0237
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `generated://<artifact_id>` exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens.
-  - generated://<artifact_id>
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ```rust
 // FileSafe pattern-loading helper example
@@ -627,26 +540,6 @@ pub fn load_patterns_with_merge(
 
 ### 2.4 Configuration Integration
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0238
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `inherit/override` from configuration layering
-  - inherit/override
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Add to `puppet-master-rs/src/config/gui_config.rs`:**
 
@@ -923,7 +816,7 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 - Log all blocked operations to event log
 
 ### 3.3 BaseRunner Integration
-`BaseRunner::execute_command()` performs FileSafe validation after request expansion but before spawn. FileSafe-managed path checks are fail-closed: candidate paths are resolved relative to `working_directory`, canonicalized, and denied if canonicalization fails.
+`BaseRunner::execute_command()` performs FileSafe validation after request expansion but before spawn. FileSafe-managed path checks are fail-closed: candidate paths are resolved relative to `working_directory`, canonicalized, and denied if canonicalization fails. Worktree symlink scope, including OC-FILE-201/202, uses the same case-fold comparison posture as permission path matching.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 
@@ -963,6 +856,11 @@ The guard must work across all providers:
 - **GitHub Copilot:** `copilot -p "..."` -- check compiled prompt content (with `@path` tokens)
 - **OpenCode (server-bridged):** enforce the guard inside Puppet Master before sending requests to the OpenCode server.
 
+Provider metadata and projection notes:
+- Non-JSON `codex exec` exposes `session id`, selected model `/provider/effort`, and a final `tokens used` summary; FileSafe may record those values as execution metadata but must not treat them as authorization by themselves.
+- provider-specific proxy/plugin patterns may support session-stickiness and quota-aware selection, but `/plugin` projection remains subordinate to FileSafe's PM-owned command/path checks.
+- `provider_usage_source_kind?` and `provider_signal_confidence?` may annotate usage evidence quality; they must not cram live overlay policy or full projection details into every runtime snapshot.
+
 **Strategy:** 
 1. Check **compiled prompt** (after context compilation) at platform runner level
 2. Check **command string** (final CLI command) at BaseRunner level
@@ -981,38 +879,7 @@ Create `puppet-master-rs/config/destructive-commands.txt`:
 # Puppet Master Destructive Command Blocklist
 # One regex pattern per line. Case-insensitive matching.
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0221
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - one compact primary line: current state + owner + reason
-  - `OpenFile { path: PathBuf, line?, range?, target_group? }`
-  - OpenFile { path: PathBuf, line?, range?, target_group? }
-  - uses `OpenFile { path, line?, range?, target_group? }`
-  - OpenFile { path, line?, range?, target_group? }
-  - `line?` / `range?` when path-based
-  - line?
-  - range?
-  - `line?` / `range?` for file-backed opens
-  - `line?`
-  - `OpenFile { path, line, range }`
-  - OpenFile { path, line, range }
-  - `OpenFile { path, line?, range?, target_group? }`
-  - one owner-doc structural gap
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 # Lines starting with # are comments. Empty lines ignored.
 
 # === PHP / Laravel ===
@@ -1061,30 +928,7 @@ mix\s+ecto\.rollback\s+--all
 
 # === Raw SQL via CLI clients ===
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0219
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - role-scoped pools already exist in policy/storage via `allowed_roles?` and `disallowed_roles?`
-  - allowed_roles?
-  - disallowed_roles?
-  - raw provider/account disclosure fields
-  - raw `resume_url`
-  - resume_url
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 (mysql|psql|sqlite3)\s+.*DROP\s+(DATABASE|TABLE)
 (mysql|psql|sqlite3)\s+.*TRUNCATE
 mongosh?\s+.*DROP\s+(DATABASE|TABLE)
@@ -1123,27 +967,6 @@ let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
 
 ### 5.2 Config File Toggle
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0240
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - config bundles are clearly defined (`.pm-bundle`)
-  - .pm-bundle
-  - config sync/export bundles (`.pm-bundle`)
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Add to `puppet-master.yaml`. All FileSafe toggles (Command blocklist, Write scope, Security filter) must be configurable from the GUI and easy to turn on or off in one place (see §13.4 and §15.5).
 
@@ -1347,6 +1170,10 @@ async fn test_runner_blocks_destructive() {
 ## 9. Implementation Checklist
 This checklist tracks implementation work for the already-locked FileSafe canon. Checklist items must implement the owner rules in Sections 11.1.1-11.1.2a and MUST NOT reopen those rules as design questions.
 
+Resolved fidelity blockers `LF-002` and `LF-005` are mutation-integrity obligations, not open checklist design items. The implementation checklist cross-references `#### 11.1.2a Optimistic concurrency for mutable rewrites` for the locked hard-error and post-staging verification behavior, and treats `/alias` wording only as retired legacy vocabulary for unresolved path aliases.
+
+The `rewrite-conflict` presentation label maps to `error.concurrent_edit_conflict` and does not create a second FileSafe conflict taxonomy.
+
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 - [ ] **Create FileSafe module structure**
@@ -1360,6 +1187,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
   - [ ] Copy destructive command patterns from OpenCode `backend/src/security/bash.ts`
   - [ ] Convert JS regex patterns to Rust `regex::Regex`
   - [ ] Port scope checking logic from OpenCode `backend/src/security/bash.ts`
+  - [ ] For FileSafe security-pattern comparisons, the inspected OpenCode upstream dev checkout baseline is `9330bc5339b3ca82975f768200450d4c9aabcd35`; later OpenCode changes require an external-reference currentness refresh before changing FileSafe canon.
   - [ ] Adapt to PM project model and remote-mode path handling
 - [ ] **Implement BashGuard**
   - [ ] Port `buildScopeRegex()` logic from OpenCode
@@ -1396,7 +1224,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImpro
   - [ ] Add remote-mode aware scope roots derived from mounted project identity
 - [ ] **Event logging**
   - [ ] Emit structured `filesafe.blocked` events with reason codes, matched rule ids, and resolved path context
-  - [ ] Emit `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` events with stable identifiers
+  - [ ] Emit compatibility `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` events only when they map to the Contracts-owned `safe_point.created` / `safe_point.restored` payload contract, with stable snapshot/safe-point identifiers and conflict or restore outcome fields where applicable
   - [ ] Ensure logs distinguish dry-run validation from hard blocking
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
@@ -1414,27 +1242,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 ## 10. Relationship to Other Plans
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0222
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Normalize every other routed identity through `object_kind` + `object_id`.
-  - object_kind
-  - object_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 10.1 Orchestrator Plan
 
@@ -1483,28 +1290,10 @@ The guard complements cleanup policies by preventing destructive operations befo
 
 ### 11.1 FileSafe: Write scope (CRITICAL)
 
-### Reconciliation addendum
+dirty-layer freshness from grep/search acceleration does not weaken FileSafe mutation or `/path-guard` behavior. Any accelerated search result that leads to a write, patch, restore, or generated edit must still pass FileSafe canonicalization, write-scope, security-filter, and optimistic-concurrency checks before mutation.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0231
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - There is still no single place to say that a result should restore not just a destination surface, but also scope such as `project_id`, `focused_run_id`, `thread_id`, selected object, and inspector target.
-  - project_id
-  - focused_run_id
-  - thread_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### 11.1.1 Realpath-before-scope-check invariant
 
@@ -1524,7 +1313,7 @@ The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohi
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
 
-#### 11.1.2 Atomic write contract
+#### 11.1.2 Atomic write and /durability contract
 
 All FileSafe-managed file mutations MUST use the atomic write pattern `temp -> fsync -> rename` in the target directory. Direct `os.WriteFile`-style writes are not allowed for managed mutations.
 
@@ -1546,16 +1335,17 @@ Temp-file lifecycle rules:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
 
 
-
 #### 11.1.2a Optimistic concurrency for mutable rewrites
 
-All mutable FileSafe rewrite paths (plan apply, patch apply, safe auto-fix, context file rewrite, and verification-driven rewrite) MUST follow the same optimistic-concurrency contract.
+All mutable FileSafe rewrite paths (plan apply, patch apply, safe auto-fix, context file rewrite, and verification-driven rewrite) MUST follow the same optimistic-concurrency / CAS contract.
+
+Resolved fidelity blocker `LFA-002` makes this anchor (`#### 11.1.2a Optimistic concurrency for mutable rewrites`) the FileSafe owner for managed-mutation integrity. Rewrite alignment, executive summary, init, logging, and historical checklist anchors are under-targeted for this obligation.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 Required behavior:
 - Before any mutable rewrite, the runner captures `read_revision={mtime_ns, content_sha256}` for the target file and records the current head state when a git worktree exists.
-- Immediately before rename/promote, the rewrite attempt re-reads the target state and compares it to the captured `read_revision`.
+- During the `/pre-promote` / pre-rename check immediately before rename/promote, the rewrite attempt re-reads the target state and compares it to the captured `read_revision`.
 - If the current target state no longer matches the captured `read_revision`, the rewrite aborts with `error.concurrent_edit_conflict` rather than silently overwriting newer content.
 - Conflict handling must surface a structured result to the caller so the run can request reconciliation, retry from fresh state, or escalate to the user according to mode/approval policy.
 - Successful rewrites update the tracked post-write state that later verification, undo, and follow-up actions consume.
@@ -1580,11 +1370,9 @@ ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Fi
 
 This contract applies to both local and remote-mode project mutations. Read-only operations and evidence capture do not require snapshot creation, but any path that claims reversibility MUST satisfy the full contract above.
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-
 #### 11.1.3 Case folding and file-record lifecycle
 
-FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity.
+FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity; this closes the OC-FILE-201/202 symlink-scope pair together with the case-fold comparison contract.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
@@ -1607,27 +1395,43 @@ In-memory file records are bounded by an LRU cap of 10,000 entries. Eviction reb
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
+### 11.1.4 Cross-owner guard-consumer alignment
+
+FileSafe's 11.1.x mutation-integrity rules are consumers of adjacent runtime, prompt, storage, usage, auth, permission, and orchestrator contracts; FileSafe owns whether a mutation may proceed, not the full policy surface for those owners. Any wording that under-specifies or leaves over-summarized owner boundaries is non-canonical. `### 15.12 Integration Checklist` is historical checklist lineage only; the live checklist anchor is `## 9. Implementation Checklist`.
+
+Packet anchor-staleness is guard evidence, not FileSafe ownership expansion. Adjacent owner routing stays outside FileSafe: orchestrator cleanup must hit the later `Gap #45`, `child-runtime`, and crew-summary sections rather than earlier executive/config blocks; `Plans/CLI_Bridged_Providers.md` owns provider-facade and ingestion gaps rather than retry/backoff text; `Plans/Run_Modes.md` owns kill conditions, outcome naming, and `/lifecycle`; `Plans/storage-plan.md` owns usage snapshot/runtime identity wording, durability, `/migration/startup`, unsafe-filesystem fallback, and migration backups rather than naming/root precedence alone; `Plans/Prompt_Pipeline.md` owns compaction `/cache/history` rather than only top-level SSOT wording; and `Plans/assistant-chat-design.md` owns `## 12. Context usage display` rather than `### 23.4 Adopted enhancements`.
+
+`research_packet.json` path-level over-scope is also guard evidence only: a stale extra `Plans/MCP_Integration.md` (`/MCP_Integration.md`) packet path does not expand FileSafe ownership unless the MCP material creates a concrete compiled-prompt, executable-surface, write-scope, or mutation-safety concern.
+
+Drift-risk checks that compare `Contracts_V0.md#4.1 AuthState` against omission/null-padding rules and `FileSafe.md#11.1.2a Optimistic concurrency for mutable rewrites` against exact contract identifiers are valid verification inputs, but stale packet over-coverage and stale replacement bodies must be removed instead of copied into owner text.
+
+`LFA-002` remains the FileSafe managed-mutation integrity check: any stale packet body that omits the exact `#### 11.1.2a Optimistic concurrency for mutable rewrites` anchor, `/pre-promote` / pre-rename recheck, `read_revision={mtime_ns, content_sha256}`, `error.concurrent_edit_conflict`, or post-`git add` `git status --porcelain` verification is under-targeted LFA evidence and must be replaced before packetization.
+
+Dispatch gating consumes `### 8.2 Policy application order and invocation flow` from `Plans/Tools.md`: `validate_tool_args`, no-dispatch-on-length, compiled-output safety, and FileSafe write-scope checks block before spawn. Listener and child-run supervision consumes orchestrator `task-envelope`, `child-runtime`, and `parent-clamped` authority: `/listener` cleanup, budget-overrun handling, and similarity-based doom-loop evidence must be preserved without widening child authority beyond parent policy.
+
+Prompt and mode safety consumes `## 0. Scope and SSOT status` and `## 7. Mode effects on context management` from `Plans/Run_Modes.md`, plus `## 12. Context usage display`, context-detail, concurrent-thread, `/global`, `## 2. Compaction and pruning`, `### 2.1 Context assembly and cache preservation`, and `### 2.2 Dynamic context shrinking` from `Plans/Prompt_Pipeline.md` and `Plans/assistant-chat-design.md`. FileSafe validates the compiled view, but Prompt Pipeline owns giant-instruction-file handling, `/on-demand` retrieval, `cachedContent` cache markers, TTL refresh behavior, non-open-ended cache lifetime, and token-savings calculations; FileSafe treats `/truncatable` context only as a safety input, not as permission to drop protected evidence.
+
+Storage and usage safety consumes `### Naming and migration rules`, the app-data-root selection, `/unsafe-filesystem` fallback, bounded-collections retention, and the canonical usage cost field `cost_microdollars: u64`. The legacy `estimated_cost_usd: f64` value is display or migration evidence only and cannot authorize a mutation, budget decision, or usage ledger update.
+
+Account and billing safety consumes `### 4.1 AuthState` and `### Billing entity field contract` from `Plans/Contracts_V0.md`: selected `billing_entity` values are omitted when not applicable and are not null-padded, with `/presence` determined by the owner contract. `/null-padding`, `auth_realm = null`, `account_id = null`, and `auth_surface = null` are stale example values; FileSafe cares only about presence or absence of the effective auth and billing inputs that affect mutation safety. FileSafe-as-owner wording is invalid for auth state, billing state, or context-compilation state; FileSafe only consumes the resulting effective runtime and safety inputs.
+
+FileSafe subagents scope consumes `Plans/orchestrator-subagent-integration.md` `### 4. Subagent -- Backend` and `Plans/Tools.md` (`/Tools.md`) `### 2.3 Session vs run; subagents` for child-run/tool identity before applying guard outcomes.
+Subagent concurrency and cleanup consume the runtime caps `max_concurrent_agents_per_crew=8` and `max_concurrent_crews_per_platform=4`. FileSafe may block or defer mutations when those caps, parent-clamped write scope, or child-runtime cleanup requirements are violated, but it does not redefine crew scheduling policy.
+
+Credential and tool-list resilience is security-relevant when it affects compiled prompts or executable surfaces. OAuth flows with `/ephemeral/manual` callback modes have TTL-bound credentials and stable `clientId` identity; a lazy-load LESSON applies to MCP/tool discovery: do not re-fetch the full tool list for every LLM step when a TTL-valid cache exists, and never turn one transient discovery miss into permanent executable access.
+
+Auto-loaded executable surfaces such as `/custom-tool/plugin/executable` require explicit approval or `/signing` evidence before FileSafe allows execution-modifying behavior. Path matching shared with `Plans/Permissions_System.md` remains filesystem-aware case-folding, using the same case probe and normalization rules as Section 11.1.3.
+
+Atomic replacement uses the atomic-write contract from Section 11.1.2: same-directory temp-dir files, `temp -> fsync -> rename`, and boot/startup `/janitor` cleanup for stale rewrite remnants. File records remain bounded by the LRU cap above, and LRU eviction must rebuild from canonical event state before it influences write-scope decisions.
+
+Rewrite-conflict detection is not mtime-based alone: every managed-mutation records `read_revision={mtime_ns, content_sha256}` and re-checks both components before promotion. Mismatches emit the canonical `concurrent_edit_conflict` / `error.concurrent_edit_conflict` GuardError, preserve same-directory-only replacement safety, and never fall back through `unwrap_or_else(|_| resolved_path)` or `canonicalize()` failure; `unwrap_or_else(\|_\| resolved_path)` is retained only as stale escaped legacy-row wording.
+
+Doc-set searches and stale-legacy-term audits are verification evidence, not FileSafe policy. EXEC/file-record map concerns are satisfied by the LRU cap above, and unresolved TODO items for symlink handling are closed by the realpath-before-scope-check and case-folding contracts.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
 ### 11.2 Security Filter (CRITICAL)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0232
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - widget-specific filter fields
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Problem:** Agents may access sensitive files (`.env`, credentials, keys) during execution.
 
@@ -1868,26 +1672,6 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 
 ### 11.3A Structured chat attachments and forwarded document selections
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0233
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - artifact-backed restore opens `generated://<artifact_id>` unless a backing document exists
-  - generated://<artifact_id>
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 FileSafe applies to structured chat attachments, not just freeform prompt text and context-file paths.
 
@@ -1903,6 +1687,8 @@ Default handling:
 - Heuristic secret-ish redaction remains off by default.
 - Mandatory secret scrubbing remains on for all structured attachments before persistence.
 - Search/indexing stores bounded summaries and provenance only, not unbounded raw selected text.
+- `/sensitive-storage` boundaries apply before any `send-to-chat` chip or structured-revision prompt is persisted.
+- Heuristic `secret-ish` redaction stays OFF by default; blocked forwarding uses explicit FileSafe signals and visible block reasons instead of guessed redaction.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -1911,6 +1697,10 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt
 **Problem:** FileSafe operates independently of verification gates, potentially blocking valid operations.
 
 **Solution:** Coordinate guards with verification gates to allow legitimate operations.
+
+Attachment gating remains active even when verification gates run: `/sensitive-storage` boundaries apply before any `send-to-chat` chip or structured-revision prompt is persisted, and heuristic `secret-ish` redaction stays OFF by default unless a concrete FileSafe signal blocks forwarding with a visible reason.
+
+Pending selection chips that cannot be restored safely because the source is missing, sensitivity is blocked, or the target thread was deleted must restore as explicit blocked or `/expired` chips instead of disappearing. Searchable records are `/searchable` only as bounded summaries plus `/provenance`; unbounded raw selected text is never stored for search. Path-based sensitive sources include `.env`, key or `/cert` material, credential files, and equivalent secret-bearing paths, and secret scrubbing must run before any seglog, `/redb/index/blob`, search, or attachment persistence. If forwarding is blocked, the UI records a visible reason code and `/audit` event; it must not silently redact the intended text into a misleading successful send.
 
 ```rust
 // In BaseRunner::execute_command()
@@ -1966,25 +1756,6 @@ impl BashGuard {
 
 ## 12. Gaps and Potential Issues
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0223
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - auth/account issues
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 12.1 Pattern Matching Accuracy
 
@@ -2008,25 +1779,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 12.3 Performance Impact
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0234
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - That means the performance model must explicitly cover:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Issue:** Pattern matching on every command may add latency.
 
@@ -2147,29 +1899,6 @@ FileSafe settings must be **configurable in the GUI** and **easy to turn on or o
 
 ## 14. Historical note on moved context-compilation canon
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0224
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - graph/use pivots still rely on `tier_id` where storage/receipts have moved to `attempt_id` + `usage_event_ref`
-  - tier_id
-  - attempt_id
-  - usage_event_ref
-  - The remaining work on this research branch is now dominated by cleanup of overlapping canon, not missing concepts.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The context-compilation and token-efficiency material that previously lived in this section is no longer canonical here.
 
@@ -2470,6 +2199,8 @@ impl FileGuard {
    - Write-scope violations should not prevent worktree cleanup
    - MiscPlan cleanup should respect write-scope allowed files (don't delete allowed files)
    - Coordinate with `cleanup_after_execution` in runner contract
+   - Structured gate details use `Plans/evidence.schema.json` (`/evidence.schema.json`) gate-specific blocks or a dedicated `wiring-evidence` block so machine-readable wiring results do not remain prose-only.
+   - FileSafe treats `/schema` and `/evidence` promises as enforceable only when the machine-readable contract can represent the same guard, gate, or wiring outcome.
 
 ### 15.5 GUI Integration
 
@@ -2556,6 +2287,7 @@ pub struct GateOverrideConfig {
    - Blocked commands should be logged as gate evidence
    - Add to `GateReport` if guard blocks occur during gate execution
    - Helps track FileSafe violations during verification
+   - `GATE-010` must have a verification home for route-aware FileSafe checks: stale or `/degraded` revalidation, `allowed_action_ids[]`, blocked-action admissibility, route-payload mismatch, alias/deprecation findings, and passthrough/correlation failures use named machine-readable-detail arrays aligned with `GATE-011` and `GATE-012`, not text-heavy freeform `details`.
 
 ### 15.7 Integration with State Management
 **Current Architecture:**
@@ -2609,58 +2341,10 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Worktre
 
 ### 15.9 Gaps Identified
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0236
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Owner docs already identified:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Gap 1: ExecutionRequest Metadata
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0244
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `effective_provider_identity` is disclosure/audit metadata
-  - effective_provider_identity
-  - Identity propagation gap:
-  - Requested-side identity gap:
-  - provider-native disclosure metadata only
-  - canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, preserved-local-work, prerequisite metadata, and `detail_ref?`
-  - blocked_reason_code
-  - allowed_action_ids[]
-  - blocked_sequence
-  - detail_ref?
-  - wrapper metadata in `UI_Command_Catalog.md`
-  - UI_Command_Catalog.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 **Issue:** No way to tag operations as verification gates, interview phases, etc.
 **Impact:** Guards can't distinguish legitimate destructive operations
 **Fix:** AutoDecision: use `ExecutionRequest.env_vars["PUPPET_MASTER_OPERATION_TYPE"]` (fixed values: `normal`, `verification_gate`, `interview`). (ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE)
@@ -2699,28 +2383,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Worktr
 
 #### Issue 1: False Positives in Documentation
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0245
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/account lineage and no contamination or safe-point restore provenance.
-  - same issue persists with more evidence:
-  - A second real issue surfaced inside `Widget_System.md` itself:
-  - Widget_System.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 **Problem:** Agents may include destructive commands in documentation or comments
 **Risk:** Guards block legitimate documentation work
 **Mitigation:** 
@@ -2765,25 +2428,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 15.11 Enhancements for Existing Systems
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0235
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - the doc is carrying two incompatible identity systems at once
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Enhancement 1: Doctor check for FileSafe
 **Add to `src/doctor/checks/`:**
@@ -2799,25 +2443,7 @@ pub fn check_filesafe() -> DoctorCheck {
 
 #### Enhancement 2: FileSafe events in gate reports
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0243
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - attempt/evidence/safe-point/remediation reports
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 **Enhance `GateReport` to include FileSafe violations:**
 ```rust
 pub struct GateReport {
@@ -2897,7 +2523,8 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 **Worktree integration**
 - canonical path/worktree guard behavior is already locked by this owner doc and `Plans/WorktreeGitImprovement.md`; implementers consume that canon rather than reopening it as checklist uncertainty
-- candidate paths are normalized relative to `working_directory`, canonicalized with fail-closed behavior, compared against the real worktree root rather than a symlink alias, and rejected when unresolved aliases remain
+- candidate paths are normalized relative to `working_directory`, canonicalized with fail-closed behavior, compared against the real worktree root rather than a symlink alias, and rejected when unresolved-path aliases remain
+- The stale TODOs for real-worktree-root comparison and unresolved-alias rejection are already-resolved owner canon; checklist prose must use this /cross-reference instead of presenting them as open TODO / TODOs.
 
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
@@ -2928,25 +2555,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 
 ## 17. Implementation Order and Dependencies
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0225
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Repeated cross-owner dependencies sharpened by Codex:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
 
@@ -2984,7 +2592,7 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 
 **Risks and mitigations:**  
 - **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
-- **Worktree paths (resolved):** Path normalization and symlink handling are specified by §11.1.1 (realpath-before-scope-check invariant) and §11.1.3 (case-folding and probe-file detection contract).  
+- **Worktree paths (resolved):** Path normalization and symlink handling are specified by §11.1.1 (realpath-before-scope-check invariant) and §11.1.3 (case-folding and probe-file detection contract), including the OC-FILE-201/202 symlink-scope pair.
 - **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
 
 ---
@@ -2995,29 +2603,6 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 
 ### 1. FileSafe outcomes are first-class blocked outcomes
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0228
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - no-backup-account outcomes
-  - `attempt_id` is first-class
-  - attempt_id
-  - `scheduler_lane` is first-class
-  - scheduler_lane
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 FileSafe decisions must integrate with the shared runtime blocked taxonomy.
 
@@ -3028,6 +2613,16 @@ Required rule:
 ### 2. Recovery options
 
 When FileSafe allows user recovery, runtime/UI surfaces must expose exact options.
+- Align `tool.denied` emission with the normalized `filesafe_blocked` outcome taxonomy so guard events and terminal outcomes tell the same story.
+- Blocked-state payloads use `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved-local-work`, prerequisite metadata, and `detail_ref?`; deprecated field names such as `allowed_actions[]` and `blocked_reason` must not appear in new canonical schemas.
+- Graph-local `Retry/Replan/Reopen/Approve/Deny` and `/Replan/Reopen/Approve/Deny` labels normalize to canonical `cmd.runtime` / `cmd.runtime.*` recovery commands before display or persistence.
+- `/interview` and `/remediation` flows use the shared `failure_class`, `blocked_reason_code`, and `allowed_action_ids[]` taxonomy; wizard/interview blocked-state is persistent runtime state, not thread-local conversational metadata.
+- Durable FileSafe event families include switch outcomes such as `threshold_preemptive_switch` and `no eligible backup` instead of relying only on notification copy.
+- Account-pressure and switching outcomes preserve projected pressure before hard failure, confidence `/source`, soft vs hard switching, `no-backup-account`, `policy-disallowed`, and role/account interactions so FileSafe recovery does not flatten guard-relevant `/account` state into a generic denial.
+- non-blocking pressure remains advisory until it changes execution authority: use a warning banner, optional toast, and quiet period first, and escalate further only if the condition becomes execution-blocking.
+- Bulk recovery actions require exact target preview: retry-many-node, graph-patch-multiple-scope, approve-many-`HITL` `/runtime` blocked actions, and cleanup `/remove` over live lanes or `/worktrees` must not share one generic confirm.
+- `UI_Command_Catalog.md` (`UI_Command_Catalog`) is a projection over canonical FileSafe `/recovery` payloads; catalog copy must not contradict the runtime action IDs or allowed-action ordering.
+- Attention routing for blocked state includes Dashboard, Orchestrator, and `chat-thread` surfaces for `live-run` status, Docker `/registry` side effects, FileSafe blocks, and optional `HITL` boundaries.
 
 Allowed examples:
 - `Approve once`
@@ -3051,28 +2646,6 @@ Minimum fields:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 ### 4. Safe-point interaction
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0239
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - safe-point restore must target the exact worktree/baseline
-  - no required safe-point restore targeting that worktree/baseline
-  - safe-point manifests / restore logs by `safe_point_id`
-  - safe_point_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 A FileSafe block that occurs before execution does not consume a mutation safe point and does not require rollback.
 
@@ -3095,56 +2668,6 @@ FileSafe denials that stop execution are blocked outcomes, not generic execution
 FileSafe must not silently convert a denial into a retryable transient error.
 ## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0227
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane/worktree restore
-  - deterministic restore from either `document_id` or `artifact_id`
-  - document_id
-  - artifact_id
-  - Normalize attention-surface target fields so they can restore:
-  - Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.
-  - 1. restore `project_id`
-  - project_id
-  - 3. restore destination class from `target_kind`
-  - target_kind
-  - artifact-backed restore resolves to transient `generated://<artifact_id>` buffers
-  - generated://<artifact_id>
-  - `preview_subject_id` gives a strong subject-first restore identity
-  - preview_subject_id
-  - Preview restore identity is subject-first, while the broader route/open owner docs still do not define the named route/open primitives that would explain it consistently.
-  - subject-first restore identity
-  - `[retired-token-1]` through `[retired-token-3]` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `[retired-token-2]` still carries a live `[retired-token-4]` contradiction in addition to missing structural headings.
-  - [retired-token-1]
-  - [retired-token-3]
-  - [retired-token-2]
-  - [retired-token-4]
-  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `[retired-token-4]` contradiction from `[retired-token-2]`, added exact broken-anchor evidence to `[retired-token-5]` and `[retired-token-6]`, and raised the underlying evidence count to sixty-two.
-  - [retired-token-5]
-  - [retired-token-6]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This section defines fileSafe Action Mapping and Persistence.
 
@@ -3163,6 +2686,7 @@ Shared runtime action IDs remain the canonical recovery families. Labels such as
 
 Required rules:
 - runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
+- FileSafe blocked-action recovery maps to `approve_once`, `filesafe_add_rule`, and `open_filesafe_settings` when the current surface can safely offer them; user-facing copy may say approve once/add rule/open FileSafe settings, but the runtime payload keeps the canonical action IDs.
 - `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields
 - child runs blocked by FileSafe remain child runs with canonical lineage and status history
 - rerun and restore behavior must preserve canonical child/run/worktree identities

@@ -1,43 +1,5 @@
 # Personas (Canonical SSOT)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0430
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - corroboration/review personas should remain distinct from the original implementation persona whenever possible.
-  - `FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings
-  - FinalGUISpec.md
-  - Personas.md
-  - Models_System.md
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
-  - Plans/Orchestrator_Page.md
-  - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
-  - Plans/Multi-Account.md
-  - Plans/Personas.md
-  - Plans/Prompt_Pipeline.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -82,6 +44,7 @@ Rules:
 - the child Persona may differ materially from the parent Persona.
 - the child Persona does not auto-inherit from the parent.
 - provider-native agent files may seed or export Persona content, but PM Persona storage remains canonical.
+- OpenCode evidence that child sessions with `session.parentID` and compaction requests are force-marked as `agent` is adapter classification evidence only; it does not redefine PM Persona identity or child-run semantics.
 - crew mode may reuse the same Persona across many members while varying the model/provider selection.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
@@ -376,7 +339,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 - a launchable subagent type may resolve to a Persona, but the registries are not the same structure.
 - Interview stage configuration must persist canonical Persona-oriented field names; legacy `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
-- provider-native command names such as `/subagent`, `/agent`, `/fleet`, or `/delegate` are not registry IDs.
+- provider-native command names such as `/subagent`, `/agent`, `/fleet`, `/delegate`, or `/replace` are not registry IDs.
 - new content must use the requested/effective runtime naming already established elsewhere; stale `*_persona_id` drift should be normalized during reconciliation.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Contracts_V0.md
@@ -396,6 +359,7 @@ OpenCode defines agents via `Agent.Info` schema with fields: `name`, `descriptio
 2. **Separation from provider-native agents:** OpenCode agents are tightly coupled to the OpenCode runtime. Puppet Master Personas are provider-agnostic; the Provider facade translates Persona instructions into provider-specific invocation.
 3. **No in-code persona content:** Puppet Master does not hardcode Persona descriptions/prompts in source code. All Persona content lives in `PERSONA.md` files resolved at runtime.
 4. **Reserved-ID enforcement:** OpenCode has no concept of reserved agent names. Puppet Master reserves IDs for planned future Personas (§6).
+5. **Provider-native reusable agents:** `Claude Code CLI` native reusable-agent/subagent support is real (`--agent`, `--agents`, and the `agents` command). PM treats that as a native-specialized-agent projection path for Personas when applicable, not as plain prompt stuffing and not as the same primitive as the PM Persona registry.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
@@ -445,6 +409,13 @@ Canonical persisted/runtime fields remain:
 Rules:
 - `requested_persona_id` and `effective_persona_id` are not canonical persisted field names
 - requested/effective, inherited/overridden, and honored/skipped/clamped remain distinct concepts
+- blocked-state payloads must use canonical requested/effective Persona identity fields rather than reviving `requested_persona_id` or `effective_persona_id`.
+- `Plans/Prompt_Pipeline.md` and `/Prompt_Pipeline.md` may still mention tier and tier_id in run-envelope lineage, but persona_override_owner_id must not use tier_id as canonical owner scope.
+- Cross-doc runtime identity references in `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, and `/runtime` must converge on requested_persona and effective_persona instead of requested_persona_id or effective_persona_id.
+- `Plans/Contracts_V0.md` and `/Contracts_V0.md` explicitly forbid requested_persona_id and effective_persona_id as parallel canonical fields; Personas.md, Contracts_V0, Contracts_V0.md, and every runtime-facing consumer must treat those names as stale aliases only.
+- `Plans/Personas.md` and `/Personas.md` define Overseer personas in relation to lanes: package-overseer and seam-overseer assignments are configurable Persona selections, not implicit implementation-persona reuse.
+- Persona-adjacent references through `Plans/orchestrator-subagent-integration.md`, `/orchestrator-subagent-integration.md`, `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Glossary.md`, and `/Glossary.md` must point back to this owner for Persona identity and naming.
+- Consumer requirements must remove requested_persona_id and effective_persona_id from canonical examples and use requested_persona/effective_persona instead.
 - historical views use frozen captured runtime identity rather than recomputing persona from current settings
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md
@@ -462,5 +433,7 @@ Rules:
 - operation type outranks stack hints
 - governance/review/corroboration personas do not collapse into implementation personas merely because repo language hints are strong
 - `persona_override_owner_id` must align to thread/run/node/attempt/actor lineage rather than to `tier_id`
+
+`owner_hint` is advisory until resolved by the crew-role map. PM checks the active agent config `crew.roles` map, for example `{ "code-review": { provider, model, persona } }`, using exact tag matches such as `code-review`, `test-writer`, or `researcher`; partial matches are not supported in MVP. If no mapping exists, PM falls back to the current session provider/model while selecting the requested Persona behavior. If a mapping exists but the mapped provider or model is unavailable, PM returns `capability_unavailable` and does not silently fall back to a different provider/model/persona tuple.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md

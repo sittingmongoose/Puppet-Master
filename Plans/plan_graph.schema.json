@@ -138,6 +138,32 @@
           },
           "allowed_tools": {"type": "array", "items": {"type": "string"}},
           "policy_mode": {"type": "string", "minLength": 1},
+          "overlay_policy": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Provider profile overlay policy; policy_mode = isolated_only | pm_managed_overlays | custom_overlays.",
+            "required": ["policy_mode"],
+            "properties": {
+              "policy_mode": {
+                "type": "string",
+                "enum": ["isolated_only", "pm_managed_overlays", "custom_overlays"]
+              },
+              "share_classes": {"type": "array", "items": {"type": "string"}},
+              "deny_classes": {"type": "array", "items": {"type": "string"}},
+              "projection_mode": {
+                "type": "string",
+                "enum": ["copy", "symlink", "generated", "provider_api"]
+              },
+              "conflict_policy": {
+                "type": "string",
+                "enum": ["pm_wins", "manual_review", "provider_wins"]
+              },
+              "drift_detection": {
+                "type": "string",
+                "enum": ["hash", "mtime", "disabled"]
+              }
+            }
+          },
           "change_budget": {"type": "object"},
           "evidence_required": {
             "type": "object",
@@ -205,6 +231,22 @@
                   "type": "string",
                   "minLength": 1
                 }
+              }
+            }
+          },
+          "provider_resolution_contract": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Optional provider/account resolution guard for nodes that depend on provider identity wording, usage-pressure state, or per-attempt resolution outcome state.",
+            "properties": {
+              "per_attempt_resolution_outcome_state": {
+                "type": "string",
+                "description": "Per-attempt resolution outcome state tracked separately from selectable-unit health state and usage pressure state."
+              },
+              "opencode_identity_label_rule": {
+                "type": "string",
+                "const": "GUI must not label OpenCode server-discovered upstream identities as PM accounts",
+                "description": "OpenCode wording contract for server-discovered upstream identities in GUI projections."
               }
             }
           },

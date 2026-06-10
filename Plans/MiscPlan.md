@@ -1,96 +1,5 @@
 # Misc Plan -- Agent Artifacts, Cleanup & Related Improvements
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-
-#### Source target target-0356
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Worktree / SCM / Parallelism Impacts
-  - Cleanup Priorities
-- Exact required items represented:
-  - Define lane↔worktree mapping
-  - Specify [retired-token-12] detection and cross-lane reuse rules
-  - Define [retired-token-9] restore for lane/package context
-  - Resolve [retired-token-2] vs [retired-token-1] contradiction
-  - Register PM-managed worktrees in source control visibility
-  - Remove legacy `[retired-token-7]` / `[retired-token-8]` drift and [retired-token-13].
-  - Normalize [retired-token-9] / [retired-token-10] / [retired-token-11] / [retired-token-12] terminology into one authoritative mapping and event taxonomy.
-  - Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs
-  - Orchestrator_Page.md
-  - Contracts_V0.md
-  - `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`
-  - Plans/feature-list.md
-  - Plans/newfeatures.md
-  - Plans/MiscPlan.md
-  - `Plans/MiscPlan.md`
-  - MiscPlan cleanup = cleaning files inside a workspace/worktree
-  - Cleanup must be gated by more than age.
-  - cleanup should reduce live clutter without erasing the historical object model
-  - Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required.
-  - FinalGUISpec.md
-  - This connects to the earlier lane/worktree cleanup work:
-  - The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surface navigation, not just a naming cleanup.
-  - usage_event_ref
-  - now clearly a schema-owner doc that will need a versioned migration, not only prose cleanup
-  - `usage-feature.md` and related docs already rely on `usage_event_ref`, but no authoritative shape exists.
-  - usage-feature.md
-  - now clearly needs transport/upstream naming cleanup to keep requested/effective identity deterministic
-  - consumer-doc cleanup for requested/effective identity fields
-  - still needs transport/upstream identity cleanup to prevent projection ambiguity
-  - tab/layout/help/glossary cleanup
-  - This tranche is no longer just “supporting docs need cleanup.” Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `route_target` and `OpenSubject` are related primitives with different jobs.
-  - route_target
-  - OpenSubject
-  - They should be fixed in the same pass as the surrounding owner-consumer reconciliation, not deferred as cleanup trivia.
-  - Highest-priority owner cleanup set
-  - owner-doc supersession cleanup
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - exact `ContractRef` / section-anchor / duplicate-number cleanup in owner docs first
-  - ContractRef
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only while `Contracts_V0.md` and `UI_Command_Catalog.md` move to route/open primitives.
-  - Progression_Gates.md
-  - UI_Command_Catalog.md
-  - `UI_Command_Catalog.md` second for command-family cleanup
-  - `FinalGUISpec.md` third for visible shell/view cleanup
-  - Primary consumer cleanup docs:
-  - Then consumer cleanup and same-file supersession collapse.
-  - summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -167,26 +76,6 @@ Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target proj
 
 ## 2. Problem Statement
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0358
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Projects page should not try to summarize every problem.
-  - The routing/open-by-identity tranche is no longer a broad invention problem.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **We should be concerned** about accumulation of agent-left-behind content: documents, tests, evidence, and builds can clutter the workspace and evidence directories if there is no cleanup policy. Agents run in fresh processes per iteration (CU-P2-T12). They can leave behind:
 
@@ -203,26 +92,6 @@ REQUIREMENTS.md specifies "Clean working directory state (git checkout to last c
 
 ### 3.1 What Must Never Be Removed
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0364
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `cleanup_eligible` is a policy/queue state, not the same thing as already removed
-  - cleanup_eligible
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - State files: `progress.txt`, `AGENTS.md`, `prd.json`, and other state as defined in STATE_FILES.md.
 - `.puppet-master/` in whole **except** where a retention/pruning policy explicitly allows pruning (e.g. old evidence per Section 6).
@@ -230,30 +99,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 3.2 What May Be Removed (Policy)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0365
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - acknowledge/dismiss may be `light` or `strong` depending on severity/blocking effect
-  - light
-  - strong
-  - archive may be `light` or `strong` depending on state
-  - `acknowledged` may reduce reminder noise
-  - acknowledged
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Untracked files and directories** under the workspace (or under the worktree when using worktrees), **except** allowlisted paths.
 - **Allowlist (do not remove):**
@@ -266,28 +111,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 3.3 Cleanup Scope
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0366
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The next meaningful passes should stay in owner-doc cleanup territory rather than broadening scope again.
-  - `persona_override_owner_id` needs owner-level cleanup so it no longer teaches `tier_id` as a canonical scope anchor.
-  - persona_override_owner_id
-  - tier_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### 3.3.1 Assistant worktree persistence
 
@@ -307,8 +130,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 
 - **Main repo path:** When not using worktrees, cleanup runs in `paths.workspace` (or configured project root).
-- **Worktrees:** When a tier runs in a worktree, cleanup runs in that worktree path only; do not clean the main working tree for that tier's artifacts.
-- **After execution:** `cleanup_after_execution` runs in the same directory the agent used (main repo or that tier's worktree).
+- **Worktrees, lanes, and attempts:** When execution uses a worktree, lane, or attempt-specific working directory, cleanup runs in that selected path only; it must not clean the main working tree for artifacts owned by another lane, attempt, or worktree.
+- **After execution:** `cleanup_after_execution` runs in the same directory the agent used (main repo, lane workspace, attempt workspace, or worktree path).
 
 ### 3.4 Cleanup Mechanisms (Choose One or Combine)
 
@@ -320,25 +143,6 @@ Recommendation: **Option C** so operators can choose safety vs aggressiveness; d
 
 ### 3.5 DRY Method: Single source of truth and reuse
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0367
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Reuse the already-emerging identity vocabulary:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The project follows the **DRY Method** (AGENTS.md): reusable code is tagged, and no logic is duplicated. Apply it to cleanup as follows.
 
@@ -427,33 +231,12 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 ### 4.6 Call sites: Orchestrator, Interview, Start chain, and Conversation
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0368
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - conversation identity:
-  - start from `attempt_id`
-  - attempt_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All code paths that invoke `runner.execute()` should use prepare and cleanup so agent-left-behind artifacts are managed consistently. The following call sites must be updated unless explicitly marked optional.
 
 | Call site | Location | Working dir source | Update required |
 |-----------|----------|--------------------|-----------------|
-| **Orchestrator** | `ExecutionEngine::execute_iteration` in `core/execution_engine.rs`; invoked by `orchestrator.rs` (e.g. `execute_iteration(&context)`). | `context.working_dir` (from tier worktree or `config.project.working_directory`). | **Yes.** Call `prepare_working_directory(work_dir)` before building/running the request and `cleanup_after_execution(work_dir)` after `execute` returns (success or failure), for each iteration. This is the main iteration path where cleanup matters most. |
+| **Orchestrator** | `ExecutionEngine::execute_iteration` in `core/execution_engine.rs`; invoked by `orchestrator.rs` (e.g. `execute_iteration(&context)`). | `context.working_dir` (from lane/attempt worktree selection or `config.project.working_directory`). | **Yes.** Call `prepare_working_directory(work_dir)` before building/running the request and `cleanup_after_execution(work_dir)` after `execute` returns (success or failure), for each iteration. This is the main iteration path where cleanup matters most. |
 | **Interview (research)** | `interview/research_engine.rs`: `execute_research_ai_call` builds request and calls `runner.execute(&request)`. | Passed in as `working_dir: &Path`. | **Yes.** Call prepare before and cleanup after the execute so research runs don't leave cruft in the project directory. |
 | **Start chain** | `start_chain/prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs`: each builds an `ExecutionRequest` with a `working_directory` and calls `runner.execute(&request)`. | Each has its own `working_directory` (e.g. project path). | **Yes.** Use the same prepare/cleanup around each `execute` so PRD/requirements/architecture generation don't accumulate untracked files. |
 | **Conversation / wizard** | `app.rs`: `execute_ai_turn` builds request with `working_dir = std::env::current_dir()` and calls `runner.execute(&request)`. | `current_dir()` (process CWD, may not be project root). | **Optional but recommended.** If the conversation runs in a known project path, use that for prepare/cleanup; otherwise use `current_dir()` with the same policy, or skip cleanup when not in a "project" context to avoid cleaning the wrong directory. |
@@ -597,25 +380,6 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 
 ## 6. Evidence Retention & Pruning
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0359
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - pruning evidence
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Implementation should align with storage-plan.md: evidence lifecycle events in seglog; retention policy and pruning metadata (or indexes) in redb where useful for fast queries.
 
@@ -625,7 +389,7 @@ Implementation should align with storage-plan.md: evidence lifecycle events in s
 
 ### 6.2 Policy
 
-- **Retention:** Keep evidence for the last N days, or last M runs per tier, or keep all (configurable).
+- **Retention:** Keep evidence for the last N days, or last M runs per node/lane/attempt lineage, or keep all (configurable).
 - **Pruning:** A scheduled or manual job removes evidence older than the retention window. Do not remove evidence for the current run or recent runs still in progress.
 
 ### 6.3 Implementation
@@ -672,28 +436,6 @@ Rust: `CleanupConfig { untracked: bool, clean_ignored: bool, clear_agent_output:
 
 ### 7.2 Manual "Prune" / "Clean Workspace" Action
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0369
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - clean workspace / prune evidence -> confirmation
-  - `workspace_ref` or canonical workspace path ref
-  - workspace_ref
-  - resolves to canonical workspace file/buffer
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Doctor or Config page:** Button or command: "Clean workspace now" that:
   - Runs the same **untracked cleanup** as `prepare_working_directory` (e.g. `run_git_clean_with_excludes` with allowlist) in the current workspace (and optionally in all active worktrees). This is **not** the same as `cleanup_after_execution`, which only clears runner temp files; the manual action is for removing agent-left-behind cruft, so it uses the prepare-style broad clean with excludes.
@@ -712,7 +454,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 7.5 GUI gaps and updates (consolidated)
 
-The Config view has **8 tabs**: Tiers, Branching, Verification, Memory, Budgets, **Advanced**, Interview, YAML. Doctor is a separate view. The following GUI updates are required or recommended so cleanup, evidence, and related behavior are visible and wired.
+The Config view remains an **8-tab** surface. Cleanup and evidence controls must live inside the existing **Advanced** tab instead of creating a cleanup-only tab; Doctor is a separate view. The following GUI updates are required or recommended so cleanup, evidence, and related behavior are visible and wired.
 
 **Where to put cleanup and evidence UI**
 
@@ -739,8 +481,11 @@ The Config view has **8 tabs**: Tiers, Branching, Verification, Memory, Budgets,
 **Cross-plan GUI alignment**
 
 - **Worktree plan:** Branching tab (Enable Git, Auto PR, Branch strategy) and Advanced (Enable parallel execution) are wired via Option B. Cleanup and evidence toggles must be **added to the same GuiConfig and Option B run-config build** so one save persists all; no separate "cleanup config file."
-- **Orchestrator plan:** Config has plan-mode and subagent UI (Tiers tab, optional "Enable plan mode for all tiers," Subagents section). Ensure cleanup subsection does not conflict with existing Advanced layout; use a clearly labeled "Workspace / Cleanup" block.
+- **Orchestrator plan:** Config has plan-mode and subagent UI (global plan-mode control for phase/task/subtask/iteration, optional "Enable plan mode for all tiers," Subagents section). Ensure cleanup subsection does not conflict with existing Advanced layout; use a clearly labeled "Workspace / Cleanup" block.
 - **Interview plan:** Interview tab has its own GUI gaps (min/max questions, generate_initial_agents_md, etc.); see Interview plan §GUI gaps. No overlap with cleanup UI.
+- **Providers surface alignment:** the Agent-Config or Settings `Providers` section includes boot-time model refresh indicator state plus a manual refresh action so provider readiness is visible without turning cleanup into a provider configuration surface.
+- **Orchestrator and Source Control alignment:** GUI cleanup/worktree visibility must cover work package and feature seam objects, seam-level acceptance and weak-integration review, per-project `/project-summary` aggregation, project-local orchestration state, worktree `/controls`, panel-size limits, `/filtering` between orchestrator-owned and non-orchestrator worktrees, and scale-safe partitioning without collapsing all cleanup state into one global pool.
+- **Source Control grouping:** terminal widget IDs and `/hostability` must be normalized before Orchestrator-owned worktree state is grouped in Source Control; source-control lane binding and historical lineage preservation are correctness requirements, not nice-to-have polish.
 
 **Potential issues and improvements**
 
@@ -757,6 +502,7 @@ Provider integrations (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gem
 
 - **Prepare and cleanup:** Puppet Master implements prepare_working_directory and cleanup_after_execution **internally** and invokes them via `run_with_cleanup` before/after each `runner.execute()`. Puppet Master does **not** rely on platform-specific hooks or scripts to perform workspace cleanup, so behavior is consistent across all supported providers and does not require the user to install or configure per-provider hooks.
 - **Subagents and plan mode:** Subagent names and plan-mode flags are passed in the **prompt or CLI args** (per platform_specs and runners). Puppet Master does not require Cursor plugins or Claude hooks to define subagents; the orchestrator and interview plans define how Puppet Master invokes each platform.
+- **Provider bootstrap/trust status:** `/bootstrap` copy for Cursor trust must preserve the title `Workspace trust required` and the subtext `Cursor CLI is signed in, but this workspace must be trusted before all tools and MCP servers are available`.
 
 **Ways we might leverage CLI capabilities (optional / future)**
 
@@ -855,9 +601,10 @@ A **GUI screen** is required to let users **manage Agent Skills**: discover, lis
 - **Disabling skill tool per Persona:** A Persona MAY set the `skill` permission key to `deny` in its permission profile to disable skill loading entirely for runs using that Persona.
 - **Skills in tool description:** Skills are listed in the `skill` tool description with `<available_skills>` XML blocks containing name and description. The agent invokes a skill via `skill({ name })` which loads the skill's content on demand. Skills are also registered as invokable commands (so `/skillname` works from the command palette).
 - Skill directories are automatically added to the `external_directory` allowlist for permission purposes (`Plans/Permissions_System.md` §3.3).
-- Skill tool calls are protected from pruning during compaction.
+- Skill tool calls are protected from pruning during `/compaction`.
+- If PM adopts Xeditor-inspired incremental summarization, `Plans/assistant-chat-design.md` and related `/assistant-chat-design.md` context `/compaction` shards must stay aligned with skill/tool-call preservation so incremental summaries do not drop recoverable skill lineage.
 
-ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/OpenCode_Deep_Extraction.md
+ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys, ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/OpenCode_Deep_Extraction.md
 
 **GUI behavior:**
 
@@ -953,7 +700,7 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipe
 
 Required backend behavior:
 - discover skills from PM roots plus compatible import roots defined by the canonical skill system.
-- validate `SKILL.md` frontmatter, including `required_tool_refs` and `optional_tool_refs`.
+- validate `SKILL.md` frontmatter, including `required_tool_refs` and `optional_tool_refs`; `required_tool_refs` problems block runnable `/readiness`, `optional_tool_refs` problems warn, and the Skills `GUI` surfaces the exact failing refs instead of flattening them into one generic error.
 - compute runtime readiness before launch from validation state, permission state, and tool availability.
 - bundle PM-selected skill content into the compiled context.
 - expose the PM `skill` tool for on-demand skill retrieval during the run.
@@ -964,7 +711,9 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/OpenCode_Dee
 Projection rules:
 - import/discovery from compatible roots is always allowed when enabled by canon.
 - projection/export is optional and explicit.
-- projection state and drift state must be tracked per target.
+- projection state and drift state must be tracked per target through `projection_targets` / `projection_targets[]`; target families may include workspace `AGENTS.md`, workspace `CLAUDE.md`, workspace `GEMINI.md`, workspace `.cursor/rules/pm-generated.mdc`, workspace `cursor/rules/pm-generated.mdc`, and provider/account-local `/account-local` config references where needed.
+- workspace-owned projections are tracked separately from provider-root-owned runtime state; cleanup or repair flows must not confuse workspace-owned projected files with provider-root-owned account/runtime directories.
+- editing a provider-native projection target directly requires switching only that target to `Manual Override`; repair acts on the chosen target and must not silently revert sibling targets.
 - a projection failure does not mean PM-native skill runtime delivery failed.
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
@@ -1130,26 +879,6 @@ Required. Use existing widgets; tag new helpers with DRY.
 
 ### 8.2 Wrapper and config wiring (required)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0370
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `EventRecord` wrapper
-  - EventRecord
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - [ ] **8.2.1** Implement `run_with_cleanup(runner, request, config)` per §4.8 (prepare → execute → cleanup; on prepare error log and continue). Place in `src/core/run_with_cleanup.rs` or inside `execution_engine.rs`; tag DRY:FN.
 - [ ] **8.2.2** Add `CleanupConfig` (or cleanup section) to the run config shape built from GuiConfig (Option B, Worktree §5). Ensure the orchestrator and other call sites can obtain a `CleanupConfig` when starting a run.
@@ -1243,25 +972,6 @@ Order: implement list/sort/filter first, then preview and last modified, then bu
 
 ## 9. Risks & Notes
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0360
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - current ledger escalation/current-vs-historical/blocked-owner notes
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Over-aggressive clean:** Using `git clean -fdx` without a correct exclude list can remove user-ignored but wanted files (e.g. local config). Prefer conservative default and explicit allowlist. **Security:** Without sensitive patterns in the allowlist (§3.6), cleanup could delete `.gitignore`, `.env`, or key files and make secrets more likely to be committed or exposed.
 - **Worktree path:** Ensure `work_dir` passed to prepare/cleanup is the actual worktree path when using worktrees, not the main repo path.
@@ -1297,8 +1007,8 @@ The following gaps or issues should be resolved during implementation or explici
 
 ### 9.1.5 Where work_dir comes from
 
-- In the codebase, **orchestrator** resolves `working_directory` via `get_tier_worktree(tier_id).unwrap_or_else(|| config.project.working_directory)` (execution_engine / orchestrator path). In **app.rs** `execute_ai_turn`, `working_dir` is set to `std::env::current_dir()` -- i.e. process CWD, which may not be the configured project or a tier worktree.
-- **Recommendation:** Ensure prepare/cleanup use the same source as the execution request: for orchestrator-driven runs use tier worktree or `config.project.working_directory`; for other flows (e.g. interview/wizard) either pass the same working_dir used for execution or document that cleanup is skipped when not using orchestrator workspace. Avoid using `current_dir()` for cleanup unless it is the intended workspace.
+- In older code paths, **orchestrator** resolves `working_directory` via the legacy-named `get_tier_worktree(tier_id).unwrap_or_else(|| config.project.working_directory)` helper (execution_engine / orchestrator path). Canonical implementation treats that as lane/attempt worktree selection before falling back to `config.project.working_directory`. In **app.rs** `execute_ai_turn`, `working_dir` is set to `std::env::current_dir()` -- i.e. process CWD, which may not be the configured project or selected execution workspace.
+- **Recommendation:** Ensure prepare/cleanup use the same source as the execution request: for orchestrator-driven runs use the selected lane/attempt worktree or `config.project.working_directory`; for other flows (e.g. interview/wizard) either pass the same working_dir used for execution or document that cleanup is skipped when not using orchestrator workspace. Avoid using `current_dir()` for cleanup unless it is the intended workspace.
 
 ### 9.1.6 git clean exclude list
 
@@ -1309,7 +1019,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 ### 9.1.7 Evidence retention: definition of "run"
 
-- Section 6 uses **evidence.retain_last_runs** without defining what counts as a "run" (per iteration, per subtask, per task, global). Without a clear definition, pruning may remove evidence that is still relevant for the current tier or for reporting.
+- Section 6 uses **evidence.retain_last_runs** without defining what counts as a "run" (per iteration, per subtask, per task, global). Without a clear definition, pruning may remove evidence that is still relevant for the current run, node, lane, or attempt lineage.
 - **Recommendation:** Define "run" in config/docs (e.g. one iteration, or one subtask completion) and how it is inferred from evidence paths or iteration logs; or prefer **retention_days** only until "run" is well-defined.
 
 ### 9.1.8 Clean workspace and active worktrees
@@ -1339,7 +1049,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 ### 9.1.13 Critical: When to run workspace cleanup (orchestrator / commit order)
 
-- **Current plan:** §4.3 says cleanup_after_execution "Run workspace cleanup in work_dir per policy (e.g. git clean -fd)". The call flow is: **run_with_cleanup** does prepare → execute → **cleanup** (immediately after the runner returns). The **orchestrator** then runs **commit_tier_progress** (add_all, commit) only after the iteration result is processed. So cleanup runs **before** the commit.
+- **Current plan:** §4.3 says cleanup_after_execution "Run workspace cleanup in work_dir per policy (e.g. git clean -fd)". The call flow is: **run_with_cleanup** does prepare → execute → **cleanup** (immediately after the runner returns). The **orchestrator** then runs its legacy-named **commit_tier_progress** helper (add_all, commit) only after the iteration result is processed. So cleanup runs **before** the commit.
 - **Problem:** If cleanup_after_execution runs `git clean -fd`, it would remove **all untracked files** in the workspace, including **new files the agent just created** (e.g. new source files, docs). Those files would be deleted before the orchestrator can stage and commit them. Result: loss of iteration output.
 - **Fix:** **Do not run broad "git clean -fd" (untracked files) in cleanup_after_execution.** In that step, only: (1) kill/terminate process if still running, (2) clean **runner temp files** (e.g. context copy temp files). **Full workspace untracked cleanup** (git clean -fd with excludes) should run only in **prepare_working_directory** (before the run), so we remove the *previous* run's cruft, not the current run's output. Optionally in cleanup_after_execution we can remove only **known build-artifact dirs** (e.g. `target/`) if config says so, but never untracked source or docs. Document this in §4.2 and §4.3 and in the implementation.
 
@@ -1348,8 +1058,8 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 ### 9.1.14 Interview and orchestrator plan output locations
 
 - **Interview:** The interview orchestrator writes to `output_dir` = `.puppet-master/interview/` (state, phase docs, requirements-complete.md, test-strategy, technology-matrix, AGENTS.md). Research engine writes to `.puppet-master/research/`. All under `.puppet-master/`, so already allowlisted. **No gap** as long as interview never writes final output to project root; if it does (e.g. a top-level REQUIREMENTS.md), that path must be allowlisted or cleanup must not run broad git clean in interview context.
-- **Start chain / wizard:** Writes to `.puppet-master/start-chain/` (e.g. tier-plan.md) and pipeline tier/test plans under paths derived from config. As long as those are under `.puppet-master/`, they are safe. If any start-chain or wizard output is written to project root, allowlist or skip broad cleanup for that flow.
-- **Orchestrator / tier plans:** STATE_FILES.md places phase/task/subtask plans under `.puppet-master/plans/`. If the orchestrator or agents write tier plans there, they are safe. If an agent during an iteration writes a plan or doc to **repo root** (e.g. `PLAN.md`), it is untracked; with the fix in §9.1.13 we do not run git clean after execution, so that file would remain until the next prepare (or commit). So after the fix, we do not delete current-iteration output.
+- **Start chain / wizard:** Writes to `.puppet-master/start-chain/` (e.g. legacy-named `tier-plan.md`) and pipeline phase/task/subtask/iteration plans under paths derived from config. As long as those are under `.puppet-master/`, they are safe. If any start-chain or wizard output is written to project root, allowlist or skip broad cleanup for that flow.
+- **Orchestrator / unit plans:** STATE_FILES.md places phase/task/subtask plans under `.puppet-master/plans/`. If the orchestrator or agents write unit plans there, they are safe. If an agent during an iteration writes a plan or doc to **repo root** (e.g. `PLAN.md`), it is untracked; with the fix in §9.1.13 we do not run git clean after execution, so that file would remain until the next prepare (or commit). So after the fix, we do not delete current-iteration output.
 - **Recommendation:** Document that interview, start-chain, and orchestrator output locations should stay under `.puppet-master/` (or allowlisted paths) so cleanup never removes them. If any flow writes to project root by design, add that path or pattern to the allowlist.
 
 ### 9.1.15 Additional gaps and room for improvement
@@ -1376,25 +1086,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 ### 9.1.18 Unwired features, GUI gaps, and implementation status (sweep)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0371
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - later broader second sweep must revisit:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Execution-affecting GUI settings must not remain GUI-only state.
 
 Canonical rule:
@@ -1405,8 +1097,8 @@ Canonical rule:
 This includes, at minimum:
 - interview question-limit settings
 - interview architecture-confirmation and vision-provider settings
-- HITL tier toggles
-- other tier/orchestrator execution-affecting settings already listed in the owning plans
+- HITL phase/task/subtask/iteration toggles
+- other orchestrator execution-affecting settings already listed in the owning plans
 
 Summary rule:
 MiscPlan should summarize these as references to the owning SSOTs rather than restating an open-ended “wire later” status once the canonical behavior is fixed elsewhere.
@@ -1450,6 +1142,20 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/orchestrator-subagent-integration.md**, and **Plans/interview-subagent-integration.md**: what this plan depends on, what it impacts, and what else needs to be done so cleanup fits the rest of the system.
 
+Cross-plan cleanup impact set:
+- `Plans/FileSafe.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/newtools.md` (`/FileSafe.md`, `/WorktreeGitImprovement.md`, `/newtools.md`) govern write-scope safety, side-effect repos, PM-managed worktree visibility, live-run artifacts, package-based lane pools, safe-point-aware sessions, lane-scoped evidence roots, project-root artifact paths, and ad-hoc runtime side effects.
+- Routing owner docs already identified for cleanup reconciliation include `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, `/Contracts_V0.md`, and `/Crosswalk.md`.
+- Cleanup lifecycle work depends on `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/orchestrator-subagent-integration.md` plus `/Executor_Protocol.md`, `/WorktreeGitImprovement.md`, and `/orchestrator-subagent-integration.md` aliases for execution, worktree, and subagent ownership.
+- `Contracts_V0` and `Contracts_V0.md` provide `/alias` handling, but cleanup needs that discipline elevated into a command-catalog pattern before deprecated commands, recovery namespaces, and cleanup commands drift.
+- Reconciliation cleanup covers Orchestrator retargeting from tiers to Seams and `/packages/graph`, Widget System hostability and `/persistence`, `/help` inventory expansion, UI command and route normalization, attention-center alignment, and consumer-doc cleanup for requested `/effective` identity fields.
+- `orchestrator-subagent-integration` / `orchestrator-subagent-integration.md` is a consumer and `/worker-spawn` document over canonical runnable units, not a competing tier-era execution model.
+- `Contracts_V0`, `Contracts_V0.md`, and `FileManager.md` split primitive shape ownership from file consumer `/realization`: file-backed document opening, `/tab/buffer` behavior, path validation, and path-target open behavior stay constrained by the owner contracts.
+- per-subtask `/worktree` cleanup must not conflict with package-based lane pools: cleanup scope is selected from package-scoped lane/worktree ownership, and `FileSafe` write-scope rules stay package-scoped so cross-lane reuse cannot erase another package's live artifacts.
+- Cleanup and restore flows are lane-aware. `revert-last-edit`, broad workspace cleanup, conflict worktrees, and safe-point restore require an explicit lane/worktree scope plus safe-point prerequisites before they can remove files, roll back state, or mark a lane cleanup complete.
+- Export or archival status can make a live-retained object eligible for later cleanup, but it does not by itself authorize deletion of the canonical `/historical` record model or the `/worktree` lineage needed for recovery explanation.
+- Cleanup reconciliation includes Orchestrator tab/page retargeting, Source Control versus Orchestrator surface cleanup, `/glossary` and `/help/view` expansion, stale consumer-doc requested and `/effective/runtime` identity cleanup, and `/search/attention/project-summary` alignment.
+- Tier language is legacy decomposition/help terminology. Tier IDs and `/request-era` or tier-era state file names remain compatibility inputs only; worktrees, crews, agent coordination, route/open cleanup, blocked-identity cleanup, and runtime cleanup use node, lane, package, attempt, `/block/runtime-lineage`, and rewrite-era runtime identity instead.
+
 ### 10.1 WorktreeGitImprovement.md
 
 **What the Worktree plan does:** Config wiring (Option B: build run config from GUI at run start), worktree create/merge/cleanup (of worktree *directories*), active_worktrees repopulation, git binary resolution, GitHub API PR creation wiring (no GitHub CLI), Branching tab GUI, Doctor worktrees check.
@@ -1466,14 +1172,14 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 
 ### 10.2 orchestrator-subagent-integration.md
 
-**What the Orchestrator plan does:** Subagent selection and invocation at Phase/Task/Subtask/Iteration, config-wiring validation, start/end verification (verify_tier_start, verify_tier_end) at tier boundaries, quality verification (reviewer subagent, gate criteria), parallel execution with worktrees per subtask.
+**What the Orchestrator plan does:** Subagent selection and invocation at Phase/Task/Subtask/Iteration, config-wiring validation, start/end verification (legacy-named `verify_tier_start`, `verify_tier_end`) at phase/task/subtask boundaries, quality verification (reviewer subagent, gate criteria), parallel execution with worktrees per subtask.
 
 **Impacts (MiscPlan impacts Orchestrator):**
 
 - **Single execution path:** All agent runs (main iteration and subagent runs) should go through the same prepare → execute → cleanup flow. When the orchestrator plan adds `execute_tier_with_subagents` or similar, that path must **use run_with_cleanup** (or the same prepare/execute/cleanup wrapper) so that both "main" iterations and subagent invocations get prepare_working_directory before run and cleanup_after_execution after run. Do not call `runner.execute()` directly from new orchestrator/subagent code; use the wrapper from MiscPlan §4.6.
-- **Ordering with start/end verification:** Orchestrator plan's verify_tier_start runs at Phase/Task/Subtask (and optionally Iteration) **entry**; verify_tier_end runs at Phase/Task/Subtask **completion**. MiscPlan's prepare/cleanup run at **iteration** boundaries (before and after each runner.execute). So the flow is: verify_tier_start (tier) → ... → prepare_working_directory (iteration) → execute → cleanup_after_execution (iteration) → ... → verify_tier_end (tier). No conflict; both apply. When implementing orchestrator start/end verification, keep iteration-level prepare/cleanup as defined in MiscPlan.
+- **Ordering with start/end verification:** Orchestrator plan's legacy-named `verify_tier_start` runs at Phase/Task/Subtask (and optionally Iteration) **entry**; `verify_tier_end` runs at Phase/Task/Subtask **completion**. MiscPlan's prepare/cleanup run at **iteration** boundaries (before and after each runner.execute). So the flow is: verify_tier_start (unit) -> ... -> prepare_working_directory (iteration) -> execute -> cleanup_after_execution (iteration) -> ... -> verify_tier_end (unit). No conflict; both apply. When implementing orchestrator start/end verification, keep iteration-level prepare/cleanup as defined in MiscPlan.
 - **Parallel subtasks:** Each parallel subtask has its own worktree and working_dir. cleanup_after_execution runs in that subtask's work_dir only (per MiscPlan §3.3). Orchestrator plan's parallel execution (worktree per subtask) is compatible; no extra change needed.
-- **Commit order:** The orchestrator calls commit_tier_progress **after** the iteration returns; run_with_cleanup runs cleanup **before** that. So cleanup_after_execution must not remove untracked files (§9.1.13); only runner temp files. Full workspace untracked clean runs in prepare_working_directory (before the run).
+- **Commit order:** The orchestrator calls its legacy-named `commit_tier_progress` helper **after** the iteration returns; run_with_cleanup runs cleanup **before** that. So cleanup_after_execution must not remove untracked files (§9.1.13); only runner temp files. Full workspace untracked clean runs in prepare_working_directory (before the run).
 
 **Dependencies (MiscPlan depends on Orchestrator):** None. MiscPlan can be implemented first; orchestrator subagent integration should then wire its runner calls through run_with_cleanup.
 
@@ -1488,7 +1194,7 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 
 **Dependencies (MiscPlan depends on Interview):** None. MiscPlan can be implemented first; interview subagent integration should then use run_with_cleanup for every runner call.
 
-**Interview and orchestrator output:** Interview writes to `.puppet-master/interview/` and `.puppet-master/research/`; start-chain/wizard to `.puppet-master/start-chain/`; tier plans to `.puppet-master/plans/` (STATE_FILES). All are under `.puppet-master/` and thus allowlisted. When adding new output paths in the interview or orchestrator plans, keep them under `.puppet-master/` or add them to the cleanup allowlist so they are never removed (§9.1.14).
+**Interview and orchestrator output:** Interview writes to `.puppet-master/interview/` and `.puppet-master/research/`; start-chain/wizard to `.puppet-master/start-chain/`; phase/task/subtask plans to `.puppet-master/plans/` (STATE_FILES). All are under `.puppet-master/` and thus allowlisted. When adding new output paths in the interview or orchestrator plans, keep them under `.puppet-master/` or add them to the cleanup allowlist so they are never removed (§9.1.14).
 
 ### 10.4 newfeatures.md
 
@@ -1496,32 +1202,11 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 
 ### 10.5 Summary: what else needs to be done
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0363
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Everything else routes through `object_kind` + `object_id`.
-  - object_kind
-  - object_id
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 | Plan | What to do so MiscPlan fits |
 |------|-----------------------------|
 | **WorktreeGitImprovement** | Implement Phase 1 (config wiring) so cleanup config is in the same run config; implement Phase 3 shared git binary resolution and use it in MiscPlan's run_git_clean_with_excludes; optionally Phase 2 (active_worktrees) for "Clean all worktrees." |
-| **orchestrator-subagent-integration** | When adding subagent/iteration execution, use run_with_cleanup (MiscPlan) for every runner invocation; keep verify_tier_start/verify_tier_end at tier boundaries and prepare/cleanup at iteration boundaries. |
+| **orchestrator-subagent-integration** | When adding subagent/iteration execution, use run_with_cleanup (MiscPlan) for every runner invocation; keep legacy-named verify_tier_start/verify_tier_end checks at phase/task/subtask boundaries and prepare/cleanup at iteration boundaries. |
 | **interview-subagent-integration** | When adding research or subagent runs that call the platform runner, use run_with_cleanup so interview runs get the same prepare/cleanup behavior. |
 
 ---
@@ -1541,27 +1226,6 @@ Rules:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
 ## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0357
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane/worktree cleanup lifecycle
-  - lane/worktree lifecycle and cleanup semantics
-  - Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Cleanup lifecycle and quality features must use canonical child-run and blocked-state contracts.
 
@@ -1618,7 +1282,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 - **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
 - **Commands run:** cargo check, cargo test (in puppet-master-rs).
 
-## Runner Preparation/Cleanup and Safe-Point Reconciliation Addendum (2026-03-08)
+## Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)
 
 Any runner prepare/cleanup flow must respect runtime safe points and remediation lineage.
 
@@ -1626,31 +1290,22 @@ Required rule:
 - prepare/cleanup logic must not erase or invalidate the baseline needed for `retry_from_safe_point`
 - cleanup after failed runs must preserve enough state for scheduler/runtime recovery until the attempt is terminal or superseded
 - temporary cleanup behavior must not collapse blocked/remediation states into generic failure cleanup
+- `Plans/MiscPlan.md` / `/MiscPlan.md` cleanup states distinguish retained, cleanup_eligible, archived, and removed lane or `/worktree` states; `removed` is a backing-object or storage-presence state, while `revoked` is semantic validity state.
+- Worktree plan cleanup removes worktree directories after merge or `/completion`; MiscPlan cleanup removes files inside a workspace or worktree. The `/state` model must separate lane lifecycle from cleanup actions.
+- Runtime governance must preserve Architecture_Invariants, Architecture_Invariants.md, FileSafe.md, MiscPlan.md, `/crew`, `/failure`, run-scoped requested/effective snapshots, `/effective` identity, execution-role identity, graph-lock degradation boundaries, role-scoped account-pool contamination, attempt-scoped evidence retention, safe-point versus restore-point immutability, context_files write-scope constraints, remote side-effect integration, DAE enforcement, and silent-disable or bypass prevention.
+- Normalized cleanup/run envelopes include `CLI_Bridged_Providers`, `CLI_Bridged_Providers.md`, `{ run_id, seq, type, payload }`, run_id, thread_id, attempt_id, node_id, snapshot IDs, remediation lineage, `/node/attempt/lineage`, `/event`, `/trust`, rewrite-era correlation, actor kind, effective account, switch reason, lane/worktree identity, and pressure/trust context.
+- Live cleanup must never erase run, lane, or worktree lineage from `History`, `Ledger`, graph-linked inspection, or `/lane/worktree` records.
+- Cleanup artifact boundaries are node-level, not tier-scoped; tier-era state file names such as `progress.txt`, `AGENTS.md`, and `prd.json` are compatibility inputs for `/cleanup`, not canonical scoping anchors.
+- Sorting and `/grouping` defaults are explicit: `Seams` sort by most operationally problematic first, while `History` and `Ledger` sort newest first.
+- Lane lifecycle verbs are separate: recover, archive, prune, remove, and `Clean all worktrees` must not blur together, and cleanup actions may expose prune or recover without implying remove.
+- `persona_override_owner_id` requires owner-level cleanup so `tier_id` no longer teaches a canonical scope anchor.
+- Cleanup command payloads with generic `page: string` or tier-bound filters must be constrained with native-surface ownership so they cannot undermine route/open or cleanup commands.
 
 Acceptance criteria:
 - runner cleanup and safe-point recovery are compatible
 - remediation/retry lineage is not lost by generic cleanup routines
 ## Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0361
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era runtime cleanup meet. Reconciliation elsewhere will keep bouncing until this file is normalized.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Cleanup logic must not erase the data required to explain or resume blocked and retried work.
 
@@ -1664,9 +1319,26 @@ Cleanup logic must not erase the data required to explain or resume blocked and 
 Temporary Debug instrumentation must preserve cleanup lineage and safe recovery behavior.
 
 Required rules:
+- before invasive instrumentation or temporary dependency/tooling changes, PM creates or updates a restore point backed by `runtime_artifact.restore_point` that is sufficient to revert the investigation's temporary state if cleanup fails
 - every temporary debug mutation lane carries an `instrumentation_id`, declared scope, and explicit cleanup obligation
 - cleanup must account for code instrumentation, temporary env flags, dev dependencies, remote host installs, browser mocks, and other reversible debug-only changes
 - resolved, cancelled, and superseded investigations attempt cleanup automatically; failed cleanup transitions the investigation to `failed_cleanup` instead of pretending success
 - unresolved instrumentation remnants must remain user-visible until cleaned up or explicitly accepted as follow-up work
+
+### Investigation instrumentation lifecycle contract
+
+Cursor-like Debug Mode remains an investigation workflow reference, not automatic MVP scope. `/blog`-sourced reference behavior is hypothesis-first: collect runtime evidence through temporary-instrumentation, local debug-server collection on the editor-side, reproduction, interpretation, small targeted patching, user re-verifies, and cleanup. The fit is regressions, timing `/races`, performance, and "reproduces but unclear from static read"; pure compile-time failures rely on build `/test` capture instead.
+
+Instrumentation-first behavior is not grounded MVP behavior until this contract is implemented. Any temporary-instrumentation patch pipeline must declare an `instrumentation_id`, `collector_state` (`collector-state` in source-lineage/audit vocabulary), collector lifecycle transitions, the install/collect/remove sequence, debug-specific mutation rules, the evidence sink contract, and explicit write `/cleanup/rollback` semantics. Auto-cleanup is mandatory for resolved, cancelled, and superseded investigations; failed residue uses lifecycle `failed_cleanup` with `stop_reason_code = investigation.cleanup_failed`.
+
+Cleanup is per-scope and per instrumentation lane, not just per investigation. A bundle-record must carry the cleanup_summary, including cleanup_summary.residual_items[] / residual_items, stop_reason_code, and any surviving residue. Cleanup state transitions use `superseded` when one owner supersedes another, and PM must not let two active investigations add overlapping temporary instrumentation to the same target.
+
+Env/config activation cleanup must revert the exact temporary flag `/toggle/value` PM introduced. If the temporary change lived only in process env, cleanup occurs by stopping `/restarting` without that env. If PM edited `/config`, treat the edit under the same rollback rules as `temporary source patch instrumentation`.
+
+Secret evidence handling must redact/hash obvious secrets `/tokens`, including `Authorization`, cookies, session IDs, API keys, passwords, private tokens, and other IDs before storage, export, or bundle handoff.
+
+Debug-capable tooling remains shared: `Plans/Tools.md` / `Plans/newtools.md` (`/Tools.md` / `/newtools.md`) own reusable tool registry details and `/tags`, while this plan records the debug investigation roles: target discovery, evidence capture, instrumentation, verification, and bundle-export.
+
+Debugger `/profiler` attach instrumentation must detach the temporary attach/profiler `/session`; if detach fails but no durable workspace mutation remains, keep the failure localized to runtime/session state and do not claim cleanup success.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md

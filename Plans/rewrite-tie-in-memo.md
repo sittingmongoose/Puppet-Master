@@ -1,73 +1,5 @@
 # Puppet Master Rewrite Tie-In Contract (Active)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0639
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `archived` means lane/worktree metadata and lineage stay visible, but the live execution surface is no longer active
-  - archived
-  - lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`
-  - active
-  - acknowledged
-  - resolved
-  - dismissed
-  - lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`
-  - Without a help-entry contract, complex rewrite terms may end up redefined inconsistently across surfaces.
-  - active blockers must not be dismissible into fake health
-  - `active -> acknowledged -> resolved -> dismissed`
-  - active -> acknowledged -> resolved -> dismissed
-  - `activity_state` (`idle | active | background_active | historical_only`)
-  - activity_state
-  - idle | active | background_active | historical_only
-  - optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering/counts
-  - project_attention_index.v1:{project_id}
-  - `status` (`active | cooled_down | resolved | invalidated`)
-  - status
-  - active | cooled_down | resolved | invalidated
-  - lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived | removed`)
-  - active | suspect | restoring | retained | cleanup_eligible | archived | removed
-  - currently active blocked/recovery/runtime gating anchors when applicable
-  - The only stronger navigation-like primitive visible at the contract layer today is `resume_url`, primarily in wizard-blocked / clarification flows. That makes `resume_url` more semantically powerful than the general UI command contract, which is the wrong layering for the rewrite.
-  - resume_url
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `Plans/rewrite-tie-in-memo.md`
-  - Plans/rewrite-tie-in-memo.md
-  - `Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChanged` / `active tier` assumptions.
-  - Orchestrator_Page.md
-  - TierChanged
-  - active tier
-  - worker output filtered by active `tier_id`
-  - tier_id
-  - Shell / promoted-feature / UI owner drift remains active:
-  - Provider/runtime identity findings are still active:
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:
-  - `gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.
-  - gap-001
-  - missing_data_shape
-  - requested_account_binding
-  - requested_account_policy
-  - tool_use_id
-  - TierContext
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -119,41 +51,25 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - **ACP note (important):** Cursor CLI is not ACP-native as of a Cursor staff reply (2026-01-04); Cursor CLI supports MCPs and may add ACP later, so if ACP is needed it's via an adapter layer on our side (not because Cursor suddenly "speaks ACP"). [web:167]
 
 ### Gemini auth decision (locked)
-- Gemini is one **DirectApi** provider with mixed OAuth and API-key account pools under the shared provider runtime.
-- The default Gemini `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
-- OAuth and API key are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
-- Gemini API key remains the explicit allowed exception to the broader subscription-first / avoid-API-keys guidance.
-- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, and runtime reporting.
-- Media follows the same requested/effective Gemini auth/account rules as regular Gemini usage.
+- Stale-canon correction: Gemini is not one **DirectApi** `mixed-account` provider. Gemini Direct (`gemini`) and Gemini CLI (`gemini_cli`) are separate provider entries; the older one-provider mixed OAuth/API-key account-pool wording is retired.
+- Subscription-first remains the default posture, and the Gemini API key remains the explicit `key-exception` to the broader avoid-API-keys guidance where the selected provider entry supports that path.
+- Gemini Direct is key-only/API-key-backed. Gemini CLI is mode-dependent and may resolve OAuth, API-key, or Google/Vertex credential account rows under its own capability and setup policy.
+- OAuth, API key, and Google/Vertex credentials are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
+- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, media capabilities, and runtime reporting.
+- The rewrite-level `three-bucket` register is `MUST CHANGE`, `MUST RECONCILE`, and `MUST VERIFY`; the Gemini `MUST CHANGE` set includes `Plans/Contracts_V0.md`, `Plans/Multi-Account.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, `Plans/Media_Generation_and_Capabilities.md`, and this memo because requested/effective `/auth-mode`, account-state `/record` shape, mode-aware usage, and anti-`key-centric` copy must align across them.
+- Three-bucket packetization meaning is fixed: `MUST CHANGE` docs either define the primary canon directly or own core state/GUI/runtime semantics that would remain misleading if only lightly edited; `MUST RECONCILE` docs are not the primary feature specs, but they contain adjacent semantics, platform assumptions, or command/runtime integration that would drift if left untouched; `MUST VERIFY` docs currently look directionally aligned, but they overlap enough with MCP/skill/tool canon that they must be checked before packet emission.
+- Stale-canon retirement is explicit for this rewrite packet: do not preserve the old one-provider Gemini mixed OAuth/API model, CLI-first Codex/Copilot runtime language, `server` / `cli_launcher` OpenCode framing where `Managed Server` / `Attach to Existing Server` owns the meaning, `--user-data-dir` as the canonical Cursor CLI account boundary, `.cursorrules` as the primary Cursor-managed rules artifact, provider-native skill loading as the canonical runtime path, or old bottom-terminal/editor slot concepts that conflict with workgroups/subtabs/split-tree/editor-stack canon.
+- Packet candidates must include all `MUST CHANGE` docs, must include `MUST RECONCILE` docs or explicitly justify why a stronger overlapping owner doc eliminates drift risk, and should list `MUST VERIFY` docs as pre-emit checks rather than derived-only outputs. If a packet candidate omits `storage-plan`, `Prompt_Pipeline`, `Contracts_V0`, `FinalGUISpec`, or `Multi-Account`, treat that omission as a likely packet defect because requested/effective vocabulary or GUI/runtime canon will drift; terminal/editor concept deltas from `Concepts/PMConcept.html` must travel with `FinalGUISpec` and terminal command/wiring docs rather than being left as concept-only knowledge.
+- Final reconciliation coverage register is locked for packetization at 21 docs across five drift clusters: provider/runtime canon (`Contracts_V0`, `Prompt_Pipeline`, `Multi-Account`, `CLI_Bridged_Providers`, `Provider_OpenCode`, `Models_System`, `Media_Generation_and_Capabilities`), GUI / terminal / editor canon (`FinalGUISpec`, `assistant-chat-design`, `UI_Command_Catalog`, `Wiring_Matrix`), storage and lifecycle canon (`storage-plan`), tool/skill/MCP and mirror docs (`MiscPlan`, `OpenCode_Deep_Extraction`, `newtools`, `Skills_System`, `Tools`), and orchestrator/interview consumers (`orchestrator-subagent-integration`, `interview-subagent-integration`, `rewrite-tie-in-memo`). The highest drift risk clusters are provider identity and requested/effective runtime vocabulary, multi-account plus billing/entity semantics, OpenCode server-profile ontology, MCP/skill ownership vs provider-native projection, `/skill/MCP` ownership, and terminal/editor integration canon after the PMConcept terminal redesign.
+- Gemini Direct remaining follow-up is narrowed to quota-fidelity/source-confidence wording and reconciliation of the now-pinned media/capability contract; Media_Generation_and_Capabilities, usage-feature, and Multi-Account own the live quota, usage-source, capability-picker, and requested/effective media/account surfaces.
+- `Plans/Contracts_V0.md` and `Plans/Prompt_Pipeline.md` carry the requested/effective auth/account identity needed to make Gemini implementation-ready across storage, usage, and UI consumers.
+- Rewrite summaries must not encode stale Gemini canon as an API-key default UI, OAuth-as-optional-fallback, or subscription exception without auth-surface and `/account-policy` nuance.
+- Media follows the same requested/effective Gemini provider-entry, auth-surface/account, and quota/usage rules as regular Gemini usage; do not `hard-split` media into `key-only` behavior unless future evidence requires it.
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
 ### Future mobile/web clients (impacts architecture now)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0641
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `[retired-token-2]` now shows an explicit same-file contradiction: `[retired-token-1]` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.
-  - [retired-token-2]
-  - [retired-token-1]
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Mobile/web clients will be "thin" and connect back to the desktop app (desktop acts like a local server), so the stable boundary is the unified event model + streaming API (runs/events/artifacts) and command API (start run, approve tool, cancel run), rather than direct access to providers/tools on mobile/web.
 - Thin clients MUST NOT call providers, tool executors, or local patch pipelines directly. They consume streamed events/artifacts and send command requests to the desktop-owned core only.
 
@@ -174,25 +90,7 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### Immediate contradictions to resolve in Plans (so requirements do not fight each other)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0642
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 The following contradictions must be retired during reconciliation so the rewrite does not preserve parallel canon.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
@@ -210,34 +108,10 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 - All run/session/artifact/checkpoint persistence and event emission must align with **Plans/storage-plan.md** (seglog writer, redb schema, projector pipeline, analytics scan).
 - When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, or both.
 - **Plans/storage-plan.md** -- Canonical storage checklist (seglog, redb schema, projectors, analytics); other plans that persist state or emit events should reference it and call out seglog vs redb.
+- Document annotation work reuses the existing bundle `/note` persistence and event model in **Plans/storage-plan.md** (`/storage-plan.md`); do not invent a second annotation storage path for the rewrite.
 
 ### Plans likely needing the most rewrite-aware edits
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0643
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - revoke should likely be `strong`
-  - strong
-  - Likely required fields:
-  - likely `wizard_id -> run_id`
-  - wizard_id -> run_id
-  - likely owner docs:
-  - likely fields:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - `Plans/newfeatures.md`
   - keep treating it as historical/origin material only; promoted browser/debug/runtime behavior now lives in the reconciled owner docs
@@ -256,65 +130,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 
 ### Plans that are still conceptually valid (but should be reworded)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0644
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `usage-feature.md` still aggregates around `tier_id`
-  - usage-feature.md
-  - tier_id
-  - Proposed fields conceptually:
-  - `view export` is still useful, but should be clearly labeled as a convenience format.
-  - view export
-  - but downstream docs still do not consistently model `requested identity` alongside verified/effective identity
-  - requested identity
-  - but downstream docs still use those names normatively or mix them with canonical names
-  - some docs still normalize around `requested_persona_id` / `effective_persona_id`
-  - requested_persona_id
-  - effective_persona_id
-  - `provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity`
-  - provider_account_id
-  - effective_provider_identity
-  - `persona_override_owner_id` still allows `tier_id`
-  - persona_override_owner_id
-  - `Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`
-  - Prompt_Pipeline.md
-  - actor_kind
-  - execution_role
-  - `requested_account_policy` still remains necessary.
-  - requested_account_policy
-  - but prompt/runtime/storage schemas still have no parallel operational-identity block
-  - useful for UI/ledger/history/debuggability, but not required to make dispatch valid:
-  - GPT-5.2 still surfaced real owner-level deltas rather than mere restatement, especially where docs are failing mechanically rather than conceptually.
-  - `generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.
-  - generated://<artifact_id>
-  - Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.
-  - `OpenFile` remains narrower still:
-  - OpenFile
-  - `thread_blocked_notice` and `wizard_runtime_state` are also still mixed:
-  - thread_blocked_notice
-  - wizard_runtime_state
-  - `tier_runtime_record` is still named as canonical
-  - tier_runtime_record
-  - `Run_Graph_View.md` still exposes `hitl_request_id`
-  - Run_Graph_View.md
-  - hitl_request_id
-  - Still login-keyed rather than stably account-keyed.
-  - GATE-010 text improved, but the supporting evidence schema/matrix model still lags
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - `Plans/FileSafe.md`
   - Safety/policy intent remains valid; implementation should target patch/apply/verify/rollback and centralized tool governance rather than UI-level/file-manager specifics
 - `Plans/WorktreeGitImprovement.md`, `Plans/MiscPlan.md`
@@ -325,6 +141,13 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 ## Suggested "single source of truth" rule for the rewrite
 
 - Provider contracts, unified event model, tool registry, and patch pipeline should be specified in one canonical plan (or one canonical spec section), and other plans should reference it instead of re-describing it
+- Grep/Search acceleration does not mint rewrite-local analytics events: the grep `tool.invoked` seglog event may include optional `index_used: boolean` for analytics, with no other event-shape change; detailed tool-event ownership remains in `Plans/Tools.md`, storage rollups in `Plans/storage-plan.md`, and Usage interpretation in `Plans/usage-feature.md`.
+- Web-tool rewrite notes keep `websearch` discovery distinct from `webfetch` / `Reading Site` read-and-parse behavior. The memo may cite OpenCode and Exa implementation research, but source-file paths, upstream API URLs, helper names, and adapter internals remain reference provenance in transfer metadata rather than PM product vocabulary.
+- The product-facing web split preserves `http://` / `https://` URL validation, permission prompting, bounded response behavior, and format-aware output where read/fetch results are rendered; provider free-plan and rate-limit behavior remains owned by `Plans/Tools.md`.
+- Chat surfaces distinguish chat-native tool result cards from shell-owned terminal/output surfaces and from true interactive terminal sessions. Chat may summarize or link to execution, but terminal/output ownership stays with the canonical shell/runtime surfaces.
+- The chat-widgets cluster includes code-block and `/diff` cards that can open in-app editor views with range-aware positioning, question chips/freeform paths, and Mermaid / `.mmd` native diagram rendering; owner details remain in `Plans/assistant-chat-design.md` and `Plans/FinalGUISpec.md`.
+- Thread context/detail surfaces do not use `chat-shell` popouts or `/side-panel` detail panels as their canonical target; rewrite navigation opens or focuses the thread-scoped Context Detail Pane as an `editor-tab` surface, with product behavior owned by `Plans/assistant-chat-design.md` and `Plans/usage-feature.md`.
+- Runtime identity carry-through treats legacy account-doc shorthand as retired: `Multi-Account.md` and the shared runtime contracts own `execution_role`, operational identity, handoff, and UI disclosure fields before feature-specific docs depend on them.
 
 ## Unified Document/Media Rendering Contract (2026-03-07)
 
@@ -340,30 +163,10 @@ This addendum locks the rewrite-level rendering contract for Markdown, Mermaid, 
   - HTML remains canonical as HTML source files.
   - Images remain canonical as image files.
 - Rendered DOM/SVG/preview state is a projection and must never become the hidden source of truth.
+- The rewrite-level file-type matrix is source-canonical by default: `/Mermaid/HTML` documents keep editable text as the durable artifact, Markdown and Mermaid support split preview plus `/preview/detached`, HTML uses a browser-rendered preview/split/detached browser route, SVG uses native image `/vector` viewing with source as alternate, and non-`UTF` or large-file cases open read-only with visible reason, bounded `/save` behavior, and explicit `/export` routes where supported.
 
 ### Preview session contract
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0645
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - no named `route_target` / `OpenSubject` contract tie even though subject-first preview identity already exists
-  - route_target
-  - OpenSubject
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Generated artifact identity and open-source contract
 
@@ -399,14 +202,37 @@ Storage and runtime projectors may derive `preview_subject_id = doc:<document_id
 - `artifact:*` opens a transient source buffer with URI `generated://<artifact_id>`.
 - A transient `generated://` buffer is authoritative for user inspection/editing until the user explicitly saves or inserts it into a workspace file.
 - `open_source` for message-backed Mermaid/Markdown MUST NOT silently invent a workspace file on disk.
+- `assistant-chat-design.md`, `assistant-chat-design`, and `FinalGUISpec.md` consume `open_source` as a real action, but the owner contract is this route/OpenSubject/FileManager split rather than a chat-local or GUI-local action definition.
 
 #### Save/link rules
 - `Save As` or `Insert into file` creates the first stable workspace path for an artifact-backed source.
 - After first persist, runtime state records the linkage from `artifact_id` to `document_id`, but the original `artifact_id` remains valid for audit/history.
 
+#### Identity-native open and route lift
+
+The rewrite-level route contract is identity-native before it is path-open. `OpenSubject` targets `doc:<document_id>` or `artifact:<artifact_id>` first, then resolves through resolver-supporting storage metadata such as `backing_document_id`, `source_kind`, and `last_saved_path`; those fields remain resolver data and are not part of the external open command. The required artifact restore order is `subject_id -> backing document or transient generated buffer -> routed surface`, so GUI surfaces must preserve subject identity before selecting a workspace path, generated://<artifact_id> buffer, or /runtime/preview-backed representation.
+
+`OpenFile` remains the workspace-path and code-navigation command for real files when a canonical path is already known. It must not be stretched into a universal path-open contract for generated/runtime/preview-backed subjects, non-file artifacts, or artifact/report opens. The stale `OpenFile { path... }` single-contract shape is a migration alias only; the cross-cutting contract is identity-native routing plus /file-backed or /buffer realization after resolution.
+
+`Plans/FileManager.md` / `FileManager` consumes `subject-open` resolution for assistant-chat artifact-backed generated buffers without becoming the subject owner: path-based `OpenFile` remains legitimate for real workspace documents, while artifact-backed opens preserve `artifact_id` and realize as `generated://<artifact_id>` buffers when no workspace path exists.
+
+`generated://<artifact_id>` is a transient `/source` or `/resulting` editor/source realization for artifact subjects, not the durable identity. Durable joins stay on `artifact:<artifact_id>`, `doc:<document_id>`, `artifact_id`, and `document_id`.
+
+`resume_url` is a serialized deep-link transport, not the hidden canonical route model. The app owns one internal route payload and treats `resume_url` as a /serialization and /restore form of that payload. Transient generated content, non-persisted Deep Plan sources, document-backed previews, artifact-backed previews, parent-summary inspection artifacts, workspace-backed documents, logical_artifact_id, linked_artifact_id, /generated route aliases, and generated://<artifact_id> report buffers all join through artifact_id, artifact_kind, document_id, and preview_subject_id rather than through file paths alone.
+
+The `pre-packetize` rewrite discussion starts from the `node-graph-based` execution model: the node graph is what Orchestrator consumes, and any packet planning for this seam must preserve that owner assumption before emitting downstream doc changes.
+
+Reviewer coverage notes from `GPT-5.2` are treated as `owner-level` deltas when they identify mechanical doc failures rather than mere restatement; the memo records those deltas as routing obligations until the owning docs absorb them.
+
+Provider recovery controls stay automation-first. Browser auto-relogin may exist as an optional provider-specific recovery helper, but it is not a cross-provider assumption; log parsing is supplemental /evidence rather than quota truth; manual `set active` remains a settings /debug/operator control rather than the main execution model. Storage split-brain and projection-health issues stay in Plans/storage-plan.md, while minority_advisory, runtime-artifact schema registration, and source-open resolver rules must be raised to owner docs instead of remaining memo-only observations.
+
+Orchestrator GUI tabs are native-purpose except where a doc explicitly says otherwise: Seams, Node Graph, Evidence, History, and Ledger are native-purpose surfaces, while Progress remains the widget-composed tab. This preserves /UI behavior without letting universal rendering or file-opening language overtake the route/open subject contract.
+
 #### PreviewSession lifecycle and identity contract
 
 `PreviewSession` is a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
+
+Owner split is explicit: `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the promoted `/browser` and `/runtime` session model; `Plans/FileManager.md` owns editor `/file-surface` preview behavior and routes HTML/browser actions to that canonical model; `Plans/storage-plan.md` owns restore identity; `Plans/UI_Command_Catalog.md` owns stable `/command` families; and `Plans/FinalGUISpec.md` owns GUI placement and rendering-surface presentation for each rendered-subject. The taxonomy separates render-capable `/document` previews from browser-capable sessions, and `auth_session` state stays a browser/session overlay rather than a generic preview fact.
 
 **Lifecycle states**
 - `created`
@@ -422,8 +248,12 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MV
 **Identity rules**
 - moving the same preview subject between source-linked preview surfaces keeps the same `preview_session_id` when `preview_subject_id`, `source_revision`, `preview_surface_kind`, and `transport_mode` remain unchanged
 - browser-capable surfaces additionally carry a distinct `browser_session_id` and `session_class`
+- browser-backed preview/debug entries cover active workspace preview, URL target, and browser-backed app reproduction surfaces; active automation uses a visible `automation_session` while preserving `browser_session_id` plus `session_class` as canonical correlation keys
+- default browser adapter evidence includes structured snapshot, screenshot, console and /network summaries, and browser recordings/traces/videos where enabled; takeover and /promote flows retain the same browser-session identity rather than creating a detached preview shell
+- route, `/focus/open/reopen`, and recovery commands target the canonical `browser_session_id` / `preview_subject_id` pair rather than a generic preview tab or stale bottom-panel browser placeholder
 - detaching normal browsing is an attachment change, not a new preview subject, unless the user explicitly creates separate detached state
 - `bottom_panel_browser` is not a canonical attachment target
+- Stale `workspace_browser`, `bottom_panel_browser`, `detached-only` guarantees, and WebView2/WebKitGTK runtime matrices are retired rewrite-baseline inputs; they do not override the PM-managed browser-session model, the editor-tab plus first-class detached-window contract, or the CEF `/pinned-runtime` baseline.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
@@ -470,6 +300,8 @@ Browser-session overlay state:
 - `effective_capabilities`
 - `capability_degradations`
 - `blocked_actions`
+- `permission_summary`
+- `permission_profile`
 - `permission_tier`
 - `profile_scope`
 - `restore_policy`
@@ -529,6 +361,7 @@ To keep implementations aligned, the rewrite uses these canonical libraries unle
   - sanitize generated HTML before it reaches the preview runtime
   - keep JavaScript minimal and preview-runtime-specific
   - do not allow arbitrary file access or arbitrary network behavior as part of the preview contract
+- Generated visual modules have an MVP library policy: allowed libraries must be BUNDLED in the source fragment, with no CDN fetches at runtime and no unvetted network requests from within the visual module. Exact allowlist TBD as an open design item; the recommended MVP behavior is no external libraries, so the agent must inline all code. Post-MVP, a curated allowlist of bundled libraries may include examples such as D3, Chart.js, and Three.js.
 - Full HTML/browser mode is a **separate trust tier** and must not inherit source-mutation privileges by default.
 
 ### Platform contract
@@ -536,6 +369,22 @@ To keep implementations aligned, the rewrite uses these canonical libraries unle
 #### Platform runtime matrix and degraded-mode UX
 
 The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows.
+- Research/design-decision lineage is closed for this topic: PM treats the CEF-class, watchable agent browsing/testing, and `mostly-full` runtime direction as locked unless new evidence makes CEF-class integration clearly impractical.
+- Installer reconciliation uses the current full/offline baseline: PM should ship or preflight a complete versioned browser runtime bundle, surface degraded state before advertising browser capability, and avoid aggressively stripped Chromium profiles that sacrifice required browser features.
+
+**Browser runtime selection constraints**
+- A CEF wrapper such as `wef` is an implementation candidate, not a product name, session class, or implicit default.
+- The preferred CEF integration starting point is lower-level bindings plus a PM-owned shim/bridge; `wef` must not become the architectural linchpin, and direct full custom CEF integration starts only if the lower-level binding path proves non-viable.
+- Browser-runtime comparison inputs are retained as non-product lineage: `Saik0s/mcp-browser-use` may inform browser-use, `/browser-agent`, `/mcp-browser-use`, and `task/observability/dashboard` ideas, but its separate LLM/browser-agent loop is a poor PM core architecture because PM's own agent must own reasoning/control directly; `chromiumoxide` is a Rust-native Chrome/Chromium CDP automation/backend candidate for launch-or-attach control, screenshots, and deeper browser control in Rust; the Rust browser ecosystem remains fragmented, so these inputs do not replace the CEF-class in-app Chromium direction, `/screenshot`/DevTools requirements, or PM-owned runtime packaging.
+- Selecting `wef` requires PM to own the CEF binary lifecycle: pin the version, define cache location, verify integrity, support rollback, and specify offline install behavior as part of the packaging/update/install strategy.
+- The `wef`/`cargo-wef` path cannot rely on an unqualified auto-downloaded CEF binary distribution at first launch; Doctor/setup must know the expected binary before PM advertises browser capability.
+- The CEF app-size impact is material: release packaging and storage planning must budget roughly ~1 GB when this path is selected.
+- The selected CEF `/binding` strategy for Rust + Slint must document how PM manages CEF's `multi-process` model, crash/restart behavior, sandboxing, codecs and `/PDF/runtime` dependencies, and DevTools availability across Linux/macOS/Windows without relying on a system-wide Chromium install.
+- Browser installer/update policy must define a versioned `runtime-bundle` layout and replacement rules, require signature/hash verification for shipped CEF artifacts, and use atomic update steps so every CEF-matched file moves together or the previous bundle remains active.
+- Distribution and update policy is locked as one pinned stable runtime stream: the browser runtime is a PM-managed bundled runtime, never a `first-use` download or dependency on a `system-installed` browser; `/installers` and `/update` replace it atomically as a matched set and surface `runtime_unavailable` on mismatch or damage.
+- Browser visibility is watchable by default: normal user-visible browser `/window` sessions let the user `/take` over; attachable background sessions must expose "open live browser session" / "watch run"; hidden utility backends are limited to auth or `/testing/evidence`, not normal user-visible browsing.
+- Browser runtime-layout is platform-explicit: Windows carries DLLs, `/resources/helper` EXEs, macOS carries the framework `/bundle` structure, and Linux carries shared objects, resources/helper processes, and the distro dependency story.
+- Any upstream experimental warning is treated as implementation risk requiring version lock, fallback/remediation, and runtime health checks; it must not reintroduce GUI experimental-feature toggles.
 
 | Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |
 |---|---|---|---|---|
@@ -545,6 +394,8 @@ The rendering system must define one browser product model across supported desk
 | Linux Wayland | supported through the same PM browser abstraction with platform-specific embedding details hidden behind the PM bridge | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+- FinalGUI cross-check: `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` keeps the `editor-tab` browser as the primary normal browsing and preview host; the bottom panel may show browser-adjacent activity only and must not reintroduce a competing primary Browser tab.
 
 **Required doctor/preflight checks**
 - bundled browser runtime is present and healthy
@@ -559,6 +410,7 @@ ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_Syst
 - browser runtime failure must use explicit user-facing remediation and MUST NOT silently swap to an unrelated legacy webview/browser model
 - blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces
 - browser capability degradations must remain visible through requested/effective runtime disclosure rather than being hidden behind platform heuristics
+- The viewer-vs-editor-vs-preview fallback hierarchy is deterministic: if a rendered preview cannot safely load, the product preserves the source editor/viewer route, keeps scroll/selection state when possible, reports the trust or runtime reason, and never treats a static screenshot as equivalent to a live `/browser` preview.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
@@ -569,6 +421,7 @@ Preview mutation and document annotation are related but distinct contracts. Dir
 #### Preview action protocol v1
 
 All successful preview mutations resolve to canonical text patches against the same shared buffer model used by File Editor.
+Diff and review flows stay shared-buffer-based: editor review may present side-by-side or `/unified` views; Source Control `/Changes` owns staged, `/unstaged/conflicted`, and conflict states; `/review/rich` preview actions mutate only bounded source spans; annotations remain source-anchored with DOM nodes treated as render projections; and apply-suggestion or one-click edits route through the FileSafe patch `/apply/verify/rollback` path rather than bypassing `/source`, dirty state, or `/redo` history.
 
 **Operation payloads**
 - `toggle_checkbox` -> `{ target_state?: boolean }`

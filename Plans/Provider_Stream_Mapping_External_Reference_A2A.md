@@ -1,111 +1,11 @@
 # Provider Stream Mapping — External Reference (A2A Bridge)
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0473
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
-  - Plans/Prompt_Pipeline.md
-  - Plans/Personas.md
-  - Plans/Provider_Stream_Mapping_External_Reference_A2A.md
-  - `External Resource`
-  - External Resource
-  - seam/package/node mapping
-  - A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete or resolve a concern; but these should remain different record families.
-  - now clearly owns the missing bridge semantics for `usage_event_ref`, projection freshness, receipt pivots, and project-scoped UI state, but has not finished naming them
-  - usage_event_ref
-  - Research Progress - 2026-03-16 - Sonnet Stream / A2A Schema Recheck
-  - Multi-account and blocked-owner semantics are still lost at the stream boundary:
-  - Shared provider runtime still lacks actor-class disclosure in the normalized stream:
-  - canonical requested/effective identity and blocked-owner payloads still do not round-trip through the stream adapter
-  - both now depend on richer blocked-owner / audit-scope vocabulary than the stream exposes today
-  - The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.
-  - attempt_id
-  - Define `usage_event_ref` once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family.
-  - it still productizes `tier_boundary` and tier-audit semantics at the normalized stream layer
-  - tier_boundary
-  - still hard-wires tier scope and drops actor/account/trust metadata at the stream boundary
-  - A2A still bakes tier scope into normalized diagnostics and still lacks actor/account/provenance trust hints.
-  - Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers.
-  - A2A’s duplicate attempt-continuity addenda and tier-boundary schema are signals that this seam needs consolidation plus version governance, not more scattered annotations.
-  - A2A still forbids new categories while the rewrite needs actor/account/trust/governance semantics at the stream layer.
-  - Add explicit versioning/migration guidance to A2A before introducing new actor/account/trust semantics.
-  - A2A’s “input_provided” resume semantics are unsafe without actor/thread binding once multiple conversational actors share provider runtime.
-  - A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals at the stream layer
-  - needs stream version governance before actor/account/trust semantics can be added cleanly
-  - Add explicit versioning/migration notes where A2A or bridged categories/fields must grow.
-  - Usage and receipt surfaces can correlate to external systems via refs, but that is weaker than first-class requested/effective operational identity disclosure.
-  - reference, but not redefine, the canonical runtime fields once added elsewhere
-  - Reconcile all approval/recovery schemas onto one key strategy and one field family (`allowed_action_ids[]`, `blocked_sequence`, explicit mapping for any retained `request_id`).
-  - allowed_action_ids[]
-  - blocked_sequence
-  - request_id
-  - these reports should bridge into execution; they should not be mistaken for execution
-  - 3. Mandatory requested/effective runtime snapshots by reference
-  - required whenever execution can touch repo/worktree or external side effects:
-  - That receipt-style bridge is much closer to where `operational_identity` belongs than the persona/runtime snapshot is.
-  - operational_identity
-  - `operational_identity` belongs in the operational bridge family:
-  - what external side-effect identity or target context was in play
-  - The bridge fields now want a precedence rule, not just a field inventory.
-  - `usage_event_ref` appears on receipts and Usage/docs as the canonical bridge into Ledger/Usage history.
-  - receipt records are the canonical bridge to external side-effect lineage for that attempt.
-  - none of these bridge fields should become a replacement primary key:
-  - usage bridge = `usage_event_ref`
-  - Make cross-surface open actions resolve through these bridge fields instead of ad hoc feature-local joins.
-  - The big risk here is accidental “primary key drift,” where bridge refs start being treated like canonical local identity.
-  - should carry external linkage refs but still anchor locally on `attempt_id`
-  - `run-gates` still executes checks with no numbered gate mapping.
-  - run-gates
-  - The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what “fully swept” looks like.
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - may reference `subject_id`, `object_kind/object_id`, `tab_id`, `inspector_target`, and related scope fields
-  - subject_id
-  - object_kind/object_id
-  - tab_id
-  - inspector_target
-  - mapping from `FinalGUISpec section 7.7`
-  - FinalGUISpec section 7.7
-  - Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cleanup stack
-  - 4. provider/runtime identity and bridge adjacencies
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - result: preserve this as an unresolved false-cognate / cross-reference survivor; the problem is not absence of safe-point canon, it is coexistence of a misleading alternate restore-point reference
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-
-## Fidelity recovery addendum
-
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-100: Provider-native correlation and approval scope
-- Coverage rows: cov-100
-- Fidelity gap refs: cov-100
-- Required fidelity items:
-- Exact required item: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
-- Exact required item: Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-100: Provider-native correlation and approval scope` exists in `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`.
-- Exact acceptance check: The `cov-100` repair states the exact requirement: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
-- Exact acceptance check: The `cov-100` repair states the exact requirement: Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
-- Exact acceptance check: The `cov-100` repair is in the owner section for `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` and is not only a downstream consumer note.
-
+### Provider-native correlation and approval scope
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -115,6 +15,12 @@ This document maps upstream external-framework native events and A2A bridge conc
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
 
 This document is **not** the SSOT for Puppet Master internal orchestration. Internal child-run supervision, crew coordination, timeout propagation, requested/effective runtime state, and PM-native lineage remain owned by `Plans/orchestrator-subagent-integration.md`, `Plans/Contracts_V0.md`, and `Plans/storage-plan.md`.
+
+This scope is `/future-interop-only`: external A2A mappings can inform bridge adapters, but internal-adoption of A2A semantics for PM child-run control requires a separate owner-doc change in the PM-native runtime SSOTs above.
+
+A2A is REJECTED for internal PM orchestration. OpenCode failure evidence is consumed here only as external bridge input, then translated into PM-owned canon for run budgets, permissions, tool dispatch, provider adapters, billing, file safety, storage integrity, prompt/cache behavior, MCP lifecycle, and orchestrator ownership.
+
+The external-only bridge may map provider reconnect `/resume` evidence to the `Plans/CLI_Bridged_Providers.md` circuit-breaker contract, but it must not redefine PM-internal retry, resume, or child-run semantics.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 ## 2. Non-goals
@@ -166,25 +72,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, Gate:GATE-009
 
 ## 5. Canonical diagnostic instrumentation (reserved categories)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0474
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The tier model is still encoded in reserved stream categories even where planning docs now move to package/seam/lane authority.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All provider-specific diagnostic events MUST use `type: "diagnostic"` with a `category` from the reserved set below. Provider/source-specific context MUST be namespaced via `diagnostic.details.source` (e.g. `"external_ref_native"`, `"a2a"`), not via category names.
 
@@ -218,7 +105,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Glo
 
 Provider/source-specific diagnostics MUST be namespaced via `diagnostic.details.source`. The `category` field MUST use only the reserved values above. Adapters MUST NOT invent new categories; provider-specific context goes in `diagnostic.details` under keys prefixed with the source name if the reserved keys are insufficient.
 
-ContractRef: ContractName:Plans/DRY_Rules.md#2, Gate:GATE-009
+ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, Gate:GATE-009
 
 ---
 
@@ -256,28 +143,16 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ## 7. Mapping table 2 — Upstream A2A bridge concepts → V0
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0475
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Cleanly separate transport host fields from upstream provider/model identity in `Models_System.md` and adjacent bridge docs.
-  - Models_System.md
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### 7.0 A2A discovery and task identity boundary
 
 Each row maps an A2A protocol concept to V0 event(s). All `ref:` citations point to local upstream clone paths.
+
+External A2A discovery remains adapter metadata. An `AgentCard` JSON document discovered at a well-known URL may describe a remote agent's capabilities, but PM records it only as provider-native capability evidence and never lets it replace the PM registry, permission ceiling, runtime snapshot, or provider capability contract. Upstream `contextId` / `context_id` groups related A2A Tasks, and once an upstream Task is terminal PM treats that Task as immutable; continuation or recovery must use PM-owned resume, retry, or attempt lineage rather than reopening the terminal A2A Task.
+
+A2A v1.0.0 transport evidence remains external-bridge input: `JSON-RPC 2.0` over `HTTP(S)` is the primary adapter surface, while `gRPC` and `HTTP+JSON/REST` bindings are treated as provider transport variants rather than PM-native orchestration modes. The A2A core primitives stay explicit in bridge evidence: `AgentCard` is discovery metadata, `Task` is the stateful upstream work unit, `Message` is the turn payload, `Part` is content, and `Artifact` is output.
+
+Because each external A2A Task can create a fresh HTTP session with fresh context, provider prompt caching may rely on STABLE PREFIXES only inside a PM-owned session or adapter-continuity boundary. Cross-task cache reuse must be explicit provider evidence, not assumed from A2A task continuity.
 
 | A2A concept | V0 event type(s) | Mapping rule | Citation |
 |---|---|---|---|
@@ -302,25 +177,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 8.1 Tool-use ID synthesis
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0476
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several owner-level contradictions.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When the upstream event provides a null or missing `tool_call_id` / `ToolCall.id` (as allowed by `FunctionCallEvent` and some `ToolCallEvent` instances; ref:autogen/events/agent_events.py::FunctionCallEvent, ref:autogen/events/agent_events.py::ToolCallEvent), the adapter MUST synthesize a deterministic `tool_use_id` using the format `pm-synth-{run_id}-{seq}` where `seq` is the current monotonic sequence number. This ensures INV-001 correlation integrity.
 
@@ -375,6 +231,8 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/new
 
 The adapter MUST enforce the tool correlation invariant (SSOT: `Plans/Architecture_Invariants.md#INV-001`) on the V0 stream:
 
+Tool correlation IDs are INV-governed: every `tool_use` gets exactly one matching `tool_result` or synthetic result, and orphaned IDs are impossible in the normalized stream except as raw-observation diagnostics paired with synthesized placeholders under the `Plans/Contracts_V0.md` and `Plans/CLI_Bridged_Providers.md` reconciler rules.
+
 - A `tool_result` MUST NOT be emitted without a corresponding `tool_use`.
 - If a tool result arrives without a prior correlated `tool_use`, the adapter MUST synthesize a placeholder `tool_use` with:
   - `tool_use_id` set to the upstream correlation ID when available (e.g. `tool_call_id`), otherwise the synthesized format from §8.1.
@@ -388,25 +246,6 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName
 
 ### 8.8 Terminal event arbitration (exactly one `done`)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0477
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - exactly one target field depending on kind:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 If the upstream emits multiple terminal indicators (e.g. `TerminationEvent` and/or `RunCompletionEvent`), the adapter MUST emit exactly one terminal `done` event and it MUST be final.
 
@@ -498,6 +337,8 @@ Provider/A2A stream normalization MUST preserve canonical wake reasons and attem
 - completion -> `wake_reason = node_completed` or `verification_completed` as applicable
 - approval/input resolution -> `wake_reason = approval_resolved` or `clarification_resolved`
 - auth recovery -> `wake_reason = auth_recovered`
+- startup recovery -> `wake_reason = startup_recovered`
+- watchdog defensive recheck -> `wake_reason = watchdog_recheck` only as a non-primary defensive wake; correctness still comes from event-driven prerequisite, auth, startup, and remediation wakes.
 - backoff expiry -> `wake_reason = backoff_expired`
 - remediation completion -> `wake_reason = remediation_completed`
 - replan application -> `wake_reason = replan_applied`
@@ -524,3 +365,15 @@ Rules:
 - Keep runtime/provider continuity split by requiring bridge-only correlation fields plus `provider_attempt_ref?` without replacing PM runtime identity.
 - Define and reuse `approval_scope_key` across permissions, HITL, doom-loop protection, and session approval caching for this bridge surface.
 
+#### P5 provider-stream continuity recovery requirements
+
+- The doc internally contradicts itself on attempt continuity: - 2026-03-09 addenda say normalized streams MUST preserve `attempt_id` - but none of the reserved diagnostic category schemas actually expose `attempt_id` - adapters currently have no canonical way to satisfy both requirements at once
+- `tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.
+- Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.
+- The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics: - bridged envelopes remain thinner than their own addenda - A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals at the stream layer - `provider_attempt_ref?` and similar continuity fields are still conceptually present but not fully owned by a stable schema slot
+- The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.
+- Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.
+- Add explicit versioning/migration notes where A2A or bridged categories/fields must grow.
+- Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.
+- OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.
+- Keep page-tab and panel-subview resolution as destination-layer concepts, not core identity concepts.

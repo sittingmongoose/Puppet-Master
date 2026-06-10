@@ -1,50 +1,5 @@
 # Chain Wizard & Interview Flexibility -- Intent-Based Workflows
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0583
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
-  - `Resume Wizard`
-  - Resume Wizard
-  - Wizard / interview / worktree lineage gaps continue to sharpen at the seams:
-  - `thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail
-  - thread_id: None
-  - Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:
-  - wizard resume via `wizard_id + step`
-  - wizard_id + step
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `object_kind = wizard`
-  - object_kind = wizard
-  - `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`
-  - puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify
-  - must override to the wizard surface and the correct wizard/step context
-  - The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport.
-  - The routing model now has a clear owner chain.
-  - Reconciliation should follow that owner chain or it will fragment again.
-  - concrete `puppet-master://wizard/...` format
-  - puppet-master://wizard/...
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -97,6 +52,7 @@ This plan's workflow semantics remain authoritative. Implementation should targe
 - GitHub auth + API flows: `Plans/GitHub_API_Auth_and_Flows.md`
 - User-project output artifacts: `Plans/Project_Output_Artifacts.md` (under `.puppet-master/project/*`)
 - OpenCode provider integration: `Plans/Provider_OpenCode.md`
+- Wizard/interview flows consume runtime `budget-outcome` names and usage snapshot fields only after `Plans/Contracts_V0.md` confirms the `/schema` surface stays stable across `Plans/Run_Modes.md`, `Plans/usage-feature.md`, and `Plans/orchestrator-subagent-integration.md`; this document must not mint a fresh event/schema delta for those outcomes.
 
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, PolicyRule:Decision_Policy.md§1
 
@@ -199,25 +155,10 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 
 ### 2.1 Wizard State Shape
 
-### Reconciliation addendum
+Thread lifecycle references in this wizard/Interview plan use the canonical thread states `active`, `attention_required`, `blocked`, `completed`, and `failed`; permanent thread removal is a `delete` action with confirmation, and `archive` is not a thread lifecycle state.
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0590
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The current wizard URL shape is useful, but it should stop standing alone as the only precise deep-link contract in the app.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### 2.2 Canonical wizard runtime state
 
 The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. The struct below captures the core form/state fields; the normative runtime fields table that follows is also required.
 
@@ -326,18 +267,23 @@ pub struct ChainWizardState {
 
 ```text
 wizard_status: enum {
-  initializing,    // wizard is setting up
-  interviewing,    // interview phase active
-  planning,        // generating plan from interview results  
-  ready,           // plan ready for execution
-  executing,       // plan being executed
-  paused,          // execution paused by user
-  blocked,         // execution blocked (NEW — add this)
-  completed,       // execution finished successfully
-  failed,          // execution finished with errors
-  cancelled,       // user cancelled
+  setup,              // wizard instance and project setup are being prepared
+  requirements,       // requirements upload, Requirements Doc Builder, or canonical requirements merge is active
+  interview,          // adaptive interview phase is active
+  validating,         // Contract Unification and validation passes are running
+  attention_required, // current clarification or review loop can still resolve the issue set
+  blocked,            // automatic progress cannot continue without new input, recovery, or replan
+  ready_to_execute,   // validated package is ready to launch execution
+  complete,           // wizard finished successfully
+  cancelled,          // user cancelled
 }
 ```
+
+The `wizard_status` enum is the wizard's own lifecycle. Builder bundle state, agent activity run state, and executor node status are separate state families and MUST NOT be conflated with `wizard_status`.
+
+Canonical wizard step contracts are `PhaseSelectorContract`, `RequirementsGatheringContract`, `InterviewContract`, and `ValidationPassContract`. Implementations may store these as concrete structs or schema-backed payloads, but the lifecycle handoff must keep those contract families distinct.
+
+For blocked wizard persistence, canonical fields use `wizard_status = blocked` with `blocked_reason_code`. Legacy blocked field names such as `is_blocked`, `blocked_info`, `blocked_state`, and `blocked_episode_ref` are non-canonical aliases and MUST NOT be introduced in new wizard state.
 
 **Field usage by intent:**
 
@@ -431,6 +377,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 6. Usage tokens already consumed remain counted against the run budget.
 7. Emit a `wizard.cancelled` event with `{ wizard_id, phase_at_cancel, resources_cleaned[], resources_preserved[], token_usage }`.
 
+Items explicitly labeled `FUTURE FEATURE` or `OPEN QUESTION` remain open by intent and do not block the current wizard/interview contract unless a later owner decision promotes them.
+
 **Resume behavior:** Within 24 hours, the user may resume a cancelled wizard from the last completed phase. Resume MUST reuse preserved interview state and preserved artifacts, while also respecting the branch-preservation rules above.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md
@@ -521,10 +469,12 @@ When the wizard flow produces a plan or deep plan, the resulting TODO items use 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 **Wizard → planning handoff:**
-- Standard Plan and Deep Plan are workflow overlays over the `plan` runtime mode. The distinction is degree and intensity, not categorical.
+- Standard Plan and Deep Plan are workflow overlays over the `plan` runtime mode. The distinction is degree and intensity (`/intensity` lineage), not categorical.
 - Deep Plan may spawn read-only research subagents (including web research) — this is permitted because plan mode allows web tools through the normal permission stack.
 - The TODO auto-use heuristic (3+ actionable steps) applies to wizard-generated plans as well.
 - Plan artifacts produced by the wizard use the same normalized TODO schema as agent-initiated plans.
+- Wizard question prompts that require structured or multi-item answers render through the shared `/questionnaire` card contract and preserve `effective_persona` / `/effective_persona` runtime identity rather than inventing wizard-local question or persona state.
+- Wizard planning and embedded activity surfaces consume `Plans/assistant-chat-design.md` for chat modes/controls, activity transparency, shared question flow, Plan/Deep Plan, TODO behavior, `/web`, `/skill`, terminal handoff, subagent defaults, assistant-facing runtime display rules, and runtime identity consumption.
 
 **Tool access in wizard-generated plan mode:**
 - Web tools resolve through the normal permission stack (default `ask`), consistent with `Plans/Run_Modes.md` §9.2 and `Plans/Permissions_System.md` §7.
@@ -543,6 +493,7 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
   - **Requirements Doc Builder:** When the Assistant is generating the requirements doc, show the Builder conversation/stream in this pane.
   - **Multi-Pass Review (requirements doc):** When the review agent and subagents are running, stream their activity (e.g. "Review agent spawning subagents...", "Subagent 1 reviewing...", "Subagent 1 reported back.") into this pane.
 - **Implementation:** Reuse the same Provider event-stream pipeline as Assistant chat (assistant-chat-design.md); for Multi-Pass Review, feed review-agent and subagent events into the same stream and render in the embedded pane. DRY: one "agent activity view" widget or component, used by Builder, Interview document creation, and Multi-Pass Review.
+- **Blocked-state mapping:** Permission blocked and FileSafe blocked activity cards use badge `blocked` plus inline recovery actions; MCP or `/Provider` unavailable states use badge `blocked` plus retry or `/config` actions; headless mode uses badge `blocked` plus an informational message instead of an unavailable GUI control.
 - **Pane separation:** Agent activity pane is streaming/progress only. Document review/editing is handled by a separate embedded document pane (see section 5 and `Plans/FinalGUISpec.md`).
 
 **Progress indicator:**
@@ -787,6 +738,10 @@ ContractRef: ContractName:Plans/Crosswalk.md
 - Current doc contents for docs with open durable annotations, or a user-selected subset
 - All open durable annotations in deterministic order by `doc_id`, source start offset, and `annotation_id`
 - Minimal context: document registry, per-doc approval state, requested/effective revision capability, and bounded provenance
+- Each annotation input record includes `annotation_id`, `operation = comment | replace | insert_after | remove`, `intent_kind = question | change_request | both`, selected anchor context, and `operation_payload`.
+- `operation_payload` uses the canonical shapes `{ body }`, `{ replacement_text, rationale? }`, `{ insert_text, rationale? }`, or `{ rationale? }`.
+- Structured revision input is source-of-truth anchored to source text, not the rendered visual tree: preview-mode selections must map back to source offsets when deterministic, and when deterministic mapping is unavailable, `Send selection to chat` may use quote/provenance while durable structured change-request annotations are disabled or downgraded to comment-only.
+- Revision input records also preserve `anchor.text_position`, `anchor.text_quote`, bounded `selected_text`, `provenance` (`path`, `source_surface`, bounded excerpt), `conflict_state`, and `staleness_state`.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
@@ -794,6 +749,8 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissio
 - Updated doc text for modified docs
 - Replies for question/comment annotations
 - One result record per input annotation, in the same order, with `outcome = addressed | still_open | cannot_apply`, `addressed_explanation`, `updated_anchor?`, and `failure_code?`
+- Output records remain per-annotation and must preserve the input order; partial success is represented per annotation rather than by a bundle-level vague success.
+- Revision output must be machine-validated before status transitions; the runtime, not the model, is authoritative for marking annotations addressed, still_open, cannot_apply, or unresolved.
 
 ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
 
@@ -802,6 +759,10 @@ ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
 - MAY answer questions without changing docs
 - Conflicting or stale mutating annotations are excluded from automatic revision until resolved
 - Allow one automatic retry on structured validation failure; then degrade or fail explicitly
+- Requested/effective revision capability must be visible when it differs. The effective capability is `schema_enforced_structured_revision`, `validated_structured_revision`, or `chat_handoff_only`.
+- `schema_enforced_structured_revision` requires transport-native `/structured-output`; `validated_structured_revision` requires local validation of shape, ids, `/order/shape`, and anchor applicability; `chat_handoff_only` means durable annotations remain but mutating revision is forwarded to chat/manual follow-up.
+- Remaining non-blocking buckets are tagged explicitly as `/future-phase`, `/risk`, `/providers`, `/conflicts`, `revision-prompt`, `thread-target`, `send-to-chat`, `sensitivity-aware`, `/stale`, and `/degradation`.
+- V1 keeps note-based embedded-document review upgraded into structured annotations and does not introduce direct `patch-apply` semantics.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md
 
@@ -811,6 +772,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Pro
 - `Send selection to chat` creates a thread-scoped composer chip in the owning chat surface for the next turn.
 - Durable annotations persist and re-anchor deterministically; `anchor_not_found` remains explicit and never silent.
 - `Resubmit with Annotations` performs a targeted pass and never invokes Multi-Pass Review.
+- `Resubmit with Notes` is a legacy UI label for the same targeted pass; it consumes open durable annotations, or a user-selected subset, and maps the output into the `open -> addressed -> resolved` lifecycle.
 - Final review cannot run until all docs are Approved/Done and no annotations remain open.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
@@ -917,6 +879,7 @@ Depth is enforced as a **soft cap** based on question count (not token budget):
 - **Skip:** phase is not run at all.
 - **Enforcement:** If the agent has asked `max` questions and has not signaled phase-complete, send a "Please wrap up this phase" instruction. If the agent asks one more question (grace: `max + 1`), force-complete the phase with a `phase.force_completed` seglog event.
 - Config per phase: `interview.phases.{phase_name}.depth` (default `"full"`), `interview.phases.{phase_name}.max_questions` (default: phase-template-defined).
+- Compatibility note: legacy source references to `phase.config.max_questions` normalize to `interview.phases.{phase_name}.max_questions` or the global `interview.max_questions_per_phase`; they do not define a separate phase-config schema.
 
 ### 6.3 Phase Selector Contract
 
@@ -1204,6 +1167,9 @@ If the selector returns an invalid/empty plan or fails to respond:
 
 - **Wizard length:** Adding intent selection and more project setup may make the wizard feel longer. Consider **progress indicator** (e.g. "Step 1 of N") and optional **skip** for advanced users.
   **Resolution:** Add a progress indicator showing current step index and total (e.g. "Step 2 of 6"). Skip-to-execution ("I already have requirements and prd.json") is deferred to a later phase; document as future work.
+
+- **IDE-grade complexity risk:** The wizard may borrow selectively from IDEs and IDE-grade workspace/project models, but it must not import a high-complexity project shell that causes hangs, heavy navigation regressions, terminal-cwd friction, or cross-tool `/source-resolution` bugs.
+  **Resolution:** Prefer legible project setup, file-tree ergonomics, and visible immediate `/test/share/apply` workflows over abstract flexibility; any cross-surface handoff must preserve the exact source, project, terminal cwd, and file context.
 
 - **Agent activity and progress (§3.5):** Implement embedded **agent activity view** and **progress indicator** for Requirements Doc Builder and Multi-Pass Review.
   **Resolution:** Implement one shared "agent activity view" component (non-interactive, streaming). Use it on the requirements/wizard page for Builder and Multi-Pass Review (requirements), and on the Interview page for document creation and Multi-Pass Review (interview). Progress indicator shows current document/step and remaining count. Provide pause, cancel, resume; persist "in progress" in recovery so user sees "interrupted" and can resume or start over.
@@ -1552,25 +1518,6 @@ Three project management flows are available that do **not** require the Chain W
 
 ### 13.2 Add Existing Project (no wizard)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0587
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - Entry: File menu → "Add Existing Project" OR Dashboard → "Add Project"
 - User selects a local folder (native OS picker) OR picks an SSH remote + path
@@ -1763,25 +1710,6 @@ The wizard returns to its normal state only when all `needs_user_clarification[]
 
 ### 15.3 UI Surfaces (Mandatory — Both Required)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0588
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - both are presented as canonical in different sections
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Surface 1: Thread Badge + In-Thread Clarification Message
 
@@ -1843,41 +1771,24 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0
 
 ### 15.6 Shared questionnaire alignment
 
-Wizard clarification uses the shared `question` contract rather than a wizard-local prompt schema.
+Wizard clarification uses the shared `question` / `/questionnaire` contract and `QuestionItem` item shape rather than a wizard-local prompt schema or wizard-local status model.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
 Alignment rules:
-- one clarification request may hold one question or many
+- one clarification request may hold one `QuestionItem` or many `QuestionItem` entries in the shared questionnaire envelope
+- the wizard consumes `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}` without adding wizard-only field names
 - `question_id` remains stable across thread, wizard, and stored report state
-- `source?` may preserve `option`, `other`, or `freeform`
-- required questions gate submit
-- dismiss pauses and resume restores the outstanding questionnaire from PM-managed draft state
+- per-question display text is `question`; `prompt` is allowed only on the envelope/header side and must not become the per-question field
+- `source?: "option" | "other" | "freeform"` may be mirrored when wizard answer payloads preserve answer origin
+- required questions gate submit, and missing required answers keep the shared question-card flow incomplete
+- dismiss pauses the flow and resume restores the outstanding questionnaire from PM-managed `draft_value` / draft state or its submitted outcome; the wizard does not invent alternate `status` or draft/resume names
 ## Requirements Builder Persona Strategy Addendum (2026-03-06)
 
 This addendum defines Persona behavior for the Requirements Builder / chain wizard flow.
 
 ### Builder stages requiring explicit Persona strategy
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0594
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requirements Builder and related wizard generation/review work should distinguish at least these stages:
 - intake / clarification
@@ -1901,7 +1812,7 @@ These are the default persona assignments for top-level wizard stages. Builder-s
 
 Requirements Builder MUST resolve Personas in this order:
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md#17.8
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
 
 1. explicit stage/pass override for the current Builder execution, if present
 2. configured stage/pass mapping from Builder Persona settings
@@ -1912,7 +1823,7 @@ Additional rules:
 - Intake/clarification MUST bias toward `collaborator` unless the user explicitly overrides it.
   ContractRef: ContractName:Plans/Personas.md
 - Review passes MUST NOT silently reuse the drafting Persona when a reviewer Persona mapping exists.
-  ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md#17.8
+  ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
 - Automatic resolution may return only IDs valid in `persona_registry` (`Plans/Personas.md` §7).
 
 ### Builder Persona config contract
@@ -1920,7 +1831,7 @@ Additional rules:
 
 `review_pass_personas` MUST use canonical ordinal keys:
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md#17.8
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
 
 - `pass_1`
 - `pass_2`
@@ -1937,7 +1848,7 @@ Rules:
 
 Builder Persona settings MUST persist a canonical config object with at least:
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#17.8, ContractName:Plans/Personas.md
+ContractRef: ContractName:Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors, ContractName:Plans/Personas.md
 
 - `mode` (`manual | auto | hybrid`)
 - `stage_personas` (map of Builder stage -> Persona ID)
@@ -1958,6 +1869,7 @@ For every Builder stage/pass execution, persist and expose:
 - `effective_model`
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
+- `requested_model_provider_id` / `effective_model_provider_id` when provider-specific runtime IDs are available alongside the resolved requested/effective model record
 
 Builder activity/status UIs may render this compactly, but they MUST use the same canonical requested/effective record as other surfaces.
 
@@ -1999,25 +1911,6 @@ Requirements Builder settings must allow platform/model selection per stage or p
 
 ### Requested vs effective visibility
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0595
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requirements Builder UI should display:
 - effective Persona,
@@ -2152,6 +2045,7 @@ If project context is still missing:
 In both cases:
 - show that the wizard was opened from Assistant Chat / Deep Plan
 - keep imported context visible/auditable
+- imported bundles must preserve `redaction_state`, `truncation_state`, and omission metadata rather than flattening evidence quality during wizard handoff
 - allow the user to continue into the interview with the imported materials in scope
 
 ### 17.7 Interview behavior after handoff
@@ -2201,6 +2095,7 @@ See canonical `wizard_status` definition in §2.1.
 Required distinction:
 - `attention_required`: the current clarification cycle can continue; answering the current questions may unblock progress
 - `blocked`: clarification rounds are exhausted or otherwise cannot progress automatically; the system must preserve the latest report and stop auto-rewrite/auto-advance until new explicit user input is provided
+- For Debug investigation handoff, a budget trip may surface as `failed` or `attention_required` depending on whether user recovery is meaningful, but the machine-readable `stop_reason_code` remains `investigation.budget_exhausted` and MUST carry `budget_kind`.
 
 Required `blocked` rules:
 - `Proceed` and `Start Run` remain disabled
@@ -2210,29 +2105,6 @@ Required `blocked` rules:
 
 ### 3. Dashboard / thread / resume behavior
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0591
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashboard CtAs, blocked-node lists, auth badges, and resume URLs
-  - `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.
-  - FinalGUISpec.md
-  - Resume Wizard
-  - View in Thread
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The wizard packet must support both:
 - `wizard_attention_required`
@@ -2287,7 +2159,7 @@ The wizard must differentiate:
 - clarification still pending (`attention_required`)
 - blocked on user correction / auth / approval / integrity (`blocked`)
 - degraded but still usable draft structure before lock
-## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
+## Canonical Wizard Blocked-State Canonical Alignment (2026-03-09)
 
 See canonical `wizard_status` definition in §2.1.
 
@@ -2344,28 +2216,6 @@ A wizard leaves `blocked` only when:
 Reopening the same blocked wizard without one of those changes does not clear blocked state and does not reset `clarification_round_count`.
 ## Canonical Wizard Blocked Lifecycle
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0586
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - wizard blocked state
-  - the `wizard.blocked` minimum payload earlier in the file requires `resume_url`
-  - wizard.blocked
-  - resume_url
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Canonical `wizard_status`
 See canonical `wizard_status` definition in §2.1.
@@ -2402,3 +2252,35 @@ Reopening the same blocked wizard without one of those changes does not clear bl
 See canonical `wizard_status` definition in §2.1.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+## Runtime Identity, Route, and Audit Refinement Rules
+
+Wizard planning output must carry the same runtime identity fields consumed by execution and storage owners. `Contracts_V0.md`, `Contracts_V0`, `Executor_Protocol.md`, `Executor_Protocol`, `Prompt_Pipeline.md`, `Prompt_Pipeline`, `storage-plan.md`, `storage-plan`, and `/storage` references require `node_id`, `package_id`, `seam_id`, `lane_id`, `attempt_id`, `effective_identity`, node-identity, and tier-identity reconciliation. `workflow_run_id` may link sweep passes, but the wizard must also preserve enough `/model` and `/runtime` context to explain which wizard/runtime state produced a sweep and what later execution it seeded.
+
+Audit refinement passes are canonical only when their exact counters and lineage are preserved. `supersedes_prior`, wave-one, `gap-007`, `gap-003`, `gap-004`, `gap-005`, exact-missing, consumer-propagation, blocker-family, affected-doc, broken-anchor, zero-finding, sixty-two, fifty-four, `canon_inventory`, `canon_inventory.json`, `Ledger Condenser`, restore points, `Plans/WorktreeGitImprovement.md`, `/WorktreeGitImprovement.md`, follow-up waves, planning_blockers, `planning_blockers = 0`, fix_backlog_items, `fix_backlog_items = 8`, total_gaps, `total_gaps = 8`, docs_affected, `docs_affected = 20`, underlying_gap_evidence_count, and `underlying_gap_evidence_count = 62` are audit values, not broad summary labels.
+
+Audit lineage that sets `supersedes_prior` can refine unresolved items without clearing material blockers: later condensation must keep the compact blocker bundle aligned to sharper live-doc evidence. `bundle-level` precision remains explicit when `gap-001` was under-reporting Interview as an affected consumer, when `gap-004` needs a Usage drill-through anchor recorded as exact-missing, and when `gap-008` removes an overstated exact-missing item while tightening identity-carrythrough. `gap-005` remains open while the blocked-packet payload is under-specified, even if assistant-chat headings are confirmed; heading precision alone does not change blocker counts, top-pressure docs, or the next stage. Source model-pass labels such as `GPT-5.3-Codex` are preserved as audit lineage for carrying the full tranche into the final pass, not as wizard runtime model requirements.
+
+Early broader-second-sweep and jumbo-doc read labels are likewise audit lineage for coverage breadth, not wizard runtime states or generated project artifacts.
+
+`Plans/Provider_OpenCode.md` and `/Provider_OpenCode.md` remain `/session` identity correction references. The planning-to-runtime handoff carries `wizard_step`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, `replan_generation`, `/degraded`, execution-unit context, and account/role linkage. The remaining exact breakage is owner-routing plus field `/command/schema` mismatch, not a new broad conceptual seam.
+
+FinalGUISpec thread search and wizard blocked state must normalize to shared route payloads. `FinalGUISpec.md` result clicks are search-local prose until they become normalized route payloads; `resume_url`, `attention_required`, `blocked`, `blocked_reason_code`, `allowed_action_ids`, and `allowed_action_ids[]` are shared by Chat, Interview, and Wizard. Thread archival `/deletion`, attempts `/generations`, blocked `/recovery` records, wizard blocked state, and annotation lifecycle `open -> addressed -> resolved` remain distinct lifecycle vocabularies.
+
+Gate-registry integrity must keep `GATE-007`, `GATE-008`, `GATE`, and `/reserved` tombstone handling visible. `GATE-012` must not collapse `attention_required` and true wizard `blocked` escalation into one evidence path; `attention_required` needs a persisted shape parallel to `blocked_notice`, append-only corrections, `/interview` alignment, and machine-verifiable expectations.
+
+Project-level attention summaries stay compact: show one `primary attention reason` or `primary blocked reason`, plus an optional count badge for additional issues, rather than trying to summarize every problem. Owner clarity matters as much as field choice; if execution-core ownership is not explicit before reconciling UI, `/storage/help`, Usage, Authentication, or Orchestrator seams, the same seam reopens under different names.
+
+Selectors are typed. `wizard_step` and `usage_event_ref` are not primary selectors; `object_kind = wizard`, `object_id = <wizard_id>`, `object_id`, `wizard_id`, `/detail`, and serialized `resume_url` carry wizard resume detail. `target_kind = primary_view`, `project_id = <project_id>`, `thread_id = <thread_id>`, `primary_view`, and `/step` restore wizard or thread focus without preserving unrelated current surface state.
+
+Persona and attention models must stay explicit. Overseer personas are settings-owned roles; worker personas/provider/model remain overrideable through `/provider/model` and `/type`. Historical mode disables live pause/resume/cancel, live retry/remediation, approval `/recovery`, and commands that mutate current runtime state. Severity semantics are `info`, `warning`, `attention_required`, `blocked`, and `system_notification`: `info` stays in-app local `/history`, `warning` can use an in-app banner `/card/badge`, `attention_required` means user input helpful `/needed`, `blocked` is action-blocking until a required `/precondition` changes, and `system_notification` is an out-of-app signal.
+
+Usage and command schemas must use first-class runtime objects: `/usage`, `/graph`, `seam_id`, `lane_id`, `tier_id`, `package_id`, `attempt_id`, `node_id`, `/commands`, and governance hooks. Non-wizard routes must follow the same model: `FinalGUISpec.md` / `Plans/FinalGUISpec.md` cards such as `Resume Wizard`, `View in Thread`, and CtA cards restore through shared navigation objects rather than special-case fields. Deep links keep `URL`, `puppet-master://wizard/`, `//wizard/`, `puppet-master`, `/thread`, and `resume_url` as serialized anchors, not as a separate routing schema.
+
+Wizard planning and `/document` systems are subject-first: the first-class identity is the staged or `/generated` artifact, and the filesystem path is a later materialization or backing-document assignment.
+
+Route targets carry enough subfocus for the destination, not just "open object X": Node Graph may need detail-panel or subsection focus, document panes may need history or approval-stage context, wizard resume may need a step plus clarification focus, chat or `/thread` search may need a specific message, and file opens may need line `/range`. The concrete wizard clarification deep-link remains `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`; its `puppet-master`, `wizard_id`, `wizard_step_id`, `//wizard/`, `/step/`, and `/clarify` components are serialized anchors. Wizard/thread blocked records preserve `/runtime` identity where applicable on `wizard_id`, `wizard_step`, and `thread_id`, while short cards may deep-link to Usage, `/Authentication/Orchestrator`, or other owner surfaces rather than repeating their full data.
+
+Wizard/interview output must converge on graph-native planning. `chain-wizard-flexibility` and `chain-wizard-flexibility.md` produce plan-graph output for Orchestrator/GUI consumption, while older `/Task/Subtask/Iteration` and `/Interview` vocabulary is compatibility context. The compact status model is `Activity`: `idle | running | paused | queued | background_active`; `Attention`: `none | attention_required | blocked | degraded`; and `Health`: setup `/config/repo` integrity. Conversational `/document-production` surfaces expose runtime-identity, effective-runtime, effective platform `/model`, skipped-control disclosure, `/pass` stage context, `/task/runtime` identity in-thread, and requested/effective visibility fields.
+
+Provider/account identity fields remain concrete: `effective_auth_mode`, `effective_account_id`, `effective_project_id`, and `operational_identity`. Cross-surface explanation must account for `/work-type` biases without dumping internals. Shared actions include `Show in Usage`, `Show in Ledger`, `Resume Wizard`, message deep links, `wizard_id`, `wizard_step`, `message_id`, `artifact_id`, `document_id`, and `usage_event_ref`. Coverage notes preserve re-audited, six-pass, `39`, `22`, `Plans/*.md`, and top-level counts without treating them as planning blockers.

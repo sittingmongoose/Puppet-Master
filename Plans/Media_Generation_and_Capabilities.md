@@ -1,39 +1,5 @@
 # Media Generation and Capabilities (Canonical SSOT)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0354
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - should also expose when an attempt is superseded by later remediation/graph generation
-  - `Superseded by Generation 4`
-  - Superseded by Generation 4
-  - live status claims, blocked action buttons, and generation overlays should disclose trust state explicitly
-  - patch point, target generation, resulting generation, requested reason, applied outcome
-  - later addenda require preservation of `thread_id`, `attempt_id`, `node_id`, generation, snapshot IDs, and remediation lineage
-  - thread_id
-  - attempt_id
-  - node_id
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -108,7 +74,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
       "category": "media",
       "enabled": false,
       "disabled_reason": "NOT_CONFIGURED",
-      "setup_hint": "Add a Google Gemini API key in Settings → Gemini Provider."
+      "setup_hint": "Configure Gemini access in Settings -> Authentication."
     }
   ]
 }
@@ -127,8 +93,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
 
 | Value | Meaning |
 |-------|---------|
-| `NOT_CONFIGURED` | Required provider configuration is missing (e.g., no Google Gemini API key). |
-| `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current API key or provider setup. |
+| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved Gemini mode (for example, no eligible Gemini OAuth session, Google/Vertex credential, or Google/Gemini API key). |
+| `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current Gemini account, auth mode, API key, or provider setup. |
 | `ADMIN_DISABLED` | The feature is explicitly disabled in Settings (Media settings). |
 | `BACKEND_UNSUPPORTED` | The current backend does not support this media kind (e.g., Cursor backend for video/tts/music). |
 | `RATE_LIMITED` | The capability is temporarily unavailable due to rate limiting. |
@@ -199,28 +165,6 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
 
 ### 2.2 Request envelope
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0355
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Request should carry:
-  - `request axis`
-  - request axis
-  - should answer: "what did this run/attempt request, what actually happened, and why?"
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ```json
 {
@@ -293,19 +237,40 @@ ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/
 
 All non-Cursor backends follow the canonical Gemini media routing model.
 
+Stale-canon cleanup: legacy shorthand that described non-Cursor Gemini media as simply `key-backed`, described Gemini as one `mixed-account` provider, or treated the Gemini API-key `key-exception` as the whole model is obsolete. Gemini media routing is mode-dependent. Gemini Direct (`gemini`) is the direct, key-only, API-key-backed provider entry. Gemini CLI (`gemini_cli`) is the CLI-wrapped provider entry and may use OAuth, API-key, or Google/Vertex credential account rows, but each media request MUST evaluate the concrete requested/effective provider entry, auth family, billing/quota plane, account/profile, and capability path before enabling a capability.
+
+Quota/usage tools and account/plan UI for Gemini are also mode-dependent rather than API-key-only or OAuth-only. Direct key-backed rows can show API-key-derived or estimated usage with project attribution when available; Gemini CLI OAuth rows can show `Gemini quota` only when authoritative quota semantics are available; CLI API-key and Google/Vertex rows must use their own source-qualified labels. The capability picker imports those account/plan and usage labels from `Plans/Multi-Account.md` and `Plans/usage-feature.md` instead of inventing a parallel bucket.
+
 Required routing order:
 1. resolve the requested provider/runtime surface for media
 2. resolve the requested/effective auth family and eligible account or profile set
 3. choose the concrete runtime surface that actually supports the requested media kind
 4. record the resulting requested/effective runtime snapshot
 
+Media generation consumes the product-wide shared runtime identity model instead of defining feature-local runtime-state fields. The requested/effective runtime snapshot remains that shared model's one canonical truth for requested/effective runtime state across the product, and media routing reads it to produce less schema drift, better audit/history/debugging (`/history/debugging`), more consistent UI across chat, tools, logs, subagents, and providers, safer routing/retry/account-switch (`/retry/account-switch`) behavior, and fewer feature-local special-case fields. Media-specific records may attach media request/output details, but they must not own or create shadow fields for account, provider, retry, switch, or audit identity.
+
 Media routing rules:
-- Gemini direct media follows the direct Gemini provider path only.
+- Gemini Direct media follows the direct Gemini provider path only and is key-only/API-key-backed.
 - Gemini CLI media uses the Gemini CLI runtime only when the required helper path is configured and a compatible API-key-backed media route exists.
 - when Gemini CLI media depends on nanobanana, PM installs and updates nanobanana per PM-managed Gemini CLI account root only when media is enabled.
-- PM injects `NANOBANANA_API_KEY` at launch instead of duplicating secrets into provider-managed config.
+- Nanobanana media tracks installed version per account root and supports multiple `image-preview` models; PM injects `NANOBANANA_API_KEY` at launch, including when the Gemini CLI account is OAuth- or Vertex-backed, instead of duplicating secrets into provider-managed config.
 - OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path are `media_partial` or `media_unavailable` rather than silently cross-falling back.
+- provider health/capability refresh for Gemini CLI media MUST expose extension presence/version (`/version`) and restart-required state in the user-visible `/disclosure` and `/capability` surfaces.
 - when family pooling chooses `Gemini` direct instead of `Gemini CLI` because of media capability, the requested/effective runtime disclosure must make that switch visible.
+- Media profile overlay policy keeps auth `/session/account` state isolated per account. Settings `/plugins/MCP/extensions` may be isolated or PM-managed shared assets only when provider capability and risk review support sharing; the default is conservative isolation.
+- Media-impact reconciliation follows the final three-bucket `CHANGE` register: this document owns media-capability changes while consuming account, runtime, usage, model, and GUI owner changes from the provider/account specs.
+- PM should consider disabling `general.plan.modelRouting` in PM-managed Gemini CLI profiles unless PM explicitly wants Gemini CLI's internal plan `/execution` model split; any effective-model changes from internal routing or fallback must be captured and surfaced.
+- Media usage accounting consumes `Plans/usage-feature.md` / `/usage-feature.md`, `usage_event_ref`, and a single scope-precedence envelope rather than inventing media-local usage scope rules.
+- Media audit links must not treat `.puppet-master/state/active-git-operations.json`, `/state/active-git-operations.json`, or `puppet-master/state/active-git-operations.json` as canonical audit; `storage-plan`, `puppet-master`, seglog, and `/receipts` remain the source-of-truth path for durable audit evidence.
+- Media consumers of execution state follow event-sourced storage: `active-agents.json` and active-agents flat files are compatibility inputs only, while `/redb`, redb projections, and event-sourced stores own durable execution state.
+- `resume_url` is a derived serialized field from the canonical route contract, not a stronger source of truth for media generation recovery or continuation.
+- spot-checks against `Plans/storage-plan.md` / `/storage-plan.md` must preserve storage as the owner for receipt, usage, and runtime persistence fields consumed by media records.
+- `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` consumers must not keep tier_id-centric media usage or identity pivots; `tier_id` is compatibility context, while `/runtime` and attempt/receipt-based `/receipt-based` truth own media usage joins.
+- `orchestrator-subagent-integration` / `orchestrator-subagent-integration.md` selector and hook APIs consume canonical execution-unit refs for truth and smaller derived selection `/decomposition` objects for heuristics.
+- Provider/account identity remains shared-runtime truth; media operational identity remains side-effect and `/target` truth. Media records may reference `/account`, but side-effect target identity must stay separate.
+- Execution-core docs must retire tier-rooted structs and enum sets before downstream media, usage, and runtime consumers compensate locally instead of inheriting stable runtime truth.
+- multi-project, lane-based orchestration means media records cannot assume one active `/worktree/thread` context; generated artifacts and usage joins must carry enough project, lane, worktree, thread, and request identity to disambiguate concurrent media work.
+- The common envelope contract is not optional: media generation records must name request, runtime, usage, route, artifact, and recovery fields explicitly instead of relying on underspecified shared envelope prose.
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 2.5 Response shape
@@ -358,8 +323,8 @@ Response fields:
   - `bytes` (integer): artifact file size in bytes.
   - `meta` (object): kind-specific metadata — `w`/`h` for images/video, `duration` for video/audio, `sample_rate` for audio, plus `model_used`, `seed`, `generation_time_ms`.
 - `usage` (object, required):
-  - `cost_microdollars` (u64): canonical persisted cost in microdollars (1 USD = 1,000,000 microdollars). This is the SSOT cost field per Architecture_Invariants.md INV-015.
-  - `cost_is_estimate` (bool): `true` when the cost is a provider-reported estimate rather than an authoritative actual. Media generation costs are typically estimates.
+  - `cost_microdollars` (`cost_microdollars: u64`): canonical persisted cost in microdollars (1 USD = 1,000,000 microdollars). This is the SSOT cost field per Architecture_Invariants.md INV-015.
+  - `cost_is_estimate` (`cost_is_estimate: bool`): `true` when the cost is a provider-reported estimate rather than an authoritative actual. Media generation costs are typically estimates.
   - `input_tokens` (u64, optional): input token count if applicable.
   - `output_tokens` (u64, optional): output token count if applicable.
   - `media_units` (u64, optional): provider-specific media generation unit count.
@@ -370,6 +335,8 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architectur
 **Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
 
 **Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). Implementations MUST write artifact files first, compute hashes/bytes from the final bytes on disk, and only then write `manifest.json`. If the provider returns partial output and final artifact persistence fails, the call returns failure and MUST NOT leave a manifest claiming success for missing artifacts.
+
+**Generation supersession record:** When remediation or graph generation supersedes a media attempt, the result carries old generation, new generation, invalidated path refs, new path refs, surviving `/rejoined` path refs, and resulting concern, `/promotion/recovery`, or recovery implications so overlays and blocked actions disclose the final state without diffing addenda.
 
 ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primitive:ArtifactStore
 
@@ -405,7 +372,7 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2, ContractNa
 
 | Code | When |
 |------|------|
-| `NOT_CONFIGURED` | Required provider configuration is missing (e.g., no Google Gemini API key). |
+| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved Gemini mode (for example, no eligible OAuth session, Google/Vertex credential, or Google/Gemini API key). |
 | `MODEL_UNAVAILABLE` | Requested `model_override` could not be resolved or model is offline. |
 | `RATE_LIMITED` | Provider returned a rate-limit / 429. |
 | `QUOTA_EXCEEDED` | Provider quota exhausted. |
@@ -713,7 +680,7 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
 
 **Model unavailable reason (`MODEL_UNAVAILABLE`):**
-> "That model isn't available with the current Gemini account or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+> "That model isn't available with the current Gemini account, auth mode, or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
 
@@ -723,7 +690,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 **Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
-> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account or API key for media generation."
+> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account, auth mode, or API key for media generation."
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
 
@@ -808,6 +775,8 @@ ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED13"></a>
 **AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use the same requested/effective Gemini auth/account resolution model as standard Gemini provider interactions. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback to the other auth surface.
+
+**AC-MED13A:** Gemini media availability, usage/quota disclosure, and account/plan UI are mode-dependent. Gemini Direct is key-only/API-key-backed; Gemini CLI OAuth, API-key, and Google/Vertex rows are separate effective modes. UI MUST NOT collapse those modes into one stale-canon mixed-account bucket.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 

@@ -1,191 +1,15 @@
 # Orchestrator Subagent Integration -- Implementation Plan
 
-### Reconciliation addendum
 
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+## Canonical owner-section requirements
 
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-  - Current docs do say Orchestrator consumes the plan/node graph for execution
-  - Design discussion now has a concrete recommendation direction
-  - Emerging execution-settings direction
-  - Worktree gap is now explicit
-  - seam review loop
-  - runtime/model precedence
-  - worktree behavior
-  - Highest-Impact Docs
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-#### Source target target-0616
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-  - Current docs do say Orchestrator consumes the plan/node graph for execution
-  - Design discussion now has a concrete recommendation direction
-  - Emerging execution-settings direction
-  - Worktree gap is now explicit
-  - seam review loop
-  - runtime/model precedence
-  - worktree behavior
-  - Highest-Impact Docs
-- Exact required items represented:
-  - Orchestrator must consume canonical runtime fields and event names from shared contracts
-  - use plan-graph index and node shard files as required execution inputs
-  - treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model
-  - define the governing intelligence/control loop in a graph-canonical system
-  - resolve whether tiers remain only a derived human-facing lens or retain execution authority
-  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work [retired-token-11], feature seam overseer, and overseer-delegated node worker levels.
-  - Make requested vs effective provider/model visible at all levels where [retired-token-6] can occur.
-  - Specify node [retired-token-14] selection as dynamic-by-default from node scope/type; node-worker [retired-token-14] override is policy-owned, not per-node [retired-token-4].
-  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.
-  - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.
-  - Resolve package-based worktree preference vs [retired-token-7] for scale/manageability.
-  - Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.
-  - Expose source-control/worktree handshake as a remaining blind spot.
-  - define concrete seam review loop behavior
-  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts
-  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-12] recommendation, corroboration requirement and outcome when invoked
-  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels
-  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints
-  - whether an overseer can do direct node work or only delegate/review
-  - if direct node work is allowed, whether it uses overseer-[retired-token-15] or node-[retired-token-15]
-  - how dynamic node [retired-token-14]s interact with explicit node overrides and overseer-controlled delegation
-  - how are worktrees assigned for parallel nodes within the same package or seam
-  - what happens to worktree ownership during remediation, corroboration, or [retired-token-12]-triggered work
-  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result
-  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism
-  - Replace tier-rooted execution with package/seam/lane model
-  - Define [retired-token-11] + seam overseer roles
-  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
-  - Redefine gates to package-complete / seam-complete
-  - Rename or retire Tiers UI/tab and tier_tree/progress bars
-  - a seam overseer should not collapse into a narrow implementation [retired-token-14] just because a framework is detected
-  - `Seam integration default`
-  - Seam integration default
-  - `Seam integration blocked`
-  - Seam integration blocked
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - `[retired-token-26]` already carries an `[retired-token-27]` field block, but stale `[retired-token-18]` / `[retired-token-21]` residue still survives nearby.
-  - [retired-token-26]
-  - [retired-token-27]
-  - [retired-token-18]
-  - [retired-token-21]
-  - `[retired-token-26]:209-235`
-  - [retired-token-26]:209-235
-  - `[retired-token-26]:380-402`
-  - [retired-token-26]:380-402
-  - `[retired-token-26]:379-391`
-  - [retired-token-26]:379-391
-  - `[retired-token-26]:374-391`
-  - [retired-token-26]:374-391
-  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `[retired-token-26]:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
-  - cov-526
-  - obl-222
-  - Plans/Crosswalk.md:88-94
-  - Plans/WorktreeGitImprovement.md:62-66
-  - Plans/WorktreeGitImprovement.md:78-80
-  - [retired-token-26]:28-41
-  - working_ledger.md:L806
-  - working_ledger.md:L1036
-  - `[retired-token-26]:28-41`
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+### Retire tier-era canon and shadow fields
 
-## Fidelity recovery addendum
 
-This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
-
-### Fidelity recovery cov-005: Retire tier-era canon and shadow fields
-
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0633
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam now needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
-- Coverage rows: cov-005
-- Fidelity gap refs: cov-005
-- Required fidelity items:
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-005: Retire tier-era canon and shadow fields` exists in `Plans/orchestrator-subagent-integration.md`.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
-- Exact acceptance check: The `cov-005` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
-
-### Fidelity recovery cov-172: Coverage blocker worktree allocation strategy
-- Coverage rows: cov-172
-- Fidelity gap refs: cov-172
-- Required fidelity items:
-- Exact required item: Define concrete worktree allocation strategy
-- Exact required item: Define contamination, reuse, and cleanup rules for that strategy
-- Acceptance checks represented:
-- Exact acceptance check: The heading `### Fidelity recovery cov-172: Coverage blocker worktree allocation strategy` exists in `Plans/orchestrator-subagent-integration.md`.
-- Exact acceptance check: The `cov-172` repair states the exact requirement: Define concrete worktree allocation strategy
-- Exact acceptance check: The `cov-172` repair states the exact requirement: Define contamination, reuse, and cleanup rules for that strategy
-- Exact acceptance check: The `cov-172` repair is in the owner section for `Plans/orchestrator-subagent-integration.md` and is not only a downstream consumer note.
-
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+### Coverage blocker worktree allocation strategy
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 > **Integration policy note (2026-02-24):** Runtime integration follows the ProviderTransport taxonomy (SSOT: `Plans/Contracts_V0.md`): Cursor/Claude Code = `CliBridge`, Codex/Copilot/Gemini = `DirectApi`, OpenCode = `ServerBridge`. Any Codex/Copilot SDK references in this file are historical context only and are not implementation targets.
 
@@ -199,6 +23,8 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 - Code changes required
 - Configuration options
 
+Browser-capability rethink entries in this planning-doc are research inputs, not direct implementation authority by themselves. They may survey capability breadth, behavior contracts and `/state` model, UX flows, safety and `/permissions`, and chat `/planning` integration, but canonical product/runtime changes must be transferred into the owning live `Plans/**` docs before implementation.
+
 ## Executive Summary
 Internal multi-agent orchestration in Puppet Master is PM-native. Parent and child supervision, timeout propagation, thread and run lineage, shell isolation, cancellation, and crew scheduling are owned by this document together with `Plans/Contracts_V0.md` and `Plans/storage-plan.md`.
 
@@ -211,31 +37,91 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 Every child spawn, retry, cancellation, timeout, pause, resume, and completion path MUST preserve PM lineage fields (`run_id`, `thread_id`, `parent_run_id`, `child_run_id`) plus requested/effective runtime descriptors where applicable. Parent oversight and audit visibility are mandatory even when a child is executing through a bridged provider surface.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Child sessions may be re-entered for explicitly supported multi-turn continuation only through PM-owned resume envelopes. Re-entry preserves lineage, narrowed-or-equal permissions, and current runtime snapshots; it does not create hidden inter-agent channels, implicit shared state, or an unbounded task queue outside the crew board contract.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+Child effective-authority is clamped before dispatch and audited after completion. Parent restrictions clamp the canonical `child-permission` envelope: child tool policy, write scope, FileSafe scope, mode ceiling, provider/model/account availability, and crew admission. Pre-dispatch budget denial, post-response budget-overrun recording, completion, cancellation, kill, terminal cleanup, child-session / provider-process teardown, and `budget-outcome` supervision all use the same canonical runtime outcome taxonomy.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+The stale later-stage example `Enforce maximum concurrent crews (e.g., 20 total)` from `Gap #45: Crew performance and scalability` is non-canonical. Crew and child admission use the executionLimits owner contract; no later-stage prose may reintroduce parallel caps that compete with that SSOT.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+Task-tool delegation must honor per-target deny rules and must reject unsafe self-dispatch loops. A long-running task that returns a `session_id` is still governed by the same child lifecycle, resume, timeout, and parent supervision rules rather than becoming an unowned detached session.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+#### Task tool contract alignment
+
+Task and question escalation remain parent-owned. Subagents may request clarification only by escalating through the parent orchestrator; they do not address users directly, and task alignment follows the parent `/question` flow plus the child lifecycle contract instead of a child-local ask channel.
+
+Child launch context carries a normalized effective skill/tool/permission/MCP snapshot plus cache-affinity, cache-hit, compaction-state, compaction-regression, and subagent context visibility context when provider-side caching, ordinary compaction, or dynamic context shrinking affects the handoff. These are propagation inputs to the PM child-run record and handoff bundle; they do not create provider-specific hidden channels or bypass the parent permission ceiling.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MCP_Integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+AgentCard-style capability advertisement is allowed only as an inspectable capability summary for PM subagent selection. AgentCard data does not replace the registry, permission ceiling, runtime snapshot, or provider capability contract.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+
+The legacy duplicate heading string `#### Task-envelope timeout contract` is retired as a separate live heading. The singular child timeout envelope above is the non-contradictory owner contract: terminal elapsed-time completion is `done.task_timeout`, while pre-dispatch and post-response budget outcomes follow the budget taxonomy. Any wording that under-specifies or over-summarizes this by reviving `done.timeout` or alternate timeout headings is non-canonical.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+The crew message board is the normative subagent-collaboration surface. BrainStorm, Crew, and Assistant projections may show collaborative summaries, but schema, routing, priority, rate limiting, orchestrator visibility, and parent mediation remain owned by this orchestrator contract.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+## Runtime scheduler, identity, and worktree reconciliation
+Orchestrator consumes canonical runtime fields and event names from shared contracts; it must not revive local page-spec ownership such as `PuppetMasterEvent::*`, PuppetMasterEvent, `/type`, or `/schema` as first-class runtime schema. Exact transfer rows that mention exact_items, exact-missing, missing_data_shape, missing-owner-heading, gap-001, gap-002, gap-003, gap-004, gap-005, gap-007, gap-008, result_id, audit-stable, `/lineage`, anti-pattern residue, and lifecycle-boundary must resolve into explicit owner headings and runtime records instead of remaining ledger-only defect names.
+
+### Cross-surface receipt record
+
+The scheduling model is graph-native: runnable graph nodes, DAG readiness, scored ready-set selection, and runtime-selection use plan-graph, plan_graph, project_plan_graph_index, project_plan_graph_index.schema.json, plan_graph.schema.json, `/project/plan_graph/index.json`, puppet-master/project/plan_graph/index.json, `/node`, `/node/runtime`, node shard files, and sharded-only execution inputs. Any `Phase / Task / Subtask / Iteration`, Phase, Task, Subtask, Iteration, tier_id, active-tier, TierChanged, tier-scoped, tier-keyed, tier-native, runnable-unit, or TierContext language is derived display or compatibility context only. Lexicographic-style selection is retired in favor of the scored ready-set.
+
+Runtime identity carry-through is mandatory across orchestrator, interview, and usage. Plans/usage-feature.md, /usage-feature.md, Plans/interview-subagent-integration.md, /interview-subagent-integration.md, Plans/orchestrator-subagent-integration.md, /orchestrator-subagent-integration.md, execution_unit_context, requested_account_policy, requested_account_binding, persona_override_owner_id, plan_or_tier_default, SSOT, `select_for_tier()`, select_for_tier, account_id, requested_account_id, operational_identity, runtime-identity, runtime-role, billing-identity, `/account-history`, `/effective`, tool_use_id, and carry-through fields must preserve requested/effective account and role disclosure rather than narrowing to one local packet.
+
+Worktree allocation is package-based by default with seam/lane exceptions documented by policy. SCM and /worktree behavior uses Plans/WorktreeGitImprovement.md, /WorktreeGitImprovement.md, package-based lane pools, branch-per-tier compatibility notes, contamination quarantine, restore-before-reuse, same-cycle event-driven update, file-lease rejection, first-class `/update`, `/backoff`, steady-state avoidance, worktree-native isolation, and safe-point-aware `/transition` recovery. Dependent nodes stay same-lane by default; promote-then-fork occurs only when it improves safe parallelism.
+
+Delegated work and memory loops remain parent-owned. Fresh-iteration loops may read `/plan`, append-only progress, reusable-pattern summaries, repo state, git history, `/gotchas`, and files changed, but they do not create hidden orchestrator memory beyond assistant-memory-subsystem, assistant-memory-subsystem.md, /State, system-prompt, and newfeatures.md owner boundaries. Task/run/subagent, package-level overrides, run scope, subagent scope, and multi-project package-lane execution must not collapse into FIFO chat ordering.
+
+Provider and permission boundaries stay explicit. Plans/Provider_Stream_Mapping_External_Reference_A2A.md and /Provider_Stream_Mapping_External_Reference_A2A.md are adapter references only; hard-wires to tier scope are non-canonical when they drop /account/trust metadata. Permissions_System.md and Permissions_System consumer rows must project blocked-reason, safe-point, event-family, tier_type compatibility labels, `/event/usage`, policy-visible role routing, UI_Command_Catalog, UI_Command_Catalog.md, per-command route meaning, and `MUST VERIFY` / VERIFY inspection requirements through shared runtime events.
+
+Packet emission is gated by target-level fidelity. Packet artifacts may be useful planning state, but they are not faithful-emission-safe until packet-planning inputs remove contradictions in owner docs, target-level runtime fields, and /graph scheduling records. The orchestrator therefore treats packet-planning as a preflight contract, not as proof that downstream packet emission can proceed.
+
+Scheduler and account selection fallbacks are deterministic. Graph scheduling uses package-based /graph lane pools, /capacity-aware ready-set filtering, blocked constraints, and wake reasons before dispatch. If a preferred subagent, Persona, provider, or /provider/model candidate is unavailable after capability filtering, the orchestrator falls through to the next eligible candidate while recording requested Persona, effective Persona, selection reason, skipped Persona controls, and any requested_account_policy /control frame that explains how selection occurred.
+
+Scoped overrides have explicit lifecycle boundaries: turn, session, run, task, and subagent overrides are separate records and must not collapse into one sticky runtime setting. TierContext is retained only as a compatibility wrapper that may carry legacy_decomposition_context beside canonical execution_unit_context; storage-side runtime consumers and human-in-the-loop projections must treat execution_unit_context as the owner field.
+
+SCM and worktree policy remains package-based end-to-end. Orchestrator worktree visibility records package-based lane-pool allocation, contamination classification, lane quarantine, safe-point recovery, and restore-before-reuse semantics shared with Source Control, while usage attribution is recorded on /package/seam/attempt/remediation dimensions rather than centering tier_id.
+
+The six-pass owner-doc audit posture is canonical for this integration surface: remaining issues are exact owner-doc structural mismatches and target-level drift, not permission to re-use stale source scaffolding. Orchestrator consumers must route storage-side gaps back to their owner docs and keep follow-up records visible until the owner span is repaired.
+
+Destructive action taxonomy is canonical. `non_reversible` covers durable `/live` state mutation such as deleting records or `/skills/files` without a protected restore path. FinalGUISpec.md, /FinalGUISpec.md, page-spec, Overseer, Package, Lanes, detached_window, project-state, artifact_kind, task_id, and Plans/UI_Command_Catalog.md / /UI_Command_Catalog.md references are consumer or compatibility vocabulary unless this orchestrator section names the runtime owner.
+
+`ActiveAgent`, crew structs, and coordination payloads key first on canonical execution refs such as run/thread/parent-child/node/attempt/package/seam/lane identity. Any `tier-keyed` field is a compatibility label only; it must not outrank `/package/seam` runtime identity or become a primary crew lookup key.
+
+Orchestrator action metadata is `command-owner` bound to `Plans/UI_Command_Catalog.md` / `UI_Command_Catalog`: every Orchestrator action declares whether it is `palette-visible`, `shortcut-worthy`, `context-menu` only, `bulk-safe`, or `bulk-forbidden`, and bulk mutation remains disabled unless the catalog and permission contracts both allow it.
+
+GUI `execution-policy` settings choose retry identity and node worker class explicitly: default retries use a fresh agent/subagent, optional same-agent retries retain prior context only when policy allows, and node execution uses `/subagent` workers by default with a full-agent override recorded as runtime policy rather than hidden state.
+
+Graph schemas must not `hard-code` lexicographic selection as execution authority. The scored `ready-set` is canonical; schemas and consumers preserve `node-first` `runnable-unit` identity, while `/task/subtask` and `Iteration` are display or compatibility lenses only.
+
+Tier `/view` identity is projection-only: `tier_type`, `tier_id`, title/description, and optional parent labels may help UI grouping, but they never replace run/node/package/seam/attempt identity in runtime routing.
+
+Coverage/audit notes for this owner doc treat the remaining partial tail uniformly as `Gemini + Opus + Sonnet`; there is no command-owner or orchestration-tail exception that permits uneven pass coverage after the merge.
+
+Retry and remediation preserve `structured-attempt-handoff`: each failed node attempt emits a receipt of what it did, what changed, why it failed or was `/blocked`, and what to try next. Retries remain policy-driven with `/caps`; some outcomes route to remediation, graph patch, `/worker` replacement, or `/HITL` instead of blind looping, and the `/handoff` artifact remains attached to the next `/subagent` attempt.
+
+Parallelism uses package/seam `lane-pool` capacity rather than stale `per-thread` queues, `per-provider` caps, parallel subtasks, or crews-per-tier as execution owners. Those older shapes may appear only as migration notes that map into package/seam promotion and lane capacity.
+
+Storage receipt and `/activity` gaps reported through this surface are `under-transfer` or anchor failures until the storage owner records the missing receipt contract; they are not total `missing-content` claims against this orchestrator doc.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md
 ## Rewrite alignment (2026-02-21)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0622
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Runtime_Artifacts_Panel.md` still uses `task_id` vocabulary where the rewrite increasingly needs `node_id` / package / seam / lane identity instead.
-  - Runtime_Artifacts_Panel.md
-  - task_id
-  - node_id
-  - This seam is mostly confirming alignment, not exposing a major contradiction.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
 
@@ -304,25 +190,6 @@ Required orchestration rules:
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Skills_System.md
 ## Debug-capable investigation orchestration
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0618
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - lane = orchestration lineage object
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Orchestrator may launch shared investigations when builds, tests, environment setup, or runtime verification fail.
 
@@ -391,6 +258,7 @@ Rules:
 - Child-run routing keeps requested and effective account identity explicit.
 - `requested_account_binding` and `requested_account_policy` survive into delegated runtime selection and audit.
 - `operational_identity` and `tool_use_id` survive into lineage, approval, and usage joins.
+- Subagent selection is a `/consumer` of the shared runtime-account owner contracts: it preserves `requested_account_binding` and `operational_identity` without local substitute fields, keeps requested/effective account and `effective-account` disclosure aligned to `Plans/Contracts_V0.md`, `Plans/Multi-Account.md`, and `Plans/storage-plan.md`, and enforces owner/consumer boundaries for account-binding fields.
 ## Integration with Orchestrator
 
 ### Overseer (controlling role)
@@ -710,12 +578,24 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 - Define contamination, reuse, and cleanup rules for that strategy: contaminated worktrees are quarantined until recovery clears the blocker, reuse requires clean lineage plus no dirty/conflict state, and cleanup waits for archive, receipt, and recovery checks instead of age alone.
 - This subsection stays separate from runtime-context canon language and separate from stale-token retirement language.
 
+### SCM lineage snapshot for Orchestrator consumers
+
+`scm_lineage_snapshot` is a projector-owned Orchestrator consumer snapshot assembled from canonical runtime, storage, and Source Control records for UI inspection, run receipts, blocked `/recovery`, and later `/reconciliation`. It does not replace the owner records. Every run, node, `/tier/attempt`, and attempt consumer must be able to resolve `project_id`, `repo_id`, `repo_root`, `worktree_id`, `worktree_path`, `worktree_status`, `branch_name`, `base_branch`, `upstream_remote`, `upstream_branch`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, `ahead_count`, `behind_count`, `dirty_file_count`, `conflict_file_count`, `owner_run_id`, `owner_node_id`, compatibility `owner_tier_id`, `owner_attempt_id`, `safe_point_id`, `requires_safe_point_restore`, active git operation, last commit summary, and `pr_ref`.
+
+`worktree_status` uses explicit states: `clean`, `dirty`, `conflict`, `orphaned`, `unknown_ownership`, `locked`, `repairable`, and `prunable`. `Progress > Current Task`, `Progress > Orchestrator Status`, graph/detail views, History rows, blocked cards, and run receipts consume this snapshot as projection data only; mutation authority, safe-point restore rules, compare target calculation, and persisted SCM evidence remain owned by `Plans/WorktreeGitImprovement.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md`.
+
 ### Compatibility retirement
 
 - Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon.
 - Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
 - Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
 - This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.
+
+#### Child effective authority and timeout contract
+
+Child timeout, budget, and `/time` supervision must reuse the corrected `Plans/Run_Modes.md` kill/done `/outcome` taxonomy. The pre-fix mixed `stop.*` / `kill.*` vocabulary is retired for child supervision: pre-dispatch budget denial is `kill.budget_exceeded`, post-response overrun after durable usage recording is `done.budget_exceeded`, and child effective authority must surface the resulting outcome without inventing a local stop-state dialect.
+
+The child timeout envelope carries `timeout_ms`, request identity, `/response` identity, parent remaining-budget snapshot, and the clamped child deadline. `/propagation` is explicit: if a child asks for more time than the parent has remaining, the child timeout is clamped and the response records the clamp. shell-isolation is contract-level behavior, not governance-level guidance; each child execution boundary owns shell scope lifecycle, teardown, and leak prevention.
 
 ## Benefits
 
@@ -981,36 +861,13 @@ Canonical decision:
 - required planning dependencies may still be child runs when they remain read-only.
 - parent mode is a hard ceiling.
 - the orchestrator must not silently widen a read-only planning run into execution authority.
+- Planning-flow behavior is PM-native: do not justify `todowrite`, `question`, or other planning tools solely by analogy to OpenCode defaults; Plan remains read-only until execution, clarifying questions are first-class, and the plan plus TODO stay visible artifacts during planning.
 
 The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 ## GUI and Backend Scope (All In-Scope Now)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0620
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam is now tightly coupled to historical-run behavior:
-  - owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names
-  - this seam now looks resolvable; the missing piece was ownership, not concept invention
-  - This seam is now mostly an ownership cleanup, not a concept invention problem.
-  - the capability-gating seam now has a direct contradiction: one owner implies frozen capability state/events while the media/capability owner says capability is recomputed live and not carried as a separate persisted state stream.
-  - This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All previously "optional" or "later" plan-mode and subagent GUI/backend items are **in scope now**. The following specifies frontend and backend so they work end-to-end.
 
@@ -1046,7 +903,7 @@ Backend requirements:
 - child routing resolves requested versus effective Persona, runtime surface, model, and effort.
 - capability narrowing is applied before launch.
 - child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
-- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+- parent orchestration state is a projected child-orchestration facet over canonical child records/events, not a separate ad hoc child-state store.
 
 Parent orchestration responsibilities:
 - maintain child rollups by batch and subgroup.
@@ -1062,32 +919,14 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contra
 - **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: dedicated "Subagent personas" tab or subsection (Config or Setup); list showing name + description; "Edit" to change the canonical Persona content; "Add" / "Delete" for list management.
 - **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan's persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, ...) or from a future subagent registry; document so UI and backend share the same names.
 
-### 6. Doctor -- Gemini Plan Mode Check
+### 6. Doctor -- Gemini Access and Plan Mode Check
 
-- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini, validate that a Google Gemini API key is configured. Gemini is a Direct API provider; no CLI settings file check is needed.
+- **Check:** In `doctor/` (new check or inside existing config check): if any tier selects the Gemini family, validate the resolved Gemini provider entry and auth mode rather than assuming a Gemini API key is the primary `/only` settings surface. Gemini Direct requires an API-key-backed account; Gemini CLI may resolve OAuth, API-key, or Google/Vertex credential account rows according to `Plans/Multi-Account.md` and `Plans/Contracts_V0.md`.
+- **Project-context UX:** Gemini OAuth checks expose explicit `project-context` fields/UX: optional configured Google Cloud project id, effective resolved project id, and `validation-required` / `onboarding-needed` states before onboarding or plan-mode execution continues. These values are account readiness evidence, not Orchestrator-owned project artifacts.
+- **GUI/spec copy:** Config, Wizard, and Doctor GUI text must say "Configure Gemini access" or name the resolved auth mode; it MUST NOT frame "Gemini API key" as the primary or `/only` settings path when OAuth or Google/Vertex credential modes are valid for the selected provider entry.
 
 ### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0629
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Node implementation match: Rust + backend`
-  - Node implementation match: Rust + backend
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 See the updated **Implementation checklist** below; it includes all of the above as concrete tasks.
 
@@ -1135,6 +974,14 @@ Rules:
 - Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.
 - command subtasks and orchestrator child runs are not separate runtime classes.
 
+### Delegated defaults and tool-contract alignment
+
+Delegation is aggressive by default. When the user explicitly asks for subagents, the orchestrator uses subagents if capability, permission, model, and provider checks pass. Without an explicit request, the orchestrator prefers subagents for larger multi-step work, delegated or crew work, and clear specialist-fit when the parent judges the extra child run beneficial. The selection rationale is specialist-fit / task-fit reasoning, not arbitrary fan-out. GUI settings may tune aggressiveness, but the default remains aggressive rather than conservative.
+
+Subagent and `task` defaults consume the reconciled `task`, `question`, `todowrite`, and `todoread` contracts from the tool and permission owners. Child runs inherit the parent permission ceiling, write scope, runtime/account restrictions, and remaining budget; child `question` access remains default-denied unless an owner policy opens it, children escalate user questions to the parent, and normalized TODO availability uses the shared TODO schema. `subagent_tool_overrides` may narrow or open `todowrite`/`todoread` for subagent runs only through explicit run config and must still respect the parent ceiling.
+
+Competitive-reference posture remains evidence-weighted: Antigravity-style high-level manager or `/agent-terminal` patterns are lower-confidence reference material than VS Code, Cursor, JetBrains, and OpenCode evidence, and must not override PM-native parent supervision, terminal ownership, or delegated-run contracts.
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
 ### 5. Tier overrides: one list per tier vs contextual keys
 
@@ -1143,29 +990,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ### 6. Orchestrator and subagent code not yet present
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0628
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready
-  - `focused_run_id` when present
-  - focused_run_id
-  - Owner docs currently disagree on whether `resume_url` is required or merely carried when present.
-  - resume_url
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
 - **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
@@ -1206,25 +1030,6 @@ When a platform-specific parser fails:
 
 ### 11. Subagent Persona info: storage, overrides, and injection
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0625
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - subagent overrides do not accidentally become package defaults
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.
 - **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — project-local (`.puppet-master/personas/<id>/PERSONA.md`) overrides global (`~/.config/puppet-master/personas/<id>/PERSONA.md`). (2) **Overrides:** User edits Personas via the GUI (Settings > Advanced > Personas); edits persist to Puppet Master Persona storage only — never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
@@ -1296,25 +1101,6 @@ The codebase follows the **DRY method** (reuse-first) and uses a **widget catalo
 
 ### After widget or catalog changes
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0632
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam changed materially after the projection-trust work.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - Run **`scripts/generate-widget-catalog.sh`** to refresh the catalog.
 - Run **`scripts/check-widget-reuse.sh`** (warn-only, exit 0) to catch reuse opportunities.
@@ -1331,25 +1117,6 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 ### 1. Default for `use_plan_mode_all_tiers` and existing configs
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0623
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This seam is mostly about propagating existing rigor, not inventing a new concept.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Issue:** If we default `use_plan_mode_all_tiers` to `true`, the first time an existing project loads (with no such key), we might force all tiers to plan mode and overwrite user's previous per-tier choices.
 - **Mitigation:** Default `use_plan_mode_all_tiers` to `false` so existing configs are unchanged. Only users who turn the global toggle on get "all tiers plan mode." Optionally, when the key is missing, do not force tier values on load.
@@ -1372,10 +1139,10 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 **Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`).
 
-### 3. Gemini API key validation
+### 3. Gemini access validation
 
-- **Issue:** Gemini is a Direct API provider. The Doctor check must validate that a Google Gemini API key is present and valid when any tier uses Gemini.
-- **Mitigation:** (1) **Key:** Check for the configured Gemini API key in app settings. (2) **Validation:** Optionally send a lightweight API probe to verify the key is active. (3) **Errors:** If no key is configured and a tier uses Gemini, Doctor should warn "Gemini API key is not configured; Gemini tiers will fail."
+- **Issue:** Gemini validation used to be framed as API-key-only, but the current provider model separates Gemini Direct and Gemini CLI. A tier that selects Gemini must validate the resolved provider entry, auth mode, project context, and account readiness instead of assuming a single key setting.
+- **Mitigation:** (1) **Auth mode:** resolve `auto`, explicit OAuth, explicit API key, or Google/Vertex credential mode through the shared account resolver. (2) **Validation:** probe the selected account using the provider-appropriate lightweight validation path. (3) **Project context:** surface `project-context`, `validation-required`, and `onboarding-needed` states for Gemini OAuth when the configured project id, effective resolved project id, billing/trust context, or provider-managed project path is incomplete. (4) **Errors:** if the selected Gemini mode is not configured, Doctor names that missing mode rather than warning that a Gemini API key is the `/only` fix.
 
 ### 4. Doctor check when config is not GuiConfig
 
@@ -1399,25 +1166,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 8. Caching of project context / language detection
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0631
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - This applies to future seam writeups and recommendation language.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Issue:** Subagent selection runs language/framework detection (e.g. filesystem reads). If run on every tier or every iteration, it could be slow or redundant.
 - **Mitigation:** Cache detection per workspace path (cache key: canonical workspace path). Invalidate when the config is reloaded or the workspace path for the run changes. Expose a single entry point (e.g. `get_project_context(workspace) -> Result<ProjectContext>`) that returns cached value if valid. Phase 1/2 implement this; the orchestrator calls that entry point instead of running detection on every tier. Consider a TTL or "cache for the duration of the run" so long sessions don't hold stale data if the user edits the repo.
@@ -2139,11 +1887,11 @@ async fn run_reviewer_subagent(
     config: &PuppetMasterConfig,
     context: &OrchestratorContext,
 ) -> Result<ReviewerResult> {
-    // DRY requirement: must use subagent_registry::get_subagents_for_tier() to get reviewer subagent — never hardcode "code-reviewer"
-    // Get reviewer subagent for this tier type
-    let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
-    // Implementation note: get_reviewer_subagent_for_tier() must use subagent_registry::get_subagents_for_tier(TierType::Subtask)
-    // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
+    // DRY requirement: resolve reviewer subagents through the subagent registry using execution_unit_context
+    // plus reviewer role metadata — never hardcode "code-reviewer" or select by tier-only lookup.
+    let reviewer_subagent = select_reviewer_subagent(context.execution_unit_context(), tier_type)?;
+    // Implementation note: select_reviewer_subagent() filters registry entries by reviewer capability,
+    // node/package/lane context, and the configured execution policy for this unit.
 
     // Build review prompt
     let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
@@ -2354,26 +2102,6 @@ Verification failures MUST produce structured feedback identifying the failing c
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 ### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0624
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `lane lifecycle state`
-  - lane lifecycle state
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Concept:** Puppet Master should support **BeforeUnit** and **AfterUnit** hooks that run automatically at execution unit boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
 
@@ -3094,26 +2822,6 @@ impl OutputParser for CursorOutputParser {
 
 ### 3. Remediation Loop for Critical/Major Findings
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0626
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Define how nominated findings become canonical concerns.
-  - This seam is upstream of several earlier findings:
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Concept:** When quality verification finds Critical or Major issues, block tier completion and enter a remediation loop. Re-run reviewer subagent until Critical/Major findings are resolved or escalated. Minor/Info findings log and proceed.
 
@@ -3379,25 +3087,6 @@ where
 
 ### 7. Lazy Lifecycle (State Created on First Write)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0630
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - top-level seam rows should load compact rollups first
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Concept:** Verification state directories are created lazily (on first write) and pruned after inactivity. No explicit setup/teardown commands required.
 
@@ -3431,6 +3120,8 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 - **Cursor/Codex/Claude/Gemini:** Parse JSON output; validate required fields (`task_report`, `downstream_context`, `findings`).
 - **Copilot:** Parse text output; extract structured sections via regex or pattern matching; validate presence.
+
+Provider capability rule: provider-doc findings are capability evidence, not a blanket bypass for local validation. For schema-critical handoffs, provider-native schema enforcement is preferred where available: Anthropic provider-doc guidance directs schema-critical workflows to **Structured Outputs** for guaranteed JSON schema conformance, and Gemini provider-doc guidance supports schema-bound structured output and SDK schema helpers. Across providers and `/transports`, PM still runs local validation and records downgrade behavior because transport support and adherence vary; unsupported or weak transports fall back to locally validated structured output or partial-output warnings.
 
 **Integration with existing plan:** This complements the existing "required reviewer subagent" requirement. The reviewer must produce structured output; runtime validation ensures it.
 
@@ -3737,25 +3428,6 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ## Parallel Execution & Subagent Integration
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0621
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Current Parallel Execution Capabilities
 
@@ -3956,6 +3628,8 @@ Threading and lifecycle:
 - `in_reply_to` links replies to the causal parent message
 - messages move through created, read, replied, resolved, and expired/archive states
 - unresolved blocker threads and unresolved coordination requests MUST remain visible until resolved or explicitly superseded, even when ordinary retention archives stale messages after 24 hours
+
+If orchestration surfaces document annotations in coordination messages, it must keep the document annotation lifecycle distinct from the crew message lifecycle. Document annotations retain the owner lifecycle `open -> addressed -> resolved` from the Crosswalk and assistant-chat contracts; coordination messages retain the created/read/replied/resolved/expired/archive states above.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
@@ -4384,7 +4058,7 @@ Crew defaults and confirmation:
 - default crews live in the model/runtime settings surface.
 - first crew invocation asks whether to use the default crew if one exists.
 - after model choice, PM resolves each member's provider/runtime surface and discloses the resulting mapping.
-- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+- if any crew member is configured to use Copilot, provider-coupling rules auto-set the whole crew to Copilot as a crew-level provider constraint.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### Gaps and Potential Issues for Crews Feature
@@ -4421,7 +4095,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 #### Future Assistant-surface note
 
-User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews" or "3 crews per subagent type".
+User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews", "3 crews per subagent type", or legacy "max 3 crews per subagent type" wording.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 ### Puppet Master Crews (Teams/Fleets Alternative)
@@ -4442,7 +4116,7 @@ Crew defaults and confirmation:
 - default crews live in the model/runtime settings surface.
 - first crew invocation asks whether to use the default crew if one exists.
 - after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
-- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+- if any crew member is configured to use Copilot, provider-coupling rules auto-set the whole crew to Copilot as a crew-level provider constraint.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### Gaps and Potential Issues for Crews Feature
@@ -4479,7 +4153,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 #### Future Assistant-surface note
 
-User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews" or "3 crews per subagent type".
+User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews", "3 crews per subagent type", or legacy "max 3 crews per subagent type" wording.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 
@@ -4569,6 +4243,7 @@ When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
 **Mitigation:**
 - **Interview phase crews:** Interview phases can use crews internally (e.g., Architecture phase crew: architect-reviewer + knowledge-synthesizer + technical-writer)
 - **Research crews:** Research operations can use crews (e.g., multiple researchers working in parallel)
+- **Research /coverage caveat:** When comparator products have mixed or limited public source availability, research crews must record the coverage limit, use official `/docs`, public community feedback, and `/web` evidence as fallback, and still maximize clone-based or source-level inspection through GitHub/web tools wherever cloning is possible or meaningful.
 - **Document generation crews:** Document generation can use crews (e.g., technical-writer + knowledge-synthesizer + qa-expert)
 - **Cross-phase coordination:** Crews can coordinate across interview phases (e.g., Architecture crew shares decisions with Testing crew)
 
@@ -5858,7 +5533,7 @@ Level 2 (After Task 1):
 ## Platform-Specific Capabilities & Extensions
 ### Platform capability overview
 
-Platform capability handling is provider-first and uses three execution classes:
+Platform capability handling is provider-first, is limited to PM-supported runtime surfaces, and uses three execution classes:
 - direct providers
 - CLI-bridged providers
 - server-bridged providers
@@ -5890,6 +5565,9 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 **GitHub Copilot**
 - direct provider with billing/entity semantics beneath the auth-backed account row.
 - no Copilot CLI runtime requirement in this plan.
+
+**Direct coding-plan providers**
+- `Alibaba coding-plan direct`, `Z.AI coding-plan direct`, and `MiniMax coding-plan direct` are day-one direct surfaces for orchestrator selection; PM consumes their requested/effective runtime and API-family facts from `Plans/Models_System.md` rather than treating them as OpenCode-only server entries.
 
 **OpenCode**
 - server-bridged provider via managed or attached server profiles.
@@ -6412,6 +6090,9 @@ The orchestrator tier model remains:
 Resolved reminder: **Iteration** remains the lowest tier. Persona switching should not introduce new tiers.
 
 ### Tier-specific Persona defaults
+
+Tier-specific Persona defaults are represented by the `tier_personas` map below. Leaving a tier unset means auto resolution falls back to the Persona registry and operation frame; it does not create an implicit overseer Persona or a provider-native agent-file default.
+
 ### Orchestrator Persona config contract
 
 Orchestrator MUST persist one canonical Persona-resolution config object separate from delegated-subagent registry data.
@@ -6537,25 +6218,6 @@ Required rule:
 
 ### 3. Worktree-native conflict control
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0627
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - open lane in Source Control
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The orchestrator MUST keep worktree-native isolation rather than adopt file-lease orchestration.
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md
@@ -6572,20 +6234,35 @@ This packet does not introduce a file-lease system.
 
 The orchestrator is the primary consumer of event-driven wakeups.
 
-Required wake causes:
-- node finished
-- verifier finished
-- HITL resolved
-- clarification resolved
-- remediation finished
-- backoff expired
-- capacity changed
-- restore/recovery finished
-- replan patch applied
+Required `wake_reason` values consumed by Orchestrator:
+- `node_finished`
+- `prerequisite_resolved`
+- `verification_finished`
+- `approval_resolved`
+- `clarification_resolved`
+- `remediation_finished`
+- `backoff_expired`
+- `capacity_changed`
+- `restore_recovery_finished`
+- `replan_patch_applied`
+- `auth_recovered`
+- `startup_recovered`
+- `watchdog_recheck`
 
 Required cascade rule:
 - direct dependents of newly completed nodes are reevaluated immediately
 - newly ready nodes are eligible in the same wake cycle
+
+### 4A. Temporal observation and long-wait scheduling semantics
+
+The orchestrator treats scheduled workflow observations, wait timers, and governance waits as explicit scheduler inputs instead of inferring failure from missing fresh data.
+
+Required rules:
+- A scheduled workflow with no fresh observation is `scheduled_workflow_observation_gap`; Orchestrator/receipts MUST NOT assume the workflow was `skipped/failed` merely because no fresh observation arrived.
+- `environment_wait_timer`, `approval_wait`, `queue_wait`, and other long-governance-wait cases are modeled separately from generic `deadlock/stall`.
+- Known future-timestamp waits keep the node in its declared wait class and MUST NOT trigger deadlock/stall escalation, `/stall` banners, auto-pause, or blocked-state creation until the governing timestamp or timer actually expires.
+- When a wait expires, the emitted event or projection keeps the `timeout_class` supplied by the runtime taxonomy: `hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, or `user-visible wait timer expiry`.
+- Receipts and blocked projections generated by Orchestrator retain `timeout_class?`, `wait_state_class?`, source timer refs, and the timestamp that caused transition so recovery can distinguish retry, reconnect, wait-for-user, and stale-observation paths.
 
 ### 5. Runtime fields surfaced by orchestrator
 
@@ -6669,7 +6346,7 @@ Polling may remain only for debug/watchdog or non-authoritative background refre
 - Retry behavior follows the shared failure-class matrix.
 - Worktree-native isolation remains the basis for parallel safety.
 - Queue and remediation UI update from event/projection streams rather than polling loops.
-## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)
+## Runtime Scheduler Consumer / Subagent Canonical Alignment (2026-03-09)
 
 The orchestrator is the primary consumer of the runtime scheduler contract and MUST treat queue analysis, attempt identity, remediation lineage, and blocked outcomes as first-class orchestration inputs.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
@@ -6709,7 +6386,7 @@ ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrat
 ### Draft decomposition fallback boundary
 Interview/planning-stage decomposition fallback may flatten only before graph lock. After graph lock, the orchestrator MUST treat invalid graph structure as integrity failure rather than silently continuing with a degraded execution plan.
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
-## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)
+## Orchestrator Runtime Consumer and Remediation Execution Canonical Alignment (2026-03-09)
 
 The orchestrator is the primary consumer of the canonical runtime scheduler contract.
 

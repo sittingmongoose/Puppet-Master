@@ -1,30 +1,17 @@
 {
-  "schema_id": "pm.plan_graph.schema.v1",
-  "graph_scope": "puppet-master-repo-build",
-  "graph_id": "EXAMPLE.pm_repo_build_graph",
-  "entrypoints": ["EXAMPLE.spec-lock-harden"],
+  "entrypoints": [
+    "pm.build-governance.spec-lock-support-refresh"
+  ],
   "execution_ordering": {
+    "completion_rule": "verifier_evidence_then_auto_done",
     "ready_rule": "all_blockers_done_and_spec_lock_satisfied",
     "selection_rule": "lexicographic_node_id",
-    "completion_rule": "verifier_evidence_then_auto_done",
     "spec_lock_source": "Plans/Spec_Lock.json"
   },
+  "graph_id": "pm.build_governance_seal.2026-06-09",
+  "graph_scope": "puppet-master-repo-build",
   "nodes": [
     {
-      "node_id": "EXAMPLE.spec-lock-harden",
-      "objective": "Harden Spec Lockfile and Decision Policy for anti-drift",
-      "contract_refs": [
-        "SchemaID:Spec_Lock.json",
-        "PolicyRule:Decision_Policy.md#spec-lock-update-protocol"
-      ],
-      "inputs": [
-        {"kind": "file", "ref": "Plans/Spec_Lock.json"},
-        {"kind": "file", "ref": "Plans/Decision_Policy.md"}
-      ],
-      "outputs": [
-        {"kind": "file", "ref": "Plans/Spec_Lock.json"},
-        {"kind": "file", "ref": "Plans/Decision_Policy.md"}
-      ],
       "acceptance": [
         {
           "check_id": "plans.verify.spec_lock",
@@ -34,179 +21,352 @@
               "expect_exit_code": 0
             }
           ],
-          "expected_events": ["tool.invoked"]
+          "expected_events": [
+            "tool.invoked"
+          ]
         }
       ],
-      "allowed_tools": ["bash", "read", "edit"],
-      "policy_mode": "workspace-write",
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "blockers": [],
       "change_budget": {
-        "schema_id": "pm.change_budget.schema.v1",
-        "allowed_paths": ["Plans/**"],
-        "forbidden_paths": ["puppet-master-rs/**"],
-        "forbidden_files": ["AGENTS.md"],
-        "max_files_changed": 5,
-        "max_lines_added": 250,
-        "max_lines_deleted": 150,
-        "max_total_loc_delta": 300,
-        "notes": "EXAMPLE"
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**",
+          "transfer_state/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Governance support refresh may touch lockfile, auto-decision log, verifier and sharder support scripts, sharding config, and reports.",
+        "schema_id": "pm.change_budget.schema.v1"
       },
-      "evidence_required": {
-        "schema_id": "pm.evidence.schema.v1",
-        "path": "Plans/.evidence/EXAMPLE.spec-lock-harden/evidence.json"
-      },
-      "status": "queued",
+      "contract_refs": [
+        "ContractName:Plans/sharding_config.json",
+        "Gate:GATE-002",
+        "Gate:GATE-009",
+        "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "SchemaID:pm.auto_decisions.schema.v1"
+      ],
+      "decision_refs": [
+        "dec-2026-06-09-build-governance-support-seal",
+        "dec-2026-06-09-exact-build-governance-support-seal"
+      ],
       "evidence_pointer": {
         "kind": "filesystem_path",
-        "ref": "Plans/.evidence/EXAMPLE.spec-lock-harden/evidence.json"
+        "ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
       },
-      "verifier_result": {
-        "outcome": "pending"
+      "evidence_required": {
+        "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
       },
-      "decision_refs": [],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/Spec_Lock.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Decision_Policy.md"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-plans-verify.py"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/sharding_config.json"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-shard-plans.py"
+        }
+      ],
+      "node_id": "pm.build-governance.spec-lock-support-refresh",
+      "objective": "Refresh Spec Lock hashes, exact-case support validators, sharding support script/config coverage, and auto-decision uniqueness policy after the allowed ledger transfer seal.",
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/Spec_Lock.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/auto_decisions.jsonl"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-plans-verify.py"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/sharding_config.json"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-shard-plans.py"
+        }
+      ],
+      "policy_mode": "workspace-write",
       "spec_lock_requirements": {
         "schema_versions": {
-          "plan_graph": "pm.plan_graph.schema.v1",
+          "auto_decisions": "pm.auto_decisions.schema.v1",
           "evidence": "pm.evidence.schema.v1",
-          "change_budget": "pm.change_budget.schema.v1",
-          "auto_decisions": "pm.auto_decisions.schema.v1"
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
         }
       },
-      "blockers": [],
-      "unblocks": ["EXAMPLE.plan-graph-upgrade"],
-      "example": true
+      "status": "done",
+      "unblocks": [
+        "pm.build-governance.shard-regeneration"
+      ],
+      "verifier_result": {
+        "message": "Spec Lock hashes, exact-case support validators, sharding support refs, and auto-decision duplicate policy refreshed under governance unlock.",
+        "outcome": "pass",
+        "timestamp_utc": "2026-06-09T17:05:10Z"
+      }
     },
     {
-      "node_id": "EXAMPLE.plan-graph-upgrade",
-      "objective": "Upgrade self-build plan_graph schema + template and validate",
-      "contract_refs": [
-        "SchemaID:Spec_Lock.json#schema_versions.plan_graph",
-        "SchemaID:plan_graph.schema.json",
-        "SchemaID:evidence.schema.json",
-        "SchemaID:change_budget.schema.json"
-      ],
-      "inputs": [
-        {"kind": "file", "ref": "Plans/plan_graph.schema.json"},
-        {"kind": "file", "ref": "Plans/plan_graph.json"}
-      ],
-      "outputs": [
-        {"kind": "file", "ref": "Plans/plan_graph.schema.json"},
-        {"kind": "file", "ref": "Plans/plan_graph.json"}
-      ],
       "acceptance": [
         {
-          "check_id": "plans.verify.plan_graph_schema",
+          "check_id": "plans.verify.shards",
           "commands": [
             {
-              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "cmd": "python3 scripts/pm-shard-plans.py --check",
               "expect_exit_code": 0
             }
           ],
-          "expected_events": ["tool.invoked"]
+          "expected_events": [
+            "tool.invoked"
+          ]
         }
       ],
-      "allowed_tools": ["bash", "read", "edit"],
-      "policy_mode": "workspace-write",
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "blockers": [
+        "pm.build-governance.spec-lock-support-refresh"
+      ],
       "change_budget": {
-        "schema_id": "pm.change_budget.schema.v1",
-        "allowed_paths": ["Plans/**"],
-        "forbidden_paths": ["puppet-master-rs/**"],
-        "forbidden_files": ["AGENTS.md"],
-        "max_files_changed": 6,
-        "max_lines_added": 400,
-        "max_lines_deleted": 200,
-        "max_total_loc_delta": 450,
-        "notes": "EXAMPLE"
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**",
+          "transfer_state/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Derived shard regeneration touches Plans/_shards/** and associated evidence reports.",
+        "schema_id": "pm.change_budget.schema.v1"
       },
-      "evidence_required": {
-        "schema_id": "pm.evidence.schema.v1",
-        "path": "Plans/.evidence/EXAMPLE.plan-graph-upgrade/evidence.json"
-      },
-      "status": "queued",
-      "evidence_pointer": {
-        "kind": "filesystem_path",
-        "ref": "Plans/.evidence/EXAMPLE.plan-graph-upgrade/evidence.json"
-      },
-      "verifier_result": {
-        "outcome": "pending"
-      },
-      "decision_refs": [],
-      "spec_lock_requirements": {
-        "schema_versions": {
-          "plan_graph": "pm.plan_graph.schema.v1",
-          "evidence": "pm.evidence.schema.v1",
-          "change_budget": "pm.change_budget.schema.v1",
-          "auto_decisions": "pm.auto_decisions.schema.v1"
-        }
-      },
-      "blockers": ["EXAMPLE.spec-lock-harden"],
-      "unblocks": ["EXAMPLE.gates-and-verifier"],
-      "example": true
-    },
-    {
-      "node_id": "EXAMPLE.gates-and-verifier",
-      "objective": "Define progression gates and the Verifier role; run gates autonomously",
       "contract_refs": [
-        "Gate:GATE-001",
-        "Gate:GATE-003",
+        "ContractName:Plans/00-plans-index.md",
+        "ContractName:Plans/sharding_config.json",
+        "Gate:GATE-005",
         "Gate:GATE-009"
       ],
+      "decision_refs": [
+        "dec-2026-06-09-build-governance-support-seal",
+        "dec-2026-06-09-exact-build-governance-support-seal"
+      ],
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
       "inputs": [
-        {"kind": "file", "ref": "Plans/Progression_Gates.md"},
-        {"kind": "file", "ref": "Plans/Architecture_Invariants.md"}
+        {
+          "kind": "file",
+          "ref": "Plans/sharding_config.json"
+        }
       ],
+      "node_id": "pm.build-governance.shard-regeneration",
+      "objective": "Regenerate plan shards from Plans/sharding_config.json and verify every registered source has exact-case index, manifest, shard files, and root index row.",
       "outputs": [
-        {"kind": "file", "ref": "Plans/Progression_Gates.md"},
-        {"kind": "file", "ref": "Plans/Architecture_Invariants.md"}
+        {
+          "kind": "directory",
+          "ref": "Plans/_shards"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+        }
       ],
+      "policy_mode": "workspace-write",
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1"
+        }
+      },
+      "status": "done",
+      "unblocks": [
+        "pm.build-governance.final-seal"
+      ],
+      "verifier_result": {
+        "message": "Shard regeneration completed for all registered sources with exact-case root index refs.",
+        "outcome": "pass",
+        "timestamp_utc": "2026-06-09T17:05:10Z"
+      }
+    },
+    {
       "acceptance": [
         {
-          "check_id": "plans.verify.gates",
+          "check_id": "plans.verify.run_gates",
           "commands": [
             {
               "cmd": "python3 scripts/pm-plans-verify.py run-gates",
               "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 codex_goal_transfer_kit/tools/pm_validate_transfer.py --allowed-only",
+              "expect_exit_code": 0
             }
           ],
-          "expected_events": ["tool.invoked"]
+          "expected_events": [
+            "tool.invoked"
+          ]
         }
       ],
-      "allowed_tools": ["bash", "read", "edit"],
-      "policy_mode": "workspace-write",
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "blockers": [
+        "pm.build-governance.shard-regeneration"
+      ],
       "change_budget": {
-        "schema_id": "pm.change_budget.schema.v1",
-        "allowed_paths": ["Plans/**"],
-        "forbidden_paths": ["puppet-master-rs/**"],
-        "forbidden_files": ["AGENTS.md"],
-        "max_files_changed": 8,
-        "max_lines_added": 600,
-        "max_lines_deleted": 250,
-        "max_total_loc_delta": 700,
-        "notes": "EXAMPLE"
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**",
+          "transfer_state/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Final governance seal may refresh graph, evidence, generated reports, and seal artifacts.",
+        "schema_id": "pm.change_budget.schema.v1"
       },
-      "evidence_required": {
-        "schema_id": "pm.evidence.schema.v1",
-        "path": "Plans/.evidence/EXAMPLE.gates-and-verifier/evidence.json"
-      },
-      "status": "queued",
+      "contract_refs": [
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009",
+        "ContractName:Plans/Project_Output_Artifacts.md",
+        "SchemaID:pm.evidence.schema.v1",
+        "ContractName:Plans/Progression_Gates.md"
+      ],
+      "decision_refs": [
+        "dec-2026-06-09-build-governance-support-seal",
+        "dec-2026-06-09-exact-build-governance-support-seal"
+      ],
       "evidence_pointer": {
         "kind": "filesystem_path",
-        "ref": "Plans/.evidence/EXAMPLE.gates-and-verifier/evidence.json"
+        "ref": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
       },
-      "verifier_result": {
-        "outcome": "pending"
+      "evidence_required": {
+        "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
       },
-      "decision_refs": [],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/plan_graph.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/project_plan_graph_index.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/project_plan_node.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "transfer_state/final_100_percent_quality_seal.json"
+        },
+        {
+          "kind": "file",
+          "ref": "transfer_state/final_quality_certification.json"
+        },
+        {
+          "kind": "file",
+          "note": "Path alias /Progression_Gates.md is retained for gate lineage.",
+          "ref": "Plans/Progression_Gates.md"
+        }
+      ],
+      "node_id": "pm.build-governance.final-seal",
+      "objective": "Certify exact-case build-governance support artifacts while preserving the completed allowed ledger transfer and locked/deferred P6 state.",
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/plan_graph.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "kind": "file",
+          "ref": "transfer_state/final_build_governance_seal.json"
+        },
+        {
+          "kind": "file",
+          "ref": "transfer_state/final_build_governance_seal.md"
+        }
+      ],
+      "policy_mode": "workspace-write",
       "spec_lock_requirements": {
         "schema_versions": {
-          "plan_graph": "pm.plan_graph.schema.v1",
-          "evidence": "pm.evidence.schema.v1",
+          "auto_decisions": "pm.auto_decisions.schema.v1",
           "change_budget": "pm.change_budget.schema.v1",
-          "auto_decisions": "pm.auto_decisions.schema.v1"
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "requirements_coverage": "pm.requirements_coverage.schema.v1"
         }
       },
-      "blockers": ["EXAMPLE.plan-graph-upgrade"],
+      "status": "done",
       "unblocks": [],
-      "example": true
+      "verifier_result": {
+        "message": "Final exact-case build-governance support seal is certified by local gates.",
+        "outcome": "pass",
+        "timestamp_utc": "2026-06-09T17:05:10Z"
+      }
     }
-  ]
+  ],
+  "schema_id": "pm.plan_graph.schema.v1"
 }

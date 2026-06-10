@@ -235,6 +235,45 @@
       "contract_refs": [
         "SchemaID:pm.evidence.schema.v1"
       ]
+    },
+    {
+      "name": "debug-target-verification-contract",
+      "result": "PASS",
+      "details": "Contract representation: pass when exit code / process status matches the expected healthy state, the original failure signature is absent from bounded stdout /stderr/log summaries, Problems /diagnostic summaries do not show the same blocking error class, and server targets answer the expected port /health check."
     }
-  ]
+  ],
+  "route_aware_verification": {
+    "gate_id": "GATE-010",
+    "result": "PASS",
+    "wiring_matrix_ref": "Plans/evidence.schema.json",
+    "route_args_verified": true,
+    "wrapper_normalization_verified": true,
+    "stale_revalidation_verified": true,
+    "admissibility_verified": true,
+    "correlation_passthrough_verified": true,
+    "details": {
+      "route_args": [
+        "The route-aware evidence contract records the wrapper target, alias target, and route-payload validation result instead of hiding them in ad hoc checks[] text.",
+        "Plans/evidence.schema.json and /evidence.schema.json remain canonical contract_refs for route-aware verification outcomes."
+      ],
+      "wrapper_normalization": [
+        "The /wrapper normalization result records canonical-contract matching separately from route-payload validation.",
+        "Wrapper target and alias target are explicit evidence fields, not implied by name, result, details, or contract_refs only."
+      ],
+      "stale_revalidation": [
+        "Stale route evidence must be revalidated against canonical-contract normalization before the check is PASS."
+      ],
+      "admissibility": [
+        "Evidence is admissible only when route-aware validation, wrapper normalization, and canonical-contract comparison are all represented."
+      ],
+      "correlation_passthrough": [
+        "Correlation identifiers stay attached to the route-payload evidence and are not replaced by generic check names."
+      ],
+      "notes": "This structured route-aware verification object fixes the former gap where checks[] only exposed name, result, details, and contract_refs.",
+      "contract_refs": [
+        "SchemaID:pm.evidence.schema.v1",
+        "Gate:GATE-010"
+      ]
+    }
+  }
 }

@@ -1,86 +1,5 @@
 # File Manager & IDE-style Editor -- Plan
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0213
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `Plans/FileManager.md`
-  - Plans/FileManager.md
-  - The coordination-canon contradiction in `[retired-token-1]` is now explicit in the same file.
-  - [retired-token-1]
-  - The runtime-artifact docs now name an envelope file, but they still do not define the common envelope field family strongly enough in prose.
-  - Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in `Runtime_Artifacts_Panel.md`.
-  - Runtime_Artifacts_Panel.md
-  - That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first.
-  - UI callers should not reconstruct file paths heuristically when a stable identity exists
-  - current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.
-  - `Open in Editor` for file/document-backed targets
-  - Open in Editor
-  - `generated://<artifact_id>` is already the proof that the system needs non-path editor targets.
-  - generated://<artifact_id>
-  - `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.
-  - Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.
-  - OpenFile { path... }
-  - `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.
-  - Project_Output_Artifacts.md
-  - .puppet-master/project/**
-  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
-  - Plans/*.md
-  - `FileManager.md`: owns workspace-file open semantics and editor realization only
-  - FileManager.md
-  - remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known
-  - Several rewrite-era object families now clearly need stable target kinds even though older docs still mostly pivot by `run_id`, `tier_id`, or file path.
-  - run_id
-  - tier_id
-  - Docker Manager: `active_subview`, runtime/context/registry/namespace focus, publish state
-  - active_subview
-  - `FileManager.md` should stay focused on path-based editor realization and should not become the owner of cross-surface identity navigation just because `OpenFile` is important there.
-  - OpenFile
-  - Keep `OpenFile` as the path-based editor contract only.
-  - `OpenFile` = path-based editor open
-  - Research Progress - 2026-03-17 - File open versus subject open consumer split
-  - `Plans/FileManager.md` still states one universal open primitive:
-  - many earlier event examples in the file still center `tier_id`
-  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
-  - 39
-  - 22
-  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
-  - 61
-  - the file is self-referential in its compliance line and therefore cannot serve as an independent example of owner-routing discipline
-  - `remediation.resolved` is also internally inconsistent inside the same file:
-  - remediation.resolved
-  - The file still claims HITL semantics must not change, while later sections already change the meaning from request-centric tier-boundary approvals to blocked/runtime overlays.
-  - The file still treats tier boundaries as the approval scope anchor, while newer runtime canon requires blocked-episode identity anchored by run/node/blocked sequence.
-  - This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift.
-  - the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence`
-  - cmd.runtime.*
-  - node_id
-  - blocked_sequence
-  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
-  - Plans/Contracts_V0.md
-  - Plans/storage-plan.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/Crosswalk.md
-  - Plans/Wiring_Matrix.md
-  - Plans/Progression_Gates.md
-  - Plans/Project_Output_Artifacts.md
-- Legacy token retirement handling:
-  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -108,6 +27,68 @@ This plan also covers **image viewing** and **HTML-in-browser preview with hot r
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
+### Project-driven capability activation
+
+The File Manager/editor surface belongs to one extensible Puppet Master platform with project-driven capability activation, not separate hard-forked products or rigid personalities. Project-open analysis MUST assemble language, framework, build, review, and remote support as capability packs/modules activated by detected project signals instead of shipping separate shells.
+
+Project open MUST run explicit detection/import logic before enabling capability packs. When signals conflict, are incomplete, or match more than one project interpretation, the UI MUST surface the plausible interpretations and make autodetection visible and overridable before mutating durable project settings.
+
+Indexing is a first-class background subsystem for the editor, file tree, search, and symbol workflows. While an index warms, rebuilds, is missing, or is unavailable, affected surfaces MUST show reduced-capability/degraded-mode state and keep fallback behavior explicit rather than pretending the project is fully indexed.
+
+Diff/review/hosted-repository workflows stay in the same shell as local editing. File Manager, editor, Source Control, and GitHub consumers may hand off ownership between panels, but they MUST preserve one project identity and route review/diff actions through the same open-file and source-control contracts instead of creating separate tools.
+
+Remote project support uses a thin local client/launcher with backend attachment/version management. Remote mode MUST NOT pretend remote is only local with different paths; attachment state, remote version compatibility, write availability, cache/index freshness, and reconnect/degraded state must be visible to the user.
+
+Capability-pack breadth is a product constraint. Plugin/module growth can become dependency and dynamic-loading debt, so packs must be bounded/reused across projects where safe, lazy-loaded only behind explicit project signals, and tested against startup and large-workspace responsiveness. Indexing and external-model sync must be bounded/reused and must not dominate project open, navigation, or editor responsiveness.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/BinaryLocator_Spec.md
+
+### External discovery cluster constraints
+
+The File Manager/editor architecture also carries external discovery research-lineage anchors `bench-01`, `bench-04`, `bench-05`, `bench-06`, `bench-07`, `bench-08`, `bench-11`, `bench-15`, `bench-23`, `bench-25`, `bench-27`, and `bench-30`. These labels are not product names, but they identify the research cluster behind the following product constraints.
+
+- `bench-01`: Puppet Master stays a local-first UI while supporting a remote-capable backend/proxy split. The editor core must account for background parsing/highlighting, a Rust-owned editor core, lifecycle-safe save/state handling, and GPU/platform crash risk.
+- `bench-04`: Project open and navigation require incremental project scanning, small-module architecture, central command predicates for command availability, line-oriented document state where appropriate, plugin compatibility discipline, crash/regression hardening, and first-class file-tree/sidebar expectations.
+- `bench-05`: The File Manager must preserve the file-manager inspiration for preview without download, chunked uploads, archive pack/unpack, direct links, per-user roots/read-only modes, and broad in-browser manage/edit flows. It must avoid monolithic customization debt and harden auth/path behavior.
+- `bench-06`, `bench-08`, and `bench-15`: thin wrapper/overlay editors may help embed ergonomics and prop-driven APIs, but they are weak foundations for Puppet Master's deeper diff/workbench ambitions. Treat resize/SSR/bundler/worker/styling edge cases as architecture risk, not late polish.
+- Early IDE and editor-engine findings are retained as File Manager/editor lineage, not MCP canon. AI-first IDE patterns validate planning `/execution/review` across editor, terminal, browser, docs, and integrations; editor-engine embeddability and `/customization` are useful only when PM also owns `/layout`, `/diff`, `/merge`, `/runtime`, and `/container` integration boundaries. A marker-based split comparison is not enough for PM's diff/merge goals, and fragile worker `/path/SSR/shadow-DOM` integration remains a failure mode to design against.
+- `bench-07`: Lightweight collaborative editing is useful only when revision/reconnect recovery is first-class and the design guards against ephemeral persistence, Unicode/IME desync, and mobile density constraints.
+- `bench-11`: first-class test/diff/task widgets must live beside the editor on the native desktop stack. JSON/timer-based hot-exit restore, deep editor affordances, and crash/backup/setup-friction risk are part of the same editor recovery and toolchain design, not follow-up polish.
+- `bench-23`, `bench-25`, `bench-27`, and `bench-30`, alongside prior browser/editor-wrapper results, are implementation-reference anchors for operational local seams rather than surface-level editing alone. Preserve atomic save, watcher-driven external-change handling, persistent search/replace/location histories, explicit command registry / palette routing, renderer-independent text cores including piece-table style editing, terminal/build/run routing separated from editing state, and per-language workspace heuristics or synthetic-workspace creation for standalone files.
+- The PM-positive implementation pattern is a reusable Rust text core separated from rendering/UI technology, with capability modules around the text core for LSP, build/run, preview, and shell integration instead of baking those services into the buffer model.
+- File watching, atomic save, reload/conflict signaling, and explicit histories for search, replace, locations, and recent targets are first-class editor/File Manager services, not afterthoughts derived from transient UI state.
+- The recurring cluster ideas to keep are local-first speed with an explicit remote/offline model, incremental/lazy file discovery and background work, first-class preview/manage operations in the file manager, durable session/hot-exit recovery, and native diff/test/task widgets integrated with editing rather than bolted on.
+- The recurring failure modes to design against are crash-prone lifecycle/save edges, thin-wrapper resize/worker/SSR fragility, plugin/integration compatibility drag, ephemeral collaboration state and weak recovery, and IME/Unicode plus large-input correctness debt.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/storage-plan.md
+
+### Editor archetype constraints
+
+File Manager/editor implementation also carries midpoint archetype evidence from lightweight native editors, thin wrappers / embeddable editor engines, collaborative / online editors, and terminal-native/modal editors.
+
+External benchmark findings remain grouped by archetype, not just by target: `AI-native workbench/IDE`, `full traditional IDE/workbench`, `embedded editor engine/wrapper`, `collaborative/online editor`, and `terminal-native editor`. These archetypes preserve discovery lineage without turning benchmark labels into product names.
+
+- Lightweight native editors validate virtualized file-tree and background-scan direction, but their recurring pain points are plugin compatibility lag, regex-heavy UI blocking, memory growth, rendering/platform bugs, and incomplete split/history/navigation surfaces.
+- Thin wrappers / embeddable editor engines are strongest at host/editor separation, small integration footprint, direct access to underlying editor instances, and easy framework embedding. Puppet Master must still treat resize/container fragility, whole-buffer rehighlighting, global shims, worker/path/SSR/shadow-DOM issues, accessibility limitations, weak diff/merge support, and host apps needing deep editor-specific knowledge as architectural risks.
+- Collaborative / online editors are strongest at room/share-link and share-by-link onboarding, cursor/presence awareness, simple split source+preview flows, `/preview/output` simplicity, and fast collaborative mental models. Puppet Master must not inherit ephemeral or memory-backed state, weak durable storage, reconnect/forced-refresh flows, limited multi-buffer/workspace models, no synced scrolling, `/sanitization` shortcuts, or backend/API dependency risk as hidden defaults.
+- Terminal-native/modal editors are strongest at command discoverability, small-footprint responsiveness, async/lazy file loading, safe save/reload handling, and cache-conscious text storage. Those strengths can inform editor command design without making the broader File Manager/editor surface terminal-owned.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/storage-plan.md
+
+### Editor adapter implementation-reference constraints
+
+The early implementation-reference cluster keeps source-lineage anchors `bench-06`, `bench-07`, `bench-08`, `bench-12`, `bench-16`, `bench-18`, and `bench-26` for editor integration constraints. Those references are useful patterns, not full workbench references: many compelling demos are thin editor wrappers, browser-first shared-document apps, or single-file/browser-runner shells.
+
+- Keep the editor adapter thin and let the host/workspace own file/project/runtime identity. The editor surface renders and edits; it does not own workspace truth, execution transport, or project identity.
+- Preserve selection/caret explicitly when re-highlighting or applying controlled external value updates.
+- Avoid feedback loops by using silent/guarded update paths when host state is mirrored back into the live editor.
+- Keep split-pane/editor-instance undo ownership explicit instead of accidentally shared across panes or wrapper instances.
+- Unicode-aware OT/revision transforms, cursor rebasing, and snapshot persistence are reusable Rust-side patterns for collaborative or remote-edit seams.
+- Deterministic extension/file-name based language fallback is a degraded path only; it is not a substitute for real detection/indexing/LSP.
+- Separate execution transport from editor state even when a browser-first or /browser-runner reference proves useful elsewhere.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
 ### Definitions
 
 - **Buffer:** In-memory representation of a file's content; one per file path. Edits apply to the buffer until Save.
@@ -118,6 +99,23 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 - **redb:** Durable key-value store for settings, sessions, project state, and editor state (see rewrite-tie-in-memo).
 - **seglog:** Canonical append-only event ledger; optional editor lifecycle events for analytics (see project storage design).
 - **FileSafe:** Patch/apply/verify pipeline and guards for agent edits; see Plans/FileSafe.md.
+
+### Buffer transaction model
+
+The editor buffer transaction model is explicit: user edits, preview edits, agent writes, FileSafe/LSP edits, restore/revert actions, and recovery replay all enter the shared buffer through typed transaction sources before dirty state, undo grouping, and save authority are updated.
+
+- User edits and preview edits create ordinary buffer-local undo groups and dirty state unless the target is read-only, write-locked, or owned by an active recovery replay.
+- Agent writes and FileSafe/LSP edits use FileSafe-backed mutation paths and must record whether they replace, patch, format, rename, or apply a code action. They do not silently merge into the user's current undo group.
+- Restore/revert actions and recovery replay are explicit transaction sources with confirmation or recovery context; they may refresh the buffer from durable state, clear or replace dirty state only after the owner confirms the applied version, and must explain what happened to undo history.
+- Save authority remains single-owner per file path: one shared buffer, one dirty flag, one last-saved version, and one authoritative save/retry path across split panes, preview surfaces, LSP apply-edit, and agent mutation flows.
+- Text mutation sources include user typing and `/paste/delete`, preview-generated bounded source patches, FileSafe/LSP apply-edit paths, backend-owned restore or `/revert/history` refreshes, on-disk-change resolution, and agent write-stream updates for generated files. They all route through the shared buffer authority and may not create independent restore points, alternate dirty branches, bypass save/retry authority, or weaken required recover-unsaved handling on `/quit` and `/later`; legacy `unsaved-content` wording maps to that recovery contract.
+- Layered change history is not one generic recovery bucket. Buffer-local history owns ordinary per-buffer `/undo` and `/redo`; user-visible restore history owns `Restore to… / History`, rollback, and `revert-last-agent-edit` through a user-confirmed backend-owned restore flow; git/source-control history owns `/revert/discard/stash`, `/history/graph`, staged, `/unstaged/conflicted`, and worktree compare/revert/discard semantics; runtime safe points remain `/internal` `/blocked` recovery anchors and are not restore points.
+- Preview-generated, preview-originated, and preview-applied source patches plus single-file FileSafe/LSP `/apply-edit/conflict` operations may enter buffer-history as one coherent single-buffer undo group only when they mutate the open source-buffer in place. Multi-file apply-edit, rename, hunk-level patch-apply, repo/worktree restore, and conflict-resolution flows route through the broader `/diff`, `/review/FileSafe`, or source-control transaction model and MUST NOT masquerade as ordinary editor undo.
+- Single-file assistant mutation batches produce one logical undo group for that file; multi-file assistant mutation batches produce one thread/run receipt and one undo group per affected file buffer while preserving multi-group shared-buffer semantics. Editor Ctrl+Z never becomes cross-file global undo. Hunk-level stage, unstage, discard, and `/stages` changes are git mutations; conflict-resolution buttons such as `accept ours`, `accept theirs`, and `accept both` are structured edits to the result buffer until final resolve/stage, after which the stage is source-control history.
+- FileManager treats the editor as a shared-buffer, source-canonical workspace: file tree opens and `/targets` buffers, preview surfaces derive from buffers and return bounded patches, and diff/review surfaces compare or mutate buffers without becoming separate authorities. Remote `/SSH` changes the authority `/source-of-truth` and capability model, not the conceptual buffer contract.
+- The editor adapter must treat accessibility, IME, selection, caret, clipboard, cursor drift, paste behavior, `/editor-wrapper` limitations, and input correctness as acceptance-criteria-level behavior. Requested-vs-effective modes include normal editable, truncated read-only with load-full, blocked too-large, binary read-only, decode-failed read-only, disk read-only, and visible `/degraded` reasons.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 ---
 
@@ -156,17 +154,24 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 **Done when:** (1) Tree lists all project files under root; (2) Selecting a file opens it in the editor via §4.1; (3) Virtualized tree handles 10k+ rows without freezing; (4) Expand/collapse state restores per project on reopen. **Error handling:** **Open failed** -- If opening the selected file fails (permission denied, not found, too large), show "Open failed" with brief reason in status or toast; do not leave tree in inconsistent state. **Refresh failure** -- If directory read fails (e.g. permission), show error on that node and optionally "Retry." **Edge cases:** **Empty project** -- Show "No files" or project root only; no crash. **No permission on subfolder** -- Show node but mark or filter; AutoDecision: show node as inaccessible and do not enumerate children. **Expand/collapse persistence:** Redb key e.g. `file_manager/expanded/{project_id}` → list of expanded path prefixes or node ids (§2.9). **Requires** §4.1 open-file contract before "select file opens it"; requires project context (project root). **Settings:** **Hide ignored** (toggle): Settings → File Manager (or header); default off (ignored dimmed); persist in redb. **Row cap per directory:** AutoDecision: default 10_000 entries; configurable; persist in redb key `file_manager/row_cap_per_directory`.
 
+Day-to-day tree interaction is implementation-ready and carries implementation-readiness detail: header search is an active repo/worktree tree filter, not universal search, full-text search, or a mixed-root result surface. Matching includes name-only and repo-relative path matches; ignored files remain dimmed by default or absent when Hide ignored is enabled. Floating-window File Manager behavior uses the same filter, `/worktree-aware` repo_id/worktree_id context, and Source Control strip (`Open in Source Control`, `Open diff`, `Open compare`) as the docked panel.
+
+Worktree-variant opens are identity-rich rather than path-only. The default GUI action for the same `repo_relative_path` across worktrees is side-by-side compare with `project_id`, `repo_id`, `repo_relative_path`, `left_worktree_id`, `right_worktree_id`, and optional revision selectors; this is the same-file-across-worktrees rule for compare/open identity. A `/chip` may switch variants only inside a dedicated compare or multi-variant inspection surface, not as the primary ordinary editor-tab model. The editor `/header/status/breadcrumb` area shows `current worktree` plus `other variants available`, and `/recent/changed-file`, chat activity cards, search results, and review links must open the correct worktree variant rather than whichever tab is active. Normal editor tabs are path-backed and file-watch-backed to one concrete file identity; PM must not implement a content-swapping tab that hides dirty state, undo history, save target, file-watch identity, or chat/diff routing.
+
+Mixed-worktree search/recent/changed-file lists show row-level and `/file-level` worktree-context badges or `/banners` when results from multiple worktrees or a mixed-root set appear together. Ordinary File Manager trees scoped to one active single-worktree root do not need duplicate per-row worktree icons. The design bias is explicit: edit one concrete variant, compare across variants explicitly, switch variants deliberately, expose `Open other worktree version`, `Compare with worktree...`, and optional `/dropdown` selection only as explicit compare/open actions, and never hide worktree context behind a generic tab that silently changes identity. Source Control owns the stronger `/switch/manage/conflict` worktree UI.
+
 ContractRef: Plans/Decision_Policy.md, Plans/storage-plan.md §2.3, Plans/Tools.md §2.5
 
-- **Placement:** Pop-out side window (like the chat pop-out), default left. Per Composergui5 §5 and feature-list layout: header ("FILES"), refresh, pop-out; search; virtualized file tree; optional Git status strip.
+- **Placement:** Docked File Manager is the Activity Bar side-panel occupant in the single right-hand shell slot by default, with the same detachable/pop-out behavior as Chat and re-docking back to that slot. Per FinalGUISpec §4.1, Composergui5 §5, and feature-list layout: header ("FILES"), refresh, pop-out; search; virtualized file tree; optional Git status strip.
 - **Virtualized file tree:** Only visible nodes are rendered; scroll position determines which slice of the tree is shown. Total height uses an estimated row height (AutoDecision: `row_height_px = 24`) so the scrollbar is correct. Supports deep trees; **very large directories** (e.g. node_modules): virtualize by row, apply a row cap per directory (AutoDecision: 10_000 entries; key `file_manager/row_cap_per_directory`) with "Show more" or type-ahead to narrow; AutoDecision: no explicit depth limit (children are loaded lazily on expand).
 - **Behavior:** Lists all files in the current project. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same project context.
-- **.gitignore / exclude:** File tree respects `.gitignore` (and optionally a project exclude list). Ignored files/folders are **dimmed** by default. Optional user setting **"Hide ignored"** hides them entirely (toggle in header or Settings).
+- **.gitignore / exclude:** File tree respects `.gitignore` (and optionally a project exclude list) as the File Manager's gitignore-aware traversal contract. Ignored files/folders are **dimmed** by default. Optional user setting **"Hide ignored"** hides them entirely (toggle in header or Settings).
 - **Context menu:** Summary-only entrypoint for the canonical file-tree action catalog in §11.1 and §11.4. Core actions include create/rename/delete/path copy, workspace-node clipboard actions, Add to Assistant Chat, Open in Terminal, Open With, and Save Local Copy. Aligns with selectable labels and context menus (AGENTS.md).
 - **Drag and drop (external ↔ File Manager):** User can **drop** files/folders from the desktop (or another app) **onto** a folder or project root in the tree (items are copied into that folder), and **drag** files/folders **out** of the tree onto the desktop or another app (copied to drop target). Copy is default; optional modifier for move. Full specification: **§1.1**.
 - **Expand/collapse persistence:** Which folders are expanded is persisted per project (e.g. in redb under project key); restore on reopen.
 - **Keyboard:** Arrow keys navigate the tree; Enter opens the selected file (or expands/collapses folders). Type-ahead (or search) narrows to matching nodes. Keyboard-only use must be supported for accessibility.
 - **Current file ("you are here"):** When the editor has focus, optionally highlight and scroll the File Manager tree to the current file so the two surfaces stay visually connected.
+- The selection-model keeps one active row while allowing additive/range multi-select for drag-out, delete, and path-copy. Open actions are `/open-on-click` and open-on-enter against the active row, not bulk-open of every selected file. `New file`, `New folder`, and `Rename` require a single concrete target context; `Delete` may operate on multi-select with recursive confirmation; `Copy full path` copies one absolute path for single-select or a newline-delimited list for multi-select. Create/rename rejects empty names, `.` / `..`, separators, and platform-reserved names before mutation; `/reveal` plus current-file `/highlight` is required when the file exists in-tree, and the GUI must disclose when filters or ignored settings hide it.
 - **Detach/snap:** Same detach and snap behavior as Chat panel; user can dock left or right. **Discoverability:** Provide a visible affordance (e.g. drag handle or "Pop out" in header) and optional first-time tooltip so users learn that the panel can be detached.
 
 ### 1.1 Drag and drop (external ↔ File Manager)
@@ -257,11 +262,12 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 - **Editable content:** Opened files are editable (not read-only preview). User edits update one shared authoritative buffer per file path.
 - **Save:** Save writes the current buffer to the file path. On success, dirty state clears and the user sees explicit success feedback. On failure (disk full, permission denied, path deleted, read-only file, disconnected remote destination), the buffer stays dirty, last-saved state does not advance, and the user gets visible recovery actions such as `Retry` and optional `Save As`.
 - **Unsaved indicator:** Each tab shows unsaved state, and at least one other stable shell location must also surface that state so it remains visible when the tab strip is crowded.
+- Editor tab `/chrome` and secondary state-feedback surfaces show dirty, conflicted, read-only `/degraded`, change-marker, write-lock, stale-disk, changed-on-disk, transient `/save/reload` failure, and recovery attention as orthogonal facts rather than a `/vague` flat status. Save is explicit in MVP, save failure leaves dirty state intact with retry, `save-as`, and reason, and backend-owned `/recovery/history` refreshes buffers through events such as `BufferReverted` / `BufferReverted(path)`. OpenFile callers from `/chat/file-tree/quick-open` converge on the same file-open path, and changed-on-disk prompts include a `Show diff` path.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/FinalGUISpec.md
 
 - **Revert:** `Revert` reloads from disk. `Revert last agent edit` is a chat-owned restore action that routes through `cmd.chat.revert`; the editor never fabricates the revert itself.
-- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. If that turn touched multiple files, the revert applies to the whole turn across all affected files. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
+- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. This is a chat-owned turn-level restore action: if that turn touched multiple files, the revert applies to the whole turn across all affected files, while per-file restore remains in editor/history surfaces. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
 - **Restore to… / History:** The editor and document pane fetch restore points from the backend store and invoke the same restore pipeline; neither surface stores or manufactures restore points independently.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FileSafe.md
@@ -270,8 +276,18 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Cro
 - Recovery snapshots represent local unsaved buffer state only; they do not imply that a remote write succeeded.
 - For recovered remote-backed buffers, the banner copy is: `Recovered local edits — remote destination not yet synchronized`.
 - A recovered remote-backed buffer must reconnect or revalidate the destination before save/flush can claim success.
+- Remote editing is MVP scope for FileManager buffers and save/recovery flows. Remote terminal and `/run-debug` execution are deferred or optional runtime-surface capabilities, so FileManager must not promise terminal/run-debug availability merely because a remote-backed file can be edited.
+- `recover-unsaved` is required MVP behavior for local and remote-backed buffers. The recovered-remote state represents local unsaved buffer memory only; it never claims that remote save/flush succeeded until reconnect and destination revalidation pass.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+### 2.2.1 Remote/offline cached-file wording
+
+The File Manager/editor owns the cached-file-only offline editing affordance. The visible action label is `Work offline (cached files only)` whenever the user can open or keep editing only files that already have a validated local cache or snapshot. `Work offline (cached)` is a legacy shorthand that may appear only in migration aliases, telemetry lineage, or compatibility notes; live UI copy must not alternate between the two labels.
+
+If no cached file snapshot exists, disable the offline action or show a no-cached-files state instead of implying a full-project offline mode. When remote connectivity returns, reconnect or revalidate before save/flush claims remote success.
+
+Remote `/offline` and remote-degraded editor-state use explicit user-visible `/states`: host connected, `Remote host reconnecting`, `Remote host unavailable`, `Pending remote write`, and `Remote file is read-only`. While reconnecting, the editor preserves visible context and buffers but blocks operations that require confirmed remote round-trips unless they explicitly queue. When disconnected, remote file listings, `/searches/diffs`, git, shell, LSP, and file writes must show unavailable or pending write state instead of pretending-to-be-live behavior.
 
 ### 2.3 Display and navigation
 
@@ -337,25 +353,6 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 
 ### 2.7 Large files
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0216
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - If the base target object grows too large, it stops being canonical and just becomes a new dumping ground.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Strategy (MVP):** Use **truncated view + "Load full file"** for files above the threshold. Open read-only with a truncated view (e.g. first N lines) and a "Load full file" control; if the user loads full, allow editing subject to the hard cap. Do not implement read-only virtualized editing in MVP unless needed.
 - **Default threshold:** **10 000 lines** (primary metric for editor UX). Files above this are not loaded into an editable buffer by default; show truncated read-only view and "Load full file."
@@ -363,25 +360,6 @@ This addendum applies row-level transfer coverage requirements for the mapped ow
 
 ### 2.8 Keyboard shortcuts
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0217
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - Keyboard shortcuts should stay useful but sparse.
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - **Editor shortcuts (when focus in editor):** Save (Ctrl+S), Close tab (Ctrl+W, with unsaved prompt), Go to line (Ctrl+G), Next tab (Ctrl+Tab), Previous tab (Ctrl+Shift+Tab). Save As via menu or command palette.
 - **Focus rule:** When focus is in the editor (docked or floating), these shortcuts are handled by the editor; when focus is elsewhere, app/chat shortcuts apply. **Floating editor:** Editor shortcuts apply when **any editor window has OS focus** (docked or floating). So Ctrl+S in the floating editor window saves the current buffer. Open-file actions target the editor surface; when the editor is floating, focus the floating window and open the file there (§4, §5).
@@ -424,8 +402,9 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 
 1. **Identity-based routing**: If the file path includes a route_target scheme (e.g., `github://owner/repo/file.md`), the open request is resolved through the shared route/open semantics in Contracts_V0.md, not a raw filesystem read.
 2. **Worktree binding**: Opened files are bound to the active worktree via an execution_unit_context; artifacts opened in different worktrees have separate identity chains.
-3. **Artifact-by-identity**: Artifacts (outputs, logs, diffs) are stored by content hash and indexed by (concern_id, route_target, artifact_type, timestamp); raw paths are deprecated.
-4. **Open-file visibility**: The open-file list visible in the GUI is filtered by the active execution_role and the current approval_scope. Files opened in restricted approval scopes are not shown to unprivileged users.
+3. **Chat edit-card open target**: For chat `file-edit` cards, the path `to-open` resolves from `working_directory + relative_path`: the card displays the worktree-relative path, and the File Manager/editor opens the worktree's filesystem location as a real file on disk at the worktree path without a special rewrite layer.
+4. **Artifact-by-identity**: Artifacts (outputs, logs, diffs) are stored by content hash and indexed by (concern_id, route_target, artifact_type, timestamp); raw paths are deprecated.
+5. **Open-file visibility**: The open-file list visible in the GUI is filtered by the active execution_role and the current approval_scope. Files opened in restricted approval scopes are not shown to unprivileged users.
 
 ### Route/open rules
 
@@ -434,6 +413,16 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 - Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based
 - Keep route_target small with subject_id or object_kind/object_id identity
 - Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state
+- Keep `OpenFile { path, line?, range?, target_group? }` as a file-system/editor realization only: `open-file`, `file-open`, `/navigation`, line `/range`, and `target_group` route workspace file paths, not every openable object.
+- Use `OpenArtifact` for identity-native runtime-artifact opens: resolve `artifact_id` first, then follow envelope refs to `content_ref`, `linked_artifact_id`, `logical_artifact_id`, receipt-like refs, `attempt-level` evidence lineage, and Source Control, GitHub, Docker, or Kubernetes surfaces when relevant.
+- Runtime artifact envelopes are attempt-native and bridge-aware: they carry `run_id`, `node_id`, `thread_id`, `attempt_id`, and `artifact_id`; `task_id` remains legacy `/compatibility` display metadata, not the primary execution anchor.
+- Evidence artifacts such as `evidence`, `validation_test`, `failed_attempts`, and `before_after_snapshot` are attempt-native whenever produced by node worker or `/verifier/reviewer` flows.
+- Route shell-state overrides only the necessary destination/context state; shell-state never replaces `subject_id`, `/object_id`, `object_kind`, or `object_kind/object_id` identity.
+- Normalize legacy `/special-case` IDs into `subject_id` or `object_kind/object_id` before open/navigation handling.
+- Tool/runtime artifact linkage is direct: `/tool` traces link to artifact refs, artifacts link back to originating `/attempt` and tool refs, and receipts preserve run/attempt plus cross-surface refs.
+- FileManager route/open handling keeps ref families distinct instead of collapsing them under one loose link idea: inspection `/detail` refs, report `/evidence` refs, provenance `/source` refs, receipt `/external-operation` refs, and navigation `/deep-link` refs remain separate inputs to `OpenSubject`, `OpenArtifact`, or workspace-file realization.
+- Node-first routing and attempt-native runtime identity flow through Usage and Evidence by carrying `run_id`, `node_id`, `thread_id`, `attempt_id`, `artifact_id`, and `route_target`/`subject_id` together; FileManager consumes those keys for evidence/artifact opens without requiring tier-first compatibility translation.
+- FileManager's `runtime-identity` open path aligns `/artifact` and evidence keys with attempt-native records: `evidence`, `validation_test`, `failed_attempts`, `before_after_snapshot`, `content_ref`, `linked_artifact_id`, `logical_artifact_id`, and receipt-like refs resolve by artifact identity before path realization.
 
 ### Error recovery in file/artifact access
 
@@ -441,30 +430,108 @@ If a file path is broken or a route_target is unreachable:
 - Log a visibility deferral (do not fail the entire run).
 - Emit a navigable error in the concern record so the user can inspect what went wrong.
 - Provide a fallback route (e.g., workspace://project/concern) for results if the primary route was unavailable.
+- Search-in-files and Search side panel handoffs use the Search-owned `cmd.search.find_in_files` and `cmd.search.open_result` route; FileManager records only route/open recovery state. For remote `/SSH` file operations, failed open, save, listing, and search handoffs classify before recovery: network or trust failures map to `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted`; access refusal maps to `permission_denied`; missing paths map to `path_not_found` / `File not found`. These classifications preserve the user-visible network vs permission vs not-found distinction and propagate to Search/FileManager UI state.
+
+## 9. Tabs: Editor, Terminal, Browser
+
+FileManager consumes terminal and browser tab ownership without collapsing them. Terminal tabs use `terminal_tab_id`, `terminal_pane_id`, and `terminal_session_id` from the terminal model; browser tabs use browser-session identity from the browser owner docs. Pinning, capability badges, and tab labels must keep terminal tab state separate from browser-tab state, so the source shorthand `/cap/browser-tab` is retired as an ambiguous combined concept rather than a live tab type.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+## 10. Editor navigation and semantic affordances
+
+The old placeholder `restore missing §10-§12` is retired. Sections 10, 11, and 12 are live owner sections for editor navigation, file-tree action handoff, and Source Control review behavior; they are not optional appendices.
+
+### 10.1 Breadcrumbs and outline
+
+FileManager owns the editor breadcrumb strip and outline. When LSP is available, breadcrumbs and outline data use `documentSymbol`; when LSP is unavailable, the fallback path uses heuristic or regex outline data and labels the degraded state.
+
+The broad-sweep meta-findings are canonical for the editor surface. Better-specified implementation-level areas include file-tree behavior, tabs and `/buffers`, split panes, save `/dirty` state, `/drop`, LSP, image `/HTML` preview, keyboard shortcuts, persistence, and click-to-open. Sparse areas that must remain visible as product seams include rename, delete, duplicate, `/compare`, patch/conflict handling, symbol-index fallback, file watcher behavior, remote SSH/LSP, terminal tabs, build/debug integration, session-view restore, file-tree refresh, and bulk operations.
+
+Already-strong coverage remains explicit: image viewing is first-class in `§8.1` and `§14`, HTML/browser preview and hot reload are covered in `§8.2` and `§14`, browser evidence capture includes screenshots/traces/videos, and `cmd.browser` / `cmd.browser.*` command routing belongs to the browser command family. Click-to-open from files-touched, `Read:`, and `Edited:` entries remains shared with `assistant-chat-design.md`.
+
+### 10.2 Go to symbol and semantic navigation
+
+FileManager §10.2 is the canonical owner for Go to symbol. The command-palette and quick-open symbol picker use `documentSymbol` and `workspace/symbol` when LSP is available, and use heuristic, regex, or indexed symbol fallback behavior when it is not. References to `FileManager §10.9` as the Go to symbol owner are stale and must be corrected rather than inventing a new §10.9 owner.
+
+In `Plans/FileManager.md` (`/FileManager.md`), symbol-index `/status` language is scoped to Go to symbol and semantic navigation. It must not imply that the regex index owns File Manager search or symbol indexing; FileManager consumes search results and fallback labels while `grep` and Search regex acceleration stay under Tools and storage-plan.
+
+### 10.3 Diagnostics, gutter markers, and change markers
+
+Diagnostics, gutter markers, and editor change markers render in the editor surface, consume LSP or fallback projections, and preserve the open-file identity from §4.1.
+
+### 10.4 Definition, references, hover, and code actions
+
+Definition, references, hover, code actions, formatting, rename, and apply-edit flows route through the FileManager editor surface and use FileSafe where a mutation is applied.
+
+## 11. File tree actions, local filter, and chat handoff
+
+FileManager owns the file-tree action surface. `cmd.chat.add_file_reference` is a lock, not a recommendation: Add to Assistant Chat inserts a visible file reference chip into the active composer/thread context and does not inline full file contents as a hidden side effect. File references are file-only in MVP; folder insertion is out of scope.
+
+Search entrypoints from command palette, keyboard shortcuts, Search panel chrome, and context menus normalize to the Search-owned `cmd.search.*` family. FileManager may reveal or open selected file results, but it must not duplicate search semantics under file-manager-local or legacy `/chat/lsp-local` names.
+
+### 11.1 Canonical tree action catalog
+
+File-tree context menus expose create, rename, delete, copy path, Add to Assistant Chat, Open in Terminal, Open With, Save Local Copy, compare, and reveal actions through canonical `cmd.file.*`, `cmd.chat.*`, and related command IDs rather than ad hoc UI callbacks.
+
+Tree-level and tree-node `/menu` contracts include Copy / Cut / Paste, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/open-containing-folder` or reveal when supported. `Save As` remains editor-oriented; tree copy/cut/paste and `/export` flows use copy-vs-move and transfer semantics, so this area is no longer under-specified by a short menu label list.
+
+Copy/Cut/Paste for tree nodes uses a dedicated file-operation clipboard model across FileManager `/surfaces`, not text-selection clipboard semantics. `Copy` duplicates on paste, `Cut` marks a pending move, paste targets must be a folder or project root, and path validation plus conflict handling reuse drag/drop rules. Open With selects PM-native surfaces first; `system-default` remains a separate future handoff rather than part of the MVP PM-native target set.
+
+### 11.2 Clipboard, drag/drop, and transfer engine
+
+Clipboard, drag/drop, upload, download, and archive flows reuse the File Manager transfer contracts from the external discovery constraints and must keep path hardening, read-only state, and transfer progress explicit.
+
+### 11.3 Local tree filter, selection, and current-file reveal
+
+The local tree filter is a File Manager filter/type-ahead, not semantic search. Current-file reveal uses the open-file contract and may reveal an existing tree node instead of opening a duplicate buffer.
+
+### 11.4 Open With and Save Local Copy
+
+`cmd.file.open_with` is the PM-native Open With command for MVP editor and preview targets. The MVP-native target set is exactly `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, and `diff_review`. `system_default` is not part of the canonical MVP target enum for this command; future OS handoff must use a separate explicit command such as `cmd.file.open_in_system_default`.
+
+`Open With…` is the user-facing chooser label for `cmd.file.open_with`; it must resolve to one of the PM-native targets above rather than a hidden preview host or system-default fallback.
+
+`cmd.file.save_local_copy` is the explicit Download / Save Local Copy `/copy-out` flow for workspace nodes: it exports a readable source to a user-chosen local destination without changing the node's project-relative path identity. For remote projects, this is the canonical remote-to-local escape hatch and remains distinct from tree Copy/Paste, editor Save As, or a move into the workspace.
+
+## 12. Source Control handoff, compare, and review
+
+Source Control handoff from FileManager keeps file identity, worktree identity, and compare targets explicit. Handoff prose must not leave unresolved `if needed` or `only if clarification text is needed` conditions; a handoff either routes through a canonical command or is recorded as out of scope for the current surface.
+
+### 12.1 File-tree Source Control strip and diff entrypoints
+
+The file tree may expose Source Control status, compare, and diff entrypoints, but ownership of repository state remains with Source Control and worktree contracts.
+
+File/file-manager surfaces may expose `Open in Source Control`, `Open diff`, and `Open compare`, but they must not absorb branch/history/worktree ownership. Those actions hand off file identity, active `repo_id`, `worktree_id`, and compare target to Source Control instead of inventing a file-surface history model.
+
+Chat owns inline operation cards for `files changed` and `code diffs`, while File Editor and compare surfaces own source-level `/diff` viewing and `/focus` for concrete files and `/subjects`. FileManager may route preview-generated edits, Open diff, Open compare, `/file-manager` and `/file-manager/source-control` entrypoints, and `/history/worktree` handoff for repo-wide or multi-file changes, but FileSafe owns mutation safety and restore-before-rerun enforcement and Source Control remains the git-native owner.
+
+The GUI ownership split is stable: the Source Control side panel owns change lists, Git mutations, compare target selection, and `history/graph/worktree` pivots; docked editor diff/review is the canonical detailed in-shell surface; detached review windows are optional large-screen focused review surfaces; chat remains compact preview/audit only; and editor gutter plus scrollbar overview own heat-map summaries and change-marker state-feedback.
+
+### 12.2 Compare-target defaults
+
+Compare targets default from the active worktree and source-control state. Ambiguous compare targets must surface choices instead of silently selecting a stale branch, remote, or generated artifact.
+
+### 12.3 Hunk actions, conflict review, and diff-local search
+
+Hunk actions and conflict review use the diff/review owner contracts. FileManager may launch or reveal those flows but does not bypass review policy. Stage, unstage, discard, apply, expand/collapse, search-within-diff, and conflict-resolution review UX stay Source Control or review-owner behavior even when FileManager provides the entrypoint.
+
+FileManager diff/review entrypoints must preserve the later reconciliation ownership: `GitHub_Integration.md` owns compare-target defaults, hunk actions, conflict review, and diff-local search; `UI_Command_Catalog.md` owns `cmd.git` / `cmd.git.*` coverage; `assistant-chat-design.md` owns `cmd.chat.revert` default semantics and chat-thread diff exposure. The hunk catalog includes `/apply/review/conflict`, `/reject/stage/unstage/revert/collapse`, `/unstage`, `/comments`, `/reanchor`, and large-directory-safe review loading; if merge strategy is unavailable, the surface must show conflict UI or reject rather than silently applying. Generated-vs-workspace-file visibility, `/file-manager` location, `/unstaged/conflicted` ownership, and conflict-resolution routing remain explicit.
+
+### 12.4 Change-marker ownership and revert boundaries
+
+Change markers in the editor are visual projections over source-control and FileSafe state. Revert actions must identify the exact file, hunk, or persisted mutation being reverted.
+
+Git/source-control discard/compare/stage actions are not ordinary editor undo. Restore points, rollback, and revert-last-agent-edit remain explicit restore-history actions and must not be hidden behind git-panel affordances. Diff-specific heat-map/change-marker, diff-edit, per-hunk controls, open-in-diff, scrollbar change-marker behavior, and diff-surface undo grouping are required editor projections over compare state, not optional source-control decoration. Top-level-doc and `assistant-chat-design.md` links such as files-touched and open-in-editor are routing affordances, not replacements for source-buffer review state.
+
+Conflicted markers override staged/unstaged styling until resolved, and staged and unstaged state remain visually distinguishable when both exist for one file. Revert/restore outcomes surface through audit/history state plus toast/banner and MUST NOT create a new persistent heat-map class.
+
+The diff-affecting taxonomy is canonical: source-buffer edits include typing, preview-originated bounded patch apply, assistant patch apply, and conflict-result text edits in source-backed panes; git mutations include stage, unstage, discard, `stash push/pop`, mark conflict resolved, and hunk-level Git actions; restore/rollback actions include Revert last agent edit, `Restore to…`, checkpoint restore, rewind, and rollback. These resolve to confirmed restore events that refresh affected buffers rather than popping a local editor stack.
+
+Diff undo/redo remains scoped by action class: single-file assistant edits, multi-file assistant edits, hunk-level Git actions, patch-apply / preview-apply actions, and conflict-resolution actions use the grouping rules above and never collapse into one global editor undo stack. Chat routing exposes the `files-touched strip`, `diff card`, `open-in-editor`, and `open-in-diff` as distinct affordances; revert scope must be declared as `last edit`, `last turn`, per-file, or per-thread, with audit/history representation preserved after revert or rollback. GUI ownership remains split across docked editor diff, detached review window, Source Control side-panel pivot / selection state, scrollbar heat-map / gutter change markers, and dirty / staged / conflicted / reverted feedback loops.
 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
-### Reconciliation addendum
-
-This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
-
-- Required structural headings for this packet target:
-  - ### Reconciliation addendum
-
-#### Source target target-0214
-- Reconciliation action: insert_after
-- Replace scope: insert_only
-- Required structural headings represented:
-  - ### Reconciliation addendum
-- Exact required items represented:
-  - `OpenFile { path }` is now unambiguously workspace-root-only, proving that generated/runtime opens need a separate open-by-identity router.
-  - OpenFile { path }
-  - subject-open / open-by-identity
-- Exact acceptance checks represented:
-  - All coverage_row_ids listed on this target are represented without broad summary substitution.
-  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
-  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
-- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Acceptance carry-through
 - Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
