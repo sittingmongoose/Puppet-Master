@@ -1,23 +1,25 @@
 {
   "schema_id": "pm.work_item_meta.v2",
   "work_id": "w-20260328-192905",
-  "mode": "research",
+  "mode": "superseded",
   "topic_or_scope": "Persona systems/features expansion for Puppet Master rewrite planning, including built-in base personas, specialty personas, and persona settings GUI behavior.",
-  "status": "blocked",
+  "status": "superseded",
   "created_at_utc": "2026-03-28T19:29:05Z",
-  "updated_at_utc": "2026-06-10T21:59:40Z",
+  "updated_at_utc": "2026-06-11T05:06:36Z",
   "run_prefix": "r-20260328-192905",
   "next_run_seq": 1,
   "run_id": null,
   "ledger_shards": {
-    "status": "generated_current",
+    "status": "superseded_by_p6_closed_copy",
     "manifest_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/manifest.json",
-    "source_sha256": "4369b596a2b2da303860f1896dbb2c97d61e06bb42d8ed2f280723199eae31cb",
+    "source_sha256": "79f8b8eec22aa8e1cdd33c77a985247e1b7536c09c03a85192f1824f7add3c26",
     "shard_line_size": 200
   },
   "target_document_existence": {
     "status": "not_checked",
     "report_path": null
   },
-  "next_required_stage": "Audit Mode"
+  "next_required_stage": "Closed",
+  "superseded_by": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md",
+  "superseded_reason": "The P6 closed source-lineage copy was repaired from this newer/longer ledger at 2026-06-11T05:06:36Z; do not process this work_items duplicate as a stale blocked lane."
 }

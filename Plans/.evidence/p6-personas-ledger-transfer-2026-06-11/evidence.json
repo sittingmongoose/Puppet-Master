@@ -1,123 +1,23 @@
 {
-  "artifacts": [
-    {
-      "note": "Per-material-item certification.",
-      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json",
-      "sha256": "ad4e9bf00d61a0c1c655236e059bce84267d6487bf77dc4709598d3cb5c718c1"
-    },
-    {
-      "note": "Primary owner canonical transfer.",
-      "path": "Plans/Personas.md",
-      "sha256": "49149602478d0ef7237e0513ac9c8ffc31c0c517c7f0a8fa0ba1463066f23397"
-    },
-    {
-      "note": "Agent Config Personas consumer updates.",
-      "path": "Plans/FinalGUISpec.md",
-      "sha256": "4cd33d36e80c469ca5cdbfe065a8bf2275a6e0d1331697bac9c658d5c31c7f4a"
-    },
-    {
-      "note": "Chat Persona eligibility consumer updates.",
-      "path": "Plans/assistant-chat-design.md",
-      "sha256": "c4974fbcf8a2f9df1db3ecafe3847e56de05f47487c4079ab98c9969df254b01"
-    },
-    {
-      "note": "Orchestrator Persona setup and registry consumer updates.",
-      "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "2ef495a547bf027b82f22d43b1cd6909f50319170517bfc5c41c6b0ca7122a37"
-    },
-    {
-      "note": "Index owner row updates.",
-      "path": "Plans/00-plans-index.md",
-      "sha256": "9736e734004ee984e92205292201a946796725b4e3baaea7753ddf6aa2ab2a72"
-    },
-    {
-      "note": "Protected core Persona term.",
-      "path": "Plans/Glossary.md",
-      "sha256": "6f120dd2bf0f29e7f0cc4d7aa98e771fc12dc6be74cf35001c8deb75635fbcf3"
-    },
-    {
-      "note": "Owner-family routing update.",
-      "path": "Plans/Crosswalk.md",
-      "sha256": "b3ab29d3fdfc69b5ac8ad8d1f6c9d2873085fa86f03b37bb459fba8bf6e57564"
-    },
-    {
-      "note": "Ledger closed metadata.",
-      "path": "Plans/ledgers/p6/w-20260328-192905/meta.json",
-      "sha256": "578c477762a386b0cf8f41240c190a878baae2ea38f84b2de1dc1ae272ec6261"
-    },
-    {
-      "note": "Ledger closed state.",
-      "path": "Plans/ledgers/p6/w-20260328-192905/current_state.md",
-      "sha256": "b001450ecd58d9745d9aeb6854b0d99bf5cd1382f6bafe16478a1e8fdfe9ef38"
-    },
-    {
-      "note": "Schema-valid decision row for this transfer.",
-      "path": "Plans/auto_decisions.jsonl",
-      "sha256": "6270e723e18754e9e11dec4bfa585e33f0647e8ad4d20bcfefbbbb2adccdea24"
-    },
-    {
-      "note": "Plan graph node/evidence refs for this transfer.",
-      "path": "Plans/plan_graph.json",
-      "sha256": "8f78b06831d23560ddd6811b99d8db382754295c5d112bfab0275e37a63ba59a"
-    },
-    {
-      "note": "Spec Lock refreshed after transfer.",
-      "path": "Plans/Spec_Lock.json",
-      "sha256": "a857b4ee807386d7e6bd4aca372ce49cac8aaae70a4e007ba6b7cbfeff7a0d95"
-    },
-    {
-      "note": "Shard regeneration report after transfer.",
-      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "a273b0dfa6b24dd1bd6897e0c4ee69cc4965af4ea23fe4a5c7e40a3ca125ee2a"
-    }
-  ],
-  "checks": [
-    {
-      "details": "All 15 material item groups were transferred, merged, already canonical, non-applicable, source-lineage-only, or explicitly deferred with live-plan evidence.",
-      "name": "material-ledger-certification",
-      "result": "PASS"
-    },
-    {
-      "details": "Only Plans/ledgers/p6/w-20260328-192905/** was unlocked; File Manager/Editor audit remains closed and other P6 lanes remain locked.",
-      "name": "p6-scope-lock",
-      "result": "PASS"
-    },
-    {
-      "details": "No transfer_state or Codex-kit artifacts were created.",
-      "name": "artifact-hygiene",
-      "result": "PASS"
-    },
-    {
-      "details": "JSON syntax, Spec Lock, auto decisions, evidence, plan graph, shard verification, contract refs, run-gates, audit-governance, and git diff --check all passed on 2026-06-11.",
-      "name": "governance-verification",
-      "result": "PASS"
-    },
-    {
-      "details": "git diff --check returned no whitespace or patch hygiene failures.",
-      "name": "git-diff-check",
-      "result": "PASS"
-    }
-  ],
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "evidence.p6-personas-newest-ledger-repair-2026-06-11",
+  "created_at_utc": "2026-06-11T05:06:36Z",
+  "node": {
+    "node_id": "pm.p6.personas-ledger-transfer",
+    "graph_id": "pm.p6-personas-ledger-transfer.2026-06-11",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Repaired the P6 Personas transfer against the newer work_items ledger, removed the stale core Document Writer canon, transferred Plan/Deep Plan post-plan actions to Assistant Chat, strengthened Collaborator and Overseer Persona owner prose, reconciled technical-writer as specialty-scoped, marked the duplicate work_items ledger state superseded, and resealed governance artifacts without unlocking File Manager/Editor or other P6 lanes.",
   "commands_run": [
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
       "exit_code": 0,
-      "stdout_excerpt": "Preflight pass generated_at_utc=2026-06-11T03:47:43Z."
-    },
-    {
-      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
-      "exit_code": 0,
-      "stdout_excerpt": "Pre-reseal owner-doc check passed."
+      "stdout_excerpt": "Preflight pass: status=pass generated_at_utc=2026-06-11T04:59:41Z."
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py json-syntax",
       "exit_code": 0,
-      "stdout_excerpt": "Pre-reseal JSON syntax check passed."
-    },
-    {
-      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 1,
-      "stdout_excerpt": "Expected reseal drift after owner-doc edits: Spec Lock, evidence hashes, plan graph, and generated shards required refresh."
+      "stdout_excerpt": "Pre-reseal syntax check passed after owner/evidence edits."
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
@@ -127,67 +27,196 @@
     {
       "cmd": "python3 scripts/pm-plans-verify.py json-syntax",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:12Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:08Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:12Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:08Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:12Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:08Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:15Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:11Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:24Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:23Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --check",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; docs_checked=46; shards_checked=711; source_count=46; failures=[]"
+      "stdout_excerpt": "status=pass; docs_checked=46; shards_checked=711; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py check-shards",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:25Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:23Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:31Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:31Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:49Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:50Z; failures=[]"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T04:09:49Z; failures=[]"
+      "stdout_excerpt": "status=pass; generated_at_utc=2026-06-11T05:15:53Z; failures=[]"
     },
     {
       "cmd": "git diff --check",
-      "exit_code": 0
+      "exit_code": 0,
+      "stdout_excerpt": "no whitespace errors; exit_code=0"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "tool_search.tool_search_tool",
+      "count": 1,
+      "note": "Loaded multi-agent tool metadata proving PM custom roles are locked to GPT-5.5 xhigh."
+    },
+    {
+      "tool_id": "multi_agent_v1.spawn_agent",
+      "count": 3,
+      "note": "Spawned only read-only PM audit roles: evidence mapper, owner adjudicator, and governance auditor."
+    },
+    {
+      "tool_id": "functions.exec_command",
+      "count": 35,
+      "note": "Used for repo inspection, verification, sharding, copying the newer ledger body, and mechanical JSON hash refresh."
+    },
+    {
+      "tool_id": "functions.apply_patch",
+      "count": 1,
+      "note": "Used for scoped canonical doc, ledger state, and evidence edits before mechanical JSON refresh."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "p6-personas-newest-ledger-repair-2026-06-11",
+        "note": "Repair certification for the newer work_items Persona ledger."
+      },
+      {
+        "source": "other",
+        "ref": "read-only-subagents:gpt-5.5-xhigh",
+        "note": "Called subagent roles were proven GPT-5.5 xhigh by tool metadata and instructed read-only."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/Personas.md",
+      "change_type": "modified",
+      "note": "Removed core Document Writer, strengthened Collaborator and Overseer, and scoped technical-writer as specialty/template."
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "change_type": "modified",
+      "note": "Replaced generic post-plan actions with the exact four Plan/Deep Plan choices."
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "change_type": "modified",
+      "note": "Softened hard technical-writer drafting default and blocked Document Writer recreation."
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "change_type": "modified",
+      "note": "Removed stale document-writer fallback from extraction guidance."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Removed document-writer from protected core Persona index summary."
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "change_type": "modified",
+      "note": "Removed document-writer from protected core Persona glossary term."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md",
+      "change_type": "modified",
+      "note": "Replaced older transferred body with the newer work_items ledger body."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260328-192905/meta.json",
+      "change_type": "modified",
+      "note": "Updated closed source-lineage SHA and repair timestamp."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260328-192905/current_state.md",
+      "change_type": "modified",
+      "note": "Marked repaired complete from newest ledger and points to superseded duplicate."
+    },
+    {
+      "path": "Plans/ledgers/work_items/w-20260328-192905/meta.json",
+      "change_type": "modified",
+      "note": "Marked duplicate as superseded by the P6 closed source-lineage copy."
+    },
+    {
+      "path": "Plans/ledgers/work_items/w-20260328-192905/current_state.md",
+      "change_type": "modified",
+      "note": "Cleared stale blocked state and added superseded warning."
+    },
+    {
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json",
+      "change_type": "modified",
+      "note": "Delta-aware material-item certification against newest ledger."
+    },
+    {
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "change_type": "modified",
+      "note": "Schema-valid repair evidence bundle."
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "change_type": "modified",
+      "note": "Corrected shard-count prose and refreshed generated artifact hashes."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "Appended repair decision row."
+    },
+    {
+      "path": "Plans/plan_graph.json",
+      "change_type": "modified",
+      "note": "Updated P6 node decision refs, inputs/outputs, and verifier message."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Refreshed locked SSOT hashes after owner and plan graph edits."
+    },
+    {
+      "path": "Plans/_shards/**",
+      "change_type": "modified",
+      "note": "Regenerated derived shards from registered source docs."
     }
   ],
   "contract_refs_satisfied": [
     "ContractName:Plans/Personas.md",
-    "ContractName:Plans/FinalGUISpec.md",
     "ContractName:Plans/assistant-chat-design.md",
+    "ContractName:Plans/chain-wizard-flexibility.md",
     "ContractName:Plans/orchestrator-subagent-integration.md",
-    "ContractName:Plans/Models_System.md",
-    "ContractName:Plans/Prompt_Pipeline.md",
-    "ContractName:Plans/Contracts_V0.md",
-    "ContractName:Plans/storage-plan.md",
+    "ContractName:Plans/00-plans-index.md",
+    "ContractName:Plans/Glossary.md",
+    "ContractName:Plans/Project_Output_Artifacts.md",
+    "ContractName:Plans/Document_Packaging_Policy.md",
     "SchemaID:pm.auto_decisions.schema.v1",
     "SchemaID:pm.evidence.schema.v1",
     "SchemaID:pm.plan_graph.schema.v1",
@@ -198,135 +227,122 @@
     "Gate:GATE-006",
     "Gate:GATE-009"
   ],
-  "created_at_utc": "2026-06-11T04:15:00Z",
-  "events": {
-    "event_refs": [
-      {
-        "note": "Canonical transfer and certification for Plans/ledgers/p6/w-20260328-192905.",
-        "ref": "p6-personas-ledger-transfer-2026-06-11",
-        "source": "other"
-      },
-      {
-        "note": "Subagent roles were proven locked to GPT-5.5 xhigh and used only for read-only review.",
-        "ref": "read-only-subagents:gpt-5.5-xhigh",
-        "source": "other"
-      }
-    ]
+  "reproducibility": {
+    "snapshot_ref": "Puppet-Master-working-tree-2026-06-11-p6-personas-newest-ledger-repair",
+    "note": "Use current repo root only. Source lineage is the repaired P6 ledger body copied from the newer work_items ledger; no transfer_state or Codex-kit artifacts are required."
   },
-  "evidence_id": "evidence.p6-personas-ledger-transfer-2026-06-11",
-  "files_changed": [
+  "artifacts": [
     {
-      "change_type": "modified",
-      "note": "Primary owner transfer for protected core IDs, built-in scope, GUI management, core Persona catalog, specialty catalog, and curation rules.",
-      "path": "Plans/Personas.md"
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json",
+      "note": "Delta material-item certification.",
+      "sha256": "8acb9b221583b0579fd47a77e98f019e00ffae9b67bc49093fed0b7f51cc401e"
     },
     {
-      "change_type": "modified",
-      "note": "Agent Config > Personas UX, prompt visibility, requested/effective summary, protected-core and bundled-specialty behavior.",
-      "path": "Plans/FinalGUISpec.md"
+      "path": "Plans/Personas.md",
+      "note": "Primary Persona owner repair.",
+      "sha256": "f1ab4cb45fb88e45d2f3ed096578e17c854b65c9e5b61b872c4bcdd980c0a77b"
     },
     {
-      "change_type": "modified",
-      "note": "Chat eligibility and natural-language behavior for subagent-only Explorer/Bash.",
-      "path": "Plans/assistant-chat-design.md"
+      "path": "Plans/assistant-chat-design.md",
+      "note": "Plan/Deep Plan post-plan owner repair.",
+      "sha256": "617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e"
     },
     {
-      "change_type": "modified",
-      "note": "Canonical Persona storage/Agent Config setup, registry split, stale catalog-name exclusions, and provider-native seed status.",
-      "path": "Plans/orchestrator-subagent-integration.md"
+      "path": "Plans/chain-wizard-flexibility.md",
+      "note": "Requirements Builder drafting Persona clarification.",
+      "sha256": "cc79ae779c15a06767c13c358168a8fc9684c7fe399ab8927c48063e9370c833"
     },
     {
-      "change_type": "modified",
-      "note": "Index owner summary updated for expanded Personas canon and source-lineage exclusions.",
-      "path": "Plans/00-plans-index.md"
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "note": "Stale document-writer fallback cleanup.",
+      "sha256": "68308e5ee0eb66377a92b5bf780abd21496f872f4df0059820d1e7f4648af5d6"
     },
     {
-      "change_type": "modified",
-      "note": "Protected core Persona glossary term added.",
-      "path": "Plans/Glossary.md"
+      "path": "Plans/00-plans-index.md",
+      "note": "Index protected core summary repair.",
+      "sha256": "2164241df7346fb49d69d008ba7eab568be1fee0fbf1ad9aa48b351c9b088693"
     },
     {
-      "change_type": "modified",
-      "note": "Owner-family routing updated for Persona/model-adjacent behavior.",
-      "path": "Plans/Crosswalk.md"
+      "path": "Plans/Glossary.md",
+      "note": "Glossary protected core summary repair.",
+      "sha256": "84a42148a157f214c1a2088e1a6c01ff04d65e8acce4aece80ff1469e6d35f41"
     },
     {
-      "change_type": "modified",
-      "note": "Unlocked P6 Personas ledger marked transferred/closed.",
-      "path": "Plans/ledgers/p6/w-20260328-192905/meta.json"
+      "path": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md",
+      "note": "Current closed source-lineage copy.",
+      "sha256": "79f8b8eec22aa8e1cdd33c77a985247e1b7536c09c03a85192f1824f7add3c26"
     },
     {
-      "change_type": "modified",
-      "note": "Unlocked P6 Personas ledger state marked transferred/closed with evidence pointers.",
-      "path": "Plans/ledgers/p6/w-20260328-192905/current_state.md"
+      "path": "Plans/ledgers/p6/w-20260328-192905/meta.json",
+      "note": "Closed P6 ledger metadata.",
+      "sha256": "b7a7808b1519e75be19f0978ab71d755f245259c30334a3d8f70ccbe0aecba22"
     },
     {
-      "change_type": "added",
-      "note": "Compact material-item certification and disposition evidence.",
-      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json"
+      "path": "Plans/ledgers/p6/w-20260328-192905/current_state.md",
+      "note": "Closed P6 ledger state.",
+      "sha256": "b9273e9f75db619d601c5572112c4f69a70427488938bc88129c80b9c959243f"
     },
     {
-      "change_type": "added",
-      "note": "Schema-valid governance evidence bundle for this transfer.",
-      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+      "path": "Plans/ledgers/work_items/w-20260328-192905/meta.json",
+      "note": "Superseded duplicate metadata.",
+      "sha256": "597bf895fb09bbb526e3a6610caf606bd07abf563a6ed65d059a493df18714d6"
     },
     {
-      "change_type": "modified",
-      "path": "Plans/auto_decisions.jsonl"
+      "path": "Plans/ledgers/work_items/w-20260328-192905/current_state.md",
+      "note": "Superseded duplicate warning state.",
+      "sha256": "509423db9a655e5a1a47649ee499fa8746968b6b78b6e2dbe164014c5b88010b"
     },
     {
-      "change_type": "modified",
-      "path": "Plans/plan_graph.json"
+      "path": "Plans/auto_decisions.jsonl",
+      "note": "Schema-valid repair decision row.",
+      "sha256": "1a8b891b06a5dc9e14cfe1f2a301bc6d65c8b9e23885faab951b1b7e8bf1af3f"
     },
     {
-      "change_type": "modified",
-      "path": "Plans/Spec_Lock.json"
+      "path": "Plans/plan_graph.json",
+      "note": "P6 node repair refs.",
+      "sha256": "d5f3a94445f6e06827e41752450223eddcd5344644fe96e8b394586e45881f58"
     },
     {
-      "change_type": "modified",
-      "path": "Plans/_shards/**"
+      "path": "Plans/Spec_Lock.json",
+      "note": "Spec Lock refreshed after repair.",
+      "sha256": "105795f9974d2cf26417b94e55c284b6b93588e65fa59ab63a8e467627ff35bd"
     },
     {
-      "change_type": "modified",
-      "path": "Plans/.evidence/**"
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "note": "Shard regeneration report.",
+      "sha256": "e49dcc788ed162094878a0aa76a0f4d7c8f1cc679c58548695127b6a21d5f52a"
     }
   ],
-  "node": {
-    "graph_id": "pm.p6-personas-ledger-transfer.2026-06-11",
-    "graph_scope": "puppet-master-repo-build",
-    "node_id": "pm.p6.personas-ledger-transfer"
-  },
-  "reproducibility": {
-    "note": "Use current repo root only. Source lineage is the unlocked P6 Personas ledger; canonical evidence points to live Plans files, not pipeline or transfer-state artifacts.",
-    "snapshot_ref": "Puppet-Master-working-tree-2026-06-11-p6-personas-ledger-transfer"
-  },
-  "schema_id": "pm.evidence.schema.v1",
-  "summary": "Transferred the completed P6 Personas ledger into canonical Persona owner and consumer plans, certified every material item, closed the unlocked ledger, and prepared governance reseal artifacts without unlocking File Manager/Editor or other P6 lanes.",
-  "tool_calls": [
+  "checks": [
     {
-      "count": 1,
-      "note": "Loaded multi-agent tool metadata to prove PM custom subagents are locked to GPT-5.5 xhigh.",
-      "tool_id": "tool_search.tool_search_tool"
+      "name": "newest-ledger-audited",
+      "result": "PASS",
+      "details": "The 2,175-line work_items ledger was compared to the 1,661-line transferred p6 copy and every newer material delta was dispositioned."
     },
     {
-      "count": 2,
-      "note": "Spawned read-only pm_evidence_mapper and pm_owner_adjudicator reviewers.",
-      "tool_id": "multi_agent_v1.create_agent"
+      "name": "document-writer-core-removal",
+      "result": "PASS",
+      "details": "document-writer is no longer a protected core Persona in Personas, Glossary, or the index; remaining references are explicit non-core/source-lineage boundaries."
     },
     {
-      "count": 2,
-      "note": "Collected read-only reviewer evidence mapping and owner adjudication.",
-      "tool_id": "multi_agent_v1.message_agent"
+      "name": "plan-deep-plan-actions",
+      "result": "PASS",
+      "details": "Assistant Chat now owns the exact four post-plan choices from the newer ledger."
     },
     {
-      "count": 20,
-      "note": "Used for repo inspection, line-reference collection, JSON/schema checks, and governance commands.",
-      "tool_id": "functions.exec_command"
+      "name": "duplicate-ledger-state",
+      "result": "PASS",
+      "details": "P6 ledger body matches the newer work_items body; work_items duplicate is marked superseded with warning and no stale blocked state."
     },
     {
-      "count": 12,
-      "note": "Used for scoped edits to canonical plans, ledger state, and evidence.",
-      "tool_id": "functions.apply_patch"
+      "name": "p6-scope-lock",
+      "result": "PASS",
+      "details": "File Manager/Editor audit stays closed and unrelated P6 lanes remain locked."
+    },
+    {
+      "name": "artifact-hygiene",
+      "result": "PASS",
+      "details": "No transfer_state or Codex kit artifacts were created."
     }
   ]
 }
