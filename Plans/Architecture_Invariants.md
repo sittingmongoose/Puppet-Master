@@ -443,3 +443,188 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged
 - Consumer drift remains blocking even when owner docs exist: slash-command consumers, questionnaire consumers, provider `/multi-account/runtime-identity` consumers, and log/audit GUI consumers MUST be reconciled in the same packet as the repaired owner docs so stale local assumptions do not mislead implementation.
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Architecture_Invariants.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### AI-001 - Architecture Invariants (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: AI-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Plans/Architecture_Invariants.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Architecture_Invariants-S0039
+preserved_exact_tokens:
+- Architecture Invariants (Canonical)
+- 0. Scope
+- 'ContractRef: Primitive:Invariant, PolicyRule:Decision_Policy.md§1'
+- INV-001 -- Tool correlation integrity (normalized streams + persisted events)
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, Primitive:RuntimeIdentity'
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject'
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md'
+- INV-002 -- No secrets in persistent storage
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, SchemaID:evidence.schema.json, PolicyRule:no_secrets_in_storage, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md'
+- INV-003 -- UI SSOT (no bespoke UI behavior)
+- 'ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand'
+- INV-004 -- UI command boundary (no business logic in UI)
+- 'ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Plans/UI_Command_Catalog.md'
+- INV-005 -- Deterministic ordering from SSOT lists
+- 'ContractRef: Primitive:Provider, ContractName:Plans/CLI_Bridged_Providers.md'
+- INV-006 -- Providers are storage-isolated
+- 'ContractRef: Primitive:Provider, Primitive:SessionStore, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md'
+- INV-007 -- No stringly-typed IDs outside SSOT
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- INV-008 -- GitHub operations are API-only
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+- INV-009 -- Cursor transport is invisible to consumers
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/CLI_Bridged_Providers.md'
+- INV-010 -- Platform naming compliance
+negative_constraints:
+- '- MUST NOT reuse persisted state when doing so would:'
+- '**Rule:** Secrets (tokens, credentials, private keys) MUST NOT be written to:'
+- '**Rule:** UI copy, buttons, and view behavior MUST be specified in the canonical UI SSOT docs and typed command layer; plan docs may reserve IDs but must not invent ad-hoc UI behaviors.'
+- '**Rule:** The UI layer MUST dispatch stable `UICommand` IDs and MUST NOT execute business logic directly.'
+- '**Rule:** Providers and provider adapters MUST NOT write directly to persistent storage (`seglog`, `redb`, `Tantivy`, sparse n-gram index files, or remote-cache state). They emit normalized events or tool results; PM-owned storage writers, projectors, and cache managers own persistence.'
+- '**Rule:** Stable IDs (Tool IDs, UICommand IDs, ConfigKey names, schema IDs) MUST NOT be re-invented as ad-hoc string literals in multiple places. They must be defined once (SSOT) and referenced everywhere else.'
+- '**Rule:** GitHub hosting/auth/repo/fork/PR operations MUST use the GitHub HTTPS API only; the GitHub CLI (`gh`) MUST NOT be used for these operations.'
+- '**Rule:** Cursor must support both `stream-json` and ACP transports under one Provider facade; consumers MUST NOT branch on transport type.'
+- '**Rule:** The UI layer MUST dispatch only typed `UICommand` envelopes to trigger non-trivial behavior. The UI MUST NOT call backend services, storage, domain logic, or provider integrations directly. All user-initiated interactions flow through the UI Command Dispatcher boundary.'
+- 'All persisted and in-memory monetary cost values MUST be stored as integer microdollars (`u64`). Float types MUST NOT be used for cost storage or accumulation at any layer. `cost_usd` is derived display copy only: `cost_microdollars / 1_000_000`, presentation-only, and never a persisted billing fiel'
+- 'All FileSafe-managed file write operations MUST use the atomic write pattern: write to a temp file, fsync, rename to the target path. Direct `os.WriteFile` or equivalent non-atomic write calls MUST NOT be used for managed files. Concurrent-edit safety is part of INV-017: managed rewrites capture `re'
+- '- Generated Rust code MUST live under a single `generated/` boundary (path is implementation-defined) and MUST NOT be hand-edited.'
+- Automatically collected Debug evidence MUST become visible Investigation Context or Runtime Artifacts state. PM MUST NOT rely on hidden prompt-only evidence injection for browser/debug payloads.
+- '- Runtime recovery invariants include safe-point vs restore-point boundaries, `graph-lock` non-degradation, `classification-before-policy`, `checkpoint-derived` projection freshness, and `attempt-boundary` identity freeze. `Plans/FileSafe.md` remains the DAE enforcement owner for post-approval arg m'
+- '- Owner-level recovery invariants cover attempt immutability, `failure-vs-blocked` family separation, restore identity, projection authority, and shared `provider-pool` concurrency. `Plans/Executor_Protocol.md`, `Plans/FileSafe.md`, and `Plans/MiscPlan.md` must not keep same-doc contradictions aroun'
+- '- `Plans/Run_Graph_View.md` and `Plans/Runtime_Artifacts_Panel.md` remain required consumers for concrete receipt/usage identity, `projection-trust` hooks, producer identity, trust/provenance, and stronger `cross-surface` linkage; runtime artifact or graph consumers must not replace those hooks with'
+- '- Route transport invariants keep `resume_url` as serialized transport only. Attention flows, general-purpose search, and cross-surface pivots MUST resolve through canonical `route_target` / subject identity first; a URL may carry that target but must not be stronger or more exact than the owner rou'
+- '- `runtime-object-first` identity starts from `node_id`, `attempt_id`, `blocked_reason_code`, scheduler lane dispatch order, and safe points; policy, `/HITL/permission`, and approval docs must not fall back to stale tier context or looser ownership terms when evaluating blocked policy, permission st'
+- '- Consumer docs must not mix canonical blocked/scheduler/remediation lineage or `/scheduler/remediation` lineage with legacy `tier-event` push streams; blocked, scheduler, remediation, and tier-era event projections must all resolve through preserved runtime identity before surfacing status.'
+- '- Cross-cutting owner gaps remain invariant obligations until resolved by their owner docs: `/session` scope, safe-point cleanup ordering, OpenCode server/session limits, project/session browser ownership, attention-center ownership, `runtime-recovery` command family coverage, and plugin `/skill/for'
+- '- Plugin/module breadth and dynamic-loading dependency debt MUST remain visible in implementation planning. New modules are loaded lazily and scoped to activated capabilities; module activation must not create unbounded startup work, hidden dependency chains, or duplicate project-detection logic.'
+- '- Browser-specific implementation assumptions must not shape Puppet Master architecture even when they make fast demos easy. DOM roots, service-worker persistence, hidden file inputs, Blob downloads, localStorage identity, query-string routing, and browser-only clipboard/selection hacks are implemen'
+- '- Replit-style hosted runtime + verification, including agent self-testing and console/Ask AI feedback, is a tight feedback loop but remains cloud-coupled; PM MUST NOT make desktop Debug Mode depend on hosted runtime ownership or a remote desktop extension log server.'
+- '- Any browser evidence auto-feed must be a visible attach `/bundle` contract and must not contradict the no hidden browser-to-chat injection rule. A browser-backed investigation can auto-feed bounded evidence only through visible Investigation Context state, consented attach/revoke affordances, and '
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- Any older naming must be referred to only as **legacy naming** (without quoting the older name).
+- '- Cross-surface navigation and usage consumers must demote `tier_id` from route identity and realign around runtime object routing plus canonical `usage-event` identity. `tier_id` may survive only as derived display/grouping compatibility metadata.'
+- '- Consumer docs must not mix canonical blocked/scheduler/remediation lineage or `/scheduler/remediation` lineage with legacy `tier-event` push streams; blocked, scheduler, remediation, and tier-era event projections must all resolve through preserved runtime identity before surfacing status.'
+- '- Addressing cannot assume rigid `<phase>/<task>/<subtask>` paths when package/seam architecture is active. `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` consumers must route by canonical package, seam, node, lane, and attempt identity rather than forcing every artifact or runtime address'
+stale_retired_dispositions:
+- '- Strong stale consumers for this runtime identity cluster are `Plans/Run_Graph_View.md` and `Plans/Orchestrator_Page.md`; their mirrors must reconcile to these invariants instead of preserving stale tier-era aggregation or route-local identity.'
+- '- `runtime-object-first` identity starts from `node_id`, `attempt_id`, `blocked_reason_code`, scheduler lane dispatch order, and safe points; policy, `/HITL/permission`, and approval docs must not fall back to stale tier context or looser ownership terms when evaluating blocked policy, permission st'
+- '- `Plans/WorktreeGitImprovement.md` / `WorktreeGitImprovement.md` already contains the correct source-control surface boundary; the stale part is the identity anchor, not the product boundary, so worktree and Source Control surfaces must retarget to runtime route identity without reopening the produ'
+- '- Reconciliation order is owner-first: owner docs and `rewrite-root` routing are repaired before primary stale consumers, and mirror `/checklist` followers only update after their owners settle.'
+- '**Rule:** Web, Firecrawl, provider, and recovery consumers MUST preserve owner boundaries instead of reintroducing stale local assumptions.'
+- '- `Plans/FileManager.md` consumes file/browser/rendering repairs and MUST NOT keep stale inline visualizer or terminal-action assumptions; `/browser/rendering` behavior stays routed through the browser/rendering owners and any terminal-action surface remains a consumer of terminal/runtime contracts.'
+- '- Consumer drift remains blocking even when owner docs exist: slash-command consumers, questionnaire consumers, provider `/multi-account/runtime-identity` consumers, and log/audit GUI consumers MUST be reconciled in the same packet as the repaired owner docs so stale local assumptions do not mislead'
+owner_boundary_notes:
+- '# Architecture Invariants (Canonical)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- '- likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage'
+- '- canonical `thread_id` remains PM correlation'
+- '- `tier_id` can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key.'
+- '- new producers/docs should emit the canonical normalized target model'
+- '- but they still carry `resume_url?`, which keeps navigation transport inside persisted state as if it were canonical identity'
+- '- 1. owner-doc integrity and routing'
+- '- Reconciliation should treat this as an owner-doc integrity stack, not three isolated docs:'
+- '- In persisted event streams, tool activity MUST be represented using the canonical tool event types (`tool.invoked`, `tool.denied`) and MUST include stable `run_id` + `thread_id` correlation.'
+- '## INV-003 -- UI SSOT (no bespoke UI behavior)'
+- '**Rule:** UI copy, buttons, and view behavior MUST be specified in the canonical UI SSOT docs and typed command layer; plan docs may reserve IDs but must not invent ad-hoc UI behaviors.'
+- '## INV-004 -- UI command boundary (no business logic in UI)'
+- '## INV-005 -- Deterministic ordering from SSOT lists'
+- '**Rule:** When multiple candidates exist (paths, names, servers, etc.), tie-break ordering MUST come from a single SSOT list owned by the relevant domain; no heuristic reordering.'
+- '## INV-007 -- No stringly-typed IDs outside SSOT'
+- '**Rule:** Stable IDs (Tool IDs, UICommand IDs, ConfigKey names, schema IDs) MUST NOT be re-invented as ad-hoc string literals in multiple places. They must be defined once (SSOT) and referenced everywhere else.'
+- '**Rule:** The UI layer MUST dispatch only typed `UICommand` envelopes to trigger non-trivial behavior. The UI MUST NOT call backend services, storage, domain logic, or provider integrations directly. All user-initiated interactions flow through the UI Command Dispatcher boundary.'
+- The five canonical token fields (`input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`) MUST be stored individually in every usage record, with `total_tokens` derived without losing bucket detail. Pre-aggregation or collapsing at the storage or
+- '- JSON Schemas under `Plans/*.schema.json` are the canonical source for validation and (optionally) code generation.'
+- '- Generated Rust code MUST live under a single `generated/` boundary (path is implementation-defined) and MUST NOT be hand-edited.'
+- '`debug` MUST exist only in overlay identity and UI label state. The canonical runtime-mode enum remains `ask | plan | regular | yolo`.'
+- '**Rule:** Canonical runtime identity and blocked-state policy MUST survive dispatch, restart recovery, approval, and usage attribution without being reminted or collapsed into provider-native aliases.'
+- '- `blocked_sequence` is the canonical blocked-episode anchor; startup recovery rebinds unresolved blocked episodes to the preserved runtime identity instead of minting a new episode.'
+owner_hints:
+- Plans/Architecture_Invariants.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `5f81d2d3a351e5e74aa0bb3010548110af523fc7e15965c95c919ad981b2a503`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Architecture_Invariants-S0001` through `Architecture_Invariants-S0039` are preserved in place and mapped in `coverage_map.jsonl` to `AI-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

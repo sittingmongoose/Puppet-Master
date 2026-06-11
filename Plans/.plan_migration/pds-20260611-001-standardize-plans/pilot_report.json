@@ -1,0 +1,23 @@
+{
+  "coverage_rows_updated": 17,
+  "generated_at_utc": "2026-06-11T19:08:33Z",
+  "notes": [
+    "Spec Lock, shards, evidence, auto_decisions, and plan_graph were not updated.",
+    "No WorkNodes, NodeSeeds, or executable build tasks were created."
+  ],
+  "pilot_doc": "Plans/UI_Wiring_Rules.md",
+  "pilot_doc_sha256_after": "5bc6f040977efde1826713ac37bef698d38612f00b9a86dbcbbf02215d743270",
+  "plan_units_found": [
+    "UIW-001",
+    "UIW-002",
+    "UIW-003",
+    "UIW-004",
+    "UIW-005",
+    "UIW-006",
+    "UIW-007",
+    "UIW-008"
+  ],
+  "run_id": "pds-20260611-001-standardize-plans",
+  "schema_id": "pm.plan_migration.pilot_report.v1",
+  "status": "pass"
+}

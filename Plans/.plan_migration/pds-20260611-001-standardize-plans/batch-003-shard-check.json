@@ -1,0 +1,1293 @@
+{
+  "body_reconstruction_checked": 732,
+  "body_reconstruction_mismatches": 0,
+  "config_path": "Plans/sharding_config.json",
+  "docs": [
+    {
+      "body_reconstruction_checked": 42,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/orchestrator-subagent-integration",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json"
+        }
+      ],
+      "shard_count": 42,
+      "source": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "body_reconstruction_checked": 34,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/finalguispec",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json"
+        }
+      ],
+      "shard_count": 34,
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "body_reconstruction_checked": 4,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/interview-subagent-integration",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/interview-subagent-integration/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/interview-subagent-integration/manifest.json"
+        }
+      ],
+      "shard_count": 4,
+      "source": "Plans/interview-subagent-integration.md"
+    },
+    {
+      "body_reconstruction_checked": 24,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/newtools",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/newtools/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/newtools/manifest.json"
+        }
+      ],
+      "shard_count": 24,
+      "source": "Plans/newtools.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/rewrite-tie-in-memo",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json"
+        }
+      ],
+      "shard_count": 6,
+      "source": "Plans/rewrite-tie-in-memo.md"
+    },
+    {
+      "body_reconstruction_checked": 18,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/agent-rules-context",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json"
+        }
+      ],
+      "shard_count": 18,
+      "source": "Plans/agent-rules-context.md"
+    },
+    {
+      "body_reconstruction_checked": 13,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/opencode_deep_extraction",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json"
+        }
+      ],
+      "shard_count": 13,
+      "source": "Plans/OpenCode_Deep_Extraction.md"
+    },
+    {
+      "body_reconstruction_checked": 19,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/lspsupport",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/lspsupport/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/lspsupport/manifest.json"
+        }
+      ],
+      "shard_count": 19,
+      "source": "Plans/LSPSupport.md"
+    },
+    {
+      "body_reconstruction_checked": 13,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/filemanager",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/filemanager/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/filemanager/manifest.json"
+        }
+      ],
+      "shard_count": 13,
+      "source": "Plans/FileManager.md"
+    },
+    {
+      "body_reconstruction_checked": 26,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/filesafe",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/filesafe/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/filesafe/manifest.json"
+        }
+      ],
+      "shard_count": 26,
+      "source": "Plans/FileSafe.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/project_output_artifacts",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/project_output_artifacts/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/project_output_artifacts/manifest.json"
+        }
+      ],
+      "shard_count": 15,
+      "source": "Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "body_reconstruction_checked": 30,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/chain-wizard-flexibility",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/chain-wizard-flexibility/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/chain-wizard-flexibility/manifest.json"
+        }
+      ],
+      "shard_count": 30,
+      "source": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "body_reconstruction_checked": 40,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/assistant-chat-design",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/assistant-chat-design/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/assistant-chat-design/manifest.json"
+        }
+      ],
+      "shard_count": 40,
+      "source": "Plans/assistant-chat-design.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/assistant-memory-subsystem",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/assistant-memory-subsystem/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/assistant-memory-subsystem/manifest.json"
+        }
+      ],
+      "shard_count": 15,
+      "source": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "body_reconstruction_checked": 24,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/miscplan",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/miscplan/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/miscplan/manifest.json"
+        }
+      ],
+      "shard_count": 24,
+      "source": "Plans/MiscPlan.md"
+    },
+    {
+      "body_reconstruction_checked": 7,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/newfeatures",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/newfeatures/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/newfeatures/manifest.json"
+        }
+      ],
+      "shard_count": 7,
+      "source": "Plans/newfeatures.md"
+    },
+    {
+      "body_reconstruction_checked": 21,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/worktreegitimprovement",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/worktreegitimprovement/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/worktreegitimprovement/manifest.json"
+        }
+      ],
+      "shard_count": 21,
+      "source": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "body_reconstruction_checked": 25,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/tools",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/tools/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/tools/manifest.json"
+        }
+      ],
+      "shard_count": 25,
+      "source": "Plans/Tools.md"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/github_integration",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/github_integration/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/github_integration/manifest.json"
+        }
+      ],
+      "shard_count": 5,
+      "source": "Plans/GitHub_Integration.md"
+    },
+    {
+      "body_reconstruction_checked": 7,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/feature-list",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/feature-list/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/feature-list/manifest.json"
+        }
+      ],
+      "shard_count": 7,
+      "source": "Plans/feature-list.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/usage-feature",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/usage-feature/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/usage-feature/manifest.json"
+        }
+      ],
+      "shard_count": 20,
+      "source": "Plans/usage-feature.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/run_graph_view",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/run_graph_view/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/run_graph_view/manifest.json"
+        }
+      ],
+      "shard_count": 6,
+      "source": "Plans/Run_Graph_View.md"
+    },
+    {
+      "body_reconstruction_checked": 3,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/orchestrator_page",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/orchestrator_page/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/orchestrator_page/manifest.json"
+        }
+      ],
+      "shard_count": 3,
+      "source": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/storage-plan",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/storage-plan/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/storage-plan/manifest.json"
+        }
+      ],
+      "shard_count": 20,
+      "source": "Plans/storage-plan.md"
+    },
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/runtime_artifacts_panel",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/runtime_artifacts_panel/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/runtime_artifacts_panel/manifest.json"
+        }
+      ],
+      "shard_count": 12,
+      "source": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/permissions_system",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/permissions_system/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/permissions_system/manifest.json"
+        }
+      ],
+      "shard_count": 20,
+      "source": "Plans/Permissions_System.md"
+    },
+    {
+      "body_reconstruction_checked": 16,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/contracts_v0",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/contracts_v0/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/contracts_v0/manifest.json"
+        }
+      ],
+      "shard_count": 16,
+      "source": "Plans/Contracts_V0.md"
+    },
+    {
+      "body_reconstruction_checked": 9,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/crosswalk",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/crosswalk/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/crosswalk/manifest.json"
+        }
+      ],
+      "shard_count": 9,
+      "source": "Plans/Crosswalk.md"
+    },
+    {
+      "body_reconstruction_checked": 8,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/section15_mvp_promoted_features_spec",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json"
+        }
+      ],
+      "shard_count": 8,
+      "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+    },
+    {
+      "body_reconstruction_checked": 8,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/mcp_integration",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/mcp_integration/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/mcp_integration/manifest.json"
+        }
+      ],
+      "shard_count": 8,
+      "source": "Plans/MCP_Integration.md"
+    },
+    {
+      "body_reconstruction_checked": 4,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/cli_bridged_providers",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/cli_bridged_providers/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/cli_bridged_providers/manifest.json"
+        }
+      ],
+      "shard_count": 4,
+      "source": "Plans/CLI_Bridged_Providers.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/models_system",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/models_system/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/models_system/manifest.json"
+        }
+      ],
+      "shard_count": 20,
+      "source": "Plans/Models_System.md"
+    },
+    {
+      "body_reconstruction_checked": 19,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/run_modes",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/run_modes/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/run_modes/manifest.json"
+        }
+      ],
+      "shard_count": 19,
+      "source": "Plans/Run_Modes.md"
+    },
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/commands_system",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/commands_system/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/commands_system/manifest.json"
+        }
+      ],
+      "shard_count": 12,
+      "source": "Plans/Commands_System.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/executor_protocol",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/executor_protocol/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/executor_protocol/manifest.json"
+        }
+      ],
+      "shard_count": 14,
+      "source": "Plans/Executor_Protocol.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/ui_command_catalog",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/ui_command_catalog/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/ui_command_catalog/manifest.json"
+        }
+      ],
+      "shard_count": 6,
+      "source": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/skills_system",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/skills_system/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/skills_system/manifest.json"
+        }
+      ],
+      "shard_count": 10,
+      "source": "Plans/Skills_System.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/multi-account",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/multi-account/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/multi-account/manifest.json"
+        }
+      ],
+      "shard_count": 14,
+      "source": "Plans/Multi-Account.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/personas",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/personas/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/personas/manifest.json"
+        }
+      ],
+      "shard_count": 14,
+      "source": "Plans/Personas.md"
+    },
+    {
+      "body_reconstruction_checked": 20,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/provider_opencode",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/provider_opencode/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/provider_opencode/manifest.json"
+        }
+      ],
+      "shard_count": 20,
+      "source": "Plans/Provider_OpenCode.md"
+    },
+    {
+      "body_reconstruction_checked": 14,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/human-in-the-loop",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/human-in-the-loop/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/human-in-the-loop/manifest.json"
+        }
+      ],
+      "shard_count": 14,
+      "source": "Plans/human-in-the-loop.md"
+    },
+    {
+      "body_reconstruction_checked": 12,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/00-plans-index",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/00-plans-index/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/00-plans-index/manifest.json"
+        }
+      ],
+      "shard_count": 12,
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/planning_ledger_system",
+      "failures": [],
+      "shard_count": 5,
+      "source": "Plans/Planning_Ledger_System.md"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/plan_document_system",
+      "failures": [],
+      "shard_count": 5,
+      "source": "Plans/Plan_Document_System.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/plan_to_node_compilation",
+      "failures": [],
+      "shard_count": 6,
+      "source": "Plans/Plan_To_Node_Compilation.md"
+    },
+    {
+      "body_reconstruction_checked": 5,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/bootstrap_planning_migration",
+      "failures": [],
+      "shard_count": 5,
+      "source": "Plans/Bootstrap_Planning_Migration.md"
+    },
+    {
+      "body_reconstruction_checked": 10,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/prompt_pipeline",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/prompt_pipeline/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/prompt_pipeline/manifest.json"
+        }
+      ],
+      "shard_count": 10,
+      "source": "Plans/Prompt_Pipeline.md"
+    },
+    {
+      "body_reconstruction_checked": 15,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/wiring_matrix",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/wiring_matrix/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/wiring_matrix/manifest.json"
+        }
+      ],
+      "shard_count": 15,
+      "source": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "body_reconstruction_checked": 11,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/gui_rebuild_requirements_checklist",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json"
+        }
+      ],
+      "shard_count": 11,
+      "source": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+    },
+    {
+      "body_reconstruction_checked": 6,
+      "body_reconstruction_mismatches": 0,
+      "dir": "Plans/_shards/widget_system",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/widget_system/manifest.json"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/widget_system/manifest.json"
+        }
+      ],
+      "shard_count": 6,
+      "source": "Plans/Widget_System.md"
+    }
+  ],
+  "docs_checked": 50,
+  "failures": [
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "source": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "source": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "source": "Plans/FinalGUISpec.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/interview-subagent-integration/manifest.json",
+      "source": "Plans/interview-subagent-integration.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/interview-subagent-integration/manifest.json",
+      "source": "Plans/interview-subagent-integration.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/newtools/manifest.json",
+      "source": "Plans/newtools.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/newtools/manifest.json",
+      "source": "Plans/newtools.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "source": "Plans/rewrite-tie-in-memo.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "source": "Plans/rewrite-tie-in-memo.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/agent-rules-context/manifest.json",
+      "source": "Plans/agent-rules-context.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/agent-rules-context/manifest.json",
+      "source": "Plans/agent-rules-context.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "source": "Plans/OpenCode_Deep_Extraction.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "source": "Plans/OpenCode_Deep_Extraction.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/lspsupport/manifest.json",
+      "source": "Plans/LSPSupport.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/lspsupport/manifest.json",
+      "source": "Plans/LSPSupport.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/filemanager/manifest.json",
+      "source": "Plans/FileManager.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/filemanager/manifest.json",
+      "source": "Plans/FileManager.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/filesafe/manifest.json",
+      "source": "Plans/FileSafe.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/filesafe/manifest.json",
+      "source": "Plans/FileSafe.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/project_output_artifacts/manifest.json",
+      "source": "Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/project_output_artifacts/manifest.json",
+      "source": "Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "source": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "source": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/assistant-chat-design/manifest.json",
+      "source": "Plans/assistant-chat-design.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/assistant-chat-design/manifest.json",
+      "source": "Plans/assistant-chat-design.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "source": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "source": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/miscplan/manifest.json",
+      "source": "Plans/MiscPlan.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/miscplan/manifest.json",
+      "source": "Plans/MiscPlan.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/newfeatures/manifest.json",
+      "source": "Plans/newfeatures.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/newfeatures/manifest.json",
+      "source": "Plans/newfeatures.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+      "source": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+      "source": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/tools/manifest.json",
+      "source": "Plans/Tools.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/tools/manifest.json",
+      "source": "Plans/Tools.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/github_integration/manifest.json",
+      "source": "Plans/GitHub_Integration.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/github_integration/manifest.json",
+      "source": "Plans/GitHub_Integration.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/feature-list/manifest.json",
+      "source": "Plans/feature-list.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/feature-list/manifest.json",
+      "source": "Plans/feature-list.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/usage-feature/manifest.json",
+      "source": "Plans/usage-feature.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/usage-feature/manifest.json",
+      "source": "Plans/usage-feature.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/run_graph_view/manifest.json",
+      "source": "Plans/Run_Graph_View.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/run_graph_view/manifest.json",
+      "source": "Plans/Run_Graph_View.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/orchestrator_page/manifest.json",
+      "source": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/orchestrator_page/manifest.json",
+      "source": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/storage-plan/manifest.json",
+      "source": "Plans/storage-plan.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/storage-plan/manifest.json",
+      "source": "Plans/storage-plan.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "source": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "source": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/permissions_system/manifest.json",
+      "source": "Plans/Permissions_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/permissions_system/manifest.json",
+      "source": "Plans/Permissions_System.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/contracts_v0/manifest.json",
+      "source": "Plans/Contracts_V0.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/contracts_v0/manifest.json",
+      "source": "Plans/Contracts_V0.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/crosswalk/manifest.json",
+      "source": "Plans/Crosswalk.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/crosswalk/manifest.json",
+      "source": "Plans/Crosswalk.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/mcp_integration/manifest.json",
+      "source": "Plans/MCP_Integration.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/mcp_integration/manifest.json",
+      "source": "Plans/MCP_Integration.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+      "source": "Plans/CLI_Bridged_Providers.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+      "source": "Plans/CLI_Bridged_Providers.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/models_system/manifest.json",
+      "source": "Plans/Models_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/models_system/manifest.json",
+      "source": "Plans/Models_System.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/run_modes/manifest.json",
+      "source": "Plans/Run_Modes.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/run_modes/manifest.json",
+      "source": "Plans/Run_Modes.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/commands_system/manifest.json",
+      "source": "Plans/Commands_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/commands_system/manifest.json",
+      "source": "Plans/Commands_System.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/executor_protocol/manifest.json",
+      "source": "Plans/Executor_Protocol.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/executor_protocol/manifest.json",
+      "source": "Plans/Executor_Protocol.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/ui_command_catalog/manifest.json",
+      "source": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/ui_command_catalog/manifest.json",
+      "source": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/skills_system/manifest.json",
+      "source": "Plans/Skills_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/skills_system/manifest.json",
+      "source": "Plans/Skills_System.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/multi-account/manifest.json",
+      "source": "Plans/Multi-Account.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/multi-account/manifest.json",
+      "source": "Plans/Multi-Account.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/personas/manifest.json",
+      "source": "Plans/Personas.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/personas/manifest.json",
+      "source": "Plans/Personas.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/provider_opencode/manifest.json",
+      "source": "Plans/Provider_OpenCode.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/provider_opencode/manifest.json",
+      "source": "Plans/Provider_OpenCode.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/human-in-the-loop/manifest.json",
+      "source": "Plans/human-in-the-loop.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/human-in-the-loop/manifest.json",
+      "source": "Plans/human-in-the-loop.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "source": "Plans/00-plans-index.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/prompt_pipeline/manifest.json",
+      "source": "Plans/Prompt_Pipeline.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/prompt_pipeline/manifest.json",
+      "source": "Plans/Prompt_Pipeline.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/wiring_matrix/manifest.json",
+      "source": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/wiring_matrix/manifest.json",
+      "source": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "source": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "source": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+    },
+    {
+      "error": "source_hash_stale",
+      "path": "Plans/_shards/widget_system/manifest.json",
+      "source": "Plans/Widget_System.md"
+    },
+    {
+      "error": "source_line_count_stale",
+      "path": "Plans/_shards/widget_system/manifest.json",
+      "source": "Plans/Widget_System.md"
+    }
+  ],
+  "generated_at_utc": "2026-06-11T19:14:15Z",
+  "mode": "check",
+  "output_root": "Plans/_shards",
+  "root_index_failures": [],
+  "root_index_path": "Plans/00-plans-index.md",
+  "schema_id": "pm.plan_shards.report.v1",
+  "shards_checked": 732,
+  "source_count": 50,
+  "status": "fail"
+}

@@ -984,3 +984,237 @@ Canonical runtime-facing blocked payload shape:
 - `detail_ref?`
 
 Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Containers_Registry_and_Unraid.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: CRAU-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: Plans/Containers_Registry_and_Unraid.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0039
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0040
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0042
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0043
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0044
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0045
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0046
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0047
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0048
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0049
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0050
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0051
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0052
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0053
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0054
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0055
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0056
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0057
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0058
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0059
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0060
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0061
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0062
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0063
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0064
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0065
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0066
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0067
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0068
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0069
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0070
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0071
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0072
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0073
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0074
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0075
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0076
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0077
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0079
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0080
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0081
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Containers_Registry_and_Unraid-S0082
+preserved_exact_tokens:
+- Containers, Registry, and Unraid Integration
+- Purpose and scope
+- Relationship to existing plans
+- Product goals
+- User-visible surfaces
+- 1. Settings > Advanced > Containers & Registry
+- 2. Contextual Docker Manager surface
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/newtools.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md'
+- 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Permissions_System.md'
+- 2A. Docker Manager operational cockpit contracts
+- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md'
+- 2B. Repo, root, runtime identity, and degraded outcome scope
+- 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+- 2C. Lifecycle, Detection, And Legacy Navigation Reconciliation
+- 3. Orchestrator and dashboard integration
+- Docker project detection and visibility rules
+- Authentication model
+- Supported authentication inputs
+- Browser/device login execution contract
+- Credential storage precedence and scope
+- Auth-expiry failure rule
+- Requested vs effective auth state
+- Canonical DockerHub effective capability enum
+negative_constraints:
+- '- Docker Hub is one registry/provider capability inside Docker Manager, and Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces.'
+- Blocked-state integration, Requested vs effective state everywhere, and Explain this state use the shared runtime vocabulary. SCM, GitHub Actions, Docker, and Kubernetes panels mirror Orchestrator blocked views, destination-panel banners, inline disabled CTAs, `allowed_action_ids[]`, and blocked pro
+- 'Issue and annotation state stay separate from presentation controls. `FinalGUISpec.md` reinforces the asymmetry: durable delete, rollback, repository creation, permission preset replacement, registry publish, and Kubernetes mutation flows use the appropriate confirmation or canonical approval/blocke'
+- Registry and tag governance use dedicated result classes instead of generic publish failure. Protected tags, registry-side immutable-tag or overwrite denial, `/push/promotion` blockers, `/rulesets`, and forbidden `latest` overwrite are recorded as destination-policy violations with namespace/reposit
+- Docker Manager deep-link handling must not expose raw local IDs as the routing contract. Commands, receipts, and deep-link descriptions resolve to the shared normalized target object; all supported deep-link forms decode into the same internal routing path instead of treating URL activation as a sep
+- Docker Manager consumes the newly-locked, now-locked remote-first project-mode vocabulary without becoming the remote-owner for file, editor, `/browser/LSP/search`, or `language-detection` behavior. Remote-capable Docker, Kubernetes, registry, and template-repo surfaces preserve `/read-only/offline`
+- This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
+- Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage are reserved future-scope anchors for this owner doc. They may render as disabled, partial, or planned capabilities until implemented, but must not disappear from the Docker Manager contract or be replaced
+- '- `cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template repos, or push remote template repos.'
+- '- Puppet Master MUST NOT claim "all fields editable" unless both layers exist.'
+- '- `needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push and MUST surface a visible warning in Docker Manager.'
+- 'If the selected repo already contains unrelated local modifications, Puppet Master MUST NOT silently fold managed template changes into that worktree state. It MUST require one of:'
+- '- `hard_gate` / HITL `/blocked` `remote-side-effect` actions use the canonical approval/blocked flow and cannot be bypassed by generic UI confirmation; Docker Manager may render the blocker, but must not downgrade it into local confirmation copy.'
+- '- `cmd.panel.switch` is shell-state only: it may choose Docker Manager as the panel/shell occupant, but object-bearing targeting must route through the shared route/open target contract instead of extending the panel-switch args shape. A `route-activation` request must not reuse destination-local st'
+- '- Help text must not flatten Feature Seam, Work Package, Weak Integration, Corroboration, Promotion, Graph Patch, Concern lifecycle, Lane vs Worktree, requested vs effective, safe point vs restore point, historical vs superseded vs revoked, or History vs Ledger into a one-line tooltip. Simple/Expert'
+- '- Contextual help is limited to local button affordances, simple counts or `/badges`, one-surface-only controls whose meaning is obvious from context, and provider-specific caveats shown near the relevant controls; it must not replace the canonical state vocabulary above.'
+- '- secrets must not be written to redb, project files, YAML, or evidence'
+- '- the UI must not claim full repository-management support when validation shows only partial capability'
+- Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+compatibility_only_notes:
+- '- legacy setting alias `Hide Docker Manage when not used in Project.` migrates to the canonical Docker Manager label and is not a separate surface'
+- '- `Publishing / Unraid` as a legacy/source-lineage alias normalized to `Publish / Unraid`'
+- Project-focused Kubernetes linkage keeps deploy and troubleshoot work in Docker Manager without turning Puppet Master into a general cluster admin console, cloud-provider console, or cluster-administration UX. The conditional `Kubernetes` subview preserves kubeconfig/context, namespace, `/namespace/
+- Operation receipts are the compact auditable record for important side effects across Orchestrator history/detail, Source Control commit/push, GitHub Actions run panes, Docker publish panes, registry promotion, and Kubernetes apply/rollout. They are compact UI objects derived from canonical run/publ
+- Runtime identity is not preview-centric. `container_id`, `compose_project`, `runtime_context`, and `workload_ref` are durable runtime identity fields with requested-vs-effective state, local-runtime blocked/degraded classification, and receipt joinability. Local-runtime blockers include compose-up f
+- Orchestrator-linked Docker Manager views consume package/lane state rather than reviving tier-era ownership. `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) may still expose compatibility labels such as `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, `/Task/Subtask`, `requested_persona_id
+- Docker Manager consumes the newly-locked, now-locked remote-first project-mode vocabulary without becoming the remote-owner for file, editor, `/browser/LSP/search`, or `language-detection` behavior. Remote-capable Docker, Kubernetes, registry, and template-repo surfaces preserve `/read-only/offline`
+- '### 2C. Lifecycle, Detection, And Legacy Navigation Reconciliation'
+- Legacy naming migration is formal. `Docker Manage` copy, `docker_manage_surface_state`, and any `cmd.panel.switch` or equivalent legacy panel IDs migrate to the canonical Docker Manager surface and do not create another owner. The concept-vs-plan contradiction around a separate `UNRAID` panel/icon i
+- '- Otherwise fall back to the lexicographically smallest tag only for legacy results that lack ordering metadata.'
+- '#### Transition rules'
+- '- `Hide Docker Manager when not used in Project.` setting, with the legacy `Hide Docker Manage when not used in Project.` alias migrated on read'
+- '- Stale `tier_id` usage is migration-only compatibility state, not a coordination-state key for Docker Manager. Package, seam, lane, node, attempt, receipt, worktree, and runtime asset references remain the owner keys for new navigation and audit joins.'
+- '- Blocked payload normalization treats legacy `reason_code` and `recovery_options[]` as compatibility inputs while runtime-facing blocked payloads use canonical `blocked_reason_code`, `allowed_action_ids`, and `allowed_action_ids[]`.'
+- Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+stale_retired_dispositions:
+- Docker Manager is the GUI owner for the unified asset explorer. Its root view keeps stable subviews for `/images/compose/registries/build-bake`, with advanced foldouts for contexts, networks, volumes, and project-focused Kubernetes. The selected runtime, selected context, active subview, explorer gr
+- Compose scenario runner lets users save and rerun named service subsets, profiles, env file combinations, and port mappings for preview, test, or `/development` workflows. The `Compose` subview owns scenario definitions, selected services, `/profiles/env` files, `/profile/env-file/port` state, detac
+- Orchestrator-linked Docker Manager views consume package/lane state rather than reviving tier-era ownership. `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) may still expose compatibility labels such as `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, `/Task/Subtask`, `requested_persona_id
+- Runtime and remote identity drift is explicit. If active Docker identity changes and the selected namespace or repository is no longer visible or writable, Docker Manager marks the selection `stale_unowned` and revalidates before publish or promotion; users can trigger `hard-refresh` when cached ide
+- Registry object lifecycle is not name-based. Registry refs support lifecycle states `active`, `renamed`, `deleted`, `private_inaccessible`, and `historical_only`; publish-chain/history preserve original registry host, namespace, and repository even if current selection changes. Old receipts never si
+- 'Docker Manager and Kubernetes first-open disclosure cards explain the surface boundary before mutation: `Containers` covers local runtime management vs hosted/remote side effects; `Publish / Unraid` covers publish chain, registry mutation, and Unraid follow-through; `Kubernetes` covers project-focus'
+- Legacy naming migration is formal. `Docker Manage` copy, `docker_manage_surface_state`, and any `cmd.panel.switch` or equivalent legacy panel IDs migrate to the canonical Docker Manager surface and do not create another owner. The concept-vs-plan contradiction around a separate `UNRAID` panel/icon i
+- '- Stale `tier_id` usage is migration-only compatibility state, not a coordination-state key for Docker Manager. Package, seam, lane, node, attempt, receipt, worktree, and runtime asset references remain the owner keys for new navigation and audit joins.'
+owner_boundary_notes:
+- 'This plan is the canonical SSOT for:'
+- This plan does not replace the existing preview/build/runtime sections in `Plans/newtools.md`, the settings UI in `Plans/FinalGUISpec.md`, or the orchestrator control surface in `Plans/Orchestrator_Page.md`; it supplies the canonical detailed contract those docs must reference.
+- '- `Plans/newtools.md` remains canonical for runtime/tool/preflight/evidence behavior, but must reference this plan for DockerHub browser auth, repository management, and Unraid template publishing.'
+- '- `Plans/FinalGUISpec.md` remains canonical for settings, controls, dialogs, and layout, but must reference this plan for Docker Manage surface requirements.'
+- '- `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions.'
+- '- tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)'
+- '- legacy setting alias `Hide Docker Manage when not used in Project.` migrates to the canonical Docker Manager label and is not a separate surface'
+- The canonical user-facing surface is **Docker Manager**.
+- Docker Manager is a first-class operational surface for containerized projects. It replaces `Docker Manage` as the canonical surface name and subsumes Publish / Unraid behavior.
+- '- Docker Manager is a first-class side-panel surface, not only Settings > Advanced. Its canonical surface includes settings-level DockerHub actions such as the create-repository toggle and `/clear` auth recovery, while remote repository creation still requires the separate protected confirmation flo'
+- Docker Manager is the GUI owner for the unified asset explorer. Its root view keeps stable subviews for `/images/compose/registries/build-bake`, with advanced foldouts for contexts, networks, volumes, and project-focused Kubernetes. The selected runtime, selected context, active subview, explorer gr
+- 'Container access intelligence detects usable URLs, health, logs, ports, shells, and stats for running previews and containers. `Containers` rows and detail drawers expose `cmd.docker.container.open`, `view_logs`, `attach_shell`, `stats`, and `inspect`; `Open running container` and `/open-container` '
+- Kubernetes operational sessions are ephemeral owner-surface sessions. `kubectl logs` can target pods, `/resources`, and all containers; rollout status is a first-class troubleshooting primitive; port-forward sessions and rollout monitors are restart/rebind workflows, not durable always-on connection
+- Operation receipts are the compact auditable record for important side effects across Orchestrator history/detail, Source Control commit/push, GitHub Actions run panes, Docker publish panes, registry promotion, and Kubernetes apply/rollout. They are compact UI objects derived from canonical run/publ
+- Docker Manager route/open adoption follows the shared route contract instead of treating object-bearing shell commands as local layout state. `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) may expose `cmd.source_control.select_worktree`, `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread
+- Blocked-state integration, Requested vs effective state everywhere, and Explain this state use the shared runtime vocabulary. SCM, GitHub Actions, Docker, and Kubernetes panels mirror Orchestrator blocked views, destination-panel banners, inline disabled CTAs, `allowed_action_ids[]`, and blocked pro
+- 'Issue and annotation state stay separate from presentation controls. `FinalGUISpec.md` reinforces the asymmetry: durable delete, rollback, repository creation, permission preset replacement, registry publish, and Kubernetes mutation flows use the appropriate confirmation or canonical approval/blocke'
+- 'Repo-selection precedence is deterministic: direct receipt or `/deep-link` target wins; explicit panel repo selection wins next; active run/tier repo follows; active editor repo follows; otherwise the user sees a chooser. Panels disclose whether a repo is pinned or inferred. Hosted GitHub features u'
+- Local-runtime reason codes are canonical and advisory-only until refreshed into requested-vs-effective state. Codes include `runtime_context_missing`, `runtime_context_unreachable`, `compose_invalid`, `compose_service_missing`, `buildx_unavailable`, `bake_unavailable`, `image_missing`, `container_un
+- Docker Manager project state preserves last runtime asset / publish result / template repo / k8s operation refs, compose scenarios, drift baseline refs, and cleanup preferences as durable reopen targets and comparison baselines. The canonical project key is `container_manager.project_state.{project_
+- Persisted projection objects include `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`; dashboard, orchestrator, `/orchestrator/source-control`, Docker Manager `/page` and widget presentation, and source-c
+- Orchestrator-linked Docker Manager views consume package/lane state rather than reviving tier-era ownership. `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) may still expose compatibility labels such as `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, `/Task/Subtask`, `requested_persona_id
+- Docker Manager consumes the newly-locked, now-locked remote-first project-mode vocabulary without becoming the remote-owner for file, editor, `/browser/LSP/search`, or `language-detection` behavior. Remote-capable Docker, Kubernetes, registry, and template-repo surfaces preserve `/read-only/offline`
+- 'Docker Manager row actions are capability-aware. File-backed or project-root rows distinguish local vs remote host context, writable vs read-only or `/degraded/offline` state, single-select vs multi-select, and exact disabled-state reasons. `Download / Save Local Copy` remains available when source '
+owner_hints:
+- Plans/Containers_Registry_and_Unraid.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `3202a4e6ff9310224dc3878a24ccc1c11c06a93576ab97cb26208da84b591560`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0082` are preserved in place and mapped in `coverage_map.jsonl` to `CRAU-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

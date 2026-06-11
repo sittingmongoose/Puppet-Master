@@ -255,3 +255,147 @@ ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-011, ContractName:Plans
 - `Plans/Contracts_V0.md`
 - `Plans/Spec_Lock.json`
 - `Plans/requirements_coverage.schema.json`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/DRY_Rules.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### DR-001 - DRY Rules (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: DR-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Plans/DRY_Rules.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:DRY_Rules-S0018
+preserved_exact_tokens:
+- DRY Rules (Canonical)
+- 0. Scope
+- ContractRef:` annotations make requirements executable and gateable
+- 'ContractRef: Primitive:DRYRules'
+- 1. SSOT precedence (global)
+- 'ContractRef: SchemaID:Spec_Lock.json, Primitive:Crosswalk, PolicyRule:Decision_Policy.md§2'
+- 2. Don't duplicate canonical contracts
+- 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md'
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md'
+- 2.1 Cross-file owner-routing boundaries
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractNam'
+- 2.2 Special recovery contradiction-check routing
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
+- 3. "Index-only" guidance
+- 3.1 Assistant worktree DRY routing
+- 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/assistant-chat-design.md'
+- 3.2 Assistant chat/runtime/question/dispatcher DRY routing
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/assistant-chat-design.md'
+- 'ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2'
+- 4. Forbidden patterns (drift accelerators)
+- 'ContractRef: PolicyRule:Decision_Policy.md§2'
+- 5. MUST/SHALL/REQUIRED implies ContractRef
+- ContractRef:` line.
+- 6. ContractRef taxonomy (allowed categories)
+negative_constraints:
+- '- a consumer doc must not preserve an older model as a peer option once a replacement canon exists'
+- 'The following concepts are owner-routed and must not be re-owned by consumers:'
+- Route reconciliation updates owner docs first, then consumer docs consume the canonical route/object model; consumer pages must not invent `/object` or page-local identity rules as peer canon.
+- A plan MAY include an index/list of IDs (event kinds, UI command IDs, tool IDs) but MUST NOT redefine schemas owned elsewhere.
+- '## 4. Forbidden patterns (drift accelerators)'
+- '- Any line containing: `MUST`, `MUST NOT`, `SHALL`, `REQUIRED`, `NEVER`.'
+- This semantic matching rule exists only for packet-fidelity/self-check comparisons and MUST NOT weaken ContractRef enforcement in run-gates or any other plan-quality gate.
+- Inline tags MUST NOT be used as the sole traceability mechanism.
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- The following cross-file concepts are DRY owner routes. Consumer docs may index them, display them, or carry refs to them, but they do not re-own their field lists, enum families, event names, storage key shapes, or compatibility aliases.
+- '| Runtime ready-set, `/backoff`, remediation, and blocked scheduling | `Plans/Executor_Protocol.md` owns ready-set scoring, scheduler lane order, retry/backoff policy, remediation flow, wake reasons, and blocked-to-runnable behavior. `Plans/Contracts_V0.md` owns runtime event and payload vocabulary,'
+- '| Worktree owner-node rename and compatibility | `owner_node_id` is the canonical orchestration-node lineage field for worktree ownership. `owner_tier_id` may remain only as documented compatibility, migration, or source-lineage evidence; consumer docs that still expose worktree owner lineage must c'
+stale_retired_dispositions:
+- '- stale canonical text must be replaced or retired; append-only clarification is not sufficient when old text would remain misleading'
+- '`resume_url` discrepancies are a required-versus-carried contradiction between `Contracts_V0.md` and `storage-plan.md`. `projection-backed` operational surfaces must expose trust state, last updated time, degraded or `/stale` reason when not current, and whether actions are partially gated.'
+- 'Contract checks must keep `ContractRef` taxonomy stricter in the gate text than in consumer summaries: reconcile owner docs in this order, `Contracts_V0.md`, `Crosswalk.md`, `UI_Command_Catalog.md`, `FinalGUISpec.md`, then consumer docs. Duplicated `cost_usage` text is a DRY reconciliation risk beca'
+- Early `event-source` tables that already consume newer runtime-lineage concepts later in the same consumer docs are internally stale and must be reconciled at the owner route, not patched as isolated table gaps. Duplicated `Crosswalk.md` numbering is a DRY failure because it undermines `ContractRef`
+owner_boundary_notes:
+- '# DRY Rules (Canonical)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- PUPPET MASTER -- DRY / SSOT RULES
+- '- how SSOT sources are referenced (instead of duplicated)'
+- '## 1. SSOT precedence (global)'
+- '## 2. Don''t duplicate canonical contracts'
+- '- owner docs are updated before consumer docs when canon changes'
+- '- stale canonical text must be replaced or retired; append-only clarification is not sufficient when old text would remain misleading'
+- '- a consumer doc must not preserve an older model as a peer option once a replacement canon exists'
+- '- summary, checklist, and feature-list mirrors do not re-own canon and must be reconciled after owner docs change'
+- '- `Plans/newtools.md` (`/newtools.md`) and its MCP `/web-tooling` origin text are consumer alignment only; verify them against canonical owners before treating older tooling prose as live canon. `Plans/newfeatures.md` (`/newfeatures.md`) is promoted-feature `/origin` summary material and must be rec'
+- 'The following concepts are owner-routed and must not be re-owned by consumers:'
+- '### 2.1 Cross-file owner-routing boundaries'
+- The following cross-file concepts are DRY owner routes. Consumer docs may index them, display them, or carry refs to them, but they do not re-own their field lists, enum families, event names, storage key shapes, or compatibility aliases.
+- '| Concept boundary | Owner route |'
+- '| Runtime ready-set, `/backoff`, remediation, and blocked scheduling | `Plans/Executor_Protocol.md` owns ready-set scoring, scheduler lane order, retry/backoff policy, remediation flow, wake reasons, and blocked-to-runnable behavior. `Plans/Contracts_V0.md` owns runtime event and payload vocabulary,'
+- '| Orchestrator graph, record, and storage-schema clusters | `Plans/Run_Graph_View.md` owns graph inspector and `/full-record` presentation. `Plans/Contracts_V0.md` owns concern, promotion, graph-patch, recovery record, and recovery event contracts. `Plans/storage-plan.md` owns investigation storage,'
+- '| Compare, review, and SCM anti-dup boundaries | Requested/effective runtime identity stays in `Plans/Contracts_V0.md`. Compare-session and same-path-across-worktrees source wording maps to explicit same-file or same `repo_relative_path` compare/open identity in `Plans/WorktreeGitImprovement.md`, `P'
+- '| Worktree owner-node rename and compatibility | `owner_node_id` is the canonical orchestration-node lineage field for worktree ownership. `owner_tier_id` may remain only as documented compatibility, migration, or source-lineage evidence; consumer docs that still expose worktree owner lineage must c'
+- Tooling and memory consumer checks keep `Plans/newtools.md`, `Plans/assistant-memory-subsystem.md`, `/assistant-memory-subsystem.md`, `UI_Command_Catalog.md`, `assistant-chat-design.md`, `Contracts_V0.md`, `storage-plan.md`, `Orchestrator_Page.md`, `WorktreeGitImprovement.md`, `Project_Output_Artifa
+- Audit-overlap routing treats `Crosswalk.md` and `Contracts_V0.md` owner-routing integrity as the primary owner check, `storage-plan.md` same-file mixed canon as a storage-owner reconciliation, `Decision_Log.md` and rewrite-root routing gaps as decision-history cleanup, `FinalGUISpec.md`, `UI_Command
+- 'Contract checks must keep `ContractRef` taxonomy stricter in the gate text than in consumer summaries: reconcile owner docs in this order, `Contracts_V0.md`, `Crosswalk.md`, `UI_Command_Catalog.md`, `FinalGUISpec.md`, then consumer docs. Duplicated `cost_usage` text is a DRY reconciliation risk beca'
+- Early `event-source` tables that already consume newer runtime-lineage concepts later in the same consumer docs are internally stale and must be reconciled at the owner route, not patched as isolated table gaps. Duplicated `Crosswalk.md` numbering is a DRY failure because it undermines `ContractRef`
+- 'Corroboration routing must keep at least two layers distinct: `corroboration_request` packet input and `corroboration_result` output evidence. Dispatch contracts must state which fields are executor-facing and mandatory for correctness at dispatch time, while optional disclosure or `/overlay` fields'
+owner_hints:
+- Plans/DRY_Rules.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `756549fc8dc63007cc2c872f862437c90b33d06d34a1d2cd9df5f0686d977232`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `DRY_Rules-S0001` through `DRY_Rules-S0018` are preserved in place and mapped in `coverage_map.jsonl` to `DR-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

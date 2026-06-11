@@ -342,3 +342,147 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 - `Plans/Progression_Gates.md`
 - `Plans/Decision_Policy.md`
 - `Plans/DRY_Rules.md`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Document_Packaging_Policy.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### DPP-001 - Document Packaging Policy (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: DPP-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Plans/Document_Packaging_Policy.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Document_Packaging_Policy-S0024
+preserved_exact_tokens:
+- Document Packaging Policy (Canonical)
+- 0. Scope and alignment
+- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/DRY_Rules.md#7'
+- 1. Document Set contract
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014'
+- 1.1 `00-index.md` requirements
+- 1.2 `manifest.json` requirements
+- 1.3 Naming rules
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-014'
+- 2. Deterministic split rules
+- 2.0 Local auth detection packaging note
+- 2.0a Runtime seam evidence and consumer-routing packages
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Widget_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, Contr'
+- 2.0b Canonical-scope reconciliation and consumer-split packages
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md'
+- 2.1 Primary split rule
+- 2.2 Fallback split rule
+- 3. Trigger budgets and deterministic defaults
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-014'
+- 4. Losslessness proof (hard requirement)
+- 'ContractRef: Gate:GATE-014, PolicyRule:Decision_Policy.md§2'
+- 5. Three independent audits (full coverage, no sampling)
+- 'ContractRef: Gate:GATE-014, ContractName:Plans/Progression_Gates.md'
+- 'ContractRef: SchemaID:evidence.schema.json, ContractName:Plans/00-plans-index.md'
+negative_constraints:
+- '- exact warning line: `Generated artifact. Do not edit shards directly; regenerate from canonical source.`'
+- '- Existing `.docset/**` members are generated outputs and MUST NOT themselves become new packaging inputs.'
+- UI command evidence packages preserve consumer splits without turning this policy into the command owner. `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) remains internally split on blocked and `/HITL` mutator ownership and still needs command families for account, `/concern/promotion`, and
+- Provider/account and event/command routing packages must expose identity boundaries. `/account` snapshots must not become a dumping ground for `non-provider` identity. Event and `/command` naming/routing remain unresolved enough that two local `SSOTs` can still disagree materially while both seem co
+- 'Generated-doc and preview evidence must not leak path assumptions back into routing. If the owner split is not explicit, generated docs, `/artifacts`, and `preview-backed` opens can keep reintroducing `path-based` routing assumptions. The consumer split is concrete: `FileManager` still treats `path-'
+- '- Packaging is a file-boundary transformation only. It MUST NOT rewrite source bytes, normalize line endings, or “clean up” content during packaging. Any source normalization must occur before packaging and be reflected in the canonical source artifact hash.'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Consumer-drift packages must flag mechanical stale examples. `Wiring_Matrix.md` (`Wiring_Matrix`) rows such as `cmd.orchestrator.switch_tab` can reinforce an older command shape and therefore carry ghost and `/stale-ID` risk even when the issue looks editorial. Packaging / evidence / artifact lineag
+- Provider/account and event/command routing packages must expose identity boundaries. `/account` snapshots must not become a dumping ground for `non-provider` identity. Event and `/command` naming/routing remain unresolved enough that two local `SSOTs` can still disagree materially while both seem co
+- 'Document packages that reconcile owner and consumer evidence must preserve the split between modern canonical field names and stale canonical scope language. The package records the field names as live evidence while making stale scope boundaries explicit, so transfer cleanup does not mistake newer '
+- Re-audit packages distinguish overstated absence from remaining defects. Some `exact-missing` lists were broader than the live docs justify because receipt, `glossary-label`, and `account-history` canon already exists elsewhere, but the remaining failures still need precise labels such as `partial-t
+owner_boundary_notes:
+- '# Document Packaging Policy (Canonical)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. Deterministic defaults per `Plans/Decision_Policy.md`.'
+- Shard mirrors under `Plans/_shards/{FileManager,FinalGUISpec,assistant-chat-design,storage-plan,newtools,...}/**` may echo the same themes as owner docs, but they remain process mirrors and are not canonical Document Set sources or live edit targets.
+- 'Plan graph stays unchanged: user-project plan graph remains canonical sharded JSON at `.puppet-master/project/plan_graph/index.json` with node shards under `nodes/<node_id>.json` as defined in `Plans/Project_Output_Artifacts.md`. Document Sets are a parallel mechanism for large text artifacts and fo'
+- '- exact warning line: `Generated artifact. Do not edit shards directly; regenerate from canonical source.`'
+- '- `shards[]` in canonical order where each item has:'
+- 'Document packages that carry runtime, storage, or provider evidence preserve owner references for `/durability` and `/attribution`: mutation durability routes through `Plans/FileSafe.md` and `Plans/storage-plan.md`, runtime/context routing through `Plans/Run_Modes.md` and `Plans/Prompt_Pipeline.md`,'
+- '### 2.0a Runtime seam evidence and consumer-routing packages'
+- 'Document packages that preserve command and event seam evidence must keep naming contradictions visible instead of flattening them into copied lists. The chat seam distinguishes canonical namespace and payload-shape conflicts: `chat.thread.created` and `chat.thread_created` are not interchangeable, '
+- Consumer-drift packages must flag mechanical stale examples. `Wiring_Matrix.md` (`Wiring_Matrix`) rows such as `cmd.orchestrator.switch_tab` can reinforce an older command shape and therefore carry ghost and `/stale-ID` risk even when the issue looks editorial. Packaging / evidence / artifact lineag
+- UI command evidence packages preserve consumer splits without turning this policy into the command owner. `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) remains internally split on blocked and `/HITL` mutator ownership and still needs command families for account, `/concern/promotion`, and
+- Migration and reversible-action evidence must keep deterministic owner alignment. `Plans/Widget_System.md` and `Plans/FinalGUISpec.md` must use one migration rule, mirrored as `/Widget_System.md` and `/FinalGUISpec.md`, so package evidence does not fork UI policy. `immediate_undo` is limited to dire
+- Provider/account and event/command routing packages must expose identity boundaries. `/account` snapshots must not become a dumping ground for `non-provider` identity. Event and `/command` naming/routing remain unresolved enough that two local `SSOTs` can still disagree materially while both seem co
+- '### 2.0b Canonical-scope reconciliation and consumer-split packages'
+- 'Document packages that reconcile owner and consumer evidence must preserve the split between modern canonical field names and stale canonical scope language. The package records the field names as live evidence while making stale scope boundaries explicit, so transfer cleanup does not mistake newer '
+- Command evidence packages preserve consumer-facing identity splits. `UI_Command_Catalog.md` (`UI_Command_Catalog`) still exposes the `request_id` versus `blocked_sequence` split directly in `user-facing` command rows; the package must name that split without turning this policy into the command cata
+- 'Generated-doc and preview evidence must not leak path assumptions back into routing. If the owner split is not explicit, generated docs, `/artifacts`, and `preview-backed` opens can keep reintroducing `path-based` routing assumptions. The consumer split is concrete: `FileManager` still treats `path-'
+- These defaults MUST be recorded in `Plans/auto_decisions.jsonl` and reused consistently unless superseded by a higher-precedence SSOT source.
+- '- Packaging is a file-boundary transformation only. It MUST NOT rewrite source bytes, normalize line endings, or “clean up” content during packaging. Any source normalization must occur before packaging and be reflected in the canonical source artifact hash.'
+- '2. Canonical project Markdown/text artifacts under `.puppet-master/project/**`, including:'
+- 3. Any other subsystem writing Markdown/text artifacts under `.puppet-master/**` through the same writer abstraction and gate contract referenced by SSOT docs updated in this change.
+- 'When a logical artifact path is a Markdown/text file and packaging triggers are reached (§3), the canonical packaged form MUST be a directory named by appending `.docset` to the full filename:'
+- 1. A statement that canonical content is packaged as a Document Set.
+- This file is a **pointer stub**. Canonical content is packaged as a Document Set.
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `e58d5d9b410738b9d8435da00ca9a2bf8e51d0d365aad9079afa7aeec0e10ce3`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Document_Packaging_Policy-S0001` through `Document_Packaging_Policy-S0024` are preserved in place and mapped in `coverage_map.jsonl` to `DPP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

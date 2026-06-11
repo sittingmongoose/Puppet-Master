@@ -290,3 +290,181 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, Con
 - `Plans/Architecture_Invariants.md`
 - `Plans/Contracts_V0.md`
 - `Plans/Spec_Lock.json`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Glossary.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### G-001 - Glossary (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: G-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: Plans/Glossary.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Glossary-S0027
+preserved_exact_tokens:
+- Glossary (Canonical)
+- Canonical owner-section requirements
+- Glossary and help governance
+- Help entry template and related-concept clusters
+- 0. Scope
+- 'ContractRef: Primitive:Glossary'
+- 1. Canonical platform name
+- 'ContractRef: Invariant:INV-010'
+- 2. Core terms
+- Orchestrator rewrite terms
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md'
+- Runtime and routing terms
+- Shell and workspace terms
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+- Terminal runtime terms
+- Provider and account terms
+- Projection freshness and health terms
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+- Help architecture and project status terms
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md'
+- Help-entry template and related-concept clusters
+- Runtime operation vocabulary and copy boundaries
+- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+- 4. Evidence
+negative_constraints:
+- '- **Runtime vocabulary** -- use platform, model, auth, account policy, and effective account for requested/effective runtime state. Do not create duplicate top-level nouns such as `chat_model`; use the owner-owned field, for example `effective_model`.'
+- '- **Provider Layer (`provider-layer`)** -- the web execution layer made of the provider capability registry and adapters. Provider-layer terms describe capability, routing, fallback, and adapter behavior; they must not be conflated with runtime identity terms.'
+- '- **Derived decomposition context (`decomposition_context`)** -- optional derived context may carry human-readable `/titles`, language `/domain/framework`, former tier grouping for help or migration, `subtask-focus` heuristics, and `parent-summary` or `/dependency` prompt conveniences, but it must n'
+- '- **Assistant chat runtime controls** -- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` maps resume and `/retry` controls to canonical runtime actions and must not invent thread-local resume paths.'
+- '- **Legacy Orchestrator surface vocabulary** -- consumer docs must not revive stale `tier-era` execution terms, `widget-era` non-`Progress` Orchestrator assumptions, `standalone-surface` page models, non-canonical persona fields, or `tier_type` as a core node UI field. `Plans/FinalGUISpec.md` / `/Fi'
+- '- **Widget hostability terms** -- `widget-hostability` and `widget-layout` are compatibility-only vocabulary for non-`Progress` Orchestrator surfaces; `/native` specialized tabs are not widget pages and must not be rebuilt as widget-hosted layouts.'
+- '- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab or `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the rewrite tab model.'
+- '**Dev Session**: A higher-level development workflow identity identified by `dev_session_id`. It may link terminal, output, problems, debug-console, and ports surfaces, but it must not replace `terminal_session_id` when exact shell reuse matters.'
+- '- **Remote-state vocabulary** -- shared surface vocabulary for File Manager, Search, Source Control, Terminal, Problems, and LSP remote-backed projections. Freshness is `current | refreshing | stale` (`current`, `refreshing`, or `stale`); health is `healthy | degraded | unavailable` (`healthy`, `deg'
+- '- **Blocked-state presentation** -- blocked-state and `dismissed` remain separate: `dismissed` is presentation state, not semantic resolution, and active blockers must not be dismissed into fake health.'
+- '- **Help-system ownership** -- `help-system` routing keeps `Glossary.md` as the owner for short canonical definitions, while richer help entries own examples and `related-concept` links; contextual help may simplify wording, but it must not mutate the underlying semantics.'
+- '- **Expert/ELI5 and chat-style copy** -- app-level Expert and `/ELI5` display is independent from `chat-style` simplification; simple help can change reading level, but it must not rename runtime truth or alter contract semantics.'
+- '- Requested-vs-effective `/copy` uses the exact labels `Requested`, `Effective`, and `Why different?` for the vs-effective explanation model. Surfaces must not use `Actual`, `Resolved`, `Current`, `Available`, or `Fallback` as synonyms for the same requested/effective concept.'
+- '- Provenance, `/legal` hold, receipt retention, and bulk `/undo/cost` disclosure remain separate blockers or explanations and must not be collapsed into generic Health, Capability, Readiness, or Validation copy.'
+- The persistent storage boundary for sessions, runs, events, and artifacts. Implementation uses seglog (append-only event ledger), redb (durable KV state/projections), and Tantivy (full-text search). Secrets are forbidden.
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- '- **legacy naming** -- the only allowed way to refer to older platform naming.'
+- '- **Requested/effective identity fields** -- runtime identity uses the shared requested/effective vocabulary from the owner contracts. Persona fields are `requested_persona` and `effective_persona`; legacy `_id` substitutes such as `requested_persona_id` and `effective_persona_id` are migration/sour'
+- '- **Protected core Persona** -- a PM-owned built-in Persona ID from `Plans/Personas.md#RESERVED-PERSONAS`, including `assistant`, `general-purpose`, `overseer`, `bash`, `teacher`, `collaborator`, `researcher`, `deep-researcher`, and `explorer`. Protected core Personas are user-immutable and not dele'
+- '- **Runtime artifact help** -- `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md` consumes `/Ledger`, `/link`, `task_id`, `cost_usage`, and cross-surface receipt linkage; artifact-panel and task-granularity wording are legacy/source-lineage aliases unless a current owner doc keeps th'
+- '- **Tier-shaped compatibility** -- `tier` and tier-shaped glossary terms are migration/source-lineage aliases; live owner docs must map them to package, seam, lane, worktree, or Orchestrator tab concepts before consumer docs reconstruct tier-shaped surfaces or payloads.'
+- '- **Legacy Orchestrator surface vocabulary** -- consumer docs must not revive stale `tier-era` execution terms, `widget-era` non-`Progress` Orchestrator assumptions, `standalone-surface` page models, non-canonical persona fields, or `tier_type` as a core node UI field. `Plans/FinalGUISpec.md` / `/Fi'
+- '- **Widget hostability terms** -- `widget-hostability` and `widget-layout` are compatibility-only vocabulary for non-`Progress` Orchestrator surfaces; `/native` specialized tabs are not widget pages and must not be rebuilt as widget-hosted layouts.'
+- '- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab or `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the rewrite tab model.'
+- '- **Blocked sequence runtime identity** -- runtime/blocking state uses node, attempt, `/attempt/blocked-sequence`, and `/blocking` identity; storage `tier_id` fields are compatibility aliases until mapped to node/attempt identity.'
+- '- **Attempt attribution migration** -- replace `tier-first` aggregation and event anchoring in `/storage/UI`, usage, and storage docs with `/node/lane/package/seam-aware` attempt/node/lane/package/seam-aware attribution; tier terms remain compatibility aliases.'
+- '- **Assistant chat compatibility drift** -- `assistant-chat-design` / `assistant-chat-design.md` is not broadly stale; remaining drift is local and `compatibility-oriented`.'
+- '**Projection Policy Fields**: Internal provider-registry or scheduler fields that describe how PM projects provider-facing configuration. `conflict_policy`, `drift_detection`, `overlay_policy`, `share_classes[]`, `deny_classes[]`, `projection_mode`, `selectable_unit`, and `root_path` stay internal/p'
+- '- **Gap inventory supersession** -- `supersedes_prior` marks current gap artifacts when `canon_inventory.json` keeps only surviving canon clusters and `open_gaps.json` keeps unresolved blocker families plus exact missing items; the legacy `canon_inventory` and `open_gaps` names are source-lineage al'
+- '- **Wrapper and alias evidence** -- `evidence.schema.json` stores `/fail` checks plus wrapper-normalization and alias-resolution evidence when command wrappers or compatibility aliases prove a canonical action mapping.'
+stale_retired_dispositions:
+- Runtime and routing help entries use `help-entry` records with `canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, and `surface_examples`; avoid two-column `Term | Definition` tables for durable glossary ownership. The wave-one `gap-
+- '- **Final GUI route copy** -- `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` consumes `route_target` semantics; `resume_url` is not a stronger ad hoc primitive. Stale `Tiers` primary-surface wording is a source-lineage alias for the rewrite Orchestrator tab model, and widget-composition means only `Pr'
+- '- **Legacy Orchestrator surface vocabulary** -- consumer docs must not revive stale `tier-era` execution terms, `widget-era` non-`Progress` Orchestrator assumptions, `standalone-surface` page models, non-canonical persona fields, or `tier_type` as a core node UI field. `Plans/FinalGUISpec.md` / `/Fi'
+- '- **Route payload vocabulary** -- route payloads use canonical surface, `/tab/object`, and object terms; generic `page: string` payloads are retired or constrained when they hide non-canonical tab naming.'
+- '- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab or `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the rewrite tab model.'
+- '- **Assistant chat compatibility drift** -- `assistant-chat-design` / `assistant-chat-design.md` is not broadly stale; remaining drift is local and `compatibility-oriented`.'
+- '- **Remote-state vocabulary** -- shared surface vocabulary for File Manager, Search, Source Control, Terminal, Problems, and LSP remote-backed projections. Freshness is `current | refreshing | stale` (`current`, `refreshing`, or `stale`); health is `healthy | degraded | unavailable` (`healthy`, `deg'
+- '- **ProjectionHealth** -- the shared user-facing `/trust` record that spans Usage, Orchestrator, Source Control, widgets, `storage-plan`, and `storage-plan.md`; it records freshness, health, stale-data mitigation, and whether an action may read, route, or mutate.'
+- '- **Progress trust copy** -- `Progress` is summary-heavy and vulnerable to stale `/degraded` projection confusion, so it shows visible freshness state and routes users to native exact-record tabs for inspection when projection trust drops.'
+- '- **Projection Freshness** -- the recency of the projection relative to the live runtime source. It answers "how old is this copy?" and is evaluated with states such as `fresh`, `warm`, `stale`, and `expired`.'
+- '- Action gating uses both axes together: a projection can be fresh-but-unhealthy or healthy-but-stale, and either condition can block a route/open or mutation surface.'
+owner_boundary_notes:
+- '# Glossary (Canonical)'
+- '## Canonical owner-section requirements'
+- These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- PUPPET MASTER -- CANONICAL TERMINOLOGY
+- This glossary defines canonical terms used across plan documents.
+- '## 1. Canonical platform name'
+- '- **Execution Unit Context** -- the canonical runtime-facing object that names `execution_unit_id`, `execution_unit_type`, parent lineage, and the `execution_role` that owns execution.'
+- '- **Inline Help** -- lightweight help rendered directly beside the active control, row, or blocked state without changing the canonical term name.'
+- '- **Canonical Help Entry** -- the durable help record keyed by canonical concern and state terms; inline help and context help both point back to this entry instead of minting new synonyms.'
+- '- **Worktree owner node (`owner_node_id`)** -- the orchestration-node lineage field used when a worktree is owned by a run/node rather than by an Assistant thread or manual workspace. Older tier-rooted ownership field names are migration/source-lineage aliases only.'
+- Use these canonical names verbatim in rewrite docs so execution objects, states, trust semantics, and help layers stay stable across Orchestrator, inspectors, and recovery surfaces.
+- Runtime and routing help entries use `help-entry` records with `canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, and `surface_examples`; avoid two-column `Term | Definition` tables for durable glossary ownership. The wave-one `gap-
+- Glossary gap governance records `exact_items` for `gap-001`, `gap-002`, `gap-003`, `gap-004`, `gap-005`, `gap-006`, `gap-007`, and `gap-008`, including missing `5.1B`, `/help/blocked/storage`, `Plans/Glossary.md#Orchestrator rewrite terms`, `Plans/Orchestrator_Page.md#11. Source Control boundary`, `
+- 'Canonical runtime and provider wording:'
+- '- **Requested/effective identity fields** -- runtime identity uses the shared requested/effective vocabulary from the owner contracts. Persona fields are `requested_persona` and `effective_persona`; legacy `_id` substitutes such as `requested_persona_id` and `effective_persona_id` are migration/sour'
+- '- **Protected core Persona** -- a PM-owned built-in Persona ID from `Plans/Personas.md#RESERVED-PERSONAS`, including `assistant`, `general-purpose`, `overseer`, `bash`, `teacher`, `collaborator`, `researcher`, `deep-researcher`, and `explorer`. Protected core Personas are user-immutable and not dele'
+- '- **Runtime vocabulary** -- use platform, model, auth, account policy, and effective account for requested/effective runtime state. Do not create duplicate top-level nouns such as `chat_model`; use the owner-owned field, for example `effective_model`.'
+- '- **Runtime identity consumers** -- `Plans/storage-plan.md` (`/storage-plan.md`) persists runtime identity fields and `Plans/FinalGUISpec.md` (`/FinalGUISpec.md`) displays `/displayed` runtime identity after the core contracts are updated; assistant/chat surfaces consume this owner boundary rather t'
+- '- **Raw finding (`raw-finding`)** -- an audit input, not a runtime state. Raw-finding clusters from `Plans/assistant-memory-subsystem.md` (`/assistant-memory-subsystem.md`) may identify delegated-run identity or persistence gaps, but the canonical fix must land in the owner contracts before delegate'
+- '- **Package/lane/worktree attribution** -- canonical attribution treats `/package/lane/worktree` lineage as first-class across `/usage` and `/storage`; `tier_id`, `/grouping`, and canonical-ish runtime-data labels are migration/source-lineage hints until mapped to package, seam, lane, worktree, and '
+- '- **Derived decomposition context (`decomposition_context`)** -- optional derived context may carry human-readable `/titles`, language `/domain/framework`, former tier grouping for help or migration, `subtask-focus` heuristics, and `parent-summary` or `/dependency` prompt conveniences, but it must n'
+- '- **Runtime artifact help** -- `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md` consumes `/Ledger`, `/link`, `task_id`, `cost_usage`, and cross-surface receipt linkage; artifact-panel and task-granularity wording are legacy/source-lineage aliases unless a current owner doc keeps th'
+- '- **Assistant chat runtime controls** -- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` maps resume and `/retry` controls to canonical runtime actions and must not invent thread-local resume paths.'
+owner_hints:
+- Plans/Glossary.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `84a42148a157f214c1a2088e1a6c01ff04d65e8acce4aece80ff1469e6d35f41`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Glossary-S0001` through `Glossary-S0027` are preserved in place and mapped in `coverage_map.jsonl` to `G-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

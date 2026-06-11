@@ -632,3 +632,190 @@ Plugin-blocked payloads MUST include:
 
 ### Recovery scope
 Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Plugins_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PS-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: PS-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: Plans/Plugins_System.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0039
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0040
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0041
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0042
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0043
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0044
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0045
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0046
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0047
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0048
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0049
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0050
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0051
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0052
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0053
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0054
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0055
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0056
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0057
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0058
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0059
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0060
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0061
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0062
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0063
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0064
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0065
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0066
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Plugins_System-S0067
+preserved_exact_tokens:
+- Plugins System (Canonical SSOT)
+- 0. Scope and SSOT status
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- SSOT references (DRY)
+- P5 plugin boundary recovery
+- 1. Definitions
+- 1.1 Plugin
+- 1.2 Hook
+- 'ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md'
+- 2. Discovery and storage
+- 2.1 Discovery paths
+- 'ContractRef: PolicyRule:Decision_Policy.md§2'
+- 2.2 Plugin manifest
+- 'ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY'
+- 2.3 Deduplication
+- 3. Load order and execution model
+- 3.1 Auto-load prohibition
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md'
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md'
+- 3.2 Deterministic load order
+- 'ContractRef: PolicyRule:Decision_Policy.md§3'
+- 3.2 Plugin lifecycle
+- 3.3 Hook execution order
+- 'ContractRef: ContractName:Plans/Plugins_System.md#LOAD-ORDER'
+negative_constraints:
+- PM MUST NOT auto-load executable plugin code from config without explicit user approval. This is the plugin no-auto-load executable-code rule.
+- The `PluginContext` is the sole API surface for plugins. Plugins MUST NOT access Puppet Master internals outside this interface.
+- Plugin-added subviews/cards/actions (`/cards/actions`) may extend core surfaces, but they MUST NOT replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning. Plugin-added navigation into core surfaces must use the canonical context payloads owned by the target s
+- Hooks must not silently rewrite protected routing fields, including remote host/base URL, registry host, kube context, namespace, or receipt identity keys. If a plugin hook changes any protected routing field, the modified invocation is revalidated through the permission engine and may be blocked wi
+- '- plugin behavior must not function as a backdoor that widens child permissions or tool authority.'
+- '- uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name'
+- '**AC-PL06:** By default, plugin tools MUST NOT override built-in tools. Collisions MUST be resolved by namespaced aliasing unless `allow_tool_override` is `true`.'
+- '**AC-PL08:** Hooks that timeout (default 5s) or panic MUST be treated as `Continue` with a warning logged. The pipeline MUST NOT crash.'
+- '- hook-driven blocking must not silently bypass scheduler observability, retry classification, or recovery-option rendering'
+- '- plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy'
+- Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
+compatibility_only_notes:
+- '- MCP availability follows the same parent-ceiling and compatibility-subset rule.'
+- 3. **Compaction hook naming and semantics:** OpenCode uses `experimental.session.compacting` as the hook key. Puppet Master canonicalizes this as `session.compacting` (dropping the `experimental.` prefix). For backward compatibility, plugins subscribing to `experimental.session.compacting` are mappe
+stale_retired_dispositions: []
+owner_boundary_notes:
+- '# Plugins System (Canonical SSOT)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- '## 0. Scope and SSOT status'
+- This document is the **single canonical source of truth** for the Puppet Master plugin system — discovery, loading, hook lifecycle, custom tool registration, and structured logging. All other plan documents MUST reference this document by anchor (e.g., `Plans/Plugins_System.md#HOOK-EVENTS`) rather t
+- '### SSOT references (DRY)'
+- '- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`'
+- '- Canonical terms: `Plans/Glossary.md`'
+- '### P5 plugin boundary recovery'
+- Plugin-added subviews/cards/actions (`/cards/actions`) may extend core surfaces, but they MUST NOT replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning. Plugin-added navigation into core surfaces must use the canonical context payloads owned by the target s
+- Plugin-added tools, hooks, MCP bridges, and other `/extensibility` capabilities that contact external hosts, registry hosts, or Kubernetes clusters must declare contacted domains/hosts before execution. They inherit `registry_hosts[]`, `k8s_host_policy`, `/network/trust`, proxy, and permission polic
+- Hooks must not silently rewrite protected routing fields, including remote host/base URL, registry host, kube context, namespace, or receipt identity keys. If a plugin hook changes any protected routing field, the modified invocation is revalidated through the permission engine and may be blocked wi
+- 3. **Compaction hook naming and semantics:** OpenCode uses `experimental.session.compacting` as the hook key. Puppet Master canonicalizes this as `session.compacting` (dropping the `experimental.` prefix). For backward compatibility, plugins subscribing to `experimental.session.compacting` are mappe
+- '**AC-PL10:** Plugins subscribing to the OpenCode-era hook key `experimental.session.compacting` MUST be treated as subscribers to the canonical `session.compacting` hook. The alias mapping is applied at plugin registration time; no runtime distinction exists between the two keys.'
+- '- if a plugin modifies prompt or tool behavior in a way that causes remediation/retry, the canonical runtime lineage still belongs to the shared scheduler/remediation contract, not to plugin-private state'
+- '## Plugin Block Runtime Canonical Alignment (2026-03-09)'
+- Plugin-driven blocking must map into the canonical runtime blocked model.
+- '- plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy'
+- Plugin-driven blocking that affects execution MUST map into the canonical runtime blocked model.
+- '- runtime-facing plugin-blocked payloads MUST expose canonical `allowed_action_ids[]`, prerequisite metadata, and `preserved_local_work` when relevant'
+- '- canonical `allowed_action_ids[]`'
+- Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
+owner_hints:
+- Plans/Plugins_System.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `04bc2ed338211fd3b68a1271c39a517ad341f84e83a5dd1cb2c96db44f5ac7fb`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Plugins_System-S0001` through `Plugins_System-S0067` are preserved in place and mapped in `coverage_map.jsonl` to `PS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

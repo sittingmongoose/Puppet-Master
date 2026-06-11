@@ -121,3 +121,115 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 ## Browser/debug auth handoff and session shaping
 - Browser session-shaping actions remain `explicit_confirmation` operations when they mutate cookies, `/storage`, storage `/export` or import state, offline `/mock` routing, or promotion into normal browsing.
 - App-debug login handoff normally remains in the same isolated automation session so authenticated state can resume the investigation, while PM-owned provider `/device/login` flows may use a dedicated `auth_session` when that is the canonical provider flow.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/GitHub_API_Auth_and_Flows.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### GAAAF-001 - Puppet Master -- GitHub API Auth and Flows Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: GAAAF-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: Plans/GitHub_API_Auth_and_Flows.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/GitHub_API_Auth_and_Flows.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:GitHub_API_Auth_and_Flows-S0011
+preserved_exact_tokens:
+- Puppet Master -- GitHub API Auth and Flows
+- Change Summary
+- Purpose
+- 'ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline, Primitive:Provider'
+- Cross-owner command and routing dependencies
+- GitHub host policy and enterprise availability
+- Canonical data-shape reconciliation
+- Required data shape
+- Stable account identity and credential references
+- Recovery context and mutation gating
+- Runtime identity and blocked-policy transfer
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md'
+- Browser/debug auth handoff and session shaping
+negative_constraints:
+- '- Multi-account GitHub and widget data sourcing must not fall back to pre-rewrite or single-account-only identity rules; cross-surface `/GitHub` and `/integration` pivots carry lane, package, `/runtime`, degraded-trust, `/package/degraded-trust`, and stale-data state into mutation gating and concern'
+- '- GitHub operations that traverse `/skills/formatters`, DAE, mixed mutation semantics, or runtime tool reachability inherit runtime safety and capability contracts; those capability boundaries must not remain under-owned or be recreated as GitHub-local auth rules.'
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- '- Legacy intent preserved: YES'
+- '- `Plans/WorktreeGitImprovement.md` / `/WorktreeGitImprovement.md` owns lane and `/worktree` lifecycle vocabulary, cleanup semantics, gating checks, and transition rules for repository worktree state.'
+- '- `Plans/Progression_Gates.md` / `/Progression_Gates.md` owns the replacement of tier-scoped gate logic with package-completion and seam-transition gates that GitHub orchestration consumes.'
+stale_retired_dispositions:
+- '- Trust/degraded-state split: low-risk read-only inspection may run on refreshing, stale, and sometimes degraded projections; deep-linking is allowed when target identity remains valid; live mutation, approval, recovery, retry, and cleanup require `current` or direct canonical-runtime validation.'
+- '- Runtime-era command wiring/gate contracts require reverse `matrix-to-catalog` coverage, precondition `/freshness/mutation-risk` fields, stale-blocking policy, explicit dispatcher obligations, and machine-verifiable allowed-action selection before dispatch.'
+- '- Multi-account GitHub and widget data sourcing must not fall back to pre-rewrite or single-account-only identity rules; cross-surface `/GitHub` and `/integration` pivots carry lane, package, `/runtime`, degraded-trust, `/package/degraded-trust`, and stale-data state into mutation gating and concern'
+owner_boundary_notes:
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- '- Canonical sources referenced (DRY):'
+- Define the canonical GitHub API authentication contract and GitHub API call flows Puppet Master relies on for repository, fork, and pull request workflows.
+- 'This document also defines the hard boundary between:'
+- Git transport auth and GitHub API auth are separate systems. `github_api` tokens never transfer to SSH remotes, local Git credential helpers, or Source Control SSH operations, and an expired or insufficient GitHub API credential is a canonical blocked/runtime condition with owner routing through Git
+- '`Plans/GitHub_Integration.md` remains the consumer cross-reference for `/remote` GitHub surfaces: hosted and SSH remote mutations consume FileSafe.md mutation-safety, write-scope, and durability contracts rather than bypassing the FileSafe owner.'
+- Generic API key, HTTP auth, OAuth 2.0, OpenID Connect, and mTLS mechanisms are transport-layer auth families only when an owning provider/runtime contract explicitly maps them into a GitHub operation. They do not replace the `github_api` OAuth device-code flow or OS credential-store token boundary.
+- '#### Cross-owner command and routing dependencies'
+- '- Wizard-blocked and thread-blocked flows may serialize `resume_url`, including wizard-step restoration detail, but `/open` behavior normalizes through canonical object identity and scope identity before using that URL.'
+- '## Canonical data-shape reconciliation'
+- '- Canonical GitHub runtime and mutation envelopes carry `requested_account_id`, `effective_account_id`, stable `account_id`, `credential_ref`, `account_type`, `account_login`, `execution_role`, `operational_identity`, and `account_switch_lineage[]`.'
+- '- Trust/degraded-state split: low-risk read-only inspection may run on refreshing, stale, and sometimes degraded projections; deep-linking is allowed when target identity remains valid; live mutation, approval, recovery, retry, and cleanup require `current` or direct canonical-runtime validation.'
+- '- Blocked `/HITL/policy` flows re-anchor on canonical node `/attempt` identifiers and the current blocked sequence before GitHub recovery, approval, retry, or cleanup continues.'
+- '- Routing, blocked-family, and attribution flows reconcile end-to-end across owner and consumer docs before GitHub-facing commands claim a recoverable, attributable, or safe-to-mutate state.'
+- '- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.'
+- '- Usage and audit rows record `execution_role`, requested/effective account identity, switch history, pressure owner, and the GitHub `account_id` / `credential_ref` pair that actually executed the call.'
+- '- App-debug login handoff normally remains in the same isolated automation session so authenticated state can resume the investigation, while PM-owned provider `/device/login` flows may use a dedicated `auth_session` when that is the canonical provider flow.'
+owner_hints:
+- Plans/GitHub_API_Auth_and_Flows.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `032feb2a9cdf3685d4373b2e47d2e4b50566f1cd202f9a0cd9283904170dea9b`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `GitHub_API_Auth_and_Flows-S0001` through `GitHub_API_Auth_and_Flows-S0011` are preserved in place and mapped in `coverage_map.jsonl` to `GAAAF-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

@@ -273,3 +273,125 @@ ContractRef: ContractName:Plans/Formatters_System.md, ContractName:Plans/Progres
 ---
 
 *Document created for planning only; no code changes.*
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Formatters_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### FS-001 - Formatters System (Canonical SSOT) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: FS-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: Plans/Formatters_System.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Formatters_System-S0024
+preserved_exact_tokens:
+- Formatters System (Canonical SSOT)
+- 0. Scope and SSOT status
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- SSOT references (DRY)
+- 1. Definitions
+- 1.1 Formatter
+- 1.2 Formatter trigger event
+- 'ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Run_Modes.md#STRATEGY-HTE'
+- 2. Lifecycle
+- 2.1 When formatters run
+- 'ContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE'
+- 2.2 Formatting changes in diffs and evidence
+- 'ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord'
+- 2.3 Error handling
+- 'ContractRef: PolicyRule:Decision_Policy.md§2'
+- 3. Built-in formatters
+- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+- 4. Configuration
+- 4.1 Global disable
+- 4.2 Per-formatter config
+- 4.3 `$FILE` placeholder
+- 4.4 Custom formatters
+- 4.5 Config persistence
+- 'ContractRef: ContractName:Plans/Plugins_System.md#PLUGIN-CONFIG'
+negative_constraints:
+- 'Rule: Formatters MUST NOT run during Delegated Agent Execution (DAE). In DAE mode, the provider CLI manages its own formatting; Puppet Master performs no post-hoc formatting.'
+- DAE analytics and `/blocked` truth still require a post-hoc `tool-event` story in the provider/run-mode event owners; the formatter subsystem records only HTE formatter events and must not synthesize DAE tool-event history after the fact.
+- '**AC-FMT01:** Formatters MUST run after every file write/edit performed by hosted tools in HTE mode. Formatters MUST NOT run in DAE mode.'
+- '**AC-FMT05:** Formatter errors (non-zero exit) MUST NOT corrupt the file. The original tool output MUST be preserved.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- '# Formatters System (Canonical SSOT)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- '## 0. Scope and SSOT status'
+- This document is the **single canonical source of truth** for the Puppet Master formatter system — how formatters run, when they trigger, how they are configured, and how formatting changes are tracked. All other plan documents MUST reference this document by anchor (e.g., `Plans/Formatters_System.m
+- '### SSOT references (DRY)'
+- '- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`'
+- '- Canonical terms: `Plans/Glossary.md`'
+- '- Formatter owner path: `Plans/Formatters_System.md` / `/Formatters_System.md`'
+owner_hints:
+- Plans/Formatters_System.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `b587099da1e4420b1a124d3e4e02a85237b94cc7c81cfc0851ba8eae49073310`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Formatters_System-S0001` through `Formatters_System-S0024` are preserved in place and mapped in `coverage_map.jsonl` to `FS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
