@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.bootstrap-design-atom.v1",
+  "title": "PM Bootstrap Design Atom",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "ledger_id",
+    "atom_id",
+    "atom_type",
+    "status",
+    "lane",
+    "title",
+    "canonical_summary",
+    "source_refs",
+    "gui_related"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.bootstrap_design_atom.v1"
+    },
+    "ledger_id": {
+      "type": "string"
+    },
+    "atom_id": {
+      "type": "string"
+    },
+    "atom_type": {
+      "enum": [
+        "requirement",
+        "constraint",
+        "negative_constraint",
+        "decision",
+        "open_question",
+        "rejected_option",
+        "compatibility_note",
+        "implementation_hint",
+        "validation_criterion",
+        "user_correction",
+        "term_definition",
+        "example",
+        "risk"
+      ]
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "accepted",
+        "rejected",
+        "superseded",
+        "retired",
+        "deferred",
+        "ready_for_plan_compile",
+        "compiled_to_plan",
+        "blocked",
+        "not_for_plan"
+      ]
+    },
+    "lane": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "canonical_summary": {
+      "type": "string"
+    },
+    "exact_tokens": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "negative_constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner_hints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gui_related": {
+      "type": "boolean",
+      "description": "Agent-inferred boolean. true when the atom is GUI/UI/visual/user-visible-presentation implementation work; false otherwise."
+    },
+    "gui_classification_reason": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

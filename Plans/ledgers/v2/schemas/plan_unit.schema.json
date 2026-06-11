@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.plan-unit.v1",
+  "title": "PM PlanUnit",
+  "type": "object",
+  "required": [
+    "plan_unit_id",
+    "unit_type",
+    "status",
+    "owner_doc",
+    "canonical_text",
+    "gui_related",
+    "source_lineage",
+    "depends_on",
+    "unblocks",
+    "acceptance_criteria",
+    "risk",
+    "node_compile_hint"
+  ],
+  "properties": {
+    "plan_unit_id": {
+      "type": "string"
+    },
+    "unit_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "owner_doc": {
+      "type": "string"
+    },
+    "canonical_text": {
+      "type": "string"
+    },
+    "source_lineage": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unblocks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk": {
+      "type": "object"
+    },
+    "node_compile_hint": {
+      "type": "object"
+    },
+    "gui_related": {
+      "type": "boolean",
+      "description": "Required agent-inferred routing flag inherited by future node-readiness/NodeSeed/WorkNode layers."
+    },
+    "gui_classification_reason": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

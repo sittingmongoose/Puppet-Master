@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.ledger_write_card.v1",
+  "profile": "bootstrap_planning",
+  "purpose": "Per-turn update contract for conversational feature/spec design.",
+  "agent_reads_default": [
+    "state/handoff.json",
+    "state/current.json",
+    "state/open_items.json",
+    "state/operating_capsule.json"
+  ],
+  "agent_writes_each_substantive_turn": [
+    "events.jsonl",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl",
+    "records/blockers.jsonl",
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json"
+  ],
+  "required_checks": [
+    "append one event for the turn",
+    "add/update design atoms for material requirements/constraints/decisions/corrections",
+    "preserve exact tokens and negative constraints",
+    "update open questions and blockers",
+    "update handoff cursor and next action",
+    "infer gui_related true/false for every new or updated design atom",
+    "do not create WorkNodes during PlanUnit indexing/node-readiness"
+  ],
+  "forbidden": [
+    "do not write canonical Plans unless compile was requested",
+    "do not update Spec_Lock or governance artifacts",
+    "do not read legacy working_ledger.md as active state",
+    "do not mark completion while open queues exist",
+    "do not ask the user to label GUI work; infer gui_related automatically",
+    "do not create WorkNodes or executable build tasks until the WorkNode compiler contract exists"
+  ]
+}

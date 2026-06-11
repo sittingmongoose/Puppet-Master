@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "capsule_id": "cap-ledger-plan-system-current",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "agent_task": "compile_ready_design_atoms_to_initial_plan_docs_when_requested",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl"
+  ],
+  "must_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "allowed_writes_during_conversation": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json"
+  ],
+  "allowed_writes_during_compile": [
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Bootstrap_Planning_Migration.md",
+    "Plans/00-plans-index.md",
+    "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/*.json",
+    "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/records/*.jsonl"
+  ],
+  "forbidden_until_governance_seal": [
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl"
+  ]
+}
