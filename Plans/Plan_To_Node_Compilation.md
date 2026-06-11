@@ -74,7 +74,10 @@ plan_unit_id: PNC-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: Future compiler inputs come from PlanUnit metadata: depends_on, unblocks, implementation surfaces, acceptance criteria, validation surfaces, risk_class, reasoning_tier, context_scope, node_compile_hint, and source_lineage.
+canonical_text: >-
+  Future compiler inputs come from PlanUnit metadata: depends_on, unblocks,
+  implementation surfaces, acceptance criteria, validation surfaces, risk_class,
+  reasoning_tier, context_scope, node_compile_hint, and source_lineage.
 gui_related: false
 gui_classification_reason: Compiler metadata routing is not GUI implementation work.
 depends_on: [PDS-003, PNC-001]

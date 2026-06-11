@@ -1,0 +1,59 @@
+{
+  "generated_at_utc": "2026-06-11T15:14:58Z",
+  "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
+  "index_sha256": "55733d6082af7a2a2000a2b7823af64ebd3b3f040034645016c16c03521914ac",
+  "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
+      "sha256": "acf8af5a686bb7d91fa07a5466920aa1085d3a14abb3adbc6d21db5eb9c2ff32",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
+      "sha256": "c4ac4f99540e9634676f8462adcaea363a6c111deb0a2ce2456f7e6693a6cdc0",
+      "shard_id": "002",
+      "source_line_end": 10,
+      "source_line_start": 5,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Migration Principles",
+      "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
+      "sha256": "50a6bc299701deef5f93adf6ebab2b0ea01594e6c7d245922403cd0efd6ad474",
+      "shard_id": "003",
+      "source_line_end": 20,
+      "source_line_start": 11,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. PlanUnits",
+      "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
+      "sha256": "728b64eb05af3f11e350cea090653eee084f4dc71c30db083003921df861c849",
+      "shard_id": "004",
+      "source_line_end": 246,
+      "source_line_start": 21,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Compilation Coverage",
+      "path": "Plans/_shards/bootstrap_planning_migration/005-3.-compilation-coverage.md",
+      "sha256": "ae40f4e71042dd50fed8bfb57b158c6dc4e7bd9e432df6569e6b961fdb358030",
+      "shard_id": "005",
+      "source_line_end": 261,
+      "source_line_start": 247,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 261,
+    "path": "Plans/Bootstrap_Planning_Migration.md",
+    "sha256": "92c092be58e2777fb8f94ac2c03f0139baf595bd52d2c49b48182763bec98bc5"
+  }
+}

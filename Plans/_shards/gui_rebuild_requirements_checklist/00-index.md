@@ -1,6 +1,6 @@
 # Shard Index: Plans/GUI_Rebuild_Requirements_Checklist.md
 
-Generated: 2026-06-11T14:38:27Z
+Generated: 2026-06-11T15:14:58Z
 
 Source SHA256: `a4ece25385dcb97fb5de5ab2468b904bf50611f61b2d81fa365045b0417a4ce4`
 

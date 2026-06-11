@@ -1,22 +1,22 @@
 # Shard Index: Plans/00-plans-index.md
 
-Generated: 2026-06-11T14:38:27Z
+Generated: 2026-06-11T15:14:58Z
 
-Source SHA256: `941d638b7de7fbc86c577e1dc5af274afd80f7bb44ee0e9690b5dbce0bd96933`
+Source SHA256: `d46f8e9167ae547a54217ea973a778718c4959076cf88898d8a1f931b030c3ce`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L6 `4fdbbad2f8970a09e72223c56a0a1941006478805c7b2a6a330c11b7a6465724`
-- [002 - Change Summary](002-change-summary.md) L7-L17 `2593632cd5a99e2e434bc31e0f535f2d5ce217c9daf1a7e415f0bcdbffb75c2c`
-- [003 - Anti-drift layer (required reading order)](003-anti-drift-layer-required-reading-order.md) L18-L176 `1ad6b684864330fc86ec88a54bbb4e425273d4735f56f53e93c2e1db58727e34`
-- [004 - Rewrite tie-in (2026-02-21)](004-rewrite-tie-in-2026-02-21.md) L177-L198 `25dd918dbe66fffc872c476fcf1ab1dd2f0667ffe092495d6b474b6407e067c5`
-- [005 - Plan map](005-plan-map.md) L199-L393 `c4868080ff26ec41a241b6d1fa06cc641a7a0ebbdae9c64d462880011fe61415`
-- [006 - Known cross-cutting duplication hotspots](006-known-cross-cutting-duplication-hotspots.md) L394-L414 `1dba1c52c4b31e2270eef5b515df9a2fd2e7db974b405ce71f0ade45e769f81f`
-- [007 - Shard indexes](007-shard-indexes.md) L415-L466 `1efe21b437edecbb586155a7de9bce30445d499dc9c4bcdf82f905ee6e03f941`
-- [008 - 2026-03-07 addendum — containers, registry, and Unraid](008-2026-03-07-addendum-containers-registry-and-unraid.md) L467-L474 `4d9b71dacdd6e07568b953d736e0a910e5580d26d9cc392a069a131de97734ca`
-- [009 - Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)](009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md) L475-L493 `8ba26504edfbc50c542c915ca63cfe0dba9989eb36b4f51cbb07eaa3bcbd4509`
-- [010 - 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager](010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md) L494-L512 `a15a681d95349349fa6134e1e27db80e950751318463b1d2228e7ce593e9fa3c`
-- [011 - Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)](011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md) L513-L578 `ce5b4cd760443706ad3f87a1362e911fef70c7af5d6c77778855c8d3c84440ce`
-- [012 - A2A / OpenCode research packet map (2026-03-28)](012-a2a-opencode-research-packet-map-2026-03-28.md) L579-L601 `da9b757f4e58ddd5c50f28802d7ef3a4723ce437e5229f6872e44e02a386b9c5`
+- [001 - Preamble](001-preamble.md) L1-L6 `fddef1acb3fb49cb2c1deac82086803866793b09504d77aa5d90922b3aee90b6`
+- [002 - Change Summary](002-change-summary.md) L7-L17 `1bd1657b1423b050aafb0bdbcf17f53268dfdd26caa4aa1b6db39c76dcb5af20`
+- [003 - Anti-drift layer (required reading order)](003-anti-drift-layer-required-reading-order.md) L18-L176 `a2959d5ac641ba5167205307cfae2f2e9129ac5c8ca5fcba212798714958f60f`
+- [004 - Rewrite tie-in (2026-02-21)](004-rewrite-tie-in-2026-02-21.md) L177-L198 `736040fb41ad57523093f215bf96fc17e1e8138ca8c5da065178ae4897052296`
+- [005 - Plan map](005-plan-map.md) L199-L393 `6e6325b0d83bf161d78d0c5d373d50dbd9bb989c832093a27dc607adbc26b81d`
+- [006 - Known cross-cutting duplication hotspots](006-known-cross-cutting-duplication-hotspots.md) L394-L414 `8dc88713d363ed4fb632230fa7bb0c04dc4b3973f8ab6d8ed593fcdf14a32302`
+- [007 - Shard indexes](007-shard-indexes.md) L415-L470 `607241b4a23ffe892fe2047cccaad0a561eb3d10ae1fe5bbb30454af6de71aea`
+- [008 - 2026-03-07 addendum — containers, registry, and Unraid](008-2026-03-07-addendum-containers-registry-and-unraid.md) L471-L478 `2f54d84e09d73eb89da0c0e673abf7dff71059b024090a89fc049660a9aa8a6e`
+- [009 - Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)](009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md) L479-L497 `5d1c857af2d0866f3e9e10d4d96025328d8b0b97132977362cacec932a55fe0c`
+- [010 - 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager](010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md) L498-L516 `788af00d788d3dcaf7b3a0fa20367a228e7493627419b5a30929b00525518d52`
+- [011 - Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)](011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md) L517-L582 `8c0195af9a9b8a02cb44c3912b1a9e05bdbdff6be6627e0b9932173da1b255d4`
+- [012 - A2A / OpenCode research packet map (2026-03-28)](012-a2a-opencode-research-packet-map-2026-03-28.md) L583-L605 `72000b445fcc7c998548ca7effcae24c0630e83ad52f91b5b80c43bcff5e5688`

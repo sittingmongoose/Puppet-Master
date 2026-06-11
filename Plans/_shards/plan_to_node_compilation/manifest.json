@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-06-11T15:14:58Z",
+  "index_path": "Plans/_shards/plan_to_node_compilation/00-index.md",
+  "index_sha256": "8bdc64a0ec972bc150948067385979ad59f367fe030050b1958c0eb6fbfb8e23",
+  "manifest_path": "Plans/_shards/plan_to_node_compilation/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/plan_to_node_compilation/001-preamble.md",
+      "sha256": "fda5e257be5088e538a92a39a57a83ec03a650525b49aa67fcd07ad501e486a2",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/plan_to_node_compilation/002-0.-scope.md",
+      "sha256": "41f5d7e6ff3dffdb2c173ea8b5a11fcf7edd52fe50b7a11d47337155d6329bbe",
+      "shard_id": "002",
+      "source_line_end": 10,
+      "source_line_start": 5,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Boundary",
+      "path": "Plans/_shards/plan_to_node_compilation/003-1.-boundary.md",
+      "sha256": "746704227036a5991ff91bf25c1b6fb45a9b896317e604883d9f7a606856ecaf",
+      "shard_id": "003",
+      "source_line_end": 22,
+      "source_line_start": 11,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. PlanUnits",
+      "path": "Plans/_shards/plan_to_node_compilation/004-2.-planunits.md",
+      "sha256": "9be9bca024afe19520838675e91043dc96914af51f324f4dc05c6a02a43240e3",
+      "shard_id": "004",
+      "source_line_end": 253,
+      "source_line_start": 23,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Deferred Compiler Algorithm",
+      "path": "Plans/_shards/plan_to_node_compilation/005-3.-deferred-compiler-algorithm.md",
+      "sha256": "0e0b79ff79cd5ee81baebad4f292c823202e64ad600e772d2b7a7f90bbf12baa",
+      "shard_id": "005",
+      "source_line_end": 290,
+      "source_line_start": 254,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Compilation Coverage",
+      "path": "Plans/_shards/plan_to_node_compilation/006-4.-compilation-coverage.md",
+      "sha256": "157d6e6bc2345b3a8996d0730c0e752d14a2580543ac72bd1957df03452779d4",
+      "shard_id": "006",
+      "source_line_end": 309,
+      "source_line_start": 291,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 309,
+    "path": "Plans/Plan_To_Node_Compilation.md",
+    "sha256": "8ed6878471ae795c4e44071cbd4c941da886619ce8f6872d18829a3caa67ffb7"
+  }
+}

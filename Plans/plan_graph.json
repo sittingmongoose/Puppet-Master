@@ -53,6 +53,10 @@
         "schema_id": "pm.change_budget.schema.v1"
       },
       "contract_refs": [
+        "ContractName:Plans/Planning_Ledger_System.md",
+        "ContractName:Plans/Plan_Document_System.md",
+        "ContractName:Plans/Plan_To_Node_Compilation.md",
+        "ContractName:Plans/Bootstrap_Planning_Migration.md",
         "ContractName:Plans/sharding_config.json",
         "Gate:GATE-002",
         "Gate:GATE-009",
@@ -92,6 +96,22 @@
         },
         {
           "kind": "file",
+          "ref": "Plans/Planning_Ledger_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Plan_Document_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Plan_To_Node_Compilation.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Bootstrap_Planning_Migration.md"
+        },
+        {
+          "kind": "file",
           "ref": "scripts/pm-shard-plans.py"
         }
       ],
@@ -113,6 +133,22 @@
         {
           "kind": "file",
           "ref": "Plans/sharding_config.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Planning_Ledger_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Plan_Document_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Plan_To_Node_Compilation.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Bootstrap_Planning_Migration.md"
         },
         {
           "kind": "file",

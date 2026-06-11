@@ -1,0 +1,59 @@
+{
+  "generated_at_utc": "2026-06-11T15:14:58Z",
+  "index_path": "Plans/_shards/plan_document_system/00-index.md",
+  "index_sha256": "091a09a30aaced948cdb1e6c384d5141f8f9419839f946c2040913aedb582374",
+  "manifest_path": "Plans/_shards/plan_document_system/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/plan_document_system/001-preamble.md",
+      "sha256": "f4b0e0ca691f58ed4a8bf09c32c1894b0c358745f31dac76718d1dc5cb89eab7",
+      "shard_id": "001",
+      "source_line_end": 4,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/plan_document_system/002-0.-scope.md",
+      "sha256": "ef97c122e06c5081d87dc7377bf229d5d842441a0dbf5694be35844e2a1caaff",
+      "shard_id": "002",
+      "source_line_end": 12,
+      "source_line_start": 5,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Standard Document Shape",
+      "path": "Plans/_shards/plan_document_system/003-1.-standard-document-shape.md",
+      "sha256": "57366372d7deb650b23bec6d4d51d7d32a619346a464675eb469bb2b30c1ca84",
+      "shard_id": "003",
+      "source_line_end": 26,
+      "source_line_start": 13,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. PlanUnits",
+      "path": "Plans/_shards/plan_document_system/004-2.-planunits.md",
+      "sha256": "0c56a28fe7fb414bc2a00d9a878fb4d4df51f3f25fb9dd848a6e545d22a2f487",
+      "shard_id": "004",
+      "source_line_end": 289,
+      "source_line_start": 27,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Compilation Coverage",
+      "path": "Plans/_shards/plan_document_system/005-3.-compilation-coverage.md",
+      "sha256": "f89ca9d78e5259dcc7879e8f26cd0ef9b56a3ae311dbe3ad4733b5642dfda85d",
+      "shard_id": "005",
+      "source_line_end": 305,
+      "source_line_start": 290,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 305,
+    "path": "Plans/Plan_Document_System.md",
+    "sha256": "8500515c9c944828f172d3c94e72715e0ccc5212a5e660e99c390b794d31bd20"
+  }
+}

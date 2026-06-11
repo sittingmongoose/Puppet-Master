@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "941d638b7de7fbc86c577e1dc5af274afd80f7bb44ee0e9690b5dbce0bd96933"
+        "sha256": "d46f8e9167ae547a54217ea973a778718c4959076cf88898d8a1f931b030c3ce"
       },
       {
         "path": "Plans/Architecture_Invariants.md",
@@ -99,7 +99,7 @@
       },
       {
         "path": "Plans/plan_graph.json",
-        "sha256": "abc6515a2dc0437f6e5644dabca6cfb7ecd6e547a24c81f77f8754e1490a7194"
+        "sha256": "867291a5644357ec2e7b76f9b04f52cabf88c8120e9ccb84f9a50297808f2260"
       },
       {
         "path": "Plans/plan_graph.schema.json",
@@ -123,7 +123,7 @@
       },
       {
         "path": "Plans/sharding_config.json",
-        "sha256": "6105386c26c3c0f67911de5b51d72f5d27802dd0260d3acb1efc03d29003c328"
+        "sha256": "c7cfa4323611cb67a992500cb2e66cd9f81e423990ffc7f83759f64aff1cc48f"
       },
       {
         "path": "Plans/test_strategy.schema.json",
@@ -136,6 +136,22 @@
       {
         "path": "scripts/pm-shard-plans.py",
         "sha256": "9780096665150fbab6996cc599888ce3665ec93d513d1ea178d9c6e830df1434"
+      },
+      {
+        "path": "Plans/Planning_Ledger_System.md",
+        "sha256": "10a7e09ff35a437ca7e9f41ac266d9745dd56582ecd4d2f10d4c13e8c1665eec"
+      },
+      {
+        "path": "Plans/Plan_Document_System.md",
+        "sha256": "8500515c9c944828f172d3c94e72715e0ccc5212a5e660e99c390b794d31bd20"
+      },
+      {
+        "path": "Plans/Plan_To_Node_Compilation.md",
+        "sha256": "8ed6878471ae795c4e44071cbd4c941da886619ce8f6872d18829a3caa67ffb7"
+      },
+      {
+        "path": "Plans/Bootstrap_Planning_Migration.md",
+        "sha256": "92c092be58e2777fb8f94ac2c03f0139baf595bd52d2c49b48182763bec98bc5"
       }
     ],
     "hash_alg": "sha256"

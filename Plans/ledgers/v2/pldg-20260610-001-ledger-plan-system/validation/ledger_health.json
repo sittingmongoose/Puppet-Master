@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 10,
+    "events": 11,
     "design_atoms": 34,
     "decisions": 10,
     "open_questions": 0,
@@ -15,8 +15,9 @@
   "blocking_defects": [],
   "warnings": [
     "Full exact chat body bytes are not stored in this seed package; key exact tokens and design decisions are preserved for bootstrap compilation.",
-    "PlanUnit index/node-readiness may be generated; WorkNodes must not be created yet.",
-    "All design atoms in this seed include gui_related boolean; future PlanUnits must preserve it."
+    "PlanUnit index/node-readiness may be generated in future work; WorkNodes and NodeSeed candidates must not be created yet.",
+    "All design atoms and PlanUnits in this seed include gui_related boolean; future PlanUnits must preserve it.",
+    "Existing Plans conversion has not started; q-0002 remains deferred to a later inventory phase."
   ],
-  "updated_at_utc": "2026-06-11T14:40:00Z"
+  "updated_at_utc": "2026-06-11T15:08:10Z"
 }
