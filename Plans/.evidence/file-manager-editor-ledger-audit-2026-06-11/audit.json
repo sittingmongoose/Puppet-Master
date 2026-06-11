@@ -1,0 +1,242 @@
+{
+  "audit_id": "file-manager-editor-ledger-audit-2026-06-11",
+  "created_at_utc": "2026-06-11T03:07:59Z",
+  "source_ledger": {
+    "path": "Plans/ledgers/p6/w-20260318-153036/working_ledger.md",
+    "meta_path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+    "mode": "research",
+    "status": "active",
+    "scope": "Update rewrite planning docs for File Manager and Editor"
+  },
+  "audit_scope": {
+    "included": [
+      "File Manager and Editor research ledger material items",
+      "Plans/FileManager.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/LSPSupport.md",
+      "Plans/storage-plan.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Architecture_Invariants.md",
+      "Plans/Contracts_V0.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/assistant-chat-design.md"
+    ],
+    "excluded": [
+      "Unrelated P6 Personas lane",
+      "Open questions and process notes without proven material obligation",
+      "Stale browser_panel, optional/later, and unresolved-gap wording superseded by stronger current canon"
+    ]
+  },
+  "preflight": {
+    "initial_run_gates_status": "blocked_by_ignored_local_state_then_stale_hashes_after_support_repair",
+    "initial_run_gates_notes": [
+      "The first preflight run was blocked by PermissionError on ignored local state path .claude/_state/ide.",
+      "scripts/pm-plans-verify.py was repaired to enumerate git tracked and non-ignored files before falling back to rglob, avoiding ignored local machine state.",
+      "After verifier repair, run-gates reached governance hash checks and failed only on stale hashes for the changed verifier support script."
+    ],
+    "ledger_status_confirmed": "research_active"
+  },
+  "material_items": [
+    {
+      "item_id": "openfile_opensubject_split",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:399",
+        "Plans/FileManager.md:426",
+        "Plans/Contracts_V0.md:740",
+        "Plans/Contracts_V0.md:1751"
+      ],
+      "notes": "FileManager owns path-based OpenFile while Contracts owns OpenSubject identity routing and route_target normalization."
+    },
+    {
+      "item_id": "shared_buffer_model",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:103",
+        "Plans/FileManager.md:118",
+        "Plans/FileManager.md:298",
+        "Plans/FileManager.md:320",
+        "Plans/FileManager.md:334"
+      ],
+      "notes": "The shared buffer authority, typed mutation sources, save authority, embedded document pane sharing, and dirty/on-disk state are canonical."
+    },
+    {
+      "item_id": "active_editor_group_targeting",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:298",
+        "Plans/FileManager.md:301",
+        "Plans/UI_Command_Catalog.md:188",
+        "Plans/UI_Command_Catalog.md:200"
+      ],
+      "notes": "Default open target is the active focused editor group; target_group is placement only and not route identity."
+    },
+    {
+      "item_id": "floating_editor_policy",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:248",
+        "Plans/FileManager.md:258",
+        "Plans/FinalGUISpec.md:548",
+        "Plans/FinalGUISpec.md:573"
+      ],
+      "notes": "MVP supports exactly one floating editor window, with detached surfaces retaining the same identity and synchronized buffers/tabs."
+    },
+    {
+      "item_id": "large_file_thresholds",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:354",
+        "Plans/FileManager.md:359"
+      ],
+      "notes": "Soft warning at 10000 lines and hard open cap at 5 MB are explicit."
+    },
+    {
+      "item_id": "session_view_state",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:367",
+        "Plans/FileManager.md:376",
+        "Plans/FinalGUISpec.md:1971",
+        "Plans/FinalGUISpec.md:2080",
+        "Plans/Contracts_V0.md:1672"
+      ],
+      "notes": "Open tabs, active tab, scroll/cursor, transient states, layout, and route identity are separated."
+    },
+    {
+      "item_id": "preview_source_patch_model",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:103",
+        "Plans/FileManager.md:118",
+        "Plans/FinalGUISpec.md:2614",
+        "Plans/FinalGUISpec.md:2628"
+      ],
+      "notes": "Preview-generated source patches are bounded shared-buffer mutations; derivative preview/source mode remains FileManager and Final GUI canon."
+    },
+    {
+      "item_id": "degraded_indexing_lsp_search_remote_states",
+      "classification": "covered_by_stronger_current_plan",
+      "evidence": [
+        "Plans/FileManager.md:284",
+        "Plans/FileManager.md:291",
+        "Plans/FileManager.md:427",
+        "Plans/FileManager.md:433",
+        "Plans/storage-plan.md:91",
+        "Plans/storage-plan.md:137",
+        "Plans/storage-plan.md:1770",
+        "Plans/storage-plan.md:1832",
+        "Plans/storage-plan.md:1927",
+        "Plans/storage-plan.md:1952",
+        "Plans/LSPSupport.md:45",
+        "Plans/LSPSupport.md:59",
+        "Plans/FinalGUISpec.md:291",
+        "Plans/FinalGUISpec.md:300"
+      ],
+      "notes": "Current owner docs cover degraded and unavailable index, LSP, search, and remote states more explicitly than the research ledger."
+    },
+    {
+      "item_id": "backend_service_boundaries",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:168",
+        "Plans/Architecture_Invariants.md:175",
+        "Plans/Architecture_Invariants.md:373",
+        "Plans/Architecture_Invariants.md:394",
+        "Plans/LSPSupport.md:204",
+        "Plans/LSPSupport.md:220"
+      ],
+      "notes": "UI dispatches commands and consumes service projections; native workspace services own buffers, LSP, search, remote, routing, and persistence."
+    },
+    {
+      "item_id": "watcher_reconciliation",
+      "classification": "needs_small_repair",
+      "repair_status": "applied",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:373",
+        "Plans/Architecture_Invariants.md:394"
+      ],
+      "notes": "INV-022 now states watchers and provider streams are invalidation signals; missed, coalesced, overflowed, or untrusted events trigger bounded reconciliation or rescan through the owning service before projections are current."
+    },
+    {
+      "item_id": "scm_hot_path_caution",
+      "classification": "needs_small_repair",
+      "repair_status": "applied",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:373",
+        "Plans/Architecture_Invariants.md:394",
+        "Plans/WorktreeGitImprovement.md:272",
+        "Plans/WorktreeGitImprovement.md:305"
+      ],
+      "notes": "INV-022 now states Git/SCM subprocess work is not an editor or UI hot-path dependency; SCM refreshes are coalesced, budgeted, projected, and revalidated before mutation."
+    },
+    {
+      "item_id": "ui_agnostic_editor_state",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:58",
+        "Plans/FinalGUISpec.md:1355",
+        "Plans/FinalGUISpec.md:1356",
+        "Plans/Architecture_Invariants.md:390",
+        "Plans/Architecture_Invariants.md:391"
+      ],
+      "notes": "Rust core owns editor and workspace state; Slint surfaces are consumers, not the state owner."
+    },
+    {
+      "item_id": "workspace_layout_vs_per_file_view_state",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:367",
+        "Plans/FileManager.md:376",
+        "Plans/FinalGUISpec.md:1971",
+        "Plans/FinalGUISpec.md:2080",
+        "Plans/Contracts_V0.md:1672",
+        "Plans/Contracts_V0.md:1678"
+      ],
+      "notes": "Workspace layout, editor tabs, route identity, and per-view line/range/subview state remain separated."
+    },
+    {
+      "item_id": "remote_edit_vs_remote_run_debug_boundary",
+      "classification": "already_canonical",
+      "evidence": [
+        "Plans/FileManager.md:275",
+        "Plans/FileManager.md:280",
+        "Plans/FileManager.md:284",
+        "Plans/FileManager.md:291",
+        "Plans/assistant-chat-design.md:3184",
+        "Plans/assistant-chat-design.md:3191"
+      ],
+      "notes": "Remote editing is MVP FileManager scope; remote terminal and run/debug availability are separate runtime-surface capabilities and cannot be implied by editing a remote file."
+    },
+    {
+      "item_id": "stale_browser_panel_optional_later_unresolved_gap_wording",
+      "classification": "obsolete_or_superseded",
+      "evidence": [
+        "Plans/FileManager.md:443",
+        "Plans/FinalGUISpec.md:1359",
+        "Plans/FinalGUISpec.md:1362",
+        "Plans/LSPSupport.md:608"
+      ],
+      "notes": "The current canon retires browser_panel labels to compatibility aliases and removes optional/future gap framing from the FileManager owner sections."
+    },
+    {
+      "item_id": "external_reference_and_process_notes",
+      "classification": "research_lineage_only",
+      "evidence": [
+        "Plans/ledgers/p6/w-20260318-153036/working_ledger.md:14",
+        "Plans/ledgers/p6/w-20260318-153036/working_ledger.md:139"
+      ],
+      "notes": "Durable research/process context is retained only as source-lineage memory and was not transferred into product canon."
+    }
+  ],
+  "result": {
+    "material_items_classified": 16,
+    "repairs_applied": [
+      "Plans/Architecture_Invariants.md"
+    ],
+    "needs_future_design_decision": [],
+    "transfer_ledger_created": false,
+    "ledger_audit_disposition": "source_lineage_research_covered",
+    "notes": "The on-disk ledger remains research/active; this audit evidence closes the File Manager/Editor material coverage check without unlocking unrelated P6 lanes."
+  }
+}

@@ -1,6 +1,6 @@
 # Shard Index: Plans/OpenCode_Deep_Extraction.md
 
-Generated: 2026-06-10T03:55:32Z
+Generated: 2026-06-11T03:10:42Z
 
 Source SHA256: `5bac461d5373c11d1990980310ef3502de74ad5370c8b496d9cf1413a8df6409`
 
