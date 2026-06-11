@@ -8,7 +8,7 @@
     {
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
       "path": "Plans/Architecture_Invariants.md",
-      "sha256": "5f81d2d3a351e5e74aa0bb3010548110af523fc7e15965c95c919ad981b2a503"
+      "sha256": "bc5fe0c3f06f26531d4c79e420f135da41f29e5c31e371784e9df7c35255a3a3"
     },
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
@@ -18,17 +18,17 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "455cc3ea41ab3639a2452ecc939326aa24db5dc4582eaa4943e609046e6ae246"
+      "sha256": "e6533e20b4540dc008a71f3f4c0af00b2808668f25afca9a78188f9ade1dc86e"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "61dae1b7bb0fc0ee968f742795fd383eacc7da890e1108b84b86f69f6b24b332"
+      "sha256": "03b1ff793cb6c6cecd8f1081ef77c9deabf48fd5dee290c924db7500f19df4f4"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "3e60b6d354fb9876c1daa8b1e76d109ac301e6e276eb60dcf4470cc84c3174ee"
+      "sha256": "843e6110092b052e8ae75c720974a77079c33b160443043e7da4dbdeaaff77e8"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",

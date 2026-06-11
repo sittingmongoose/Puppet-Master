@@ -1,3 +1,3 @@
-# Final Build Governance Seal — Clean Repo
+# Final Build Governance Seal - PlanUnit Governance Reseal
 
-Status: pass. The clean repo keeps canonical Plans, preserved ledgers, current shards, and current governance evidence while omitting legacy app code and full runtime transfer_state artifacts.
+Status: pass. The seal refreshed generated PlanUnit indexes, configured shards, evidence hashes, plan graph metadata, Spec Lock hashes, and the required auto-decision row after stable ledger and Plan changes. No product prose, WorkNodes, NodeSeeds, executable build tasks, or final node queues were created.

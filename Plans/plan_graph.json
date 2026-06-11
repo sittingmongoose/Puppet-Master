@@ -67,7 +67,8 @@
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
-        "dec-2026-06-10-clean-repo-governance-seal"
+        "dec-2026-06-10-clean-repo-governance-seal",
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -169,9 +170,9 @@
         "pm.build-governance.shard-regeneration"
       ],
       "verifier_result": {
-        "message": "Spec Lock hashes, exact-case support validators, sharding support refs, and auto-decision duplicate policy refreshed under governance unlock.",
+        "message": "Spec Lock hashes refreshed after current Plans, PlanUnit index, graph, and generated shard artifacts stabilized.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-10T04:05:00Z"
+        "timestamp_utc": "2026-06-11T21:23:55Z"
       }
     },
     {
@@ -225,7 +226,8 @@
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
-        "dec-2026-06-10-clean-repo-governance-seal"
+        "dec-2026-06-10-clean-repo-governance-seal",
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -265,9 +267,9 @@
         "pm.build-governance.final-seal"
       ],
       "verifier_result": {
-        "message": "Shard regeneration completed for all registered sources with exact-case root index refs.",
+        "message": "Configured plan shards regenerated from current live Plans docs.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-10T04:05:00Z"
+        "timestamp_utc": "2026-06-11T21:23:55Z"
       }
     },
     {
@@ -277,6 +279,30 @@
           "commands": [
             {
               "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.plan_index.validate",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plan-index.py validate",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.shards.check",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-shard-plans.py --check",
               "expect_exit_code": 0
             }
           ],
@@ -320,12 +346,15 @@
         "Gate:GATE-009",
         "ContractName:Plans/Project_Output_Artifacts.md",
         "SchemaID:pm.evidence.schema.v1",
-        "ContractName:Plans/Progression_Gates.md"
+        "ContractName:Plans/Progression_Gates.md",
+        "ContractName:Plans/Plan_Document_System.md",
+        "ContractName:Plans/Plan_To_Node_Compilation.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
-        "dec-2026-06-10-clean-repo-governance-seal"
+        "dec-2026-06-10-clean-repo-governance-seal",
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -356,6 +385,11 @@
           "kind": "file",
           "note": "Path alias /Progression_Gates.md is retained for gate lineage.",
           "ref": "Plans/Progression_Gates.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.plan_index/coverage_report.json",
+          "note": "PlanUnit index coverage report generated before governance seal."
         }
       ],
       "node_id": "pm.build-governance.final-seal",
@@ -376,6 +410,11 @@
         {
           "kind": "file",
           "ref": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.md"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/.plan_index",
+          "note": "Generated PlanUnit index and node-readiness artifacts."
         }
       ],
       "policy_mode": "workspace-write",
@@ -391,9 +430,9 @@
       "status": "done",
       "unblocks": [],
       "verifier_result": {
-        "message": "Clean-repo build-governance support seal is certified without transfer_state dependency.",
+        "message": "Governance seal refreshed Spec Lock, plan graph metadata, generated shards, evidence hashes, and PlanUnit index artifacts without creating WorkNodes or executable build tasks.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-10T04:05:00Z"
+        "timestamp_utc": "2026-06-11T21:23:55Z"
       }
     },
     {
