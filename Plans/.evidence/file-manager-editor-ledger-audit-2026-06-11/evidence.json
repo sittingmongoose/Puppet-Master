@@ -18,26 +18,26 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "201de93351485224d9c7dc3d9cc2c5c12962b28e50136fe23565d3b525874f93"
+      "sha256": "80958b9844205d6861e9759c6603d3522dbf359f7482fd4b315c3552e3f817ba"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "e069b2d5821dc5c7ea0438b764fbb521226a4619844261607521bd7002df025a"
+      "sha256": "284f5fb477750b712c46bd83a59473d38becf37e2b89b314bdc5bbc0e2d19101"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "1c239becd364fa8e4d1cb78838f0fc3f3bc4e1211739569ce3c8459d9d6dc341"
+      "sha256": "1d4afb86b6ae08b9f549e60fcba26c63e015d920b4d89656e2a5db9485ed277d"
     },
     {
-      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
       "sha256": "212053ee508e2a95b53b5ca5cb04d2e4381beb4aabc5be2b7d90efbbd730692d"
     },
     {
-      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
       "note": "Compact ledger state: audit-only reconciliation complete, no normal transfer required, do not process unless reopened.",
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
       "sha256": "a88e64a462a86c32a0cf32f5b987faa457593252ba5345a1d85922f22c8a911e"
     }
   ],
@@ -63,13 +63,13 @@
       "result": "PASS"
     },
     {
-      "name": "file-manager-editor-ledger-state-closure",
-      "result": "PASS",
-      "details": "Plans/ledgers/p6/w-20260318-153036 is audit-closed/source-lineage-only with no open material items and no normal transfer required.",
       "contract_refs": [
         "ContractName:Plans/FileManager.md",
         "SchemaID:pm.evidence.schema.v1"
-      ]
+      ],
+      "details": "Plans/ledgers/p6/w-20260318-153036 is audit-closed/source-lineage-only with no open material items and no normal transfer required.",
+      "name": "file-manager-editor-ledger-state-closure",
+      "result": "PASS"
     }
   ],
   "commands_run": [
@@ -236,14 +236,14 @@
       "path": "Plans/.evidence/**"
     },
     {
-      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
       "change_type": "modified",
-      "note": "Marked audit-closed/source-lineage-only instead of active research."
+      "note": "Marked audit-closed/source-lineage-only instead of active research.",
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json"
     },
     {
-      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
       "change_type": "added",
-      "note": "Added compact state explaining audit-only reconciliation, no transfer, and do-not-process warning."
+      "note": "Added compact state explaining audit-only reconciliation, no transfer, and do-not-process warning.",
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md"
     }
   ],
   "node": {

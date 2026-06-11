@@ -1,15 +1,16 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
-  "status": "pass_with_deferred_items",
+  "status": "pass_governance_sealed",
   "summary": {
-    "events": 8,
+    "events": 10,
     "design_atoms": 34,
     "decisions": 10,
-    "open_questions": 1,
-    "deferred_questions": 1,
+    "open_questions": 0,
+    "deferred_questions": 2,
     "open_blockers": 0,
-    "compile_queue_items": 4
+    "compile_queue_items": 4,
+    "governance_seal": "passed"
   },
   "blocking_defects": [],
   "warnings": [
@@ -17,5 +18,5 @@
     "PlanUnit index/node-readiness may be generated; WorkNodes must not be created yet.",
     "All design atoms in this seed include gui_related boolean; future PlanUnits must preserve it."
   ],
-  "updated_at_utc": "2026-06-11T00:00:00Z"
+  "updated_at_utc": "2026-06-11T14:40:00Z"
 }

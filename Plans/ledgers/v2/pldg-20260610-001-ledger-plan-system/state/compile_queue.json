@@ -1,12 +1,22 @@
 {
   "schema_id": "pm.plan_compile_queue.v1",
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
-  "status": "ready_with_open_deferred_algorithm_question_no_worknodes",
+  "status": "compiled_initial_plan_docs_governance_sealed",
   "items": [
     {
       "queue_id": "pcq-0001",
-      "status": "ready",
+      "status": "compiled",
       "target_doc": "Plans/Planning_Ledger_System.md",
+      "compiled_plan_unit_ids": [
+        "PLS-001",
+        "PLS-002",
+        "PLS-003",
+        "PLS-004",
+        "PLS-005",
+        "PLS-006",
+        "PLS-007",
+        "PLS-008"
+      ],
       "source_atom_ids": [
         "atom-0001",
         "atom-0002",
@@ -27,8 +37,17 @@
     },
     {
       "queue_id": "pcq-0002",
-      "status": "ready",
+      "status": "compiled",
       "target_doc": "Plans/Plan_Document_System.md",
+      "compiled_plan_unit_ids": [
+        "PDS-001",
+        "PDS-002",
+        "PDS-003",
+        "PDS-004",
+        "PDS-005",
+        "PDS-006",
+        "PDS-007"
+      ],
       "source_atom_ids": [
         "atom-0015",
         "atom-0019",
@@ -44,8 +63,17 @@
     },
     {
       "queue_id": "pcq-0003",
-      "status": "ready",
+      "status": "compiled",
       "target_doc": "Plans/Plan_To_Node_Compilation.md",
+      "compiled_plan_unit_ids": [
+        "PNC-001",
+        "PNC-002",
+        "PNC-003",
+        "PNC-004",
+        "PNC-005",
+        "PNC-006",
+        "PNC-007"
+      ],
       "source_atom_ids": [
         "atom-0017",
         "atom-0022",
@@ -62,8 +90,16 @@
     },
     {
       "queue_id": "pcq-0004",
-      "status": "ready",
+      "status": "compiled",
       "target_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "compiled_plan_unit_ids": [
+        "BPM-001",
+        "BPM-002",
+        "BPM-003",
+        "BPM-004",
+        "BPM-005",
+        "BPM-006"
+      ],
       "source_atom_ids": [
         "atom-0011",
         "atom-0013",
