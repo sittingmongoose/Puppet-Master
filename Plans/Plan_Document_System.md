@@ -287,6 +287,121 @@ owner_hints: [Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md]
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
+
+### PDS-008 - PlanUnit Block Grammar And Field Semantics
+
+```yaml
+plan_unit_id: PDS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: A PlanUnit block is a fenced YAML block containing exactly one mapping with unique keys. Each PlanUnit is extracted from live non-pipeline Plans docs into generated indexes. Required fields keep stable identity, lifecycle status, owner_doc, canonical_text, gui_related, source_lineage, dependency edges, acceptance criteria, validation surfaces, risk_class, reasoning_tier, context_scope, implementation_surfaces, and node_compile_hint machine-readable.
+gui_related: false
+gui_classification_reason: PlanUnit grammar and extraction rules are metadata/governance behavior, not GUI implementation work.
+depends_on: [PDS-003, PLS-010]
+unblocks: [PDS-006, PNC-002, PNC-004]
+acceptance_criteria:
+  - PlanUnit YAML parse errors and duplicate keys fail validation.
+  - Generated indexes preserve every required PlanUnit field without rewriting canonical_text.
+  - Existing explanatory prose can remain outside PlanUnits, but canonical requirements/decisions/constraints must become PlanUnits during conversion.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
+  - Future PlanUnit index generator validation.
+risk_class: indexability
+reasoning_tier: standard
+context_scope: all_planunits
+implementation_surfaces: [Plans/*.md, Plans/ledgers/v2/schemas/plan_unit.schema.json, Plans/.plan_index/plan_units.jsonl]
+node_compile_hint: {mode: planunit_block_grammar, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0037
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["```yaml", "plan_unit_id", "unit_type", "status", "owner_doc", "canonical_text", "gui_related", "source_lineage", "depends_on", "unblocks", "acceptance_criteria", "validation_surfaces", "risk_class", "reasoning_tier", "context_scope", "implementation_surfaces", "node_compile_hint"]
+negative_constraints:
+  - Do not allow duplicate YAML keys that silently overwrite fields.
+owner_hints: [Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md
+
+### PDS-009 - Standard Plan Document Layout Contract
+
+```yaml
+plan_unit_id: PDS-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Standardized Plan docs use a base layout with compliance/authority, scope, architecture or standard summary, PlanUnits, applicable doc-type modules, migration or compilation coverage, and governance/validation notes. Doc-type modules may be marked not_applicable when a section would otherwise imply missing content. Existing docs convert to this layout only through a lossless inventory and pilot/batch workflow.
+gui_related: false
+gui_classification_reason: Plan document layout is not GUI implementation work.
+depends_on: [PDS-002, PDS-004]
+unblocks: [BPM-004]
+acceptance_criteria:
+  - The converter can identify where each original span lands in the standardized layout.
+  - Required layout sections are present or have explicit not_applicable disposition when relevant.
+  - Doc-type modules do not force unnatural content into unrelated owner docs.
+validation_surfaces:
+  - Migration inventory coverage map.
+  - Pilot conversion report.
+  - Post-conversion plan validators.
+risk_class: migration_safety
+reasoning_tier: standard
+context_scope: all_plans
+implementation_surfaces: [Plans/*.md, Plans/.plan_migration]
+node_compile_hint: {mode: standardized_doc_layout, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0038
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["compliance", "scope", "PlanUnits", "doc-type modules", "not_applicable", "migration coverage", "governance/validation"]
+negative_constraints:
+  - Do not rewrite all Plans into one rigid skeleton without doc-type modules.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### PDS-010 - Lossless Migration Artifact Contract
+
+```yaml
+plan_unit_id: PDS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Lossless conversion of existing Plans must produce migration artifacts before
+  broad edits: inventory.json, original_hashes.json, span_map.jsonl,
+  coverage_map.jsonl, anchor_aliases.json, pilot_report.json,
+  batch_report.jsonl, and validation_report.json under a run-scoped migration
+  directory. These artifacts prove every original heading/body span is preserved,
+  moved, converted to a PlanUnit, placed in an appendix/source block, or
+  explicitly dispositioned.
+gui_related: false
+gui_classification_reason: Migration proof artifacts are not GUI implementation work.
+depends_on: [PDS-004, PDS-009]
+unblocks: [BPM-004]
+acceptance_criteria:
+  - No broad conversion starts until original hashes, span map, and coverage map exist.
+  - Every original span has exactly one final disposition or an explicit split disposition.
+  - A pilot report passes before batch conversion continues.
+validation_surfaces:
+  - Plans/.plan_migration/<run_id>/coverage_map.jsonl
+  - Plans/.plan_migration/<run_id>/validation_report.json
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: content_loss
+reasoning_tier: high
+context_scope: all_plans
+implementation_surfaces: [Plans/.plan_migration, Plans/*.md]
+node_compile_hint: {mode: migration_artifact_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0038
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["inventory.json", "original_hashes.json", "span_map.jsonl", "coverage_map.jsonl", "anchor_aliases.json", "pilot_report.json", "batch_report.jsonl", "validation_report.json"]
+negative_constraints:
+  - Do not delete or semantically change original content without coverage-map proof.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
 ## 3. Compilation Coverage
 
 | Ledger atom | Disposition |

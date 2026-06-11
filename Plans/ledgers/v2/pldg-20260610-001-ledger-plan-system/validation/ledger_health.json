@@ -3,14 +3,15 @@
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 11,
-    "design_atoms": 34,
-    "decisions": 10,
+    "events": 12,
+    "design_atoms": 42,
+    "decisions": 11,
     "open_questions": 0,
     "deferred_questions": 2,
     "open_blockers": 0,
     "compile_queue_items": 4,
-    "governance_seal": "passed"
+    "governance_seal": "passed",
+    "corrections": 4
   },
   "blocking_defects": [],
   "warnings": [
@@ -19,5 +20,7 @@
     "All design atoms and PlanUnits in this seed include gui_related boolean; future PlanUnits must preserve it.",
     "Existing Plans conversion has not started; q-0002 remains deferred to a later inventory phase."
   ],
-  "updated_at_utc": "2026-06-11T15:08:10Z"
+  "updated_at_utc": "2026-06-11T15:08:10Z",
+  "last_validated_at_utc": "2026-06-11T15:38:13Z",
+  "notes": "Implementation-readiness polish applied; validators strengthened to reject duplicate PlanUnit YAML keys."
 }

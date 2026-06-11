@@ -251,7 +251,44 @@ owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Planning_Ledger_System.md
 
-## 3. Deferred Compiler Algorithm
+
+### PNC-008 - Node-Readiness Report Field Contract
+
+```yaml
+plan_unit_id: PNC-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, compiler_contract_status, no_worknodes_created, and next_required_action. It may recommend future grouping questions, but it must not create NodeSeed candidates or WorkNodes until this owner doc defines those artifact contracts.
+gui_related: false
+gui_classification_reason: Readiness report structure and routing analysis are backend/orchestration behavior.
+depends_on: [PNC-001, PNC-002, PNC-003, PNC-004, PNC-005]
+unblocks: [BPM-005]
+acceptance_criteria:
+  - The report exposes dependency/build-order blockers separately from model/capability risk.
+  - The report lists gui_related PlanUnits so future routing can inherit the boolean.
+  - The report explicitly states no_worknodes_created=true for the current readiness-only phase.
+validation_surfaces:
+  - Plans/.plan_index/node_readiness_report.json
+  - Future node-readiness validator.
+risk_class: false_node_generation
+reasoning_tier: standard
+context_scope: plan_index
+implementation_surfaces: [Plans/.plan_index/node_readiness_report.json]
+node_compile_hint: {mode: readiness_report_schema, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0039
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["status", "status_reason", "source_plan_unit_index", "plan_unit_count", "missing_required_metadata", "dependency_graph_summary", "build_order_blockers", "risk_and_reasoning_summary", "gui_related_units", "compiler_contract_status", "no_worknodes_created", "next_required_action"]
+negative_constraints:
+  - Do not create NodeSeed candidates from a readiness report unless this doc later defines the NodeSeed candidate contract.
+  - Do not create WorkNodes from node-readiness output.
+owner_hints: [Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
+
+## 4. Deferred Compiler Algorithm
 
 The exact future PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm is intentionally deferred. Current work reserves interface fields and readiness reporting only.
 
@@ -288,7 +325,7 @@ owner_hints: [Plans/Plan_To_Node_Compilation.md]
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 
-## 4. Compilation Coverage
+## 5. Compilation Coverage
 
 | Ledger atom | Disposition |
 | --- | --- |
@@ -305,5 +342,6 @@ ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 | atom-0033 | PNC-005; PDS-007 owns the gui_related true user-visible setting PlanUnit. |
 | atom-0034 | PNC-005 |
 | q-0001 | PNC-007 deferred decision. |
+| atom-0039 | PNC-008 |
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md

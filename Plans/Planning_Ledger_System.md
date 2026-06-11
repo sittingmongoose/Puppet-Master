@@ -50,6 +50,7 @@ implementation_surfaces: [Plans/ledgers/v2, Plans/bootstrap, Plans/*.md]
 node_compile_hint: {mode: index_only, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0001
+  - pldg-20260610-001-ledger-plan-system:atom-0016
   - pldg-20260610-001-ledger-plan-system:atom-0009
   - pldg-20260610-001-ledger-plan-system:dec-0001
   - source_ref:chat:design-discussion
@@ -316,6 +317,86 @@ owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
+
+### PLS-009 - Bootstrap Ledger Directory And Record Contract
+
+```yaml
+plan_unit_id: PLS-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  Every bootstrap ledger directory has a deterministic file layout: manifest.json,
+  events.jsonl, records/design_atoms.jsonl, records/decisions.jsonl,
+  records/questions.jsonl, records/blockers.jsonl, records/corrections.jsonl,
+  state/current.json, state/handoff.json, state/open_items.json,
+  state/compile_queue.json, state/operating_capsule.json,
+  validation/ledger_health.json, indexes/, and source_shards/. The registry entry
+  points to the ledger handoff file and records status, phase, canonical targets,
+  and resume path.
+gui_related: false
+gui_classification_reason: File layout and machine-state contracts are not GUI work.
+depends_on: [PLS-002, PLS-003, PLS-004]
+unblocks: [PLS-006, BPM-001, BPM-002]
+acceptance_criteria:
+  - A new feature ledger can be created from the contract without reading an old working_ledger.md.
+  - Every required stream/projection file exists before an agent claims a ledger is usable.
+  - Registry, manifest, compile queue, and handoff paths agree on the same ledger_id and phase.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
+  - JSON/JSONL syntax validation.
+risk_class: bootstrap_operability
+reasoning_tier: standard
+context_scope: single_ledger
+implementation_surfaces: [Plans/ledgers/v2/README.md, Plans/ledgers/v2/ledger_registry.json, Plans/ledgers/v2/*/manifest.json, Plans/ledgers/v2/*/events.jsonl, Plans/ledgers/v2/*/records, Plans/ledgers/v2/*/state, Plans/ledgers/v2/*/validation]
+node_compile_hint: {mode: ledger_file_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0035
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json"]
+negative_constraints:
+  - Do not treat legacy working_ledger.md files as the v2 active ledger format.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/bootstrap/Bootstrap_Planning_Workflow.md
+
+### PLS-010 - Bootstrap Ledger Validator And Projection Contract
+
+```yaml
+plan_unit_id: PLS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: The bootstrap ledger validator must fail on structural drift, including invalid JSON/JSONL, missing required files, duplicate record IDs, manifest count mismatch, current/handoff/health disagreement, stale last-event cursors, missing gui_related booleans, compile queue/source atom mismatch, PlanUnit YAML parse errors, duplicate YAML keys, PlanUnit schema misses, and missing governance registration for canonical targets.
+gui_related: false
+gui_classification_reason: Validator behavior is not GUI implementation work.
+depends_on: [PLS-005, PLS-006, PLS-009, PDS-003]
+unblocks: [BPM-003, BPM-005]
+acceptance_criteria:
+  - Validator output reports exact errors and warnings instead of allowing false completion.
+  - Validator checks canonical targets against sharding_config, Spec_Lock, and plan_graph coverage after seal.
+  - Duplicate PlanUnit YAML keys are rejected so overwritten fields cannot hide drift.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+risk_class: false_completion
+reasoning_tier: high
+context_scope: ledger_and_governance
+implementation_surfaces: [scripts/pm-bootstrap-ledger-validate.py, Plans/ledgers/v2/schemas/plan_unit.schema.json, Plans/sharding_config.json, Plans/Spec_Lock.json, Plans/plan_graph.json]
+node_compile_hint: {mode: validator_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0036
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["duplicate YAML keys", "manifest count mismatch", "current/handoff/health disagreement", "last_event_id", "gui_related", "sharding_config", "Spec_Lock", "plan_graph"]
+negative_constraints:
+  - Do not rely on ordinary plan gates alone to prove ledger/PlanUnit health.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
 ## 3. Compilation Coverage
 
 | Ledger atom | Disposition |
@@ -331,9 +412,12 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 | atom-0009 | PLS-001, PLS-007 |
 | atom-0010 | PLS-007 |
 | atom-0012 | PLS-002, PLS-006 |
-| atom-0016 | Fulfilled by creation of this owner doc and by PLS-001 through PLS-008. |
+| atom-0016 | PLS-001; creation of this owner doc fulfills the broad owner-doc atom. |
 | atom-0028 | PLS-001 preserves the stale/retired boundary; BPM-006 owns migration handling. |
 | atom-0029 | PLS-008 |
 | atom-0032 | PLS-005; PDS-003 and PNC-005 consume it. |
+| atom-0035 | PLS-009 |
+| atom-0036 | PLS-010 |
+| atom-0042 | PLS-001 |
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md
