@@ -16,11 +16,11 @@
   "blocking_defects": [],
   "warnings": [
     "Full exact chat body bytes are not stored in this seed package; key exact tokens and design decisions are preserved for bootstrap compilation.",
-    "PlanUnit index and node-readiness report are generated; node-readiness remains blocked_compiler_contract_incomplete until q-0001 is resolved. WorkNodes and NodeSeed candidates were not created.",
+    "PlanUnit index and node-readiness report are generated; node-readiness remains intentionally blocked by compiler_contract_incomplete/q-0001. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
     "All design atoms and PlanUnits in this seed include gui_related boolean; future PlanUnits must preserve it.",
-    "Existing Plans conversion completed through pds-20260611-001-standardize-plans; q-0002 is answered by selecting Plans/UI_Wiring_Rules.md as the pilot and completing controlled batches."
+    "Existing Plans conversion completed through pds-20260611-001-standardize-plans with migration validation passing; q-0002 is answered by selecting Plans/UI_Wiring_Rules.md as the pilot and completing controlled batches."
   ],
-  "updated_at_utc": "2026-06-11T21:54:11Z",
-  "last_validated_at_utc": "2026-06-11T21:54:11Z",
-  "notes": "Compact ledger health refreshed after existing Plans conversion, PlanUnit index generation, node-readiness reporting, and governance seal. q-0001 remains deferred; q-0002 is answered."
+  "updated_at_utc": "2026-06-11T22:05:24Z",
+  "last_validated_at_utc": "2026-06-11T22:05:24Z",
+  "notes": "Compact ledger health refreshed after existing Plans conversion, migration validation, PlanUnit index generation, node-readiness reporting, and governance seal. q-0001 remains deferred; q-0002 is answered."
 }

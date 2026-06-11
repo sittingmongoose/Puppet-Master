@@ -25,7 +25,7 @@
     "Plans/00-plans-index.md"
   ],
   "governance_status": "sealed",
-  "next_safe_action": "Existing Plans conversion is complete; PlanUnit index and node-readiness report are generated; governance seal is complete. Next true design blocker is q-0001: the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm/contract remains deferred. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues.",
+  "next_safe_action": "Existing Plans conversion and migration validation are complete; PlanUnit index and node-readiness report are generated; governance seal is complete. Node readiness remains intentionally blocked by compiler_contract_incomplete/q-0001: the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm/contract remains deferred. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues.",
   "validation_state": {
     "safe_content_checks": [
       "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system passed",
@@ -35,7 +35,7 @@
       "python3 scripts/pm-plans-verify.py run-gates passed",
       "python3 scripts/pm-shard-plans.py --check passed"
     ],
-    "seal_request": "User asked to check whether the new plan docs were fleshed out and implementation-ready, then repair deficiencies directly.",
+    "seal_request": "User asked to refresh stale PM bootstrap ledger compact state after existing Plans conversion, PlanUnit indexing, and governance seal.",
     "final_governance_checks": [
       "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system passed",
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans passed",
@@ -53,5 +53,5 @@
     "Do not create WorkNodes or executable build tasks during PlanUnit indexing/node-readiness.",
     "Do not require the user to label GUI work; agents infer gui_related true/false."
   ],
-  "updated_at_utc": "2026-06-11T21:54:11Z"
+  "updated_at_utc": "2026-06-11T22:05:24Z"
 }
