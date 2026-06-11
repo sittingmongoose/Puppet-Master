@@ -220,8 +220,29 @@ def validate_against_schema(instance_path: Path, schema_path: Path) -> list[str]
 
 def iter_repo_files() -> list[Path]:
     files: list[Path] = []
+    proc = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    if proc.returncode == 0:
+        for raw in proc.stdout.split(b"\0"):
+            if not raw:
+                continue
+            path = ROOT / raw.decode("utf-8")
+            try:
+                if path.is_file():
+                    files.append(path)
+            except OSError:
+                continue
+        return files
+
     for path in ROOT.rglob("*"):
-        if not path.is_file():
+        try:
+            if not path.is_file():
+                continue
+        except OSError:
             continue
         parts = path.relative_to(ROOT).parts
         if ".git" in parts:
