@@ -1,0 +1,305 @@
+# Plan Document System
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns the Plan document layout, PlanUnit standard, lossless conversion protocol, and generated PlanUnit index boundary.
+
+## 0. Scope
+
+This document is the canonical owner for stable PlanUnits, the standard Plan doc layout family, owner/consumer discipline, lossless conversion rules, generated PlanUnit indexes, and the `gui_related: true|false` field carried by every PlanUnit.
+
+The system is intentionally standard but not rigid. Existing plan docs convert through a base required layout plus doc-type modules, not a single unsafe skeleton rewrite.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Planning_Ledger_System.md
+
+## 1. Standard Document Shape
+
+A standardized Plan doc uses:
+
+- scope and authority summary;
+- owner/consumer map when cross-doc boundaries exist;
+- PlanUnits for canonical requirements, constraints, decisions, validation rules, deferred items, compatibility-only notes, and node-relevant hints;
+- coverage/disposition tables for migrated material;
+- ContractRef annotations for operational requirements under `Plans/DRY_Rules.md`.
+
+Doc-type modules may add UI sections, storage schemas, command tables, event tables, validation matrices, migration notes, or appendices. Non-applicable modules are recorded as `not_applicable` when the omission matters for lossless conversion.
+
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Plan_Document_System.md
+
+## 2. PlanUnits
+
+### PDS-001 - Plan Document System Ownership
+
+```yaml
+plan_unit_id: PDS-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Plans/Plan_Document_System.md owns plan-doc layout, the PlanUnit standard, governance-facing validators, lossless conversion rules, generated indexes, and node-readiness metadata.
+gui_related: false
+gui_classification_reason: Plan document structure and validators are docs/governance behavior, not GUI work.
+depends_on: [PLS-001]
+unblocks: [PDS-002, PDS-004, BPM-004]
+acceptance_criteria:
+  - The doc defines stable PlanUnit fields and layout expectations.
+  - Future conversion work can cite this doc as the owner for PlanUnit shape.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+risk_class: governance_standard
+reasoning_tier: standard
+context_scope: all_plans
+implementation_surfaces: [Plans/*.md, Plans/.plan_index]
+node_compile_hint: {mode: index_owner, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0015
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Plans/Plan_Document_System.md", "PlanUnit"]
+negative_constraints: []
+owner_hints: [Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md
+
+### PDS-002 - Standard But Not Rigid Layout
+
+```yaml
+plan_unit_id: PDS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Plan docs use a base required layout plus doc-type modules. Existing Plans are not forced into one rigid identical skeleton in a single unsafe pass.
+gui_related: false
+gui_classification_reason: Documentation structure is not GUI implementation work.
+depends_on: [PDS-001]
+unblocks: [BPM-004]
+acceptance_criteria:
+  - Conversion inventories distinguish base sections from doc-type modules.
+  - Non-applicable modules use not_applicable where needed for proof.
+validation_surfaces:
+  - Migration inventory coverage map.
+  - Pilot conversion validation.
+risk_class: migration_safety
+reasoning_tier: standard
+context_scope: all_plans
+implementation_surfaces: [Plans/*.md]
+node_compile_hint: {mode: doc_layout_metadata, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0019
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["base required layout", "doc-type modules", "not_applicable"]
+negative_constraints:
+  - Do not force all existing Plans into a rigid identical layout in one unsafe pass.
+owner_hints: [Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### PDS-003 - PlanUnit Required Fields
+
+```yaml
+plan_unit_id: PDS-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Every PlanUnit is a canonical addressable unit with plan_unit_id, unit_type, status, owner_doc, canonical_text, gui_related true/false, source_lineage, depends_on, unblocks, acceptance_criteria, validation_surfaces, risk_class, reasoning_tier, context_scope, implementation_surfaces, and node_compile_hint.
+gui_related: false
+gui_classification_reason: The field contract is metadata/governance behavior, not GUI implementation work.
+depends_on: [PDS-001, PLS-005]
+unblocks: [PDS-006, PNC-002, PNC-004]
+acceptance_criteria:
+  - Every PlanUnit includes gui_related true/false.
+  - Every PlanUnit preserves source_lineage and owner_doc.
+  - PlanUnit fields expose enough metadata for generated indexes and future node-readiness.
+validation_surfaces:
+  - PlanUnit index generator.
+  - Node-readiness report generator.
+  - Manual coverage audit during migration.
+risk_class: indexability
+reasoning_tier: standard
+context_scope: all_planunits
+implementation_surfaces: [Plans/*.md, Plans/.plan_index/plan_units.jsonl]
+node_compile_hint: {mode: planunit_schema, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0021
+  - pldg-20260610-001-ledger-plan-system:atom-0022
+  - pldg-20260610-001-ledger-plan-system:atom-0032
+  - pldg-20260610-001-ledger-plan-system:dec-0004
+  - pldg-20260610-001-ledger-plan-system:dec-0009
+  - source_ref:chat:design-discussion
+  - source_ref:chat:user-gui-classification-correction
+preserved_exact_tokens: ["PlanUnit", "plan_unit_id", "canonical_text", "gui_related", "depends_on", "unblocks", "risk_class", "reasoning_tier", "context_scope", "node_compile_hint", "GUI", "UI", "icons", "SVGs", "images", "true", "false"]
+negative_constraints:
+  - Do not require the user to declare whether an item is GUI-related.
+  - Do not use a granular surface taxonomy for the bootstrap standard; use a simple boolean.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### PDS-004 - Lossless Plan Conversion Protocol
+
+```yaml
+plan_unit_id: PDS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Existing Plans convert losslessly by hashing originals, inventorying heading/body spans, mapping every span to a standardized section, PlanUnit, preserved appendix/source block, or explicit disposition, and preserving ContractRef annotations plus anchors or aliases.
+gui_related: false
+gui_classification_reason: Conversion proof mechanics are not GUI implementation work.
+depends_on: [PDS-001, PDS-002]
+unblocks: [BPM-004]
+acceptance_criteria:
+  - Original file hashes are recorded before conversion.
+  - Every original heading/body span has a coverage-map disposition.
+  - ContractRef annotations, anchors, aliases, exact tokens, negative constraints, compatibility-only notes, and stale/retired dispositions survive conversion.
+validation_surfaces:
+  - Pre-hash inventory.
+  - Coverage map.
+  - Post-conversion validators.
+risk_class: content_loss
+reasoning_tier: high
+context_scope: all_plans
+implementation_surfaces: [Plans/*.md, future migration inventory]
+node_compile_hint: {mode: migration_proof, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0020
+  - pldg-20260610-001-ledger-plan-system:q-0002
+  - source_ref:chat:design-discussion
+  - source_ref:chat:lossless-conversion
+preserved_exact_tokens: ["hash originals", "heading/body spans", "coverage map", "ContractRef", "anchors"]
+negative_constraints: []
+owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### PDS-005 - Owner Adjudication In PlanUnits
+
+```yaml
+plan_unit_id: PDS-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: PlanUnits preserve owner_doc, owner_hints, candidate owners when relevant, consumer docs, and adjudication evidence. Ordinary row-level owner ambiguity is resolved during compilation; only true product decisions are returned to Jared.
+gui_related: false
+gui_classification_reason: Owner routing metadata is not GUI implementation work.
+depends_on: [PLS-007]
+unblocks: [PDS-006, BPM-004]
+acceptance_criteria:
+  - PlanUnits expose owner_doc and source_lineage.
+  - Ambiguous migrated spans record candidate owners and adjudication evidence before conversion proceeds.
+validation_surfaces:
+  - Owner map review.
+  - DRY Rules lint and ContractRef lint.
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: cross_doc
+implementation_surfaces: [Plans/*.md, Plans/00-plans-index.md]
+node_compile_hint: {mode: owner_route_metadata, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0010
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["candidate owners", "consumer docs", "owner adjudication"]
+negative_constraints:
+  - Do not blindly trust queued owner hints as authority.
+  - Do not block on ordinary row-level owner ambiguity.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/DRY_Rules.md
+
+### PDS-006 - Generated PlanUnit Index Boundary
+
+```yaml
+plan_unit_id: PDS-006
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Standardized Plans may generate plan_units.jsonl, doc_cards.json, dependencies.json, acceptance_units.jsonl, coverage_report.json, and node_readiness_report.json under Plans/.plan_index/. This indexing phase catalogs PlanUnits and assesses readiness only; it does not create WorkNodes or executable build tasks.
+gui_related: false
+gui_classification_reason: Index generation and readiness reporting are backend/governance behavior.
+depends_on: [PDS-003, PDS-004]
+unblocks: [PNC-004]
+acceptance_criteria:
+  - Generated indexes include gui_related true/false for every indexed PlanUnit.
+  - node_readiness_report analyzes future conversion readiness only.
+  - No WorkNodes or executable build queues are produced by the index phase.
+validation_surfaces:
+  - Future PlanUnit index generator checks.
+  - Future node-readiness report checks.
+risk_class: execution_boundary
+reasoning_tier: standard
+context_scope: plan_index
+implementation_surfaces: [Plans/.plan_index/plan_units.jsonl, Plans/.plan_index/doc_cards.json, Plans/.plan_index/dependencies.json, Plans/.plan_index/acceptance_units.jsonl, Plans/.plan_index/coverage_report.json, Plans/.plan_index/node_readiness_report.json]
+node_compile_hint: {mode: readiness_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0026
+  - pldg-20260610-001-ledger-plan-system:atom-0031
+  - pldg-20260610-001-ledger-plan-system:dec-0010
+  - pldg-20260610-001-ledger-plan-system:corr-0002
+  - source_ref:chat:design-discussion
+  - source_ref:chat:user-node-readiness-correction
+preserved_exact_tokens: ["Plans/.plan_index/plan_units.jsonl", "doc_cards.json", "dependencies.json", "node_readiness_report.json", "PlanUnit index", "node-readiness report", "Do not create WorkNodes"]
+negative_constraints:
+  - Do not create WorkNodes from the PlanUnit index phase.
+  - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
+  - Do not generate NodeSeed candidates unless the Plan_To_Node_Compilation contract explicitly defines that candidate artifact.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### PDS-007 - GUI Classification Field And Native Setting Surface
+
+```yaml
+plan_unit_id: PDS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: Every PlanUnit carries a simple agent-inferred gui_related boolean. Native Puppet Master should expose a simple setting such as "use different model for GUI elements?" so gui_related work can route to a configured GUI model when enabled.
+gui_related: true
+gui_classification_reason: This PlanUnit includes the user-visible native setting/control surface.
+depends_on: [PDS-003]
+unblocks: [PNC-005]
+acceptance_criteria:
+  - PlanUnits use only gui_related true/false for GUI routing metadata.
+  - Product UI exposes a simple setting rather than a granular GUI/UI/icon/image taxonomy.
+validation_surfaces:
+  - Future settings UI review.
+  - PlanUnit index field coverage.
+risk_class: user_visible_settings
+reasoning_tier: standard
+context_scope: planunit_metadata_and_settings
+implementation_surfaces: [Plans/*.md, future Settings UI]
+node_compile_hint: {mode: route_metadata_for_future_runtime, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0032
+  - pldg-20260610-001-ledger-plan-system:atom-0033
+  - pldg-20260610-001-ledger-plan-system:dec-0009
+  - pldg-20260610-001-ledger-plan-system:corr-0003
+  - source_ref:chat:user-gui-classification-correction
+  - source_ref:chat:user-gui-routing-native-setting
+preserved_exact_tokens: ["gui_related", "use different model for GUI elements?", "GUI model", "user won't know what is gui or ui or icons", "llm should just determine", "tagging it as GUI is enough"]
+negative_constraints:
+  - Do not require the user to declare whether an item is GUI-related.
+  - Do not expose a highly granular GUI/UI/icon/image routing taxonomy in the product UI.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+## 3. Compilation Coverage
+
+| Ledger atom | Disposition |
+| --- | --- |
+| atom-0015 | PDS-001 |
+| atom-0019 | PDS-002 |
+| atom-0020 | PDS-004; BPM-004 owns migration sequencing. |
+| atom-0021 | PDS-003 |
+| atom-0022 | PDS-003; PNC-002 consumes compiler-facing fields. |
+| atom-0026 | PDS-006 |
+| atom-0031 | PDS-006 |
+| atom-0032 | PDS-003, PDS-007 |
+| atom-0033 | PDS-007; PNC-005 owns runtime inheritance. |
+| q-0002 | Captured in PDS-004/BPM-004 as a non-blocking future migration choice: "Which representative pilot Plan doc should be converted first?" Disposition remains "Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum." |
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md

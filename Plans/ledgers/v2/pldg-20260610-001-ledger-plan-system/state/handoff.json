@@ -1,31 +1,33 @@
 {
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
-  "current_phase": "bootstrap_design_compilation_ready",
+  "current_phase": "compiled_initial_plan_docs_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0008",
+    "last_event_id": "evt-0010",
     "last_decision_id": "dec-0010",
     "next_queue_id": "pcq-0001"
   },
-  "last_known_good_state": "Design discussion captured into structured v2 bootstrap ledger records; compile queue targets four new plan docs and includes gui_related/node-readiness corrections.",
+  "last_known_good_state": "Accepted ledger atoms compiled into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, and Plans/00-plans-index.md. No WorkNodes or executable build tasks were created.",
   "open_blockers": [],
-  "open_questions": [
+  "open_questions": [],
+  "deferred_questions": [
+    "q-0001",
     "q-0002"
   ],
-  "deferred_questions": [
-    "q-0001"
-  ],
-  "next_action": "Compile accepted design atoms into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, and Plans/Bootstrap_Planning_Migration.md. Do not create WorkNodes.",
+  "next_action": "Future work may generate a PlanUnit index and node-readiness report or begin controlled existing-Plans conversion. Do not create WorkNodes until the compiler contract is complete.",
   "validation_state": {
-    "ledger_health": "seed_pass_with_deferred_algorithm_question_and_gui_related_boolean",
-    "last_validator": "manual_seed_creation"
+    "ledger_health": "compiled_initial_plan_docs_pending_governance_seal",
+    "safe_content_checks": "git diff --check, json-syntax, lint-contractrefs, lint-banned-phrases, and validate-auto-decisions passed",
+    "seal_request": "User asked to update stale follow-up artifacts/state after initial compile.",
+    "final_governance_checks": "pm-bootstrap-ledger-validate, pm-shard-plans --check, pm-plans-verify run-gates, and git diff --check passed"
   },
   "do_not_redo": [
     "Do not re-derive whether ledger is memory/Plan Mode/canon; it is none of those.",
     "Do not re-litigate JSONL/JSON vs Markdown; JSONL/JSON is accepted.",
     "Do not reintroduce retired failed experiments as architecture.",
     "Do not reintroduce granular GUI/UI/icon/image routing taxonomy; use gui_related boolean.",
-    "Do not treat PlanUnit index/node-readiness as WorkNode creation."
+    "Do not treat PlanUnit index/node-readiness as WorkNode creation.",
+    "Do not create WorkNodes or executable build tasks during governance refresh."
   ],
-  "updated_at_utc": "2026-06-11T00:00:00Z"
+  "updated_at_utc": "2026-06-11T14:40:00Z"
 }

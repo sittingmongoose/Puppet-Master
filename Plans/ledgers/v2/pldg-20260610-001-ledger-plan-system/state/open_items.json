@@ -1,24 +1,7 @@
 {
   "schema_id": "pm.bootstrap_open_items.v1",
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
-  "open_questions": [
-    {
-      "schema_id": "pm.bootstrap_question.v1",
-      "ledger_id": "pldg-20260610-001-ledger-plan-system",
-      "question_id": "q-0002",
-      "status": "open",
-      "question": "Which representative pilot Plan doc should be converted first?",
-      "disposition": "Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum.",
-      "linked_atom_ids": [
-        "atom-0020"
-      ],
-      "source_refs": [
-        "chat:lossless-conversion"
-      ],
-      "created_at_utc": "2026-06-10T00:00:00Z",
-      "updated_at_utc": "2026-06-10T00:00:00Z"
-    }
-  ],
+  "open_questions": [],
   "deferred_questions": [
     {
       "schema_id": "pm.bootstrap_question.v1",
@@ -35,13 +18,27 @@
       ],
       "created_at_utc": "2026-06-10T00:00:00Z",
       "updated_at_utc": "2026-06-10T00:00:00Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260610-001-ledger-plan-system",
+      "question_id": "q-0002",
+      "status": "deferred",
+      "question": "Which representative pilot Plan doc should be converted first?",
+      "disposition": "Deferred to the future existing-Plans conversion inventory. Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum.",
+      "linked_atom_ids": [
+        "atom-0020"
+      ],
+      "source_refs": [
+        "chat:lossless-conversion"
+      ],
+      "created_at_utc": "2026-06-10T00:00:00Z",
+      "updated_at_utc": "2026-06-11T14:40:00Z"
     }
   ],
   "open_blockers": [],
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
-  "unsealed_governance": [
-    "Spec Lock and generated governance artifacts are intentionally not updated until final governance seal."
-  ],
-  "notes": "Node compiler algorithm is deferred. PlanUnit index/node-readiness is allowed; WorkNode creation is not allowed yet. Every atom/PlanUnit must carry gui_related true/false inferred by the agent."
+  "unsealed_governance": [],
+  "notes": "Node compiler algorithm is deferred. PlanUnit index/node-readiness is allowed; WorkNode creation is not allowed yet. Every atom/PlanUnit must carry gui_related true/false inferred by the agent. q-0002 remains a non-blocking future migration choice to be resolved by inventory when converting existing Plans."
 }

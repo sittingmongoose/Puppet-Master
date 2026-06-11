@@ -1,0 +1,339 @@
+# Planning Ledger System
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns the planning ledger system boundary; it does not make ledger records canonical product prose.
+
+## 0. Scope
+
+This document is the canonical owner for the Bootstrap Planning Ledger, the later Native Ledger Service, compact operating surfaces, per-turn ledger protocol, ledger source-lineage preservation, and ledger-to-Plan compilation boundary.
+
+The ledger exists to preserve planning/source memory during long feature-spec conversations. Canonical product/build truth remains in live non-pipeline `Plans/**` docs after compilation.
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## 1. Architecture Summary
+
+The planning system has two incarnations:
+
+1. Bootstrap Ledger: file-backed JSONL/JSON under `Plans/ledgers/v2/`.
+2. Native Ledger Service: future Puppet Master service/API implementation that imports and exports the same record concepts.
+
+Both incarnations use `design_atom` records during conversation and compile accepted atoms into PlanUnits only when the user asks to compile.
+
+The active bootstrap ledger format is machine-first: append-only JSONL event and record streams plus compact JSON projections. Markdown may exist as a debug export only and does not replace active JSONL/JSON state.
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+## 2. PlanUnits
+
+### PLS-001 - Ledger Authority Boundary
+
+```yaml
+plan_unit_id: PLS-001
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: The Bootstrap Planning Ledger is durable planning/source state for feature-spec conversations. It is not assistant memory, not Plan Mode, and not canonical Plans prose. Canonical product/build truth remains live non-pipeline Plans docs after compilation.
+gui_related: false
+gui_classification_reason: Ledger authority and source/canon boundaries are backend/governance behavior, not GUI or visual presentation.
+depends_on: []
+unblocks: [PLS-002, PLS-005, BPM-001]
+acceptance_criteria:
+  - Ledger records can be cited as source_lineage without being treated as canonical product prose.
+  - Compiled PlanUnits point canonical evidence at live Plans docs, not ledgers or source shards.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - Ledger health reports for open blockers and unresolved contradictions.
+risk_class: governance_boundary
+reasoning_tier: standard
+context_scope: repo
+implementation_surfaces: [Plans/ledgers/v2, Plans/bootstrap, Plans/*.md]
+node_compile_hint: {mode: index_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0001
+  - pldg-20260610-001-ledger-plan-system:atom-0009
+  - pldg-20260610-001-ledger-plan-system:dec-0001
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["assistant memory", "Plan Mode", "Plans/**", "source_evidence", "canonical_evidence", "process_evidence", "governance_evidence", "live non-pipeline Plans docs"]
+negative_constraints:
+  - Do not confuse the ledger with the actual chat memory system.
+  - Do not treat the ledger as canonical product prose.
+  - Do not point canonical evidence at ledgers, shards, pipeline/process artifacts, or governance bundles.
+owner_hints: [Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### PLS-002 - Bootstrap And Native Incarnations
+
+```yaml
+plan_unit_id: PLS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: The Bootstrap Ledger and the future Native Ledger Service are two incarnations of one planning-ledger standard. Bootstrap uses repo files now; native storage may be service/API or DB backed later but preserves import/export compatibility for the core concepts.
+gui_related: false
+gui_classification_reason: Storage/service architecture is not GUI implementation work.
+depends_on: [PLS-001]
+unblocks: [PLS-003, PLS-004, BPM-001]
+acceptance_criteria:
+  - Bootstrap records can be imported into the native service without losing record identity, source refs, decisions, questions, blockers, corrections, or gui_related classification.
+  - Native export can reconstruct the bootstrap concepts needed for audit or migration.
+validation_surfaces:
+  - Ledger schema validation.
+  - Migration/import-export tests once the native service exists.
+risk_class: migration_compatibility
+reasoning_tier: standard
+context_scope: repo_to_native
+implementation_surfaces: [Plans/ledgers/v2, future Native Ledger Service]
+node_compile_hint: {mode: preserve_for_future_service, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0002
+  - pldg-20260610-001-ledger-plan-system:atom-0012
+  - pldg-20260610-001-ledger-plan-system:dec-0001
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Bootstrap Ledger", "Native Ledger Service", "import/export", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json"]
+negative_constraints: []
+owner_hints: [Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### PLS-003 - Machine-First Bootstrap Record Set
+
+```yaml
+plan_unit_id: PLS-003
+unit_type: decision
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: Bootstrap ledger state uses JSONL append logs and JSON state projections. Source shards preserve exact source/history for recovery, audit, and migration; shards are cold source/history, not the active operating interface.
+gui_related: false
+gui_classification_reason: File format and source-history boundaries are not GUI work.
+depends_on: [PLS-002]
+unblocks: [PLS-004, PLS-006]
+acceptance_criteria:
+  - A v2 ledger contains manifest, events, records, state, validation, indexes, and source_shards locations.
+  - The normal resume surface is compact JSON state, not a full event-log read.
+validation_surfaces:
+  - JSON syntax validation.
+  - Ledger health checks.
+risk_class: data_integrity
+reasoning_tier: standard
+context_scope: repo
+implementation_surfaces: [Plans/ledgers/v2/manifest.json, Plans/ledgers/v2/*/events.jsonl, Plans/ledgers/v2/*/records, Plans/ledgers/v2/*/state, Plans/ledgers/v2/*/source_shards]
+node_compile_hint: {mode: source_memory_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0003
+  - pldg-20260610-001-ledger-plan-system:atom-0005
+  - pldg-20260610-001-ledger-plan-system:dec-0002
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["JSONL", "JSON projections", "Markdown debug export", "source_shards", "cold source/history", "active state projections"]
+negative_constraints:
+  - Do not create another Markdown working_ledger.md as the active format.
+  - Sharding alone must not become the active working interface.
+compatibility_only_notes:
+  - Legacy working_ledger.md files are source-lineage/debug material only.
+owner_hints: [Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md
+
+### PLS-004 - Compact Operating Surface
+
+```yaml
+plan_unit_id: PLS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: Agents continue a ledger from compact operating views and capsules by default. The normal read set is ledger_registry.json, state/handoff.json, state/current.json, state/open_items.json, state/operating_capsule.json, and any explicitly allowed queue/record files named by the capsule.
+gui_related: false
+gui_classification_reason: Agent resume protocol is not GUI or visual implementation work.
+depends_on: [PLS-003]
+unblocks: [PLS-006, BPM-001]
+acceptance_criteria:
+  - A lower-quality agent can resume from compact projections without reading full events.jsonl or source_shards.
+  - The operating capsule names allowed reads, allowed writes, and forbidden governance outputs.
+validation_surfaces:
+  - Ledger health projections.
+  - Manual compile review.
+risk_class: context_budget
+reasoning_tier: standard
+context_scope: single_ledger
+implementation_surfaces: [Plans/ledgers/v2/*/state/current.json, Plans/ledgers/v2/*/state/handoff.json, Plans/ledgers/v2/*/state/open_items.json, Plans/ledgers/v2/*/state/operating_capsule.json]
+node_compile_hint: {mode: index_resume_surface, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0004
+  - pldg-20260610-001-ledger-plan-system:dec-0003
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["operating capsule", "state/current.json", "state/handoff.json", "state/open_items.json"]
+negative_constraints:
+  - Do not require agents to read the whole ledger to continue.
+owner_hints: [Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/bootstrap/Bootstrap_Planning_Workflow.md
+
+### PLS-005 - Design Atom Lifecycle And Exact Preservation
+
+```yaml
+plan_unit_id: PLS-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: Conversational planning captures neutral design_atom records. The compiler converts accepted atoms into PlanUnits later. Ledger records preserve exact field names, examples, negative constraints, compatibility-only notes, stale/retired notes, owner hints, user corrections, and agent-inferred gui_related true/false.
+gui_related: false
+gui_classification_reason: Metadata and preservation rules are not GUI implementation work.
+depends_on: [PLS-001, PLS-003]
+unblocks: [PDS-002, PDS-003, PNC-005]
+acceptance_criteria:
+  - Every new or updated design atom includes gui_related true/false.
+  - Accepted corrections survive compilation into PlanUnits or explicit dispositions.
+validation_surfaces:
+  - Ledger schema validation.
+  - PlanUnit coverage review.
+risk_class: source_loss
+reasoning_tier: standard
+context_scope: ledger_to_plan
+implementation_surfaces: [Plans/ledgers/v2/*/records/design_atoms.jsonl, Plans/ledgers/v2/*/records/corrections.jsonl, Plans/*.md]
+node_compile_hint: {mode: planunit_source_lineage, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0006
+  - pldg-20260610-001-ledger-plan-system:atom-0008
+  - pldg-20260610-001-ledger-plan-system:atom-0032
+  - pldg-20260610-001-ledger-plan-system:corr-0003
+  - source_ref:chat:design-discussion
+  - source_ref:chat:user-gui-classification-correction
+preserved_exact_tokens: ["design_atom", "PlanUnit", "obligation", "negative constraints", "compatibility-only", "stale/retired", "owner hints", "user corrections", "gui_related", "GUI", "UI", "icons", "SVGs", "images", "true", "false"]
+negative_constraints:
+  - Do not prematurely treat every discussion point as a transfer obligation.
+  - Do not require the user to declare whether an item is GUI-related.
+  - Do not use a granular surface taxonomy for the bootstrap standard; use a simple boolean.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### PLS-006 - Per-Turn Update Protocol
+
+```yaml
+plan_unit_id: PLS-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: After every substantive ledger conversation turn, append one event, upsert affected records, update questions/blockers/corrections, and rewrite current/handoff/open-item projections. Multiple simultaneous ledgers are tracked by stable ledger_id values in ledger_registry.json.
+gui_related: false
+gui_classification_reason: Conversation-state persistence is not GUI implementation work.
+depends_on: [PLS-002, PLS-003, PLS-004]
+unblocks: [BPM-001, BPM-002]
+acceptance_criteria:
+  - events.jsonl records the turn-level history.
+  - records/*.jsonl captures durable planning state.
+  - state/handoff.json remains sufficient for transfer.
+validation_surfaces:
+  - JSON syntax validation.
+  - Ledger health summary counts.
+risk_class: continuity
+reasoning_tier: standard
+context_scope: single_ledger
+implementation_surfaces: [Plans/ledgers/v2/ledger_registry.json, Plans/ledgers/v2/*/events.jsonl, Plans/ledgers/v2/*/records, Plans/ledgers/v2/*/state]
+node_compile_hint: {mode: ledger_maintenance, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0007
+  - pldg-20260610-001-ledger-plan-system:atom-0012
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["events.jsonl", "records/*.jsonl", "state/handoff.json", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json"]
+negative_constraints: []
+owner_hints: [Plans/Planning_Ledger_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md
+
+### PLS-007 - Owner Ambiguity And Evidence Classes
+
+```yaml
+plan_unit_id: PLS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: Owner ambiguity is normal during planning. The ledger captures candidate owners, consumer docs, evidence, and adjudication rules; compile agents resolve ordinary row-level placement by evidence and deterministic policy, asking Jared only for a true product decision.
+gui_related: false
+gui_classification_reason: Owner adjudication is planning/governance behavior, not GUI work.
+depends_on: [PLS-001, PLS-005]
+unblocks: [PDS-005, BPM-004]
+acceptance_criteria:
+  - Ambiguous placement records include candidate owners and adjudication evidence.
+  - Ordinary owner ambiguity does not block compilation when a safe target owner is known.
+validation_surfaces:
+  - Compile queue owner_adjudication_status.
+  - PlanUnit source_lineage and owner_hints.
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: cross_doc
+implementation_surfaces: [Plans/ledgers/v2/*/state/compile_queue.json, Plans/*.md]
+node_compile_hint: {mode: owner_route_metadata, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0010
+  - pldg-20260610-001-ledger-plan-system:atom-0009
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["candidate owners", "consumer docs", "owner adjudication", "source_evidence", "canonical_evidence", "process_evidence", "governance_evidence"]
+negative_constraints:
+  - Do not blindly trust queued owner hints as authority.
+  - Do not block on ordinary row-level owner ambiguity.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### PLS-008 - Chain Wizard And Goal Integration
+
+```yaml
+plan_unit_id: PLS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: Future Chain Wizard planning uses native Goal Mode invisibly to transfer ledgers to Plans, convert Plans to future work-node artifacts after the compiler contract exists, and audit. Assistant chat may invoke Goal Mode visibly for arbitrary execution tasks.
+gui_related: false
+gui_classification_reason: Goal orchestration policy is not itself GUI implementation work.
+depends_on: [PLS-001, PLS-002, PNC-001]
+unblocks: [BPM-002, PNC-006]
+acceptance_criteria:
+  - Chain Wizard/native Goal integration respects the ledger-to-Plan and Plan-to-node boundaries.
+  - Visible Assistant Goal Mode remains available for user-directed long-running execution tasks.
+validation_surfaces:
+  - Future Chain Wizard integration tests.
+  - Plan_To_Node_Compilation boundary checks.
+risk_class: execution_boundary
+reasoning_tier: standard
+context_scope: native_future
+implementation_surfaces: [future Chain Wizard, future Goal Mode service, Plans/Plan_To_Node_Compilation.md]
+node_compile_hint: {mode: future_native_integration, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0029
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
+negative_constraints: []
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+## 3. Compilation Coverage
+
+| Ledger atom | Disposition |
+| --- | --- |
+| atom-0001 | PLS-001 |
+| atom-0002 | PLS-002 |
+| atom-0003 | PLS-003 |
+| atom-0004 | PLS-004 |
+| atom-0005 | PLS-003 |
+| atom-0006 | PLS-005 |
+| atom-0007 | PLS-006 |
+| atom-0008 | PLS-005 |
+| atom-0009 | PLS-001, PLS-007 |
+| atom-0010 | PLS-007 |
+| atom-0012 | PLS-002, PLS-006 |
+| atom-0016 | Fulfilled by creation of this owner doc and by PLS-001 through PLS-008. |
+| atom-0028 | PLS-001 preserves the stale/retired boundary; BPM-006 owns migration handling. |
+| atom-0029 | PLS-008 |
+| atom-0032 | PLS-005; PDS-003 and PNC-005 consume it. |
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md

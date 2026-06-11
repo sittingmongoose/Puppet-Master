@@ -1,14 +1,16 @@
 {
   "schema_id": "pm.bootstrap_ledger_registry.v1",
-  "updated_at_utc": "2026-06-10T00:00:00Z",
-  "active_ledgers": [
+  "updated_at_utc": "2026-06-11T14:40:00Z",
+  "active_ledgers": [],
+  "paused_ledgers": [],
+  "compiled_ledgers": [
     {
       "ledger_id": "pldg-20260610-001-ledger-plan-system",
       "title": "Ledger, plan document standardization, and plan-to-node readiness system",
-      "status": "active",
-      "phase": "bootstrap_design_compilation_ready",
+      "status": "compiled",
+      "phase": "compiled_initial_plan_docs_governance_sealed",
       "created_at_utc": "2026-06-10T00:00:00Z",
-      "last_updated_at_utc": "2026-06-10T00:00:00Z",
+      "last_updated_at_utc": "2026-06-11T14:40:00Z",
       "primary_goal": "Define and bootstrap the structured planning ledger, standardized Plan docs, lossless Plan conversion, PlanUnit indexing, node-readiness reporting, and simple gui_related routing.",
       "canonical_plan_targets": [
         "Plans/Planning_Ledger_System.md",
@@ -17,10 +19,8 @@
         "Plans/Bootstrap_Planning_Migration.md"
       ],
       "resume_file": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/handoff.json",
-      "last_updated_at": "2026-06-11T00:00:00Z",
-      "notes": "Updated to use node-readiness instead of node seeds/WorkNodes and simple agent-inferred gui_related boolean."
+      "last_updated_at": "2026-06-11T14:40:00Z",
+      "notes": "Compiled to canonical Plans docs, governance artifacts refreshed, full gates passed, and no WorkNodes were created."
     }
-  ],
-  "paused_ledgers": [],
-  "compiled_ledgers": []
+  ]
 }
