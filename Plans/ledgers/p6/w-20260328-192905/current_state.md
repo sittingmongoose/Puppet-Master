@@ -1,23 +1,22 @@
 # Current State
 
 - work_id = w-20260328-192905
-- state = Open Gaps Reducer / Ready-Routing Gate completed
+- state = Transferred / Closed
 - run_id = none
-- open_gaps = Plans/.pipeline/work_items/w-20260328-192905/open_gaps.json
-- open_gaps_noise = Plans/.pipeline/work_items/w-20260328-192905/open_gaps.noise.json
-- planning_blockers = 3
-- fix_backlog_items = 46
-- total_gaps = 49
+- transferred_to = Plans/Personas.md
+- supporting_canonical_docs = Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/orchestrator-subagent-integration.md, Plans/00-plans-index.md, Plans/Glossary.md, Plans/Crosswalk.md
+- evidence = Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json
+- audit = Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json
+- planning_blockers = 0
+- fix_backlog_items = 0
+- total_gaps = 0
 - missing_target_files_observed = 0
 - doc_discovery_required_items = 0
-- stale_token_replacement_unknown_items = 3
+- stale_token_replacement_unknown_items = 0
 - packetizable_layout_defects = 0
 - path quarantine status = pass
 - source lineage status = pass
 - subagent_execution_status = pass
 - subagent_execution = used
-- wave_files:
-  - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-001.json
-  - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-002.json
-  - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-003.json
-- next stage = Audit Mode
+- transfer status = complete
+- next stage = Closed

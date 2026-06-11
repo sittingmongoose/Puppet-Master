@@ -1115,9 +1115,9 @@ Operational-identity payloads use the bounded `operational-identity` shape `{ ki
 
 #### 7.4.7 Agent-Config panel specification
 
-Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, catalog_installed, manual_import, project_local, global_local, pm_enhanced, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
+Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
 
-The Agent Config Personas tab has three visible content categories: persona list and editing (create, edit, delete, reorder), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
+The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
 
 Agent Config `/data` records include a durable `provider_entry` row with `provider_entry_id`, `runtime_platform_id`, `model_provider_id`, provider family, account/profile identity, and `auth_surface` auth-state metadata. Richer provider fields extend the visible `/provider` row without renaming the existing `auth_surface` or account/provider auth-state terms.
 
@@ -2517,9 +2517,11 @@ Debug and run activity surfaces expose an `agent_trace_summary` with `subagent_c
 
 If the user summons a Persona via natural language, the UI must reflect it explicitly, for example:
 - `Persona: Collaborator (User requested)`
-- `Persona: Explorer (User requested, session lock)`
+- `Persona: Researcher (User requested, session lock)`
 
 If the override is turn-scoped, the UI should clear back to the previous/auto state on the next eligible turn.
+
+Subagent-only Persona requests such as `Explorer` or `Bash` render as child-run/delegation feedback rather than direct chat Persona locks.
 
 ### 19.7 Provider-gap disclosure rule
 
