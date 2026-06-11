@@ -445,7 +445,10 @@
         "ContractName:Plans/Personas.md",
         "ContractName:Plans/FinalGUISpec.md",
         "ContractName:Plans/assistant-chat-design.md",
+        "ContractName:Plans/chain-wizard-flexibility.md",
         "ContractName:Plans/orchestrator-subagent-integration.md",
+        "ContractName:Plans/Project_Output_Artifacts.md",
+        "ContractName:Plans/Document_Packaging_Policy.md",
         "ContractName:Plans/Models_System.md",
         "ContractName:Plans/Prompt_Pipeline.md",
         "ContractName:Plans/Contracts_V0.md",
@@ -460,7 +463,8 @@
         "Gate:GATE-009"
       ],
       "decision_refs": [
-        "dec-2026-06-11-p6-personas-ledger-transfer"
+        "dec-2026-06-11-p6-personas-ledger-transfer",
+        "dec-2026-06-11-p6-personas-newest-ledger-repair"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -489,6 +493,18 @@
         },
         {
           "kind": "file",
+          "ref": "Plans/ledgers/work_items/w-20260328-192905/working_ledger.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/work_items/w-20260328-192905/meta.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/work_items/w-20260328-192905/current_state.md"
+        },
+        {
+          "kind": "file",
           "ref": "Plans/Personas.md"
         },
         {
@@ -498,6 +514,10 @@
         {
           "kind": "file",
           "ref": "Plans/assistant-chat-design.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/chain-wizard-flexibility.md"
         },
         {
           "kind": "file",
@@ -537,7 +557,7 @@
         }
       ],
       "node_id": "pm.p6.personas-ledger-transfer",
-      "objective": "Transfer the completed P6 Personas ledger into canonical Plans, certify every material Persona item, close the unlocked ledger, and reseal governance without processing File Manager/Editor or other P6 lanes.",
+      "objective": "Repair the completed P6 Personas transfer from the newer work_items ledger, certify every material Persona and Persona-adjacent item, reconcile duplicate ledger state, and reseal governance without processing File Manager/Editor or other P6 lanes.",
       "outputs": [
         {
           "kind": "file",
@@ -550,6 +570,10 @@
         {
           "kind": "file",
           "ref": "Plans/assistant-chat-design.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/chain-wizard-flexibility.md"
         },
         {
           "kind": "file",
@@ -574,6 +598,18 @@
         {
           "kind": "file",
           "ref": "Plans/ledgers/p6/w-20260328-192905/current_state.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/work_items/w-20260328-192905/meta.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/work_items/w-20260328-192905/current_state.md"
         },
         {
           "kind": "file",
@@ -617,9 +653,9 @@
       "status": "done",
       "unblocks": [],
       "verifier_result": {
-        "message": "P6 Personas ledger transfer certified with no unresolved material items; final governance reseal commands are recorded in evidence.",
+        "message": "P6 Personas transfer repaired from the newest ledger with no unresolved material items; duplicate ledger state is reconciled and governance reseal commands are recorded in evidence.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-11T04:15:00Z"
+        "timestamp_utc": "2026-06-11T05:06:36Z"
       }
     }
   ],

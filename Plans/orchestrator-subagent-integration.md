@@ -3280,7 +3280,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Pattern matching:** Use regex/pattern matching to extract decisions (e.g., "We chose Rust + Actix" → save as architectural decision).
-- **LLM extraction:** Run a lightweight extraction subagent (e.g., `knowledge-synthesizer` if promoted, otherwise `document-writer`) on Phase 1 output to extract structured memory entries.
+- **LLM extraction:** Run a lightweight extraction subagent (e.g., `knowledge-synthesizer` if promoted, otherwise a workflow-resolved drafting/synthesis Persona such as `general-purpose` or a retained specialty) on Phase 1 output to extract structured memory entries. Do not require a protected core `document-writer` Persona.
 - **Manual tagging:** Allow Phase 1 subagent to explicitly tag decisions (e.g., `<memory:architecture>Rust + Actix</memory:architecture>`).
 - **Best-effort:** Extract what we can. Missing extractions don't block execution; memory is enhancement, not requirement.
 

@@ -1885,7 +1885,7 @@ Behavior:
 - more willing to talk than execution Personas.
 
 #### 2. Drafting
-Default Persona: `technical-writer`
+Default Persona: workflow-resolved drafting Persona. `technical-writer` MAY be used only when retained as an available specialty or explicitly configured for the Builder drafting stage; otherwise the resolver falls through the configured mapping and final `general-purpose` fallback above. Drafting MUST NOT require or recreate a protected core `document-writer` Persona.
 
 #### 3. Domain-specialized fragment generation
 Use domain or language Personas as needed, for example:
@@ -1922,7 +1922,7 @@ Requirements Builder UI should display:
 
 - Requirements Builder must support Persona selection by stage/pass.
 - Collaborator is the default intake/clarification Persona.
-- Technical Writer is the default drafting Persona.
+- Drafting does not require a protected core Document Writer; `technical-writer` is specialty-scoped and may be used only when retained/configured for that stage.
 - Reviewer Personas are distinct from drafting Personas for review passes.
 - Builder UI must expose effective Persona/model/platform and any skipped unsupported Persona controls.
 

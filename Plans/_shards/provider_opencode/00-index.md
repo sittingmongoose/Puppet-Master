@@ -1,6 +1,6 @@
 # Shard Index: Plans/Provider_OpenCode.md
 
-Generated: 2026-06-11T04:13:16Z
+Generated: 2026-06-11T05:08:40Z
 
 Source SHA256: `e0d27c1494bf01c5a72ca17abb7f28b8f6a1045f19aa2ef941b87d7c9ab6d2e9`
 

@@ -4,7 +4,9 @@
 - state = Transferred / Closed
 - run_id = none
 - transferred_to = Plans/Personas.md
-- supporting_canonical_docs = Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/orchestrator-subagent-integration.md, Plans/00-plans-index.md, Plans/Glossary.md, Plans/Crosswalk.md
+- supporting_canonical_docs = Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/chain-wizard-flexibility.md, Plans/orchestrator-subagent-integration.md, Plans/00-plans-index.md, Plans/Glossary.md, Plans/Crosswalk.md
+- source_lineage_copy = current closed copy; body reconciled from Plans/ledgers/work_items/w-20260328-192905/working_ledger.md at 2026-06-11T05:06:36Z
+- supersedes_duplicate = Plans/ledgers/work_items/w-20260328-192905/**
 - evidence = Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json
 - audit = Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json
 - planning_blockers = 0
@@ -18,5 +20,5 @@
 - source lineage status = pass
 - subagent_execution_status = pass
 - subagent_execution = used
-- transfer status = complete
+- transfer status = repaired_complete_from_newest_ledger
 - next stage = Closed

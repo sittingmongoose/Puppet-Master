@@ -1,13 +1,16 @@
 # Current State
 
 - work_id = w-20260328-192905
-- state = Open Gaps Reducer / Ready-Routing Gate completed
+- state = Superseded by P6 closed source-lineage copy
 - run_id = none
 - open_gaps = Plans/.pipeline/work_items/w-20260328-192905/open_gaps.json
 - open_gaps_noise = Plans/.pipeline/work_items/w-20260328-192905/open_gaps.noise.json
-- planning_blockers = 3
-- fix_backlog_items = 46
-- total_gaps = 49
+- superseded_by = Plans/ledgers/p6/w-20260328-192905/**
+- superseded_on_utc = 2026-06-11T05:06:36Z
+- superseded_warning = Do not process this duplicate as a stale blocked work item; the newer ledger body has been reconciled into the closed P6 source-lineage copy and audited in Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/.
+- planning_blockers = 0
+- fix_backlog_items = 0
+- total_gaps = 0
 - missing_target_files_observed = 0
 - doc_discovery_required_items = 0
 - stale_token_replacement_unknown_items = 3
@@ -20,4 +23,4 @@
   - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-001.json
   - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-002.json
   - Plans/.pipeline/work_items/w-20260328-192905/open_gaps_reducer.wave-003.json
-- next stage = Audit Mode
+- next stage = Closed
