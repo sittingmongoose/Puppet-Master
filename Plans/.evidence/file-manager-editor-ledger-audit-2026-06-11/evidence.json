@@ -3,7 +3,7 @@
     {
       "note": "Per-material-item classification for the P6 File Manager/Editor research ledger.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
-      "sha256": "446d1ffcbda7d1d925ce09b2f76e1bcbd8f6e0d2cfa0d23266809b06477fe63e"
+      "sha256": "004ca8b31c05f7772de31826307328dfb3ca578fe2e2529ced502710054ca741"
     },
     {
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
@@ -18,17 +18,27 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "105795f9974d2cf26417b94e55c284b6b93588e65fa59ab63a8e467627ff35bd"
+      "sha256": "201de93351485224d9c7dc3d9cc2c5c12962b28e50136fe23565d3b525874f93"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "1a8b891b06a5dc9e14cfe1f2a301bc6d65c8b9e23885faab951b1b7e8bf1af3f"
+      "sha256": "e069b2d5821dc5c7ea0438b764fbb521226a4619844261607521bd7002df025a"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "e49dcc788ed162094878a0aa76a0f4d7c8f1cc679c58548695127b6a21d5f52a"
+      "sha256": "1c239becd364fa8e4d1cb78838f0fc3f3bc4e1211739569ce3c8459d9d6dc341"
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+      "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
+      "sha256": "212053ee508e2a95b53b5ca5cb04d2e4381beb4aabc5be2b7d90efbbd730692d"
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+      "note": "Compact ledger state: audit-only reconciliation complete, no normal transfer required, do not process unless reopened.",
+      "sha256": "a88e64a462a86c32a0cf32f5b987faa457593252ba5345a1d85922f22c8a911e"
     }
   ],
   "checks": [
@@ -51,6 +61,15 @@
       "details": "git diff --check returned no whitespace or patch hygiene failures.",
       "name": "git-diff-check",
       "result": "PASS"
+    },
+    {
+      "name": "file-manager-editor-ledger-state-closure",
+      "result": "PASS",
+      "details": "Plans/ledgers/p6/w-20260318-153036 is audit-closed/source-lineage-only with no open material items and no normal transfer required.",
+      "contract_refs": [
+        "ContractName:Plans/FileManager.md",
+        "SchemaID:pm.evidence.schema.v1"
+      ]
     }
   ],
   "commands_run": [
@@ -122,6 +141,36 @@
     {
       "cmd": "git diff --check",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "Preflight pass for final polish: status=pass; generated_at_utc=2026-06-11T09:43:39Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py json-syntax",
+      "exit_code": 0,
+      "stdout_excerpt": "Post-patch syntax pass before reseal: status=pass; generated_at_utc=2026-06-11T09:47:00Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:25Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:53:02Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:53:05Z; failures=[]."
+    },
+    {
+      "cmd": "git diff --check",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     }
   ],
   "contract_refs_satisfied": [
@@ -185,6 +234,16 @@
     {
       "change_type": "modified",
       "path": "Plans/.evidence/**"
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+      "change_type": "modified",
+      "note": "Marked audit-closed/source-lineage-only instead of active research."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+      "change_type": "added",
+      "note": "Added compact state explaining audit-only reconciliation, no transfer, and do-not-process warning."
     }
   ],
   "node": {
@@ -197,7 +256,7 @@
     "snapshot_ref": "Puppet-Master-working-tree-2026-06-11-file-manager-editor-ledger-audit"
   },
   "schema_id": "pm.evidence.schema.v1",
-  "summary": "Audit-only reconciliation of the P6 File Manager/Editor research ledger. Current canon covers all material items after two small INV-022 repairs; no transfer ledger or unrelated P6 unlock was needed.",
+  "summary": "Audit-only reconciliation of the P6 File Manager/Editor research ledger. Current canon covers all material items after two small INV-022 repairs; the P6 ledger metadata is now closed as audit-only source-lineage memory, with no normal transfer required and no open material items.",
   "tool_calls": [
     {
       "count": 1,

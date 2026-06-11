@@ -13,7 +13,12 @@
     "scaffold_only_evidence_check": "PASS",
     "subagent_model_lock": "PASS",
     "true_product_decision_blockers": 0,
-    "wrong_owner_check": "PASS"
+    "wrong_owner_check": "PASS",
+    "collaborator_tone_detail_preserved": true,
+    "file_manager_editor_audit_closed_source_lineage_only": true,
+    "personas_ledger_copies_identical": true,
+    "project_local_codex_model_lock": "PASS",
+    "work_items_personas_copy_remains_superseded": true
   },
   "preflight": {
     "initial_run_gates": {
@@ -44,6 +49,23 @@
         }
       ],
       "tool_metadata": "tool_search exposed Puppet Master custom roles as model=gpt-5.5 with xhigh reasoning; the called roles were explicitly instructed read-only and returned read-only audit results."
+    },
+    "final_polish": {
+      "run_gates": {
+        "command": "python3 scripts/pm-plans-verify.py run-gates",
+        "generated_at_utc": "2026-06-11T09:43:39Z",
+        "status": "pass"
+      },
+      "personas_ledger_copy_sha256": "79f8b8eec22aa8e1cdd33c77a985247e1b7536c09c03a85192f1824f7add3c26",
+      "work_items_copy_status": "superseded",
+      "project_local_codex_config": {
+        "config": ".codex/config.toml",
+        "agents_glob": ".codex/agents/*.toml",
+        "model": "gpt-5.5",
+        "model_reasoning_effort": "xhigh",
+        "sandbox_mode": "read-only"
+      },
+      "runtime_tool_metadata": "tool_search exposed PM custom runtime roles as fixed gpt-5.5 with xhigh reasoning; project-local TOMLs provide the read-only sandbox lock."
     }
   },
   "source_compare": {

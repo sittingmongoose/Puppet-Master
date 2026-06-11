@@ -424,7 +424,10 @@
       "blockers": [],
       "change_budget": {
         "allowed_paths": [
-          "Plans/**"
+          "Plans/**",
+          ".gitignore",
+          ".codex/config.toml",
+          ".codex/agents/*.toml"
         ],
         "forbidden_files": [
           "AGENTS.md"
@@ -438,7 +441,7 @@
         "max_lines_added": 200000,
         "max_lines_deleted": 200000,
         "max_total_loc_delta": 400000,
-        "notes": "Transfer may touch canonical Plans owner/consumer docs, the unlocked P6 Personas ledger state, evidence, Spec Lock, plan graph, auto decisions, and generated shards only.",
+        "notes": "Final polish may touch canonical Plans owner/consumer docs, unlocked P6 Personas state, audit-closed File Manager/Editor P6 ledger state, project-local Codex model-lock tracking, evidence, Spec Lock, plan graph, auto decisions, and generated shards only.",
         "schema_id": "pm.change_budget.schema.v1"
       },
       "contract_refs": [
@@ -464,7 +467,8 @@
       ],
       "decision_refs": [
         "dec-2026-06-11-p6-personas-ledger-transfer",
-        "dec-2026-06-11-p6-personas-newest-ledger-repair"
+        "dec-2026-06-11-p6-personas-newest-ledger-repair",
+        "dec-2026-06-11-p6-ledger-closure-persona-model-lock-polish"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -554,10 +558,40 @@
         {
           "kind": "file",
           "ref": "scripts/pm-plans-verify.py"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+          "note": "P6 File Manager/Editor ledger metadata."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+          "note": "P6 File Manager/Editor ledger compact state."
+        },
+        {
+          "kind": "file",
+          "ref": ".gitignore",
+          "note": "Project-local Codex trackability rules."
+        },
+        {
+          "kind": "file",
+          "ref": ".codex/config.toml",
+          "note": "Project-local Codex model lock."
+        },
+        {
+          "kind": "file",
+          "ref": ".codex/agents/*.toml",
+          "note": "Project-local PM read-only agent model locks."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+          "note": "File Manager/Editor audit evidence."
         }
       ],
       "node_id": "pm.p6.personas-ledger-transfer",
-      "objective": "Repair the completed P6 Personas transfer from the newer work_items ledger, certify every material Persona and Persona-adjacent item, reconcile duplicate ledger state, and reseal governance without processing File Manager/Editor or other P6 lanes.",
+      "objective": "Repair and polish the completed P6 Personas transfer, certify every material Persona and Persona-adjacent item, reconcile duplicate ledger state, close the File Manager/Editor P6 ledger as audit-only source-lineage memory, and make the project-local Codex GPT-5.5 xhigh read-only model-lock unambiguous without processing other P6 lanes.",
       "outputs": [
         {
           "kind": "file",
@@ -638,6 +672,31 @@
         {
           "kind": "file",
           "ref": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+          "note": "P6 File Manager/Editor ledger metadata closed as source-lineage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+          "note": "P6 File Manager/Editor compact state."
+        },
+        {
+          "kind": "file",
+          "ref": ".gitignore",
+          "note": "Project-local Codex trackability rules."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
+          "note": "File Manager/Editor audit closure evidence."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+          "note": "File Manager/Editor compact closure evidence."
         }
       ],
       "policy_mode": "workspace-write",
@@ -653,9 +712,9 @@
       "status": "done",
       "unblocks": [],
       "verifier_result": {
-        "message": "P6 Personas transfer repaired from the newest ledger with no unresolved material items; duplicate ledger state is reconciled and governance reseal commands are recorded in evidence.",
+        "message": "P6 Personas transfer is repaired and polished; File Manager/Editor is audit-closed/source-lineage-only; project-local Codex agent model-lock is explicit; no unrelated P6 lane was processed.",
         "outcome": "pass",
-        "timestamp_utc": "2026-06-11T05:06:36Z"
+        "timestamp_utc": "2026-06-11T09:46:06Z"
       }
     }
   ],

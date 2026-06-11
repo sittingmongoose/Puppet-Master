@@ -4,9 +4,11 @@
   "source_ledger": {
     "path": "Plans/ledgers/p6/w-20260318-153036/working_ledger.md",
     "meta_path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
-    "mode": "research",
-    "status": "active",
-    "scope": "Update rewrite planning docs for File Manager and Editor"
+    "mode": "audit_closed",
+    "status": "closed",
+    "scope": "Update rewrite planning docs for File Manager and Editor",
+    "source_lineage_status": "source_lineage_only",
+    "current_state_path": "Plans/ledgers/p6/w-20260318-153036/current_state.md"
   },
   "audit_scope": {
     "included": [
@@ -238,5 +240,12 @@
     "transfer_ledger_created": false,
     "ledger_audit_disposition": "source_lineage_research_covered",
     "notes": "The on-disk ledger remains research/active; this audit evidence closes the File Manager/Editor material coverage check without unlocking unrelated P6 lanes."
+  },
+  "closure": {
+    "closed_at_utc": "2026-06-11T09:46:06Z",
+    "disposition": "audit_only_reconciled_no_normal_transfer_required",
+    "normal_transfer_required": false,
+    "open_material_items": 0,
+    "process_warning": "Do not process this ledger unless explicitly reopened; it is source-lineage memory only."
   }
 }
