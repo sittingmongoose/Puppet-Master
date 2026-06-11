@@ -9,7 +9,7 @@
       "question_id": "q-0001",
       "status": "deferred",
       "question": "What is the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm?",
-      "disposition": "Deferred to a dedicated Plan_To_Node_Compilation design process; current plan standard must reserve interface fields.",
+      "disposition": "Deferred. PlanUnit index and node-readiness report are generated; NodeSeed candidates, WorkNodes, executable build tasks, and final node queues remain blocked until Plan_To_Node_Compilation defines the compiler contract.",
       "linked_atom_ids": [
         "atom-0030"
       ],
@@ -17,29 +17,13 @@
         "chat:plan-to-node-deferred"
       ],
       "created_at_utc": "2026-06-10T00:00:00Z",
-      "updated_at_utc": "2026-06-10T00:00:00Z"
-    },
-    {
-      "schema_id": "pm.bootstrap_question.v1",
-      "ledger_id": "pldg-20260610-001-ledger-plan-system",
-      "question_id": "q-0002",
-      "status": "deferred",
-      "question": "Which representative pilot Plan doc should be converted first?",
-      "disposition": "Deferred to the future existing-Plans conversion inventory. Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum.",
-      "linked_atom_ids": [
-        "atom-0020"
-      ],
-      "source_refs": [
-        "chat:lossless-conversion"
-      ],
-      "created_at_utc": "2026-06-10T00:00:00Z",
-      "updated_at_utc": "2026-06-11T14:40:00Z"
+      "updated_at_utc": "2026-06-11T21:57:41Z"
     }
   ],
   "open_blockers": [],
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "notes": "Node compiler algorithm is deferred. PlanUnit index/node-readiness is allowed; WorkNode creation is not allowed yet. Every atom/PlanUnit must carry gui_related true/false inferred by the agent. q-0002 remains a non-blocking future migration choice to be resolved by inventory when converting existing Plans.",
-  "updated_at_utc": "2026-06-11T15:38:13Z"
+  "notes": "q-0001 remains the only deferred design issue: the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm/contract is not defined. Existing Plans conversion is complete, q-0002 is answered by selecting Plans/UI_Wiring_Rules.md as the pilot, PlanUnit index/node-readiness is generated, and governance is sealed. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created. Every atom/PlanUnit must carry gui_related true/false inferred by the agent.",
+  "updated_at_utc": "2026-06-11T21:57:41Z"
 }

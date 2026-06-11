@@ -7,19 +7,18 @@
     "last_decision_id": "dec-0010",
     "next_queue_id": "pcq-0001"
   },
-  "last_known_good_state": "Accepted ledger atoms are compiled into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, and Plans/00-plans-index.md; governance registration now covers the four owner docs in sharding_config, Spec Lock, and plan_graph. No WorkNodes, NodeSeeds, executable build tasks, existing-Plans conversion, or .plan_index outputs were created.",
+  "last_known_good_state": "Accepted ledger atoms are compiled into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, and Plans/00-plans-index.md; existing Plans conversion completed through Plans/.plan_migration/pds-20260611-001-standardize-plans, Plans/.plan_index contains the PlanUnit index and node-readiness report, and governance registration is sealed. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
   "open_blockers": [],
   "open_questions": [],
   "deferred_questions": [
-    "q-0001",
-    "q-0002"
+    "q-0001"
   ],
-  "next_action": "Future work may generate a PlanUnit index and node-readiness report or begin controlled existing-Plans conversion. Do not create WorkNodes until the compiler contract is complete.",
+  "next_action": "Resolve q-0001 before any node compilation: define the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm/contract. Existing Plans conversion, PlanUnit index generation, node-readiness reporting, and governance seal are complete. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues.",
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
-    "safe_content_checks": "pm-bootstrap-ledger-validate, validate-auto-decisions, run-gates, and shard check pass after repair.",
+    "safe_content_checks": "pm-bootstrap-ledger-validate, pm-plan-migration validate, pm-plan-index validate, run-gates, shard check, audit-governance, and validate-auto-decisions pass after repair.",
     "seal_request": "User asked to repair the PM ledger/Plan compile seal before any existing-Plans conversion.",
-    "final_governance_checks": "pm-bootstrap-ledger-validate, pm-plans-verify run-gates, pm-shard-plans --check, and validate-auto-decisions passed"
+    "final_governance_checks": "pm-bootstrap-ledger-validate, pm-plan-migration validate, pm-plan-index validate, pm-plans-verify run-gates, pm-shard-plans --check, audit-governance, and validate-auto-decisions passed"
   },
   "do_not_redo": [
     "Do not re-derive whether ledger is memory/Plan Mode/canon; it is none of those.",
@@ -29,8 +28,8 @@
     "Do not treat PlanUnit index/node-readiness as WorkNode creation.",
     "Do not create WorkNodes or executable build tasks during governance refresh."
   ],
-  "updated_at_utc": "2026-06-11T15:38:13Z",
+  "updated_at_utc": "2026-06-11T21:54:11Z",
   "phase": "compiled_initial_plan_docs_governance_sealed",
-  "last_completed_action": "Implementation-readiness polish added explicit file-layout, validator, PlanUnit grammar, migration artifact, node-readiness, and phase-handoff contracts; retired experiment canonical wording was generalized; atom-0016 source_lineage was attached to PLS-001.",
-  "next_safe_action": "Implementation-readiness polish is sealed. Next safe action is controlled existing-Plans conversion inventory/pilot or PlanUnit index + node-readiness report. Do not create WorkNodes until the compiler contract is complete."
+  "last_completed_action": "Existing Plans conversion selected Plans/UI_Wiring_Rules.md as the representative pilot, completed controlled conversion batches, generated Plans/.plan_index PlanUnit index and node-readiness report, and completed the governance seal. q-0002 is answered; q-0001 remains deferred.",
+  "next_safe_action": "Resolve q-0001 before any node compilation: define the exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm/contract. Existing Plans conversion, PlanUnit index generation, node-readiness reporting, and governance seal are complete. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues."
 }

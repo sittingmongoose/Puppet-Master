@@ -7,7 +7,7 @@
     "design_atoms": 42,
     "decisions": 11,
     "open_questions": 0,
-    "deferred_questions": 2,
+    "deferred_questions": 1,
     "open_blockers": 0,
     "compile_queue_items": 4,
     "governance_seal": "passed",
@@ -16,11 +16,11 @@
   "blocking_defects": [],
   "warnings": [
     "Full exact chat body bytes are not stored in this seed package; key exact tokens and design decisions are preserved for bootstrap compilation.",
-    "PlanUnit index/node-readiness may be generated in future work; WorkNodes and NodeSeed candidates must not be created yet.",
+    "PlanUnit index and node-readiness report are generated; node-readiness remains blocked_compiler_contract_incomplete until q-0001 is resolved. WorkNodes and NodeSeed candidates were not created.",
     "All design atoms and PlanUnits in this seed include gui_related boolean; future PlanUnits must preserve it.",
-    "Existing Plans conversion has not started; q-0002 remains deferred to a later inventory phase."
+    "Existing Plans conversion completed through pds-20260611-001-standardize-plans; q-0002 is answered by selecting Plans/UI_Wiring_Rules.md as the pilot and completing controlled batches."
   ],
-  "updated_at_utc": "2026-06-11T15:08:10Z",
-  "last_validated_at_utc": "2026-06-11T15:38:13Z",
-  "notes": "Implementation-readiness polish applied; validators strengthened to reject duplicate PlanUnit YAML keys."
+  "updated_at_utc": "2026-06-11T21:54:11Z",
+  "last_validated_at_utc": "2026-06-11T21:54:11Z",
+  "notes": "Compact ledger health refreshed after existing Plans conversion, PlanUnit index generation, node-readiness reporting, and governance seal. q-0001 remains deferred; q-0002 is answered."
 }
