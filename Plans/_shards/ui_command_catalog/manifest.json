@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/ui_command_catalog/00-index.md",
-  "index_sha256": "3f8a070cb53dfc5a06a07b7863be0852bb0285f124c92affdd19330b863851ba",
+  "index_sha256": "a3f63cac8835a512c937038cbd9d61c853ca95926ba82a4a68649cec3bc46198",
   "manifest_path": "Plans/_shards/ui_command_catalog/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/ui_command_catalog/001-preamble.md",
-      "sha256": "ff4fb36e51dc17284b3530bceb313a4540004fe499575f926b53532c257a359e",
+      "sha256": "958dabe3f900f48457f81c620125930c1c1f26e52ee696bcf4e03d5215d85d44",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
-      "sha256": "dfe798a3022b09614f145d2b89a00679b7c5b69e5d81fb40084f7ddea92be7ca",
+      "sha256": "1cc2884ecc078630fdf9a0fe4dc73404285901c90e8f42811c6da5640e33992d",
       "shard_id": "002",
       "source_line_end": 22,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/ui_command_catalog/003-0.-scope.md",
-      "sha256": "fa443bf0c532104e9097d97d628c37a442c9634c1387de8c3e8196d10f67b6c8",
+      "sha256": "c43e2e8f776a16e710478d5559b7bf9591075a679f188e5b8f10b37f08487dee",
       "shard_id": "003",
       "source_line_end": 31,
       "source_line_start": 23,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Naming rules",
       "path": "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
-      "sha256": "1c5eca55099dddc508de7cb0275c14638041ad77a3d4112950512a550cfc723e",
+      "sha256": "03f556495306912b7273388d2bb5356e854e6214c68cf30ce846017ae30fa54d",
       "shard_id": "004",
       "source_line_end": 41,
       "source_line_start": 32,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Canonical command IDs",
       "path": "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
-      "sha256": "b00dd451b7721e671f636942f6a506852cea44eddc8a8232ddf4efac3cf47634",
+      "sha256": "ae0964e6107d208032afb7f31a04432782332470ae648da96c59899a2a0781c2",
       "shard_id": "005",
       "source_line_end": 1111,
       "source_line_start": 42,
@@ -53,16 +53,43 @@
     {
       "heading": "References",
       "path": "Plans/_shards/ui_command_catalog/006-references.md",
-      "sha256": "bd1e73355f676738d11018a0008cbcf324fc7a8556f4dfb25545f627f7ea4a70",
+      "sha256": "a18e49092188b4eedb807714790613bcfd462580b8e660bd93a3a88c8bf24872",
       "shard_id": "006",
-      "source_line_end": 1205,
+      "source_line_end": 1206,
       "source_line_start": 1112,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/ui_command_catalog/007-owner-consumer-map.md",
+      "sha256": "e9e0c8bbdaabff240ff458b4f2a5f5e7dc8ebbd68a0dc11ca43ef18ae62c2b79",
+      "shard_id": "007",
+      "source_line_end": 1212,
+      "source_line_start": 1207,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/ui_command_catalog/008-planunits.md",
+      "sha256": "b14b52a867e297b6d8b8d1160512fd777043281b33b47045ba9d21b10a5b85a2",
+      "shard_id": "008",
+      "source_line_end": 1424,
+      "source_line_start": 1213,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/ui_command_catalog/009-migration-coverage.md",
+      "sha256": "77bc15118cfa7f86811d79562b06db3545e1ef94f53ce89789612fa7af8329a6",
+      "shard_id": "009",
+      "source_line_end": 1435,
+      "source_line_start": 1425,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1205,
+    "line_count": 1435,
     "path": "Plans/UI_Command_Catalog.md",
-    "sha256": "de7fa9f47cbbaac910b668db4778c3faea7d2a32334ade64545dec448b22ac79"
+    "sha256": "ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d"
   }
 }

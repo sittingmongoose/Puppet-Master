@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/run_graph_view/00-index.md",
-  "index_sha256": "075549b1f1410df9c42e201371806c78dfbd85b873bb7bb689ba94422f4aabda",
+  "index_sha256": "df4944dcb33d054fc035f6c871c706e002ab325636499eb2205f6753de86a8ff",
   "manifest_path": "Plans/_shards/run_graph_view/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/run_graph_view/001-preamble.md",
-      "sha256": "29ac69178781e28cd5c5a3bb1683a807f2f7e31aed14e861da5b23789caedddb",
+      "sha256": "5bb6703fa61fa2d6da417c6569dc3c50b96f4e9b8e440c1ccb071dfe40da21d5",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/run_graph_view/002-canonical-owner-section-requirements.md",
-      "sha256": "b22a908ef0ea8ec159bb94f7d51ba34a5c039871ac42cecd72d339e30ad32a46",
+      "sha256": "1a8ea1752c45b705690e8f9102354c6c3dacb4f0aed7e7670344b7fe8dfce4e0",
       "shard_id": "002",
       "source_line_end": 13,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Scope and canonical role",
       "path": "Plans/_shards/run_graph_view/003-1.-scope-and-canonical-role.md",
-      "sha256": "3eea1041a368dd9bba15901ed17e5c3910ae9b22a776dd6cc22fca3d4f515c4a",
+      "sha256": "afb3426dbea905bbc980ed5435441a8db5ccad2966b122aff28a6ec688553a29",
       "shard_id": "003",
       "source_line_end": 96,
       "source_line_start": 14,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Layout",
       "path": "Plans/_shards/run_graph_view/004-2.-layout.md",
-      "sha256": "335e9d06a129ef31b1e1d41c6524327fc2f18ac49f8b5dfbf2d10de40f4c6d34",
+      "sha256": "c65aaa0c260c58fd3166de3fa237dfe14371d480a03234fa129008214447ecee",
       "shard_id": "004",
       "source_line_end": 111,
       "source_line_start": 97,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Node detail inspector",
       "path": "Plans/_shards/run_graph_view/005-3.-node-detail-inspector.md",
-      "sha256": "affdc44d04f2aac2d45afd449c1211fa527ef51ffe6e4c8648727e0826cc4e63",
+      "sha256": "be81bae5d0b4fb2bb1882cc83fcc68a1820af4a315ce9f68c848d1a4f6d2b857",
       "shard_id": "005",
       "source_line_end": 124,
       "source_line_start": 112,
@@ -53,16 +53,43 @@
     {
       "heading": "4. Data model and identity",
       "path": "Plans/_shards/run_graph_view/006-4.-data-model-and-identity.md",
-      "sha256": "aefb451af831a916fe3964b4919fce8ed6aca735dfaa071439516abc6260086e",
+      "sha256": "ba833e5382d584ec39194b4eea6dddd75ccd82c800a5e76f4e4ee7ec37ec52fd",
       "shard_id": "006",
-      "source_line_end": 133,
+      "source_line_end": 134,
       "source_line_start": 125,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/run_graph_view/007-owner-consumer-map.md",
+      "sha256": "6073092b19be6f71f339a32151f9bb34eb0560d40d9fa3355a4bfbabc59905bc",
+      "shard_id": "007",
+      "source_line_end": 140,
+      "source_line_start": 135,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/run_graph_view/008-planunits.md",
+      "sha256": "5d7490d3600a18b50dcf6d76f643c62523fdc717e64422c7bba08bbc1f4949c7",
+      "shard_id": "008",
+      "source_line_end": 242,
+      "source_line_start": 141,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/run_graph_view/009-migration-coverage.md",
+      "sha256": "3d217db48eaa712715e6c2d1754da69ab267c245f31062cbdb14b5a3986f0873",
+      "shard_id": "009",
+      "source_line_end": 253,
+      "source_line_start": 243,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 133,
+    "line_count": 253,
     "path": "Plans/Run_Graph_View.md",
-    "sha256": "ae46a77348397a81370e97493b38f8997311c540607466ad3571d87c62785bef"
+    "sha256": "88b59545c38655934469f01f9488055853e22aa4a0ce623f1eac7bf2dd351790"
   }
 }

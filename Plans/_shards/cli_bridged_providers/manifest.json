@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/cli_bridged_providers/00-index.md",
-  "index_sha256": "d0b6d41115083a2be86fdda91475d2c898fe06f2036b7c7e1a8682403b49ebc7",
+  "index_sha256": "63c774f579db83424e691d0e5b4d130b9e433bde20dfe4e23b5a10539137c1cb",
   "manifest_path": "Plans/_shards/cli_bridged_providers/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/cli_bridged_providers/001-preamble.md",
-      "sha256": "5e4b2567d689d737060d0380610e44be7b905c1a64834114fb306241cb5d9262",
+      "sha256": "7c985595b2bbb77007b95a7eb9ad802d3add29e74d52ac016c3aba05437726dc",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/cli_bridged_providers/002-canonical-owner-section-requirements.md",
-      "sha256": "176081eed34d91778ecd62765b779f381a74c9b86a99a64e3214c0e8bf7f3559",
+      "sha256": "1e709be2982abd10e21905b4e0f2589c8370f78dc347843247f5ae40df043d5e",
       "shard_id": "002",
       "source_line_end": 14,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/cli_bridged_providers/003-purpose.md",
-      "sha256": "00f1f51430c8b5c5115ecffd65cf5f01d08cf70f8f6968d75ee6d79ee4fb1cb9",
+      "sha256": "336f4b8c187580bd3bc89df53b34885ca15b66c12aeb6698c711ff3831eebbbe",
       "shard_id": "003",
       "source_line_end": 35,
       "source_line_start": 15,
@@ -35,16 +35,43 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/cli_bridged_providers/004-canonical-data-shape-reconciliation.md",
-      "sha256": "77ee06bfde9bea52956517a04c02d165aaaa2dd061b78a23ee19adf4509467aa",
+      "sha256": "bf287a245fc9de0d4936ed9208463abdf3c3429a5d1dd53aa4267e8164dc96b8",
       "shard_id": "004",
-      "source_line_end": 129,
+      "source_line_end": 130,
       "source_line_start": 36,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/cli_bridged_providers/005-owner-consumer-map.md",
+      "sha256": "9ce0e5282bcb2be734baa84116e755ef1737ad26a7bc83553749804a06bdb485",
+      "shard_id": "005",
+      "source_line_end": 136,
+      "source_line_start": 131,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/cli_bridged_providers/006-planunits.md",
+      "sha256": "4c7782dd9849a217f3a5572f7f1db734874e5e5352fc76c3c9916db21c8a70bb",
+      "shard_id": "006",
+      "source_line_end": 233,
+      "source_line_start": 137,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/cli_bridged_providers/007-migration-coverage.md",
+      "sha256": "c09a8acb00ffa96d5db6400927816e6ee9e03ff31152518540816b527307c6ca",
+      "shard_id": "007",
+      "source_line_end": 244,
+      "source_line_start": 234,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 129,
+    "line_count": 244,
     "path": "Plans/CLI_Bridged_Providers.md",
-    "sha256": "3b2f3908a287cb355fa85b17c3a6f5d7af31cba872c6756f89f14db4cf1ea9b7"
+    "sha256": "e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36"
   }
 }

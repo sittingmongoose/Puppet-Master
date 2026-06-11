@@ -1,52 +1,55 @@
 # Shard Index: Plans/orchestrator-subagent-integration.md
 
-Generated: 2026-06-11T15:42:37Z
+Generated: 2026-06-11T21:19:43Z
 
-Source SHA256: `68308e5ee0eb66377a92b5bf780abd21496f872f4df0059820d1e7f4648af5d6`
+Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `32c17d9f0afbe264b544fb2f8bce36adb4054bcfb0d28b2db75840606961e67a`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L16 `1469c9d8412f9120068afd931bc1d72965b843dc04239f694b23ab222718744b`
-- [003 - Plan Document Status](003-plan-document-status.md) L17-L27 `907fb8d3e2e666c5cade379b9437088fe12f84296a534332b4c4028f35e1e410`
-- [004 - Executive Summary](004-executive-summary.md) L28-L76 `d41a55512a9f40ea55836a141a60f9c0f8aa38b55dabe0de93ae6c7d521014d8`
-- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L77-L122 `d71ffd4191de33bb6e3a2d3810dc86a95936fda94ba90ddc84e25c1c9e2df9a7`
-- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L123-L160 `cdd912e6722840f9decb56f137709b475cc3d46daa6246b8a4876d5cc6f36062`
-- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L161-L177 `449ecb2735f7eee967bf446419295b24c414b539f066e3ea36ba2042f0c7db59`
-- [008 - Tier-Level Subagent Strategy](008-tier-level-subagent-strategy.md) L178-L190 `09197dcb723db8d37091e11287038254bbfaebc6236e681986de54c032768998`
-- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L191-L203 `20ca36cd2e634726e103bd51bbd18f4cf99d2ecd3cf4878993d152ec66a941eb`
-- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L204-L261 `d3296a7845abe868df11d1f12f75f610c823f3cca9297a10e8779fea12c90217`
-- [011 - Integration with Orchestrator](011-integration-with-orchestrator.md) L262-L565 `49768ced5c74f12488cf0e4fb468b1aa8ae6f8cb9a958d8dae824790a8fe5496`
-- [012 - Execution unit context and worktree allocation strategy](012-execution-unit-context-and-worktree-allocation-strategy.md) L566-L599 `e590113f2088b8fb317c0b35d24b65e71e54c59cb01fecda3c40924c45ea6255`
-- [013 - Benefits](013-benefits.md) L600-L608 `e53a14998bf05754195e06665be415ec78f2f858ea2412d793dc6eaf555f9f62`
-- [014 - Implementation Phases](014-implementation-phases.md) L609-L641 `c325d0776e4a5c09327cdd462c904baa1f9a1e9a954a489451c6a238dd4900df`
-- [015 - Provider Connectivity Smoke Tests & Subagent Invocation Testing](015-provider-connectivity-smoke-tests-subagent-invocation-testing.md) L642-L852 `44d6448ce82d5713118bb7513d3b0e83532a3a23f48e563837f73ace8c5e5352`
-- [016 - Plan Mode Strategy & Defaults](016-plan-mode-strategy-defaults.md) L853-L868 `dade0678a83e3ed5b129b00dab0823bad38f22a28af7910de3e074332f05c152`
-- [017 - GUI and Backend Scope (All In-Scope Now)](017-gui-and-backend-scope-all-in-scope-now.md) L869-L934 `2926ea5004793623529d60f89d916113e2babd4c6f059c470159e4878c529a30`
-- [018 - Gaps and Clarifications](018-gaps-and-clarifications.md) L935-L1040 `a5cbd443f791614621401ad03cee6662b1763bdfcb5e73209d484251e5c25d92`
-- [019 - DRY Method Compliance](019-dry-method-compliance.md) L1041-L1113 `30dc599780e75d88a11b8375a867b31fa3e92771bea5ece8182c7472b2d96801`
-- [020 - Potential Issues](020-potential-issues.md) L1114-L1204 `159e16d316f12d5769ba466e90ae57784b4267a200ec84cd31ec6bee8668b977`
-- [021 - Interviewer Enhancements and Config Wiring](021-interviewer-enhancements-and-config-wiring.md) L1205-L1276 `b97b255c6e16694525c02fd849f0a3541b44707917590ecb8c07927a28bd4edc`
-- [022 - Avoiding "Built but Not Wired"](022-avoiding-built-but-not-wired.md) L1277-L1345 `ca3346121af46e6a7b7a382b0c92b2fbe5e289237ed12b0f9e8c99e236851fd1`
-- [023 - Start and End Verification at Phase, Task, and Subtask](023-start-and-end-verification-at-phase-task-and-subtask.md) L1346-L3323 `b68e85d97786e64c70d298e1c5333ed6046db95c8cf286fca39503832e01bc14`
-- [024 - Considerations](024-considerations.md) L3324-L3332 `2f0bb91898b3143d9b9a49ae606d3342a9ef1f1c4899fba569c2084cc379bd43`
-- [025 - Platform capability next steps](025-platform-capability-next-steps.md) L3333-L3350 `ebb4c3888800499750bbc732c14a169c13870ee149e056b7c7ba3c798a168dd8`
-- [026 - Considerations](026-considerations.md) L3351-L3359 `be2dfa743b140c195eccc6fd8b0c34c8ae3ed5d913761d6c29400ba6f03bc35b`
-- [027 - Platform capability next steps](027-platform-capability-next-steps.md) L3360-L3369 `5e8984c52ed370d650bdf505781b8b884de9e2af52b1480653efb6305fc21d74`
-- [028 - Implementation Notes (Where Code Lives and What to Add)](028-implementation-notes-where-code-lives-and-what-to-add.md) L3370-L3428 `beb8a33cc11797598c9fd9762ed0828919fb7c1e1b5d6be47cd87c2b0da3642a`
-- [029 - Parallel Execution & Subagent Integration](029-parallel-execution-subagent-integration.md) L3429-L5532 `eff06168bc83afff7923729c1d4619882fde312383461ea54691e7c05ca0f1dc`
-- [030 - Platform-Specific Capabilities & Extensions](030-platform-specific-capabilities-extensions.md) L5533-L5575 `5cf08598ed3e8b2cb6c4df271990531d63e6873ed919ca60453c601b5d4e54ce`
-- [031 - Leveraging Platform Capabilities for Subagent Integration](031-leveraging-platform-capabilities-for-subagent-integration.md) L5576-L5593 `0af094df6bb4b5b07b8459a72fce43437cbc866566a99fda5934f06096cc169d`
-- [032 - Updated Implementation Architecture](032-updated-implementation-architecture.md) L5594-L5653 `69da99924301e1f3d2032737bb5858157a2b4c52ee4b0fc242826aedd76d9371`
-- [033 - Benefits of Platform Capabilities](033-benefits-of-platform-capabilities.md) L5654-L5662 `8a541eac6caeb1ff0bdcb814e1d02e01b001c689a03e54d61c7550d0a7eafd6c`
-- [034 - Implementation Considerations](034-implementation-considerations.md) L5663-L5671 `cf07851b11798df34ff565b8062b994e5b35450c82791d4090f5fd5e024416db`
-- [035 - Next Steps](035-next-steps.md) L5672-L5679 `c2b32779a66cb2aa7bc1350cbcc1a6b80a11fcb5eac5512a8bc7458556e6966c`
-- [036 - Autonomous QA Loop Pattern Integration](036-autonomous-qa-loop-pattern-integration.md) L5680-L6070 `20d914bcad01f73d21904de78e88592e04695fa12980c77b677600937602cacc`
-- [037 - Change Summary](037-change-summary.md) L6071-L6077 `eedd5203375df32191deca272440505c18dcf732d20cf3fe7409fc5a05ee616e`
-- [038 - Persona and Effective Runtime Resolution Addendum (2026-03-06)](038-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) L6078-L6192 `1d143a5dbd07959214819d0e19e259b5ca6208118e64e9715f6ba1940184ac32`
-- [039 - Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)](039-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-0.md) L6193-L6348 `1331096b9fb637ccc9c4f7c25efc56312c99b9de8bda32d4dd6178fae22fc45a`
-- [040 - Runtime Scheduler Consumer / Subagent Canonical Alignment (2026-03-09)](040-runtime-scheduler-consumer-subagent-canonical-alignment-2026-03-.md) L6349-L6388 `b8043f2ead61a341530cb1cb40c99a3986462661503c9c34e94dffeb99077303`
-- [041 - Orchestrator Runtime Consumer and Remediation Execution Canonical Alignment (2026-03-09)](041-orchestrator-runtime-consumer-and-remediation-execution-canonica.md) L6389-L6413 `880122ec154269014aa771dba35a88c600b166bab075a2bfb5260026080ffb75`
-- [042 - Runtime Enum and Counter Alignment Addendum](042-runtime-enum-and-counter-alignment-addendum.md) L6414-L6426 `cef9a17cf5db4a0a2c3259665ba99fd351343ec20efe96638df519ba9ed14d27`
+- [001 - Preamble](001-preamble.md) L1-L3 `2c14be9a668d36799f229340d4118d6592e17e945a39acff3c8bbd580aebd341`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L16 `5ea70b8c23cafe933a90b9c709744cda88254f4d1a23e18ca7b40b2954534af7`
+- [003 - Plan Document Status](003-plan-document-status.md) L17-L27 `4294a8583560c932e7e5432782c8a88211cc81e1789a8bc08a03aa3c3aef0ddb`
+- [004 - Executive Summary](004-executive-summary.md) L28-L76 `9280376141b1c637cbe27062d79a9a481802e59a14aa69774cc803b87530734d`
+- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L77-L122 `db639651d5a9930585ce0fb6e0109dc5141fc4419e87703633efddbbf9e520cb`
+- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L123-L160 `e55156120a88359debfc512779db4b78d5402cb51f16c96dec7c8120f08b8f13`
+- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L161-L177 `56281ecb2acc010a81637bd824a32240591d300e0c4744eded19ce3873fc8fed`
+- [008 - Tier-Level Subagent Strategy](008-tier-level-subagent-strategy.md) L178-L190 `7afdbf5ea8f8dd213395fcca35e4e1037f0a7d403ca7c0da825e93d3670b1461`
+- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L191-L203 `d94f891c8b95bf65d00cdc3b1ae65abac1dd70876551a172e3a5112b8382460c`
+- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L204-L261 `2ab59db703692978b31093f7e645f1c02329019649f171fb8bb225c9dbaa2142`
+- [011 - Integration with Orchestrator](011-integration-with-orchestrator.md) L262-L565 `355603a1004698ab03044a9703fad4bb8919c4b08bb234ba4b8508680157b33a`
+- [012 - Execution unit context and worktree allocation strategy](012-execution-unit-context-and-worktree-allocation-strategy.md) L566-L599 `3068ddc4dd5f1bda8e62974a398d447cd6c05730fd7d7ee1af14890a399a8522`
+- [013 - Benefits](013-benefits.md) L600-L608 `71042ff33bff61a2874b2dcecf597d20a039e523775dc5729a46a375026ee156`
+- [014 - Implementation Phases](014-implementation-phases.md) L609-L641 `a3bbf8bbea2e061de4dcebb94bc2f68788a0fa3575a78b43591799c75f48ef01`
+- [015 - Provider Connectivity Smoke Tests & Subagent Invocation Testing](015-provider-connectivity-smoke-tests-subagent-invocation-testing.md) L642-L852 `8ea1cc4bc6da1d23cabe8faa1535fa9fafb99ebadc59eef00d4ccf5f1ee60ef4`
+- [016 - Plan Mode Strategy & Defaults](016-plan-mode-strategy-defaults.md) L853-L868 `7c4641cff4b9cff7acc3a211546d37ffec4a7a7d3f0e219de71baba094e87f96`
+- [017 - GUI and Backend Scope (All In-Scope Now)](017-gui-and-backend-scope-all-in-scope-now.md) L869-L934 `23db9fc374466d36bfd87c45df6f0956ad830b430e26aa7c6d42778fb9651278`
+- [018 - Gaps and Clarifications](018-gaps-and-clarifications.md) L935-L1040 `f7d471b18ee7519ccbbcea89db5d08c8c9ca6730a1118113b10510a3e2d16159`
+- [019 - DRY Method Compliance](019-dry-method-compliance.md) L1041-L1113 `230e89362d7de85fca7e287b74bbd7e3e10aa4b3ce4b306f3d5661c0ff0b9ff1`
+- [020 - Potential Issues](020-potential-issues.md) L1114-L1204 `62f2510e72329076e76e917f79b71e1563203e15be54a8b9185439d48ef6bfaf`
+- [021 - Interviewer Enhancements and Config Wiring](021-interviewer-enhancements-and-config-wiring.md) L1205-L1276 `a5637491f4f31b7786ac04ac6e1a6eca6d1f423c09bbeb8239c81246a76d5e0f`
+- [022 - Avoiding "Built but Not Wired"](022-avoiding-built-but-not-wired.md) L1277-L1345 `0583b62a4d8d05e528e77df61dbedf0c018f9335a871f763ab8addb8570e1d25`
+- [023 - Start and End Verification at Phase, Task, and Subtask](023-start-and-end-verification-at-phase-task-and-subtask.md) L1346-L3323 `ca4c92e72b95e20f2f262411602a32b4f7a44c367a5e4c0178ea40338f6ab716`
+- [024 - Considerations](024-considerations.md) L3324-L3332 `d9955410bb75685efbf01af34be4183edafa391e3b35e9aed28bb3a8d17b462d`
+- [025 - Platform capability next steps](025-platform-capability-next-steps.md) L3333-L3350 `90021ac49538587a68989b4632ddfac26755595fc64c5e6d7e99478a5407e707`
+- [026 - Considerations](026-considerations.md) L3351-L3359 `b7b1b9893903c0edfdab8630a886e4faedba64d2fde11f438aeba28b0d316610`
+- [027 - Platform capability next steps](027-platform-capability-next-steps.md) L3360-L3369 `71d9f53196e30a55e7412e8ac4f931c3a11da0477d7b42d35bba9f61a00f794e`
+- [028 - Implementation Notes (Where Code Lives and What to Add)](028-implementation-notes-where-code-lives-and-what-to-add.md) L3370-L3428 `b53443ee66f2a67c586bb8e6f597e328a1d8455bd5c21e5cd991df5d91233393`
+- [029 - Parallel Execution & Subagent Integration](029-parallel-execution-subagent-integration.md) L3429-L5532 `105073cbdbf001b5b5d995b33f84ffb091e57cae93886eec5e34945ddb988034`
+- [030 - Platform-Specific Capabilities & Extensions](030-platform-specific-capabilities-extensions.md) L5533-L5575 `19a47c207faf79cef63a31de3a156dd3f36d83fcecbaba4adb0dfa9a2e9d81b1`
+- [031 - Leveraging Platform Capabilities for Subagent Integration](031-leveraging-platform-capabilities-for-subagent-integration.md) L5576-L5593 `8831abfc5c1999790e1849c371088fc655f13de6690cd394dd60b145f9a39127`
+- [032 - Updated Implementation Architecture](032-updated-implementation-architecture.md) L5594-L5653 `43d31029f71c08cfd8449ef42c4d58e9c863257472fac8efa1582fcbefeb6f6f`
+- [033 - Benefits of Platform Capabilities](033-benefits-of-platform-capabilities.md) L5654-L5662 `7892db9f1e2174513854e16f7155925dc0d3632ff9eff7e7e05af7fd08d928d5`
+- [034 - Implementation Considerations](034-implementation-considerations.md) L5663-L5671 `cee985501b340d0b2f5270e36fd08ccfe49e058609ae47ffaa3cd812e038e2be`
+- [035 - Next Steps](035-next-steps.md) L5672-L5679 `1c8eb8281a953dc54a1344620351a7d96c0750e0c926c877e8f40bc42e69c5af`
+- [036 - Autonomous QA Loop Pattern Integration](036-autonomous-qa-loop-pattern-integration.md) L5680-L6070 `4e6ac981c0e16b0d6b667be66002c9c82c9339cdaced524f6f83e8756e88a23f`
+- [037 - Change Summary](037-change-summary.md) L6071-L6077 `123057272df3e4ab1e6ef75116e6e714edc9449422ee81a4a2f89d0c399591c4`
+- [038 - Persona and Effective Runtime Resolution Addendum (2026-03-06)](038-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) L6078-L6192 `5e7d776c8ad047eb77772a69a31679c3cb362fb179fbc62e404d4030dff2ee2e`
+- [039 - Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)](039-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-0.md) L6193-L6348 `84a9cc378d4b711aaeac2774531537264503f62574ac5892f416673db6ef2cab`
+- [040 - Runtime Scheduler Consumer / Subagent Canonical Alignment (2026-03-09)](040-runtime-scheduler-consumer-subagent-canonical-alignment-2026-03-.md) L6349-L6388 `0fb6c0911ee6a2b6525e2aef269f3f5962a7d04834bd991fdf58d77e7a3447e4`
+- [041 - Orchestrator Runtime Consumer and Remediation Execution Canonical Alignment (2026-03-09)](041-orchestrator-runtime-consumer-and-remediation-execution-canonica.md) L6389-L6413 `f628c6a6859b98a73634d1188ab1106968d3d368191f77206ff3b9cf4be19d54`
+- [042 - Runtime Enum and Counter Alignment Addendum](042-runtime-enum-and-counter-alignment-addendum.md) L6414-L6427 `4ec4170ef1456aa932d87c2c97debd7e77c7df88bc2cf0372987771071e28713`
+- [043 - Owner / Consumer Map](043-owner-consumer-map.md) L6428-L6433 `3ac6245a3dfc284e29bf083afaee34cd5eb6b1dce4c451680a61373faf3c1358`
+- [044 - PlanUnits](044-planunits.md) L6434-L6816 `4b17d65d586c33f5e11d08a3c60f853d0d75a7149026d27239ac7523d9f205ae`
+- [045 - Migration Coverage](045-migration-coverage.md) L6817-L6827 `866c563fa8e4a00e7a26d8b80505200c013de863189411ccb1655f61c3f7a880`

@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L773-L786
+Source lines: L773-L787
 
-Source SHA256: `873ad4ab0fac4327e921959abc15ad6271f04bd544a04c7ca7ff4dc01ef5ac80`
+Source SHA256: `d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12`
 
 ---
 
@@ -22,3 +22,4 @@ Required fields:
 Rules:
 - Validation lineage stays concrete and inspectable.
 - Pass reports remain upstream artifacts rather than local replacement identifiers.
+

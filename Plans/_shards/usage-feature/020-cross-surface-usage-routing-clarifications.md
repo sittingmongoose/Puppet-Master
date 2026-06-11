@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L901-L918
+Source lines: L901-L919
 
-Source SHA256: `0aa9f55786575dbd9e7fbc5e155e14e603ca5a56959c5fbdae4f8801628b259d`
+Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1`
 
 ---
 
@@ -26,3 +26,4 @@ Source SHA256: `0aa9f55786575dbd9e7fbc5e155e14e603ca5a56959c5fbdae4f8801628b259d
 - Project run history remains chronological-first. If cross-run derivation or `/continuation` concepts are added later, they require explicit run-relationship metadata instead of reordering history around inferred relationships.
 - Account switching and quota pressure share an append-only account-switch / pressure-episode family with shared projection consumers, so Usage, Ledger, History, and account-pressure views read one durable record family.
 - OpenCode bridge limits, DAE enforcement, promoted-feature shell ownership, and runtime identity provenance remain explicit architectural edges before Usage presents those events as fully resolved provider/account facts.
+

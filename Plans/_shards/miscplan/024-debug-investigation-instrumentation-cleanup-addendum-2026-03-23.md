@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1317-L1344
+Source lines: L1317-L1345
 
-Source SHA256: `bc01e6f91402242abb8e486a0f70fe8b7c3b3ecc94a1e1a85ebd94ba62eb534d`
+Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4`
 
 ---
 
@@ -36,3 +36,4 @@ Debug-capable tooling remains shared: `Plans/Tools.md` / `Plans/newtools.md` (`/
 Debugger `/profiler` attach instrumentation must detach the temporary attach/profiler `/session`; if detach fails but no durable workspace mutation remains, keep the failure localized to runtime/session state and do not claim cleanup success.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+

@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L640-L702
+Source lines: L640-L703
 
-Source SHA256: `e0d27c1494bf01c5a72ca17abb7f28b8f6a1045f19aa2ef941b87d7c9ab6d2e9`
+Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1`
 
 ---
 
@@ -71,3 +71,4 @@ If OpenCode or the selected upstream model does not support a requested runtime 
 **Usage and Ledger alignment:** OpenCode server returns message-level usage; the adapter maps it to normalized usage (same shape as `usage.event`). Persistence and Ledger/Usage consumption follow `Plans/storage-plan.md` and `Plans/usage-feature.md`. For implementers, the OpenCode product pipeline (`Session.getUsage`, processor finish-step) is the reference for how message metadata becomes stored usage; terminology should not drift.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+

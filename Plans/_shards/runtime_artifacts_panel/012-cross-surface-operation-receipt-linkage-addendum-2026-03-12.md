@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L365-L395
+Source lines: L365-L396
 
-Source SHA256: `b3e07aeee00362056ec43b4d5a7fefc895678e6e419f5f40d61ba937820a1bb1`
+Source SHA256: `61408fdc7b9377e56d2d9a36661d6e8d5650ce40e634d9c10b5c95cc85dfa094`
 
 ---
 
@@ -39,3 +39,4 @@ Rules:
 - Bridge fields remain joins rather than replacement primary keys.
 - Open and focus actions route through canonical receipt and usage identity.
 - Usage-linked artifacts consume frozen `effective_*` runtime snapshot fields and `usage-source-confidence` fields; Agent-Config and Health may display live current values beside the artifact, but they must not rename or rewrite the frozen schema carried by the usage/runtime record.
+

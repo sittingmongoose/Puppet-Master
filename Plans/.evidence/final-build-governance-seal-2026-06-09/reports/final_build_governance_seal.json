@@ -6,9 +6,15 @@
     "p6_locked_deferred": true,
     "plan_graph": "pass",
     "shards": "pass",
-    "spec_lock": "pass"
+    "spec_lock": "pass",
+    "plan_index": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "run_gates": "pass",
+    "auto_decisions": "pass"
   },
-  "generated_at_utc": "2026-06-10T04:05:00Z",
+  "generated_at_utc": "2026-06-11T21:25:28Z",
   "kept_ledgers": "Plans/ledgers/**",
   "ledger_transfer": {
     "allowed_batch_results_passed": {
@@ -87,5 +93,13 @@
   ],
   "schema_id": "pm.final_build_governance_seal.report.v1",
   "status": "pass",
-  "summary": "Clean repo build-governance support artifacts sealed after legacy Iced/prompt artifact cleanup."
+  "summary": "Stable ledger, Plan, and PlanUnit governance seal passed run-gates and shard verification.",
+  "plan_index": {
+    "status": "pass",
+    "plan_unit_count": 105,
+    "acceptance_unit_count": 357,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false
+  }
 }

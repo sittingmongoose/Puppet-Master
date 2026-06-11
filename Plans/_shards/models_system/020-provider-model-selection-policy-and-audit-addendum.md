@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1160-L1236
+Source lines: L1160-L1237
 
-Source SHA256: `10fe6fe1c4a9e31b624537b011c0b93e66a40ad7e68a7ee45eed589ae1abe66b`
+Source SHA256: `c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c`
 
 ---
 
@@ -85,3 +85,4 @@ selection_reason {
 This metadata is logged so inspectors and auditors can trace why a particular model was chosen and what constraints were active.
 
 ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md
+

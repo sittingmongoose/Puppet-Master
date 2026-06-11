@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L417-L478
+Source lines: L417-L479
 
-Source SHA256: `b3ab29d3fdfc69b5ac8ad8d1f6c9d2873085fa86f03b37bb459fba8bf6e57564`
+Source SHA256: `f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682`
 
 ---
 
@@ -70,3 +70,4 @@ When feature-owner docs disagree, this Crosswalk records the owner precedence an
 - Secondary broad-pass constraints: chat and file-tree docs remain consumers of the legacy Git/GitHub model and must be reconciled alongside the feature-owner docs; `git*` and `actions*` remain built-in chat command namespaces; Docker/registry/Kubernetes operational identity is not owned by Multi-Account unless a later owner doc explicitly moves it; `/underdefined` UI-state contracts must be resolved in the named surface owner docs rather than by adding consumer-only state; prescriptive `recovery_options` or `recovery_options[]` wording must be retired in favor of `allowed_action_ids` and `allowed_action_ids[]`.
 
 ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/human-in-the-loop.md
+

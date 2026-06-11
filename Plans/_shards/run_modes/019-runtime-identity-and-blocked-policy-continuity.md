@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L710-L719
+Source lines: L710-L720
 
-Source SHA256: `a430763e3be8df6d28f0bd8e8563eb2428ce42663485d0412aaacf8a41d3706f`
+Source SHA256: `278c36fc1015a5ee27bf870d55c3f1147530f3880a98ebc4071ecc5e19ef74b0`
 
 ---
 
@@ -18,3 +18,4 @@ Source SHA256: `a430763e3be8df6d28f0bd8e8563eb2428ce42663485d0412aaacf8a41d3706f
 - Carry usage switch-history and usage execution-role follow-through across mode changes and blocked recovery.
 - cov-159 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
 - cov-159 exact item present: Carry usage switch-history and usage execution-role follow-through
+

@@ -1,18 +1,21 @@
 # Shard Index: Plans/MCP_Integration.md
 
-Generated: 2026-06-11T15:42:37Z
+Generated: 2026-06-11T21:19:43Z
 
-Source SHA256: `47c5bc2c1c6dc0199dd175d4f2a6a2ada76f0c7bd904280cbb3a9e7ff66a2d3f`
+Source SHA256: `c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L7 `0bbcbd0e2f805d93673f70cd50028a1d1e0d0962b8627efd8a279b06e5dd9412`
-- [002 - 1. Canonical naming](002-1.-canonical-naming.md) L8-L25 `8489eedd7598868d15fb648c527eeadf1fd71547cb35d2b5b9711ad8e2f29543`
-- [003 - 2. Requested versus effective availability](003-2.-requested-versus-effective-availability.md) L26-L46 `865ee580bc9f2b175a42c87f693282facb51e30b22b498e6126ce2b738f614fa`
-- [004 - 3. Credential binding and invalidation](004-3.-credential-binding-and-invalidation.md) L47-L66 `d1e66404b22f4c87d924c280e04b5ebf75b6c5b39a742db20065da85eab60aa8`
-- [005 - 4. Cross-surface responsibilities](005-4.-cross-surface-responsibilities.md) L67-L80 `e30d853ae20619183a1ef5684a4538eee98ba2ce6689e4eabb806d07ba8864ae`
-- [006 - 5. Server config schema](006-5.-server-config-schema.md) L81-L142 `2680eca823ef422f52efb8a44dec15aedd2052050a1d729cad0486148888bcd1`
-- [007 - 6. Supported flows](007-6.-supported-flows.md) L143-L154 `5fb0d888a28a0c42a41ecc2a8ee4723f4dfe35d4d7db3879e5a094732702cb46`
-- [008 - 7. Effective tool availability and GUI surfacing](008-7.-effective-tool-availability-and-gui-surfacing.md) L155-L186 `fb5af49e3abae205cd7b08945520e5a2a29c60f31c769e851ac37743743c8d22`
+- [001 - Preamble](001-preamble.md) L1-L7 `341e28c840e71cb37eed98ddc610ecd1e5fb01c029edd31f0800de8da079a91e`
+- [002 - 1. Canonical naming](002-1.-canonical-naming.md) L8-L25 `be4d6313f50e0033236380224a0c4428bc9288bd71fc750333ad77e183192902`
+- [003 - 2. Requested versus effective availability](003-2.-requested-versus-effective-availability.md) L26-L46 `eb00fb88b52b0e06c62f9ae965f62de0a62eb4f06b4fb863fe6bc92e09e39eae`
+- [004 - 3. Credential binding and invalidation](004-3.-credential-binding-and-invalidation.md) L47-L66 `94a22d8c2ec8bd6c526fdae74c3c4bc0b398f86fb306d893e2d361d17c0f394e`
+- [005 - 4. Cross-surface responsibilities](005-4.-cross-surface-responsibilities.md) L67-L80 `7c2aafd6bfa25d31f2cc142072a5b845088b7aa5a7840238ed2f99fab099a03b`
+- [006 - 5. Server config schema](006-5.-server-config-schema.md) L81-L142 `1c35f79b488256b7b9016cb8ec16933f4a2c4288aa71841b5196939b9f80eca8`
+- [007 - 6. Supported flows](007-6.-supported-flows.md) L143-L154 `b54d4787bb7d4998f289db2aaf598781aea74dc8995819b00c974e76f3a429ec`
+- [008 - 7. Effective tool availability and GUI surfacing](008-7.-effective-tool-availability-and-gui-surfacing.md) L155-L187 `f9e7478e0841efe383cfd3ef1b82678c6c77fbd80035113b6bde06d32926eddb`
+- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L188-L193 `348a4bdf878f7f7d41bc7033eae58b48fa5cf217ebaeb1c6dfbaac4420ded2b8`
+- [010 - PlanUnits](010-planunits.md) L194-L288 `90a3bfbf4344bacbf49660df12140f159f1fccb75aabcddc92544c45277e3e44`
+- [011 - Migration Coverage](011-migration-coverage.md) L289-L299 `a37ed86354c2a30305b5443e5dab4a5075f55bbf59503b5afc18174450c91b5f`

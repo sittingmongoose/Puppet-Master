@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2669-L2710
+Source lines: L2669-L2711
 
-Source SHA256: `285a73955e3375657f111ef892fc805af9511994cf79f1ab9bd74ddc5697299d`
+Source SHA256: `e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214`
 
 ---
 
@@ -50,3 +50,4 @@ Context-shaping and handoff rule:
 - any rerun or restore after FileSafe denial uses canonical handoff reconstruction.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+

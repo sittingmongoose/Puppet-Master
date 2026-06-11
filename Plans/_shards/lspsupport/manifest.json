@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/lspsupport/00-index.md",
-  "index_sha256": "9ee4115991999403828ac3c83503ad949e56dd4bbd4ddbbef0eaaef064fb3977",
+  "index_sha256": "108c19ba75c9be9a9b209772f1d967cc9b46812923a9ee14ffc929853ee6a9f5",
   "manifest_path": "Plans/_shards/lspsupport/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/lspsupport/001-preamble.md",
-      "sha256": "7f6ec3faf5e8121f5f80ff876770b1309ab9028a1ae9d71686e8003d65fddd2c",
+      "sha256": "dba8b25aa00bfd8e13f5d614a4777cfaa2c17cabc3e76fce7c178f5bab0faa8b",
       "shard_id": "001",
       "source_line_end": 19,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "1. Purpose",
       "path": "Plans/_shards/lspsupport/002-1.-purpose.md",
-      "sha256": "9f31b22efafd31a5de398a76f380c1d0372023e95c21a376838a742b4f9d8624",
+      "sha256": "0e74b203e88d849d4ce206345ab1e581f2e7644989c05a6570d1444df599a5fa",
       "shard_id": "002",
       "source_line_end": 71,
       "source_line_start": 20,
@@ -26,7 +26,7 @@
     {
       "heading": "2. LSP Basics (Reference)",
       "path": "Plans/_shards/lspsupport/003-2.-lsp-basics-reference.md",
-      "sha256": "d97394af3c7be9442b675c63f6efff6e37288ed68e15ad2141ecb3a0ba393b92",
+      "sha256": "681e361a72f4be42486966aca530c33af2bd96246c66b3b003362f0005aec16d",
       "shard_id": "003",
       "source_line_end": 88,
       "source_line_start": 72,
@@ -35,7 +35,7 @@
     {
       "heading": "3. How OpenCode Does It (Reference for Rewrite)",
       "path": "Plans/_shards/lspsupport/004-3.-how-opencode-does-it-reference-for-rewrite.md",
-      "sha256": "634440cf95ccc5b5327db0f3340dd7b5ea9132a3f8fab3dacf93e8e22aa511dc",
+      "sha256": "f0e8f41a4992b737536c64a8082ad7813cb92bbbd0b7187ecfd433c53814585f",
       "shard_id": "004",
       "source_line_end": 267,
       "source_line_start": 89,
@@ -44,7 +44,7 @@
     {
       "heading": "4. Rust Stack (Client Side)",
       "path": "Plans/_shards/lspsupport/005-4.-rust-stack-client-side.md",
-      "sha256": "c88f38f14a0d9c85facd9d547970093fd4056ae67d1743bef901215538d7168f",
+      "sha256": "56e758e902fdbdebc949521bbfea06ff9a23b5fe2ee9e386162b0c0d3b9d17f8",
       "shard_id": "005",
       "source_line_end": 282,
       "source_line_start": 268,
@@ -53,7 +53,7 @@
     {
       "heading": "5. Integration with Our Editor (FileManager / Rewrite)",
       "path": "Plans/_shards/lspsupport/006-5.-integration-with-our-editor-filemanager-rewrite.md",
-      "sha256": "e19fcc1a69e0da870a4d584392f50873e345945b6f7c54e60a99eae532f47336",
+      "sha256": "1b18a43bb534d3e73465a3b5e0d3097395a592bf6afdc4eeb6360773ea9743f2",
       "shard_id": "006",
       "source_line_end": 359,
       "source_line_start": 283,
@@ -62,7 +62,7 @@
     {
       "heading": "6. Scope and Phasing",
       "path": "Plans/_shards/lspsupport/007-6.-scope-and-phasing.md",
-      "sha256": "762a31fda3064c619b779e1b4aaff0e74919ed90867b1a950638dc6aeef9731d",
+      "sha256": "f0f582a9a33112e44db90eda7370fda8dbf2276b90a6ce2fc1082425c1f60fbb",
       "shard_id": "007",
       "source_line_end": 367,
       "source_line_start": 360,
@@ -71,7 +71,7 @@
     {
       "heading": "7. Resolved design decisions and implementation constraints",
       "path": "Plans/_shards/lspsupport/008-7.-resolved-design-decisions-and-implementation-constraints.md",
-      "sha256": "ae8224b29b1c866cfe34021d0ad8694edeea948684b9147618226ba3423d96ee",
+      "sha256": "b26846047dd2e5bae04734c8eefcf0bf0e85dd16a0980fde2fb7e5e036a4250b",
       "shard_id": "008",
       "source_line_end": 390,
       "source_line_start": 368,
@@ -80,7 +80,7 @@
     {
       "heading": "8. Potential issues and mitigations",
       "path": "Plans/_shards/lspsupport/009-8.-potential-issues-and-mitigations.md",
-      "sha256": "1ad55b9ac25314f232133cabb3d8e8325f11666d238f77cb802b0309b54f5b8e",
+      "sha256": "06464385bc6c5881d6731388687c735be213c343a1f77af9305557fe4fcbf29e",
       "shard_id": "009",
       "source_line_end": 408,
       "source_line_start": 391,
@@ -89,7 +89,7 @@
     {
       "heading": "9. MVP LSP features (summary)",
       "path": "Plans/_shards/lspsupport/010-9.-mvp-lsp-features-summary.md",
-      "sha256": "fe4e752465ff562327632d8d9d8e2361aa64d7ae9fe741c928cd51d65cbd844a",
+      "sha256": "94cd3b56b8cab24b68246672c74228569d3a60a91b7e06318df45a7997494474",
       "shard_id": "010",
       "source_line_end": 442,
       "source_line_start": 409,
@@ -98,7 +98,7 @@
     {
       "heading": "10. Transport alternatives and bridge pattern",
       "path": "Plans/_shards/lspsupport/011-10.-transport-alternatives-and-bridge-pattern.md",
-      "sha256": "5ced9545d6fcc2a74e92e30f8934d4d3d3997fcab5d2104121986ba2d83634e9",
+      "sha256": "0de5a1ac29d3cacc7d12186165e68d4b0a6f57e267a9ce69ff3c519daee125bd",
       "shard_id": "011",
       "source_line_end": 460,
       "source_line_start": 443,
@@ -107,7 +107,7 @@
     {
       "heading": "11. References",
       "path": "Plans/_shards/lspsupport/012-11.-references.md",
-      "sha256": "0ab22bf70b0dd0c9d9121d028188e306a7258e7df0d0e2ef49b29788d15cc851",
+      "sha256": "95121019675895b5741ff58bbf22d85f2eb86076b61f6706fd7935957fbf59bb",
       "shard_id": "012",
       "source_line_end": 479,
       "source_line_start": 461,
@@ -116,7 +116,7 @@
     {
       "heading": "12. Implementation checklist (when phased in)",
       "path": "Plans/_shards/lspsupport/013-12.-implementation-checklist-when-phased-in.md",
-      "sha256": "cd8f33d2f0774d5b27a0ca53ecfc3b5f83ccbbdc6cb3b196cc4d7b6738ebdabc",
+      "sha256": "6a24790236587105d8d2af16d37713045c34618f70512c4085409d4e8b7e63b5",
       "shard_id": "013",
       "source_line_end": 538,
       "source_line_start": 480,
@@ -125,7 +125,7 @@
     {
       "heading": "13. GUI requirements and cross-references",
       "path": "Plans/_shards/lspsupport/014-13.-gui-requirements-and-cross-references.md",
-      "sha256": "48482fabb6119ae295c4a1ad5d9dd4d7dae9a972367f40653f67c612f5f6e73f",
+      "sha256": "12409b53158d18e6674b35135276358ea6ed4c7842f71585036c9660a0f4fc58",
       "shard_id": "014",
       "source_line_end": 563,
       "source_line_start": 539,
@@ -134,7 +134,7 @@
     {
       "heading": "14. Technical implementation (implementation guide source)",
       "path": "Plans/_shards/lspsupport/015-14.-technical-implementation-implementation-guide-source.md",
-      "sha256": "5d4c33cdcd2ad2e82b35a9d50a6a96cc9ed6eaf8fa5f819a4fb463de4ec35fb7",
+      "sha256": "f2caab69f823fe0c4644d10492c76c2f24978ab3879140de4aa0695993ffb862",
       "shard_id": "015",
       "source_line_end": 782,
       "source_line_start": 564,
@@ -143,7 +143,7 @@
     {
       "heading": "15. Implementation phases and acceptance criteria",
       "path": "Plans/_shards/lspsupport/016-15.-implementation-phases-and-acceptance-criteria.md",
-      "sha256": "211356bc98d010e7dadbb7a5767061e2977c74f7f6b172ec16e52ef3370515b3",
+      "sha256": "da67c05bd9d388c2b4f1632aa9f8ea923eaa4c1a1d95030d6dd66152cd60548a",
       "shard_id": "016",
       "source_line_end": 801,
       "source_line_start": 783,
@@ -152,7 +152,7 @@
     {
       "heading": "16. Open points and decisions for implementer",
       "path": "Plans/_shards/lspsupport/017-16.-open-points-and-decisions-for-implementer.md",
-      "sha256": "18162c3eb0451005852d435ed82893b9fbb2d2c18fbc0333241686ed0551144b",
+      "sha256": "6438c48a29a12b21175e74c3cf46175e9b14ec9ea9e3974cd0e26eb28600cbf1",
       "shard_id": "017",
       "source_line_end": 852,
       "source_line_start": 802,
@@ -161,7 +161,7 @@
     {
       "heading": "Appendix: Implementation plan checklist (single ordered list for implementers)",
       "path": "Plans/_shards/lspsupport/018-appendix-implementation-plan-checklist-single-ordered-list-for-i.md",
-      "sha256": "c2197e196ab6af219963d7731cb52e0b66312b20d9f69902aabcd6746b91f216",
+      "sha256": "15fbcbc3cad4b7df74fa59acb1d4f038e4e8ea71cef262eed004a581242860ff",
       "shard_id": "018",
       "source_line_end": 909,
       "source_line_start": 853,
@@ -170,16 +170,43 @@
     {
       "heading": "17. LSP verification gate, evidence, subagent selection (implementation spec)",
       "path": "Plans/_shards/lspsupport/019-17.-lsp-verification-gate-evidence-subagent-selection-implementa.md",
-      "sha256": "cf745a249232fad6ee2ff72551c853ac0b724d1f17d47f417c61f78181ef6e7b",
+      "sha256": "7f11b867cc2cf47fdf5e9c8619c6eaef59418c18ebb5fff8871252f1ba0b6a1c",
       "shard_id": "019",
-      "source_line_end": 1076,
+      "source_line_end": 1077,
       "source_line_start": 910,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/lspsupport/020-owner-consumer-map.md",
+      "sha256": "28555aabb59e9e99c628ae941f9d5772eb49420c55340fced7261e6d6fff1ac4",
+      "shard_id": "020",
+      "source_line_end": 1083,
+      "source_line_start": 1078,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/lspsupport/021-planunits.md",
+      "sha256": "a4951a1744fe920dfc73c43500af63afce69abc420d8ebab38a1050dc74fbe9c",
+      "shard_id": "021",
+      "source_line_end": 1304,
+      "source_line_start": 1084,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/lspsupport/022-migration-coverage.md",
+      "sha256": "06b23f25bcee5f471a965298bb0c04a608c51b92ec3a9531dc245bc2586debe5",
+      "shard_id": "022",
+      "source_line_end": 1315,
+      "source_line_start": 1305,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1076,
+    "line_count": 1315,
     "path": "Plans/LSPSupport.md",
-    "sha256": "0a28db3773e3e47f3f5c861279553d6e3696de6980ec40acb40a19fe703f3d8d"
+    "sha256": "df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278"
   }
 }

@@ -1,44 +1,47 @@
 # Shard Index: Plans/FinalGUISpec.md
 
-Generated: 2026-06-11T15:42:37Z
+Generated: 2026-06-11T21:19:43Z
 
-Source SHA256: `4cd33d36e80c469ca5cdbfe065a8bf2275a6e0d1331697bac9c658d5c31c7f4a`
+Source SHA256: `e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `79c530a1486c9d30b15a39fe1da1c81b562eaf2bc6059380d7e3d60732899328`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L137 `df6dff4e7056ecb4d2c7fe98aeab86675ff058dbae92285bf557df55de2718dd`
-- [003 - Table of Contents](003-table-of-contents.md) L138-L163 `c7311f634934c174f54ab0134630ef9fff1185edf61f07748a5e8a7a77df23f9`
-- [004 - 1. Executive Summary](004-1.-executive-summary.md) L164-L189 `ecaf20930321db3cd3ea5f6fdd4bb897457f13c49d36f5ca35e4a0e7c53a0648`
-- [005 - 2. Tech Stack and Renderer](005-2.-tech-stack-and-renderer.md) L190-L251 `3ffb8e062ace27c503c3cf263330ff086c5ef92a82be487e8b9326d1172171ac`
-- [006 - 3. Master Layout](006-3.-master-layout.md) L252-L373 `3c70516b6410d7f713581ef616d0b537bbe9d698610c34eb5e75069f3d49a606`
-- [007 - 4. Navigation Architecture](007-4.-navigation-architecture.md) L374-L547 `54431a365e454bdc3c454036d16e87eb78d6235573485950c1f1f00e809edd08`
-- [008 - 5. Panel System](008-5.-panel-system.md) L548-L701 `12738cd1255d79b12b3504e33a44dd640d80a7b47658f2e45c200267466c722e`
-- [009 - 6. Theme System](009-6.-theme-system.md) L702-L888 `06b062bda3ff4ecabd46a2c144e1bfb1d10ac80438803e548a2f9b52c090bd4c`
-- [010 - 7. Views Specification](010-7.-views-specification.md) L889-L1472 `54d545106ee02169fb8b3cab534b863b253356787d818ccc1d46b011347cd62b`
-- [011 - 8. Widget Catalog](011-8.-widget-catalog.md) L1473-L1500 `211315adc9a6bc1504354f0f09478a8ac3eb0cd49efa4314368a288f54e25542`
-- [012 - 9. State Management](012-9.-state-management.md) L1501-L1572 `0c5326bebf317524d860c7d24b04f34007fac7c4b9d6a8089458ac211171935e`
-- [013 - 10. UX Patterns](013-10.-ux-patterns.md) L1573-L1697 `8e29f1e14e8da2ec3e810d5b5058809b8aa8c9bcf800c088df2b931743acdad9`
-- [014 - 11. Anti-Flickering and Scroll Preservation](014-11.-anti-flickering-and-scroll-preservation.md) L1698-L1741 `ad57727cccfa94c2e17de102deb8f4bc78f6ab567032e26b66636f6730de71d8`
-- [015 - 12. Responsive Design](015-12.-responsive-design.md) L1742-L1782 `26fc0d5a2b48a59c05938cba832ef7d32977cd404ac7163a0833ffaaab414d9b`
-- [016 - 13. Accessibility](016-13.-accessibility.md) L1783-L1823 `ae2eb4491d536a162c628a21bb7fe6ffb9096b4db88cd738187e56d67ab9d853`
-- [017 - 14. Slint File Organization](017-14.-slint-file-organization.md) L1824-L1966 `3418500a86f32ebe26aad74a5288d9870aa7cb956650da4bfe24dddbe4eede68`
-- [018 - 15. Persistence](018-15.-persistence.md) L1967-L2129 `e554e87cbe6a044fa403824b807f3fe675b05c011f276853cf8e6b19d93ebce1`
-- [019 - 16. Migration Mapping](019-16.-migration-mapping.md) L2130-L2209 `f6aff33a9038f0886de28d1ae3bbcf3529290e7fcec6774bb8c833765d0d61c8`
-- [020 - 17. Risks and Mitigations](020-17.-risks-and-mitigations.md) L2210-L2245 `d8e185c10680e2f4e46ac403affa81645c8ec3ef9fee33dd292fd4f58b99b13b`
-- [021 - 18. Promoted Features (Formerly Future Considerations)](021-18.-promoted-features-formerly-future-considerations.md) L2246-L2272 `9a4b7a949b92c103e0b825923f4bc8b993c4a68c696c6a2175a1af6da96ac165`
-- [022 - Appendix A: Cross-References](022-appendix-a-cross-references.md) L2273-L2310 `da6e6a25f0b3ca36b57317d0ab43854f88d8ec5391d524169665b2cb305fdcbd`
-- [023 - Appendix B: Locked Decisions Summary](023-appendix-b-locked-decisions-summary.md) L2311-L2332 `99623251e75c569c28fa5e74182b8ef27d771f2d3907d26acb4af3147821e342`
-- [024 - Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)](024-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md) L2333-L2424 `9fdce67c3c2ebb5353398e47cba784efcecd5151c44d7701f1f460a08985e9e4`
-- [025 - 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)](025-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md) L2425-L2563 `2e3bba83dce137791a97bafffeda4705daea69b2beddb06cea98058761218bda`
-- [026 - Rendering Surface Addendum (2026-03-07)](026-rendering-surface-addendum-2026-03-07.md) L2564-L2693 `b3b141515a17ee458c6a3c0d05ba37a792e597f502cd40a72eaaa3c5f79034d9`
-- [027 - Assistant Planning UX Addendum (2026-03-08)](027-assistant-planning-ux-addendum-2026-03-08.md) L2694-L2804 `b5f1e3dd54efd0df0cf6079b21c935f60d2e9ff79dd24f819f0232b48270841f`
-- [028 - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)](028-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md) L2805-L2880 `e8f34df9eb22e98f89de46f466c322c1b54172b584ecdf2681dad83357374379`
-- [029 - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)](029-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md) L2881-L2901 `c3eb96e0d0e69d40786196c2c1bdf3c2fbd7528b931ae446d14fe5e88655d6cf`
-- [030 - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)](030-runtime-blocked-queue-and-recovery-gui-canonical-alignment-2026-.md) L2902-L2929 `de1924eab203d333a0d45dd471f3f8279838c3cc0754a3125bda35b93a02f22d`
-- [031 - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)](031-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) L2930-L2947 `bf58c37c19434b68f67517f99a23dc6ad0882ef8fc9d1825a0ae8c6e201d3d23`
-- [032 - Canonical Blocked/Recovery Behavior](032-canonical-blocked-recovery-behavior.md) L2948-L2994 `a3074190188df973e3fdc9fa2e46dd020ab98222ad1d6895ec6a8174de31a929`
-- [033 - Blocked-State Visual Distinction and Recovery UX Addendum](033-blocked-state-visual-distinction-and-recovery-ux-addendum.md) L2995-L3062 `b4d632549d26b31d28ce8c57da0b662fc4a8db930d5297326dd401a6828de939`
-- [034 - 15. Promoted widget catalog (web tools, planning, question, operation cards)](034-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md) L3063-L3431 `e2e4dcc3ccfd8610f839df888375adaf5e44623690d62a74f704d78c4232c13d`
+- [001 - Preamble](001-preamble.md) L1-L3 `187d85ba84426c8ce511144c10975e25fafb9abd31ff6e861de1b265cc3cb027`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L137 `5f5ccf0d7e8c4a21a346071d15e50856db75aaa4cb998530614ecde92f2d42e1`
+- [003 - Table of Contents](003-table-of-contents.md) L138-L163 `a6a35e7f84ddf910d5f1bc3c1d79e76c6e11a8e738e701c5fa674c90d37d95e1`
+- [004 - 1. Executive Summary](004-1.-executive-summary.md) L164-L189 `6b7110c4a5166a939c0d5de52d072dbd733e165f1279496b0a2f19597d6755d5`
+- [005 - 2. Tech Stack and Renderer](005-2.-tech-stack-and-renderer.md) L190-L251 `0dcbc145cc55c3dc93dbbb32286028e7d561501e58afef591a19b21f84bc7094`
+- [006 - 3. Master Layout](006-3.-master-layout.md) L252-L373 `e871ad09d09c5087de3bcd248b9272b1f1d65b67c0ef2d544efb8747cf1137bf`
+- [007 - 4. Navigation Architecture](007-4.-navigation-architecture.md) L374-L547 `0dfbc3df79fd4f14e823645f7248ebea309ef24c775f319cd5f7617efbc86204`
+- [008 - 5. Panel System](008-5.-panel-system.md) L548-L701 `d0b56b2f0d8a021560839cb808a0215c80b7eebcf341436757e2115587fa96d1`
+- [009 - 6. Theme System](009-6.-theme-system.md) L702-L888 `ac078fbd40c986032a7661cccbc800a513999f31d1ee70b310fce5953b80e04b`
+- [010 - 7. Views Specification](010-7.-views-specification.md) L889-L1472 `d35ca9675e80f135b1428735b2cc03b1f4b38b20ef8c7229177123b0fb397b0b`
+- [011 - 8. Widget Catalog](011-8.-widget-catalog.md) L1473-L1500 `75075567ab346d56709db4eafe7a53cddd48a37d21064592affe5e61443406b2`
+- [012 - 9. State Management](012-9.-state-management.md) L1501-L1572 `2a749161337b18090ed2f460179fccb1490cf21ba44b69d49df297d53faf8d21`
+- [013 - 10. UX Patterns](013-10.-ux-patterns.md) L1573-L1697 `34918d7a7e1ebe5460e9f10d56df2915d5849b6be03df973b665efa3eb2d3cd2`
+- [014 - 11. Anti-Flickering and Scroll Preservation](014-11.-anti-flickering-and-scroll-preservation.md) L1698-L1741 `68994161de1faf1b9758f431fbba9efa6a356985e3de22a94b4482a77ebae825`
+- [015 - 12. Responsive Design](015-12.-responsive-design.md) L1742-L1782 `dcda3e14e86c3362dd48c3e828d0c445a2f1b140368cee360a50f7b780d77827`
+- [016 - 13. Accessibility](016-13.-accessibility.md) L1783-L1823 `7b9f171fd9fc1d98c2d341cabce2a2b7ec3534e14b19bbccd92c71bc85ffb25a`
+- [017 - 14. Slint File Organization](017-14.-slint-file-organization.md) L1824-L1966 `710860e1ea9a51cb29ba5dbeec3c65f318e06bbd0a0f2b9bd74e09829815efd7`
+- [018 - 15. Persistence](018-15.-persistence.md) L1967-L2129 `0fe27621373c7b80f47d2d0d3903d0a4102ec072b0b2b3a56f257208deb78091`
+- [019 - 16. Migration Mapping](019-16.-migration-mapping.md) L2130-L2209 `f692576aac228a2e1539c1417d9c0f6ae2f98d7269312692a868f2027e7d3ec2`
+- [020 - 17. Risks and Mitigations](020-17.-risks-and-mitigations.md) L2210-L2245 `e449f2e3f8615a32400ba4990249fa6019385ba5812a2205445b494dd27de9e1`
+- [021 - 18. Promoted Features (Formerly Future Considerations)](021-18.-promoted-features-formerly-future-considerations.md) L2246-L2272 `c2c653d068d0dc65ad5726ac249e8c275115b163f38f53c1d49284623387c81d`
+- [022 - Appendix A: Cross-References](022-appendix-a-cross-references.md) L2273-L2310 `8ff015d1d4b7acd9b53598d7203c3a7df61b9c54162a06cc747f8a10d0507df6`
+- [023 - Appendix B: Locked Decisions Summary](023-appendix-b-locked-decisions-summary.md) L2311-L2332 `ccb597022ab8a03e4a06c25aafbee659f5c7f496d067bd6f83be1fa609b4c6bf`
+- [024 - Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)](024-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md) L2333-L2424 `6d745c4d8d96b44657a224b213f6a456c857692d696b1c72a73d58033874655b`
+- [025 - 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)](025-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md) L2425-L2563 `0e40be85a6691e182c70ed57bca7dbb066ca753955169f70c45f82dfcab36954`
+- [026 - Rendering Surface Addendum (2026-03-07)](026-rendering-surface-addendum-2026-03-07.md) L2564-L2693 `0fa086fd05e6c3e3935877fb942eb715f1ec917b2034bd1224e090ff60cf25de`
+- [027 - Assistant Planning UX Addendum (2026-03-08)](027-assistant-planning-ux-addendum-2026-03-08.md) L2694-L2804 `d6e608b4517cffb9b3551b0fde7da82bb4770b190f37f38fada6ce2f1cd4f1fc`
+- [028 - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)](028-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md) L2805-L2880 `0b9040d4493d9ad548aafcce453ce683738fdf849deccaac6e5f3b1f0c4ba0b8`
+- [029 - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)](029-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md) L2881-L2901 `11c88f4bb168a70dff08f501adf3f80cf77c5d034789e20be01a70bc37f79aa0`
+- [030 - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)](030-runtime-blocked-queue-and-recovery-gui-canonical-alignment-2026-.md) L2902-L2929 `a6e743a872b151a88e387c627b208ec93977d6092fead77b3ea0cfea6b601888`
+- [031 - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)](031-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) L2930-L2947 `b659efa0d6fb71138fa53bd5c4d640b36237bf372682e0abd02e72c0f8c4a400`
+- [032 - Canonical Blocked/Recovery Behavior](032-canonical-blocked-recovery-behavior.md) L2948-L2994 `8d87634e4b7dd42174fced495ceb50135b5fffec88ab52d3ab41bac468522f95`
+- [033 - Blocked-State Visual Distinction and Recovery UX Addendum](033-blocked-state-visual-distinction-and-recovery-ux-addendum.md) L2995-L3062 `3aa32b46c403ba16728ccf7338cb0e488543de824c2f9f5362be38cb226d720e`
+- [034 - 15. Promoted widget catalog (web tools, planning, question, operation cards)](034-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md) L3063-L3432 `d2a96fbd6b0cca6930cc3ad54a15b2f4e490281895080983cf8f7de690215810`
+- [035 - Owner / Consumer Map](035-owner-consumer-map.md) L3433-L3438 `4c396cec604e351b1fe6ee849a7fe5be017435da54aba388b78cb0b6b134dd76`
+- [036 - PlanUnits](036-planunits.md) L3439-L3838 `5926bd2af50507a89c3bf6b7ceb259edca3f844f7187b1d0c40f0f6b46de62a1`
+- [037 - Migration Coverage](037-migration-coverage.md) L3839-L3849 `50f131af355238ef2b587d8e8cb566be586f6d830e2fe1004e130b16dbec99c0`

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/orchestrator_page/00-index.md",
-  "index_sha256": "757554548a488adf1fa1c8eefb0d193da8cdb3acf32dad6e1e1b3ff1cb76019d",
+  "index_sha256": "64df592166270ace458c6b9c2797b3fb8e8edb4b3fed252a2312660067d1c946",
   "manifest_path": "Plans/_shards/orchestrator_page/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/orchestrator_page/001-preamble.md",
-      "sha256": "76ecc7921ddc383f106b9ed365280d95df03e3372e3093bbc388b2bcfe182b02",
+      "sha256": "a2f836ccbded7bb7ea27998d58d452780e24d9c8a64bee297f29f6723c92e772",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md",
-      "sha256": "653b95e422c6982f74281b04a7c02bf6e0acbb8a136ed1c6e7e85ab7c938a847",
+      "sha256": "cf2efce40692aa8af5a5307a7d052fde0a1a0e214de7cff7b5f45c38005c86ff",
       "shard_id": "002",
       "source_line_end": 54,
       "source_line_start": 4,
@@ -26,16 +26,43 @@
     {
       "heading": "1. Scope and canonical model",
       "path": "Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md",
-      "sha256": "5fe734f741eecc146a39c87d6fd5190ce90f59e8484c5769858f0fd457c88aba",
+      "sha256": "33b93239f9cefc48ac1849ca790c0611e469d7a256cda06bf1767897836d4c14",
       "shard_id": "003",
-      "source_line_end": 390,
+      "source_line_end": 391,
       "source_line_start": 55,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/orchestrator_page/004-owner-consumer-map.md",
+      "sha256": "d637ecab8d336d3c568c6c0f08638f44152a6f1ea7b1868a44a53495586a3a0e",
+      "shard_id": "004",
+      "source_line_end": 397,
+      "source_line_start": 392,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/orchestrator_page/005-planunits.md",
+      "sha256": "1025ea3a77bb7b3dfb62fc6c68b942ef31ff0b567c8392491b129a652b470e51",
+      "shard_id": "005",
+      "source_line_end": 593,
+      "source_line_start": 398,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/orchestrator_page/006-migration-coverage.md",
+      "sha256": "9064f1be7a67a9dfc1fb1d17084128f77fffc4adae9b7ea4f9b18d9576811820",
+      "shard_id": "006",
+      "source_line_end": 604,
+      "source_line_start": 594,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 390,
+    "line_count": 604,
     "path": "Plans/Orchestrator_Page.md",
-    "sha256": "a19c226e4d254af53de956bd11bffd37105c2305ccafa3144ebf2f1de92f4c6b"
+    "sha256": "9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8"
   }
 }

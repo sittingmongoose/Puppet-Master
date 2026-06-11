@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/project_output_artifacts/00-index.md",
-  "index_sha256": "716f25bc0ba7cab9a721d5d1f66afb610c4c1f44ec0f77e2937f2c41ddc82c01",
+  "index_sha256": "f3e2ffbb12cfb11e9f7fc87d6ce26b41769d61ef5a91fad0dab80a48aac73a90",
   "manifest_path": "Plans/_shards/project_output_artifacts/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/project_output_artifacts/001-preamble.md",
-      "sha256": "730c933cb0d716efd503d23a7b37a7a77c42978a843e3069b7e79ea65896cf20",
+      "sha256": "81f1a86867b2f785963ea19537a91498c7645e62cbd6a04380c9bb93eefc112d",
       "shard_id": "001",
       "source_line_end": 16,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope (normative)",
       "path": "Plans/_shards/project_output_artifacts/002-0.-scope-normative.md",
-      "sha256": "d35baba130a6f979c21274fb7b426ade0895b44679684d999de46777ecd60da7",
+      "sha256": "1eded623f984fd4246a2a4614554ebbe5f45a61a7720e097b897d95cc15cd33a",
       "shard_id": "002",
       "source_line_end": 70,
       "source_line_start": 17,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Canonical persistence vs filesystem staging",
       "path": "Plans/_shards/project_output_artifacts/003-1.-canonical-persistence-vs-filesystem-staging.md",
-      "sha256": "6edf8047fb2724c01a6f691f6b1aca29f8464aff6c2c1a5bee516bc021f0a075",
+      "sha256": "d2dce51fa643fc2b221f93ddc964765a4ffa5cab30e771b9a54a0857d99ae3bf",
       "shard_id": "003",
       "source_line_end": 80,
       "source_line_start": 71,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Required artifact set (SSOT) \u2014 Project Plan Package",
       "path": "Plans/_shards/project_output_artifacts/004-2.-required-artifact-set-ssot-project-plan-package.md",
-      "sha256": "a6becb4082639ccb4ef66b31a47493e4515d47ece46d82775716a5a738e21384",
+      "sha256": "bcba0f0e38df766217fb2ce7539984cdfcc77ff31debab8820a85c37e87c1ca8",
       "shard_id": "004",
       "source_line_end": 205,
       "source_line_start": 81,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Schema alignment (critical; do not rename fields)",
       "path": "Plans/_shards/project_output_artifacts/005-3.-schema-alignment-critical-do-not-rename-fields.md",
-      "sha256": "c836fdacd7d540829e777fe4ca84bf35cff99a3980ebecff9a8ec45ac69348eb",
+      "sha256": "2eb5f562e1f6d704e95d54ed69cad2df2284c97b22823937f0a16dff31fa5910",
       "shard_id": "005",
       "source_line_end": 225,
       "source_line_start": 206,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Contract layers (two-layer model)",
       "path": "Plans/_shards/project_output_artifacts/006-4.-contract-layers-two-layer-model.md",
-      "sha256": "9d391516e9de1b045a8f37f3bd910aef6fd1074e74d1fd3046de2d0af6db6c8f",
+      "sha256": "53abadd67f39e37a9416f08c9f8e07289c0596e854a15e98b45a97add70338c3",
       "shard_id": "006",
       "source_line_end": 257,
       "source_line_start": 226,
@@ -62,7 +62,7 @@
     {
       "heading": "5. DRY enforcement (contract-referenced graph)",
       "path": "Plans/_shards/project_output_artifacts/007-5.-dry-enforcement-contract-referenced-graph.md",
-      "sha256": "abc826bcbebc7a1851148729a27533781638a9388051c0120ece081413f04892",
+      "sha256": "d28bba7d85cfabfdc8e6107b13e09225d5b803ba0df4e80512d77a2cd7820795",
       "shard_id": "007",
       "source_line_end": 288,
       "source_line_start": 258,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Autonomy + decision logging (no human-required decisions)",
       "path": "Plans/_shards/project_output_artifacts/008-6.-autonomy-decision-logging-no-human-required-decisions.md",
-      "sha256": "815d5bd514da837e3260899695eba308a77f783740236a98793f8600336ec3c1",
+      "sha256": "e54d7174987cf7b904993d7c30fbd9f92bbe95f38987508d124ddcfb8795225a",
       "shard_id": "008",
       "source_line_end": 304,
       "source_line_start": 289,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
       "path": "Plans/_shards/project_output_artifacts/009-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md",
-      "sha256": "59c23ccb94bb56d66cfe4212fde671a1e1fce139629ce40c0483b1e19b4ba0b8",
+      "sha256": "92f0787f4baba7a5b0f623c6ac71c302fd1cb0a1d55ff7471028182213d04923",
       "shard_id": "009",
       "source_line_end": 426,
       "source_line_start": 305,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Seglog canonical persistence contract (artifact events)",
       "path": "Plans/_shards/project_output_artifacts/010-8.-seglog-canonical-persistence-contract-artifact-events.md",
-      "sha256": "0a4e323f269748eac8679aec4fb4bdcf3262262e1db7d03156166474e8060d30",
+      "sha256": "bfdb905ee8eefc9dc53003cfe6ba6e041b699c0c55d8de8083ce8f1f7e093faf",
       "shard_id": "010",
       "source_line_end": 476,
       "source_line_start": 427,
@@ -98,7 +98,7 @@
     {
       "heading": "9. Acceptance criteria (validator requirements)",
       "path": "Plans/_shards/project_output_artifacts/011-9.-acceptance-criteria-validator-requirements.md",
-      "sha256": "4831c914c6718855d2592862e75c59b64779ed269ce14c9d5597f41e76fa551d",
+      "sha256": "768aff0dfbc6c0f0e0b055af929098546a940cea921f98a7e40a0918b17b0570",
       "shard_id": "011",
       "source_line_end": 586,
       "source_line_start": 477,
@@ -107,7 +107,7 @@
     {
       "heading": "11. Traceability outputs",
       "path": "Plans/_shards/project_output_artifacts/012-11.-traceability-outputs.md",
-      "sha256": "3f0ca8d0eec09e7b0c4603fde9ce2958e10c1a7bbfd6a7e1c55285bfde3eb41f",
+      "sha256": "69b01b47ceb0c9d800535fcd5dd9f04fd22bc4af9bf786f81f5ade5592fac972",
       "shard_id": "012",
       "source_line_end": 724,
       "source_line_start": 587,
@@ -116,7 +116,7 @@
     {
       "heading": "12. Optional derived `quickstart.md` contract (human convenience only)",
       "path": "Plans/_shards/project_output_artifacts/013-12.-optional-derived-quickstart.md-contract-human-convenience-on.md",
-      "sha256": "e82adb4d159a3d198efe0e05086862d5adc36c1db9e91cf3674227595aa19638",
+      "sha256": "f19063c7602840afba10260e05b521ff0a4eff3d0b38a2b8cae2efac2b2c644f",
       "shard_id": "013",
       "source_line_end": 758,
       "source_line_start": 725,
@@ -125,7 +125,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/project_output_artifacts/014-change-summary.md",
-      "sha256": "572baa77c7af53ca77c708dd069bbdc70d713b5b95ab486afc7ce45049533f52",
+      "sha256": "ebb5ed2334edee53bce2e454441526e70dd86bfefae62ef44e8e76f1bbee0d6e",
       "shard_id": "014",
       "source_line_end": 772,
       "source_line_start": 759,
@@ -134,16 +134,43 @@
     {
       "heading": "Runtime Evidence and Degradation Artifact Addendum (2026-03-08)",
       "path": "Plans/_shards/project_output_artifacts/015-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
-      "sha256": "2651c26ea93c24468d4d5bb8d0b67fadcc0951aa4aa62c35daac4e3b5d8f6c9e",
+      "sha256": "06351f9f7550536057fd88a5ad8de14a1b3098c1a3585635771b41c3557d1854",
       "shard_id": "015",
-      "source_line_end": 786,
+      "source_line_end": 787,
       "source_line_start": 773,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/project_output_artifacts/016-owner-consumer-map.md",
+      "sha256": "8e3d666dd595117b0d9ae0b86716aa36fa03c2154d06710ad181ff5b7b028a2e",
+      "shard_id": "016",
+      "source_line_end": 793,
+      "source_line_start": 788,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/project_output_artifacts/017-planunits.md",
+      "sha256": "037cd5d65ccf1fa3a05851c86896394af978812b32b41d859a82428d586741ef",
+      "shard_id": "017",
+      "source_line_end": 952,
+      "source_line_start": 794,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/project_output_artifacts/018-migration-coverage.md",
+      "sha256": "b8c6d511fe2b6a8e581960651effaa590dcc0e2949875cf79b5a9c54cabeface",
+      "shard_id": "018",
+      "source_line_end": 963,
+      "source_line_start": 953,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 786,
+    "line_count": 963,
     "path": "Plans/Project_Output_Artifacts.md",
-    "sha256": "873ad4ab0fac4327e921959abc15ad6271f04bd544a04c7ca7ff4dc01ef5ac80"
+    "sha256": "d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12"
   }
 }

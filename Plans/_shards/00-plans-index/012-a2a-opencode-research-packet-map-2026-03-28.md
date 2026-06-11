@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L583-L605
+Source lines: L583-L606
 
-Source SHA256: `d46f8e9167ae547a54217ea973a778718c4959076cf88898d8a1f931b030c3ce`
+Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
 
 ---
 
@@ -31,3 +31,4 @@ All active fidelity blockers consumed by this reconciliation result must land as
 AuthState fidelity closure: `LFA-001` is `CONFIRMED RESOLVED` by live `Contracts_V0.md#4.1` null-padding / omission semantics. `Plans/.pipeline/ledger_fidelity_report.txt` and `/.pipeline/ledger_fidelity_report.txt` are source-lineage paths only and do not become `Plans/Personas.md` persona schema canon.
 
 Packet section coverage for this research result is anchor-exact, not path-only: `Plans/Run_Modes.md` evidence must reach the kill-condition tables and run outcome taxonomy, `Plans/CLI_Bridged_Providers.md` must reach `### HTTP/status to failure-class mapping`, `### Stream cancellation and replay safety`, and `### Normalized usage event minimum fields`, `Plans/FileSafe.md` must account for `### 15.12 Integration Checklist` lineage without substituting generic managed-mutation background, `Plans/storage-plan.md` must preserve `lock-path` wording in durability / multi-instance / startup sections as well as broader `storage-root` selection, and `Plans/Prompt_Pipeline.md` must reach `### 2.3 Post-filter integrity rules` instead of only compaction-adjacent context. `Plans/orchestrator-subagent-integration.md` and `Plans/usage-feature.md` stay in the packet as `MUST RECONCILE` alignment surfaces; they are not owner-gap add-ons or raw `/anchor` placeholders.
+

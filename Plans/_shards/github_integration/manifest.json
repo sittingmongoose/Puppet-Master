@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/github_integration/00-index.md",
-  "index_sha256": "d9c7a45ce4429e1b9152a2eeab28dcfb4c407ecd5ef3782d9da0defbdba5d7a9",
+  "index_sha256": "f1c5d0a3168826c423c6fc04ef21c37b87f0db67232272d9da80c17b9513c3f7",
   "manifest_path": "Plans/_shards/github_integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/github_integration/001-preamble.md",
-      "sha256": "4ec96562d8996ff9fa0d282c771bd234ed27fe8b97f0d3cbbcb3e71b5ff49b06",
+      "sha256": "ce3013854cda4ed6a2a7c6d71d9350a9acf2c5481a4101910b69db1a61a07351",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
-      "sha256": "8f257b73c140c253da45048aadadc809284951148350179fea86f02d4102d52a",
+      "sha256": "a8dbf00b92e53e4c8fbe23c55bda2f872a6b9335a2952d319aefc876a32a8230",
       "shard_id": "002",
       "source_line_end": 31,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/github_integration/003-change-summary.md",
-      "sha256": "be71de022f86bb3dd0545a69cb02b39d7cf50f3f3629f3a5849b7cefe34166ad",
+      "sha256": "73635452a652e8491cff20fecca4495eb0d838a55af041c44a97a87fc3f538ab",
       "shard_id": "003",
       "source_line_end": 42,
       "source_line_start": 32,
@@ -35,7 +35,7 @@
     {
       "heading": "SSOT References (DRY)",
       "path": "Plans/_shards/github_integration/004-ssot-references-dry.md",
-      "sha256": "305a7e76c7cd99ced3cba2d0bb7bfb1bb2372c51da305f8529ba718fc98f2881",
+      "sha256": "ef5f25ef8c9f3542e480959fcd4f1510027ec5cf8462b1c7279f095f1e9c0183",
       "shard_id": "004",
       "source_line_end": 79,
       "source_line_start": 43,
@@ -44,16 +44,43 @@
     {
       "heading": "Canonical owner and consumer reconciliation",
       "path": "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
-      "sha256": "75b2b813b556414ca370baa9c41ae2b5160a629a352eef4467c3471831769b1d",
+      "sha256": "abc983f9d1a61b717394a86c48ba023e41646f91fd829db8e536479282fda4ea",
       "shard_id": "005",
-      "source_line_end": 227,
+      "source_line_end": 228,
       "source_line_start": 80,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/github_integration/006-owner-consumer-map.md",
+      "sha256": "ed4850ca76a7fb452abec42a44358879d471036230932cddc19fec3136aa6c43",
+      "shard_id": "006",
+      "source_line_end": 234,
+      "source_line_start": 229,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/github_integration/007-planunits.md",
+      "sha256": "c10eb10f8c29c147f0c5abc520c61ea9d831b48331d72e9182130c0c89db4cee",
+      "shard_id": "007",
+      "source_line_end": 353,
+      "source_line_start": 235,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/github_integration/008-migration-coverage.md",
+      "sha256": "eaac2a1d1dd647f35b124d8f3428b7d46285884c5e6e398d3033530809972927",
+      "shard_id": "008",
+      "source_line_end": 364,
+      "source_line_start": 354,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 227,
+    "line_count": 364,
     "path": "Plans/GitHub_Integration.md",
-    "sha256": "83409aeac5a71e7400edf7a289fafd72d57317cc9693777bfa53107aa25bed59"
+    "sha256": "3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3"
   }
 }

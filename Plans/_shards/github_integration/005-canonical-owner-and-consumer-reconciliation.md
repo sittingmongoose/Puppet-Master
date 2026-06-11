@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L80-L227
+Source lines: L80-L228
 
-Source SHA256: `83409aeac5a71e7400edf7a289fafd72d57317cc9693777bfa53107aa25bed59`
+Source SHA256: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3`
 
 ---
 
@@ -156,3 +156,4 @@ Remote tool/provider execution uses the same GitHub remote context, remote SSH/r
 - Model selection is tied to the active Persona and execution_unit_type, not to the repository or organization.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+

@@ -2,15 +2,15 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "455cc3ea41ab3639a2452ecc939326aa24db5dc4582eaa4943e609046e6ae246"
+      "sha256": "e6533e20b4540dc008a71f3f4c0af00b2808668f25afca9a78188f9ade1dc86e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "61dae1b7bb0fc0ee968f742795fd383eacc7da890e1108b84b86f69f6b24b332"
+      "sha256": "03b1ff793cb6c6cecd8f1081ef77c9deabf48fd5dee290c924db7500f19df4f4"
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "867291a5644357ec2e7b76f9b04f52cabf88c8120e9ccb84f9a50297808f2260"
+      "sha256": "6bb177da77dab5a9192b2d795e9da51ac0ea8ae504dafa55d298936ba3cf15af"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "2426f12f6493322875ab835541970e4318dc1d6ffd0cf88480edd4ec57af23b4"
+      "sha256": "b9cf441f96ab72c21bb3735d09a58870ae43d1d5c9d731953234433986e06430"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "60dc795c6e066c710dab6f392339c44948f900c03ad3962821062c06cba911b9"
+      "sha256": "e1590ae85487706eafc48d573a0c153d0819d78cb491bf7feac57f5bbd1e7f4c"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -42,33 +42,89 @@
     },
     {
       "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.json",
-      "sha256": "0b74f9efbdaf69452c818f22c253b14d8e428b74e920b39633a109811d1659f1"
+      "sha256": "d463f00bcce0524cc0e780a05a21c0198c6b866edf516702af2c8772e3b5659a"
     },
     {
       "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.md",
-      "sha256": "0499ad4c3ba5cfd20e2f53b6ba081699dd0fab181ce22e566d89a98e8d5675bf"
+      "sha256": "c988e2fbcb63afa6c2e731960fc56da6f0168d535700d224ef1ae1899daf1b48"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "sha256": "bc73c1d4a3c65b52547fc05a815b93b9dfaa122e35c5731a55e5182a5c9ced8f"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "sha256": "8f8216f4ff383808081b4217e5f2077481299fe34197565c147feac600887bd3"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "sha256": "990e7535ec0ef443b6a8b0af972af5c9600c1c96f2f0bb35df2b17d30c98ccb1"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "sha256": "1a7827cc9ae3bcec56346dfdfb24c8baeb4894a0338971cdee0b47777e3c8944"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "sha256": "e7603ce61004a2bfedaa29e035a69bf9edb67062e87b50beef2c170b168a9bae"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "sha256": "c547c97ed9f213ac2e402a09f1413ed402839ebf041c6d2caebab8705415e98a"
     }
   ],
   "checks": [
     {
-      "details": "Expected to pass after regeneration.",
       "name": "run-gates",
-      "result": "PASS"
+      "result": "PASS",
+      "details": "python3 scripts/pm-plans-verify.py run-gates passed at 2026-06-11T21:24:43Z."
     },
     {
-      "details": "P6 preserved as source ledgers only; not transferred or unlocked.",
-      "name": "p6-locked",
-      "result": "PASS"
+      "name": "shard-check",
+      "result": "PASS",
+      "details": "docs_checked=50; shards_checked=870; failures=[]"
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "PlanUnit index validates with 105 PlanUnits and 357 acceptance units."
+    },
+    {
+      "name": "node-readiness-boundary",
+      "result": "PASS",
+      "details": "node_readiness_status=blocked_compiler_contract_incomplete; no_worknodes_created=True; nodeseed_candidates_created=False."
+    },
+    {
+      "name": "spec-lock-protocol",
+      "result": "PASS",
+      "details": "Spec Lock hashes refreshed and auto-decision dec-2026-06-11-planunit-index-and-governance-artifact-reseal appended."
     }
   ],
   "commands_run": [
     {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; plan_unit_count=105; acceptance_unit_count=357; node_readiness_status=blocked_compiler_contract_incomplete"
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; plan_units_checked=35; warnings=[]"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; plan_unit_count=105; acceptance_unit_count=357"
+    },
+    {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "exit_code": 0
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; docs_generated=50; shards_generated=870"
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 0
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; failures=[]; generated_at_utc=2026-06-11T21:24:43Z"
     }
   ],
   "contract_refs_satisfied": [
@@ -79,7 +135,7 @@
     "Gate:GATE-009",
     "SchemaID:pm.evidence.schema.v1"
   ],
-  "created_at_utc": "2026-06-11T15:08:10Z",
+  "created_at_utc": "2026-06-11T21:25:28Z",
   "events": {
     "event_refs": [
       {
@@ -110,7 +166,7 @@
     "snapshot_ref": "clean-repo-generated-from-Puppet-Master-main-4-plus-Archive991-transfer_state991"
   },
   "schema_id": "pm.evidence.schema.v1",
-  "summary": "Final clean-repo build-governance seal with self-contained Plans evidence and no transfer_state dependency.",
+  "summary": "Final governance seal passed for stable ledger, Plan, and PlanUnit changes.",
   "tool_calls": [
     {
       "count": 1,

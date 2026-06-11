@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:42:37Z",
+  "generated_at_utc": "2026-06-11T21:19:43Z",
   "index_path": "Plans/_shards/provider_opencode/00-index.md",
-  "index_sha256": "6b2fd29a9456e3d732f29eb8f615b8e1e18d78e77657de7277dce5c8cd3c5883",
+  "index_sha256": "cd8292bc6818bcb7b77a26cc56dc88dd81603ecfeafbb881b200c373f8606fde",
   "manifest_path": "Plans/_shards/provider_opencode/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/provider_opencode/001-preamble.md",
-      "sha256": "4ceac6153f5105b31ddd56fc9a48c0c0ddd2b8648c8c0223039d636a6cfb2789",
+      "sha256": "246723bdfd764238b1606bfe95510c27c6b8aedaa8b6fc3dc75b78729c5eaadf",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/provider_opencode/002-change-summary.md",
-      "sha256": "b5b0fc99a4c7c91d1f64141a24c0def6f6f59e95bbd00e0487a59eca851336d4",
+      "sha256": "3238ed2c9ec80ebae19210c9e2e5e37988272a045bf0508cbcf2c5175977ab3a",
       "shard_id": "002",
       "source_line_end": 13,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Purpose",
       "path": "Plans/_shards/provider_opencode/003-1.-purpose.md",
-      "sha256": "b38822857bc605fd892ab512a0eeabea2b1fe8d7c5c0f2510754c567b31f20d9",
+      "sha256": "dd5355240457753542509186987de38b4d553663a0b9a5dedde3504073594c9c",
       "shard_id": "003",
       "source_line_end": 32,
       "source_line_start": 14,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Non-goals",
       "path": "Plans/_shards/provider_opencode/004-2.-non-goals.md",
-      "sha256": "263b7e481102ce9ffc92e7dae4515ccd063134de8b04393018a8708b92eb3a70",
+      "sha256": "685ff2ea29c4095379a4c160d68e9ca3cfd615c01702f77a3995e96573070681",
       "shard_id": "004",
       "source_line_end": 45,
       "source_line_start": 33,
@@ -44,7 +44,7 @@
     {
       "heading": "3. SSOT References (DRY)",
       "path": "Plans/_shards/provider_opencode/005-3.-ssot-references-dry.md",
-      "sha256": "a3b238deb44bd260c66c8d7a64c1ccf0078fd0f7c88f2f7841e102f44ea36c26",
+      "sha256": "d8e5e7b69d019d11c843781f2ac28348f83ff42670856132ffde4944232fce2c",
       "shard_id": "005",
       "source_line_end": 63,
       "source_line_start": 46,
@@ -53,7 +53,7 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/provider_opencode/006-canonical-data-shape-reconciliation.md",
-      "sha256": "43752842146906cb97fe3faae686276870fef0d7e42e1ea53a992aa28400778f",
+      "sha256": "6eb2932b18e793f35d3d6701ae9e0e0ef8f53aa5c4c23b36a60745c7db28db90",
       "shard_id": "006",
       "source_line_end": 98,
       "source_line_start": 64,
@@ -62,7 +62,7 @@
     {
       "heading": "4. Architecture Overview",
       "path": "Plans/_shards/provider_opencode/007-4.-architecture-overview.md",
-      "sha256": "e3940d3eb9942df2a91f796e27c7b0b8a9226df23bc43276cb6f543a24b8a906",
+      "sha256": "096488eecc1065e204b0c18436fb78628d6c2280cb078cd533360c7b66f2bdf5",
       "shard_id": "007",
       "source_line_end": 130,
       "source_line_start": 99,
@@ -71,7 +71,7 @@
     {
       "heading": "5. Connection Contract",
       "path": "Plans/_shards/provider_opencode/008-5.-connection-contract.md",
-      "sha256": "46b469437284f0d43e60cfe8c18bd66dd28013f708a65574b3e62c1ccc286f47",
+      "sha256": "07b7e3ff7e50d831a85d3eaa1e65d7f812fec3a2031ff5602a59795c5ba7ff98",
       "shard_id": "008",
       "source_line_end": 220,
       "source_line_start": 131,
@@ -80,7 +80,7 @@
     {
       "heading": "6. Provider Facade Mapping",
       "path": "Plans/_shards/provider_opencode/009-6.-provider-facade-mapping.md",
-      "sha256": "0b0f202c7c07ee6e8cc362bda64a38b1fccbda6651b5b61e84f975a313a42f33",
+      "sha256": "8c2cf3e66a467c00b92a4611ae8ded99241eb0e80c81faa47df1cc6c9f112797",
       "shard_id": "009",
       "source_line_end": 341,
       "source_line_start": 221,
@@ -89,7 +89,7 @@
     {
       "heading": "7. Model Discovery",
       "path": "Plans/_shards/provider_opencode/010-7.-model-discovery.md",
-      "sha256": "82d3fee377ae9eacd7400a43a76f3578d35de57705b14cc551475396081b2d69",
+      "sha256": "d636f83984f7d1039f6b3234f996fb5ec11269bb6cc90c3276c5ff94ee252a54",
       "shard_id": "010",
       "source_line_end": 383,
       "source_line_start": 342,
@@ -98,7 +98,7 @@
     {
       "heading": "8. Capability flags",
       "path": "Plans/_shards/provider_opencode/011-8.-capability-flags.md",
-      "sha256": "dd4c38e402696eaf364aef34d57151367ed4685f1cbf900cfe1b3a152a64c94b",
+      "sha256": "896ef13f590754a801730281a5f79b88faefcda81c4293778a107781e6191faf",
       "shard_id": "011",
       "source_line_end": 398,
       "source_line_start": 384,
@@ -107,7 +107,7 @@
     {
       "heading": "9. Failure States and Recovery",
       "path": "Plans/_shards/provider_opencode/012-9.-failure-states-and-recovery.md",
-      "sha256": "2a2cf477025617fa393932472c07a5831051f9607df5591dbaf40ba4482f5ddb",
+      "sha256": "a0ca573e86a5ad902319c9de5fba5dd9433d0c3248023f50d1da71751cc083b1",
       "shard_id": "012",
       "source_line_end": 427,
       "source_line_start": 399,
@@ -116,7 +116,7 @@
     {
       "heading": "10. GUI Configuration",
       "path": "Plans/_shards/provider_opencode/013-10.-gui-configuration.md",
-      "sha256": "3cbd8689ecb749a30bdb7bdb1165705e1ebfe1dee765fd43171d3919e80328b6",
+      "sha256": "660ccf4e9c282505d50b1109794ee990591b900638cbf7dda70977a166a19b2f",
       "shard_id": "013",
       "source_line_end": 470,
       "source_line_start": 428,
@@ -125,7 +125,7 @@
     {
       "heading": "11. platform_specs integration (SSOT)",
       "path": "Plans/_shards/provider_opencode/014-11.-platform_specs-integration-ssot.md",
-      "sha256": "7a3c04626dbdc75de55dbdf3e15b8dd40be1aae558d03ab9b929f1e4dd73326e",
+      "sha256": "f0c1fb4c032d05fd45e28b1efc614379710fca11ee02c12418606c591fdb0c9a",
       "shard_id": "014",
       "source_line_end": 485,
       "source_line_start": 471,
@@ -134,7 +134,7 @@
     {
       "heading": "12. Process Isolation",
       "path": "Plans/_shards/provider_opencode/015-12.-process-isolation.md",
-      "sha256": "b42726fec8c55fd1d4f0964f8c41b3767222b5d783aa3488b431c9df2b40143c",
+      "sha256": "7779b6d64f769a8d645146f66f8e57bc3ac18762397092753b9da5412f8f9f14",
       "shard_id": "015",
       "source_line_end": 495,
       "source_line_start": 486,
@@ -143,7 +143,7 @@
     {
       "heading": "13. Invocation Shape (Normative)",
       "path": "Plans/_shards/provider_opencode/016-13.-invocation-shape-normative.md",
-      "sha256": "3cc2f44e4e1b075a9a02a5d5d5fe59b305a408c5a323d5b4325d0e61e64932b5",
+      "sha256": "66145a52c1a7dd65945bde430a5b9c03fb664c3300b6d1bb3d5d8253d42f67fb",
       "shard_id": "016",
       "source_line_end": 594,
       "source_line_start": 496,
@@ -152,7 +152,7 @@
     {
       "heading": "14. Persistence Mapping (seglog)",
       "path": "Plans/_shards/provider_opencode/017-14.-persistence-mapping-seglog.md",
-      "sha256": "510fc511e01b624ed70ab56ba7083dad58b38c91d959c33a12a67b78052a8c61",
+      "sha256": "b0854368fd09e83b166e6edf784ef22fc59c330476d7a0cdec1f92a64f42b831",
       "shard_id": "017",
       "source_line_end": 611,
       "source_line_start": 595,
@@ -161,7 +161,7 @@
     {
       "heading": "15. Acceptance Criteria (Testable)",
       "path": "Plans/_shards/provider_opencode/018-15.-acceptance-criteria-testable.md",
-      "sha256": "ac1c3849756056bed96874c35db674ffb137cbd8e04115323828ec0d1472d73c",
+      "sha256": "49d301d44b63dce7adaebc40a135fd6565176f7bc1479f65c9ac089db0fcc253",
       "shard_id": "018",
       "source_line_end": 625,
       "source_line_start": 612,
@@ -170,7 +170,7 @@
     {
       "heading": "16. References",
       "path": "Plans/_shards/provider_opencode/019-16.-references.md",
-      "sha256": "349ec511b50ea244a4511b08d34aeeabd2c16bb94091ab4cf0da7555c3e28ebe",
+      "sha256": "b155e837b785b073e76568c97dc6edb22d588f40dbbf924c500870a9bef957ef",
       "shard_id": "019",
       "source_line_end": 639,
       "source_line_start": 626,
@@ -179,16 +179,43 @@
     {
       "heading": "OpenCode Runtime Retry / Blocked-State / Packet Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/provider_opencode/020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md",
-      "sha256": "5e3b8d119377703ca68c43914646cdad8cecc32440f2005b68468fa5dedec8ed",
+      "sha256": "d158123d1eed1d688e2360107a74ba09eba7c9d37ce27815b34813b8a9ecbaed",
       "shard_id": "020",
-      "source_line_end": 702,
+      "source_line_end": 703,
       "source_line_start": 640,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/provider_opencode/021-owner-consumer-map.md",
+      "sha256": "03e25495fc0f585ef67a14927dcfeccc89ac9dbf15dae76fcb4666399b9427d2",
+      "shard_id": "021",
+      "source_line_end": 709,
+      "source_line_start": 704,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/provider_opencode/022-planunits.md",
+      "sha256": "88482ff6b2bc5be8d5b5e7686f09a8c49ead3db4e0bf722395c39477ebf4f32c",
+      "shard_id": "022",
+      "source_line_end": 876,
+      "source_line_start": 710,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/provider_opencode/023-migration-coverage.md",
+      "sha256": "6352bc0b769de78ccc66a0d28319fb7cc3501db865496c9d8d8a1b496dd37660",
+      "shard_id": "023",
+      "source_line_end": 887,
+      "source_line_start": 877,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 702,
+    "line_count": 887,
     "path": "Plans/Provider_OpenCode.md",
-    "sha256": "e0d27c1494bf01c5a72ca17abb7f28b8f6a1045f19aa2ef941b87d7c9ab6d2e9"
+    "sha256": "0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1"
   }
 }

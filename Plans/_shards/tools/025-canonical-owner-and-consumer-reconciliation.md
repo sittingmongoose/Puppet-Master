@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2214-L2244
+Source lines: L2214-L2245
 
-Source SHA256: `01fed36dead4538803197fcd86d37c352a3950e47715306fc216511d5f524f7f`
+Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c`
 
 ---
 
@@ -39,3 +39,4 @@ OpenCode billing and /caching evidence confirms that extra abstraction layers ma
 - Carry run/attempt/thread/node/artifact/provider/usage anchors together with execution/runtime identity fields in the tool record shape.
 - Transfer `execution_role`, `requested_account_id`, `operational_identity`, account-switch ownership, pressure ownership, `blocked_sequence` minting, startup recovery handshake, and DAE jail/approval policy into the owner/consumer contract.
 - Require usage switch-history and usage execution-role follow-through in the same reconciled owner data shape.
+
