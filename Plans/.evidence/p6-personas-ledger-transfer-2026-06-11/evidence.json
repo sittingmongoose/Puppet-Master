@@ -7,7 +7,7 @@
     "graph_id": "pm.p6-personas-ledger-transfer.2026-06-11",
     "graph_scope": "puppet-master-repo-build"
   },
-  "summary": "Repaired the P6 Personas transfer against the newer work_items ledger, removed the stale core Document Writer canon, transferred Plan/Deep Plan post-plan actions to Assistant Chat, strengthened Collaborator and Overseer Persona owner prose, reconciled technical-writer as specialty-scoped, marked the duplicate work_items ledger state superseded, and resealed governance artifacts without unlocking File Manager/Editor or other P6 lanes.",
+  "summary": "Repaired the P6 Personas transfer against the newer work_items ledger, removed the stale core Document Writer canon, transferred Plan/Deep Plan post-plan actions to Assistant Chat, strengthened Collaborator and Overseer Persona owner prose, reconciled technical-writer as specialty-scoped, marked the duplicate work_items ledger state superseded, and resealed governance artifacts without unlocking File Manager/Editor or other P6 lanes. Final polish restored the missing Collaborator tone detail, confirmed the Personas ledger copies are identical, closed the File Manager/Editor P6 ledger as audit-only source-lineage memory, and made the project-local Codex GPT-5.5 xhigh read-only model-lock trackable.",
   "commands_run": [
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
@@ -78,13 +78,93 @@
       "cmd": "git diff --check",
       "exit_code": 0,
       "stdout_excerpt": "no whitespace errors; exit_code=0"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "Preflight pass for final polish: status=pass; generated_at_utc=2026-06-11T09:43:39Z; failures=[]."
+    },
+    {
+      "cmd": "sha256sum Plans/ledgers/p6/w-20260328-192905/working_ledger.md Plans/ledgers/work_items/w-20260328-192905/working_ledger.md",
+      "exit_code": 0,
+      "stdout_excerpt": "Both Personas ledger bodies hash to 79f8b8eec22aa8e1cdd33c77a985247e1b7536c09c03a85192f1824f7add3c26."
+    },
+    {
+      "cmd": "git check-ignore --quiet --no-index .codex/config.toml",
+      "exit_code": 1,
+      "stdout_excerpt": "exit_code=1: project-local Codex config is not ignored and remains trackable."
+    },
+    {
+      "cmd": "git check-ignore --quiet --no-index .codex/agents/pm_governance_auditor.toml",
+      "exit_code": 1,
+      "stdout_excerpt": "exit_code=1: project-local Codex agent TOMLs are not ignored and remain trackable."
+    },
+    {
+      "cmd": "git check-ignore --quiet --no-index .codex/notes.tmp",
+      "exit_code": 0,
+      "stdout_excerpt": "exit_code=0: other .codex scratch files remain ignored."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py json-syntax",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:23Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:23Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:23Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:25Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:25Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; docs_checked=46; shards_checked=711; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py check-shards",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:55Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:52:59Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:53:02Z; failures=[]."
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: status=pass; generated_at_utc=2026-06-11T09:53:05Z; failures=[]."
+    },
+    {
+      "cmd": "git diff --check",
+      "exit_code": 0,
+      "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     }
   ],
   "tool_calls": [
     {
       "tool_id": "tool_search.tool_search_tool",
-      "count": 1,
-      "note": "Loaded multi-agent tool metadata proving PM custom roles are locked to GPT-5.5 xhigh."
+      "count": 2,
+      "note": "Loaded multi-agent role metadata proving PM custom runtime roles are fixed GPT-5.5 xhigh; project-local TOMLs provide read-only sandbox lock."
     },
     {
       "tool_id": "multi_agent_v1.spawn_agent",
@@ -98,8 +178,8 @@
     },
     {
       "tool_id": "functions.apply_patch",
-      "count": 1,
-      "note": "Used for scoped canonical doc, ledger state, and evidence edits before mechanical JSON refresh."
+      "count": 2,
+      "note": "Used for scoped canonical doc, ledger state, ignore-rule, and evidence edits before mechanical JSON refresh."
     }
   ],
   "events": {
@@ -113,6 +193,11 @@
         "source": "other",
         "ref": "read-only-subagents:gpt-5.5-xhigh",
         "note": "Called subagent roles were proven GPT-5.5 xhigh by tool metadata and instructed read-only."
+      },
+      {
+        "source": "other",
+        "ref": "p6-ledger-closure-persona-model-lock-polish-2026-06-11",
+        "note": "Final polish: Collaborator tone restored, File Manager/Editor P6 ledger closed as source-lineage, Codex model-lock tracking made explicit."
       }
     ]
   },
@@ -120,7 +205,7 @@
     {
       "path": "Plans/Personas.md",
       "change_type": "modified",
-      "note": "Removed core Document Writer, strengthened Collaborator and Overseer, and scoped technical-writer as specialty/template."
+      "note": "Restored missing Collaborator tone detail while preserving constructive challenge behavior."
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -206,6 +291,31 @@
       "path": "Plans/_shards/**",
       "change_type": "modified",
       "note": "Regenerated derived shards from registered source docs."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+      "change_type": "modified",
+      "note": "Marked File Manager/Editor P6 ledger audit-closed/source-lineage-only instead of active research."
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+      "change_type": "added",
+      "note": "Added compact audit-closed state and do-not-process warning."
+    },
+    {
+      "path": ".gitignore",
+      "change_type": "modified",
+      "note": "Made project-local Codex config and agent TOMLs explicitly trackable."
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
+      "change_type": "modified",
+      "note": "Recorded File Manager/Editor ledger closure disposition."
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "change_type": "modified",
+      "note": "Recorded compact evidence for File Manager/Editor source-lineage closure."
     }
   ],
   "contract_refs_satisfied": [
@@ -235,12 +345,12 @@
     {
       "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json",
       "note": "Delta material-item certification.",
-      "sha256": "8acb9b221583b0579fd47a77e98f019e00ffae9b67bc49093fed0b7f51cc401e"
+      "sha256": "4bf1ca61055a388baf5e21427839c811d6de025a7ba1429e9bf40cc5d29b10b6"
     },
     {
       "path": "Plans/Personas.md",
       "note": "Primary Persona owner repair.",
-      "sha256": "f1ab4cb45fb88e45d2f3ed096578e17c854b65c9e5b61b872c4bcdd980c0a77b"
+      "sha256": "9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5"
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -295,22 +405,92 @@
     {
       "path": "Plans/auto_decisions.jsonl",
       "note": "Schema-valid repair decision row.",
-      "sha256": "1a8b891b06a5dc9e14cfe1f2a301bc6d65c8b9e23885faab951b1b7e8bf1af3f"
+      "sha256": "e069b2d5821dc5c7ea0438b764fbb521226a4619844261607521bd7002df025a"
     },
     {
       "path": "Plans/plan_graph.json",
       "note": "P6 node repair refs.",
-      "sha256": "d5f3a94445f6e06827e41752450223eddcd5344644fe96e8b394586e45881f58"
+      "sha256": "abc6515a2dc0437f6e5644dabca6cfb7ecd6e547a24c81f77f8754e1490a7194"
     },
     {
       "path": "Plans/Spec_Lock.json",
       "note": "Spec Lock refreshed after repair.",
-      "sha256": "105795f9974d2cf26417b94e55c284b6b93588e65fa59ab63a8e467627ff35bd"
+      "sha256": "201de93351485224d9c7dc3d9cc2c5c12962b28e50136fe23565d3b525874f93"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
       "note": "Shard regeneration report.",
-      "sha256": "e49dcc788ed162094878a0aa76a0f4d7c8f1cc679c58548695127b6a21d5f52a"
+      "sha256": "1c239becd364fa8e4d1cb78838f0fc3f3bc4e1211739569ce3c8459d9d6dc341"
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/meta.json",
+      "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
+      "sha256": "212053ee508e2a95b53b5ca5cb04d2e4381beb4aabc5be2b7d90efbbd730692d"
+    },
+    {
+      "path": "Plans/ledgers/p6/w-20260318-153036/current_state.md",
+      "note": "File Manager/Editor P6 compact state: no normal transfer required and do not process unless reopened.",
+      "sha256": "a88e64a462a86c32a0cf32f5b987faa457593252ba5345a1d85922f22c8a911e"
+    },
+    {
+      "path": ".gitignore",
+      "note": "Project-local Codex config and agent TOMLs are explicitly trackable while other .codex scratch files remain ignored.",
+      "sha256": "edf6ddd16e804056a6886ca5e07c12d1023aed4d3b182a6bf354e95bfc94ad7f"
+    },
+    {
+      "path": ".codex/config.toml",
+      "note": "Project-local Codex default model lock: gpt-5.5 with xhigh reasoning.",
+      "sha256": "3a28992f76b0112471671f3e6c6ee17c2668eee5f2bdd3302af74b691e0c42c4"
+    },
+    {
+      "path": ".codex/agents/pm_drift_critic.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "a156f8e64417618c16134f15485cca59a27bc19927043b044068f6f500d49a46"
+    },
+    {
+      "path": ".codex/agents/pm_evidence_mapper.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "f05d3498898890f9259b2e9ecf9e0ae8cf9875691a2cb70c5900356a04c53be5"
+    },
+    {
+      "path": ".codex/agents/pm_fidelity_auditor.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "04db53bd873bdf4fd06e776acc26b97bcef30f7c9e4b58303498ff4b9c217d37"
+    },
+    {
+      "path": ".codex/agents/pm_governance_auditor.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "7b3a5d6f7b6192fe0bb07ec661e414881f8fcd598766be7a6a783a6f691cf420"
+    },
+    {
+      "path": ".codex/agents/pm_owner_adjudicator.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "e452d012fcd3dd644465d87ce7cc30b74ab06d2b66d230feb9c49e77adc5f1db"
+    },
+    {
+      "path": ".codex/agents/pm_patch_planner.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "c0de8d699ff781d6d4fd1fb321e3b3b7e4b1a46e61b107416e94fe1b59cc1a30"
+    },
+    {
+      "path": ".codex/agents/pm_scaffold_police.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "6a0dea70316d716b54d0529cc5528bcf4ed13322dd1f5c4bbc4b5a66ed69573c"
+    },
+    {
+      "path": ".codex/agents/pm_special_lane_auditor.toml",
+      "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
+      "sha256": "62adae7b3cf41add438ffb0be0a44047d8d2c448d684b1e2555cc03fec48ca14"
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
+      "note": "Updated File Manager/Editor audit closure metadata.",
+      "sha256": "004ca8b31c05f7772de31826307328dfb3ca578fe2e2529ced502710054ca741"
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
+      "sha256": "54f1e120a8044d181d6acf42e89d4b6fd6aa5e19a22e6540e460983019599897"
     }
   ],
   "checks": [
@@ -343,6 +523,47 @@
       "name": "artifact-hygiene",
       "result": "PASS",
       "details": "No transfer_state or Codex kit artifacts were created."
+    },
+    {
+      "name": "personas-ledger-copy-identity",
+      "result": "PASS",
+      "details": "P6 and work_items Personas ledger bodies both hash to 79f8b8eec22aa8e1cdd33c77a985247e1b7536c09c03a85192f1824f7add3c26.",
+      "contract_refs": [
+        "ContractName:Plans/Personas.md"
+      ]
+    },
+    {
+      "name": "work-items-personas-copy-remains-superseded",
+      "result": "PASS",
+      "details": "Plans/ledgers/work_items/w-20260328-192905/meta.json remains mode/status superseded with next_required_stage=Closed.",
+      "contract_refs": [
+        "ContractName:Plans/Personas.md"
+      ]
+    },
+    {
+      "name": "file-manager-editor-p6-ledger-closed-source-lineage",
+      "result": "PASS",
+      "details": "Plans/ledgers/p6/w-20260318-153036 is audit-closed/source-lineage-only; no normal transfer required and no open material items remain.",
+      "contract_refs": [
+        "ContractName:Plans/FileManager.md",
+        "SchemaID:pm.evidence.schema.v1"
+      ]
+    },
+    {
+      "name": "collaborator-tone-detail-preserved",
+      "result": "PASS",
+      "details": "Plans/Personas.md preserves Collaborator as warm, eager, curious, proactive, technically serious, creative, and constructively challenging.",
+      "contract_refs": [
+        "ContractName:Plans/Personas.md"
+      ]
+    },
+    {
+      "name": "project-local-codex-model-lock-trackable",
+      "result": "PASS",
+      "details": ".codex/config.toml and .codex/agents/*.toml are trackable; all PM agents are gpt-5.5 xhigh with read-only sandbox_mode.",
+      "contract_refs": [
+        "SchemaID:pm.auto_decisions.schema.v1"
+      ]
     }
   ]
 }

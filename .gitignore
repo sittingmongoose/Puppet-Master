@@ -10,7 +10,11 @@ PuppetMaster*.zip
 Puppet-Master*.zip
 
 # Local/runtime agent state
-.codex/
+.codex/*
+!.codex/config.toml
+!.codex/agents/
+.codex/agents/*
+!.codex/agents/*.toml
 .claude/.credentials.json
 .claude/_state/
 .claude/debug/
