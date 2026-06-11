@@ -1,0 +1,2747 @@
+{
+  "build_order": [
+    "0PI-001",
+    "ACD-001",
+    "AI-001",
+    "AMS-001",
+    "ARC-001",
+    "BS-001",
+    "C-001",
+    "CBP-001",
+    "CRAU-001",
+    "CS-001",
+    "CV-001",
+    "CW-001",
+    "CWF-001",
+    "DL-001",
+    "DP-001",
+    "DPP-001",
+    "DR-001",
+    "EP-001",
+    "F-001",
+    "F2-001",
+    "F3-001",
+    "FL-001",
+    "FS-001",
+    "G-001",
+    "GAAAF-001",
+    "GI-001",
+    "GRRC-001",
+    "HITL-001",
+    "ISI-001",
+    "L-001",
+    "M-001",
+    "MA-001",
+    "MGAC-001",
+    "MI-001",
+    "MS-001",
+    "N-001",
+    "N2-001",
+    "OCM-001",
+    "ODE-001",
+    "OP-001",
+    "OSI-001",
+    "P-001",
+    "PG-001",
+    "PLS-001",
+    "PLUG-001",
+    "PO-001",
+    "POA-001",
+    "PP-001",
+    "PS-001",
+    "PSMERA-001",
+    "RAP-001",
+    "RGV-001",
+    "RM-001",
+    "RTIM-001",
+    "SMPFS-001",
+    "SP-001",
+    "SS-001",
+    "T-001",
+    "UCC-001",
+    "UF-001",
+    "UIW-001",
+    "W-001",
+    "WM-001",
+    "WS-001",
+    "PDS-001",
+    "PLS-002",
+    "UIW-002",
+    "UIW-003",
+    "UIW-008",
+    "PDS-002",
+    "PLS-003",
+    "UIW-004",
+    "UIW-005",
+    "PDS-004",
+    "PLS-004",
+    "PLS-005",
+    "UIW-006",
+    "PDS-009",
+    "PLS-006",
+    "PLS-009",
+    "PDS-003",
+    "PLS-007",
+    "UIW-007",
+    "PDS-010",
+    "BPM-001",
+    "PDS-006",
+    "PDS-007",
+    "PLS-010",
+    "PDS-005",
+    "BPM-002",
+    "BPM-006",
+    "PNC-001",
+    "PDS-008",
+    "BPM-004",
+    "BPM-007",
+    "BPM-003",
+    "PLS-008",
+    "PNC-002",
+    "PNC-006",
+    "PNC-003",
+    "PNC-004",
+    "PNC-005",
+    "PNC-007",
+    "BPM-005",
+    "PNC-008"
+  ],
+  "cycle_blockers": [],
+  "edges": [
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-001",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-001",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-002",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-003",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-003",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-003",
+      "to": "PDS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-003",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-003",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-004",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-004",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-004",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-005",
+      "to": "BPM-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-005",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-005",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-005",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-006",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-006",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-007",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-007",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-007",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BPM-007",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-001",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-002",
+      "to": "PDS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-003",
+      "to": "PDS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-003",
+      "to": "PLS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-004",
+      "to": "PDS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-004",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-005",
+      "to": "PLS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-006",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-006",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-007",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-008",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-008",
+      "to": "PLS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-009",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-009",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-010",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-010",
+      "to": "PDS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-002",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-003",
+      "to": "PLS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-004",
+      "to": "PLS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-005",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-005",
+      "to": "PLS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-006",
+      "to": "PLS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-006",
+      "to": "PLS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-006",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-007",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-007",
+      "to": "PLS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-008",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-008",
+      "to": "PLS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-008",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-009",
+      "to": "PLS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-009",
+      "to": "PLS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-009",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-010",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-010",
+      "to": "PLS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-010",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-010",
+      "to": "PLS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-001",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-001",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-002",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-002",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-003",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-004",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-004",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-004",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-004",
+      "to": "PNC-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-005",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-005",
+      "to": "PDS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-005",
+      "to": "PNC-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-006",
+      "to": "PLS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-006",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-007",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-007",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-007",
+      "to": "PNC-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-008",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-008",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-008",
+      "to": "PNC-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-008",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-008",
+      "to": "PNC-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-002",
+      "to": "UIW-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-003",
+      "to": "UIW-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-004",
+      "to": "UIW-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-005",
+      "to": "UIW-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-005",
+      "to": "UIW-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-006",
+      "to": "UIW-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-006",
+      "to": "UIW-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-006",
+      "to": "UIW-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-007",
+      "to": "UIW-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-007",
+      "to": "UIW-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-007",
+      "to": "UIW-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-007",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-008",
+      "to": "UIW-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-001",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-001",
+      "to": "BPM-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-002",
+      "to": "BPM-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-002",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-002",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-003",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-003",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-004",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-007",
+      "to": "BPM-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-007",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "BPM-007",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-001",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-001",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-001",
+      "to": "PDS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-002",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-003",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-003",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-003",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-004",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-005",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-005",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-006",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-007",
+      "to": "PNC-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-008",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-008",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-008",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-009",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-010",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-001",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-001",
+      "to": "PLS-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-001",
+      "to": "PLS-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-002",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-002",
+      "to": "PLS-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-002",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-003",
+      "to": "PLS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-003",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-004",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-004",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-005",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-005",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-005",
+      "to": "PNC-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-006",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-006",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-007",
+      "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-007",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-008",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-008",
+      "to": "PNC-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-009",
+      "to": "BPM-001"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-009",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-009",
+      "to": "PLS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-010",
+      "to": "BPM-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PLS-010",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-001",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-001",
+      "to": "PNC-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-001",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-002",
+      "to": "PNC-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-002",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-003",
+      "to": "PNC-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-003",
+      "to": "PNC-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-004",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-008",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-001",
+      "to": "UIW-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-001",
+      "to": "UIW-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-001",
+      "to": "UIW-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-001",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-001",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-002",
+      "to": "UIW-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-002",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-003",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-003",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-004",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-004",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-005",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-005",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-006",
+      "to": "UIW-007"
+    }
+  ],
+  "generated_at_utc": "2026-06-11T20:20:55Z",
+  "nodes": [
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/00-plans-index.md",
+      "plan_unit_id": "0PI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "0PI-001 - Plans Index (authoritative map) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 615,
+        "line": 617,
+        "path": "Plans/00-plans-index.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "ACD-001 - Assistant & Chat UI -- Design Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 3326,
+        "line": 3328,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Architecture_Invariants.md",
+      "plan_unit_id": "AI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "AI-001 - Architecture Invariants (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 455,
+        "line": 457,
+        "path": "Plans/Architecture_Invariants.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "AMS-001 - Assistant-Only Memory Subsystem (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 549,
+        "line": 551,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/agent-rules-context.md",
+      "plan_unit_id": "ARC-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "ARC-001 - Application- and Project-Level Agent Rules -- Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 311,
+        "line": 313,
+        "path": "Plans/agent-rules-context.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "repo_agents",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-001",
+      "reasoning_tier": "standard",
+      "risk_class": "agent_instruction_drift",
+      "source_location": {
+        "heading": "BPM-001 - AGENTS Trigger Surface",
+        "heading_level": 3,
+        "heading_line": 23,
+        "line": 25,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "codex_bootstrap",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-002",
+      "reasoning_tier": "standard",
+      "risk_class": "workflow_continuity",
+      "source_location": {
+        "heading": "BPM-002 - Codex Phase And Goal Prompt Model",
+        "heading_level": 3,
+        "heading_line": 56,
+        "line": 58,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "repo",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-003",
+      "reasoning_tier": "standard",
+      "risk_class": "initial_compile",
+      "source_location": {
+        "heading": "BPM-003 - Initial Canonical Doc Compilation",
+        "heading_level": 3,
+        "heading_line": 92,
+        "line": 94,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-004",
+      "reasoning_tier": "high",
+      "risk_class": "content_loss",
+      "source_location": {
+        "heading": "BPM-004 - Controlled Lossless Plan Conversion",
+        "heading_level": 3,
+        "heading_line": 126,
+        "line": 128,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "repo_governance",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-005",
+      "reasoning_tier": "standard",
+      "risk_class": "governance_artifact_staleness",
+      "source_location": {
+        "heading": "BPM-005 - Governance Seal Timing",
+        "heading_level": 3,
+        "heading_line": 168,
+        "line": 170,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "repo",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-006",
+      "reasoning_tier": "standard",
+      "risk_class": "stale_architecture_revival",
+      "source_location": {
+        "heading": "BPM-006 - Retired Legacy Experiments Excluded",
+        "heading_level": 3,
+        "heading_line": 208,
+        "line": 210,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "codex_bootstrap",
+      "gui_related": false,
+      "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_id": "BPM-007",
+      "reasoning_tier": "standard",
+      "risk_class": "thread_restart_continuity",
+      "source_location": {
+        "heading": "BPM-007 - Phase Handoff And Thread Boundary Contract",
+        "heading_level": 3,
+        "heading_line": 246,
+        "line": 248,
+        "path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "plan_unit_id": "BS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "BS-001 - BinaryLocator Spec (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 379,
+        "line": 381,
+        "path": "Plans/BinaryLocator_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Crosswalk.md",
+      "plan_unit_id": "C-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "C-001 - Crosswalk (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 488,
+        "line": 490,
+        "path": "Plans/Crosswalk.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "plan_unit_id": "CBP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CBP-001 - CLI-Bridged Providers (Provider Facade) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 139,
+        "line": 141,
+        "path": "Plans/CLI_Bridged_Providers.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 996,
+        "line": 998,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CS-001 - Commands System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 682,
+        "line": 684,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CV-001 - Contracts V0 (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 2546,
+        "line": 2548,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/chain-wizard.md",
+      "plan_unit_id": "CW-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CW-001 - Chain Wizard -- Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 37,
+        "line": 39,
+        "path": "Plans/chain-wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/chain-wizard-flexibility.md",
+      "plan_unit_id": "CWF-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "CWF-001 - Chain Wizard & Interview Flexibility -- Intent-Based Workflows Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 2296,
+        "line": 2298,
+        "path": "Plans/chain-wizard-flexibility.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "DL-001 - Decision Log Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 129,
+        "line": 131,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Policy.md",
+      "plan_unit_id": "DP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "DP-001 - Decision Policy (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 466,
+        "line": 468,
+        "path": "Plans/Decision_Policy.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Document_Packaging_Policy.md",
+      "plan_unit_id": "DPP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "DPP-001 - Document Packaging Policy (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 354,
+        "line": 356,
+        "path": "Plans/Document_Packaging_Policy.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/DRY_Rules.md",
+      "plan_unit_id": "DR-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "DR-001 - DRY Rules (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 267,
+        "line": 269,
+        "path": "Plans/DRY_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "EP-001 - Overseer Protocol (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 841,
+        "line": 843,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "F-001 - File Manager & IDE-style Editor -- Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 548,
+        "line": 550,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "F2-001 - FileSafe -- Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 2720,
+        "line": 2722,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "F3-001 - Puppet Master GUI Specification -- Slint Rewrite Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 3441,
+        "line": 3443,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/feature-list.md",
+      "plan_unit_id": "FL-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "FL-001 - Puppet Master Feature List (Reference) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 221,
+        "line": 223,
+        "path": "Plans/feature-list.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Formatters_System.md",
+      "plan_unit_id": "FS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "FS-001 - Formatters System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 285,
+        "line": 287,
+        "path": "Plans/Formatters_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Glossary.md",
+      "plan_unit_id": "G-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "G-001 - Glossary (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 302,
+        "line": 304,
+        "path": "Plans/Glossary.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "plan_unit_id": "GAAAF-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "GAAAF-001 - Puppet Master -- GitHub API Auth and Flows Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 133,
+        "line": 135,
+        "path": "Plans/GitHub_API_Auth_and_Flows.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/GitHub_Integration.md",
+      "plan_unit_id": "GI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "GI-001 - GitHub Integration -- Spec Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 237,
+        "line": 239,
+        "path": "Plans/GitHub_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "plan_unit_id": "GRRC-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "GRRC-001 - GUI Rebuild Requirements Checklist (2026-02-23) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 181,
+        "line": 183,
+        "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/human-in-the-loop.md",
+      "plan_unit_id": "HITL-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "HITL-001 - Human-in-the-Loop (HITL) Mode -- Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 423,
+        "line": 425,
+        "path": "Plans/human-in-the-loop.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/interview-subagent-integration.md",
+      "plan_unit_id": "ISI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "ISI-001 - Interview Feature Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 64,
+        "line": 66,
+        "path": "Plans/interview-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/LSPSupport.md",
+      "plan_unit_id": "L-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "L-001 - LSP Support -- Plan (Rewrite) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1086,
+        "line": 1088,
+        "path": "Plans/LSPSupport.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/MiscPlan.md",
+      "plan_unit_id": "M-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "M-001 - Misc Plan -- Agent Artifacts, Cleanup & Related Improvements Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1354,
+        "line": 1356,
+        "path": "Plans/MiscPlan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "MA-001 - Multi-Account Specification Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 781,
+        "line": 783,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_id": "MGAC-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "3.4 `model_override` extraction",
+        "heading_level": 3,
+        "heading_line": 444,
+        "line": 891,
+        "path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "MI-001 - MCP Integration Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 196,
+        "line": 198,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "MS-001 - Models System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1246,
+        "line": 1248,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/newfeatures.md",
+      "plan_unit_id": "N-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "N-001 - New Features Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 96,
+        "line": 98,
+        "path": "Plans/newfeatures.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "N2-001 - GUI Testing Tools & Framework Options -- Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1314,
+        "line": 1316,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/OpenCode_Coverage_Matrix.md",
+      "plan_unit_id": "OCM-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "OCM-001 - OpenCode Coverage Matrix (Audit) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 266,
+        "line": 268,
+        "path": "Plans/OpenCode_Coverage_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/OpenCode_Deep_Extraction.md",
+      "plan_unit_id": "ODE-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "ODE-001 - OpenCode Deep Extraction (for Puppet Master) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 788,
+        "line": 790,
+        "path": "Plans/OpenCode_Deep_Extraction.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "plan_unit_id": "OP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "OP-001 - Orchestrator Page -- Single-Page 6-Tab Specification Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 400,
+        "line": 402,
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "OSI-001 - Orchestrator Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 6436,
+        "line": 6438,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Personas.md",
+      "plan_unit_id": "P-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "P-001 - Personas (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 690,
+        "line": 692,
+        "path": "Plans/Personas.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "governance_standard",
+      "source_location": {
+        "heading": "PDS-001 - Plan Document System Ownership",
+        "heading_level": 3,
+        "heading_line": 29,
+        "line": 31,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-002",
+      "reasoning_tier": "standard",
+      "risk_class": "migration_safety",
+      "source_location": {
+        "heading": "PDS-002 - Standard But Not Rigid Layout",
+        "heading_level": 3,
+        "heading_line": 62,
+        "line": 64,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_planunits",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-003",
+      "reasoning_tier": "standard",
+      "risk_class": "indexability",
+      "source_location": {
+        "heading": "PDS-003 - PlanUnit Required Fields",
+        "heading_level": 3,
+        "heading_line": 96,
+        "line": 98,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-004",
+      "reasoning_tier": "high",
+      "risk_class": "content_loss",
+      "source_location": {
+        "heading": "PDS-004 - Lossless Plan Conversion Protocol",
+        "heading_level": 3,
+        "heading_line": 138,
+        "line": 140,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_doc",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-005",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "PDS-005 - Owner Adjudication In PlanUnits",
+        "heading_level": 3,
+        "heading_line": 175,
+        "line": 177,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plan_index",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-006",
+      "reasoning_tier": "standard",
+      "risk_class": "execution_boundary",
+      "source_location": {
+        "heading": "PDS-006 - Generated PlanUnit Index Boundary",
+        "heading_level": 3,
+        "heading_line": 210,
+        "line": 212,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "planunit_metadata_and_settings",
+      "gui_related": true,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-007",
+      "reasoning_tier": "standard",
+      "risk_class": "user_visible_settings",
+      "source_location": {
+        "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
+        "heading_level": 3,
+        "heading_line": 251,
+        "line": 253,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_planunits",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-008",
+      "reasoning_tier": "standard",
+      "risk_class": "indexability",
+      "source_location": {
+        "heading": "PDS-008 - PlanUnit Block Grammar And Field Semantics",
+        "heading_level": 3,
+        "heading_line": 291,
+        "line": 293,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-009",
+      "reasoning_tier": "standard",
+      "risk_class": "migration_safety",
+      "source_location": {
+        "heading": "PDS-009 - Standard Plan Document Layout Contract",
+        "heading_level": 3,
+        "heading_line": 326,
+        "line": 328,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-010",
+      "reasoning_tier": "high",
+      "risk_class": "content_loss",
+      "source_location": {
+        "heading": "PDS-010 - Lossless Migration Artifact Contract",
+        "heading_level": 3,
+        "heading_line": 362,
+        "line": 364,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Progression_Gates.md",
+      "plan_unit_id": "PG-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PG-001 - Progression Gates (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 649,
+        "line": 651,
+        "path": "Plans/Progression_Gates.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "repo",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "governance_boundary",
+      "source_location": {
+        "heading": "PLS-001 - Ledger Authority Boundary",
+        "heading_level": 3,
+        "heading_line": 28,
+        "line": 30,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "repo_to_native",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-002",
+      "reasoning_tier": "standard",
+      "risk_class": "migration_compatibility",
+      "source_location": {
+        "heading": "PLS-002 - Bootstrap And Native Incarnations",
+        "heading_level": 3,
+        "heading_line": 67,
+        "line": 69,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "repo",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-003",
+      "reasoning_tier": "standard",
+      "risk_class": "data_integrity",
+      "source_location": {
+        "heading": "PLS-003 - Machine-First Bootstrap Record Set",
+        "heading_level": 3,
+        "heading_line": 102,
+        "line": 104,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "single_ledger",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-004",
+      "reasoning_tier": "standard",
+      "risk_class": "context_budget",
+      "source_location": {
+        "heading": "PLS-004 - Compact Operating Surface",
+        "heading_level": 3,
+        "heading_line": 141,
+        "line": 143,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ledger_to_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-005",
+      "reasoning_tier": "standard",
+      "risk_class": "source_loss",
+      "source_location": {
+        "heading": "PLS-005 - Design Atom Lifecycle And Exact Preservation",
+        "heading_level": 3,
+        "heading_line": 176,
+        "line": 178,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_ledger",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-006",
+      "reasoning_tier": "standard",
+      "risk_class": "continuity",
+      "source_location": {
+        "heading": "PLS-006 - Per-Turn Update Protocol",
+        "heading_level": 3,
+        "heading_line": 216,
+        "line": 218,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_doc",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-007",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "PLS-007 - Owner Ambiguity And Evidence Classes",
+        "heading_level": 3,
+        "heading_line": 251,
+        "line": 253,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "native_future",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-008",
+      "reasoning_tier": "standard",
+      "risk_class": "execution_boundary",
+      "source_location": {
+        "heading": "PLS-008 - Chain Wizard And Goal Integration",
+        "heading_level": 3,
+        "heading_line": 287,
+        "line": 289,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_ledger",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-009",
+      "reasoning_tier": "standard",
+      "risk_class": "bootstrap_operability",
+      "source_location": {
+        "heading": "PLS-009 - Bootstrap Ledger Directory And Record Contract",
+        "heading_level": 3,
+        "heading_line": 321,
+        "line": 323,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ledger_and_governance",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-010",
+      "reasoning_tier": "high",
+      "risk_class": "false_completion",
+      "source_location": {
+        "heading": "PLS-010 - Bootstrap Ledger Validator And Projection Contract",
+        "heading_level": 3,
+        "heading_line": 364,
+        "line": 366,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Plugins_System.md",
+      "plan_unit_id": "PLUG-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PLUG-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 644,
+        "line": 646,
+        "path": "Plans/Plugins_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plan_to_execution",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-001",
+      "reasoning_tier": "standard",
+      "risk_class": "execution_boundary",
+      "source_location": {
+        "heading": "PNC-001 - Readiness Boundary, Not WorkNode Creation",
+        "heading_level": 3,
+        "heading_line": 25,
+        "line": 27,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "all_planunits",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-002",
+      "reasoning_tier": "standard",
+      "risk_class": "compile_correctness",
+      "source_location": {
+        "heading": "PNC-002 - Compiler Input Metadata",
+        "heading_level": 3,
+        "heading_line": 70,
+        "line": 72,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "future_compiler",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-003",
+      "reasoning_tier": "high",
+      "risk_class": "scheduling_correctness",
+      "source_location": {
+        "heading": "PNC-003 - Ordering And Capability Hints",
+        "heading_level": 3,
+        "heading_line": 107,
+        "line": 109,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plan_index",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-004",
+      "reasoning_tier": "standard",
+      "risk_class": "false_completion",
+      "source_location": {
+        "heading": "PNC-004 - Node-Readiness Report Contract",
+        "heading_level": 3,
+        "heading_line": 142,
+        "line": 144,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "future_compiler_and_runtime",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-005",
+      "reasoning_tier": "standard",
+      "risk_class": "routing_mismatch",
+      "source_location": {
+        "heading": "PNC-005 - GUI Routing Inheritance",
+        "heading_level": 3,
+        "heading_line": 180,
+        "line": 182,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "native_future",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-006",
+      "reasoning_tier": "standard",
+      "risk_class": "phase_boundary",
+      "source_location": {
+        "heading": "PNC-006 - Native Goal Mode Compiler Handoff",
+        "heading_level": 3,
+        "heading_line": 221,
+        "line": 223,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "future_compiler",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-007",
+      "reasoning_tier": "high",
+      "risk_class": "deferred_algorithm",
+      "source_location": {
+        "heading": "4. Deferred Compiler Algorithm",
+        "heading_level": 2,
+        "heading_line": 291,
+        "line": 295,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "deferred",
+      "unit_type": "deferred_decision"
+    },
+    {
+      "context_scope": "plan_index",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-008",
+      "reasoning_tier": "standard",
+      "risk_class": "false_node_generation",
+      "source_location": {
+        "heading": "PNC-008 - Node-Readiness Report Field Contract",
+        "heading_level": 3,
+        "heading_line": 255,
+        "line": 257,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "plan_unit_id": "PO-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PO-001 - Provider: OpenCode (Server-Bridged) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 712,
+        "line": 714,
+        "path": "Plans/Provider_OpenCode.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Project_Output_Artifacts.md",
+      "plan_unit_id": "POA-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "POA-001 - Puppet Master — User-Project Project Plan Package Outputs (SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 796,
+        "line": 798,
+        "path": "Plans/Project_Output_Artifacts.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PP-001 - Prompt Pipeline (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 665,
+        "line": 667,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PS-001 - Permissions System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1248,
+        "line": 1250,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "plan_unit_id": "PSMERA-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "PSMERA-001 - Provider Stream Mapping — External Reference (A2A Bridge) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 389,
+        "line": 391,
+        "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "RAP-001 - Runtime Artifacts Panel — SSOT Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 405,
+        "line": 407,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Run_Graph_View.md",
+      "plan_unit_id": "RGV-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "RGV-001 - Run Graph View (Node Graph Display) -- Specification Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 143,
+        "line": 145,
+        "path": "Plans/Run_Graph_View.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Run_Modes.md",
+      "plan_unit_id": "RM-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "RM-001 - Run Modes (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 729,
+        "line": 731,
+        "path": "Plans/Run_Modes.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/rewrite-tie-in-memo.md",
+      "plan_unit_id": "RTIM-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "RTIM-001 - Puppet Master Rewrite Tie-In Contract (Active) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 504,
+        "line": 506,
+        "path": "Plans/rewrite-tie-in-memo.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "SMPFS-001 - Section 15 Promoted Features Spec Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 810,
+        "line": 812,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "SP-001 - Storage plan (seglog, redb, Tantivy, projectors) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 2234,
+        "line": 2236,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Skills_System.md",
+      "plan_unit_id": "SS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "SS-001 - Skills System (Canonical SSOT) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 417,
+        "line": 419,
+        "path": "Plans/Skills_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "T-001 - Adding Tool Support -- Research & Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 2254,
+        "line": 2256,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "UCC-001 - UI Command Catalog (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 1215,
+        "line": 1217,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "UF-001 - Usage Feature -- App/GUI Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 928,
+        "line": 930,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-001",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "UIW-001 - UI Wiring Scope And Authority",
+        "heading_level": 3,
+        "heading_line": 70,
+        "line": 72,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_dispatch",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-002",
+      "reasoning_tier": "high",
+      "risk_class": "ui_backend_bypass",
+      "source_location": {
+        "heading": "UIW-002 - Typed UICommand Dispatch Only",
+        "heading_level": 3,
+        "heading_line": 104,
+        "line": 106,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "ui_elements",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-003",
+      "reasoning_tier": "standard",
+      "risk_class": "unwired_gui",
+      "source_location": {
+        "heading": "UIW-003 - One Interactive Element Maps To One Command",
+        "heading_level": 3,
+        "heading_line": 139,
+        "line": 141,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_to_runtime_flow",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-004",
+      "reasoning_tier": "high",
+      "risk_class": "dispatcher_integrity",
+      "source_location": {
+        "heading": "UIW-004 - UI Command Dispatcher Flow",
+        "heading_level": 3,
+        "heading_line": 173,
+        "line": 175,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_surface_gui_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-005",
+      "reasoning_tier": "high",
+      "risk_class": "route_owner_drift",
+      "source_location": {
+        "heading": "UIW-005 - Route-Aware And Cross-Surface Wiring Boundaries",
+        "heading_level": 3,
+        "heading_line": 212,
+        "line": 214,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "wiring_matrix",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-006",
+      "reasoning_tier": "standard",
+      "risk_class": "matrix_schema_drift",
+      "source_location": {
+        "heading": "UIW-006 - Wiring Matrix Artifact Contract",
+        "heading_level": 3,
+        "heading_line": 249,
+        "line": 251,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_wiring_validation",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-007",
+      "reasoning_tier": "high",
+      "risk_class": "false_wiring_completion",
+      "source_location": {
+        "heading": "UIW-007 - Autonomous Verification Strategy",
+        "heading_level": 3,
+        "heading_line": 286,
+        "line": 288,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_wiring_references",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-008",
+      "reasoning_tier": "standard",
+      "risk_class": "reference_drift",
+      "source_location": {
+        "heading": "UIW-008 - Reference Boundary Preservation",
+        "heading_level": 3,
+        "heading_line": 322,
+        "line": 324,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/WorktreeGitImprovement.md",
+      "plan_unit_id": "W-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "W-001 - Worktree & Git Improvement -- Implementation Plan Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 805,
+        "line": 807,
+        "path": "Plans/WorktreeGitImprovement.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "WM-001 - Wiring Matrix (Canonical) Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 575,
+        "line": 577,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "single_plan_doc",
+      "gui_related": true,
+      "owner_doc": "Plans/Widget_System.md",
+      "plan_unit_id": "WS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "source_preservation",
+      "source_location": {
+        "heading": "WS-001 - Widget System -- Cross-Cutting Specification Source-Preserving PlanUnit",
+        "heading_level": 3,
+        "heading_line": 132,
+        "line": 134,
+        "path": "Plans/Widget_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    }
+  ],
+  "schema_id": "pm.plan_index.dependencies.v1",
+  "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
+  "summary": {
+    "build_order_available": true,
+    "cycle_blocker_count": 0,
+    "depends_on_edge_count": 92,
+    "edge_count": 167,
+    "node_count": 105,
+    "unblocks_edge_count": 75,
+    "unresolved_reference_count": 0
+  },
+  "unresolved_references": []
+}

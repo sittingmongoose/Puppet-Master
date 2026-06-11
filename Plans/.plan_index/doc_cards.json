@@ -1,0 +1,2797 @@
+{
+  "docs": [
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 27,
+      "implementation_surfaces": [
+        "Plans/00-plans-index.md"
+      ],
+      "line_count": 774,
+      "path": "Plans/00-plans-index.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "0PI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd",
+      "source_preserving_unit_ids": [
+        "0PI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Plans Index (authoritative map)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 46,
+      "implementation_surfaces": [
+        "Plans/agent-rules-context.md"
+      ],
+      "line_count": 440,
+      "path": "Plans/agent-rules-context.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "ARC-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de",
+      "source_preserving_unit_ids": [
+        "ARC-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Application- and Project-Level Agent Rules -- Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 43,
+      "implementation_surfaces": [
+        "Plans/Architecture_Invariants.md"
+      ],
+      "line_count": 629,
+      "path": "Plans/Architecture_Invariants.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "AI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "bc5fe0c3f06f26531d4c79e420f135da41f29e5c31e371784e9df7c35255a3a3",
+      "source_preserving_unit_ids": [
+        "AI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Architecture Invariants (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 184,
+      "implementation_surfaces": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "line_count": 3672,
+      "path": "Plans/assistant-chat-design.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "ACD-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f",
+      "source_preserving_unit_ids": [
+        "ACD-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Assistant & Chat UI -- Design Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 44,
+      "implementation_surfaces": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "line_count": 704,
+      "path": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "AMS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38",
+      "source_preserving_unit_ids": [
+        "AMS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 45,
+      "implementation_surfaces": [
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "line_count": 555,
+      "path": "Plans/BinaryLocator_Spec.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "BS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "34854d3fbb62b71b4fd828dbe38ad67c6c81f8a5e67edfb883c9675597d043c7",
+      "source_preserving_unit_ids": [
+        "BS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "BinaryLocator Spec (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "False": 7
+      },
+      "heading_count": 12,
+      "implementation_surfaces": [
+        "AGENTS.md",
+        "Plans/*.md",
+        "Plans/.evidence",
+        "Plans/00-plans-index.md",
+        "Plans/Bootstrap_Planning_Migration.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards",
+        "Plans/auto_decisions.jsonl",
+        "Plans/bootstrap",
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+        "Plans/bootstrap/Codex_Prompts.md",
+        "Plans/ledgers/v2",
+        "Plans/ledgers/v2/*/state",
+        "Plans/plan_graph.json",
+        "future migration inventory"
+      ],
+      "line_count": 298,
+      "path": "Plans/Bootstrap_Planning_Migration.md",
+      "plan_unit_count": 7,
+      "plan_unit_ids": [
+        "BPM-001",
+        "BPM-002",
+        "BPM-003",
+        "BPM-004",
+        "BPM-005",
+        "BPM-006",
+        "BPM-007"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "standard"
+      ],
+      "risk_classes": [
+        "agent_instruction_drift",
+        "content_loss",
+        "governance_artifact_staleness",
+        "initial_compile",
+        "stale_architecture_revival",
+        "thread_restart_continuity",
+        "workflow_continuity"
+      ],
+      "sha256": "075240cac02382fcc35f41e087b5e055becdd62946bfc023ce7e1d31ee7185e2",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 7
+      },
+      "title": "Bootstrap Planning Migration",
+      "unit_type_counts": {
+        "constraint": 3,
+        "decision": 1,
+        "requirement": 3
+      },
+      "validation_surfaces": [
+        "Coverage map.",
+        "Explicit governance seal report.",
+        "Goal prompt templates in Plans/bootstrap/Codex_Prompts.md.",
+        "Heading/body span inventory.",
+        "Ledger workflow smoke test.",
+        "Manual AGENTS.md review.",
+        "Manual plan review.",
+        "Original hash inventory.",
+        "Per-turn ledger state projections.",
+        "Phase validator reports.",
+        "Plans/bootstrap/Codex_Prompts.md",
+        "Plans/ledgers/v2/<ledger_id>/state/handoff.json",
+        "Source-lineage coverage.",
+        "Validators after pilot and each batch.",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 158,
+      "implementation_surfaces": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "line_count": 2587,
+      "path": "Plans/chain-wizard-flexibility.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CWF-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346",
+      "source_preserving_unit_ids": [
+        "CWF-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 8,
+      "implementation_surfaces": [
+        "Plans/chain-wizard.md"
+      ],
+      "line_count": 102,
+      "path": "Plans/chain-wizard.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CW-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "7e0a148008f20aeb3b9c8946502b107ff8c0b63ff720da6bd60b7aa0eaaebe55",
+      "source_preserving_unit_ids": [
+        "CW-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Chain Wizard -- Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 14,
+      "implementation_surfaces": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "line_count": 244,
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CBP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36",
+      "source_preserving_unit_ids": [
+        "CBP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "CLI-Bridged Providers (Provider Facade)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 57,
+      "implementation_surfaces": [
+        "Plans/Commands_System.md"
+      ],
+      "line_count": 875,
+      "path": "Plans/Commands_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "b5de2955ec7af4adeb576436220d240d13e0d93596dc9236fc6e2d2124d58540",
+      "source_preserving_unit_ids": [
+        "CS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Commands System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 86,
+      "implementation_surfaces": [
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "line_count": 1219,
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CRAU-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "8b580f15d2ce07b4639dae61ad607a7c30eaa6432475e2498ed3d03c2fb4d92b",
+      "source_preserving_unit_ids": [
+        "CRAU-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Containers, Registry, and Unraid Integration",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 122,
+      "implementation_surfaces": [
+        "Plans/Contracts_V0.md"
+      ],
+      "line_count": 2835,
+      "path": "Plans/Contracts_V0.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "CV-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021",
+      "source_preserving_unit_ids": [
+        "CV-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Contracts V0 (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 39,
+      "implementation_surfaces": [
+        "Plans/Crosswalk.md"
+      ],
+      "line_count": 666,
+      "path": "Plans/Crosswalk.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "C-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682",
+      "source_preserving_unit_ids": [
+        "C-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Crosswalk (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 26,
+      "implementation_surfaces": [
+        "Plans/Decision_Log.md"
+      ],
+      "line_count": 249,
+      "path": "Plans/Decision_Log.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "DL-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "49b5c5923e0c43afe9115e0e2b692a245f6832115204fa1e13f09e87827f8925",
+      "source_preserving_unit_ids": [
+        "DL-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Decision Log",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 36,
+      "implementation_surfaces": [
+        "Plans/Decision_Policy.md"
+      ],
+      "line_count": 642,
+      "path": "Plans/Decision_Policy.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "DP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "979fab9c2182291acc9989c5b3b2d0efa643c6deb0ab489d49f3e3531c042581",
+      "source_preserving_unit_ids": [
+        "DP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Decision Policy (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 28,
+      "implementation_surfaces": [
+        "Plans/Document_Packaging_Policy.md"
+      ],
+      "line_count": 487,
+      "path": "Plans/Document_Packaging_Policy.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "DPP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "1aab7576adc5c87b1a5532c1f39829cf9e9d184c1774c77d455c52b4aeecfd0b",
+      "source_preserving_unit_ids": [
+        "DPP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Document Packaging Policy (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 22,
+      "implementation_surfaces": [
+        "Plans/DRY_Rules.md"
+      ],
+      "line_count": 400,
+      "path": "Plans/DRY_Rules.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "DR-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c021921731548bf74e664f2cbb474ff9fc3aff640364b48ad6a85d68196233fe",
+      "source_preserving_unit_ids": [
+        "DR-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "DRY Rules (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 71,
+      "implementation_surfaces": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "line_count": 1072,
+      "path": "Plans/Executor_Protocol.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "EP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d",
+      "source_preserving_unit_ids": [
+        "EP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Overseer Protocol (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 22,
+      "implementation_surfaces": [
+        "Plans/feature-list.md"
+      ],
+      "line_count": 340,
+      "path": "Plans/feature-list.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "FL-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c",
+      "source_preserving_unit_ids": [
+        "FL-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Puppet Master Feature List (Reference)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 58,
+      "implementation_surfaces": [
+        "Plans/FileManager.md"
+      ],
+      "line_count": 737,
+      "path": "Plans/FileManager.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "F-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a",
+      "source_preserving_unit_ids": [
+        "F-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "File Manager & IDE-style Editor -- Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 114,
+      "implementation_surfaces": [
+        "Plans/FileSafe.md"
+      ],
+      "line_count": 2977,
+      "path": "Plans/FileSafe.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "F2-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214",
+      "source_preserving_unit_ids": [
+        "F2-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "FileSafe -- Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 241,
+      "implementation_surfaces": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "line_count": 3849,
+      "path": "Plans/FinalGUISpec.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "F3-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2",
+      "source_preserving_unit_ids": [
+        "F3-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Puppet Master GUI Specification -- Slint Rewrite",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 28,
+      "implementation_surfaces": [
+        "Plans/Formatters_System.md"
+      ],
+      "line_count": 396,
+      "path": "Plans/Formatters_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "FS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "841153deb0b40a91ed918a8627949361b605326365dffbe4a2a5b2eb5e09c592",
+      "source_preserving_unit_ids": [
+        "FS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Formatters System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 15,
+      "implementation_surfaces": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "line_count": 234,
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "GAAAF-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "ae9a04b542086ed39c8b78e71f708c91a73242ebf4bfe39fd4680336c75f870d",
+      "source_preserving_unit_ids": [
+        "GAAAF-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Puppet Master -- GitHub API Auth and Flows",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 16,
+      "implementation_surfaces": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "line_count": 364,
+      "path": "Plans/GitHub_Integration.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "GI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3",
+      "source_preserving_unit_ids": [
+        "GI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "GitHub Integration -- Spec",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 31,
+      "implementation_surfaces": [
+        "Plans/Glossary.md"
+      ],
+      "line_count": 469,
+      "path": "Plans/Glossary.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "G-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "9c5a6506e244d091954f576977d8078604cedcd5402dd92a0a17f107acb49bd3",
+      "source_preserving_unit_ids": [
+        "G-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Glossary (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 21,
+      "implementation_surfaces": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "line_count": 294,
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "GRRC-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a",
+      "source_preserving_unit_ids": [
+        "GRRC-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "GUI Rebuild Requirements Checklist (2026-02-23)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 48,
+      "implementation_surfaces": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "line_count": 606,
+      "path": "Plans/human-in-the-loop.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "HITL-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b",
+      "source_preserving_unit_ids": [
+        "HITL-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Human-in-the-Loop (HITL) Mode -- Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 15,
+      "implementation_surfaces": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "line_count": 158,
+      "path": "Plans/interview-subagent-integration.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "ISI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6",
+      "source_preserving_unit_ids": [
+        "ISI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Interview Feature Subagent Integration -- Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 72,
+      "implementation_surfaces": [
+        "Plans/LSPSupport.md"
+      ],
+      "line_count": 1315,
+      "path": "Plans/LSPSupport.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "L-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278",
+      "source_preserving_unit_ids": [
+        "L-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "LSP Support -- Plan (Rewrite)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 12,
+      "implementation_surfaces": [
+        "Plans/MCP_Integration.md"
+      ],
+      "line_count": 299,
+      "path": "Plans/MCP_Integration.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "MI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606",
+      "source_preserving_unit_ids": [
+        "MI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "MCP Integration",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 24,
+      "implementation_surfaces": [
+        "Plans/Media_Generation_and_Capabilities.md"
+      ],
+      "line_count": 1037,
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "MGAC-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "14a92c4cc13c1644eeaf07ae7f8bbd5456dc3b74ff01372617552515b55e251f",
+      "source_preserving_unit_ids": [
+        "MGAC-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Media Generation and Capabilities (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 105,
+      "implementation_surfaces": [
+        "Plans/MiscPlan.md"
+      ],
+      "line_count": 1593,
+      "path": "Plans/MiscPlan.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "M-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4",
+      "source_preserving_unit_ids": [
+        "M-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 81,
+      "implementation_surfaces": [
+        "Plans/Models_System.md"
+      ],
+      "line_count": 1476,
+      "path": "Plans/Models_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "MS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c",
+      "source_preserving_unit_ids": [
+        "MS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Models System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 41,
+      "implementation_surfaces": [
+        "Plans/Multi-Account.md"
+      ],
+      "line_count": 952,
+      "path": "Plans/Multi-Account.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "MA-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75",
+      "source_preserving_unit_ids": [
+        "MA-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Multi-Account Specification",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 18,
+      "implementation_surfaces": [
+        "Plans/newfeatures.md"
+      ],
+      "line_count": 199,
+      "path": "Plans/newfeatures.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "N-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63",
+      "source_preserving_unit_ids": [
+        "N-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "New Features Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 82,
+      "implementation_surfaces": [
+        "Plans/newtools.md"
+      ],
+      "line_count": 1522,
+      "path": "Plans/newtools.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "N2-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9",
+      "source_preserving_unit_ids": [
+        "N2-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "GUI Testing Tools & Framework Options -- Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 25,
+      "implementation_surfaces": [
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "line_count": 390,
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "OCM-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c7890ec1d1237f09c00b1490da11be56051fdd0e936f09e9b6a0d4e87f57fa4b",
+      "source_preserving_unit_ids": [
+        "OCM-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "OpenCode Coverage Matrix (Audit)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 74,
+      "implementation_surfaces": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "line_count": 971,
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "ODE-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21",
+      "source_preserving_unit_ids": [
+        "ODE-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "OpenCode Deep Extraction (for Puppet Master)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 228,
+      "implementation_surfaces": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "line_count": 6827,
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "OSI-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241",
+      "source_preserving_unit_ids": [
+        "OSI-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Orchestrator Subagent Integration -- Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 78,
+      "implementation_surfaces": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "line_count": 604,
+      "path": "Plans/Orchestrator_Page.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "OP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8",
+      "source_preserving_unit_ids": [
+        "OP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Orchestrator Page -- Single-Page 6-Tab Specification",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 82,
+      "implementation_surfaces": [
+        "Plans/Permissions_System.md"
+      ],
+      "line_count": 1465,
+      "path": "Plans/Permissions_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926",
+      "source_preserving_unit_ids": [
+        "PS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Permissions System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 62,
+      "implementation_surfaces": [
+        "Plans/Personas.md"
+      ],
+      "line_count": 869,
+      "path": "Plans/Personas.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "P-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "5e129c7f012d6afb9ec8705e987406f2c4dbf03270001df73844c0aff95d2ab9",
+      "source_preserving_unit_ids": [
+        "P-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Personas (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "False": 9,
+        "True": 1
+      },
+      "heading_count": 15,
+      "implementation_surfaces": [
+        "Plans/*.md",
+        "Plans/.plan_index",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration",
+        "Plans/00-plans-index.md",
+        "Plans/ledgers/v2/schemas/plan_unit.schema.json",
+        "future Settings UI",
+        "future migration inventory"
+      ],
+      "line_count": 420,
+      "path": "Plans/Plan_Document_System.md",
+      "plan_unit_count": 10,
+      "plan_unit_ids": [
+        "PDS-001",
+        "PDS-002",
+        "PDS-003",
+        "PDS-004",
+        "PDS-005",
+        "PDS-006",
+        "PDS-007",
+        "PDS-008",
+        "PDS-009",
+        "PDS-010"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "standard"
+      ],
+      "risk_classes": [
+        "content_loss",
+        "execution_boundary",
+        "governance_standard",
+        "indexability",
+        "migration_safety",
+        "owner_drift",
+        "user_visible_settings"
+      ],
+      "sha256": "942608f9c851e18cfcd5f5fef53edf9e68e2a689f2244e1f0cabfeb14f0ecc57",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 10
+      },
+      "title": "Plan Document System",
+      "unit_type_counts": {
+        "constraint": 1,
+        "requirement": 9
+      },
+      "validation_surfaces": [
+        "Coverage map.",
+        "DRY Rules lint and ContractRef lint.",
+        "Future PlanUnit index generator checks.",
+        "Future PlanUnit index generator validation.",
+        "Future node-readiness report checks.",
+        "Future settings UI review.",
+        "Manual coverage audit during migration.",
+        "Migration inventory coverage map.",
+        "Node-readiness report generator.",
+        "Owner map review.",
+        "Pilot conversion report.",
+        "Pilot conversion validation.",
+        "PlanUnit index field coverage.",
+        "PlanUnit index generator.",
+        "Plans/.plan_migration/<run_id>/coverage_map.jsonl",
+        "Plans/.plan_migration/<run_id>/validation_report.json",
+        "Post-conversion plan validators.",
+        "Post-conversion validators.",
+        "Pre-hash inventory.",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "False": 8
+      },
+      "heading_count": 13,
+      "implementation_surfaces": [
+        "Plans/*.md",
+        "Plans/.plan_index",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Plan_To_Node_Compilation.md",
+        "future Chain Wizard",
+        "future Goal Mode service",
+        "future NodeSeed compiler",
+        "future WorkNode compiler",
+        "future compiler",
+        "future runtime router"
+      ],
+      "line_count": 347,
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_count": 8,
+      "plan_unit_ids": [
+        "PNC-001",
+        "PNC-002",
+        "PNC-003",
+        "PNC-004",
+        "PNC-005",
+        "PNC-006",
+        "PNC-008",
+        "PNC-007"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "standard"
+      ],
+      "risk_classes": [
+        "compile_correctness",
+        "deferred_algorithm",
+        "execution_boundary",
+        "false_completion",
+        "false_node_generation",
+        "phase_boundary",
+        "routing_mismatch",
+        "scheduling_correctness"
+      ],
+      "sha256": "e0fc4a6bab582e2596887df2e731d79d53f7031e6ebd7865c29496ceb79ee6f7",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 7,
+        "deferred": 1
+      },
+      "title": "Plan To Node Compilation",
+      "unit_type_counts": {
+        "constraint": 1,
+        "deferred_decision": 1,
+        "requirement": 6
+      },
+      "validation_surfaces": [
+        "Future PlanUnit index validator.",
+        "Future compiler boundary tests.",
+        "Future compiler design review.",
+        "Future compiler dry-run.",
+        "Future compiler tests.",
+        "Future native Goal integration tests.",
+        "Future node-readiness report status.",
+        "Future node-readiness validator.",
+        "Future routing-policy tests.",
+        "Node-readiness dependency analysis.",
+        "Node-readiness report status.",
+        "Plan review for WorkNode language that implies executable tasks.",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "False": 10
+      },
+      "heading_count": 15,
+      "implementation_surfaces": [
+        "Plans/*.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Spec_Lock.json",
+        "Plans/bootstrap",
+        "Plans/ledgers/v2",
+        "Plans/ledgers/v2/*/events.jsonl",
+        "Plans/ledgers/v2/*/manifest.json",
+        "Plans/ledgers/v2/*/records",
+        "Plans/ledgers/v2/*/records/corrections.jsonl",
+        "Plans/ledgers/v2/*/records/design_atoms.jsonl",
+        "Plans/ledgers/v2/*/source_shards",
+        "Plans/ledgers/v2/*/state",
+        "Plans/ledgers/v2/*/state/compile_queue.json",
+        "Plans/ledgers/v2/*/state/current.json",
+        "Plans/ledgers/v2/*/state/handoff.json",
+        "Plans/ledgers/v2/*/state/open_items.json",
+        "Plans/ledgers/v2/*/state/operating_capsule.json",
+        "Plans/ledgers/v2/*/validation",
+        "Plans/ledgers/v2/README.md",
+        "Plans/ledgers/v2/ledger_registry.json",
+        "Plans/ledgers/v2/manifest.json",
+        "Plans/ledgers/v2/schemas/plan_unit.schema.json",
+        "Plans/plan_graph.json",
+        "Plans/sharding_config.json",
+        "future Chain Wizard",
+        "future Goal Mode service",
+        "future Native Ledger Service",
+        "scripts/pm-bootstrap-ledger-validate.py"
+      ],
+      "line_count": 423,
+      "path": "Plans/Planning_Ledger_System.md",
+      "plan_unit_count": 10,
+      "plan_unit_ids": [
+        "PLS-001",
+        "PLS-002",
+        "PLS-003",
+        "PLS-004",
+        "PLS-005",
+        "PLS-006",
+        "PLS-007",
+        "PLS-008",
+        "PLS-009",
+        "PLS-010"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "standard"
+      ],
+      "risk_classes": [
+        "bootstrap_operability",
+        "context_budget",
+        "continuity",
+        "data_integrity",
+        "execution_boundary",
+        "false_completion",
+        "governance_boundary",
+        "migration_compatibility",
+        "owner_drift",
+        "source_loss"
+      ],
+      "sha256": "f7b19989c67fde8bc6ecc6d7b43888943630ce0714e0b33b1c22be0332aca457",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 10
+      },
+      "title": "Planning Ledger System",
+      "unit_type_counts": {
+        "constraint": 1,
+        "decision": 1,
+        "requirement": 8
+      },
+      "validation_surfaces": [
+        "Compile queue owner_adjudication_status.",
+        "Future Chain Wizard integration tests.",
+        "JSON syntax validation.",
+        "JSON/JSONL syntax validation.",
+        "Ledger health checks.",
+        "Ledger health projections.",
+        "Ledger health reports for open blockers and unresolved contradictions.",
+        "Ledger health summary counts.",
+        "Ledger schema validation.",
+        "Manual compile review.",
+        "Migration/import-export tests once the native service exists.",
+        "PlanUnit coverage review.",
+        "PlanUnit source_lineage and owner_hints.",
+        "Plan_To_Node_Compilation boundary checks.",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 71,
+      "implementation_surfaces": [
+        "Plans/Plugins_System.md"
+      ],
+      "line_count": 820,
+      "path": "Plans/Plugins_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PLUG-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "c92bac9d3c0a647e37fbb5d6b8c0e6f9450cafc71aa0ac83e5f04cf71d92dfbe",
+      "source_preserving_unit_ids": [
+        "PLUG-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Plugins System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 51,
+      "implementation_surfaces": [
+        "Plans/Progression_Gates.md"
+      ],
+      "line_count": 829,
+      "path": "Plans/Progression_Gates.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PG-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "27857f2c3098b29813a2f0d17f4cb34ffe9a7f83fa781e04862e157b0ff76b9c",
+      "source_preserving_unit_ids": [
+        "PG-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Progression Gates (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 53,
+      "implementation_surfaces": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "line_count": 963,
+      "path": "Plans/Project_Output_Artifacts.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "POA-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12",
+      "source_preserving_unit_ids": [
+        "POA-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Puppet Master — User-Project Project Plan Package Outputs (SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 46,
+      "implementation_surfaces": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "line_count": 836,
+      "path": "Plans/Prompt_Pipeline.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc",
+      "source_preserving_unit_ids": [
+        "PP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Prompt Pipeline (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 58,
+      "implementation_surfaces": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "line_count": 887,
+      "path": "Plans/Provider_OpenCode.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PO-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1",
+      "source_preserving_unit_ids": [
+        "PO-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Provider: OpenCode (Server-Bridged)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 46,
+      "implementation_surfaces": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "line_count": 547,
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "PSMERA-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "a5e55c0f85da0401a83bf41fe766ea72b6003166c137fa0d3a001388f8c55e9c",
+      "source_preserving_unit_ids": [
+        "PSMERA-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Provider Stream Mapping — External Reference (A2A Bridge)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 42,
+      "implementation_surfaces": [
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "line_count": 675,
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "RTIM-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99",
+      "source_preserving_unit_ids": [
+        "RTIM-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Puppet Master Rewrite Tie-In Contract (Active)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 15,
+      "implementation_surfaces": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "line_count": 253,
+      "path": "Plans/Run_Graph_View.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "RGV-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "88b59545c38655934469f01f9488055853e22aa4a0ce623f1eac7bf2dd351790",
+      "source_preserving_unit_ids": [
+        "RGV-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Run Graph View (Node Graph Display) -- Specification",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 63,
+      "implementation_surfaces": [
+        "Plans/Run_Modes.md"
+      ],
+      "line_count": 915,
+      "path": "Plans/Run_Modes.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "RM-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "278c36fc1015a5ee27bf870d55c3f1147530f3880a98ebc4071ecc5e19ef74b0",
+      "source_preserving_unit_ids": [
+        "RM-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Run Modes (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 35,
+      "implementation_surfaces": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "line_count": 555,
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "RAP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "61408fdc7b9377e56d2d9a36661d6e8d5650ce40e634d9c10b5c95cc85dfa094",
+      "source_preserving_unit_ids": [
+        "RAP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Runtime Artifacts Panel — SSOT",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 54,
+      "implementation_surfaces": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "line_count": 989,
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "SMPFS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf",
+      "source_preserving_unit_ids": [
+        "SMPFS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Section 15 Promoted Features Spec",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 34,
+      "implementation_surfaces": [
+        "Plans/Skills_System.md"
+      ],
+      "line_count": 560,
+      "path": "Plans/Skills_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "SS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "000669515ae4da149f6179882db634954d230601e52e8b94108ea35216c9d3f2",
+      "source_preserving_unit_ids": [
+        "SS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Skills System (Canonical SSOT)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 130,
+      "implementation_surfaces": [
+        "Plans/storage-plan.md"
+      ],
+      "line_count": 2531,
+      "path": "Plans/storage-plan.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "SP-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e511858de8d0a127d40bda1e315d00ac4987efaaa217bddbf3de189ca16e46da",
+      "source_preserving_unit_ids": [
+        "SP-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Storage plan (seglog, redb, Tantivy, projectors)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 117,
+      "implementation_surfaces": [
+        "Plans/Tools.md"
+      ],
+      "line_count": 2538,
+      "path": "Plans/Tools.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "T-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c",
+      "source_preserving_unit_ids": [
+        "T-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Adding Tool Support -- Research & Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 56,
+      "implementation_surfaces": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "line_count": 1435,
+      "path": "Plans/UI_Command_Catalog.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "UCC-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d",
+      "source_preserving_unit_ids": [
+        "UCC-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "UI Command Catalog (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 8
+      },
+      "heading_count": 28,
+      "implementation_surfaces": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/evidence.schema.json"
+      ],
+      "line_count": 523,
+      "path": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_count": 8,
+      "plan_unit_ids": [
+        "UIW-001",
+        "UIW-002",
+        "UIW-003",
+        "UIW-004",
+        "UIW-005",
+        "UIW-006",
+        "UIW-007",
+        "UIW-008"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "standard"
+      ],
+      "risk_classes": [
+        "dispatcher_integrity",
+        "false_wiring_completion",
+        "matrix_schema_drift",
+        "owner_drift",
+        "reference_drift",
+        "route_owner_drift",
+        "ui_backend_bypass",
+        "unwired_gui"
+      ],
+      "sha256": "5bc6f040977efde1826713ac37bef698d38612f00b9a86dbcbbf02215d743270",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 8
+      },
+      "title": "UI Wiring Rules (Canonical)",
+      "unit_type_counts": {
+        "constraint": 1,
+        "requirement": 7
+      },
+      "validation_surfaces": [
+        "ContractRef lint",
+        "Dispatcher tests",
+        "Dispatcher tests for unknown-command rejection",
+        "Future UI wiring verifier scripts",
+        "GATE-010",
+        "GATE-010 element-command coverage checks",
+        "GATE-010 route-aware checks",
+        "GATE-010 schema validation",
+        "GATE-010 wiring checks",
+        "Handler statelessness lint",
+        "Migration coverage map for retained anchors and aliases",
+        "Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/evidence.schema.json",
+        "UI purity check",
+        "UI purity lints",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 107,
+      "implementation_surfaces": [
+        "Plans/usage-feature.md"
+      ],
+      "line_count": 1176,
+      "path": "Plans/usage-feature.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "UF-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1",
+      "source_preserving_unit_ids": [
+        "UF-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Usage Feature -- App/GUI Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 13,
+      "implementation_surfaces": [
+        "Plans/Widget_System.md"
+      ],
+      "line_count": 247,
+      "path": "Plans/Widget_System.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "WS-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "87ebb933f2415c333d7ad4923c41ef1ab01731b9d27a51485636e3800ee50120",
+      "source_preserving_unit_ids": [
+        "WS-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Widget System -- Cross-Cutting Specification",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 47,
+      "implementation_surfaces": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "line_count": 736,
+      "path": "Plans/Wiring_Matrix.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "WM-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750",
+      "source_preserving_unit_ids": [
+        "WM-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Wiring Matrix (Canonical)",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "True": 1
+      },
+      "heading_count": 103,
+      "implementation_surfaces": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "line_count": 1032,
+      "path": "Plans/WorktreeGitImprovement.md",
+      "plan_unit_count": 1,
+      "plan_unit_ids": [
+        "W-001"
+      ],
+      "reasoning_tiers": [
+        "standard"
+      ],
+      "risk_classes": [
+        "source_preservation"
+      ],
+      "sha256": "9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907",
+      "source_preserving_unit_ids": [
+        "W-001"
+      ],
+      "status_counts": {
+        "accepted": 1
+      },
+      "title": "Worktree & Git Improvement -- Implementation Plan",
+      "unit_type_counts": {
+        "requirement": 1
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-shard-plans.py --check"
+      ]
+    }
+  ],
+  "generated_at_utc": "2026-06-11T20:20:55Z",
+  "schema_id": "pm.plan_index.doc_cards.v1",
+  "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
+  "summary": {
+    "doc_count": 67,
+    "docs_with_plan_units": 67,
+    "docs_without_plan_units": 0,
+    "gui_related_counts": {
+      "False": 34,
+      "True": 71
+    },
+    "plan_unit_count": 105,
+    "source_preserving_unit_count": 62,
+    "status_counts": {
+      "accepted": 104,
+      "deferred": 1
+    },
+    "unit_type_counts": {
+      "constraint": 7,
+      "decision": 2,
+      "deferred_decision": 1,
+      "requirement": 95
+    }
+  }
+}

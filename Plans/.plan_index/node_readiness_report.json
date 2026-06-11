@@ -1,0 +1,1641 @@
+{
+  "build_order_blockers": [],
+  "compiler_contract_status": {
+    "blockers": [
+      {
+        "blocker": "compiler_algorithm_deferred",
+        "canonical_text": "The exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm remains deferred to a dedicated design process. The current standard reserves fields and reports node-readiness without generating NodeSeed candidates or WorkNodes.",
+        "plan_unit_id": "PNC-007",
+        "source_location": {
+          "heading": "4. Deferred Compiler Algorithm",
+          "heading_level": 2,
+          "heading_line": 291,
+          "line": 295,
+          "path": "Plans/Plan_To_Node_Compilation.md"
+        }
+      },
+      {
+        "blocker": "nodeseed_candidate_contract_absent",
+        "evidence": "PNC-001 and PNC-008 forbid NodeSeed candidates until this owner doc defines that artifact contract.",
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "source_location": {
+          "heading": "PNC-008 - Node-Readiness Report Field Contract",
+          "heading_level": 3,
+          "heading_line": 255,
+          "line": 257,
+          "path": "Plans/Plan_To_Node_Compilation.md"
+        }
+      }
+    ],
+    "complete": false,
+    "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+    "status": "blocked_compiler_contract_incomplete"
+  },
+  "dependency_graph_summary": {
+    "build_order_available": true,
+    "cycle_blocker_count": 0,
+    "depends_on_edge_count": 92,
+    "edge_count": 167,
+    "node_count": 105,
+    "unblocks_edge_count": 75,
+    "unresolved_reference_count": 0
+  },
+  "generated_at_utc": "2026-06-11T20:20:55Z",
+  "gui_related_units": {
+    "count": 71,
+    "units": [
+      {
+        "owner_doc": "Plans/00-plans-index.md",
+        "plan_unit_id": "0PI-001",
+        "source_location": {
+          "heading": "0PI-001 - Plans Index (authoritative map) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 615,
+          "line": 617,
+          "path": "Plans/00-plans-index.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-001",
+        "source_location": {
+          "heading": "ACD-001 - Assistant & Chat UI -- Design Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 3326,
+          "line": 3328,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Architecture_Invariants.md",
+        "plan_unit_id": "AI-001",
+        "source_location": {
+          "heading": "AI-001 - Architecture Invariants (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 455,
+          "line": 457,
+          "path": "Plans/Architecture_Invariants.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-memory-subsystem.md",
+        "plan_unit_id": "AMS-001",
+        "source_location": {
+          "heading": "AMS-001 - Assistant-Only Memory Subsystem (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 549,
+          "line": 551,
+          "path": "Plans/assistant-memory-subsystem.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/agent-rules-context.md",
+        "plan_unit_id": "ARC-001",
+        "source_location": {
+          "heading": "ARC-001 - Application- and Project-Level Agent Rules -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 311,
+          "line": 313,
+          "path": "Plans/agent-rules-context.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/BinaryLocator_Spec.md",
+        "plan_unit_id": "BS-001",
+        "source_location": {
+          "heading": "BS-001 - BinaryLocator Spec (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 379,
+          "line": 381,
+          "path": "Plans/BinaryLocator_Spec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Crosswalk.md",
+        "plan_unit_id": "C-001",
+        "source_location": {
+          "heading": "C-001 - Crosswalk (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 488,
+          "line": 490,
+          "path": "Plans/Crosswalk.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/CLI_Bridged_Providers.md",
+        "plan_unit_id": "CBP-001",
+        "source_location": {
+          "heading": "CBP-001 - CLI-Bridged Providers (Provider Facade) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 139,
+          "line": 141,
+          "path": "Plans/CLI_Bridged_Providers.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-001",
+        "source_location": {
+          "heading": "CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 996,
+          "line": 998,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Commands_System.md",
+        "plan_unit_id": "CS-001",
+        "source_location": {
+          "heading": "CS-001 - Commands System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 682,
+          "line": 684,
+          "path": "Plans/Commands_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-001",
+        "source_location": {
+          "heading": "CV-001 - Contracts V0 (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2546,
+          "line": 2548,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/chain-wizard.md",
+        "plan_unit_id": "CW-001",
+        "source_location": {
+          "heading": "CW-001 - Chain Wizard -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 37,
+          "line": 39,
+          "path": "Plans/chain-wizard.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/chain-wizard-flexibility.md",
+        "plan_unit_id": "CWF-001",
+        "source_location": {
+          "heading": "CWF-001 - Chain Wizard & Interview Flexibility -- Intent-Based Workflows Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2296,
+          "line": 2298,
+          "path": "Plans/chain-wizard-flexibility.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-001",
+        "source_location": {
+          "heading": "DL-001 - Decision Log Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 129,
+          "line": 131,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Policy.md",
+        "plan_unit_id": "DP-001",
+        "source_location": {
+          "heading": "DP-001 - Decision Policy (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 466,
+          "line": 468,
+          "path": "Plans/Decision_Policy.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Document_Packaging_Policy.md",
+        "plan_unit_id": "DPP-001",
+        "source_location": {
+          "heading": "DPP-001 - Document Packaging Policy (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 354,
+          "line": 356,
+          "path": "Plans/Document_Packaging_Policy.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/DRY_Rules.md",
+        "plan_unit_id": "DR-001",
+        "source_location": {
+          "heading": "DR-001 - DRY Rules (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 267,
+          "line": 269,
+          "path": "Plans/DRY_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Executor_Protocol.md",
+        "plan_unit_id": "EP-001",
+        "source_location": {
+          "heading": "EP-001 - Overseer Protocol (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 841,
+          "line": 843,
+          "path": "Plans/Executor_Protocol.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-001",
+        "source_location": {
+          "heading": "F-001 - File Manager & IDE-style Editor -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 548,
+          "line": 550,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileSafe.md",
+        "plan_unit_id": "F2-001",
+        "source_location": {
+          "heading": "F2-001 - FileSafe -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2720,
+          "line": 2722,
+          "path": "Plans/FileSafe.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-001",
+        "source_location": {
+          "heading": "F3-001 - Puppet Master GUI Specification -- Slint Rewrite Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 3441,
+          "line": 3443,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/feature-list.md",
+        "plan_unit_id": "FL-001",
+        "source_location": {
+          "heading": "FL-001 - Puppet Master Feature List (Reference) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 221,
+          "line": 223,
+          "path": "Plans/feature-list.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Formatters_System.md",
+        "plan_unit_id": "FS-001",
+        "source_location": {
+          "heading": "FS-001 - Formatters System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 285,
+          "line": 287,
+          "path": "Plans/Formatters_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Glossary.md",
+        "plan_unit_id": "G-001",
+        "source_location": {
+          "heading": "G-001 - Glossary (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 302,
+          "line": 304,
+          "path": "Plans/Glossary.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+        "plan_unit_id": "GAAAF-001",
+        "source_location": {
+          "heading": "GAAAF-001 - Puppet Master -- GitHub API Auth and Flows Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 133,
+          "line": 135,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GitHub_Integration.md",
+        "plan_unit_id": "GI-001",
+        "source_location": {
+          "heading": "GI-001 - GitHub Integration -- Spec Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 237,
+          "line": 239,
+          "path": "Plans/GitHub_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "plan_unit_id": "GRRC-001",
+        "source_location": {
+          "heading": "GRRC-001 - GUI Rebuild Requirements Checklist (2026-02-23) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 181,
+          "line": 183,
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/human-in-the-loop.md",
+        "plan_unit_id": "HITL-001",
+        "source_location": {
+          "heading": "HITL-001 - Human-in-the-Loop (HITL) Mode -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 423,
+          "line": 425,
+          "path": "Plans/human-in-the-loop.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/interview-subagent-integration.md",
+        "plan_unit_id": "ISI-001",
+        "source_location": {
+          "heading": "ISI-001 - Interview Feature Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 64,
+          "line": 66,
+          "path": "Plans/interview-subagent-integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/LSPSupport.md",
+        "plan_unit_id": "L-001",
+        "source_location": {
+          "heading": "L-001 - LSP Support -- Plan (Rewrite) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1086,
+          "line": 1088,
+          "path": "Plans/LSPSupport.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/MiscPlan.md",
+        "plan_unit_id": "M-001",
+        "source_location": {
+          "heading": "M-001 - Misc Plan -- Agent Artifacts, Cleanup & Related Improvements Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1354,
+          "line": 1356,
+          "path": "Plans/MiscPlan.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Multi-Account.md",
+        "plan_unit_id": "MA-001",
+        "source_location": {
+          "heading": "MA-001 - Multi-Account Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 781,
+          "line": 783,
+          "path": "Plans/Multi-Account.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+        "plan_unit_id": "MGAC-001",
+        "source_location": {
+          "heading": "3.4 `model_override` extraction",
+          "heading_level": 3,
+          "heading_line": 444,
+          "line": 891,
+          "path": "Plans/Media_Generation_and_Capabilities.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/MCP_Integration.md",
+        "plan_unit_id": "MI-001",
+        "source_location": {
+          "heading": "MI-001 - MCP Integration Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 196,
+          "line": 198,
+          "path": "Plans/MCP_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-001",
+        "source_location": {
+          "heading": "MS-001 - Models System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1246,
+          "line": 1248,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/newfeatures.md",
+        "plan_unit_id": "N-001",
+        "source_location": {
+          "heading": "N-001 - New Features Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 96,
+          "line": 98,
+          "path": "Plans/newfeatures.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/newtools.md",
+        "plan_unit_id": "N2-001",
+        "source_location": {
+          "heading": "N2-001 - GUI Testing Tools & Framework Options -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1314,
+          "line": 1316,
+          "path": "Plans/newtools.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/OpenCode_Coverage_Matrix.md",
+        "plan_unit_id": "OCM-001",
+        "source_location": {
+          "heading": "OCM-001 - OpenCode Coverage Matrix (Audit) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 266,
+          "line": 268,
+          "path": "Plans/OpenCode_Coverage_Matrix.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/OpenCode_Deep_Extraction.md",
+        "plan_unit_id": "ODE-001",
+        "source_location": {
+          "heading": "ODE-001 - OpenCode Deep Extraction (for Puppet Master) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 788,
+          "line": 790,
+          "path": "Plans/OpenCode_Deep_Extraction.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-001",
+        "source_location": {
+          "heading": "OP-001 - Orchestrator Page -- Single-Page 6-Tab Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 400,
+          "line": 402,
+          "path": "Plans/Orchestrator_Page.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/orchestrator-subagent-integration.md",
+        "plan_unit_id": "OSI-001",
+        "source_location": {
+          "heading": "OSI-001 - Orchestrator Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 6436,
+          "line": 6438,
+          "path": "Plans/orchestrator-subagent-integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Personas.md",
+        "plan_unit_id": "P-001",
+        "source_location": {
+          "heading": "P-001 - Personas (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 690,
+          "line": 692,
+          "path": "Plans/Personas.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Plan_Document_System.md",
+        "plan_unit_id": "PDS-007",
+        "source_location": {
+          "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
+          "heading_level": 3,
+          "heading_line": 251,
+          "line": 253,
+          "path": "Plans/Plan_Document_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Progression_Gates.md",
+        "plan_unit_id": "PG-001",
+        "source_location": {
+          "heading": "PG-001 - Progression Gates (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 649,
+          "line": 651,
+          "path": "Plans/Progression_Gates.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Plugins_System.md",
+        "plan_unit_id": "PLUG-001",
+        "source_location": {
+          "heading": "PLUG-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 644,
+          "line": 646,
+          "path": "Plans/Plugins_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Provider_OpenCode.md",
+        "plan_unit_id": "PO-001",
+        "source_location": {
+          "heading": "PO-001 - Provider: OpenCode (Server-Bridged) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 712,
+          "line": 714,
+          "path": "Plans/Provider_OpenCode.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Project_Output_Artifacts.md",
+        "plan_unit_id": "POA-001",
+        "source_location": {
+          "heading": "POA-001 - Puppet Master — User-Project Project Plan Package Outputs (SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 796,
+          "line": 798,
+          "path": "Plans/Project_Output_Artifacts.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Prompt_Pipeline.md",
+        "plan_unit_id": "PP-001",
+        "source_location": {
+          "heading": "PP-001 - Prompt Pipeline (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 665,
+          "line": 667,
+          "path": "Plans/Prompt_Pipeline.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Permissions_System.md",
+        "plan_unit_id": "PS-001",
+        "source_location": {
+          "heading": "PS-001 - Permissions System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1248,
+          "line": 1250,
+          "path": "Plans/Permissions_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "plan_unit_id": "PSMERA-001",
+        "source_location": {
+          "heading": "PSMERA-001 - Provider Stream Mapping — External Reference (A2A Bridge) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 389,
+          "line": 391,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-001",
+        "source_location": {
+          "heading": "RAP-001 - Runtime Artifacts Panel — SSOT Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 405,
+          "line": 407,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-001",
+        "source_location": {
+          "heading": "RGV-001 - Run Graph View (Node Graph Display) -- Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 143,
+          "line": 145,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Modes.md",
+        "plan_unit_id": "RM-001",
+        "source_location": {
+          "heading": "RM-001 - Run Modes (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 729,
+          "line": 731,
+          "path": "Plans/Run_Modes.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/rewrite-tie-in-memo.md",
+        "plan_unit_id": "RTIM-001",
+        "source_location": {
+          "heading": "RTIM-001 - Puppet Master Rewrite Tie-In Contract (Active) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 504,
+          "line": 506,
+          "path": "Plans/rewrite-tie-in-memo.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-001",
+        "source_location": {
+          "heading": "SMPFS-001 - Section 15 Promoted Features Spec Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 810,
+          "line": 812,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/storage-plan.md",
+        "plan_unit_id": "SP-001",
+        "source_location": {
+          "heading": "SP-001 - Storage plan (seglog, redb, Tantivy, projectors) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2234,
+          "line": 2236,
+          "path": "Plans/storage-plan.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Skills_System.md",
+        "plan_unit_id": "SS-001",
+        "source_location": {
+          "heading": "SS-001 - Skills System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 417,
+          "line": 419,
+          "path": "Plans/Skills_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Tools.md",
+        "plan_unit_id": "T-001",
+        "source_location": {
+          "heading": "T-001 - Adding Tool Support -- Research & Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2254,
+          "line": 2256,
+          "path": "Plans/Tools.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-001",
+        "source_location": {
+          "heading": "UCC-001 - UI Command Catalog (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1215,
+          "line": 1217,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/usage-feature.md",
+        "plan_unit_id": "UF-001",
+        "source_location": {
+          "heading": "UF-001 - Usage Feature -- App/GUI Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 928,
+          "line": 930,
+          "path": "Plans/usage-feature.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-001",
+        "source_location": {
+          "heading": "UIW-001 - UI Wiring Scope And Authority",
+          "heading_level": 3,
+          "heading_line": 70,
+          "line": 72,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-002",
+        "source_location": {
+          "heading": "UIW-002 - Typed UICommand Dispatch Only",
+          "heading_level": 3,
+          "heading_line": 104,
+          "line": 106,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-003",
+        "source_location": {
+          "heading": "UIW-003 - One Interactive Element Maps To One Command",
+          "heading_level": 3,
+          "heading_line": 139,
+          "line": 141,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-004",
+        "source_location": {
+          "heading": "UIW-004 - UI Command Dispatcher Flow",
+          "heading_level": 3,
+          "heading_line": 173,
+          "line": 175,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-005",
+        "source_location": {
+          "heading": "UIW-005 - Route-Aware And Cross-Surface Wiring Boundaries",
+          "heading_level": 3,
+          "heading_line": 212,
+          "line": 214,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-006",
+        "source_location": {
+          "heading": "UIW-006 - Wiring Matrix Artifact Contract",
+          "heading_level": 3,
+          "heading_line": 249,
+          "line": 251,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-007",
+        "source_location": {
+          "heading": "UIW-007 - Autonomous Verification Strategy",
+          "heading_level": 3,
+          "heading_line": 286,
+          "line": 288,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-008",
+        "source_location": {
+          "heading": "UIW-008 - Reference Boundary Preservation",
+          "heading_level": 3,
+          "heading_line": 322,
+          "line": 324,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/WorktreeGitImprovement.md",
+        "plan_unit_id": "W-001",
+        "source_location": {
+          "heading": "W-001 - Worktree & Git Improvement -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 805,
+          "line": 807,
+          "path": "Plans/WorktreeGitImprovement.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-001",
+        "source_location": {
+          "heading": "WM-001 - Wiring Matrix (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 575,
+          "line": 577,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Widget_System.md",
+        "plan_unit_id": "WS-001",
+        "source_location": {
+          "heading": "WS-001 - Widget System -- Cross-Cutting Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 132,
+          "line": 134,
+          "path": "Plans/Widget_System.md"
+        }
+      }
+    ]
+  },
+  "missing_required_metadata": [],
+  "next_required_action": "Complete the Plan_To_Node_Compilation.md compiler algorithm and explicit NodeSeed candidate contract in a future design phase before generating NodeSeeds, WorkNodes, executable tasks, or final node queues. Run the separate governance seal after index artifacts stop changing.",
+  "no_executable_build_tasks_created": true,
+  "no_final_node_queues_created": true,
+  "no_worknodes_created": true,
+  "nodeseed_candidates_created": false,
+  "plan_unit_count": 105,
+  "risk_and_reasoning_summary": {
+    "reasoning_tier_counts": {
+      "high": 10,
+      "standard": 95
+    },
+    "risk_class_counts": {
+      "agent_instruction_drift": 1,
+      "bootstrap_operability": 1,
+      "compile_correctness": 1,
+      "content_loss": 3,
+      "context_budget": 1,
+      "continuity": 1,
+      "data_integrity": 1,
+      "deferred_algorithm": 1,
+      "dispatcher_integrity": 1,
+      "execution_boundary": 3,
+      "false_completion": 2,
+      "false_node_generation": 1,
+      "false_wiring_completion": 1,
+      "governance_artifact_staleness": 1,
+      "governance_boundary": 1,
+      "governance_standard": 1,
+      "indexability": 2,
+      "initial_compile": 1,
+      "matrix_schema_drift": 1,
+      "migration_compatibility": 1,
+      "migration_safety": 2,
+      "owner_drift": 3,
+      "phase_boundary": 1,
+      "reference_drift": 1,
+      "route_owner_drift": 1,
+      "routing_mismatch": 1,
+      "scheduling_correctness": 1,
+      "source_loss": 1,
+      "source_preservation": 62,
+      "stale_architecture_revival": 1,
+      "thread_restart_continuity": 1,
+      "ui_backend_bypass": 1,
+      "unwired_gui": 1,
+      "user_visible_settings": 1,
+      "workflow_continuity": 1
+    },
+    "source_preserving_unit_count": 62,
+    "source_preserving_units": [
+      {
+        "owner_doc": "Plans/00-plans-index.md",
+        "plan_unit_id": "0PI-001",
+        "source_location": {
+          "heading": "0PI-001 - Plans Index (authoritative map) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 615,
+          "line": 617,
+          "path": "Plans/00-plans-index.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-001",
+        "source_location": {
+          "heading": "ACD-001 - Assistant & Chat UI -- Design Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 3326,
+          "line": 3328,
+          "path": "Plans/assistant-chat-design.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Architecture_Invariants.md",
+        "plan_unit_id": "AI-001",
+        "source_location": {
+          "heading": "AI-001 - Architecture Invariants (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 455,
+          "line": 457,
+          "path": "Plans/Architecture_Invariants.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/assistant-memory-subsystem.md",
+        "plan_unit_id": "AMS-001",
+        "source_location": {
+          "heading": "AMS-001 - Assistant-Only Memory Subsystem (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 549,
+          "line": 551,
+          "path": "Plans/assistant-memory-subsystem.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/agent-rules-context.md",
+        "plan_unit_id": "ARC-001",
+        "source_location": {
+          "heading": "ARC-001 - Application- and Project-Level Agent Rules -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 311,
+          "line": 313,
+          "path": "Plans/agent-rules-context.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/BinaryLocator_Spec.md",
+        "plan_unit_id": "BS-001",
+        "source_location": {
+          "heading": "BS-001 - BinaryLocator Spec (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 379,
+          "line": 381,
+          "path": "Plans/BinaryLocator_Spec.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Crosswalk.md",
+        "plan_unit_id": "C-001",
+        "source_location": {
+          "heading": "C-001 - Crosswalk (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 488,
+          "line": 490,
+          "path": "Plans/Crosswalk.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/CLI_Bridged_Providers.md",
+        "plan_unit_id": "CBP-001",
+        "source_location": {
+          "heading": "CBP-001 - CLI-Bridged Providers (Provider Facade) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 139,
+          "line": 141,
+          "path": "Plans/CLI_Bridged_Providers.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-001",
+        "source_location": {
+          "heading": "CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 996,
+          "line": 998,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Commands_System.md",
+        "plan_unit_id": "CS-001",
+        "source_location": {
+          "heading": "CS-001 - Commands System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 682,
+          "line": 684,
+          "path": "Plans/Commands_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-001",
+        "source_location": {
+          "heading": "CV-001 - Contracts V0 (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2546,
+          "line": 2548,
+          "path": "Plans/Contracts_V0.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/chain-wizard.md",
+        "plan_unit_id": "CW-001",
+        "source_location": {
+          "heading": "CW-001 - Chain Wizard -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 37,
+          "line": 39,
+          "path": "Plans/chain-wizard.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/chain-wizard-flexibility.md",
+        "plan_unit_id": "CWF-001",
+        "source_location": {
+          "heading": "CWF-001 - Chain Wizard & Interview Flexibility -- Intent-Based Workflows Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2296,
+          "line": 2298,
+          "path": "Plans/chain-wizard-flexibility.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-001",
+        "source_location": {
+          "heading": "DL-001 - Decision Log Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 129,
+          "line": 131,
+          "path": "Plans/Decision_Log.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Decision_Policy.md",
+        "plan_unit_id": "DP-001",
+        "source_location": {
+          "heading": "DP-001 - Decision Policy (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 466,
+          "line": 468,
+          "path": "Plans/Decision_Policy.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Document_Packaging_Policy.md",
+        "plan_unit_id": "DPP-001",
+        "source_location": {
+          "heading": "DPP-001 - Document Packaging Policy (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 354,
+          "line": 356,
+          "path": "Plans/Document_Packaging_Policy.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/DRY_Rules.md",
+        "plan_unit_id": "DR-001",
+        "source_location": {
+          "heading": "DR-001 - DRY Rules (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 267,
+          "line": 269,
+          "path": "Plans/DRY_Rules.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Executor_Protocol.md",
+        "plan_unit_id": "EP-001",
+        "source_location": {
+          "heading": "EP-001 - Overseer Protocol (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 841,
+          "line": 843,
+          "path": "Plans/Executor_Protocol.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-001",
+        "source_location": {
+          "heading": "F-001 - File Manager & IDE-style Editor -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 548,
+          "line": 550,
+          "path": "Plans/FileManager.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/FileSafe.md",
+        "plan_unit_id": "F2-001",
+        "source_location": {
+          "heading": "F2-001 - FileSafe -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2720,
+          "line": 2722,
+          "path": "Plans/FileSafe.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-001",
+        "source_location": {
+          "heading": "F3-001 - Puppet Master GUI Specification -- Slint Rewrite Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 3441,
+          "line": 3443,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/feature-list.md",
+        "plan_unit_id": "FL-001",
+        "source_location": {
+          "heading": "FL-001 - Puppet Master Feature List (Reference) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 221,
+          "line": 223,
+          "path": "Plans/feature-list.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Formatters_System.md",
+        "plan_unit_id": "FS-001",
+        "source_location": {
+          "heading": "FS-001 - Formatters System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 285,
+          "line": 287,
+          "path": "Plans/Formatters_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Glossary.md",
+        "plan_unit_id": "G-001",
+        "source_location": {
+          "heading": "G-001 - Glossary (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 302,
+          "line": 304,
+          "path": "Plans/Glossary.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+        "plan_unit_id": "GAAAF-001",
+        "source_location": {
+          "heading": "GAAAF-001 - Puppet Master -- GitHub API Auth and Flows Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 133,
+          "line": 135,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/GitHub_Integration.md",
+        "plan_unit_id": "GI-001",
+        "source_location": {
+          "heading": "GI-001 - GitHub Integration -- Spec Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 237,
+          "line": 239,
+          "path": "Plans/GitHub_Integration.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "plan_unit_id": "GRRC-001",
+        "source_location": {
+          "heading": "GRRC-001 - GUI Rebuild Requirements Checklist (2026-02-23) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 181,
+          "line": 183,
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/human-in-the-loop.md",
+        "plan_unit_id": "HITL-001",
+        "source_location": {
+          "heading": "HITL-001 - Human-in-the-Loop (HITL) Mode -- Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 423,
+          "line": 425,
+          "path": "Plans/human-in-the-loop.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/interview-subagent-integration.md",
+        "plan_unit_id": "ISI-001",
+        "source_location": {
+          "heading": "ISI-001 - Interview Feature Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 64,
+          "line": 66,
+          "path": "Plans/interview-subagent-integration.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/LSPSupport.md",
+        "plan_unit_id": "L-001",
+        "source_location": {
+          "heading": "L-001 - LSP Support -- Plan (Rewrite) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1086,
+          "line": 1088,
+          "path": "Plans/LSPSupport.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/MiscPlan.md",
+        "plan_unit_id": "M-001",
+        "source_location": {
+          "heading": "M-001 - Misc Plan -- Agent Artifacts, Cleanup & Related Improvements Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1354,
+          "line": 1356,
+          "path": "Plans/MiscPlan.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Multi-Account.md",
+        "plan_unit_id": "MA-001",
+        "source_location": {
+          "heading": "MA-001 - Multi-Account Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 781,
+          "line": 783,
+          "path": "Plans/Multi-Account.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+        "plan_unit_id": "MGAC-001",
+        "source_location": {
+          "heading": "3.4 `model_override` extraction",
+          "heading_level": 3,
+          "heading_line": 444,
+          "line": 891,
+          "path": "Plans/Media_Generation_and_Capabilities.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/MCP_Integration.md",
+        "plan_unit_id": "MI-001",
+        "source_location": {
+          "heading": "MI-001 - MCP Integration Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 196,
+          "line": 198,
+          "path": "Plans/MCP_Integration.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-001",
+        "source_location": {
+          "heading": "MS-001 - Models System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1246,
+          "line": 1248,
+          "path": "Plans/Models_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/newfeatures.md",
+        "plan_unit_id": "N-001",
+        "source_location": {
+          "heading": "N-001 - New Features Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 96,
+          "line": 98,
+          "path": "Plans/newfeatures.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/newtools.md",
+        "plan_unit_id": "N2-001",
+        "source_location": {
+          "heading": "N2-001 - GUI Testing Tools & Framework Options -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1314,
+          "line": 1316,
+          "path": "Plans/newtools.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/OpenCode_Coverage_Matrix.md",
+        "plan_unit_id": "OCM-001",
+        "source_location": {
+          "heading": "OCM-001 - OpenCode Coverage Matrix (Audit) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 266,
+          "line": 268,
+          "path": "Plans/OpenCode_Coverage_Matrix.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/OpenCode_Deep_Extraction.md",
+        "plan_unit_id": "ODE-001",
+        "source_location": {
+          "heading": "ODE-001 - OpenCode Deep Extraction (for Puppet Master) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 788,
+          "line": 790,
+          "path": "Plans/OpenCode_Deep_Extraction.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-001",
+        "source_location": {
+          "heading": "OP-001 - Orchestrator Page -- Single-Page 6-Tab Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 400,
+          "line": 402,
+          "path": "Plans/Orchestrator_Page.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/orchestrator-subagent-integration.md",
+        "plan_unit_id": "OSI-001",
+        "source_location": {
+          "heading": "OSI-001 - Orchestrator Subagent Integration -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 6436,
+          "line": 6438,
+          "path": "Plans/orchestrator-subagent-integration.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Personas.md",
+        "plan_unit_id": "P-001",
+        "source_location": {
+          "heading": "P-001 - Personas (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 690,
+          "line": 692,
+          "path": "Plans/Personas.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Progression_Gates.md",
+        "plan_unit_id": "PG-001",
+        "source_location": {
+          "heading": "PG-001 - Progression Gates (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 649,
+          "line": 651,
+          "path": "Plans/Progression_Gates.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Plugins_System.md",
+        "plan_unit_id": "PLUG-001",
+        "source_location": {
+          "heading": "PLUG-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 644,
+          "line": 646,
+          "path": "Plans/Plugins_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Provider_OpenCode.md",
+        "plan_unit_id": "PO-001",
+        "source_location": {
+          "heading": "PO-001 - Provider: OpenCode (Server-Bridged) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 712,
+          "line": 714,
+          "path": "Plans/Provider_OpenCode.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Project_Output_Artifacts.md",
+        "plan_unit_id": "POA-001",
+        "source_location": {
+          "heading": "POA-001 - Puppet Master — User-Project Project Plan Package Outputs (SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 796,
+          "line": 798,
+          "path": "Plans/Project_Output_Artifacts.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Prompt_Pipeline.md",
+        "plan_unit_id": "PP-001",
+        "source_location": {
+          "heading": "PP-001 - Prompt Pipeline (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 665,
+          "line": 667,
+          "path": "Plans/Prompt_Pipeline.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Permissions_System.md",
+        "plan_unit_id": "PS-001",
+        "source_location": {
+          "heading": "PS-001 - Permissions System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1248,
+          "line": 1250,
+          "path": "Plans/Permissions_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "plan_unit_id": "PSMERA-001",
+        "source_location": {
+          "heading": "PSMERA-001 - Provider Stream Mapping — External Reference (A2A Bridge) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 389,
+          "line": 391,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-001",
+        "source_location": {
+          "heading": "RAP-001 - Runtime Artifacts Panel — SSOT Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 405,
+          "line": 407,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-001",
+        "source_location": {
+          "heading": "RGV-001 - Run Graph View (Node Graph Display) -- Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 143,
+          "line": 145,
+          "path": "Plans/Run_Graph_View.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Run_Modes.md",
+        "plan_unit_id": "RM-001",
+        "source_location": {
+          "heading": "RM-001 - Run Modes (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 729,
+          "line": 731,
+          "path": "Plans/Run_Modes.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/rewrite-tie-in-memo.md",
+        "plan_unit_id": "RTIM-001",
+        "source_location": {
+          "heading": "RTIM-001 - Puppet Master Rewrite Tie-In Contract (Active) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 504,
+          "line": 506,
+          "path": "Plans/rewrite-tie-in-memo.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-001",
+        "source_location": {
+          "heading": "SMPFS-001 - Section 15 Promoted Features Spec Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 810,
+          "line": 812,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/storage-plan.md",
+        "plan_unit_id": "SP-001",
+        "source_location": {
+          "heading": "SP-001 - Storage plan (seglog, redb, Tantivy, projectors) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2234,
+          "line": 2236,
+          "path": "Plans/storage-plan.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Skills_System.md",
+        "plan_unit_id": "SS-001",
+        "source_location": {
+          "heading": "SS-001 - Skills System (Canonical SSOT) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 417,
+          "line": 419,
+          "path": "Plans/Skills_System.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Tools.md",
+        "plan_unit_id": "T-001",
+        "source_location": {
+          "heading": "T-001 - Adding Tool Support -- Research & Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 2254,
+          "line": 2256,
+          "path": "Plans/Tools.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-001",
+        "source_location": {
+          "heading": "UCC-001 - UI Command Catalog (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 1215,
+          "line": 1217,
+          "path": "Plans/UI_Command_Catalog.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/usage-feature.md",
+        "plan_unit_id": "UF-001",
+        "source_location": {
+          "heading": "UF-001 - Usage Feature -- App/GUI Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 928,
+          "line": 930,
+          "path": "Plans/usage-feature.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/WorktreeGitImprovement.md",
+        "plan_unit_id": "W-001",
+        "source_location": {
+          "heading": "W-001 - Worktree & Git Improvement -- Implementation Plan Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 805,
+          "line": 807,
+          "path": "Plans/WorktreeGitImprovement.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-001",
+        "source_location": {
+          "heading": "WM-001 - Wiring Matrix (Canonical) Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 575,
+          "line": 577,
+          "path": "Plans/Wiring_Matrix.md"
+        },
+        "split_recommended": true
+      },
+      {
+        "owner_doc": "Plans/Widget_System.md",
+        "plan_unit_id": "WS-001",
+        "source_location": {
+          "heading": "WS-001 - Widget System -- Cross-Cutting Specification Source-Preserving PlanUnit",
+          "heading_level": 3,
+          "heading_line": 132,
+          "line": 134,
+          "path": "Plans/Widget_System.md"
+        },
+        "split_recommended": false
+      }
+    ],
+    "status_counts": {
+      "accepted": 104,
+      "deferred": 1
+    },
+    "unit_type_counts": {
+      "constraint": 7,
+      "decision": 2,
+      "deferred_decision": 1,
+      "requirement": 95
+    }
+  },
+  "schema_id": "pm.plan_index.node_readiness_report.v1",
+  "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
+  "status": "blocked_compiler_contract_incomplete",
+  "status_reason": "Plans are indexed with required PlanUnit metadata, but Plan_To_Node_Compilation.md deliberately defers the compiler algorithm and does not define a NodeSeed candidate contract."
+}
