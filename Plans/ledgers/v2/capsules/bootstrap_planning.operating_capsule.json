@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "capsule_id": "bootstrap_planning_default",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "continue_feature_design_conversation_or_compile_when_explicitly_requested",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl"
+  ],
+  "allowed_writes_default": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json"
+  ],
+  "must_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "required_end_of_turn_actions": [
+    "append_turn_event",
+    "upsert_design_atoms",
+    "update_questions_blockers",
+    "update_handoff_projection",
+    "classify_gui_related",
+    "preserve_node_readiness_boundary"
+  ],
+  "completion_blockers_visible_to_agent": [
+    "open_questions",
+    "unclassified_candidates",
+    "unresolved_contradictions",
+    "open_blockers",
+    "unsealed_governance",
+    "missing_gui_related_classification",
+    "worknode_creation_requested_before_contract"
+  ]
+}

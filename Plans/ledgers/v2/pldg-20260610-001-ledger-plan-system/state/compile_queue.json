@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.plan_compile_queue.v1",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "status": "ready_with_open_deferred_algorithm_question_no_worknodes",
+  "items": [
+    {
+      "queue_id": "pcq-0001",
+      "status": "ready",
+      "target_doc": "Plans/Planning_Ledger_System.md",
+      "source_atom_ids": [
+        "atom-0001",
+        "atom-0002",
+        "atom-0003",
+        "atom-0004",
+        "atom-0005",
+        "atom-0006",
+        "atom-0007",
+        "atom-0008",
+        "atom-0009",
+        "atom-0010",
+        "atom-0012",
+        "atom-0028",
+        "atom-0029",
+        "atom-0032"
+      ],
+      "owner_adjudication_status": "target_owner_known"
+    },
+    {
+      "queue_id": "pcq-0002",
+      "status": "ready",
+      "target_doc": "Plans/Plan_Document_System.md",
+      "source_atom_ids": [
+        "atom-0015",
+        "atom-0019",
+        "atom-0020",
+        "atom-0021",
+        "atom-0022",
+        "atom-0026",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033"
+      ],
+      "owner_adjudication_status": "target_owner_known"
+    },
+    {
+      "queue_id": "pcq-0003",
+      "status": "ready",
+      "target_doc": "Plans/Plan_To_Node_Compilation.md",
+      "source_atom_ids": [
+        "atom-0017",
+        "atom-0022",
+        "atom-0023",
+        "atom-0024",
+        "atom-0025",
+        "atom-0030",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034"
+      ],
+      "owner_adjudication_status": "target_owner_known"
+    },
+    {
+      "queue_id": "pcq-0004",
+      "status": "ready",
+      "target_doc": "Plans/Bootstrap_Planning_Migration.md",
+      "source_atom_ids": [
+        "atom-0011",
+        "atom-0013",
+        "atom-0014",
+        "atom-0018",
+        "atom-0020",
+        "atom-0027"
+      ],
+      "owner_adjudication_status": "target_owner_known"
+    }
+  ]
+}

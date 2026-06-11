@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.bootstrap-ledger-core.v1",
+  "title": "PM Bootstrap Ledger Core",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "ledger_id",
+    "record_id",
+    "record_type",
+    "status",
+    "source_refs",
+    "created_at_utc",
+    "updated_at_utc"
+  ],
+  "properties": {
+    "schema_id": {
+      "type": "string"
+    },
+    "ledger_id": {
+      "type": "string",
+      "pattern": "^pldg-[0-9]{8}-[0-9]{3}-[a-z0-9-]+$"
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "record_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at_utc": {
+      "type": "string"
+    },
+    "updated_at_utc": {
+      "type": "string"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "superseded_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

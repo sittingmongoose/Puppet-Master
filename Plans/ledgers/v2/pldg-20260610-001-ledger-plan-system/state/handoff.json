@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "current_phase": "bootstrap_design_compilation_ready",
+  "cursor": {
+    "last_event_id": "evt-0008",
+    "last_decision_id": "dec-0010",
+    "next_queue_id": "pcq-0001"
+  },
+  "last_known_good_state": "Design discussion captured into structured v2 bootstrap ledger records; compile queue targets four new plan docs and includes gui_related/node-readiness corrections.",
+  "open_blockers": [],
+  "open_questions": [
+    "q-0002"
+  ],
+  "deferred_questions": [
+    "q-0001"
+  ],
+  "next_action": "Compile accepted design atoms into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, and Plans/Bootstrap_Planning_Migration.md. Do not create WorkNodes.",
+  "validation_state": {
+    "ledger_health": "seed_pass_with_deferred_algorithm_question_and_gui_related_boolean",
+    "last_validator": "manual_seed_creation"
+  },
+  "do_not_redo": [
+    "Do not re-derive whether ledger is memory/Plan Mode/canon; it is none of those.",
+    "Do not re-litigate JSONL/JSON vs Markdown; JSONL/JSON is accepted.",
+    "Do not reintroduce retired failed experiments as architecture.",
+    "Do not reintroduce granular GUI/UI/icon/image routing taxonomy; use gui_related boolean.",
+    "Do not treat PlanUnit index/node-readiness as WorkNode creation."
+  ],
+  "updated_at_utc": "2026-06-11T00:00:00Z"
+}

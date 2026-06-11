@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "status": "pass_with_deferred_items",
+  "summary": {
+    "events": 8,
+    "design_atoms": 34,
+    "decisions": 10,
+    "open_questions": 1,
+    "deferred_questions": 1,
+    "open_blockers": 0,
+    "compile_queue_items": 4
+  },
+  "blocking_defects": [],
+  "warnings": [
+    "Full exact chat body bytes are not stored in this seed package; key exact tokens and design decisions are preserved for bootstrap compilation.",
+    "PlanUnit index/node-readiness may be generated; WorkNodes must not be created yet.",
+    "All design atoms in this seed include gui_related boolean; future PlanUnits must preserve it."
+  ],
+  "updated_at_utc": "2026-06-11T00:00:00Z"
+}

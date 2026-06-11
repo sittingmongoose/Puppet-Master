@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "title": "Ledger, Plan Document System, and Plan-to-Node bootstrap design",
+  "created_at_utc": "2026-06-10T00:00:00Z",
+  "updated_at_utc": "2026-06-11T00:00:00Z",
+  "status": "active",
+  "profile": "bootstrap_planning",
+  "source_context": "ChatGPT design discussion with Jared on 2026-06-10; key decisions transcribed into structured records for Codex bootstrap use.",
+  "canonical_plan_targets": [
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Bootstrap_Planning_Migration.md"
+  ],
+  "files": {
+    "events": "events.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "decisions": "records/decisions.jsonl",
+    "questions": "records/questions.jsonl",
+    "blockers": "records/blockers.jsonl",
+    "current_state": "state/current.json",
+    "handoff": "state/handoff.json"
+  },
+  "record_counts": {
+    "events": 8,
+    "design_atoms": 34,
+    "decisions": 10,
+    "questions": 2,
+    "blockers": 0,
+    "corrections": 3
+  },
+  "notes": "Starter ledger updated for node-readiness-not-WorkNodes and automatic simple gui_related boolean classification."
+}
