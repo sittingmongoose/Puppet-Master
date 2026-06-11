@@ -553,4 +553,3 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 All original spans from `Runtime_Artifacts_Panel-S0001` through `Runtime_Artifacts_Panel-S0031` are preserved in place and mapped in `coverage_map.jsonl` to `RAP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
-

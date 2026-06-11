@@ -210,6 +210,26 @@ def extract_plan_unit_blocks(path: Path) -> tuple[list[dict[str, Any]], list[dic
     return units, errors
 
 
+def live_plan_unit_blocks() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    units: list[dict[str, Any]] = []
+    errors: list[dict[str, Any]] = []
+    for path in top_level_plan_docs():
+        doc_units, doc_errors = extract_plan_unit_blocks(path)
+        units.extend(doc_units)
+        errors.extend(doc_errors)
+    return units, errors
+
+
+def live_plan_unit_prefixes() -> set[str]:
+    prefixes: set[str] = set()
+    units, _ = live_plan_unit_blocks()
+    for unit in units:
+        plan_unit_id = str(unit.get("plan_unit_id", ""))
+        if plan_unit_id:
+            prefixes.add(plan_unit_id.split("-", 1)[0])
+    return prefixes
+
+
 def span_contractrefs(text: str) -> list[str]:
     return [match.group(0).strip() for match in CONTRACT_REF_PATTERN.finditer(text)]
 
@@ -681,7 +701,7 @@ def cmd_standardize_batch(args: argparse.Namespace) -> dict[str, Any]:
     for span in spans:
         by_doc.setdefault(span["source_path"], []).append(span)
 
-    used_prefixes = {unit.get("plan_unit_id", "").split("-", 1)[0] for doc in inventory.get("docs", []) for unit in []}
+    used_prefixes = live_plan_unit_prefixes()
     batch_rows = []
     failures: list[dict[str, Any]] = []
     for path_ref in args.docs:
@@ -827,6 +847,44 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
     if not isinstance(aliases.get("aliases"), list):
         failures.append({"path": rel(run_dir / "anchor_aliases.json"), "error": "aliases_not_list"})
 
+    live_units, live_unit_errors = live_plan_unit_blocks()
+    failures.extend(live_unit_errors)
+    unit_locations: dict[str, list[dict[str, Any]]] = {}
+    for unit in live_units:
+        plan_unit_id = str(unit.get("plan_unit_id", ""))
+        if not plan_unit_id:
+            continue
+        unit_locations.setdefault(plan_unit_id, []).append({"path": unit.get("_path"), "line": unit.get("_line")})
+        missing = unit.get("_missing_required_fields", [])
+        if missing:
+            failures.append(
+                {
+                    "path": unit.get("_path"),
+                    "line": unit.get("_line"),
+                    "plan_unit_id": plan_unit_id,
+                    "error": "missing_required_planunit_fields",
+                    "missing": missing,
+                }
+            )
+        if unit.get("gui_related") not in {True, False}:
+            failures.append(
+                {
+                    "path": unit.get("_path"),
+                    "line": unit.get("_line"),
+                    "plan_unit_id": plan_unit_id,
+                    "error": "missing_gui_related_boolean",
+                }
+            )
+    for plan_unit_id, locations in sorted(unit_locations.items()):
+        if len(locations) > 1:
+            failures.append(
+                {
+                    "plan_unit_id": plan_unit_id,
+                    "error": "duplicate_plan_unit_id",
+                    "locations": locations,
+                }
+            )
+
     return {
         "schema_id": "pm.plan_migration.validation_report.v1",
         "generated_at_utc": utc_now(),
@@ -838,6 +896,8 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
             "span_count": len(spans),
             "coverage_rows": len(coverage),
             "anchor_alias_rows": len(aliases.get("aliases", [])) if isinstance(aliases.get("aliases"), list) else 0,
+            "live_plan_unit_count": len(live_units),
+            "unique_live_plan_unit_count": len(unit_locations),
         },
     }
 

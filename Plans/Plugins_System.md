@@ -641,10 +641,10 @@ ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Boot
 
 ## PlanUnits
 
-### PS-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit
+### PLUG-001 - Plugins System (Canonical SSOT) Source-Preserving PlanUnit
 
 ```yaml
-plan_unit_id: PS-001
+plan_unit_id: PLUG-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
@@ -817,5 +817,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Plugins_System-S0001` through `Plugins_System-S0067` are preserved in place and mapped in `coverage_map.jsonl` to `PS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
-
+All original spans from `Plugins_System-S0001` through `Plugins_System-S0067` are preserved in place and mapped in `coverage_map.jsonl` to `PLUG-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
