@@ -1,15 +1,15 @@
 # Shard Index: Plans/Planning_Ledger_System.md
 
-Generated: 2026-06-11T15:14:58Z
+Generated: 2026-06-11T15:42:37Z
 
-Source SHA256: `10a7e09ff35a437ca7e9f41ac266d9745dd56582ecd4d2f10d4c13e8c1665eec`
+Source SHA256: `f7b19989c67fde8bc6ecc6d7b43888943630ce0714e0b33b1c22be0332aca457`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `494d1ea3b784eadc0ab4c4edd46e67038594e66c9f365df5fdd63c8302d368bf`
-- [002 - 0. Scope](002-0.-scope.md) L5-L12 `42fe2466a54d2ef776c412e65ab677f725697ec3c290a695f1926bf7012eb409`
-- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L25 `1dd2140cee9305fdea900cfd2521ccc65013984fc75e092225db2e853ceb64f3`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L318 `8ad25b6549c893cd047dfac68f1ba1e5b75ff4d71a9162e8ef3367517e704e96`
-- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L319-L339 `2ce4fbefc78681da87a9f7ad672cdc91a638edb83e749b229fd487cc01922e7d`
+- [001 - Preamble](001-preamble.md) L1-L4 `8d273eeee9fcdd7e713cb5f2e8b910a01e9b3387d37eff2d35c0425a5ec93b9f`
+- [002 - 0. Scope](002-0.-scope.md) L5-L12 `60b596526d9eaa854eb46b2a382107b09ed394b1c65d3cf384ede5e5cd21e946`
+- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L25 `2ab227f558161cbbf1582fdcd0d72b7327deb0903a55e037bc1cdcc909f6a733`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L399 `f314fed31419d5f28c8574b40759729ddfb154287bc7c7dfa29486454fc23f09`
+- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L400-L423 `c2829a005012c6f84c6252776c5501bd1c9f8480ce79428929b09d4b570870a9`

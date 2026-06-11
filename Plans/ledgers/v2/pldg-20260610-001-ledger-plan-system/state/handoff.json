@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
   "current_phase": "compiled_initial_plan_docs_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0011",
+    "last_event_id": "evt-0012",
     "last_decision_id": "dec-0010",
     "next_queue_id": "pcq-0001"
   },
@@ -29,5 +29,8 @@
     "Do not treat PlanUnit index/node-readiness as WorkNode creation.",
     "Do not create WorkNodes or executable build tasks during governance refresh."
   ],
-  "updated_at_utc": "2026-06-11T15:08:10Z"
+  "updated_at_utc": "2026-06-11T15:38:13Z",
+  "phase": "compiled_initial_plan_docs_governance_sealed",
+  "last_completed_action": "Implementation-readiness polish added explicit file-layout, validator, PlanUnit grammar, migration artifact, node-readiness, and phase-handoff contracts; retired experiment canonical wording was generalized; atom-0016 source_lineage was attached to PLS-001.",
+  "next_safe_action": "Implementation-readiness polish is sealed. Next safe action is controlled existing-Plans conversion inventory/pilot or PlanUnit index + node-readiness report. Do not create WorkNodes until the compiler contract is complete."
 }

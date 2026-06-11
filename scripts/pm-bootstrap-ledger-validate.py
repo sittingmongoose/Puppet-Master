@@ -15,6 +15,30 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
 
+
+
+class UniqueKeySafeLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects duplicate mapping keys in PlanUnit blocks."""
+
+
+def _construct_mapping_unique(loader: UniqueKeySafeLoader, node: yaml.MappingNode, deep: bool = False) -> dict[str, Any]:
+    mapping: dict[str, Any] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        if key in mapping:
+            raise yaml.constructor.ConstructorError(
+                "while constructing a mapping",
+                node.start_mark,
+                f"found duplicate key: {key}",
+                key_node.start_mark,
+            )
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+UniqueKeySafeLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_mapping_unique)
+
+
 PLAN_UNIT_REQUIRED_FIELDS = {
     "plan_unit_id",
     "unit_type",
@@ -116,7 +140,7 @@ def extract_plan_unit_blocks(path: Path) -> list[dict[str, Any]]:
         if "plan_unit_id:" not in block:
             continue
         try:
-            data = yaml.safe_load(block)
+            data = yaml.load(block, Loader=UniqueKeySafeLoader)
         except Exception as exc:  # noqa: BLE001 - include snippet location.
             units.append(
                 {

@@ -205,20 +205,20 @@ owner_hints: [Plans/Bootstrap_Planning_Migration.md, Plans/Plan_Document_System.
 
 ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
-### BPM-006 - Retired Experiments Excluded
+### BPM-006 - Retired Legacy Experiments Excluded
 
 ```yaml
 plan_unit_id: BPM-006
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Bootstrap_Planning_Migration.md
-canonical_text: Retired prompt-packet, tranche, and subagent conversion experiments are stale/retired source-lineage only. The replacement architecture is Goal + new ledger + validators + compact operating views.
+canonical_text: Retired legacy transfer experiments are stale/retired source-lineage only. The replacement architecture is Goal + new ledger + validators + compact operating views. Exact retired labels remain in ledger/source evidence when needed, not in active architecture prose.
 gui_related: false
 gui_classification_reason: Retired process vocabulary and migration guardrails are not GUI implementation work.
 depends_on: [BPM-001, PLS-001]
 unblocks: []
 acceptance_criteria:
-  - Retired packet/tranche mechanics are not cited as the basis for the new architecture.
+  - Retired legacy experiment mechanics are not cited as the basis for the new architecture.
   - Historical terms may appear only as stale/retired lineage or negative constraints.
 validation_surfaces:
   - Manual plan review.
@@ -232,17 +232,52 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0028
   - pldg-20260610-001-ledger-plan-system:corr-0001
   - source_ref:chat:user-retired-experiments-correction
-preserved_exact_tokens: ["Goal + Ledger + Validators + Compact Operating Views", "Do not reference", "failed experiments", "completely replaced by goal and this new ledger", "prompt-packet", "tranche", "subagent conversion experiments"]
+preserved_exact_tokens: ["Goal + Ledger + Validators + Compact Operating Views", "Do not reference", "failed experiments", "completely replaced by goal and this new ledger"]
 negative_constraints:
-  - Do not reference retired packet/tranche mechanics as the basis of the new architecture.
+  - Do not reference retired legacy experiment mechanics as the basis of the new architecture.
 stale_retired_terms:
-  - prompt-packet
-  - tranche
-  - subagent conversion experiments
+  - retired legacy transfer experiments
 owner_hints: [Plans/Planning_Ledger_System.md, Plans/Bootstrap_Planning_Migration.md]
 ```
 
 ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md
+
+
+### BPM-007 - Phase Handoff And Thread Boundary Contract
+
+```yaml
+plan_unit_id: BPM-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Bootstrap work may run across separate Codex threads. Each phase starts from the relevant ledger_id, compact state, and canonical owner docs; each phase ends by updating handoff/projection state, reporting validators, and leaving an exact next safe action. Conversational ledger creation is not required to use Goal Mode; transformation phases should use compact Goal prompts under the Codex objective limit.
+gui_related: false
+gui_classification_reason: Bootstrap phase orchestration is not GUI implementation work.
+depends_on: [BPM-001, BPM-002, PLS-004, PLS-006]
+unblocks: [BPM-003, BPM-004, BPM-005]
+acceptance_criteria:
+  - Start/continue/compile/conversion/index/seal prompts can be used independently in new threads.
+  - Every phase produces a clear handoff and validator list before stopping.
+  - Ordinary conversation is allowed to create and update ledgers without Goal Mode.
+validation_surfaces:
+  - Plans/bootstrap/Codex_Prompts.md
+  - Plans/ledgers/v2/<ledger_id>/state/handoff.json
+  - Phase validator reports.
+risk_class: thread_restart_continuity
+reasoning_tier: standard
+context_scope: codex_bootstrap
+implementation_surfaces: [Plans/bootstrap/Codex_Prompts.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/ledgers/v2/*/state]
+node_compile_hint: {mode: phase_handoff_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0040
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["separate Codex threads", "ledger_id", "compact state", "Goal prompts", "less than 4,000 characters", "conversational ledger creation"]
+negative_constraints:
+  - Do not require Goal Mode for the feature-spec conversation phase unless Jared chooses it.
+owner_hints: [Plans/Bootstrap_Planning_Migration.md, Plans/bootstrap/Codex_Prompts.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/bootstrap/Codex_Prompts.md
 
 ## 3. Compilation Coverage
 
@@ -257,5 +292,7 @@ ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Pl
 | atom-0028 | BPM-006 |
 | atom-0031 | BPM-005; PDS-006 and PNC-001/PNC-004 own index/readiness boundary. |
 | q-0002 | BPM-004 records the pilot-choice disposition and leaves the actual choice for the later inventory phase. |
+| atom-0040 | BPM-007 |
+| atom-0041 | BPM-006 |
 
 ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md

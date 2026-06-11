@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-11T15:14:58Z",
+  "generated_at_utc": "2026-06-11T15:42:37Z",
   "index_path": "Plans/_shards/planning_ledger_system/00-index.md",
-  "index_sha256": "541cc69edfb7a942edcd65277249ba23ee50ed3a4473e14e1f1181790bfade2a",
+  "index_sha256": "b49a868033669352fcc36f2a6beb6e989e126ac3ee88d6e9deb9109ebe92770b",
   "manifest_path": "Plans/_shards/planning_ledger_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/planning_ledger_system/001-preamble.md",
-      "sha256": "494d1ea3b784eadc0ab4c4edd46e67038594e66c9f365df5fdd63c8302d368bf",
+      "sha256": "8d273eeee9fcdd7e713cb5f2e8b910a01e9b3387d37eff2d35c0425a5ec93b9f",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/planning_ledger_system/002-0.-scope.md",
-      "sha256": "42fe2466a54d2ef776c412e65ab677f725697ec3c290a695f1926bf7012eb409",
+      "sha256": "60b596526d9eaa854eb46b2a382107b09ed394b1c65d3cf384ede5e5cd21e946",
       "shard_id": "002",
       "source_line_end": 12,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Architecture Summary",
       "path": "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
-      "sha256": "1dd2140cee9305fdea900cfd2521ccc65013984fc75e092225db2e853ceb64f3",
+      "sha256": "2ab227f558161cbbf1582fdcd0d72b7327deb0903a55e037bc1cdcc909f6a733",
       "shard_id": "003",
       "source_line_end": 25,
       "source_line_start": 13,
@@ -35,25 +35,25 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/planning_ledger_system/004-2.-planunits.md",
-      "sha256": "8ad25b6549c893cd047dfac68f1ba1e5b75ff4d71a9162e8ef3367517e704e96",
+      "sha256": "f314fed31419d5f28c8574b40759729ddfb154287bc7c7dfa29486454fc23f09",
       "shard_id": "004",
-      "source_line_end": 318,
+      "source_line_end": 399,
       "source_line_start": 26,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/planning_ledger_system/005-3.-compilation-coverage.md",
-      "sha256": "2ce4fbefc78681da87a9f7ad672cdc91a638edb83e749b229fd487cc01922e7d",
+      "sha256": "c2829a005012c6f84c6252776c5501bd1c9f8480ce79428929b09d4b570870a9",
       "shard_id": "005",
-      "source_line_end": 339,
-      "source_line_start": 319,
+      "source_line_end": 423,
+      "source_line_start": 400,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 339,
+    "line_count": 423,
     "path": "Plans/Planning_Ledger_System.md",
-    "sha256": "10a7e09ff35a437ca7e9f41ac266d9745dd56582ecd4d2f10d4c13e8c1665eec"
+    "sha256": "f7b19989c67fde8bc6ecc6d7b43888943630ce0714e0b33b1c22be0332aca457"
   }
 }

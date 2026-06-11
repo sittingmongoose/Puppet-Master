@@ -3,9 +3,9 @@
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
   "title": "Ledger, Plan Document System, and Plan-to-Node bootstrap design",
   "phase": "compiled_initial_plan_docs_governance_sealed",
-  "last_event_id": "evt-0011",
-  "accepted_decisions_count": 10,
-  "design_atoms_total": 34,
+  "last_event_id": "evt-0012",
+  "accepted_decisions_count": 11,
+  "design_atoms_total": 42,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
   "open_questions_count": 0,
@@ -25,7 +25,7 @@
     "Plans/00-plans-index.md"
   ],
   "governance_status": "sealed",
-  "next_safe_action": "Future work may generate a PlanUnit index and node-readiness report or begin controlled existing-Plans conversion. Do not create WorkNodes until the compiler contract is complete.",
+  "next_safe_action": "Implementation-readiness polish is sealed. Next safe action is controlled existing-Plans conversion inventory/pilot or PlanUnit index + node-readiness report. Do not create WorkNodes until the compiler contract is complete.",
   "validation_state": {
     "safe_content_checks": [
       "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system passed",
@@ -33,7 +33,7 @@
       "python3 scripts/pm-plans-verify.py run-gates passed",
       "python3 scripts/pm-shard-plans.py --check passed"
     ],
-    "seal_request": "User asked to repair the PM ledger/Plan compile seal before any existing-Plans conversion.",
+    "seal_request": "User asked to check whether the new plan docs were fleshed out and implementation-ready, then repair deficiencies directly.",
     "final_governance_checks": [
       "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system passed",
       "python3 scripts/pm-plans-verify.py run-gates passed",
@@ -43,10 +43,10 @@
   },
   "must_not_do": [
     "Do not update Spec_Lock before governance seal.",
-    "Do not import retired failed prompt-packet/tranche mechanics as architecture.",
+    "Do not import retired failed legacy experiment mechanics as architecture.",
     "Do not write final WorkNodes into plan docs.",
     "Do not create WorkNodes or executable build tasks during PlanUnit indexing/node-readiness.",
     "Do not require the user to label GUI work; agents infer gui_related true/false."
   ],
-  "updated_at_utc": "2026-06-11T15:08:10Z"
+  "updated_at_utc": "2026-06-11T15:38:13Z"
 }
