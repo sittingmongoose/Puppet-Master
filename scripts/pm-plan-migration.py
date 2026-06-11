@@ -795,6 +795,59 @@ def append_batch_report(run_dir: Path, report: dict[str, Any]) -> None:
     path.write_text(existing + json.dumps(report, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def validate_batch_report_docs(run_dir: Path, live_plan_unit_ids: set[str], failures: list[dict[str, Any]]) -> tuple[int, int]:
+    path = run_dir / "batch_report.jsonl"
+    if not path.exists():
+        return 0, 0
+
+    rows = read_jsonl(path)
+    doc_count = 0
+    for row_index, row in enumerate(rows, 1):
+        docs = row.get("docs", [])
+        if not isinstance(docs, list):
+            failures.append({"path": rel(path), "row": row_index, "error": "batch_report_docs_not_list"})
+            continue
+        for doc_index, doc in enumerate(docs, 1):
+            doc_count += 1
+            if not isinstance(doc, dict):
+                failures.append({"path": rel(path), "row": row_index, "doc_index": doc_index, "error": "batch_report_doc_not_object"})
+                continue
+
+            path_ref = doc.get("path")
+            if not isinstance(path_ref, str) or not path_ref:
+                failures.append({"path": rel(path), "row": row_index, "doc_index": doc_index, "error": "batch_report_doc_missing_path"})
+                continue
+
+            live_path = ROOT / path_ref
+            failure_base = {"path": rel(path), "row": row_index, "doc_index": doc_index, "doc_path": path_ref}
+            if not live_path.exists():
+                failures.append({**failure_base, "error": "batch_report_doc_path_missing"})
+            else:
+                actual_sha256 = sha256_file(live_path)
+                if doc.get("sha256_after") != actual_sha256:
+                    failures.append(
+                        {
+                            **failure_base,
+                            "error": "stale_batch_report_sha256_after",
+                            "expected": actual_sha256,
+                            "actual": doc.get("sha256_after"),
+                        }
+                    )
+
+            plan_unit_id = doc.get("plan_unit_id")
+            if not isinstance(plan_unit_id, str) or not plan_unit_id:
+                failures.append({**failure_base, "error": "batch_report_doc_missing_plan_unit_id"})
+            elif plan_unit_id not in live_plan_unit_ids:
+                failures.append(
+                    {
+                        **failure_base,
+                        "plan_unit_id": plan_unit_id,
+                        "error": "batch_report_plan_unit_id_not_found_in_live_plans",
+                    }
+                )
+    return len(rows), doc_count
+
+
 def validate_run_dir(run_dir: Path) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     required = [
@@ -884,6 +937,7 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
                     "locations": locations,
                 }
             )
+    batch_report_rows, batch_report_doc_entries = validate_batch_report_docs(run_dir, set(unit_locations), failures)
 
     return {
         "schema_id": "pm.plan_migration.validation_report.v1",
@@ -898,6 +952,8 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
             "anchor_alias_rows": len(aliases.get("aliases", [])) if isinstance(aliases.get("aliases"), list) else 0,
             "live_plan_unit_count": len(live_units),
             "unique_live_plan_unit_count": len(unit_locations),
+            "batch_report_rows": batch_report_rows,
+            "batch_report_doc_entries": batch_report_doc_entries,
         },
     }
 
