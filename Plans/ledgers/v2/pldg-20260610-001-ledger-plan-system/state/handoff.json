@@ -3,11 +3,11 @@
   "ledger_id": "pldg-20260610-001-ledger-plan-system",
   "current_phase": "compiled_initial_plan_docs_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0010",
+    "last_event_id": "evt-0011",
     "last_decision_id": "dec-0010",
     "next_queue_id": "pcq-0001"
   },
-  "last_known_good_state": "Accepted ledger atoms compiled into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, and Plans/00-plans-index.md. No WorkNodes or executable build tasks were created.",
+  "last_known_good_state": "Accepted ledger atoms are compiled into Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, and Plans/00-plans-index.md; governance registration now covers the four owner docs in sharding_config, Spec Lock, and plan_graph. No WorkNodes, NodeSeeds, executable build tasks, existing-Plans conversion, or .plan_index outputs were created.",
   "open_blockers": [],
   "open_questions": [],
   "deferred_questions": [
@@ -16,10 +16,10 @@
   ],
   "next_action": "Future work may generate a PlanUnit index and node-readiness report or begin controlled existing-Plans conversion. Do not create WorkNodes until the compiler contract is complete.",
   "validation_state": {
-    "ledger_health": "compiled_initial_plan_docs_pending_governance_seal",
-    "safe_content_checks": "git diff --check, json-syntax, lint-contractrefs, lint-banned-phrases, and validate-auto-decisions passed",
-    "seal_request": "User asked to update stale follow-up artifacts/state after initial compile.",
-    "final_governance_checks": "pm-bootstrap-ledger-validate, pm-shard-plans --check, pm-plans-verify run-gates, and git diff --check passed"
+    "ledger_health": "pass_governance_sealed",
+    "safe_content_checks": "pm-bootstrap-ledger-validate, validate-auto-decisions, run-gates, and shard check pass after repair.",
+    "seal_request": "User asked to repair the PM ledger/Plan compile seal before any existing-Plans conversion.",
+    "final_governance_checks": "pm-bootstrap-ledger-validate, pm-plans-verify run-gates, pm-shard-plans --check, and validate-auto-decisions passed"
   },
   "do_not_redo": [
     "Do not re-derive whether ledger is memory/Plan Mode/canon; it is none of those.",
@@ -29,5 +29,5 @@
     "Do not treat PlanUnit index/node-readiness as WorkNode creation.",
     "Do not create WorkNodes or executable build tasks during governance refresh."
   ],
-  "updated_at_utc": "2026-06-11T14:40:00Z"
+  "updated_at_utc": "2026-06-11T15:08:10Z"
 }

@@ -9,12 +9,16 @@
     "status",
     "owner_doc",
     "canonical_text",
+    "risk_class",
+    "reasoning_tier",
+    "context_scope",
+    "validation_surfaces",
+    "implementation_surfaces",
     "gui_related",
     "source_lineage",
     "depends_on",
     "unblocks",
     "acceptance_criteria",
-    "risk",
     "node_compile_hint"
   ],
   "properties": {
@@ -32,6 +36,27 @@
     },
     "canonical_text": {
       "type": "string"
+    },
+    "risk_class": {
+      "type": "string"
+    },
+    "reasoning_tier": {
+      "type": "string"
+    },
+    "context_scope": {
+      "type": "string"
+    },
+    "validation_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "implementation_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "source_lineage": {
       "type": "array",
@@ -56,9 +81,6 @@
       "items": {
         "type": "string"
       }
-    },
-    "risk": {
-      "type": "object"
     },
     "node_compile_hint": {
       "type": "object"
