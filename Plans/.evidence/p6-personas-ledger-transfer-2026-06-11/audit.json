@@ -1,0 +1,413 @@
+{
+  "audit_id": "p6-personas-ledger-transfer-2026-06-11",
+  "certification": {
+    "canonical_evidence_live_plans_check": "PASS",
+    "detail_loss_check": "PASS",
+    "file_manager_editor_audit_stays_closed": true,
+    "material_items_total": 15,
+    "material_items_unresolved": 0,
+    "other_p6_lanes_remain_locked": true,
+    "owner_adjudication": {
+      "primary_owner": "Plans/Personas.md",
+      "supporting_consumers": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/00-plans-index.md",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md"
+      ]
+    },
+    "scaffold_only_evidence_check": "PASS",
+    "true_product_decision_blockers": 0,
+    "wrong_owner_check": "PASS"
+  },
+  "created_at_utc": "2026-06-11T04:15:00Z",
+  "material_items": [
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:34",
+        "Plans/Personas.md:39",
+        "Plans/Personas.md:53",
+        "Plans/Personas.md:104",
+        "Plans/Personas.md:129",
+        "Plans/Personas.md:185",
+        "Plans/Personas.md:217",
+        "Plans/Personas.md:431"
+      ],
+      "details": "Existing Persona canon covered terminology, storage, schema, GUI CRUD, child selection/injection, reserved IDs, and requested/effective fields.",
+      "disposition": "merged",
+      "id": "P6-PER-01",
+      "notes": "Validation, protected-ID shadowing, and GUI prompt visibility were strengthened in the owner doc.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:40-49"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:113",
+        "Plans/Personas.md:115",
+        "Plans/Personas.md:331",
+        "Plans/Personas.md:341",
+        "Plans/Personas.md:342",
+        "Plans/Personas.md:343",
+        "Plans/Personas.md:344",
+        "Plans/Personas.md:345",
+        "Plans/Personas.md:346",
+        "Plans/Personas.md:347",
+        "Plans/Personas.md:348",
+        "Plans/Personas.md:349",
+        "Plans/Personas.md:350",
+        "Plans/Glossary.md:67"
+      ],
+      "details": "Expand protected core built-ins from five IDs to Assistant, General, Overseer, Document Writer, Bash, Teacher, Collaborator, Researcher, Deep Researcher, and Explorer; protect them from user deletion/modification.",
+      "disposition": "transferred",
+      "id": "P6-PER-02",
+      "notes": "Protected built-ins are user-immutable, not deletable/disableable, and PM-updatable across product versions.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:50-69"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:143",
+        "Plans/Personas.md:169",
+        "Plans/Personas.md:192",
+        "Plans/Personas.md:225",
+        "Plans/Personas.md:229",
+        "Plans/Personas.md:481",
+        "Plans/Personas.md:483",
+        "Plans/Personas.md:484",
+        "Plans/Personas.md:485",
+        "Plans/Models_System.md:89",
+        "Plans/Models_System.md:821",
+        "Plans/Models_System.md:869",
+        "Plans/FinalGUISpec.md:1120"
+      ],
+      "details": "Preserve provider/model/runtime inheritance, skipped-control disclosure, Auto behavior, chat eligibility, and subagent-only versus chat-selectable states.",
+      "disposition": "transferred",
+      "id": "P6-PER-03",
+      "notes": "Auto is inherited/null by default unless a PM-owned definition explicitly sets a runtime preference.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:73-77",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:364-366",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:619-641"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:350",
+        "Plans/Personas.md:483",
+        "Plans/Personas.md:510",
+        "Plans/Personas.md:512",
+        "Plans/Personas.md:515",
+        "Plans/Personas.md:518",
+        "Plans/Personas.md:520",
+        "Plans/assistant-chat-design.md:2360",
+        "Plans/assistant-chat-design.md:2412"
+      ],
+      "details": "Explorer is protected, codebase-local, read-only, thorough by default, subagent-only, and not a web researcher by default.",
+      "disposition": "transferred",
+      "id": "P6-PER-04",
+      "notes": "Chat examples now route Explorer requests as child-run delegation instead of direct chat Persona switches.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:27-30",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:50-60",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:107-109"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:345",
+        "Plans/Personas.md:483",
+        "Plans/Personas.md:522",
+        "Plans/Personas.md:524",
+        "Plans/Personas.md:527",
+        "Plans/Personas.md:530",
+        "Plans/Personas.md:531",
+        "Plans/assistant-chat-design.md:2397",
+        "Plans/assistant-chat-design.md:2412",
+        "Plans/FinalGUISpec.md:2524"
+      ],
+      "details": "Bash is a protected terminal-execution Persona for command sequences and concise command-output reduction; subagent-only rather than a general coding/planning Persona.",
+      "disposition": "transferred",
+      "id": "P6-PER-05",
+      "notes": "Terminal/tool mechanics remain owned by runtime/tool surfaces; Persona prose only defines behavior and handoff boundaries.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:56-66",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:619-641"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:341",
+        "Plans/Personas.md:342",
+        "Plans/Personas.md:344",
+        "Plans/Personas.md:346",
+        "Plans/Personas.md:347",
+        "Plans/Personas.md:491",
+        "Plans/Personas.md:500",
+        "Plans/Personas.md:558",
+        "Plans/Personas.md:583",
+        "Plans/Personas.md:593"
+      ],
+      "details": "Assistant, General, Teacher, Collaborator, and Document Writer have distinct protected core behaviors and boundaries.",
+      "disposition": "transferred",
+      "id": "P6-PER-06",
+      "notes": "Teacher documentation coverage is preserved as a product dependency instead of guessed product prose.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:26-33",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:56-67",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:557-560"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:348",
+        "Plans/Personas.md:349",
+        "Plans/Personas.md:534",
+        "Plans/Personas.md:536",
+        "Plans/Personas.md:539",
+        "Plans/Personas.md:544",
+        "Plans/Personas.md:546",
+        "Plans/Personas.md:548",
+        "Plans/Personas.md:551",
+        "Plans/Personas.md:556"
+      ],
+      "details": "Researcher and Deep Researcher are protected read-only Personas with local and current external-source research boundaries, citations, synthesis, and handoff expectations.",
+      "disposition": "transferred",
+      "id": "P6-PER-07",
+      "notes": "Implementation remains a handoff to execution-capable Personas.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:26-29",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:56-59"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:343",
+        "Plans/Personas.md:570",
+        "Plans/Personas.md:572",
+        "Plans/Personas.md:575",
+        "Plans/Personas.md:576",
+        "Plans/Personas.md:578",
+        "Plans/Personas.md:579",
+        "Plans/Executor_Protocol.md:54",
+        "Plans/Executor_Protocol.md:57",
+        "Plans/Decision_Log.md:28",
+        "Plans/rewrite-tie-in-memo.md:24"
+      ],
+      "details": "Overseer may express governance/conductor/audit instincts, but runtime/scheduler owners keep dispatch, readiness, blocked state, retry budgets, wakeups, and hard Orchestrator mechanics.",
+      "disposition": "transferred",
+      "id": "P6-PER-08",
+      "notes": "The singular user-facing Overseer is retained as the abstraction over the governance family unless a future owner decision splits it.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:475-527",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:664-675"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:217",
+        "Plans/Personas.md:221",
+        "Plans/Personas.md:225",
+        "Plans/Personas.md:229",
+        "Plans/Personas.md:231",
+        "Plans/Personas.md:233",
+        "Plans/FinalGUISpec.md:1118",
+        "Plans/FinalGUISpec.md:1120",
+        "Plans/orchestrator-subagent-integration.md:919"
+      ],
+      "details": "Move primary Persona management to Agent Config > Personas with library grouping, prompt preview/editor, requested/effective runtime summary, provider compatibility disclosure, and mutable specialty actions.",
+      "disposition": "transferred",
+      "id": "P6-PER-09",
+      "notes": "Settings remains a routing/help and preference surface rather than the main prompt browser/editor.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:73-77",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:102-107",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:546-555",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:638-658"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:198",
+        "Plans/Personas.md:200",
+        "Plans/Personas.md:431",
+        "Plans/Personas.md:443",
+        "Plans/Contracts_V0.md:375",
+        "Plans/Contracts_V0.md:385",
+        "Plans/Models_System.md:105",
+        "Plans/storage-plan.md:1531",
+        "Plans/storage-plan.md:1541",
+        "Plans/assistant-chat-design.md:2368",
+        "Plans/FinalGUISpec.md:2489"
+      ],
+      "details": "Requested/effective Persona state, stale _id compatibility, skipped controls, provider/model inheritance, and storage snapshots remain canonical and distinct.",
+      "disposition": "already_canonical",
+      "id": "P6-PER-10",
+      "notes": "No new compatibility alias was introduced.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:601-604",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:631-637"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:357",
+        "Plans/Personas.md:359",
+        "Plans/Personas.md:365",
+        "Plans/Personas.md:369",
+        "Plans/Personas.md:602",
+        "Plans/Personas.md:655",
+        "Plans/orchestrator-subagent-integration.md:920",
+        "Plans/orchestrator-subagent-integration.md:6124",
+        "Plans/orchestrator-subagent-integration.md:6126",
+        "Plans/Crosswalk.md:261"
+      ],
+      "details": "Persona catalog/taxonomy, Persona registry, and delegated-subagent registry are separate; auto-resolution has grouping and precedence rules.",
+      "disposition": "transferred",
+      "id": "P6-PER-11",
+      "notes": "Subagent launch types may resolve to Personas, but the registries remain distinct.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:101",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:591-600",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:631-637"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:46",
+        "Plans/Personas.md:119",
+        "Plans/Personas.md:189",
+        "Plans/Personas.md:253",
+        "Plans/Personas.md:612",
+        "Plans/Personas.md:613",
+        "Plans/Personas.md:614",
+        "Plans/Personas.md:615",
+        "Plans/Personas.md:645",
+        "Plans/Personas.md:647"
+      ],
+      "details": "Provider-native agent files, tool lists, web tool names, context-manager references, KPI/SLA claims, JSON examples, and benchmark model recommendations are migration inputs only.",
+      "disposition": "transferred_as_constraints",
+      "id": "P6-PER-12",
+      "notes": "No old local benchmark path was promoted into canonical plan prose.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:25",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:270-278",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:364-400",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:690-702"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:602",
+        "Plans/Personas.md:608",
+        "Plans/Personas.md:619",
+        "Plans/Personas.md:625",
+        "Plans/Personas.md:626",
+        "Plans/Personas.md:627",
+        "Plans/Personas.md:628",
+        "Plans/Personas.md:629",
+        "Plans/Personas.md:630",
+        "Plans/Personas.md:632",
+        "Plans/Personas.md:634",
+        "Plans/Personas.md:643",
+        "Plans/Personas.md:645",
+        "Plans/Personas.md:655",
+        "Plans/orchestrator-subagent-integration.md:920"
+      ],
+      "details": "Specialty catalog groups, excluded workflow-manager names, approved first-wave additions, future candidates, and prompt-shape curation were normalized into owner canon.",
+      "disposition": "transferred_with_deferred_candidates",
+      "id": "P6-PER-13",
+      "notes": "`project-manager`, `product-manager`, and `context-manager` were explicitly excluded from the PM Persona catalog; future candidates remain future catalog/template candidates unless separately promoted.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:108-269",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:338-472",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:401-454",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:721-756"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:481",
+        "Plans/Personas.md:486",
+        "Plans/Personas.md:487",
+        "Plans/assistant-chat-design.md:2436",
+        "Plans/assistant-chat-design.md:2475"
+      ],
+      "details": "Plan/deep-plan phase mechanics are not owned by the Persona ledger transfer except for Persona Auto-switch disclosure and requested/effective state.",
+      "disposition": "non_applicable_to_persona_transfer",
+      "id": "P6-PER-14",
+      "notes": "No File Manager/Editor or unrelated P6 plan-mode lane was unlocked.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:619-624",
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:641-642"
+      ]
+    },
+    {
+      "canonical_evidence": [
+        "Plans/Personas.md:558",
+        "Plans/Personas.md:560",
+        "Plans/Personas.md:564",
+        "Plans/Personas.md:568"
+      ],
+      "details": "Teacher requires reliable PM documentation coverage; missing feature/help coverage must be surfaced rather than invented.",
+      "disposition": "deferred_with_canonical_dependency",
+      "id": "P6-PER-15",
+      "notes": "This is a broader PM docs dependency, not an unresolved Persona product decision.",
+      "source_lines": [
+        "Plans/ledgers/p6/w-20260328-192905/working_ledger.md:557-560"
+      ]
+    }
+  ],
+  "preflight": {
+    "initial_run_gates": {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "generated_at_utc": "2026-06-11T03:47:43Z",
+      "status": "pass"
+    },
+    "subagent_model_lock_proof": {
+      "parent_thread_only_writer": true,
+      "read_only_reviewers": [
+        {
+          "agent_id": "019eb4cb-58aa-7df3-8dbd-c7854f411dc8",
+          "mode": "read-only",
+          "nickname": "Bacon",
+          "role": "pm_evidence_mapper"
+        },
+        {
+          "agent_id": "019eb4cb-7384-7ce0-8b3f-b8d587e2e0e5",
+          "mode": "read-only",
+          "nickname": "Noether",
+          "role": "pm_owner_adjudicator"
+        }
+      ],
+      "tool_metadata": "tool_search exposed PM custom subagent roles as model=gpt-5.5 with xhigh reasoning and non-user-changeable model/effort."
+    }
+  },
+  "scope_control": {
+    "excluded": [
+      "File Manager/Editor P6 research ledger; audit remains closed",
+      "All other deferred P6 lanes",
+      "Historical local benchmark paths from the ledger; source-lineage only, not canonical plan evidence"
+    ],
+    "included": [
+      "Persona built-in/core catalog",
+      "Specialty Persona curation",
+      "Persona GUI and prompt visibility",
+      "Persona requested/effective runtime identity",
+      "Persona registry versus delegated-subagent registry",
+      "Overseer Persona boundary"
+    ],
+    "no_transfer_state_artifacts": true
+  },
+  "source": {
+    "current_state": "Plans/ledgers/p6/w-20260328-192905/current_state.md",
+    "ledger": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md",
+    "meta": "Plans/ledgers/p6/w-20260328-192905/meta.json",
+    "override_reason": "Jared explicitly unlocked the completed P6 Personas ledger; stale research/current-state labels were treated as source-lineage state, not blockers.",
+    "stale_labels_overridden": true,
+    "unlock_scope": "Plans/ledgers/p6/w-20260328-192905/**"
+  }
+}

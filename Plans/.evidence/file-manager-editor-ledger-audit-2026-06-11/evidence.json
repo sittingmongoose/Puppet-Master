@@ -1,34 +1,34 @@
 {
   "artifacts": [
     {
-      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
       "note": "Per-material-item classification for the P6 File Manager/Editor research ledger.",
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json",
       "sha256": "446d1ffcbda7d1d925ce09b2f76e1bcbd8f6e0d2cfa0d23266809b06477fe63e"
     },
     {
-      "path": "Plans/Architecture_Invariants.md",
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
+      "path": "Plans/Architecture_Invariants.md",
       "sha256": "5f81d2d3a351e5e74aa0bb3010548110af523fc7e15965c95c919ad981b2a503"
     },
     {
-      "path": "scripts/pm-plans-verify.py",
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
+      "path": "scripts/pm-plans-verify.py",
       "sha256": "5633c1407ce7137b821dd8098e8406e316add306c97dd517655c33d45a968640"
     },
     {
-      "path": "Plans/Spec_Lock.json",
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
-      "sha256": "d51c448181916ee3d1bbe45f699dfe7c19a98924bced0f2b2ddb8d89f20184a8"
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "a857b4ee807386d7e6bd4aca372ce49cac8aaae70a4e007ba6b7cbfeff7a0d95"
     },
     {
-      "path": "Plans/auto_decisions.jsonl",
       "note": "Schema-valid auto-decision row for the audit result.",
-      "sha256": "5bea1d9139b37e7d362e006b53936b4be73a4c61859b6e78190cb946c06ffae6"
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "6270e723e18754e9e11dec4bfa585e33f0647e8ad4d20bcfefbbbb2adccdea24"
     },
     {
-      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
-      "sha256": "c553dd00c463b46ba39f8cd0e2c7809d79fa484de666023d28d53e66ca7692f2"
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "sha256": "a273b0dfa6b24dd1bd6897e0c4ee69cc4965af4ea23fe4a5c7e40a3ca125ee2a"
     }
   ],
   "checks": [
@@ -144,9 +144,9 @@
   "events": {
     "event_refs": [
       {
+        "note": "Audit-only reconciliation of Plans/ledgers/p6/w-20260318-153036.",
         "ref": "file-manager-editor-ledger-audit-2026-06-11",
-        "source": "other",
-        "note": "Audit-only reconciliation of Plans/ledgers/p6/w-20260318-153036."
+        "source": "other"
       }
     ]
   },

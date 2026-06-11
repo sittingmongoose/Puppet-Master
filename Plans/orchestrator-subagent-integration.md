@@ -916,8 +916,8 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contra
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.
 - **Section:** Add a "Subagents" section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.
-- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: dedicated "Subagent personas" tab or subsection (Config or Setup); list showing name + description; "Edit" to change the canonical Persona content; "Add" / "Delete" for list management.
-- **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan's persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, ...) or from a future subagent registry; document so UI and backend share the same names.
+- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; "Edit" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID.
+- **Discovery:** Subagent names in the override UI come from `subagent_registry` and Persona names from `persona_registry`; document so UI and backend share the same names. Removed catalog names such as `project-manager`, `product-manager`, and `context-manager` are source-lineage/import-seed vocabulary only unless a future owner decision promotes a replacement.
 
 ### 6. Doctor -- Gemini Access and Plan Mode Check
 
@@ -986,7 +986,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [project-manager]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
+- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [collaborator]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
 
 ### 6. Orchestrator and subagent code not yet present
 
@@ -1032,7 +1032,7 @@ When a platform-specific parser fails:
 
 
 - **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.
-- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — project-local (`.puppet-master/personas/<id>/PERSONA.md`) overrides global (`~/.config/puppet-master/personas/<id>/PERSONA.md`). (2) **Overrides:** User edits Personas via the GUI (Settings > Advanced > Personas); edits persist to Puppet Master Persona storage only — never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
+- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — PM-owned protected built-ins resolve before project-local (`.puppet-master/personas/<id>/PERSONA.md`) and global (`~/.config/puppet-master/personas/<id>/PERSONA.md`) user Personas. (2) **Overrides:** User edits Personas via Agent Config > Personas; edits persist to Puppet Master Persona storage only -- never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). Protected core built-ins cannot be modified, deleted, disabled, or shadowed; bundled specialties can be modified, disabled, and restored to default. (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected mutable Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
@@ -3280,7 +3280,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Pattern matching:** Use regex/pattern matching to extract decisions (e.g., "We chose Rust + Actix" → save as architectural decision).
-- **LLM extraction:** Run a lightweight extraction subagent (e.g., `project-manager`) on Phase 1 output to extract structured memory entries.
+- **LLM extraction:** Run a lightweight extraction subagent (e.g., `knowledge-synthesizer` if promoted, otherwise `document-writer`) on Phase 1 output to extract structured memory entries.
 - **Manual tagging:** Allow Phase 1 subagent to explicitly tag decisions (e.g., `<memory:architecture>Rust + Actix</memory:architecture>`).
 - **Best-effort:** Extract what we can. Missing extractions don't block execution; memory is enhancement, not requirement.
 
@@ -5473,7 +5473,7 @@ Both limits apply: a crew spawn must not exceed either the crew cap or the per-p
 **Scenario:** Full-stack project with Rust backend and React frontend
 
 **Phase 1: Setup**
-- `project-manager` coordinates
+- `overseer` coordinates
 
 **Task 1: Backend API**
 - Subtask 1.1: Database schema (parallelizable)
@@ -6128,7 +6128,7 @@ Rules:
 The orchestrator must support Persona defaults and/or auto Persona resolution per tier.
 
 Examples:
-- **Phase:** strategic/planning Personas such as `project-manager`, `architect-reviewer`, `collaborator`
+- **Phase:** strategic/planning Personas such as `collaborator`, `overseer`, `architect-reviewer`
 - **Task:** domain/language Personas such as `rust-engineer`, `frontend-developer`, `backend-developer`, `devops-engineer`
 - **Subtask:** reviewer/writer/specialist Personas such as `code-reviewer`, `technical-writer`, `security-engineer`
 - **Iteration:** execution/debugging/verification Personas such as `rust-engineer`, `frontend-developer`, `debugger`, `qa-expert`
@@ -6169,7 +6169,7 @@ Examples:
 - Rust code execution in iteration -> `rust-engineer`
 - planning mode at a tier boundary -> `collaborator`
 - repo discovery before edits -> `explorer`
-- production-readiness validation -> `sre`
+- production-readiness validation -> `devops-engineer` or `performance-engineer` unless a future `sre` Persona is explicitly promoted
 
 ### Registry normalization
 

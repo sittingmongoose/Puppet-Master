@@ -2357,6 +2357,8 @@ Definitions:
 - **auto:** chat resolver selects Persona based on repo/task/message context.
 - **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
 
+Chat selection consumes the eligibility rules in `Plans/Personas.md`: `assistant` is the default direct-chat Persona; `explorer` and `bash` are subagent-only and cannot be selected as the direct chat Persona; `teacher` is direct-chat eligible but not a subagent Persona.
+
 ### 27.2 Current Persona display (required)
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -2387,11 +2389,12 @@ Rules:
 ### 27.3 Natural-language Persona invocation in chat
 
 The Assistant must support user requests such as:
-- `Use Explorer`
 - `Use Collaborator`
 - `Be a Rust engineer`
 - `Answer as a technical writer`
 - `Switch to security auditor`
+- `Ask Explorer to inspect the repo`
+- `Run that with Bash`
 
 #### Scope semantics
 
@@ -2401,10 +2404,12 @@ Default scope handling:
 
 UI must show when a natural-language override is active, for example:
 - `Persona: Collaborator (User requested)`
-- `Persona: Explorer (User requested, session lock)`
+- `Persona: Researcher (User requested, session lock)`
 
 When the override expires, the UI should return to auto display, for example:
 - `Persona: Rust Engineer (Auto: Rust repo + code task)`
+
+Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona. If the user asks to make a subagent-only Persona the direct chat Persona, chat must explain the eligibility constraint and offer the closest valid route.
 
 ### 27.4 Persona aliases and fuzzy matching
 

@@ -1,6 +1,7 @@
 {
   "entrypoints": [
-    "pm.build-governance.spec-lock-support-refresh"
+    "pm.build-governance.spec-lock-support-refresh",
+    "pm.p6.personas-ledger-transfer"
   ],
   "execution_ordering": {
     "completion_rule": "verifier_evidence_then_auto_done",
@@ -357,6 +358,268 @@
         "message": "Clean-repo build-governance support seal is certified without transfer_state dependency.",
         "outcome": "pass",
         "timestamp_utc": "2026-06-10T04:05:00Z"
+      }
+    },
+    {
+      "acceptance": [
+        {
+          "check_id": "plans.verify.p6_personas_transfer_reseal",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py json-syntax",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-shard-plans.py --check",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py check-shards",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
+              "expect_exit_code": 0
+            },
+            {
+              "cmd": "git diff --check",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ],
+          "note": "Full governance reseal after P6 Personas ledger transfer."
+        }
+      ],
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "blockers": [],
+      "change_budget": {
+        "allowed_paths": [
+          "Plans/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**",
+          "transfer_state/**"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Transfer may touch canonical Plans owner/consumer docs, the unlocked P6 Personas ledger state, evidence, Spec Lock, plan graph, auto decisions, and generated shards only.",
+        "schema_id": "pm.change_budget.schema.v1"
+      },
+      "contract_refs": [
+        "ContractName:Plans/Personas.md",
+        "ContractName:Plans/FinalGUISpec.md",
+        "ContractName:Plans/assistant-chat-design.md",
+        "ContractName:Plans/orchestrator-subagent-integration.md",
+        "ContractName:Plans/Models_System.md",
+        "ContractName:Plans/Prompt_Pipeline.md",
+        "ContractName:Plans/Contracts_V0.md",
+        "ContractName:Plans/storage-plan.md",
+        "SchemaID:pm.evidence.schema.v1",
+        "SchemaID:pm.auto_decisions.schema.v1",
+        "SchemaID:pm.plan_graph.schema.v1",
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009"
+      ],
+      "decision_refs": [
+        "dec-2026-06-11-p6-personas-ledger-transfer"
+      ],
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/00-plans-index.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/working_ledger.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/meta.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/current_state.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Personas.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/FinalGUISpec.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/assistant-chat-design.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/orchestrator-subagent-integration.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Glossary.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Crosswalk.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Spec_Lock.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/sharding_config.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/plan_graph.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/evidence.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/auto_decisions.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-plans-verify.py"
+        }
+      ],
+      "node_id": "pm.p6.personas-ledger-transfer",
+      "objective": "Transfer the completed P6 Personas ledger into canonical Plans, certify every material Persona item, close the unlocked ledger, and reseal governance without processing File Manager/Editor or other P6 lanes.",
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/Personas.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/FinalGUISpec.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/assistant-chat-design.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/orchestrator-subagent-integration.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/00-plans-index.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Glossary.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Crosswalk.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/meta.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/ledgers/p6/w-20260328-192905/current_state.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/audit.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/auto_decisions.jsonl"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/plan_graph.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Spec_Lock.json"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/_shards"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+        }
+      ],
+      "policy_mode": "workspace-write",
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "auto_decisions": "pm.auto_decisions.schema.v1",
+          "change_budget": "pm.change_budget.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
+        }
+      },
+      "status": "done",
+      "unblocks": [],
+      "verifier_result": {
+        "message": "P6 Personas ledger transfer certified with no unresolved material items; final governance reseal commands are recorded in evidence.",
+        "outcome": "pass",
+        "timestamp_utc": "2026-06-11T04:15:00Z"
       }
     }
   ],

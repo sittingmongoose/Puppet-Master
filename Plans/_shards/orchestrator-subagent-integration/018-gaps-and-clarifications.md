@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L935-L1040
 
-Source SHA256: `989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb`
+Source SHA256: `2ef495a547bf027b82f22d43b1cd6909f50319170517bfc5c41c6b0ca7122a37`
 
 ---
 
@@ -62,7 +62,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [project-manager]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
+- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [collaborator]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
 
 ### 6. Orchestrator and subagent code not yet present
 
@@ -108,7 +108,7 @@ When a platform-specific parser fails:
 
 
 - **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.
-- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — project-local (`.puppet-master/personas/<id>/PERSONA.md`) overrides global (`~/.config/puppet-master/personas/<id>/PERSONA.md`). (2) **Overrides:** User edits Personas via the GUI (Settings > Advanced > Personas); edits persist to Puppet Master Persona storage only — never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
+- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — PM-owned protected built-ins resolve before project-local (`.puppet-master/personas/<id>/PERSONA.md`) and global (`~/.config/puppet-master/personas/<id>/PERSONA.md`) user Personas. (2) **Overrides:** User edits Personas via Agent Config > Personas; edits persist to Puppet Master Persona storage only -- never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). Protected core built-ins cannot be modified, deleted, disabled, or shadowed; bundled specialties can be modified, disabled, and restored to default. (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected mutable Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 

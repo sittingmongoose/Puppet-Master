@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L3429-L5532
 
-Source SHA256: `989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb`
+Source SHA256: `2ef495a547bf027b82f22d43b1cd6909f50319170517bfc5c41c6b0ca7122a37`
 
 ---
 
@@ -2055,7 +2055,7 @@ Both limits apply: a crew spawn must not exceed either the crew cap or the per-p
 **Scenario:** Full-stack project with Rust backend and React frontend
 
 **Phase 1: Setup**
-- `project-manager` coordinates
+- `overseer` coordinates
 
 **Task 1: Backend API**
 - Subtask 1.1: Database schema (parallelizable)

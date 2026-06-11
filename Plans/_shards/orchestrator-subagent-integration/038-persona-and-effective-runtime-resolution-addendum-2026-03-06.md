@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L6078-L6192
 
-Source SHA256: `989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb`
+Source SHA256: `2ef495a547bf027b82f22d43b1cd6909f50319170517bfc5c41c6b0ca7122a37`
 
 ---
 
@@ -61,7 +61,7 @@ Rules:
 The orchestrator must support Persona defaults and/or auto Persona resolution per tier.
 
 Examples:
-- **Phase:** strategic/planning Personas such as `project-manager`, `architect-reviewer`, `collaborator`
+- **Phase:** strategic/planning Personas such as `collaborator`, `overseer`, `architect-reviewer`
 - **Task:** domain/language Personas such as `rust-engineer`, `frontend-developer`, `backend-developer`, `devops-engineer`
 - **Subtask:** reviewer/writer/specialist Personas such as `code-reviewer`, `technical-writer`, `security-engineer`
 - **Iteration:** execution/debugging/verification Personas such as `rust-engineer`, `frontend-developer`, `debugger`, `qa-expert`
@@ -102,7 +102,7 @@ Examples:
 - Rust code execution in iteration -> `rust-engineer`
 - planning mode at a tier boundary -> `collaborator`
 - repo discovery before edits -> `explorer`
-- production-readiness validation -> `sre`
+- production-readiness validation -> `devops-engineer` or `performance-engineer` unless a future `sre` Persona is explicitly promoted
 
 ### Registry normalization
 

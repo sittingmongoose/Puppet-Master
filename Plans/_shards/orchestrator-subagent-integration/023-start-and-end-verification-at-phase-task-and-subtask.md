@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1346-L3323
 
-Source SHA256: `989e16bf4f9fd579e5261d478721a3e5199742e4cba06fc0b8860f6b55d231cb`
+Source SHA256: `2ef495a547bf027b82f22d43b1cd6909f50319170517bfc5c41c6b0ca7122a37`
 
 ---
 
@@ -1945,7 +1945,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Pattern matching:** Use regex/pattern matching to extract decisions (e.g., "We chose Rust + Actix" → save as architectural decision).
-- **LLM extraction:** Run a lightweight extraction subagent (e.g., `project-manager`) on Phase 1 output to extract structured memory entries.
+- **LLM extraction:** Run a lightweight extraction subagent (e.g., `knowledge-synthesizer` if promoted, otherwise `document-writer`) on Phase 1 output to extract structured memory entries.
 - **Manual tagging:** Allow Phase 1 subagent to explicitly tag decisions (e.g., `<memory:architecture>Rust + Actix</memory:architecture>`).
 - **Best-effort:** Extract what we can. Missing extractions don't block execution; memory is enhancement, not requirement.
 
