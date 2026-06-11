@@ -1,5 +1,0 @@
--Always use subagents
--Do the tasks with separate subagents
--Pick the correct subagents
--Include in the plan what agents will be doing each task in a phase
--Announce what subagent is being used.

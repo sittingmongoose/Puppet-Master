@@ -1,4 +1,0 @@
-- Please implement
-- Always use the Context7 MCP.
-- Make sure you update the status when you are done!
-- Delete the .test-cache and .test-quota files when you are done.
