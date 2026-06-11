@@ -877,3 +877,162 @@ Combine explicit + avoid list (dedupe preserve order).
 - `Plans/Progression_Gates.md` — verification gates
 
 *Document created for planning only; no code changes.*
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Media_Generation_and_Capabilities.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### MGAC-001 - Media Generation and Capabilities (Canonical SSOT) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: MGAC-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Plans/Media_Generation_and_Capabilities.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- Media Generation and Capabilities (Canonical SSOT)
+- 0. Scope and SSOT status
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- SSOT references (DRY)
+- 1. Capability system
+- '1.1 Internal tool: `capabilities.get`'
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+- 1.2 Response shape
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md'
+- 1.3 Canonical disabled-reason values
+- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+- 1.4 Disabled-reason evaluation precedence
+- 1.5 Capability categories
+- 1.6 Agent invocation rule
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md'
+- 1.7 Registry snapshot and refresh semantics
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+- 1.8 Eventing and audit behavior
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md'
+- 2. Media generation contract
+- '2.1 Internal tool: `media.generate`'
+- 'ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md'
+- 2.2 Request envelope
+- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+negative_constraints:
+- Capability state is therefore **runtime-derived**, not a separately persisted capability database. A Settings save, provider switch, MCP adapter refresh, or Doctor/preflight remediation invalidates the previous snapshot; the next `capabilities.get` call MUST recompute from live state and MUST NOT re
+- 'Media generation consumes the product-wide shared runtime identity model instead of defining feature-local runtime-state fields. The requested/effective runtime snapshot remains that shared model''s one canonical truth for requested/effective runtime state across the product, and media routing reads '
+- '- Media audit links must not treat `.puppet-master/state/active-git-operations.json`, `/state/active-git-operations.json`, or `puppet-master/state/active-git-operations.json` as canonical audit; `storage-plan`, `puppet-master`, seglog, and `/receipts` remain the source-of-truth path for durable audi'
+- '- `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` consumers must not keep tier_id-centric media usage or identity pivots; `tier_id` is compatibility context, while `/runtime` and attempt/receipt-based `/receipt-based` truth own media usage joins.'
+- '**Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). Implementations MUST write artifact '
+- These nine codes are stable across versions. Implementations MUST NOT invent ad-hoc code strings.
+- '**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.'
+- 'Deterministic guard: bare lexical matches from the regex above are candidate tokens only. `quality` MUST be set only when the match is in a controls block or a quality-keyword phrase (`quality: high`, `quality=standard`, `high quality`, `draft quality`); plain descriptive adjectives in the creative '
+- The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+- '**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.'
+- '**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use the same requested/effective Gemini auth/account resolution model as standard Gemini provider interactions. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback to the other auth surface.'
+- '**AC-MED13A:** Gemini media availability, usage/quota disclosure, and account/plan UI are mode-dependent. Gemini Direct is key-only/API-key-backed; Gemini CLI OAuth, API-key, and Google/Vertex rows are separate effective modes. UI MUST NOT collapse those modes into one stale-canon mixed-account buck'
+- '**AC-MED16:** `capabilities.get` MUST evaluate provider-tool capabilities from the current runtime registry snapshot at call time, including built-ins, enabled MCP-discovered tools, and provider-exposed tools for the active backend. Tools hidden because an MCP server/provider bridge is unhealthy MUS'
+- '**AC-MED17:** Successful `media.generate` calls MUST write artifact files before `manifest.json`, and `manifest.json` MUST include at least `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). A failed or partial request MUST NOT leave be'
+- Do not treat bare numbers as size unless they are in controls block or trailing comma controls.
+- 'Envelope mapping: size_px -> size; size_k -> size (2k=2048,4k=4096,8k=8192) plus resolution token; vres -> resolution for video and MUST NOT override size_k-derived resolution for image prompts.'
+- '11) quality: (?i)\b(?P<qual>draft|standard|high)\b optional phrase mapping. Guard: set only when in controls block or quality-keyword phrase; bare descriptive adjectives in creative prompt MUST NOT set quality.'
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- 'Stale-canon cleanup: legacy shorthand that described non-Cursor Gemini media as simply `key-backed`, described Gemini as one `mixed-account` provider, or treated the Gemini API-key `key-exception` as the whole model is obsolete. Gemini media routing is mode-dependent. Gemini Direct (`gemini`) is the'
+- '- Media consumers of execution state follow event-sourced storage: `active-agents.json` and active-agents flat files are compatibility inputs only, while `/redb`, redb projections, and event-sourced stores own durable execution state.'
+- '- `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` consumers must not keep tier_id-centric media usage or identity pivots; `tier_id` is compatibility context, while `/runtime` and attempt/receipt-based `/receipt-based` truth own media usage joins.'
+stale_retired_dispositions:
+- Capability state is therefore **runtime-derived**, not a separately persisted capability database. A Settings save, provider switch, MCP adapter refresh, or Doctor/preflight remediation invalidates the previous snapshot; the next `capabilities.get` call MUST recompute from live state and MUST NOT re
+- 'Stale-canon cleanup: legacy shorthand that described non-Cursor Gemini media as simply `key-backed`, described Gemini as one `mixed-account` provider, or treated the Gemini API-key `key-exception` as the whole model is obsolete. Gemini media routing is mode-dependent. Gemini Direct (`gemini`) is the'
+- '**AC-MED13A:** Gemini media availability, usage/quota disclosure, and account/plan UI are mode-dependent. Gemini Direct is key-only/API-key-backed; Gemini CLI OAuth, API-key, and Google/Vertex rows are separate effective modes. UI MUST NOT collapse those modes into one stale-canon mixed-account buck'
+- '**AC-MED16:** `capabilities.get` MUST evaluate provider-tool capabilities from the current runtime registry snapshot at call time, including built-ins, enabled MCP-discovered tools, and provider-exposed tools for the active backend. Tools hidden because an MCP server/provider bridge is unhealthy MUS'
+owner_boundary_notes:
+- '# Media Generation and Capabilities (Canonical SSOT)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- PUPPET MASTER -- MEDIA GENERATION AND CAPABILITIES SSOT
+- '## 0. Scope and SSOT status'
+- 'This document is the **single canonical source of truth** for:'
+- '### SSOT references (DRY)'
+- '- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`'
+- '- Canonical terms: `Plans/Glossary.md`'
+- '- `disabled_reason` (string | null, required): one of the canonical disabled-reason values (§1.3) when `enabled` is `false`; `null` when `enabled` is `true`.'
+- '### 1.3 Canonical disabled-reason values'
+- These values are the canonical enum; implementations MUST use exactly these strings.
+- '- built-in internal tools from the canonical tool registry,'
+- '`capabilities.get` uses the standard tool event pipeline from `Plans/Contracts_V0.md` / `Plans/Tools.md`; it does **not** define a separate persistent capability-state event stream. Each invocation emits the canonical tool telemetry (`tool_name = "capabilities.get"`, latency, success/failure). If se'
+- '| `resolution` | `string \| null` | Optional | Canonical resolution token when provided (e.g., `720p`, `1080p`, `1440p`, `2160p`, `4k`, `2k`, `8k`). |'
+- All non-Cursor backends follow the canonical Gemini media routing model.
+- 'Media generation consumes the product-wide shared runtime identity model instead of defining feature-local runtime-state fields. The requested/effective runtime snapshot remains that shared model''s one canonical truth for requested/effective runtime state across the product, and media routing reads '
+- '- Media-impact reconciliation follows the final three-bucket `CHANGE` register: this document owns media-capability changes while consuming account, runtime, usage, model, and GUI owner changes from the provider/account specs.'
+- '- Media audit links must not treat `.puppet-master/state/active-git-operations.json`, `/state/active-git-operations.json`, or `puppet-master/state/active-git-operations.json` as canonical audit; `storage-plan`, `puppet-master`, seglog, and `/receipts` remain the source-of-truth path for durable audi'
+- '- `resume_url` is a derived serialized field from the canonical route contract, not a stronger source of truth for media generation recovery or continuation.'
+- '- spot-checks against `Plans/storage-plan.md` / `/storage-plan.md` must preserve storage as the owner for receipt, usage, and runtime persistence fields consumed by media records.'
+- '- `orchestrator-subagent-integration` / `orchestrator-subagent-integration.md` selector and hook APIs consume canonical execution-unit refs for truth and smaller derived selection `/decomposition` objects for heuristics.'
+- '- `cost_microdollars` (`cost_microdollars: u64`): canonical persisted cost in microdollars (1 USD = 1,000,000 microdollars). This is the SSOT cost field per Architecture_Invariants.md INV-015.'
+- 'The `error.code` field MUST be exactly one of the following canonical values:'
+- '**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.'
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `d4154d77ca8f652711e96fba9b68a00cf0cbcdfd00a2f9ee21d0ad244eef3d1c`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Media_Generation_and_Capabilities-S0001` through `Media_Generation_and_Capabilities-S0024` are preserved in place and mapped in `coverage_map.jsonl` to `MGAC-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

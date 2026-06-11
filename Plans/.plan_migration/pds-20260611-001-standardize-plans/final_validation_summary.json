@@ -1,0 +1,46 @@
+{
+  "coverage_status_counts": {
+    "already_standardized_existing_planunits": 55,
+    "batch-001-unlocked-unsharded_converted_covered": 303,
+    "batch-002-sharded-unlocked_converted_covered": 2288,
+    "batch-003-spec-locked_converted_covered": 955,
+    "pilot_converted_covered": 17
+  },
+  "forbidden_during_this_run_confirmed_not_updated": [
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl"
+  ],
+  "gui_related_counts": {
+    "false": 34,
+    "true": 71
+  },
+  "migration_validation": "pass",
+  "nodeseeds_created": false,
+  "original_spans": 3618,
+  "plan_unit_count": 105,
+  "planunit_field_check": "pass",
+  "run_id": "pds-20260611-001-standardize-plans",
+  "schema_id": "pm.plan_migration.final_validation_summary.v1",
+  "seal_phase_required": [
+    "Regenerate Plans/_shards/** with python3 scripts/pm-shard-plans.py --generate",
+    "Refresh evidence bundles that hash changed Plans docs",
+    "Refresh Plans/Spec_Lock.json through the explicit governance seal workflow",
+    "Refresh Plans/plan_graph.json only if the seal workflow requires it",
+    "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check"
+  ],
+  "shard_check_status": "fail",
+  "shard_failure_count": 92,
+  "standard_run_gates_expected_seal_failures": [
+    "verify_spec_lock",
+    "validate_plan_graph",
+    "validate_evidence",
+    "check_shards"
+  ],
+  "standard_run_gates_status": "fail",
+  "status": "converted_pending_governance_seal",
+  "top_level_plan_docs": 67,
+  "worknodes_created": false
+}

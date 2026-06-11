@@ -1,0 +1,54 @@
+{
+  "check": "run-gates",
+  "checks": {
+    "check_project_artifact_requirements": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "check_shards": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "json_syntax": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "lint_banned_phrases": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "lint_contractrefs": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "validate_auto_decisions": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "validate_evidence": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "validate_plan_graph": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "verify_spec_lock": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    }
+  },
+  "failures": [],
+  "generated_at_utc": "2026-06-11T19:12:08Z",
+  "schema_id": "pm.plans_verify.report.v1",
+  "status": "pass"
+}

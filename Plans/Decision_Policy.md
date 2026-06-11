@@ -454,3 +454,190 @@ Approval/preflight blind-spot defaults are target-bound, not action-name-bound, 
 Domain-bound approvals also include the attempted operation or action class, not only resource identity. `/admin/domain-sensitive` operations bind SCM `/repositories` and `/worktrees/refs`, GitHub Actions workflow and `/environment` targets, Docker registries/repositories, and Kubernetes clusters/namespaces/verbs plus workload or resource refs to the approval scope; `policy-vs-approval-vs-preflight` outcomes remain distinct blocked families. `/research-safe` plan-mode tools such as `todoread`, `todowrite`, `webfetch`, `webcrawl`, `webmap`, and question-driven planning flows may be allowed for planning without granting mutation authority. Durable approval scope and reuse are governed by `approval_scope_key`, actor/lane/run/account context, requested/effective permission disclosure, and permission-snapshot drift rules in `Plans/Permissions_System.md` and `Plans/Contracts_V0.md`.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Policy.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### DP-001 - Decision Policy (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: DP-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: Plans/Decision_Policy.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Decision_Policy.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Decision_Policy-S0032
+preserved_exact_tokens:
+- Decision Policy (Canonical)
+- 0. Scope
+- 'ContractRef: PolicyRule:Decision_Policy.md'
+- 1. Precedence (non-negotiable)
+- 'ContractRef: SchemaID:Spec_Lock.json'
+- 2. Deterministic defaults (must be autonomous)
+- 'ContractRef: PolicyRule:Decision_Policy.md§2'
+- 2.1 Runtime trust and identity defaults
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md'
+- 2.2 Runtime ownership and action gating defaults
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md'
+- 2.3 Runtime projection, route-owner, and persistence defaults
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/human-in-the-loop.md'
+- 2.4 Route-target, blocked-object, and runtime-identity cleanup defaults
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Graph_View.md'
+- 'ContractRef: Invariant:INV-002, SchemaID:Spec_Lock.json#github_operations'
+- 3. Tie-break rules (ordering)
+- 3.1 Autonomous decision logging contract
+- 'ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§2'
+- 'ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§1, PolicyRule:no_secrets_in_storage, Invariant:INV-002'
+- 4. "No human in the loop" rule
+- 5. SpecLock Update Protocol (autonomous; no human readers)
+- 'ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2, SchemaID:pm.auto_decisions.schema.v1'
+- 5.1 When Spec Lock updates are allowed
+negative_constraints:
+- Operational identity is a separate policy layer from provider-account identity. `Multi-Account.md` distinguishes `github_api`, registry identity, Kubernetes context, provider-account routing, and operational side-effect identity; the shared effective-resolution record must not collapse those into `/
+- Orchestrator semantic scope is page-owned, not widget-owned. Page and `/router` state owns `project_id`, `focused_run_id`, historical-run mode, and object focus; widgets may add presentation or sub-filter choices, but they must not secretly select a different `/run` or redefine operational scope.
+- Approval identity must not be reconstructed from `request_id + tier_id + tier_type`, ambient tier labels, or a `one-off` `resume_url`. `request_id`, `tier_id`, `tier_type`, `resume_url`, `/wizard`, and `/object` values are compatibility, lineage, or derived route/object data under blocked-episode id
+- Runtime blocked reasons remain runtime truth even when Source Control or SCM surfaces display remediation. `dirty_worktree` and `worktree_conflict` stay exact blocked reasons, remain visible in both surfaces, and must not be softened into generic SCM errors; Source Control surfaces the condition and
+- Tool, approval, and blocked records must be node/actor/account-aware. Tool events must not remain under-attributed analytics exhaust; first-class runtime trace events carry `/actor/account-aware` and `/identity` links plus the effective account/identity that would have executed the approval or block
+- The provider/model/persona/account policy model also applies to worker policy. Worker selection and execution policy must not stop at `/model/persona/account`; worker routes carry the same identity, account, role, and permission separation expected from provider and runtime decisions.
+- GitHub realm isolation remains part of runtime identity. `multi-account` `/runtime` policy must not collapse `github_api` and `copilot_github` into one identity bucket, and `Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`) must materialize runtime identity throug
+- 'Route and primitive ownership stay split: `Contracts_V0.md` is the correct owner for the canonical route contract, while `Crosswalk.md` is the correct owner for the primitive boundary declaration. If a seam still requires inventing a new canonical event `/record` family, that seam remains research-i'
+- '`tier-shaped` objects may survive only as compatibility or selector overlays for phase/task/subtask/iteration navigation. They must not pretend to be canonical runtime context, and any `/task/subtask/iteration` selector that remains user-visible must point back to canonical run/node/attempt/lane/wor'
+- '- Auto-decision rows MUST NOT contain secrets or credential material in `decision`, `rationale`, or `applied_to[]`.'
+- Plans MUST NOT depend on humans making decisions mid-run.
+- 'Operational handling: `Plans/Spec_Lock.json` is verified after canonical doc edits and MUST NOT be hand-edit updated outside this protocol. `Plans/auto_decisions.jsonl` is pipeline-managed by deterministic logging and MUST NOT be hand-edit maintained as a manual ledger.'
+- 'Agents MUST NOT:'
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#4-forbidden-patterns-drift-accelerators'
+- '**Rule:** Persistent stores MUST NOT contain secrets (tokens, passwords, API keys, OAuth refresh tokens). Tokens live only in the OS credential store (platform keyring). Violations are P0 bugs requiring immediate remediation.'
+- '- Crosswalk.md §3.6 (AuthState rules: "Tokens MUST NOT be persisted in AuthState")'
+- '**Resolution rule:** The system MUST generate a clarification question. It MUST NOT apply a deterministic default. The clarification question is captured in the requirements quality report (`Plans/requirements_quality_report.schema.json`, field `needs_user_clarification[]`).'
+- The §4 rule ("plans must not depend on humans making decisions mid-run") applies to **runtime execution** (orchestrator runs, agent iterations, verification gates).
+- '**Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action.'
+- '- Before persisting `description`, `before`, `after`, `context`, or `question` fields in the quality report, Puppet Master MUST redact secret-like values and MUST NOT copy credentials or tokens into the artifact.'
+- Runtime and consumer docs must not preserve tier-era or request-era canon as silent fallback behavior once replacement canon is locked.
+- Mutating actions must not rely silently on stale or degraded projections.
+- Provider pressure policy uses source-class evidence. An `authoritative_remaining_counter` drives `approaching_threshold` at `<= 20% remaining`; weaker inferred signals may be displayed as pressure but must not masquerade as authoritative counters.
+- '- `/G/L` question surfaces use parent-owned `question-flow` routing. Subagent access stays `default-denial`; `sendPrompt` has dual-context semantics for general prompts versus question-flow work and must not let a child answer the user through a child-local ask channel.'
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- Approval identity must not be reconstructed from `request_id + tier_id + tier_type`, ambient tier labels, or a `one-off` `resume_url`. `request_id`, `tier_id`, `tier_type`, `resume_url`, `/wizard`, and `/object` values are compatibility, lineage, or derived route/object data under blocked-episode id
+- '`tier-shaped` objects may survive only as compatibility or selector overlays for phase/task/subtask/iteration navigation. They must not pretend to be canonical runtime context, and any `/task/subtask/iteration` selector that remains user-visible must point back to canonical run/node/attempt/lane/wor'
+- '- If `needs_user_clarification[]` is non-empty, the workflow MUST transition to the clarification/escalation path instead of starting execution.'
+- '- Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only.'
+- '- `request_id` is lineage/compatibility only'
+- '- Stale recovery action names are compatibility/display labels only: they must resolve to canonical `allowed_action_id` values and ordered `allowed_action_ids[]` in the runtime payload before any recovery button or menu item is executable.'
+stale_retired_dispositions:
+- 6) **Prefer current provider/account policy over stale provider tables**.
+- '- Section `6. Provider-specific behavior` rows for Codex/Copilot/Gemini/Cursor/OpenCode are advisory when stale; current selection policy is owned by Contracts, Multi-Account, Models, and provider contracts.'
+- 'Projection trust policy allows read-only navigation on `stale` or some `degraded` projections only when the UI says so clearly. Live mutating or decision-bearing actions must tighten on trust state and use copy such as `Warning: provider pressure high`, `Blocked: waiting on user approval`, `View may'
+- Conversational and tooling surfaces share one degraded-trust and concern-escalation bridge. Blocked overlays, approval prompts, and tool-health disclosures must expose runtime-trust, `/concern`, and degraded-trust state consistently, and chat threads need a natural place for switch events, concern n
+- Degraded-projection action gating is action-class aware. Actions that change execution, `/promotion/recovery/approval` truth, or recovery state require fresh-enough projection state; observational `/navigation/export` actions generally remain safe. UI explanations identify what is stale, why it matt
+- 'Evidence and artifact views are durable-first under projection loss. `Evidence`, `/artifact`, and `/artifacts` browsing may survive stale projections because records and artifacts are canonical records, but `new-links` and `/live-status` indicators may not. Copy for these states must be explicit: `V'
+- Reconciliation proceeds as a canon-collapse and owner-schema completion pass, not as generic polish. Owner-schema gaps, same-file mixed-era canon, and schema/contract drift are transfer blockers until owner contracts and schemas are reconciled first, then primary consumers collapse their stale same-
+- Usage routing cleanup includes `usage-feature.md` (`usage-feature`) and its duplicated `cost_usage` section. That normalization must happen with Usage routing so usage/cost decisions do not keep separate, stale ownership surfaces.
+- Route/open ownership is subject-first when the subject is already present. `preview_subject_id` proves subject-first identity is viable; `/open` routes should align to that instead of inventing a second identity model. `subject_id` routes are valid for content subjects only, while `object_kind` rout
+- '- leave hashes stale after changing SSOT docs'
+- Mutating actions must not rely silently on stale or degraded projections.
+- Registry promotion flow, Docker Manager drift-detection, and Kubernetes operations are projection-sensitive mutation domains. Container panel state persistence and Docker/K8s event-registration coverage route to `Plans/Containers_Registry_and_Unraid.md` and `Plans/Contracts_V0.md`; Decision_Policy o
+- '- Stale recovery action names are compatibility/display labels only: they must resolve to canonical `allowed_action_id` values and ordered `allowed_action_ids[]` in the runtime payload before any recovery button or menu item is executable.'
+- Approval/preflight blind-spot defaults are target-bound, not action-name-bound, including in multi-repo projects. SCM approvals carry `project_id`, `repo_id`, optional `worktree_id`, `/worktree/context`, `branch`, and `commit`; GitHub Actions approvals carry `repo_remote`, optional `workflow_id`, `r
+owner_boundary_notes:
+- '# Decision Policy (Canonical)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- 'Approval and recovery policy treat `Plans/human-in-the-loop.md` (`/human-in-the-loop.md`) drift as a field-name and field-family normalization problem: `allowed_action_ids` is canonical over `allowed_actions`, and recovery, replay, storage, approval identity, and persistence semantics must share one'
+- 'Projection trust policy allows read-only navigation on `stale` or some `degraded` projections only when the UI says so clearly. Live mutating or decision-bearing actions must tighten on trust state and use copy such as `Warning: provider pressure high`, `Blocked: waiting on user approval`, `View may'
+- '`Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`) is a consumer of canonical execution and `/runtime` context, not the owner of a mixed runtime object. It may keep local selection and `/decomposition` helpers for subagent policy, but route, identity, approval, bl'
+- Approval identity must not be reconstructed from `request_id + tier_id + tier_type`, ambient tier labels, or a `one-off` `resume_url`. `request_id`, `tier_id`, `tier_type`, `resume_url`, `/wizard`, and `/object` values are compatibility, lineage, or derived route/object data under blocked-episode id
+- '`tier-level` settings may remain as user-facing configuration only when reframed as approval-trigger policy; they are not canonical approval object identity. Automation-first execution remains the default: approval-heavy UX defaults such as phase-complete approvals, manual review steps, modal confir'
+- 'Cross-surface research and remediation decisions must keep `/surface`, cross-surface lineage, receipts, blocked UX, and `/recovery/remediation` consequences visible until the owner split is settled; page/surface design, runtime state model, and blocked recovery UX are not interchangeable discussion '
+- '### 2.3 Runtime projection, route-owner, and persistence defaults'
+- 'Evidence and artifact views are durable-first under projection loss. `Evidence`, `/artifact`, and `/artifacts` browsing may survive stale projections because records and artifacts are canonical records, but `new-links` and `/live-status` indicators may not. Copy for these states must be explicit: `V'
+- 'Route and primitive ownership stay split: `Contracts_V0.md` is the correct owner for the canonical route contract, while `Crosswalk.md` is the correct owner for the primitive boundary declaration. If a seam still requires inventing a new canonical event `/record` family, that seam remains research-i'
+- Worker output, approval targeting, and live graph bindings must flow through canonical blocked projections. `tier_id` worker-output correlation, `request_id` approval targeting, and graph `/orchestrator` `live-status` bindings are upstream drift risks when they bypass canonical blocked projection id
+- 'Routing and bridge cleanup remains incomplete until schemas, enums, operational policy layers, routing `/bridge` refinement rules, and same-file canon collapse are reconciled. `storage-plan.md` (`storage-plan`) may retain both `attempt_record` and `tier_runtime_record` only if `tier_runtime_record` '
+- '`Decision_Log.md` records explicit rewrite-era owner-boundary decisions as durable records whenever routing, Orchestrator ontology, blocked identity, runtime identity, or projection-trust vocabulary changes. `Plans/Decision_Policy.md` may set deterministic defaults, but durable decision records pres'
+- '`Plans/Contracts_V0.md` remains the owner-contract seam for runtime identity, blocked identity, and route/open ownership. Decision Policy records deterministic posture for `/open`, approval, recovery, and projection trust, but it does not replace the Contracts schema owner for route/open contracts.'
+- Reconciliation proceeds as a canon-collapse and owner-schema completion pass, not as generic polish. Owner-schema gaps, same-file mixed-era canon, and schema/contract drift are transfer blockers until owner contracts and schemas are reconciled first, then primary consumers collapse their stale same-
+- Runtime identity is not replaced by artifact lineage. `logical_artifact_id` and `linked_artifact_id` are lineage and `/navigation` helpers only; they may point users to related records but do not become runtime identity or blocked-object identity. CtA card actions and `blocked-notice` actions are fi
+- Blocked episodes are targetable objects. `blocked_sequence` has canonical identity meaning alongside `/attempt`, but blocked work should not route only through node/attempt views when the blocked episode itself is the object being approved, resumed, inspected, or remediated.
+- 'Canonical blocked objects carry a cross-family minimum: blocked reason, ordered allowed actions when applicable, `preserved-work` and `local-state` disclosure when applicable, stable `blocked-episode` identity or a `family-local` equivalent, and detail `/report` inspection references. Reconciliation'
+- '`tier-shaped` objects may survive only as compatibility or selector overlays for phase/task/subtask/iteration navigation. They must not pretend to be canonical runtime context, and any `/task/subtask/iteration` selector that remains user-visible must point back to canonical run/node/attempt/lane/wor'
+- '- If the decision changes or explains Puppet Master internal SSOT documents, write to `Plans/auto_decisions.jsonl`.'
+- 'Operational handling: `Plans/Spec_Lock.json` is verified after canonical doc edits and MUST NOT be hand-edit updated outside this protocol. `Plans/auto_decisions.jsonl` is pipeline-managed by deterministic logging and MUST NOT be hand-edit maintained as a manual ledger.'
+- 2. Recompute and update `canonical_ssot_hashes[*].sha256` for every SSOT file listed in Spec Lock.
+- '- leave hashes stale after changing SSOT docs'
+owner_hints:
+- Plans/Decision_Policy.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `34fdf55ca635fc59620b14a92475ca59f3c1e2ccb1ba0af1ce503798b8612230`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Decision_Policy-S0001` through `Decision_Policy-S0032` are preserved in place and mapped in `coverage_map.jsonl` to `DP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

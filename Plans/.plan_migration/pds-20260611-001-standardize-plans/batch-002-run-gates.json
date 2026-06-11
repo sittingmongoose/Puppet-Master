@@ -1,0 +1,432 @@
+{
+  "check": "run-gates",
+  "checks": {
+    "check_project_artifact_requirements": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "check_shards": {
+      "failure_samples": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json",
+          "source": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json",
+          "source": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/newtools/manifest.json",
+          "source": "Plans/newtools.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/newtools/manifest.json",
+          "source": "Plans/newtools.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+          "source": "Plans/rewrite-tie-in-memo.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+          "source": "Plans/rewrite-tie-in-memo.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json",
+          "source": "Plans/agent-rules-context.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json",
+          "source": "Plans/agent-rules-context.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+          "source": "Plans/OpenCode_Deep_Extraction.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+          "source": "Plans/OpenCode_Deep_Extraction.md"
+        }
+      ],
+      "failures": 74,
+      "status": "fail"
+    },
+    "json_syntax": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "lint_banned_phrases": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "lint_contractrefs": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "validate_auto_decisions": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    },
+    "validate_evidence": {
+      "failure_samples": [
+        {
+          "actual": "b47e7edbd1de2f0f9ff59d771171f6cb18556f32f215f2a8abb933b79d3f8cc0",
+          "artifact": "Plans/Personas.md",
+          "error": "artifact_hash_stale",
+          "expected": "9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "8dce0634ed30ea4f53cb8cc3249e16654ad8b41f7a9dbfdf53eb30ec81725e99",
+          "artifact": "Plans/assistant-chat-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        }
+      ],
+      "failures": 2,
+      "status": "fail"
+    },
+    "validate_plan_graph": {
+      "failure_samples": [
+        {
+          "actual": "b47e7edbd1de2f0f9ff59d771171f6cb18556f32f215f2a8abb933b79d3f8cc0",
+          "artifact": "Plans/Personas.md",
+          "error": "artifact_hash_stale",
+          "expected": "9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "8dce0634ed30ea4f53cb8cc3249e16654ad8b41f7a9dbfdf53eb30ec81725e99",
+          "artifact": "Plans/assistant-chat-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        }
+      ],
+      "failures": 2,
+      "status": "fail"
+    },
+    "verify_spec_lock": {
+      "failure_samples": [],
+      "failures": 0,
+      "status": "pass"
+    }
+  },
+  "failures": [
+    {
+      "check": "validate_plan_graph",
+      "failures": [
+        {
+          "actual": "b47e7edbd1de2f0f9ff59d771171f6cb18556f32f215f2a8abb933b79d3f8cc0",
+          "artifact": "Plans/Personas.md",
+          "error": "artifact_hash_stale",
+          "expected": "9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "8dce0634ed30ea4f53cb8cc3249e16654ad8b41f7a9dbfdf53eb30ec81725e99",
+          "artifact": "Plans/assistant-chat-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_evidence",
+      "failures": [
+        {
+          "actual": "b47e7edbd1de2f0f9ff59d771171f6cb18556f32f215f2a8abb933b79d3f8cc0",
+          "artifact": "Plans/Personas.md",
+          "error": "artifact_hash_stale",
+          "expected": "9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "8dce0634ed30ea4f53cb8cc3249e16654ad8b41f7a9dbfdf53eb30ec81725e99",
+          "artifact": "Plans/assistant-chat-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "check_shards",
+      "failures": [
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json",
+          "source": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/finalguispec/manifest.json",
+          "source": "Plans/FinalGUISpec.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/newtools/manifest.json",
+          "source": "Plans/newtools.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/newtools/manifest.json",
+          "source": "Plans/newtools.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+          "source": "Plans/rewrite-tie-in-memo.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+          "source": "Plans/rewrite-tie-in-memo.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json",
+          "source": "Plans/agent-rules-context.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/agent-rules-context/manifest.json",
+          "source": "Plans/agent-rules-context.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+          "source": "Plans/OpenCode_Deep_Extraction.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+          "source": "Plans/OpenCode_Deep_Extraction.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/lspsupport/manifest.json",
+          "source": "Plans/LSPSupport.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/lspsupport/manifest.json",
+          "source": "Plans/LSPSupport.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/filemanager/manifest.json",
+          "source": "Plans/FileManager.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/filemanager/manifest.json",
+          "source": "Plans/FileManager.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/filesafe/manifest.json",
+          "source": "Plans/FileSafe.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/filesafe/manifest.json",
+          "source": "Plans/FileSafe.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/assistant-chat-design/manifest.json",
+          "source": "Plans/assistant-chat-design.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/assistant-chat-design/manifest.json",
+          "source": "Plans/assistant-chat-design.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+          "source": "Plans/assistant-memory-subsystem.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+          "source": "Plans/assistant-memory-subsystem.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/miscplan/manifest.json",
+          "source": "Plans/MiscPlan.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/miscplan/manifest.json",
+          "source": "Plans/MiscPlan.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/newfeatures/manifest.json",
+          "source": "Plans/newfeatures.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/newfeatures/manifest.json",
+          "source": "Plans/newfeatures.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+          "source": "Plans/WorktreeGitImprovement.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+          "source": "Plans/WorktreeGitImprovement.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/tools/manifest.json",
+          "source": "Plans/Tools.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/tools/manifest.json",
+          "source": "Plans/Tools.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/github_integration/manifest.json",
+          "source": "Plans/GitHub_Integration.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/github_integration/manifest.json",
+          "source": "Plans/GitHub_Integration.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/feature-list/manifest.json",
+          "source": "Plans/feature-list.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/feature-list/manifest.json",
+          "source": "Plans/feature-list.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/usage-feature/manifest.json",
+          "source": "Plans/usage-feature.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/usage-feature/manifest.json",
+          "source": "Plans/usage-feature.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/run_graph_view/manifest.json",
+          "source": "Plans/Run_Graph_View.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/run_graph_view/manifest.json",
+          "source": "Plans/Run_Graph_View.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/orchestrator_page/manifest.json",
+          "source": "Plans/Orchestrator_Page.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/orchestrator_page/manifest.json",
+          "source": "Plans/Orchestrator_Page.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/storage-plan/manifest.json",
+          "source": "Plans/storage-plan.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/storage-plan/manifest.json",
+          "source": "Plans/storage-plan.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+          "source": "Plans/Runtime_Artifacts_Panel.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+          "source": "Plans/Runtime_Artifacts_Panel.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/permissions_system/manifest.json",
+          "source": "Plans/Permissions_System.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/permissions_system/manifest.json",
+          "source": "Plans/Permissions_System.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+          "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+          "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/mcp_integration/manifest.json",
+          "source": "Plans/MCP_Integration.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/mcp_integration/manifest.json",
+          "source": "Plans/MCP_Integration.md"
+        },
+        {
+          "error": "source_hash_stale",
+          "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+          "source": "Plans/CLI_Bridged_Providers.md"
+        },
+        {
+          "error": "source_line_count_stale",
+          "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+          "source": "Plans/CLI_Bridged_Providers.md"
+        }
+      ],
+      "status": "fail"
+    }
+  ],
+  "generated_at_utc": "2026-06-11T19:13:21Z",
+  "schema_id": "pm.plans_verify.report.v1",
+  "status": "fail"
+}

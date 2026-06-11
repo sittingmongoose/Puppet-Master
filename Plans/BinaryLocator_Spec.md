@@ -367,3 +367,190 @@ Expected result includes probe layer and a representative resolved path pattern.
   - `puppet-master-rs/src/platforms/path_utils.rs`
   - `puppet-master-rs/src/platforms/platform_detector.rs`
   - `puppet-master-rs/src/install/script_installer.rs`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/BinaryLocator_Spec.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### BS-001 - BinaryLocator Spec (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: BS-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/BinaryLocator_Spec.md
+canonical_text: Plans/BinaryLocator_Spec.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/BinaryLocator_Spec.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0039
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0040
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:BinaryLocator_Spec-S0041
+preserved_exact_tokens:
+- BinaryLocator Spec (Canonical)
+- Purpose
+- 'ContractRef: Primitive:Provider)'
+- Non-goals
+- Canonical references and constraints (SSOT; DRY)
+- Locked decisions (no drift)
+- 'ContractRef: Invariant:INV-010)'
+- 'ContractRef: SchemaID:spec_lock)'
+- Canonical sources (reference, don't duplicate)
+- Legacy-code anchor note (read-only)
+- Cross-owner boundary constraints
+- Terminology (index only)
+- BinaryLocator boundary
+- Contract shape
+- Input (conceptual)
+- Output (conceptual)
+- Trace emission (storage contract note)
+- 'ContractRef: SchemaID:EventEnvelopeV1)'
+- 'ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Contracts_V0.md#EventRecord)'
+- 'ContractRef: SchemaID:EventEnvelopeV1, ContractName:Plans/Contracts_V0.md#EventRecord)'
+- Deterministic discovery algorithm
+- Probe-layer order (hard requirement)
+- 'ContractRef: Invariant:INV-005)'
+- 'Probe layer: Override'
+negative_constraints:
+- '## Non-goals'
+- '- Locating, installing, updating, uninstalling, or health-checking the PM-managed bundled browser runtime is out of scope; browser runtime distribution, including any CEF/`wef`/`cargo-wef` packaging path, is owned by the promoted browser/runtime docs. (ContractRef: ContractName:Plans/Section15_MVP_P'
+- BinaryLocator diagnostics must not define `/outcome` or reason-code taxonomies and must not own bridge-side `usage-field` or failure-class mapping. Those contracts remain in `Plans/Run_Modes.md` and `Plans/CLI_Bridged_Providers.md`; BinaryLocator only emits discovery traces that those owners can cla
+- '- Storage is **seglog + redb + Tantivy**; SQLite is forbidden. (ContractRef: SchemaID:spec_lock)'
+- '- Terminology drift in `Plans/Glossary.md`, `Plans/Decision_Policy.md`, and `Plans/Crosswalk.md` must adopt Seam/Lane/Overseer/Package vocabulary, including `/Glossary.md`, `/Decision_Policy.md`, `/Crosswalk.md`, and `/Lane/Overseer/Package` references; stale `newfeatures.md` four-tier hierarchy and'
+- '- `Plans/Executor_Protocol.md` / `/Executor_Protocol.md` remains the owner for execution-core duplicate canonical sections plus mint, `/handshake`, and handoff rules; BinaryLocator must not absorb those rules while validating provider binaries.'
+- '- `Permissions_System.md` / Permissions_System approval cache and reject-cascade behavior must be scoped by multi-lane, shared-runtime actor separation rather than globally session-scoped state; BinaryLocator diagnostics may reference permission results but must not define permission scope.'
+- '- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` must not be over-corrected when provider/runtime packet material touches chat surfaces: assistant-chat-design is mostly aligned, no longer a main drift multiplier, and any remaining compatibility-oriented drift stays with the chat owne'
+- '- Approval and blocking seams that expose blocked-family mismatch, scope-language drift, or graph command payload drift route to the HITL, runtime, Run Graph, Orchestrator, and command owners; BinaryLocator must not encode those seams as locator state, binary validation, or provider discovery contra'
+- '- **Session** is the canonical user-facing term; legacy terminology must not appear in user-facing text. (ContractRef: Invariant:INV-010)'
+- '- `workspace_root`: absolute path; used **only** for workspace-scoped caching keys (must not expand filesystem probing scope). (ContractRef: Primitive:Provider)'
+- '- `override_path` input is valid only for Cursor Agent and Claude Code rows exposed in Setup/Health UI; other tools must not emit this field. (ContractRef: ConfigKey:advanced_config.cli_paths)'
+- '- Candidate paths MUST be limited to official/default footprints and explicit user override path; legacy/pre-rewrite binary locations MUST NOT be included. (ContractRef: Primitive:Provider)'
+- '- PM MUST NOT execute binaries received from the remote host; it only transfers and runs PM-built helper binaries.'
+- 'AutoDecision: Collision guard is **disabled by default** until Provider SSOT defines deterministic `WrongBinary` signatures; implementations MUST NOT introduce heuristic string matching beyond that SSOT. (ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/DRY_Rules.md#4-forbidden-patte'
+- '- Playwright installation state is out of scope for BinaryLocator and must be driven by Browser Tools health checks, not Provider CLI lookup. (ContractRef: Primitive:Provider)'
+- '- `Plans/Spec_Lock.json` (locked stack; forbidden deps) (ContractRef: SchemaID:spec_lock)'
+compatibility_only_notes:
+- '- UI toolkit is **Slint 1.15.1**; Iced is legacy. (ContractRef: SchemaID:spec_lock)'
+- '- Storage envelopes + transition note: `Plans/storage-plan.md` §2.2 (ContractRef: SchemaID:EventEnvelopeV1)'
+- '### Legacy-code anchor note (read-only)'
+- This spec may cite `puppet-master-rs/src/...` paths as **legacy-code behavior anchors** only.
+- '- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` must not be over-corrected when provider/runtime packet material touches chat surfaces: assistant-chat-design is mostly aligned, no longer a main drift multiplier, and any remaining compatibility-oriented drift stays with the chat owne'
+- '- **Session** is the canonical user-facing term; legacy terminology must not appear in user-facing text. (ContractRef: Invariant:INV-010)'
+- '> Compatibility note: storage-plan defines `EventEnvelopeV1` as a minimal envelope; Contracts V0 defines `EventRecord` as the canonical persisted envelope with additional required fields; implementations must emit full `EventRecord` envelopes, while readers may accept both during transition. (Contra'
+- '- Legacy anchor: `puppet-master-rs/src/platforms/platform_specs.rs` `PlatformSpec.cli_binary_names`.'
+- 'Legacy anchor: `which::which()` is used today in `puppet-master-rs/src/platforms/path_utils.rs`.'
+- '- Candidate paths MUST be limited to official/default footprints and explicit user override path; legacy/pre-rewrite binary locations MUST NOT be included. (ContractRef: Primitive:Provider)'
+- 'Legacy anchors (read-only):'
+- 'Legacy anchor: `puppet-master-rs/src/install/script_installer.rs` (Cursor shim notes).'
+- '- Legacy anchor: `puppet-master-rs/src/platforms/platform_specs.rs` `PlatformSpec.version_command`.'
+- '- Legacy anchor: `puppet-master-rs/src/platforms/path_utils.rs` `build_enhanced_path_for_subprocess()`.'
+- 'Legacy anchors (behavior compatibility):'
+- '- `Plans/storage-plan.md` (EventEnvelopeV1 compatibility note) (ContractRef: SchemaID:EventEnvelopeV1)'
+- '- Legacy behavior anchors (read-only):'
+stale_retired_dispositions:
+- '- Hard spec-integrity defects such as duplicate sections, duplicate numbering, internally contradictory migration rules, stale approval-model command contracts, and exact command-arg mismatches are contract failures; BinaryLocator references the owning command, approval, or migration doc rather than'
+- '- Terminology drift in `Plans/Glossary.md`, `Plans/Decision_Policy.md`, and `Plans/Crosswalk.md` must adopt Seam/Lane/Overseer/Package vocabulary, including `/Glossary.md`, `/Decision_Policy.md`, `/Crosswalk.md`, and `/Lane/Overseer/Package` references; stale `newfeatures.md` four-tier hierarchy and'
+owner_boundary_notes:
+- '# BinaryLocator Spec (Canonical)'
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- 'Usage source metadata emitted from binary/provider discovery uses the locked `usage_source_kind` vocabulary: `provider_runtime_usage`, `provider_quota_api`, `provider_usage_api`, `provider_error_hint`, and `project_rollup`. Binary location only reports which source kind is available or detected; can'
+- '## Canonical references and constraints (SSOT; DRY)'
+- '### Canonical sources (reference, don''t duplicate)'
+- '- Naming rules + canonical terms: `Plans/Glossary.md` (ContractRef: SchemaID:spec_lock)'
+- '- Those paths are **not** the canonical SSOT for the rewrite architecture (see Spec Lock). (ContractRef: SchemaID:spec_lock)'
+- 'Packet-derived output boundary: when BinaryLocator is mentioned in reconciliation packets, packet doc intent buckets include `MUST CHANGE` and `MUST RECONCILE` docs only; `MUST VERIFY` docs are review inputs rather than primary write targets. Derived-only outputs such as ledger summaries, audit tabl'
+- '### Cross-owner boundary constraints'
+- 'BinaryLocator preserves the following routed boundary constraints when provider or binary-discovery packet material exposes wider platform drift:'
+- '- Agent coordination state MUST remain event-sourced through `seglog` / `redb` and `/redb` storage; `active-agents.json` and `active-agents` views may be debug mirrors only, because using a flat agent file as canonical state creates split-brain risk.'
+- '- `Plans/Executor_Protocol.md` / `/Executor_Protocol.md` remains the owner for execution-core duplicate canonical sections plus mint, `/handshake`, and handoff rules; BinaryLocator must not absorb those rules while validating provider binaries.'
+- '- `storage-plan.md`, storage-plan, and `FileManager.md` remain consumers of canonical route identity, not owners that can redefine it locally; BinaryLocator traces and cache keys must follow route/runtime owners when a provider discovery outcome is opened or inspected.'
+- '- `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` must not be over-corrected when provider/runtime packet material touches chat surfaces: assistant-chat-design is mostly aligned, no longer a main drift multiplier, and any remaining compatibility-oriented drift stays with the chat owne'
+- '- **Provider** is the canonical term (not "runner"). (ContractRef: SchemaID:spec_lock)'
+- '- **Session** is the canonical user-facing term; legacy terminology must not appear in user-facing text. (ContractRef: Invariant:INV-010)'
+- '## BinaryLocator boundary'
+- '> Compatibility note: storage-plan defines `EventEnvelopeV1` as a minimal envelope; Contracts V0 defines `EventRecord` as the canonical persisted envelope with additional required fields; implementations must emit full `EventRecord` envelopes, while readers may accept both during transition. (Contra'
+- '- Within a layer, earlier candidate name wins (ordered by SSOT list). (ContractRef: Invariant:INV-005)'
+- 'Candidate name ordering MUST come from a single SSOT list owned by the Provider domain. (ContractRef: Invariant:INV-005)'
+- '- Enumerate absolute candidate paths from Provider-owned SSOT data in a stable order. (ContractRef: Invariant:INV-005)'
+- '### Command selection (SSOT)'
+- 'BinaryLocator MUST use a Provider-owned SSOT version command for each `provider_cli`. (ContractRef: Invariant:INV-005)'
+- 'AutoDecision: Collision guard is **disabled by default** until Provider SSOT defines deterministic `WrongBinary` signatures; implementations MUST NOT introduce heuristic string matching beyond that SSOT. (ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/DRY_Rules.md#4-forbidden-patte'
+owner_hints:
+- Plans/BinaryLocator_Spec.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `78de2230f1d912c528c281e40b91f18e08ca975c81f7064e8a9055d13d7e04d7`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `BinaryLocator_Spec-S0001` through `BinaryLocator_Spec-S0041` are preserved in place and mapped in `coverage_map.jsonl` to `BS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

@@ -377,3 +377,172 @@ Rules:
 - Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.
 - OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.
 - Keep page-tab and panel-subview resolution as destination-layer concepts, not core identity concepts.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PSMERA-001 - Provider Stream Mapping — External Reference (A2A Bridge) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: PSMERA-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: Plans/Provider_Stream_Mapping_External_Reference_A2A.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0039
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0040
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0041
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0042
+preserved_exact_tokens:
+- Provider Stream Mapping — External Reference (A2A Bridge)
+- Canonical owner-section requirements
+- Provider-native correlation and approval scope
+- 1. Purpose
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md'
+- 2. Non-goals
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md'
+- 3. References (DRY)
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001'
+- 4. V0-safe primitives used
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, Gate:GATE-009'
+- 5. Canonical diagnostic instrumentation (reserved categories)
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009'
+- 5.1 Reserved diagnostic categories and required details keys
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, Gate:GATE-009'
+- 5.2 Namespacing rule (normative)
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, Gate:GATE-009'
+- 6. Mapping table 1 — Upstream native events → V0
+- 7. Mapping table 2 — Upstream A2A bridge concepts → V0
+- 7.0 A2A discovery and task identity boundary
+- 8. Deterministic rules (normative)
+- 8.1 Tool-use ID synthesis
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009'
+negative_constraints:
+- The external-only bridge may map provider reconnect `/resume` evidence to the `Plans/CLI_Bridged_Providers.md` circuit-breaker contract, but it must not redefine PM-internal retry, resume, or child-run semantics.
+- '## 2. Non-goals'
+- Provider/source-specific diagnostics MUST be namespaced via `diagnostic.details.source`. The `category` field MUST use only the reserved values above. Adapters MUST NOT invent new categories; provider-specific context goes in `diagnostic.details` under keys prefixed with the source name if the reser
+- '| `Part` / `DataPart` | `diagnostic` (category `artifact_data_part`) | Preserve the data-part payload losslessly in `diagnostic.details` and/or persisted artifacts. Do not inline non-text/binary data in `text_delta`. If a text projection exists (e.g. `data["content"]`), it MAY be emitted as `text_de'
+- Auth recovery policy (prompts, device flows, key refresh) is owned by the Puppet Master auth subsystem; the adapter MUST NOT attempt re-authentication autonomously.
+- '- Binary content MUST NOT appear in the V0 normalized stream. Binary artifacts MUST be persisted to the artifact store and referenced by `artifact_id` in diagnostic details (SSOT: `Plans/Project_Output_Artifacts.md`).'
+- '- A `tool_result` MUST NOT be emitted without a corresponding `tool_use`.'
+- '- Any additional terminal indicators MUST be preserved as `raw_observation` diagnostics and MUST NOT cause additional `done` events.'
+- Normalized streams MUST preserve `attempt_id` across reconnect/observe-only flows and MUST NOT create provider-local retry identity separate from runtime identity.
+- '- provider/session IDs MUST NOT be reused as runtime `attempt_id`'
+- '- reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity'
+compatibility_only_notes:
+- '| `tier_boundary` | `run_id`, `source`, `from_tier`, `to_tier` | Tier transition detected (Phase/Task/Subtask/Iteration). |'
+- '| `FunctionCallEvent` | `tool_use` | `payload.tool_use_id` ← synthesized (see §8.1), `payload.tool_name` ← `function_call.name`, `payload.arguments` ← parsed `function_call.arguments`. Legacy path; if `ToolCallEvent` is also observed for the same logical call, the adapter prefers `ToolCallEvent` and'
+- Emit `tool_use` on call intent and exactly one `tool_result` on completion, enforcing INV-001 correlation even when upstream omits IDs or emits legacy tool events (see §8.1 and §8.7; ref:autogen/events/agent_events.py::ToolCallEvent, ref:autogen/events/agent_events.py::ToolResponseEvent, ref:autogen
+- '- Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.'
+- '- Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.'
+stale_retired_dispositions:
+- '- `tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.'
+owner_boundary_notes:
+- '## Canonical owner-section requirements'
+- These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- This document maps upstream external-framework native events and A2A bridge concepts to Puppet Master V0 normalized stream events defined in `Plans/CLI_Bridged_Providers.md`. It is the canonical external-reference guide for adapter implementors building provider bridges against the upstream external
+- This document is **not** the SSOT for Puppet Master internal orchestration. Internal child-run supervision, crew coordination, timeout propagation, requested/effective runtime state, and PM-native lineage remain owned by `Plans/orchestrator-subagent-integration.md`, `Plans/Contracts_V0.md`, and `Pla
+- 'This scope is `/future-interop-only`: external A2A mappings can inform bridge adapters, but internal-adoption of A2A semantics for PM child-run control requires a separate owner-doc change in the PM-native runtime SSOTs above.'
+- '- Redefining the V0 event envelope or event types table (SSOT: `Plans/CLI_Bridged_Providers.md`).'
+- '- Defining persistent storage semantics (SSOT: `Plans/storage-plan.md`).'
+- '- Defining tool schemas, permissions, or policy (SSOT: `Plans/Tools.md`, `Plans/FileSafe.md`).'
+- '| Reference | Canonical location |'
+- '| Canonical terms | `Plans/Glossary.md` |'
+- '## 5. Canonical diagnostic instrumentation (reserved categories)'
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, Gate:GATE-009'
+- '| `SelectSpeakerEvent` | `diagnostic` (category `raw_observation`) | Captured as raw observation; selection mechanics are upstream-specific and not treated as a first-class step boundary in V0. | `ref:autogen/events/agent_events.py::SelectSpeakerEvent` |'
+- '### 7.0 A2A discovery and task identity boundary'
+- Because each external A2A Task can create a fresh HTTP session with fresh context, provider prompt caching may rely on STABLE PREFIXES only inside a PM-owned session or adapter-continuity boundary. Cross-task cache reuse must be explicit provider evidence, not assumed from A2A task continuity.
+- '- Binary content MUST NOT appear in the V0 normalized stream. Binary artifacts MUST be persisted to the artifact store and referenced by `artifact_id` in diagnostic details (SSOT: `Plans/Project_Output_Artifacts.md`).'
+- 'The adapter MUST enforce the tool correlation invariant (SSOT: `Plans/Architecture_Invariants.md#INV-001`) on the V0 stream:'
+- 'All audit actions MUST be reconstructable from the V0 diagnostic stream alone. A consumer reading only `diagnostic` events with the `overseer_*` categories MUST be able to reconstruct: which tier was audited, how many reviewers were spawned, each reviewer''s verdict, the consensus result, and the fin'
+- 'When upstream emits richer payloads than V0 can represent as first-class events, adapters preserve the excess data in `diagnostic.details` (bounded; see §8.6) and/or persist it as artifacts (SSOT: `Plans/Project_Output_Artifacts.md`) instead of dropping it.'
+- Provider/A2A stream normalization MUST preserve canonical wake reasons and attempt continuity.
+- '## Canonical data-shape reconciliation'
+- '- Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id'
+- '- In `## Canonical data-shape reconciliation` -> `### Required data shape`, store upstream OpenCode/A2A session identifiers in provider-native correlation fields rather than canonical `thread_id`.'
+owner_hints:
+- Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `d824f9769c286194f15ee61389c27025673d29def80e04fdb99aab6ab73f6257`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Provider_Stream_Mapping_External_Reference_A2A-S0001` through `Provider_Stream_Mapping_External_Reference_A2A-S0042` are preserved in place and mapped in `coverage_map.jsonl` to `PSMERA-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

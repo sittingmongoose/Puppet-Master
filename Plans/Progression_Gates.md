@@ -637,3 +637,194 @@ The runtime recovery sweep MUST fail if any doc:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md
 
 Accept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Progression_Gates.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PG-001 - Progression Gates (Canonical) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: PG-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: Plans/Progression_Gates.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/Progression_Gates.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0021
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0022
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0023
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0024
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0025
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0026
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0027
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0028
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0029
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0030
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0031
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0032
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0033
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0034
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0035
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0036
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0037
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0038
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0039
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0040
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0041
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0042
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0043
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0044
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0045
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0046
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:Progression_Gates-S0047
+preserved_exact_tokens:
+- Progression Gates (Canonical)
+- Canonical owner-section requirements
+- Promotion classes and gate evidence
+- 0. Scope
+- P5 progression owner recovery requirements
+- 'ContractRef: Primitive:Gate'
+- Route-aware progression and packet verification gates
+- Promotion classes and required evidence
+- Route-aware wiring evidence
+- route_target/OpenSubject packet checks
+- Compatibility fallback and contradiction-fail rules
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md'
+- 1. Verifier role (AI-only; deterministic)
+- 'ContractRef: PolicyRule:Decision_Policy.md§4'
+- Verifier scope boundary
+- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014'
+- Verifier result normalization
+- Verifier result normalization canonical rules
+- 'ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2'
+- Runtime node-model progression gate definitions
+- 'ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/human-in-the-loop.md'
+- '`package_complete_gate`'
+- '`seam_complete_gate`'
+- 'ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+negative_constraints:
+- '- GATE-011, GATE-012, GATE-010, machine-readable failure arrays, and generic check rows must not diverge across gate patterns.'
+- '- The Verifier MUST NOT require a human to read logs or approve decisions; it relies only on machine-checkable artifacts (schemas, evidence bundles, deterministic lints).'
+- '## GATE-004 -- Forbidden deps + drift phrases'
+- '- No build-governing doc introduces forbidden dependencies from Spec Lock, and'
+- 'ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4-forbidden-patterns-drift-accelerators'
+- '**Pass condition:** The actual change stays within the node’s declared change budget (max files, LOC delta, allowed/forbidden paths/files).'
+- '- Operational requirement line contains: `MUST`, `MUST NOT`, `SHALL`, `REQUIRED`, `NEVER`.'
+- '- Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is `BLOCKED` or `FAIL`.'
+- '- In BLOCKED state: Puppet Master MUST NOT advance to the next plan node; instead it MUST surface each clarification item to the user via the UI escalation path (thread badge + in-thread clarification message + dashboard CtA).'
+- '- Puppet Master MUST NOT auto-resolve clarification items; each item MUST be resolved by explicit user input before re-running the gate.'
+- A run MUST NOT proceed into canonical execution when the canonical sharded graph is invalid, cyclic, or internally inconsistent.
+- Scheduler correctness must not depend on timer polling. Authoritative wakeups must be event-driven.
+- '- `assistant-chat-design.md` formally models `blocked` thread state instead of punting it out of scope'
+- '- graph-degradation fallback forbidden after `run.graph_canonical_locked`'
+compatibility_only_notes:
+- '- If older naming exists, refer to it only as "legacy naming" (do not quote it).'
+- '- Run graph and orchestrator docs `Plans/Run_Graph_View.md`, `/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `/catalog`, compatibility-era identity, `/action`, and command/catalog normalization must be verified before affected gates pass.'
+- Progression gates are the canonical owners of promotion evidence, route/open packet verification, and compatibility checks before run sealing and archival.
+- '### Compatibility fallback and contradiction-fail rules'
+- Legacy tier-level gate definitions are replaced by package-, seam-, and lane-scoped progression gates. These gates inherit the existing blocking, approval, and timeout/remediation behavior patterns already defined by the progression system; only the execution entities change from tiers to node-model
+- '- cross-package transition readiness validates prerequisite resolution, context handoff preparation, and contract compatibility'
+- '- For this gate, “advance to the next plan node” means any transition from requirements-generation/validation into execution of executable plan-graph nodes, and any later attempt to resume execution after a prior `BLOCKED` result.'
+- '- a packet preserves stale tier-era, request-era, or legacy tier-level gate text as a peer option rather than collapsing to the canonical `package_complete_gate`, `seam_complete_gate`, and `lane_complete_gate` model'
+- '- canonical event-name precedence (`scheduler.pass` and related canonical names win over legacy aliases)'
+stale_retired_dispositions:
+- '- GATE-010 verifies wrapper commands, deprecated aliases, canonical command IDs, command-kind, normalization metadata, GATE, and command IDs without expanding wiring schema more than necessary.'
+- '- GATE-010 `/reporting` evidence captures wrapper normalization target, deprecated alias target, and mismatch detection when wrapper commands claim one primitive but wire to different semantics.'
+- '- GUI_Rebuild_Requirements_Checklist, GUI_Rebuild_Requirements_Checklist.md, and stale upstream PASS conditions cannot create false confidence in progression gates.'
+- '- append-only addenda in high-value owner docs are risk signals when stale canonical text remains unreconciled.'
+- '- Deprecated aliases should eventually disappear, while wrapper commands may remain as permanent UX-facing vocabulary when their primitive family is explicit.'
+- '- a deprecated alias is treated as an independent canonical command'
+- '- a packet preserves stale tier-era, request-era, or legacy tier-level gate text as a peer option rather than collapsing to the canonical `package_complete_gate`, `seam_complete_gate`, and `lane_complete_gate` model'
+- '- a recovery-plan leaves active blockers unresolved by choosing `append` or `verify_only` when `replace_section` is required to repair or retire stale owner canon'
+- The verification sweep rule that flags docs using `recovery_options[]` or `allowed_actions[]` as the canonical shared blocked-payload field now also flags any prescriptive usage (payload definition, schema, storage shape, or contract) of these deprecated names. The sole canonical name is `allowed_ac
+- '- leaves stale canonical text in owner docs while only appending a contradictory later note'
+- Accept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.
+owner_boundary_notes:
+- '# Progression Gates (Canonical)'
+- '## Canonical owner-section requirements'
+- These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- '### P5 progression owner recovery requirements'
+- '- Cross-owner seam docs include `Plans/Wiring_Matrix.schema.json`, `/Wiring_Matrix.schema.json`, `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/FileManager.md`, `/FileManager.md`, `Plans/Decision_Policy.md`, and `/Decision_Policy.md`.'
+- '- Later-model high-risk routing keeps `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/FileManager.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `/Run_Modes.md`, `Plans/Progression_G'
+- '- Primary owner sets for command/wiring continuation include `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/Glossary.md`, `/Glossary.md`, `Plans/FileManager.md`, `Plans/Crosswalk.md`, `/Cro'
+- '- GPT continuation risk keeps GPT, `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/FileManager.md`, `Plans/Crosswalk.md`, `/Crosswalk.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `'
+- '- GATE-010 verifies wrapper commands, deprecated aliases, canonical command IDs, command-kind, normalization metadata, GATE, and command IDs without expanding wiring schema more than necessary.'
+- '- Binary locator and architecture owner docs `Plans/00-plans-index.md`, `/00-plans-index.md`, `Plans/Architecture_Invariants.md`, `/Architecture_Invariants.md`, `Plans/BinaryLocator_Spec.md`, and `/BinaryLocator_Spec.md` remain implicated when progression gates depend on binary location semantics.'
+- '- Progression_Gates.md owner normalization requires `/wrapper`, command-definition metadata, ContractRef taxonomy, numbered gate canon, GATE, GATE-010, deterministic gate language, routing/wrapper normalization, and wiring evidence.'
+- '- Related owner docs `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, `Plans/Permissions_System.md`, `/Permissions_System.md`, and `Plans/Decision_Policy.md`, `/Decision_Policy.md` are progression gate inputs when packaging or permission decisions affect promotion.'
+- '- Stewardship refresh artifacts meta.json, mode_rules.md, mode_status.md, mode_rules, mode_status, fresh-agent, and existing packet/run metadata are gate-state references, not a replacement for canonical gate evidence.'
+- '- allowed_actions in canonical-looking HITL `/storage` shapes is a gate risk until the deprecation addendum is reflected in owner docs.'
+- '- `Plans/human-in-the-loop.md` and `/human-in-the-loop.md` remain the primary owner for HITL route, approval, and blocked identity semantics referenced by progression gates.'
+- '- The executor-facing contract is mostly normalization across existing owner docs, not a greenfield schema invention.'
+- '- Wrapper normalization metadata describes canonical primitive family, not serialized route payload.'
+- '- Transfer coverage blockers cov-034, cov-511, cov-526, transfer-coverage, owner-definition, and evidence-collection are owner-definition gaps until resolved, not just missing evidence-collection gaps.'
+- '- GATE-010 route-aware verification must be explicit, either inside GATE-010 or as a sibling GATE boundary.'
+- '- append-only addenda in high-value owner docs are risk signals when stale canonical text remains unreconciled.'
+- Progression gates are the canonical owners of promotion evidence, route/open packet verification, and compatibility checks before run sealing and archival.
+- '- `GATE-002` Spec Lock integrity (SSOT hash verification)'
+- '### Verifier scope boundary'
+owner_hints:
+- Plans/Progression_Gates.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `bb5559baa9f9e32acbf9ba920afade85c4de1d3ef0dd21c4be288cfc39e21271`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `Progression_Gates-S0001` through `Progression_Gates-S0047` are preserved in place and mapped in `coverage_map.jsonl` to `PG-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+

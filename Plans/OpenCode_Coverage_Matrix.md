@@ -254,3 +254,138 @@ Provider/account/model reconciliation for OpenCode coverage stays linked to `Pla
 | **Missing** | 0 | - |
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/OpenCode_Coverage_Matrix.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### OCM-001 - OpenCode Coverage Matrix (Audit) Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: OCM-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Coverage_Matrix.md
+canonical_text: Plans/OpenCode_Coverage_Matrix.md keeps its pre-migration canonical source content losslessly in place while exposing a source-preserving PlanUnit for Plan Document System indexing. Fine-grained requirement splitting may occur in a later controlled batch using the recorded span_map and coverage_map.
+gui_related: true
+gui_classification_reason: The preserved source spans include GUI/UI/user-visible presentation or interactive control requirements.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Original source spans remain available for exact-text audit.
+- Every original span for this doc has one coverage_map disposition.
+- ContractRefs, anchors or aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage are preserved by span_map and coverage_map.
+- No WorkNodes, NodeSeeds, or executable build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: single_plan_doc
+implementation_surfaces:
+- Plans/OpenCode_Coverage_Matrix.md
+node_compile_hint:
+  mode: source_preserving_planunit
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0001
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0002
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0003
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0004
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0005
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0006
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0007
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0008
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0009
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0010
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0011
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0012
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0013
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0014
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0015
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0016
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0017
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0018
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0019
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0020
+- Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:OpenCode_Coverage_Matrix-S0021
+preserved_exact_tokens:
+- OpenCode Coverage Matrix (Audit)
+- 1. Scope and Method
+- External Reference Landing Guidance
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- 2. Coverage Matrix
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md'
+- 3. DRY Authority Audit
+- 3.1 Documents duplicating canonical definitions
+- 3.2 SSOT docs missing stable anchors
+- 4. GUI + Config Wiring Audit
+- 4.1 Permissions
+- 4.2 Commands
+- 4.3 Skills
+- 4.4 Plugins
+- 4.5 Models
+- 4.6 Formatters
+- 5. Mandatory Fix List
+- 5.1 Missing SSOT Documents
+- 5.2 Anchor Additions
+- 5.3 Cross-Reference Corrections
+- 5.4 DRY Tightening
+- 5.5 Doctor/Preflight Gaps
+- 6. Summary
+negative_constraints: []
+compatibility_only_notes:
+- Stale tier-era, Phase/Task/Subtask/Iteration, or legacy boundary notes in this matrix are anti-pattern markers and audit lineage only; they are not product-owner vocabulary unless a named SSOT owner doc adopts a replacement.
+- '| Config keys/state storage | ✅ | Canonical storage and discovery roots are defined in `Plans/Skills_System.md` (project: `.puppet-master/skills/`, global: `~/.config/puppet-master/skills/`, plus legacy discovery roots for compatibility). |'
+stale_retired_dispositions:
+- Stale tier-era, Phase/Task/Subtask/Iteration, or legacy boundary notes in this matrix are anti-pattern markers and audit lineage only; they are not product-owner vocabulary unless a named SSOT owner doc adopts a replacement.
+- Command coverage health tracks fix-status, command-coverage, self-invalidating IDs, DRY_Rules, DRY_Rules.md, alias-canonicalization, cross-checks, and `/uncategorized` routing so this matrix can distinguish stale aliases from unresolved owner gaps.
+- '| `Plans/Personas.md` §1.4, §5.4 | SSOT reference list typos / stale qualifiers | `Plugins_System.md` is now referenced correctly (plural) and `Skills_System.md` is no longer marked as missing/future. |'
+owner_boundary_notes:
+- '> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.'
+- This document audits every OpenCode-derived capability extracted in `Plans/OpenCode_Deep_Extraction.md` (§7A–§7H, §8, §9, §10) and verifies its coverage within the Puppet Master SSOT plan corpus.
+- '| **Covered** | An explicit SSOT owner doc exists with stable anchors; dependent plans reference it by anchor (not by restating definitions). |'
+- '| **Partial** | A target doc exists but is missing stable anchors, missing GUI wiring, or the capability is only described in `OpenCode_Deep_Extraction.md` without a dedicated SSOT section. |'
+- '| **Missing** | No SSOT doc and no clear contract for this capability. The extraction doc records the baseline but nothing in `Plans/` owns it. |'
+- 'Provider-matrix confidence rule: OpenCode-derived provider-matrix rows must track confidence explicitly so downstream reconciliation does not accidentally treat partially researched direct providers as fully pinned. A direct provider row can be useful evidence while still remaining `Partial` until a'
+- '**Inspection corpus:** All files listed in `Plans/00-plans-index.md` plus subsystem SSOT docs (`Run_Modes.md`, `Personas.md`, `Permissions_System.md`, `Commands_System.md`, `Skills_System.md`, `Prompt_Pipeline.md`, `Formatters_System.md`, `Plugins_System.md`, `Models_System.md`) and `OpenCode_Deep_E'
+- 'Self-review note: `Plans/OpenCode_Coverage_Matrix.md` (`/OpenCode_Coverage_Matrix.md`) audit statuses and `/notes` remain the coverage owner after packet changes to command, skill, LSP, and permission coverage; when those owner docs change, this matrix is rechecked as an audit/currentness surface ra'
+- Stale tier-era, Phase/Task/Subtask/Iteration, or legacy boundary notes in this matrix are anti-pattern markers and audit lineage only; they are not product-owner vocabulary unless a named SSOT owner doc adopts a replacement.
+- Coverage audit rows may carry `supersedes_prior`, doc-discovery, owner-definition, and `17` resolved-count state when a later matrix pass replaces an older audit conclusion. Those fields are audit-state metadata and do not move ownership out of the named SSOT docs.
+- Command coverage health tracks fix-status, command-coverage, self-invalidating IDs, DRY_Rules, DRY_Rules.md, alias-canonicalization, cross-checks, and `/uncategorized` routing so this matrix can distinguish stale aliases from unresolved owner gaps.
+- Zero-finding waves and Ledger Condenser handoffs are audit terminal signals. A zero-finding result may supersedes_prior audit state only when no new exact blockers, contradictory survivors, or owner-definition gaps remain.
+- Adjacent owner references for this matrix include `Plans/Multi-Account.md`, `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/FinalGUISpec.md`, `/Multi-Account.md`, `/Models_System.md`, `/Prompt_Pipeline.md`, `/Personas.md`, and `/FinalGUISpec.md`; those references ke
+- automation-first provider-stream coverage keeps `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, `/Provider_Stream_Mapping_External_Reference_A2A.md`, `/seam`, and tier-boundary evidence tied to provider-stream mapping rather than treating it as local matrix behavior.
+- Runtime-correlation and meta-docs coverage uses `/runtime-correlation`, meta-docs, DRY_Rules, DRY_Rules.md, `/additive`, doc-integrity, cross-checking, `/governance`, and multi-account fields to mark additive governance evidence without treating the matrix as the owner of those runtime contracts.
+- Later-model audit entries keep later-model and follow-on fields when the next step depends on a future model pass instead of immediate owner-doc edits.
+- External reference adoption uses owner categories before wording lands in canon. Tool/runtime contracts land in `Tools.md` and `Contracts_V0.md`; UI/UX patterns land in `FinalGUISpec.md`; permission/auth patterns land in `Permissions_System.md`; provider/integration patterns land in `CLI_Bridged_Pro
+- '| 32 | Context handling / compaction / rotation | Covered | **Covered** | `Prompt_Pipeline.md` now owns synthetic-continue loop prevention, compaction-immune overflow handling, and the prompt-compaction contract directly; FileSafe remains a safety consumer rather than a second SSOT. |'
+- '| # | OpenCode Topic Area | Extraction Pointer(s) | Puppet Master SSOT Owner (Doc + Anchor) | Dependent Plans Referencing SSOT | Coverage Status | Notes |'
+- '| 3 | **Permissions - granular/wildcard rules** | §7C.2, §7C.3 | `Plans/Permissions_System.md` #GRANULAR-RULES, #WILDCARD-SYNTAX | Tools.md §2.2 | **Covered** | Last-match-wins, `*`/`?` wildcards, home expansion, canonical-root case semantics. |'
+- '| 15 | **Skills - discovery** | §7F.1 | `Plans/Skills_System.md` #DISCOVERY, #SEARCH-ORDER | FinalGUISpec.md (Skills tab), Personas.md (`default_skill_refs`), Tools.md (`skill` tool), Permissions_System.md (`skill` key), FileSafe.md (Skill Bundling), MiscPlan.md (implementation checklist) | **Covere'
+- '| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/Run_Modes.md` §7 (mode-specific context deltas) | - | **Covered** | Prompt_Pipeline.md now preserves synthetic-continue loop prevention, compaction thresholds, immu'
+- '| 33 | **LSP integration** | - (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |'
+- '| 38 | **GUI config wiring - Skills** | - | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4A Agent Config Skills tab | - | **Covered** | Agent Config > Skills is the canonical GUI surface; it mirrors Skills_System owner vocabulary. |'
+owner_hints:
+- Plans/OpenCode_Coverage_Matrix.md
+split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
+```
+
+## Migration Coverage
+
+Original hash: `d76e3a91d68d46770db47b8bc6123849238f5347ef59f1fa2454d390ebb56237`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+All original spans from `OpenCode_Coverage_Matrix-S0001` through `OpenCode_Coverage_Matrix-S0021` are preserved in place and mapped in `coverage_map.jsonl` to `OCM-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
