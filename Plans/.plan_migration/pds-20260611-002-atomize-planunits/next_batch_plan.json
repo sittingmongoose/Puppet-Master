@@ -1,0 +1,49 @@
+{
+  "completed_batch": {
+    "batch_id": "phase2b-001-assistant-chat-design-lines-1-398",
+    "docs": [
+      "Plans/assistant-chat-design.md"
+    ],
+    "plan_unit_ids": [
+      "ACD-002",
+      "ACD-003",
+      "ACD-004",
+      "ACD-005",
+      "ACD-006",
+      "ACD-007",
+      "ACD-008",
+      "ACD-009",
+      "ACD-010",
+      "ACD-011",
+      "ACD-012",
+      "ACD-013",
+      "ACD-014",
+      "ACD-015",
+      "ACD-016",
+      "ACD-017"
+    ],
+    "source_line_end": 398,
+    "source_line_start": 1,
+    "span_end": "assistant-chat-design-S0025",
+    "span_start": "assistant-chat-design-S0001"
+  },
+  "generated_at_utc": "2026-06-12T00:41:24Z",
+  "hard_stops_preserved": [
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.",
+    "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions before explicit governance seal.",
+    "Do not semantically rewrite/delete canon without span-map coverage proof."
+  ],
+  "next_batch_cursor": {
+    "batch_id": "phase2b-002-assistant-chat-design-lines-399-next-window",
+    "batch_limit": "Continue in a <=400-line window aligned to full source spans; do not include partial Teach span without explicit split disposition.",
+    "docs": [
+      "Plans/assistant-chat-design.md"
+    ],
+    "source_line_start": 399,
+    "source_path": "Plans/assistant-chat-design.md",
+    "span_id": "assistant-chat-design-S0026"
+  },
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.phase2b_next_batch_plan.v1",
+  "status": "in_progress_after_batch_001"
+}

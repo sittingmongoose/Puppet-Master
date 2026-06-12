@@ -117,37 +117,88 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 1
+        "False": 3,
+        "True": 14
       },
-      "heading_count": 184,
+      "heading_count": 200,
       "implementation_surfaces": [
-        "Plans/assistant-chat-design.md"
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Skills_System.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 3672,
+      "line_count": 4443,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 1,
+      "plan_unit_count": 17,
       "plan_unit_ids": [
-        "ACD-001"
+        "ACD-001",
+        "ACD-002",
+        "ACD-003",
+        "ACD-004",
+        "ACD-005",
+        "ACD-006",
+        "ACD-007",
+        "ACD-008",
+        "ACD-009",
+        "ACD-010",
+        "ACD-011",
+        "ACD-012",
+        "ACD-013",
+        "ACD-014",
+        "ACD-015",
+        "ACD-016",
+        "ACD-017"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
-        "source_preservation"
+        "command_alias_drift",
+        "copy_policy_drift",
+        "debug_mode_drift",
+        "evidence_loop",
+        "execution_boundary",
+        "gui_state_sync",
+        "message_history_safety",
+        "mode_routing_drift",
+        "permission_boundary",
+        "projection_fork",
+        "runtime_identity_drift",
+        "runtime_mode_drift",
+        "skill_dispatch_drift",
+        "source_control_boundary",
+        "source_preservation",
+        "web_tool_routing"
       ],
-      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f",
+      "sha256": "f848c64d536302cb5905c4e73396845edc919fa5aff4d602e6cbc59029fb220f",
       "source_preserving_unit_ids": [
         "ACD-001"
       ],
       "status_counts": {
-        "accepted": 1
+        "accepted": 17
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
-        "requirement": 1
+        "constraint": 2,
+        "requirement": 15
       },
       "validation_surfaces": [
+        "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check"
       ]
@@ -2242,39 +2293,93 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 1
+        "False": 4,
+        "True": 6
       },
-      "heading_count": 15,
+      "heading_count": 24,
       "implementation_surfaces": [
-        "Plans/Run_Graph_View.md"
+        "Plans/.plan_index",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "future Orchestrator project state projection",
+        "future Run Graph UI",
+        "future Run Graph canvas",
+        "future Run Graph inspector",
+        "future concern identity contract"
       ],
-      "line_count": 253,
+      "line_count": 738,
       "path": "Plans/Run_Graph_View.md",
-      "plan_unit_count": 1,
+      "plan_unit_count": 10,
       "plan_unit_ids": [
-        "RGV-001"
+        "RGV-001",
+        "RGV-002",
+        "RGV-003",
+        "RGV-004",
+        "RGV-005",
+        "RGV-006",
+        "RGV-007",
+        "RGV-008",
+        "RGV-009",
+        "RGV-010"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
-        "source_preservation"
+        "historical_run_focus",
+        "identity_model_drift",
+        "inspector_fidelity",
+        "large_graph_usability",
+        "owner_adjudication",
+        "projection_trust",
+        "route_fidelity",
+        "route_owner_drift",
+        "stale_tier_cleanup",
+        "validation_coverage"
       ],
-      "sha256": "88b59545c38655934469f01f9488055853e22aa4a0ce623f1eac7bf2dd351790",
-      "source_preserving_unit_ids": [
-        "RGV-001"
-      ],
+      "sha256": "e3e923ed5c31385eb7e21a1b9d96f73fdcd93e72c72e84bde596d2c336835cd2",
+      "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 1
+        "accepted": 10
       },
       "title": "Run Graph View (Node Graph Display) -- Specification",
       "unit_type_counts": {
-        "requirement": 1
+        "compatibility_disposition": 1,
+        "constraint": 3,
+        "requirement": 5,
+        "validation_rule": 1
       },
       "validation_surfaces": [
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
-        "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-shard-plans.py --check"
+        "Concern schema owner review.",
+        "Cross-check against Contracts, Executor Protocol, storage, and usage docs.",
+        "DRY Rules/ContractRef review.",
+        "Large-graph interaction and projection review.",
+        "Manual Run Graph layout review.",
+        "Manual cross-surface deep-link review.",
+        "Manual data-model identity review.",
+        "Manual focus-mode review across Run Graph and Orchestrator docs.",
+        "Manual node detail and action payload review.",
+        "Manual review of Plans/Run_Graph_View.md section 1.",
+        "Manual stale tier/HITL cleanup review.",
+        "Owner adjudication review.",
+        "Projection trust/manual action-gating review.",
+        "Route/open payload audit.",
+        "UI Command Catalog cross-check.",
+        "UI Command Catalog payload review.",
+        "python3 scripts/pm-plan-index.py generate",
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates"
       ]
     },
     {
@@ -2770,7 +2875,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-12T00:41:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -2778,20 +2883,22 @@
     "docs_with_plan_units": 67,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 34,
-      "True": 71
+      "False": 41,
+      "True": 89
     },
-    "plan_unit_count": 105,
-    "source_preserving_unit_count": 62,
+    "plan_unit_count": 130,
+    "source_preserving_unit_count": 61,
     "status_counts": {
-      "accepted": 104,
+      "accepted": 129,
       "deferred": 1
     },
     "unit_type_counts": {
-      "constraint": 7,
+      "compatibility_disposition": 1,
+      "constraint": 12,
       "decision": 2,
       "deferred_decision": 1,
-      "requirement": 95
+      "requirement": 113,
+      "validation_rule": 1
     }
   }
 }

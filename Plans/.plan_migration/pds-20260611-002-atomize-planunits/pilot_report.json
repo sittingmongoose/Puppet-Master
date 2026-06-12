@@ -1,0 +1,53 @@
+{
+  "coverage_rows_updated": 15,
+  "fine_grained_plan_units": [
+    "RGV-001",
+    "RGV-002",
+    "RGV-003",
+    "RGV-004",
+    "RGV-005",
+    "RGV-006",
+    "RGV-007",
+    "RGV-008",
+    "RGV-009",
+    "RGV-010"
+  ],
+  "forbidden_governance_artifacts_not_updated": [
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl"
+  ],
+  "forbidden_outputs_not_created": [
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "final node manifests",
+    "production build tasks"
+  ],
+  "generated_at_utc": "2026-06-12T00:28:08Z",
+  "gui_related_counts": {
+    "false": 4,
+    "true": 6
+  },
+  "pilot_doc": "Plans/Run_Graph_View.md",
+  "pilot_doc_sha256_after": "e3e923ed5c31385eb7e21a1b9d96f73fdcd93e72c72e84bde596d2c336835cd2",
+  "pre_edit_span_count": 15,
+  "replaced_source_preserving_plan_unit_ids": [
+    "RGV-001"
+  ],
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.phase2a_pilot_report.v1",
+  "source_lineage_artifacts": [
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl"
+  ],
+  "status": "pass",
+  "why_representative": [
+    "It was source_preserving_bridge_only before the pilot and the old RGV-001 bridge explicitly recommended splitting.",
+    "It is small enough for a single bounded pass: 253 pre-edit lines and 15 pre-edit spans, below the 400-line window threshold.",
+    "It contains representative mixed content: GUI surface requirements, routing constraints, data-model identity modernization, validation rules, compatibility/stale tier-era dispositions, and cross-owner hints.",
+    "It is implementation-relevant but not so broad that Phase 2A would become a hidden broad conversion."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "check_name": "shard_check",
+  "command": [
+    "python3",
+    "scripts/pm-shard-plans.py",
+    "--check"
+  ],
+  "generated_at_utc": "2026-06-12T00:28:58Z",
+  "phase2a_interpretation": "expected_pending_governance_seal_or_shard_regeneration_failure",
+  "returncode": 1,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.phase2a_command_report.v1",
+  "stderr": "",
+  "stdout": "{\n  \"docs_checked\": 50,\n  \"failures\": [\n    {\n      \"error\": \"source_hash_stale\",\n      \"path\": \"Plans/_shards/run_graph_view/manifest.json\",\n      \"source\": \"Plans/Run_Graph_View.md\"\n    },\n    {\n      \"error\": \"source_line_count_stale\",\n      \"path\": \"Plans/_shards/run_graph_view/manifest.json\",\n      \"source\": \"Plans/Run_Graph_View.md\"\n    },\n    {\n      \"actual_body_bytes\": 11299,\n      \"actual_body_sha256\": \"f783bd6e90bd5227678fe3528e4b41d0ed37cba0d3d9c97e070c14493134c0dc\",\n      \"error\": \"shard_body_mismatch\",\n      \"expected_body_bytes\": 4571,\n      \"expected_body_sha256\": \"951b200ce51d905837b422e736573f588ea05133047f1aa319d817281b77d206\",\n      \"first_difference\": {\n        \"actual_byte\": 86,\n        \"expected_byte\": 67,\n        \"offset\": 38\n      },\n      \"path\": \"Plans/_shards/run_graph_view/008-planunits.md\",\n      \"source\": \"Plans/Run_Graph_View.md\",\n      \"source_line_end\": 242,\n      \"source_line_start\": 141\n    },\n    {\n      \"actual_body_bytes\": 780,\n      \"actual_body_sha256\": \"d09a4f8cc49cfc6413093629e004082bf74064d17873ca647547d385891cb250\",\n      \"error\": \"shard_body_mismatch\",\n      \"expected_body_bytes\": 288,\n      \"expected_body_sha256\": \"85acfb642a5ce430f9a46eaa54a1eead5fde1ea68b21a6c33cc65e71f7ac342a\",\n      \"first_difference\": {\n        \"actual_byte\": 35,\n        \"expected_byte\": 96,\n        \"offset\": 0\n      },\n      \"path\": \"Plans/_shards/run_graph_view/009-migration-coverage.md\",\n      \"source\": \"Plans/Run_Graph_View.md\",\n      \"source_line_end\": 253,\n      \"source_line_start\": 243\n    }\n  ],\n  \"shards_checked\": 870,\n  \"source_count\": 50,\n  \"status\": \"fail\"\n}\n"
+}

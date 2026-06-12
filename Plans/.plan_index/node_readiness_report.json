@@ -34,15 +34,15 @@
   "dependency_graph_summary": {
     "build_order_available": true,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 92,
-    "edge_count": 167,
-    "node_count": 105,
-    "unblocks_edge_count": 75,
+    "depends_on_edge_count": 118,
+    "edge_count": 210,
+    "node_count": 130,
+    "unblocks_edge_count": 92,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-12T00:41:39Z",
   "gui_related_units": {
-    "count": 71,
+    "count": 89,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -63,6 +63,149 @@
           "heading_level": 3,
           "heading_line": 3326,
           "line": 3328,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-002",
+        "source_location": {
+          "heading": "ACD-002 - Assistant Chat Scope And Source Authority",
+          "heading_level": 3,
+          "heading_line": 3662,
+          "line": 3664,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-003",
+        "source_location": {
+          "heading": "ACD-003 - Rewrite Runtime Identity Boundary",
+          "heading_level": 3,
+          "heading_line": 3711,
+          "line": 3713,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-004",
+        "source_location": {
+          "heading": "ACD-004 - Primary Assistant Mode Strip",
+          "heading_level": 3,
+          "heading_line": 3759,
+          "line": 3761,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-006",
+        "source_location": {
+          "heading": "ACD-006 - Debug Overlay Entrypoint",
+          "heading_level": 3,
+          "heading_line": 3856,
+          "line": 3858,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-007",
+        "source_location": {
+          "heading": "ACD-007 - Debug Phase And Revalidation Loop",
+          "heading_level": 3,
+          "heading_line": 3901,
+          "line": 3903,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-008",
+        "source_location": {
+          "heading": "ACD-008 - Runtime Mode Normalization And Project Gating",
+          "heading_level": 3,
+          "heading_line": 3950,
+          "line": 3952,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-009",
+        "source_location": {
+          "heading": "ACD-009 - Chat Header Runtime Controls",
+          "heading_level": 3,
+          "heading_line": 3997,
+          "line": 3999,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-010",
+        "source_location": {
+          "heading": "ACD-010 - Dual ELI5 Toggle Contract",
+          "heading_level": 3,
+          "heading_line": 4045,
+          "line": 4047,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-011",
+        "source_location": {
+          "heading": "ACD-011 - Permission Posture And Approval Ladder",
+          "heading_level": 3,
+          "heading_line": 4092,
+          "line": 4094,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-012",
+        "source_location": {
+          "heading": "ACD-012 - Message Controls And Queue Semantics",
+          "heading_level": 3,
+          "heading_line": 4137,
+          "line": 4139,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-013",
+        "source_location": {
+          "heading": "ACD-013 - Footer Queue And Files-Touched Projection",
+          "heading_level": 3,
+          "heading_line": 4188,
+          "line": 4190,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-015",
+        "source_location": {
+          "heading": "ACD-015 - Web Command Family And Capability Disclosure",
+          "heading_level": 3,
+          "heading_line": 4286,
+          "line": 4288,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-016",
+        "source_location": {
+          "heading": "ACD-016 - Skill Invocation Paths",
+          "heading_level": 3,
+          "heading_line": 4340,
+          "line": 4342,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -609,10 +752,65 @@
         "owner_doc": "Plans/Run_Graph_View.md",
         "plan_unit_id": "RGV-001",
         "source_location": {
-          "heading": "RGV-001 - Run Graph View (Node Graph Display) -- Specification Source-Preserving PlanUnit",
+          "heading": "RGV-001 - Run Graph Canonical Scope",
           "heading_level": 3,
           "heading_line": 143,
           "line": 145,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-002",
+        "source_location": {
+          "heading": "RGV-002 - Focused Run And Historical Mode",
+          "heading_level": 3,
+          "heading_line": 190,
+          "line": 192,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-003",
+        "source_location": {
+          "heading": "RGV-003 - Shared Deep-Link And Search Routing",
+          "heading_level": 3,
+          "heading_line": 247,
+          "line": 249,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-004",
+        "source_location": {
+          "heading": "RGV-004 - Graph Layout, Scale, And Generation Visibility",
+          "heading_level": 3,
+          "heading_line": 303,
+          "line": 305,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-005",
+        "source_location": {
+          "heading": "RGV-005 - Node Detail Inspector Content And Actions",
+          "heading_level": 3,
+          "heading_line": 358,
+          "line": 360,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-007",
+        "source_location": {
+          "heading": "RGV-007 - Tier-Era And HITL Compatibility Disposition",
+          "heading_level": 3,
+          "heading_line": 474,
+          "line": 476,
           "path": "Plans/Run_Graph_View.md"
         }
       },
@@ -833,50 +1031,73 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 105,
+  "plan_unit_count": 130,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 10,
-      "standard": 95
+      "high": 16,
+      "standard": 114
     },
     "risk_class_counts": {
       "agent_instruction_drift": 1,
       "bootstrap_operability": 1,
+      "command_alias_drift": 1,
       "compile_correctness": 1,
       "content_loss": 3,
       "context_budget": 1,
       "continuity": 1,
+      "copy_policy_drift": 1,
       "data_integrity": 1,
+      "debug_mode_drift": 1,
       "deferred_algorithm": 1,
       "dispatcher_integrity": 1,
-      "execution_boundary": 3,
+      "evidence_loop": 1,
+      "execution_boundary": 4,
       "false_completion": 2,
       "false_node_generation": 1,
       "false_wiring_completion": 1,
       "governance_artifact_staleness": 1,
       "governance_boundary": 1,
       "governance_standard": 1,
+      "gui_state_sync": 1,
+      "historical_run_focus": 1,
+      "identity_model_drift": 1,
       "indexability": 2,
       "initial_compile": 1,
+      "inspector_fidelity": 1,
+      "large_graph_usability": 1,
       "matrix_schema_drift": 1,
+      "message_history_safety": 1,
       "migration_compatibility": 1,
       "migration_safety": 2,
+      "mode_routing_drift": 1,
+      "owner_adjudication": 1,
       "owner_drift": 3,
+      "permission_boundary": 1,
       "phase_boundary": 1,
+      "projection_fork": 1,
+      "projection_trust": 1,
       "reference_drift": 1,
-      "route_owner_drift": 1,
+      "route_fidelity": 1,
+      "route_owner_drift": 2,
       "routing_mismatch": 1,
+      "runtime_identity_drift": 1,
+      "runtime_mode_drift": 1,
       "scheduling_correctness": 1,
+      "skill_dispatch_drift": 1,
+      "source_control_boundary": 1,
       "source_loss": 1,
       "source_preservation": 62,
       "stale_architecture_revival": 1,
+      "stale_tier_cleanup": 1,
       "thread_restart_continuity": 1,
       "ui_backend_bypass": 1,
       "unwired_gui": 1,
       "user_visible_settings": 1,
+      "validation_coverage": 1,
+      "web_tool_routing": 1,
       "workflow_continuity": 1
     },
-    "source_preserving_unit_count": 62,
+    "source_preserving_unit_count": 61,
     "source_preserving_units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -1479,18 +1700,6 @@
         "split_recommended": true
       },
       {
-        "owner_doc": "Plans/Run_Graph_View.md",
-        "plan_unit_id": "RGV-001",
-        "source_location": {
-          "heading": "RGV-001 - Run Graph View (Node Graph Display) -- Specification Source-Preserving PlanUnit",
-          "heading_level": 3,
-          "heading_line": 143,
-          "line": 145,
-          "path": "Plans/Run_Graph_View.md"
-        },
-        "split_recommended": true
-      },
-      {
         "owner_doc": "Plans/Run_Modes.md",
         "plan_unit_id": "RM-001",
         "source_location": {
@@ -1624,14 +1833,16 @@
       }
     ],
     "status_counts": {
-      "accepted": 104,
+      "accepted": 129,
       "deferred": 1
     },
     "unit_type_counts": {
-      "constraint": 7,
+      "compatibility_disposition": 1,
+      "constraint": 12,
       "decision": 2,
       "deferred_decision": 1,
-      "requirement": 95
+      "requirement": 113,
+      "validation_rule": 1
     }
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",

@@ -3659,6 +3659,775 @@ owner_hints:
 split_recommendation_reason: The doc-level source-preserving unit covers both GUI-related and non-GUI spans; future fine-grained PlanUnits should split those surfaces when safe.
 ```
 
+### ACD-002 - Assistant Chat Scope And Source Authority
+
+```yaml
+plan_unit_id: ACD-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat owns the shared Assistant/Interview chat UX, source-preserved
+  owner-section requirements, compliance posture, route-payload boundary
+  headings, change history, executive role, and table-of-contents anchors for
+  this Phase 2B window. Original source prose remains in place for exact audit.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible Assistant and Interview chat surface and its navigation anchors.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Spans assistant-chat-design-S0001 through assistant-chat-design-S0005 and S0007 through S0008 are mapped to this PlanUnit in the Phase 2B coverage map.
+  - The source body remains available in place for exact-token audit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: planunit_atomization
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0001
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0002
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0003
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0004
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0005
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0008
+preserved_exact_tokens:
+  - "Assistant & Chat UI -- Design Plan"
+  - "Canonical owner-section requirements"
+  - "Shared conversational/runtime boundary"
+  - "Canonical route payload"
+  - "Calls to Action (CtAs)"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-003 - Rewrite Runtime Identity Boundary
+
+```yaml
+plan_unit_id: ACD-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat targets the rewrite architecture while displaying concrete
+  requested/effective runtime identity and preserving shared provider/auth
+  fields without reopening the Contracts_V0 additive field set.
+gui_related: true
+gui_classification_reason: Runtime identity, platform, account, and auth state are user-visible chat display requirements.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Assistant Chat displays concrete requested/effective platform identity instead of collapsing Gemini Direct and Gemini CLI into one generic badge.
+  - Assistant Chat consumes shared provider/auth fields and does not invent a parallel field set.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+node_compile_hint:
+  mode: runtime_identity_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0006
+preserved_exact_tokens:
+  - "Rust + Slint"
+  - "gemini"
+  - "gemini_cli"
+  - "Gemini Direct"
+  - "Gemini CLI"
+  - "provider_family_id = gemini"
+negative_constraints:
+  - "Assistant Chat must not invent a parallel provider/auth field set."
+  - "Reconciliation may align wording and placement but must not reopen the shared field set."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-004 - Primary Assistant Mode Strip
+
+```yaml
+plan_unit_id: ACD-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant exposes stable Ask, Agent, Debug, Plan, and Deep Plan choices.
+  Specialized Interview, BrainStorm, and Crew workflows remain overlays or
+  routed flows that normalize through the shared requested/effective runtime
+  and overlay model.
+gui_related: true
+gui_classification_reason: The Assistant mode strip and workflow choices are visible chat controls.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The Assistant mode strip exposes Ask, Agent, Debug, Plan, and Deep Plan as stable choices.
+  - Specialized workflows remain overlays rather than replacements for the primary mode strip.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mode_routing_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: visible_mode_strip
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0009
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0010
+preserved_exact_tokens:
+  - "Ask"
+  - "Agent"
+  - "Debug"
+  - "Plan"
+  - "Deep Plan"
+  - "Interview"
+  - "BrainStorm"
+  - "Crew"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-005 - Planning Read-Only Approval Boundary
+
+```yaml
+plan_unit_id: ACD-005
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Plan and Deep Plan are read-only planning runs. Execution requires approval
+  and then runs under regular or yolo, never under plan; queueing applies only
+  to post-approval execution.
+gui_related: false
+gui_classification_reason: This unit governs runtime execution posture and approval boundaries rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Planning-time runs do not mutate project files.
+  - Execution after approval reuses approved plan/TODO state under regular or yolo, never plan.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: execution_boundary
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: read_only_planning_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0011
+preserved_exact_tokens:
+  - "planning is read-only"
+  - "Puppet Master-controlled draft"
+  - "regular"
+  - "yolo"
+  - "plan"
+negative_constraints:
+  - "Queueing affects only post-approval execution, never the planning-time read-only run."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-006 - Debug Overlay Entrypoint
+
+```yaml
+plan_unit_id: ACD-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Debug Mode is an Assistant workflow overlay, stronger than a behavioral hint,
+  that persists requested/effective debug overlay fields, remains
+  execution-capable, and is visually distinct in transcript and status
+  labeling.
+gui_related: true
+gui_classification_reason: Debug overlay selection, transcript treatment, and status labeling are visible chat UI behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - /mode debug preserves requested and effective debug overlay fields through restore and resume.
+  - Debug transcript and status labeling remain visually distinct from Agent and Plan threads.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_mode_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: debug_overlay_entrypoint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+preserved_exact_tokens:
+  - "requested_mode_overlay = debug"
+  - "effective_mode_overlay = debug"
+  - "/mode debug"
+  - "Debug + ask"
+negative_constraints:
+  - "There is no stable `Debug + ask` combination for automated investigations."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-007 - Debug Phase And Revalidation Loop
+
+```yaml
+plan_unit_id: ACD-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Debug investigations follow closed phases from target_binding through cleanup.
+  Drift triggers explicit revalidation, verification is mandatory, and cleanup
+  is the terminal mutation-capable phase unless preservation is explicit.
+gui_related: true
+gui_classification_reason: Investigation Context, attention status, and cleanup/resolution state are user-visible in the chat surface.
+depends_on: [ACD-006]
+unblocks: []
+acceptance_criteria:
+  - Target, runtime, worktree, auth, instrumentation, and evidence drift trigger explicit revalidation before mutation-capable steps continue.
+  - A fix attempt without recorded verification remains attention_required or failed_cleanup, not resolved.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: evidence_loop
+reasoning_tier: high
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_revalidation_loop
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+preserved_exact_tokens:
+  - "target_binding"
+  - "baseline_capture"
+  - "instrumentation"
+  - "verification"
+  - "cleanup"
+  - "attention_required"
+  - "failed_cleanup"
+  - "resolved"
+negative_constraints:
+  - "A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-008 - Runtime Mode Normalization And Project Gating
+
+```yaml
+plan_unit_id: ACD-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant workflow identity is closed to ask, agent, debug, plan, and
+  deep_plan. Only runtime posture normalizes to the run-envelope mode, and
+  project-scoped capabilities require a selected project.
+gui_related: true
+gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Debug and deep_plan do not mint extra canonical runtime-mode enum values.
+  - Project-scoped capabilities are unavailable or gated when no project is selected.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_mode_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: runtime_mode_normalization
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013
+preserved_exact_tokens:
+  - "ask | agent | debug | plan | deep_plan"
+  - "run-envelope"
+  - "regular"
+  - "yolo"
+  - "Requires a project"
+  - "@"
+negative_constraints:
+  - "Subordinate behavior/profile fields may describe investigation or planning depth, but they do not replace this workflow-mode enum."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-009 - Chat Header Runtime Controls
+
+```yaml
+plan_unit_id: ACD-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header exposes platform, model, reasoning/effort, and worktree
+  controls. Selections apply to the next turn and do not interrupt a streaming
+  response.
+gui_related: true
+gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Platform and model lists come from platform_specs and dynamic discovery rather than hardcoded UI lists.
+  - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gui_state_sync
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: chat_header_controls
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
+preserved_exact_tokens:
+  - "platform_specs"
+  - "fallback_model_ids(platform)"
+  - "Reasoning / effort"
+  - "Worktree"
+  - "bound-dirty"
+  - "bound-conflict"
+  - "turn"
+negative_constraints:
+  - "Data comes from `platform_specs`; no hardcoding."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+```
+
+### ACD-010 - Dual ELI5 Toggle Contract
+
+```yaml
+plan_unit_id: ACD-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat ELI5 and app-level ELI5 are separate toggles with independent scope.
+  Generated docs stay technical, and authored copy maintains Expert/ELI5
+  variants without creating concept-help drift.
+gui_related: true
+gui_classification_reason: The ELI5 toggles, tooltips, and authored user-facing copy variants are visible product UI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Chat ELI5 affects Assistant chat behavior only and is not passed into generated interview documentation prompts.
+  - App-level ELI5 affects tooltips and interviewer Q&A responses without changing generated documentation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: copy_policy_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: dual_copy_toggle_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0015
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0017
+preserved_exact_tokens:
+  - "two separate ELI5 toggles"
+  - "Interaction Mode (Expert/ELI5)"
+  - "Expert"
+  - "ELI5"
+  - "concept-help"
+negative_constraints:
+  - "There are two separate ELI5 toggles; they are independent and must not be conflated."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-011 - Permission Posture And Approval Ladder
+
+```yaml
+plan_unit_id: ACD-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat supports YOLO and Regular permission postures. Regular uses the
+  canonical deny, once, for session, and always approval ladder, while durable
+  approval defaults remain owned by Permissions_System.
+gui_related: true
+gui_classification_reason: Permission prompts and approval choices are user-facing controls.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Regular mode asks before executing or editing and presents the canonical approval ladder.
+  - Durable approval/default behavior remains routed to Permissions_System.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: permission_boundary
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_posture_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0018
+preserved_exact_tokens:
+  - "YOLO mode"
+  - "Regular mode"
+  - "deny"
+  - "once"
+  - "for session"
+  - "always"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+```
+
+### ACD-012 - Message Controls And Queue Semantics
+
+```yaml
+plan_unit_id: ACD-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Stop, Edit, and Resend scope to the most recent user message. Copy controls
+  stay visible, the queue is FIFO with max 2 entries, queue state is transient,
+  and delete/rewrite shorthand labels remain retired.
+gui_related: true
+gui_classification_reason: Message-row controls, composer behavior, queue affordances, and copy actions are visible chat UI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Stop, Edit, and Resend attach only to the most recent user-sent message and discard later generated history/work where specified.
+  - Code-block and message-row copy controls remain visible and do not depend on hover-only discovery.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: message_history_safety
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: message_control_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0019
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0020
+preserved_exact_tokens:
+  - "Stop"
+  - "Edit"
+  - "Resend"
+  - "/steer"
+  - "/resend"
+  - "/follow"
+  - "max 2"
+  - "/open-in-editor"
+negative_constraints:
+  - "Copy availability must not depend on hover-only discovery."
+stale_retired_terms:
+  - "/edit/delete"
+  - "/control"
+  - "/composer"
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-013 - Footer Queue And Files-Touched Projection
+
+```yaml
+plan_unit_id: ACD-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat footer owns the send/stop morph, queued-message affordance,
+  latest-message actions, and compact files-touched projections synchronized
+  with operation cards.
+gui_related: true
+gui_classification_reason: Footer controls, queue UI, files-touched rows, and click-to-open affordances are visible UI.
+depends_on: [ACD-012]
+unblocks: []
+acceptance_criteria:
+  - Queue UI shows FIFO order, pending count, and stop/interrupt state without restoring transient queued text after reload or restart.
+  - Files-touched summaries stay synchronized with operation cards rather than forking status models.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: projection_fork
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: footer_projection_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0021
+preserved_exact_tokens:
+  - "Read:"
+  - "Edited:"
+  - "diff counts"
+  - "operation cards"
+negative_constraints:
+  - "Files touched output stays a compact projection of edit/diff activity rather than a second transcript."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-014 - Reserved Built-In Commands And Alias Disposition
+
+```yaml
+plan_unit_id: ACD-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Reserved slash commands are canonical and non-overridable. Deprecated and
+  retired aliases remain visibly distinct and cannot suppress active command
+  canon.
+gui_related: false
+gui_classification_reason: This unit governs command authority and compatibility routing rather than visual implementation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Built-in commands remain reserved and non-editable by user-defined commands.
+  - Retired aliases such as /assistant-chat and /clear remain compatibility lineage unless the command-catalog owner re-promotes them.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_alias_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: reserved_command_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0023
+preserved_exact_tokens:
+  - "/new"
+  - "/model"
+  - "/mode"
+  - "/stop"
+  - "/revert"
+  - "/web"
+  - "/skill"
+  - "/cancel"
+  - "cmd.chat.stop"
+  - "cmd.chat.revert"
+negative_constraints: []
+compatibility_only_notes:
+  - "/assistant-chat and /clear are retired legacy or compatibility aliases in this Assistant Chat SSOT."
+stale_retired_terms:
+  - "/assistant-chat"
+  - "/clear"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-015 - Web Command Family And Capability Disclosure
+
+```yaml
+plan_unit_id: ACD-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  /web stays one command family with explicit subcommands, stable command IDs,
+  help-only bare behavior, capability disclosure, normalized schemas, URL
+  normalization, and source-obligation carry-through.
+gui_related: true
+gui_classification_reason: Web help, autocomplete, settings disclosure, and command availability are user-visible.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Bare /web shows help/autocomplete only and executable web intents require explicit subcommands.
+  - /web help and settings disclose provider support tier, credential state, failures, and availability.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_tool_routing
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: web_command_family
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0024
+preserved_exact_tokens:
+  - "/web search <query>"
+  - "/web extract <url>"
+  - "/web research <task>"
+  - "/web crawl <url>"
+  - "cmd.chat.web.help"
+  - "obl-037"
+  - "obl-046"
+  - "obl-047"
+  - "obl-048"
+  - "obl-051"
+negative_constraints:
+  - "Do not flatten /web into separate slash families."
+  - "Bare /web is /help-only autocomplete and dispatches cmd.chat.web.help."
+compatibility_only_notes:
+  - "Legacy /what lineage is compatibility/help-only."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-016 - Skill Invocation Paths
+
+```yaml
+plan_unit_id: ACD-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Skill discovery and invocation are locked to the GUI panel, /skill, and
+  natural language, all converging on invoke_skill without an MVP subcommand
+  family.
+gui_related: true
+gui_classification_reason: The skill panel, slash help, and natural-language invocation are user-visible interaction paths.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - /skill with no args lists available skills, and /skill with a name invokes the shared invoke_skill path.
+  - GUI skill management, /skill, and natural-language invocation do not fork separate dispatch behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: skill_dispatch_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_invocation_paths
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0024
+preserved_exact_tokens:
+  - "/skill <skill_name> [args]"
+  - "/skill with no args"
+  - "invoke_skill"
+  - "Skills panel"
+  - "Natural language"
+  - "No subcommand family for MVP"
+negative_constraints:
+  - "Do not create a separate MVP subcommand family for skills."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Skills_System.md
+```
+
+### ACD-017 - Git And GitHub Dispatch Boundary
+
+```yaml
+plan_unit_id: ACD-017
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  /git and local repository requests route to source-control commands. /github
+  and hosted-repo requests route to GitHub commands. Cross-domain flows disclose
+  the boundary and preserve repo, worktree, and compare handoff identity.
+gui_related: false
+gui_classification_reason: This unit governs routing and source-control boundaries rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The assistant does not reinterpret Git requests as GitHub requests or GitHub requests as Git requests just because one path appears easier.
+  - Cross-domain flows preserve canonical repo/worktree/compare identity fields between local and hosted stages.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: source_control_boundary
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/GitHub_Integration.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: git_github_dispatch_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0025
+preserved_exact_tokens:
+  - "/git ..."
+  - "/github ..."
+  - "local compare first, then hosted PR creation"
+  - "repo/worktree/compare identity"
+negative_constraints:
+  - "The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/GitHub_Integration.md
+```
+
 ## Migration Coverage
 
 Original hash: `617115e11c2fedeb013bfac6ecdbc1bd8abca75f85d590c67a2930152ff0664e`.
@@ -3670,3 +4439,5 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 All original spans from `assistant-chat-design-S0001` through `assistant-chat-design-S0180` are preserved in place and mapped in `coverage_map.jsonl` to `ACD-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+Phase 2B atomization run `pds-20260611-002-atomize-planunits` mapped the first bounded window, `assistant-chat-design-S0001` through `assistant-chat-design-S0025` (source lines 1-398), to fine-grained PlanUnits `ACD-002` through `ACD-017`. `ACD-001` remains as residual source-preserving bridge coverage for later windows until every remaining span is atomized or explicitly dispositioned. The next safe cursor is `assistant-chat-design-S0026` at source line 399.
