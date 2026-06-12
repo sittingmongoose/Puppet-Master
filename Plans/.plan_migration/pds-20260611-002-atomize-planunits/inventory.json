@@ -1,0 +1,2064 @@
+{
+  "doc_count": 67,
+  "docs": [
+    {
+      "anchor_count": 0,
+      "bytes": 119294,
+      "contractref_count": 32,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 27,
+      "line_count": 774,
+      "path": "Plans/00-plans-index.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd",
+      "sharded": true,
+      "span_count": 27,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 2,
+      "bytes": 32799,
+      "contractref_count": 27,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 46,
+      "line_count": 440,
+      "path": "Plans/agent-rules-context.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de",
+      "sharded": true,
+      "span_count": 46,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 15,
+      "bytes": 67065,
+      "contractref_count": 60,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 43,
+      "line_count": 629,
+      "path": "Plans/Architecture_Invariants.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "bc5fe0c3f06f26531d4c79e420f135da41f29e5c31e371784e9df7c35255a3a3",
+      "sharded": false,
+      "span_count": 43,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 1,
+      "bytes": 332286,
+      "contractref_count": 134,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 184,
+      "line_count": 3672,
+      "path": "Plans/assistant-chat-design.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f",
+      "sharded": true,
+      "span_count": 184,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 10,
+      "bytes": 53827,
+      "contractref_count": 72,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 44,
+      "line_count": 704,
+      "path": "Plans/assistant-memory-subsystem.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38",
+      "sharded": true,
+      "span_count": 44,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 46999,
+      "contractref_count": 154,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 45,
+      "line_count": 555,
+      "path": "Plans/BinaryLocator_Spec.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "34854d3fbb62b71b4fd828dbe38ad67c6c81f8a5e67edfb883c9675597d043c7",
+      "sharded": false,
+      "span_count": 45,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 15508,
+      "contractref_count": 10,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 12,
+      "line_count": 298,
+      "path": "Plans/Bootstrap_Planning_Migration.md",
+      "phase2a_classification_reasons": [
+        "Live PlanUnits are already fine-grained enough for Phase 2A inventory; no source_preserving_planunit bridge remains."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": true,
+        "layout_normalization_needed": false,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": false,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "fine_grained_enough",
+      "plan_unit_count": 7,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "075240cac02382fcc35f41e087b5e055becdd62946bfc023ce7e1d31ee7185e2",
+      "sharded": true,
+      "span_count": 12,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 202909,
+      "contractref_count": 82,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 158,
+      "line_count": 2587,
+      "path": "Plans/chain-wizard-flexibility.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346",
+      "sharded": true,
+      "span_count": 158,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 9739,
+      "contractref_count": 1,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 8,
+      "line_count": 102,
+      "path": "Plans/chain-wizard.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "7e0a148008f20aeb3b9c8946502b107ff8c0b63ff720da6bd60b7aa0eaaebe55",
+      "sharded": false,
+      "span_count": 8,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 29533,
+      "contractref_count": 11,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 14,
+      "line_count": 244,
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36",
+      "sharded": true,
+      "span_count": 14,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 24,
+      "bytes": 84252,
+      "contractref_count": 35,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 57,
+      "line_count": 875,
+      "path": "Plans/Commands_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "b5de2955ec7af4adeb576436220d240d13e0d93596dc9236fc6e2d2124d58540",
+      "sharded": true,
+      "span_count": 57,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 123653,
+      "contractref_count": 13,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 86,
+      "line_count": 1219,
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "8b580f15d2ce07b4639dae61ad607a7c30eaa6432475e2498ed3d03c2fb4d92b",
+      "sharded": false,
+      "span_count": 86,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 1,
+      "bytes": 297117,
+      "contractref_count": 85,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 122,
+      "line_count": 2835,
+      "path": "Plans/Contracts_V0.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021",
+      "sharded": true,
+      "span_count": 122,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 84685,
+      "contractref_count": 36,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 39,
+      "line_count": 666,
+      "path": "Plans/Crosswalk.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682",
+      "sharded": true,
+      "span_count": 39,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 23299,
+      "contractref_count": 27,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 26,
+      "line_count": 249,
+      "path": "Plans/Decision_Log.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "49b5c5923e0c43afe9115e0e2b692a245f6832115204fa1e13f09e87827f8925",
+      "sharded": false,
+      "span_count": 26,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 3,
+      "bytes": 65751,
+      "contractref_count": 51,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 36,
+      "line_count": 642,
+      "path": "Plans/Decision_Policy.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "979fab9c2182291acc9989c5b3b2d0efa643c6deb0ab489d49f3e3531c042581",
+      "sharded": false,
+      "span_count": 36,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 1,
+      "bytes": 34820,
+      "contractref_count": 37,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 28,
+      "line_count": 487,
+      "path": "Plans/Document_Packaging_Policy.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "1aab7576adc5c87b1a5532c1f39829cf9e9d184c1774c77d455c52b4aeecfd0b",
+      "sharded": false,
+      "span_count": 28,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 4,
+      "bytes": 31618,
+      "contractref_count": 40,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 22,
+      "line_count": 400,
+      "path": "Plans/DRY_Rules.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "owner_consumer_unclear",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "c021921731548bf74e664f2cbb474ff9fc3aff640364b48ad6a85d68196233fe",
+      "sharded": false,
+      "span_count": 22,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 98183,
+      "contractref_count": 64,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 71,
+      "line_count": 1072,
+      "path": "Plans/Executor_Protocol.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d",
+      "sharded": true,
+      "span_count": 71,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 14,
+      "bytes": 32853,
+      "contractref_count": 14,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 22,
+      "line_count": 340,
+      "path": "Plans/feature-list.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c",
+      "sharded": true,
+      "span_count": 22,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 104754,
+      "contractref_count": 24,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 58,
+      "line_count": 737,
+      "path": "Plans/FileManager.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a",
+      "sharded": true,
+      "span_count": 58,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 170712,
+      "contractref_count": 81,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 114,
+      "line_count": 2977,
+      "path": "Plans/FileSafe.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214",
+      "sharded": true,
+      "span_count": 114,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 1,
+      "bytes": 335759,
+      "contractref_count": 69,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 241,
+      "line_count": 3849,
+      "path": "Plans/FinalGUISpec.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2",
+      "sharded": true,
+      "span_count": 241,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 15,
+      "bytes": 21376,
+      "contractref_count": 19,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 28,
+      "line_count": 396,
+      "path": "Plans/Formatters_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "841153deb0b40a91ed918a8627949361b605326365dffbe4a2a5b2eb5e09c592",
+      "sharded": false,
+      "span_count": 28,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 22068,
+      "contractref_count": 5,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 15,
+      "line_count": 234,
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "ae9a04b542086ed39c8b78e71f708c91a73242ebf4bfe39fd4680336c75f870d",
+      "sharded": false,
+      "span_count": 15,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 54189,
+      "contractref_count": 15,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 16,
+      "line_count": 364,
+      "path": "Plans/GitHub_Integration.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3",
+      "sharded": true,
+      "span_count": 16,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 56567,
+      "contractref_count": 25,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 31,
+      "line_count": 469,
+      "path": "Plans/Glossary.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "9c5a6506e244d091954f576977d8078604cedcd5402dd92a0a17f107acb49bd3",
+      "sharded": false,
+      "span_count": 31,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 28067,
+      "contractref_count": 11,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 21,
+      "line_count": 294,
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a",
+      "sharded": true,
+      "span_count": 21,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 60186,
+      "contractref_count": 20,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 48,
+      "line_count": 606,
+      "path": "Plans/human-in-the-loop.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b",
+      "sharded": true,
+      "span_count": 48,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 16568,
+      "contractref_count": 7,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 15,
+      "line_count": 158,
+      "path": "Plans/interview-subagent-integration.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6",
+      "sharded": true,
+      "span_count": 15,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 152837,
+      "contractref_count": 37,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 72,
+      "line_count": 1315,
+      "path": "Plans/LSPSupport.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278",
+      "sharded": true,
+      "span_count": 72,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 31181,
+      "contractref_count": 9,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 12,
+      "line_count": 299,
+      "path": "Plans/MCP_Integration.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606",
+      "sharded": true,
+      "span_count": 12,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 29,
+      "bytes": 68372,
+      "contractref_count": 71,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 24,
+      "line_count": 1037,
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "14a92c4cc13c1644eeaf07ae7f8bbd5456dc3b74ff01372617552515b55e251f",
+      "sharded": false,
+      "span_count": 24,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 189072,
+      "contractref_count": 23,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 105,
+      "line_count": 1593,
+      "path": "Plans/MiscPlan.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4",
+      "sharded": true,
+      "span_count": 105,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 18,
+      "bytes": 115618,
+      "contractref_count": 43,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 81,
+      "line_count": 1476,
+      "path": "Plans/Models_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c",
+      "sharded": true,
+      "span_count": 81,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 106171,
+      "contractref_count": 38,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 41,
+      "line_count": 952,
+      "path": "Plans/Multi-Account.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75",
+      "sharded": true,
+      "span_count": 41,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 19764,
+      "contractref_count": 9,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 18,
+      "line_count": 199,
+      "path": "Plans/newfeatures.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63",
+      "sharded": true,
+      "span_count": 18,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 136544,
+      "contractref_count": 97,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 82,
+      "line_count": 1522,
+      "path": "Plans/newtools.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9",
+      "sharded": true,
+      "span_count": 82,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 40617,
+      "contractref_count": 6,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 25,
+      "line_count": 390,
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "c7890ec1d1237f09c00b1490da11be56051fdd0e936f09e9b6a0d4e87f57fa4b",
+      "sharded": false,
+      "span_count": 25,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 75105,
+      "contractref_count": 3,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 74,
+      "line_count": 971,
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21",
+      "sharded": true,
+      "span_count": 74,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 401868,
+      "contractref_count": 111,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 228,
+      "line_count": 6827,
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241",
+      "sharded": true,
+      "span_count": 228,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 65806,
+      "contractref_count": 2,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 78,
+      "line_count": 604,
+      "path": "Plans/Orchestrator_Page.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8",
+      "sharded": true,
+      "span_count": 78,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 28,
+      "bytes": 110647,
+      "contractref_count": 57,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 82,
+      "line_count": 1465,
+      "path": "Plans/Permissions_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926",
+      "sharded": true,
+      "span_count": 82,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 18,
+      "bytes": 69710,
+      "contractref_count": 43,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 62,
+      "line_count": 869,
+      "path": "Plans/Personas.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "5e129c7f012d6afb9ec8705e987406f2c4dbf03270001df73844c0aff95d2ab9",
+      "sharded": true,
+      "span_count": 62,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 21381,
+      "contractref_count": 13,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 15,
+      "line_count": 420,
+      "path": "Plans/Plan_Document_System.md",
+      "phase2a_classification_reasons": [
+        "Live PlanUnits are already fine-grained enough for Phase 2A inventory; no source_preserving_planunit bridge remains.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": true,
+        "layout_normalization_needed": false,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": false,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "fine_grained_enough",
+      "plan_unit_count": 10,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "942608f9c851e18cfcd5f5fef53edf9e68e2a689f2244e1f0cabfeb14f0ecc57",
+      "sharded": true,
+      "span_count": 15,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 17613,
+      "contractref_count": 11,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 13,
+      "line_count": 347,
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "phase2a_classification_reasons": [
+        "Live PlanUnits are already fine-grained enough for Phase 2A inventory; no source_preserving_planunit bridge remains."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": true,
+        "layout_normalization_needed": false,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": false,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "fine_grained_enough",
+      "plan_unit_count": 8,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e0fc4a6bab582e2596887df2e731d79d53f7031e6ebd7865c29496ceb79ee6f7",
+      "sharded": true,
+      "span_count": 13,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 22132,
+      "contractref_count": 13,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 15,
+      "line_count": 423,
+      "path": "Plans/Planning_Ledger_System.md",
+      "phase2a_classification_reasons": [
+        "Live PlanUnits are already fine-grained enough for Phase 2A inventory; no source_preserving_planunit bridge remains.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": true,
+        "layout_normalization_needed": false,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": false,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "fine_grained_enough",
+      "plan_unit_count": 10,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "f7b19989c67fde8bc6ecc6d7b43888943630ce0714e0b33b1c22be0332aca457",
+      "sharded": true,
+      "span_count": 15,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 29,
+      "bytes": 46737,
+      "contractref_count": 38,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 71,
+      "line_count": 820,
+      "path": "Plans/Plugins_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "c92bac9d3c0a647e37fbb5d6b8c0e6f9450cafc71aa0ac83e5f04cf71d92dfbe",
+      "sharded": false,
+      "span_count": 71,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 11,
+      "bytes": 67822,
+      "contractref_count": 62,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 51,
+      "line_count": 829,
+      "path": "Plans/Progression_Gates.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "27857f2c3098b29813a2f0d17f4cb34ffe9a7f83fa781e04862e157b0ff76b9c",
+      "sharded": false,
+      "span_count": 51,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 77366,
+      "contractref_count": 71,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 53,
+      "line_count": 963,
+      "path": "Plans/Project_Output_Artifacts.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12",
+      "sharded": true,
+      "span_count": 53,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 8,
+      "bytes": 72998,
+      "contractref_count": 56,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 46,
+      "line_count": 836,
+      "path": "Plans/Prompt_Pipeline.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc",
+      "sharded": true,
+      "span_count": 46,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 69986,
+      "contractref_count": 36,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 58,
+      "line_count": 887,
+      "path": "Plans/Provider_OpenCode.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1",
+      "sharded": true,
+      "span_count": 58,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 54281,
+      "contractref_count": 31,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 46,
+      "line_count": 547,
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "a5e55c0f85da0401a83bf41fe766ea72b6003166c137fa0d3a001388f8c55e9c",
+      "sharded": false,
+      "span_count": 46,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 70876,
+      "contractref_count": 30,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 42,
+      "line_count": 675,
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99",
+      "sharded": true,
+      "span_count": 42,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 36274,
+      "contractref_count": 7,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 15,
+      "line_count": 253,
+      "path": "Plans/Run_Graph_View.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "owner_consumer_unclear",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "88b59545c38655934469f01f9488055853e22aa4a0ce623f1eac7bf2dd351790",
+      "sharded": true,
+      "span_count": 15,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 18,
+      "bytes": 72092,
+      "contractref_count": 83,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 63,
+      "line_count": 915,
+      "path": "Plans/Run_Modes.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "278c36fc1015a5ee27bf870d55c3f1147530f3880a98ebc4071ecc5e19ef74b0",
+      "sharded": true,
+      "span_count": 63,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 59954,
+      "contractref_count": 14,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 35,
+      "line_count": 555,
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "61408fdc7b9377e56d2d9a36661d6e8d5650ce40e634d9c10b5c95cc85dfa094",
+      "sharded": true,
+      "span_count": 35,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 117646,
+      "contractref_count": 53,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 54,
+      "line_count": 989,
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf",
+      "sharded": true,
+      "span_count": 54,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 12,
+      "bytes": 46482,
+      "contractref_count": 25,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 34,
+      "line_count": 560,
+      "path": "Plans/Skills_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "000669515ae4da149f6179882db634954d230601e52e8b94108ea35216c9d3f2",
+      "sharded": true,
+      "span_count": 34,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 259544,
+      "contractref_count": 62,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 130,
+      "line_count": 2531,
+      "path": "Plans/storage-plan.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e511858de8d0a127d40bda1e315d00ac4987efaaa217bddbf3de189ca16e46da",
+      "sharded": true,
+      "span_count": 130,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 254319,
+      "contractref_count": 73,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 117,
+      "line_count": 2538,
+      "path": "Plans/Tools.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c",
+      "sharded": true,
+      "span_count": 117,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 155441,
+      "contractref_count": 51,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 56,
+      "line_count": 1435,
+      "path": "Plans/UI_Command_Catalog.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d",
+      "sharded": true,
+      "span_count": 56,
+      "spec_locked": true
+    },
+    {
+      "anchor_count": 7,
+      "bytes": 34615,
+      "contractref_count": 7,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 28,
+      "line_count": 523,
+      "path": "Plans/UI_Wiring_Rules.md",
+      "phase2a_classification_reasons": [
+        "Live PlanUnits are already fine-grained enough for Phase 2A inventory; no source_preserving_planunit bridge remains.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": true,
+        "layout_normalization_needed": false,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": false,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "fine_grained_enough",
+      "plan_unit_count": 8,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "5bc6f040977efde1826713ac37bef698d38612f00b9a86dbcbbf02215d743270",
+      "sharded": false,
+      "span_count": 28,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 1,
+      "bytes": 116819,
+      "contractref_count": 33,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 107,
+      "line_count": 1176,
+      "path": "Plans/usage-feature.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1",
+      "sharded": true,
+      "span_count": 107,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 29969,
+      "contractref_count": 7,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 13,
+      "line_count": 247,
+      "path": "Plans/Widget_System.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": false,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": false
+      },
+      "phase2a_primary_classification": "layout_normalization_needed",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "87ebb933f2415c333d7ad4923c41ef1ab01731b9d27a51485636e3800ee50120",
+      "sharded": true,
+      "span_count": 13,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 5,
+      "bytes": 73281,
+      "contractref_count": 23,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 47,
+      "line_count": 736,
+      "path": "Plans/Wiring_Matrix.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750",
+      "sharded": true,
+      "span_count": 47,
+      "spec_locked": false
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 108511,
+      "contractref_count": 20,
+      "gui_related_inferred": true,
+      "has_planunits_section": true,
+      "heading_count": 103,
+      "line_count": 1032,
+      "path": "Plans/WorktreeGitImprovement.md",
+      "phase2a_classification_reasons": [
+        "Contains a doc-level source_preserving_planunit that should not be treated as the final implementation standard.",
+        "Original body still needs layout/section normalization before broad atomization is safe.",
+        "Pre-PlanUnits body has high cross-owner, ContractRef, stale, compatibility, or conflict signal; preserve owner-adjudication notes during atomization.",
+        "Doc exceeds the <=400-line or <=40-span single-batch threshold for bounded review."
+      ],
+      "phase2a_classifications": {
+        "fine_grained_enough": false,
+        "layout_normalization_needed": true,
+        "owner_consumer_unclear": true,
+        "source_preserving_bridge_only": true,
+        "too_large_for_one_batch": true
+      },
+      "phase2a_primary_classification": "too_large_for_one_batch",
+      "plan_unit_count": 1,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "governance_seal_needed",
+      "sha256": "9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907",
+      "sharded": true,
+      "span_count": 103,
+      "spec_locked": false
+    }
+  ],
+  "generated_at_utc": "2026-06-11T22:35:23Z",
+  "locked_doc_count": 21,
+  "phase2a_classification_artifact": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2a_inventory.json",
+  "phase2a_classification_summary": {
+    "boolean_classification_counts": {
+      "fine_grained_enough": 5,
+      "layout_normalization_needed": 62,
+      "owner_consumer_unclear": 45,
+      "source_preserving_bridge_only": 62,
+      "too_large_for_one_batch": 50
+    },
+    "doc_count": 67,
+    "primary_classification_counts": {
+      "fine_grained_enough": 5,
+      "layout_normalization_needed": 13,
+      "owner_consumer_unclear": 2,
+      "too_large_for_one_batch": 47
+    }
+  },
+  "pilot_doc": "Plans/Run_Graph_View.md",
+  "plan_unit_count": 105,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.inventory.v1",
+  "scope": "top-level Plans/*.md",
+  "sharded_doc_count": 50,
+  "span_count": 3873
+}

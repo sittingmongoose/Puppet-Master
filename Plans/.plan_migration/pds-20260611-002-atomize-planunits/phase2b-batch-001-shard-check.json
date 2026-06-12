@@ -1,0 +1,91 @@
+{
+  "batch_id": "phase2b-001-assistant-chat-design-lines-1-398",
+  "command": [
+    "python3",
+    "scripts/pm-shard-plans.py",
+    "--check"
+  ],
+  "generated_at_utc": "2026-06-12T00:42:23Z",
+  "returncode": 1,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.validator_capture.v1",
+  "status": "fail",
+  "stderr": "",
+  "stdout": null,
+  "stdout_json": {
+    "docs_checked": 50,
+    "failures": [
+      {
+        "error": "source_hash_stale",
+        "path": "Plans/_shards/assistant-chat-design/manifest.json",
+        "source": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "source_line_count_stale",
+        "path": "Plans/_shards/assistant-chat-design/manifest.json",
+        "source": "Plans/assistant-chat-design.md"
+      },
+      {
+        "actual_body_bytes": 794,
+        "actual_body_sha256": "be9888e5230f117a99c64b4e3bb81280805b8b9bfc54ad19b2035bdfb1511156",
+        "error": "shard_body_mismatch",
+        "expected_body_bytes": 418,
+        "expected_body_sha256": "d9ea860ce291af6e3645ed3924eadecdd27c55766a1acdd6d6cdcc87ffb4491d",
+        "first_difference": {
+          "actual_byte": 32,
+          "expected_byte": 35,
+          "offset": 2
+        },
+        "path": "Plans/_shards/assistant-chat-design/043-migration-coverage.md",
+        "source": "Plans/assistant-chat-design.md",
+        "source_line_end": 3672,
+        "source_line_start": 3662
+      },
+      {
+        "error": "source_hash_stale",
+        "path": "Plans/_shards/run_graph_view/manifest.json",
+        "source": "Plans/Run_Graph_View.md"
+      },
+      {
+        "error": "source_line_count_stale",
+        "path": "Plans/_shards/run_graph_view/manifest.json",
+        "source": "Plans/Run_Graph_View.md"
+      },
+      {
+        "actual_body_bytes": 11299,
+        "actual_body_sha256": "f783bd6e90bd5227678fe3528e4b41d0ed37cba0d3d9c97e070c14493134c0dc",
+        "error": "shard_body_mismatch",
+        "expected_body_bytes": 4571,
+        "expected_body_sha256": "951b200ce51d905837b422e736573f588ea05133047f1aa319d817281b77d206",
+        "first_difference": {
+          "actual_byte": 86,
+          "expected_byte": 67,
+          "offset": 38
+        },
+        "path": "Plans/_shards/run_graph_view/008-planunits.md",
+        "source": "Plans/Run_Graph_View.md",
+        "source_line_end": 242,
+        "source_line_start": 141
+      },
+      {
+        "actual_body_bytes": 780,
+        "actual_body_sha256": "d09a4f8cc49cfc6413093629e004082bf74064d17873ca647547d385891cb250",
+        "error": "shard_body_mismatch",
+        "expected_body_bytes": 288,
+        "expected_body_sha256": "85acfb642a5ce430f9a46eaa54a1eead5fde1ea68b21a6c33cc65e71f7ac342a",
+        "first_difference": {
+          "actual_byte": 35,
+          "expected_byte": 96,
+          "offset": 0
+        },
+        "path": "Plans/_shards/run_graph_view/009-migration-coverage.md",
+        "source": "Plans/Run_Graph_View.md",
+        "source_line_end": 253,
+        "source_line_start": 243
+      }
+    ],
+    "shards_checked": 870,
+    "source_count": 50,
+    "status": "fail"
+  }
+}

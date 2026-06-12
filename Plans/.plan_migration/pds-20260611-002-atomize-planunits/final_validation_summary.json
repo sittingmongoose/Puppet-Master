@@ -1,0 +1,196 @@
+{
+  "batch_report": {
+    "batch_id": "phase2b-001-assistant-chat-design-lines-1-398",
+    "docs": [
+      {
+        "batch_id": "phase2b-001-assistant-chat-design-lines-1-398",
+        "first_span_id": "assistant-chat-design-S0001",
+        "last_span_id": "assistant-chat-design-S0025",
+        "next_cursor": {
+          "source_line_start": 399,
+          "source_path": "Plans/assistant-chat-design.md",
+          "span_id": "assistant-chat-design-S0026"
+        },
+        "path": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-002",
+        "plan_unit_ids": [
+          "ACD-002",
+          "ACD-003",
+          "ACD-004",
+          "ACD-005",
+          "ACD-006",
+          "ACD-007",
+          "ACD-008",
+          "ACD-009",
+          "ACD-010",
+          "ACD-011",
+          "ACD-012",
+          "ACD-013",
+          "ACD-014",
+          "ACD-015",
+          "ACD-016",
+          "ACD-017"
+        ],
+        "replaced_source_preserving_plan_unit_ids": [],
+        "residual_source_preserving_plan_unit_ids": [
+          "ACD-001"
+        ],
+        "sha256_after": "f848c64d536302cb5905c4e73396845edc919fa5aff4d602e6cbc59029fb220f",
+        "source_line_end": 398,
+        "source_line_start": 1,
+        "spans_covered": 25
+      }
+    ],
+    "failures": [],
+    "generated_at_utc": "2026-06-12T00:41:24Z",
+    "notes": [
+      "Spec Lock, generated shards, evidence bundles, auto_decisions, and plan_graph were not updated.",
+      "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks were created.",
+      "Read-only subagent Ampere proposed PlanUnits and coverage; main agent was the only writer."
+    ],
+    "run_id": "pds-20260611-002-atomize-planunits",
+    "schema_id": "pm.plan_migration.batch_report.v1",
+    "status": "pass"
+  },
+  "blockers": [
+    "Governance seal remains deferred, so run-gates and shard-check fail on stale evidence/shards by design.",
+    "Plans/assistant-chat-design.md remains partially atomized; continue from assistant-chat-design-S0026 at line 399."
+  ],
+  "compiler_contract_status": "blocked_compiler_contract_incomplete",
+  "coverage_rows_updated": 25,
+  "coverage_status_counts": {
+    "phase2b_batch_001_atomized_covered": 25,
+    "pilot_atomized_covered": 15,
+    "pre_conversion_preserved_in_place": 3833
+  },
+  "docs_still_source_preserving_count": 61,
+  "forbidden_governance_artifacts_changed": [],
+  "forbidden_governance_artifacts_confirmed_not_updated": [
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl"
+  ],
+  "generated_at_utc": "2026-06-12T00:43:20Z",
+  "gui_related_counts_after_batch": {
+    "False": 41,
+    "True": 89
+  },
+  "in_progress_handoff": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/IN_PROGRESS.md",
+  "live_plan_unit_count": 130,
+  "next_batch_cursor": {
+    "batch_id": "phase2b-002-assistant-chat-design-lines-399-next-window",
+    "batch_limit": "Continue in a <=400-line window aligned to full source spans; do not include partial Teach span without explicit split disposition.",
+    "docs": [
+      "Plans/assistant-chat-design.md"
+    ],
+    "source_line_start": 399,
+    "source_path": "Plans/assistant-chat-design.md",
+    "span_id": "assistant-chat-design-S0026"
+  },
+  "no_executable_build_tasks_created": true,
+  "no_final_node_queues_created": true,
+  "no_worknodes_created": true,
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "nodeseed_candidates_created": false,
+  "phase2a_pilot_method_used": true,
+  "plan_units_added": [
+    "ACD-002",
+    "ACD-003",
+    "ACD-004",
+    "ACD-005",
+    "ACD-006",
+    "ACD-007",
+    "ACD-008",
+    "ACD-009",
+    "ACD-010",
+    "ACD-011",
+    "ACD-012",
+    "ACD-013",
+    "ACD-014",
+    "ACD-015",
+    "ACD-016",
+    "ACD-017"
+  ],
+  "plan_units_replaced": [],
+  "residual_source_preserving_plan_units": [
+    "ACD-001"
+  ],
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.phase2b_final_validation_summary.v1",
+  "scope": "Phase 2B batch 001 atomized Plans/assistant-chat-design.md source lines 1-398 only.",
+  "selected_batch": {
+    "batch_id": "phase2b-001-assistant-chat-design-lines-1-398",
+    "batch_limit_basis": "<=5 docs, <=2 large docs, <=2000 total source lines, and Phase 2A <=400-line window method",
+    "docs": [
+      "Plans/assistant-chat-design.md"
+    ],
+    "source_line_count": 398,
+    "source_line_end": 398,
+    "source_line_start": 1,
+    "span_count": 25,
+    "span_end": "assistant-chat-design-S0025",
+    "span_start": "assistant-chat-design-S0001",
+    "within_batch_limits": true
+  },
+  "selected_doc_still_source_preserving": {
+    "path": "Plans/assistant-chat-design.md",
+    "source_preserving_unit_ids": [
+      "ACD-001"
+    ]
+  },
+  "source_preserving_unit_count_after_batch": 61,
+  "status": "phase2b_batch_001_complete_in_progress",
+  "subagents": [
+    {
+      "agent_id": "019eb93f-a874-7fa0-9b73-4291480d8d86",
+      "mode": "read_only_findings_only",
+      "nickname": "Ampere",
+      "scope": "Plans/assistant-chat-design.md lines 1-427; main writer applied lines 1-398 / S0001-S0025"
+    }
+  ],
+  "subagents_required_and_used": true,
+  "validators": {
+    "pm_plan_index_validate": {
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 425,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 130
+      }
+    },
+    "pm_plan_migration_validate": {
+      "checks": {
+        "anchor_alias_rows": 3873,
+        "batch_report_doc_entries": 1,
+        "batch_report_rows": 1,
+        "coverage_rows": 3873,
+        "doc_count": 67,
+        "live_plan_unit_count": 130,
+        "span_count": 3873,
+        "unique_live_plan_unit_count": 130
+      },
+      "returncode": 0,
+      "status": "pass"
+    },
+    "pm_plans_verify_run_gates": {
+      "failure_checks": [
+        "validate_plan_graph",
+        "validate_evidence",
+        "check_shards"
+      ],
+      "interpretation": "expected pending governance seal; failures are stale evidence/plan_index hashes and stale shards after allowed PlanUnit index regeneration / canonical doc edit",
+      "returncode": 1,
+      "status": "fail"
+    },
+    "pm_shard_plans_check": {
+      "failure_count": 7,
+      "interpretation": "expected pending governance seal/regeneration; assistant-chat-design and prior Run_Graph_View shards were intentionally not regenerated",
+      "returncode": 1,
+      "status": "fail"
+    }
+  }
+}

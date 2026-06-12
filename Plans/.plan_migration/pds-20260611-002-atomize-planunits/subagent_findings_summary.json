@@ -1,0 +1,29 @@
+{
+  "generated_at_utc": "2026-06-12T00:41:24Z",
+  "phase2b_batch_001_subagent": {
+    "agent_id": "019eb93f-a874-7fa0-9b73-4291480d8d86",
+    "mode": "read_only_findings_only",
+    "nickname": "Ampere",
+    "scope": "Plans/assistant-chat-design.md lines 1-427; main writer used bounded subset lines 1-398 / S0001-S0025",
+    "summary": "Proposed ACD-002 through ACD-020 and coverage dispositions. Main writer applied ACD-002 through ACD-017 only to keep the first batch under the Phase 2A <=400-line window method."
+  },
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.phase2a_subagent_findings_summary.v1",
+  "subagents": [
+    {
+      "agent_id": "019eb8d1-e84a-7551-9a00-42961e77046b",
+      "mode": "read_only_findings_only",
+      "nickname": "McClintock",
+      "scope": "Plans/assistant-chat-design.md lines 1-1600 in <=400-line windows",
+      "summary": "Classified windows as too_large_for_one_batch/layout_normalization_needed with mixed fine-grained candidates; proposed PlanUnit candidates for chat modes, slash/web/skill commands, teach capture, attachments, question cards, plan/TODO, debug, context, operation cards, web activity, and terminal carry-through."
+    },
+    {
+      "agent_id": "019eb8d2-13eb-72c0-8cc2-1f05c327326b",
+      "mode": "read_only_findings_only",
+      "nickname": "Plato",
+      "scope": "Plans/assistant-chat-design.md lines 1601-3400 in bounded windows",
+      "summary": "Classified windows as layout_normalization_needed/owner_consumer_unclear/too_large_for_one_batch; proposed PlanUnit candidates for command cards, runtime identity, child-run visibility, interview cards, context/truncation, dashboard/dev-session, virtualization, validation settings, persona controls, visualizer, wizard escalation, blocked packets, worktree UI, merge/test gates, seglog events, remote SSH, and actor boundaries."
+    }
+  ],
+  "usage_in_this_phase": "Subagent findings were used as read-only proposals only. The main agent wrote PlanUnits and migration reports."
+}
