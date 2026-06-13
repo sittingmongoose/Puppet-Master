@@ -1,24 +1,24 @@
 {
   "blockers": [],
   "field_coverage": {
-    "acceptance_criteria": 130,
-    "canonical_text": 130,
-    "context_scope": 130,
-    "depends_on": 130,
-    "gui_related": 130,
-    "implementation_surfaces": 130,
-    "node_compile_hint": 130,
-    "owner_doc": 130,
-    "plan_unit_id": 130,
-    "reasoning_tier": 130,
-    "risk_class": 130,
-    "source_lineage": 130,
-    "status": 130,
-    "unblocks": 130,
-    "unit_type": 130,
-    "validation_surfaces": 130
+    "acceptance_criteria": 4944,
+    "canonical_text": 4944,
+    "context_scope": 4944,
+    "depends_on": 4944,
+    "gui_related": 4944,
+    "implementation_surfaces": 4944,
+    "node_compile_hint": 4944,
+    "owner_doc": 4944,
+    "plan_unit_id": 4944,
+    "reasoning_tier": 4944,
+    "risk_class": 4944,
+    "source_lineage": 4944,
+    "status": 4944,
+    "unblocks": 4944,
+    "unit_type": 4944,
+    "validation_surfaces": 4944
   },
-  "generated_at_utc": "2026-06-12T00:41:39Z",
+  "generated_at_utc": "2026-06-13T08:42:48Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -80,7 +80,7 @@
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
   "status": "pass",
   "summary": {
-    "cycle_blocker_count": 0,
+    "cycle_blocker_count": 245,
     "doc_count": 67,
     "docs_with_plan_units": 67,
     "docs_without_plan_units": 0,
@@ -88,8 +88,8 @@
     "missing_gui_related_boolean_count": 0,
     "missing_required_metadata_count": 0,
     "parse_error_count": 0,
-    "plan_unit_count": 130,
-    "unique_plan_unit_count": 130,
+    "plan_unit_count": 4944,
+    "unique_plan_unit_count": 4944,
     "unresolved_dependency_reference_count": 0
   }
 }

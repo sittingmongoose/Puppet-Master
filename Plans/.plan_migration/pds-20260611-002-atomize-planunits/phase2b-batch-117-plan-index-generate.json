@@ -1,0 +1,23 @@
+{
+  "blockers": [],
+  "generated_at_utc": "2026-06-12T19:27:17Z",
+  "outputs": [
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "schema_id": "pm.plan_index.generate_report.v1",
+  "status": "pass",
+  "summary": {
+    "acceptance_unit_count": 11907,
+    "coverage_status": "pass",
+    "doc_count": 67,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 3150
+  }
+}

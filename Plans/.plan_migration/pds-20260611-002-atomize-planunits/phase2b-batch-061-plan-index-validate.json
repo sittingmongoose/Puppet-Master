@@ -1,0 +1,15 @@
+{
+  "batch_id": "phase2b-061-filesafe-lines-1479-1875",
+  "captured_at_utc": "2026-06-12T10:56:14Z",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "returncode": 0,
+  "status": "pass",
+  "stderr": "",
+  "stderr_tail": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T10:56:14Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5882,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 1662\n  }\n}\n",
+  "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T10:56:14Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5882,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 1662\n  }\n}\n"
+}

@@ -1,0 +1,206 @@
+{
+  "batch_id": "phase2b-005-assistant-chat-design-lines-1546-1934",
+  "command": [
+    "python3",
+    "scripts/pm-plans-verify.py",
+    "run-gates"
+  ],
+  "generated_at_utc": "2026-06-12T01:40:41Z",
+  "returncode": 1,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.validator_capture.v1",
+  "status": "fail",
+  "stderr": "",
+  "stdout": null,
+  "stdout_json": {
+    "check": "run-gates",
+    "failures": [
+      {
+        "check": "validate_plan_graph",
+        "failures": [
+          {
+            "actual": "8b0a90f5ecdb6209d20481a13c79e05cb4618496b6fece94e3e6c819f297d557",
+            "artifact": "Plans/.plan_index/plan_units.jsonl",
+            "error": "artifact_hash_stale",
+            "expected": "bc73c1d4a3c65b52547fc05a815b93b9dfaa122e35c5731a55e5182a5c9ced8f",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "65b10406a46f1981fc2bd02cb47e4f1b5b8539e120054c1cc3721fa488fc1cfb",
+            "artifact": "Plans/.plan_index/doc_cards.json",
+            "error": "artifact_hash_stale",
+            "expected": "8f8216f4ff383808081b4217e5f2077481299fe34197565c147feac600887bd3",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "458245aa053c78052b88fa49358f7043e2743c3b0c3f9891d36b5f4c105fda77",
+            "artifact": "Plans/.plan_index/dependencies.json",
+            "error": "artifact_hash_stale",
+            "expected": "990e7535ec0ef443b6a8b0af972af5c9600c1c96f2f0bb35df2b17d30c98ccb1",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "17e8a48bf9c2302f828953689d482c92ca9232be9e0ef073794493808e89bc51",
+            "artifact": "Plans/.plan_index/acceptance_units.jsonl",
+            "error": "artifact_hash_stale",
+            "expected": "1a7827cc9ae3bcec56346dfdfb24c8baeb4894a0338971cdee0b47777e3c8944",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "17c1d34f96beb59304d58897ef31fa27f61b12e4a009f1b4a37cdf8994303fe3",
+            "artifact": "Plans/.plan_index/coverage_report.json",
+            "error": "artifact_hash_stale",
+            "expected": "e7603ce61004a2bfedaa29e035a69bf9edb67062e87b50beef2c170b168a9bae",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "2508f6169e02dd70d3453f7b8659709121ba1556a3c3d8dcecabfeef051bf557",
+            "artifact": "Plans/.plan_index/node_readiness_report.json",
+            "error": "artifact_hash_stale",
+            "expected": "c547c97ed9f213ac2e402a09f1413ed402839ebf041c6d2caebab8705415e98a",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "2a74e10021191237dd7bb4367ea42a45600e31083ad43dbed469b33626d2b5fd",
+            "artifact": "Plans/assistant-chat-design.md",
+            "error": "artifact_hash_stale",
+            "expected": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f",
+            "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+          }
+        ],
+        "status": "fail"
+      },
+      {
+        "check": "validate_evidence",
+        "failures": [
+          {
+            "actual": "8b0a90f5ecdb6209d20481a13c79e05cb4618496b6fece94e3e6c819f297d557",
+            "artifact": "Plans/.plan_index/plan_units.jsonl",
+            "error": "artifact_hash_stale",
+            "expected": "bc73c1d4a3c65b52547fc05a815b93b9dfaa122e35c5731a55e5182a5c9ced8f",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "65b10406a46f1981fc2bd02cb47e4f1b5b8539e120054c1cc3721fa488fc1cfb",
+            "artifact": "Plans/.plan_index/doc_cards.json",
+            "error": "artifact_hash_stale",
+            "expected": "8f8216f4ff383808081b4217e5f2077481299fe34197565c147feac600887bd3",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "458245aa053c78052b88fa49358f7043e2743c3b0c3f9891d36b5f4c105fda77",
+            "artifact": "Plans/.plan_index/dependencies.json",
+            "error": "artifact_hash_stale",
+            "expected": "990e7535ec0ef443b6a8b0af972af5c9600c1c96f2f0bb35df2b17d30c98ccb1",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "17e8a48bf9c2302f828953689d482c92ca9232be9e0ef073794493808e89bc51",
+            "artifact": "Plans/.plan_index/acceptance_units.jsonl",
+            "error": "artifact_hash_stale",
+            "expected": "1a7827cc9ae3bcec56346dfdfb24c8baeb4894a0338971cdee0b47777e3c8944",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "17c1d34f96beb59304d58897ef31fa27f61b12e4a009f1b4a37cdf8994303fe3",
+            "artifact": "Plans/.plan_index/coverage_report.json",
+            "error": "artifact_hash_stale",
+            "expected": "e7603ce61004a2bfedaa29e035a69bf9edb67062e87b50beef2c170b168a9bae",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "2508f6169e02dd70d3453f7b8659709121ba1556a3c3d8dcecabfeef051bf557",
+            "artifact": "Plans/.plan_index/node_readiness_report.json",
+            "error": "artifact_hash_stale",
+            "expected": "c547c97ed9f213ac2e402a09f1413ed402839ebf041c6d2caebab8705415e98a",
+            "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+          },
+          {
+            "actual": "2a74e10021191237dd7bb4367ea42a45600e31083ad43dbed469b33626d2b5fd",
+            "artifact": "Plans/assistant-chat-design.md",
+            "error": "artifact_hash_stale",
+            "expected": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f",
+            "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+          }
+        ],
+        "status": "fail"
+      },
+      {
+        "check": "check_shards",
+        "failures": [
+          {
+            "error": "source_hash_stale",
+            "path": "Plans/_shards/assistant-chat-design/manifest.json",
+            "source": "Plans/assistant-chat-design.md"
+          },
+          {
+            "error": "source_line_count_stale",
+            "path": "Plans/_shards/assistant-chat-design/manifest.json",
+            "source": "Plans/assistant-chat-design.md"
+          },
+          {
+            "actual_body_bytes": 794,
+            "actual_body_sha256": "be9888e5230f117a99c64b4e3bb81280805b8b9bfc54ad19b2035bdfb1511156",
+            "error": "shard_body_mismatch",
+            "expected_body_bytes": 418,
+            "expected_body_sha256": "d9ea860ce291af6e3645ed3924eadecdd27c55766a1acdd6d6cdcc87ffb4491d",
+            "first_difference": {
+              "actual_byte": 32,
+              "expected_byte": 35,
+              "offset": 2
+            },
+            "path": "Plans/_shards/assistant-chat-design/043-migration-coverage.md",
+            "source": "Plans/assistant-chat-design.md",
+            "source_line_end": 3672,
+            "source_line_start": 3662
+          },
+          {
+            "error": "source_hash_stale",
+            "path": "Plans/_shards/run_graph_view/manifest.json",
+            "source": "Plans/Run_Graph_View.md"
+          },
+          {
+            "error": "source_line_count_stale",
+            "path": "Plans/_shards/run_graph_view/manifest.json",
+            "source": "Plans/Run_Graph_View.md"
+          },
+          {
+            "actual_body_bytes": 11299,
+            "actual_body_sha256": "f783bd6e90bd5227678fe3528e4b41d0ed37cba0d3d9c97e070c14493134c0dc",
+            "error": "shard_body_mismatch",
+            "expected_body_bytes": 4571,
+            "expected_body_sha256": "951b200ce51d905837b422e736573f588ea05133047f1aa319d817281b77d206",
+            "first_difference": {
+              "actual_byte": 86,
+              "expected_byte": 67,
+              "offset": 38
+            },
+            "path": "Plans/_shards/run_graph_view/008-planunits.md",
+            "source": "Plans/Run_Graph_View.md",
+            "source_line_end": 242,
+            "source_line_start": 141
+          },
+          {
+            "actual_body_bytes": 780,
+            "actual_body_sha256": "d09a4f8cc49cfc6413093629e004082bf74064d17873ca647547d385891cb250",
+            "error": "shard_body_mismatch",
+            "expected_body_bytes": 288,
+            "expected_body_sha256": "85acfb642a5ce430f9a46eaa54a1eead5fde1ea68b21a6c33cc65e71f7ac342a",
+            "first_difference": {
+              "actual_byte": 35,
+              "expected_byte": 96,
+              "offset": 0
+            },
+            "path": "Plans/_shards/run_graph_view/009-migration-coverage.md",
+            "source": "Plans/Run_Graph_View.md",
+            "source_line_end": 253,
+            "source_line_start": 243
+          }
+        ],
+        "status": "fail"
+      }
+    ],
+    "generated_at_utc": "2026-06-12T01:40:41Z",
+    "status": "fail"
+  }
+}

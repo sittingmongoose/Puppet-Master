@@ -1,0 +1,16 @@
+{
+  "schema_id": "pm.plan_migration.command_capture.v1",
+  "batch_id": "phase2b-028-containers-registry-and-unraid-lines-1-400",
+  "label": "plan-index-validate",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "started_at_utc": "2026-06-12T05:39:21Z",
+  "ended_at_utc": "2026-06-12T05:39:25Z",
+  "returncode": 0,
+  "status": "pass",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T05:39:25Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 3063,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 835\n  }\n}\n",
+  "stderr": ""
+}

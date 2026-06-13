@@ -1,0 +1,16 @@
+{
+  "batch_id": "phase2b-026-commands-system-lines-399-673",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "ended_at_utc": "2026-06-12T05:14:20Z",
+  "label": "plan-index-validate",
+  "returncode": 0,
+  "schema_id": "pm.plan_migration.command_capture.v1",
+  "started_at_utc": "2026-06-12T05:14:16Z",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T05:14:20Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 2900,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 805\n  }\n}\n"
+}

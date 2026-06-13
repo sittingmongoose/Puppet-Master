@@ -1,0 +1,16 @@
+{
+  "schema_id": "pm.plan_migration.command_capture.v1",
+  "batch_id": "phase2b-035-contracts-v0-lines-768-971",
+  "label": "plan-index-generate",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "generate"
+  ],
+  "started_at_utc": "2026-06-12T06:49:00Z",
+  "ended_at_utc": "2026-06-12T06:49:05Z",
+  "returncode": 0,
+  "status": "pass",
+  "stdout": "{\n  \"blockers\": [],\n  \"generated_at_utc\": \"2026-06-12T06:49:00Z\",\n  \"outputs\": [\n    \"Plans/.plan_index/plan_units.jsonl\",\n    \"Plans/.plan_index/doc_cards.json\",\n    \"Plans/.plan_index/dependencies.json\",\n    \"Plans/.plan_index/acceptance_units.jsonl\",\n    \"Plans/.plan_index/coverage_report.json\",\n    \"Plans/.plan_index/node_readiness_report.json\"\n  ],\n  \"schema_id\": \"pm.plan_index.generate_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 3574,\n    \"coverage_status\": \"pass\",\n    \"doc_count\": 67,\n    \"no_worknodes_created\": true,\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"nodeseed_candidates_created\": false,\n    \"plan_unit_count\": 983\n  }\n}\n",
+  "stderr": ""
+}
