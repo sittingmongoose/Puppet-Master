@@ -2161,7 +2161,7 @@ Rules:
 - batch webextract accepts `schema_mode?: string` / `schema_mode` and `detail_hint?: string` / `detail_hint`; each uses the same semantics as single-URL webextract.
 - `concurrency?: number` (default 3; max 10)
 - batch webfetch maxes at 50 URLs with `concurrency?: number` default 3 and max 10; batch webextract maxes at 10 URLs.
-- batch webextract `concurrency?: number` defaults to 3 and maxes at 5.
+- batch webextract `concurrency?: number` defaults to 3 and maxes at 10; older max 5 wording is stale source-lineage only.
 - `continue_on_error?: boolean` (default true)
 - With `continue_on_error?: boolean` default true, a batch succeeds if at least one URL succeeds; setting `continue_on_error: false` stops on the first failure and returns completed results plus failure detail.
 - "For Session" grants all listed domains for that session
@@ -10140,7 +10140,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - Batch webfetch maxes at 50 URLs with default concurrency 3 and max 10.
-- Batch webextract maxes at 10 URLs with default concurrency 3 and max 5.
+- Batch webextract maxes at 10 URLs with default concurrency 3 and max 10.
 - Batch-level timeout remains `individual_timeout × min(url_count, 5)`, cap 600s.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -10155,6 +10155,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0107
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
+- Plans/Tools.md:623
+- Plans/Tools.md:669
+- Plans/Tools.md:2160
+- Plans/Tools.md:2163
+- Plans/Tools.md:2164
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -10172,7 +10180,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The older batch_webextract max concurrency 5 line is stale; the accepted canonical max concurrency is 10.
 owner_hints:
 - Plans/Tools.md
 ```

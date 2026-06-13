@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "current_phase": "compiled_section_a_governance_sealed",
+  "cursor": {
+    "last_event_id": "evt-0012",
+    "last_decision_id": "dec-0012",
+    "next_queue_id": "pcq-0003"
+  },
+  "last_known_good_state": "Section A cleanup decisions are compiled into live Plans docs and Plans/.plan_index outputs. Governance seal artifacts have been refreshed: migration batch hashes, migration validation report, configured Plans/_shards, shard report, Spec_Lock canonical hashes, and evidence artifact hashes. Node readiness remains intentionally blocked by compiler_contract_incomplete. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
+  "open_blockers": [],
+  "open_questions": [],
+  "deferred_questions": [],
+  "next_action": "Continue with the next cleanup section if desired. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
+  "validation_state": {
+    "ledger_health": "pass_governance_sealed",
+    "safe_content_checks": "Migration validation, PlanUnit index validation, Spec Lock verification, shard regeneration/check, and evidence validation pass after governance refresh; final closeout suite is rerun after ledger projections are updated.",
+    "seal_request": "Explicit governance seal phase requested after Section A ledger compile and PlanUnit index updates stabilized.",
+    "final_governance_checks": "Required closeout commands include migration validate, plan-index validate, both relevant ledger validators, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check."
+  },
+  "do_not_redo": [
+    "Do not re-create this ledger unless Jared asks for a fresh ledger.",
+    "Do not write canonical Plans during conversational planning.",
+    "Do not treat `cleanup work` as a feature implementation task.",
+    "Do not drop exact tokens such as `Part 1 Cleanup Fable Audit of Plans`, `less of a feature`, `more of cleanup work`, `not a Goal run`, or `collaborator`."
+  ],
+  "updated_at_utc": "2026-06-13T21:36:42Z",
+  "phase": "compiled_section_a_governance_sealed",
+  "last_completed_action": "Refreshed governance seal artifacts for Section A cleanup and preserved the node-readiness boundary.",
+  "next_safe_action": "Continue with the next cleanup section if desired; governance_status is sealed for Section A cleanup artifacts."
+}

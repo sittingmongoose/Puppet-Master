@@ -1078,6 +1078,7 @@ The unified Settings surface exposes a stable tab registry so run-touched settin
 | Memory | Assistant memory, retrieval, context, and rehydration preferences | assistant-memory, Prompt Pipeline, and assistant-chat docs |
 | Budgets | Token, spend, quota, pressure, and execution-budget controls | usage, Models, Run Modes, and Contracts docs |
 | Advanced | Rare or hazardous controls, debug/instrumentation toggles, and platform diagnostics | FileSafe, Tools, Runtime Artifacts, and Doctor/Health owners |
+| Terminal | Durable terminal appearance, shell startup, transcript, interaction, and diagnostics preferences | Terminal Settings Ownership in this document plus terminal/runtime owner docs |
 | Permissions | Permission rules, approval scopes, presets, and web-operation keys | Permissions_System |
 | LSP | Language-server enablement, host/root attachment, diagnostics, and restart controls | LSPSupport plus FileManager consumers |
 | Interview | Interview, builder, and requirements workflow preferences | interview, chain-wizard, and Project Output Artifacts docs |
@@ -1088,6 +1089,8 @@ The unified Settings surface exposes a stable tab registry so run-touched settin
 | Shortcuts | Keyboard shortcut discovery, remapping, conflicts, and command bindings | UI_Command_Catalog |
 | Skills | Skill registry visibility, readiness, source, and persona references | Skills_System and Agent Config |
 | Plugins | Plugin registry visibility, readiness, source, and capability disclosure | Plugins_System and MCP/Tools owners |
+
+This table is the canonical 19-tab Settings registry. Older `24 tabs across 5 groups` risk rows and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` migration list are stale migration/source-lineage notes only.
 
 Settings is the tooltip-heavy `/help` surface for explaining what a setting does and what wins when multiple settings apply; it links to owner docs rather than duplicating runtime policy.
 
@@ -2141,7 +2144,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
 | `tiers.rs` | `views/nodes.slint` (Run group) | Renamed to match the node/package/lane/seam model; otherwise minimal changes |
-| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Tabs: Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML |
+| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Legacy Config import rows only; live Settings tabs are the §7.4.4 19-tab registry |
 | `settings.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: General |
 | `login.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Authentication |
 | `doctor.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Health |
@@ -2220,7 +2223,7 @@ cargo check
 | **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. |
 | **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
-| **Large Settings page complexity** | Medium | 24 tabs across 5 groups. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar. Test with real data. |
+| **Large Settings page complexity** | Medium | The old `24 tabs across 5 groups` count is stale migration residue; the current canonical registry is the §7.4.4 19-tab Settings registry. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar. Test with real data. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
 | **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |
 | **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show "Load earlier messages" button. |
@@ -2237,7 +2240,7 @@ cargo check
 | **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
 | **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
 | **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. |
-| **Settings page tab count (24 tabs)** | Medium | 24 tabs across 5 groups requires careful navigation. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette "Open setting: {name}" jumps directly to the relevant tab and scrolls to the field. |
+| **Settings page tab count (24 tabs)** | Medium | `Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels; live Settings uses the §7.4.4 19-tab registry. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette "Open setting: {name}" jumps directly to the relevant tab and scrolls to the field. |
 | **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
 | **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |
 
@@ -2379,19 +2382,16 @@ The current **named widget catalog** includes:
 **Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
 
 Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
-### C.3 Add-Widget Flow on Dashboard
 
-The Dashboard has an explicit **"Add Widget"** control:
-- **Location**: floating action button in the bottom-right corner of the Dashboard grid area, or in a Dashboard toolbar.
-- **Behavior**: opens the Widget Catalog overlay (Plans/Widget_System.md section 4.2) filtered to Dashboard-compatible widgets.
-- **Available widgets**: all widgets from the catalog whose "Hostable Pages" includes "Dashboard" -- this includes Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.), Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.), and others.
-- **On add**: widget placed at next available grid position with its default size. Layout persisted immediately.
+### C.4.1 Larger Widget Library Compatibility Note
 
-This enables users to build a customized Dashboard that includes usage information, orchestrator progress, and other data -- all from a single surface.
+Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+
+Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
 
 ContractRef: ContractName:Plans/Widget_System.md#4
 
-### C.4 Widget Catalog vs. Core Widget Catalog
+### C.4.2 Widget Catalog vs. Core Widget Catalog
 
 Two distinct catalogs now exist. To avoid confusion:
 
@@ -2407,7 +2407,7 @@ The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-
 
 1. **On first load** after the widget system upgrade:
    - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
-   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding Widget Catalog ID (per the table in C.2), assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
+   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding named Widget Catalog ID from C.4, assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
    - Treat `dashboard_layout:v1` as deprecated migration input only; it does not remain canonical after migration completes.
 2. **Future reads** use `widget_layout:v1:dashboard` only.
 3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.
@@ -9041,9 +9041,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The unified Settings surface exposes a stable tab registry so run-touched settings content has a
-  visible landing zone, unsupported tabs remain searchable and command-addressable, and tab
-  placement routes to owner docs instead of copying their detailed behavior.
+  The unified Settings surface exposes the canonical 19-tab registry so run-touched settings
+  content has a visible landing zone, unsupported tabs remain searchable and command-addressable,
+  and tab placement routes to owner docs instead of copying their detailed behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings tab structure, labels, searchability, and owner routing.
@@ -9053,6 +9053,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "The Settings Tab Registry is canonical at 19 tabs and includes Terminal."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -9068,8 +9069,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
 preserved_exact_tokens:
 - "Settings Tab Registry"
+- "19-tab Settings registry"
 - "General"
 - "Models / Providers"
 - "Tiers (retired alias)"
@@ -9077,14 +9082,26 @@ preserved_exact_tokens:
 - "Verification"
 - "Memory"
 - "Budgets"
+- "Advanced"
+- "Terminal"
 - "Permissions"
+- "LSP"
+- "Interview"
+- "Media"
+- "Auth"
+- "Health"
+- "Rules"
+- "Shortcuts"
 - "Skills"
 - "Plugins"
+- "24 tabs across 5 groups"
+- "Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML"
 negative_constraints:
 - "Hidden or unsupported tabs remain searchable and command-addressable instead of disappearing silently."
 compatibility_only_notes:
 - "`Tiers (retired alias)` is compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`24 tabs across 5 groups` and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` list are stale migration/source-lineage notes only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16506,7 +16523,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Large Settings page complexity` risk is mitigated as follows: Settings uses mandatory
+  The `Large Settings page complexity` risk preserves the stale `24 tabs across 5 groups` label
+  only as migration lineage; the live Settings registry is 19 tabs, mitigated by mandatory
   two-level sidebar navigation, collapsible group headers, sidebar search, deep links, and
   real-data testing.
 gui_related: true
@@ -16533,6 +16551,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
 preserved_exact_tokens:
 - "Large Settings page complexity"
 - "24 tabs"
@@ -16543,7 +16564,8 @@ preserved_exact_tokens:
 - "Open setting: {name}"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`24 tabs across 5 groups` is stale migration residue, not the live Settings count."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -17359,9 +17381,10 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Settings page tab count (24 tabs)` risk is mitigated as follows: Settings tab count
-  risk is mitigated by mandatory two-level sidebar navigation, collapsible groups, top
-  search/filter, and command-palette deep links.
+  The `Settings page tab count (24 tabs)` risk preserves the stale `24 tabs across 5 groups`
+  label only as risk-lineage; the live Settings registry is 19 tabs, mitigated by mandatory
+  two-level sidebar navigation, collapsible groups, top search/filter, and command-palette deep
+  links.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -17386,6 +17409,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
 preserved_exact_tokens:
 - "Settings page tab count (24 tabs)"
 - "Two-level sidebar navigation is mandatory"
@@ -17394,7 +17420,8 @@ preserved_exact_tokens:
 - "Open setting: {name}"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels, not the live Settings count."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -18149,9 +18176,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Dashboard exposes Add Widget through a menu, floating action button, or toolbar control; it
-  opens the Widget Catalog overlay filtered to Dashboard-compatible widgets, lets the user
-  choose placement and sizing, places widgets at the next available grid position with default
-  size, and persists layout immediately.
+  opens the Widget Catalog overlay filtered to the named Dashboard catalog unless an owner has
+  promoted another dashboard widget, lets the user choose placement and sizing, places widgets at
+  the next available grid position with default size, and persists layout immediately.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the visible Dashboard add-widget workflow and control.
@@ -18161,6 +18188,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "The Dashboard Add Widget selectable set uses the four-entry named catalog unless another owner promotes a new dashboard widget."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -18177,6 +18205,9 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0162"
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0164"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:10"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:8"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:17"
 preserved_exact_tokens:
 - "Add Widget"
 - "Dashboard menu"
@@ -18198,14 +18229,16 @@ preserved_exact_tokens:
 - "Layout persisted immediately"
 - "ContractName:Plans/Widget_System.md#4"
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The broader widget.* list is compatibility/candidate-library lineage unless promoted by an owner doc."
+stale_retired_dispositions:
+- "The duplicated C.3/C.4 add-widget/catalog blocks are reconciled; the larger widget.* list is not the Dashboard named catalog."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-279 - Named Dashboard Widget Catalog
+### F3-279 - Exact Four-Widget Dashboard Catalog Canon
 
 ```yaml
 plan_unit_id: F3-279
@@ -18213,10 +18246,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The named widget catalog includes Puppet Master-owned core widgets for orchestrator
-  progress, active lanes, recent results, plus optional user-generated custom metrics;
-  Widget_System consumes this named catalog directly without inventing or synthesizing widget
-  IDs.
+  The Dashboard named widget catalog is exactly `widget-orchestrator-progress`,
+  `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; Widget_System
+  consumes this named catalog directly without inventing or synthesizing widget IDs.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves the Dashboard named-widget catalog.
@@ -18225,6 +18257,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
+- "The Dashboard named widget catalog contains exactly four entries."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -18237,12 +18270,16 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: named_dashboard_widget_catalog
+  mode: exact_four_widget_dashboard_catalog
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0163"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:10"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:8"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:17"
 preserved_exact_tokens:
 - "named widget catalog"
+- "exactly 4 widgets"
 - "widget-orchestrator-progress"
 - "widget-active-lanes"
 - "widget-recent-results"
@@ -18254,10 +18291,20 @@ preserved_exact_tokens:
 - "Widget_System"
 - "does not invent new widget IDs"
 - "synthesize missing entries"
+- "widget.quota_summary"
+- "widget.budget_donuts"
+- "widget.analytics_chart"
+- "widget.tool_usage"
+- "widget.multi_account"
+- "widget.orchestrator_status"
+- "widget.current_task"
+- "widget.progress_bars"
 negative_constraints:
 - "Widget_System must not invent new widget IDs or synthesize missing entries."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The broader widget.* catalog is future/candidate/library lineage unless promoted by an owner doc."
+stale_retired_dispositions:
+- "Duplicate Appendix C C.3/C.4 sections and the broader widget.* Dashboard list are not peer canon."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

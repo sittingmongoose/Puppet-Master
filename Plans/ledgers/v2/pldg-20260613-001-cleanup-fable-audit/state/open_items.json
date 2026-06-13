@@ -1,0 +1,27 @@
+{
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "notes": "All Section A questions are answered, Section A cleanup is compiled to Plans, and governance seal artifacts are refreshed. No product/canon questions remain open. Node readiness remains blocked by compiler_contract_incomplete.",
+  "updated_at_utc": "2026-06-13T21:36:42Z",
+  "sealed_governance": [
+    {
+      "item_id": "gov-0001",
+      "status": "sealed",
+      "summary": "Section A compiled Plan docs and Plans/.plan_index outputs have had governance artifacts refreshed: migration batch hashes, generated shards, shard report, Spec_Lock hashes, and evidence artifact hashes.",
+      "source_refs": [
+        "goal:governance-seal",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.plan_compile_queue.v1",
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "status": "compiled_section_a_governance_sealed",
+  "items": [
+    {
+      "queue_id": "pcq-0001",
+      "status": "compiled",
+      "target_doc": "Plans/Contracts_V0.md",
+      "source_atom_ids": [
+        "atom-0009",
+        "atom-0013",
+        "atom-0015"
+      ],
+      "compiled_plan_unit_ids": [
+        "CV-029",
+        "CV-030",
+        "CV-050",
+        "CV-155",
+        "CV-218",
+        "CV-219",
+        "CV-230",
+        "CV-236"
+      ],
+      "compile_action": "update_existing_and_compile_to_existing_planunits",
+      "notes": "Contracts-owned runtime action, blocked-state, account_switch_event, and remediation.resolved canon anchors for Section A cleanup."
+    },
+    {
+      "queue_id": "pcq-0002",
+      "status": "compiled",
+      "target_doc": "Plans/orchestrator-subagent-integration.md",
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0012"
+      ],
+      "compiled_plan_unit_ids": [
+        "OSI-018",
+        "OSI-035",
+        "OSI-055",
+        "OSI-245",
+        "OSI-251",
+        "OSI-281",
+        "OSI-298",
+        "OSI-313",
+        "OSI-322",
+        "OSI-357",
+        "OSI-402"
+      ],
+      "compile_action": "update_existing_planunits",
+      "notes": "Orchestrator runtime ontology, crew-board persistence, executionLimits anchor, and tier-label compatibility cleanup."
+    }
+  ],
+  "updated_at_utc": "2026-06-13T21:36:42Z",
+  "notes": "Strict queue target docs remain limited to governance-covered owner docs. Governance seal artifacts are refreshed; see current.compiled_plan_outputs and atom compile_notes for all edited owner docs."
+}
