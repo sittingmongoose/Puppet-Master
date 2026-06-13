@@ -3749,7 +3749,7 @@ preserved_exact_tokens:
 - "expected vs observed CRC"
 - "last known-good checkpoint"
 negative_constraints: []
-preserved_contractrefs: 
+preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md"
 - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
 compatibility_only_notes: []
@@ -3812,7 +3812,7 @@ preserved_exact_tokens:
 - "payload_length: u32"
 - "checksum_crc32: u32"
 - "compression: \"none\" | \"lz4\""
-negative_constraints: 
+negative_constraints:
 - "JSON is not the on-disk authority."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -3864,7 +3864,7 @@ preserved_exact_tokens:
 - "closed segments are immutable"
 - "no in-place rewrite"
 - "lexicographic order"
-negative_constraints: 
+negative_constraints:
 - "Closed segments are immutable; no in-place rewrite is allowed."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -3920,9 +3920,9 @@ preserved_exact_tokens:
 - "last verified record"
 - "sequence_id ordering"
 - "semantic event order"
-negative_constraints: 
+negative_constraints:
 - "redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority."
-preserved_contractrefs: 
+preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -4023,7 +4023,7 @@ preserved_exact_tokens:
 - "created_at_utc"
 - "updated_at_utc"
 - "created_by"
-negative_constraints: 
+negative_constraints:
 - "Canonical records are immutable once committed; corrections require a new record with explicit lineage."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4083,7 +4083,7 @@ preserved_exact_tokens:
 - "concern_record"
 - "concern_projection"
 - "blocked_episode linkage"
-negative_constraints: 
+negative_constraints:
 - "Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4189,7 +4189,7 @@ preserved_exact_tokens:
 - "artifact"
 - "worktree"
 - "usage"
-negative_constraints: 
+negative_constraints:
 - "Historical terms stay shared across concern, receipt, artifact, worktree, and usage families without collapsing family-local workflow states."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4618,7 +4618,7 @@ preserved_exact_tokens:
 - "invalidated"
 - "obsoleted_by_patch"
 - "obsoleted_by_recovery"
-negative_constraints: 
+negative_constraints:
 - "source-event refs, concern records, and concern projections are separate structural layers rather than one collapsed object."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4729,7 +4729,7 @@ preserved_exact_tokens:
 - "Artifact open flows"
 - "artifact_id"
 - "linked envelope refs"
-negative_constraints: 
+negative_constraints:
 - "provider_attempt_ref, usage_event_ref, and receipt refs do not replace the local key."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4870,7 +4870,7 @@ preserved_exact_tokens:
 - "/path"
 - "/source-control"
 - "base-branch"
-negative_constraints: 
+negative_constraints:
 - "Project attention records MUST NOT collapse user attention into only orchestrator status."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -4938,7 +4938,7 @@ preserved_exact_tokens:
 - "missing_external_refs[]"
 - "hold_state"
 - "structured-copy"
-negative_constraints: 
+negative_constraints:
 - "Consumers distinguish source facts from projected summaries."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -5002,7 +5002,7 @@ preserved_exact_tokens:
 - "ConfigMap"
 - "Open app"
 - "access-intelligence"
-negative_constraints: 
+negative_constraints:
 - "The durable store does not persist interactive transcript or /stdin by default."
 - "Kubernetes Secret resources are never rendered back in full, never indexed, and never included in receipts or /evidence beyond kind, /name/namespace, and redacted status."
 preserved_contractrefs: []
@@ -5118,7 +5118,7 @@ preserved_exact_tokens:
 - "unavailable"
 - "trust_tier"
 - "preview/browser semantics"
-negative_constraints: 
+negative_constraints:
 - "projection_freshness remains the recency axis and projection_health remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -5175,7 +5175,7 @@ preserved_exact_tokens:
 - "Contracts_V0"
 - "cross-family attribution packet"
 - "attempt/usage/receipt/artifact joins"
-negative_constraints: 
+negative_constraints:
 - "Any TierContext or tier_id decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -5569,7 +5569,7 @@ preserved_exact_tokens:
 - "last access"
 - "run completion"
 - "MUST NOT infer the anchor from file mtime alone"
-negative_constraints: 
+negative_constraints:
 - "Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both retention_anchor_kind and retention_anchor_at_utc; implementations MUST NOT infer the anchor from file mtime alone."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -5942,7 +5942,7 @@ preserved_exact_tokens:
 - "Default stale threshold"
 - "Expiry computation"
 - "Post-expiry posture"
-negative_constraints: 
+negative_constraints:
 - "Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version."
 preserved_contractrefs: []
 compatibility_only_notes: []
@@ -5997,7 +5997,7 @@ preserved_exact_tokens:
 - "hidden elapsed time"
 - "reset"
 - "last rendered frame"
-negative_constraints: 
+negative_constraints:
 - "Consumers do not infer continuity from the last rendered frame."
 preserved_contractrefs: []
 compatibility_only_notes: []

@@ -2407,7 +2407,7 @@ plan_unit_id: 0PI-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: The shard index table preserves every Source doc to Plans/_shards/.../00-index.md mapping in the index, including
+canonical_text: The shard index table preserves every Source doc to Plans/_shards/<doc-slug>/00-index.md mapping in the index, including
   orchestrator subagents, FinalGUISpec, bootstrap, prompt, wiring, GUI checklist, widget, and 00-plans-index.md shard entries.
 gui_related: false
 gui_classification_reason: The unit records document-to-shard routing metadata, not GUI behavior.

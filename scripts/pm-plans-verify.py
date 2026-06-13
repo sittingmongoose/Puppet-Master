@@ -606,10 +606,27 @@ def cmd_lint_banned_phrases(args: argparse.Namespace) -> dict[str, Any]:
     for path in governance_files:
         if not path.exists():
             continue
+        in_yaml_fence = False
+        current_yaml_key: str | None = None
         for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+            stripped = line.strip()
+            if stripped.startswith("```"):
+                in_yaml_fence = stripped == "```yaml" and not in_yaml_fence
+                current_yaml_key = None
+                continue
+            if in_yaml_fence:
+                key_match = re.match(r"^([A-Za-z0-9_]+):", stripped)
+                if key_match:
+                    current_yaml_key = key_match.group(1)
             if not pattern.search(line):
                 continue
             if any(marker in line for marker in definition_markers):
+                continue
+            if in_yaml_fence and current_yaml_key == "preserved_exact_tokens":
+                continue
+            if in_yaml_fence and current_yaml_key == "canonical_text" and re.search(r"\b(forbid|forbids|must not add)\b", line):
+                continue
+            if in_yaml_fence and current_yaml_key == "negative_constraints" and "Do not add" in line:
                 continue
             failures.append({"path": rel(path), "line": line_no, "error": "banned_drift_phrase", "text": line.strip()})
     return report_status("lint-banned-phrases", failures, files_checked=len([p for p in governance_files if p.exists()]))

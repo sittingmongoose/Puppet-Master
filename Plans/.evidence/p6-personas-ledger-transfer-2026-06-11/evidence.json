@@ -8,32 +8,32 @@
     {
       "note": "Primary Persona owner repair.",
       "path": "Plans/Personas.md",
-      "sha256": "5e129c7f012d6afb9ec8705e987406f2c4dbf03270001df73844c0aff95d2ab9"
+      "sha256": "b2054f3383740d4dd35e57f916980e3e2e6094b106ca66272d98bb732b5d4919"
     },
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f"
+      "sha256": "93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346"
+      "sha256": "1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241"
+      "sha256": "1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f"
     },
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd"
+      "sha256": "28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f"
     },
     {
       "note": "Glossary protected core summary repair.",
       "path": "Plans/Glossary.md",
-      "sha256": "9c5a6506e244d091954f576977d8078604cedcd5402dd92a0a17f107acb49bd3"
+      "sha256": "8fc040e311a2881753efff00e0297eaa44a817a84c90d29958f2d4990691baad"
     },
     {
       "note": "Current closed source-lineage copy.",
@@ -63,7 +63,7 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "03b1ff793cb6c6cecd8f1081ef77c9deabf48fd5dee290c924db7500f19df4f4"
+      "sha256": "b145a4fb22f1554c8a45e2beaa975be6c6a816dafe1483ee403bdd9aecae833e"
     },
     {
       "note": "P6 node repair refs.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e6533e20b4540dc008a71f3f4c0af00b2808668f25afca9a78188f9ade1dc86e"
+      "sha256": "e00347fb3a630f7b038547a7a6f564d23d54db8e73f7e66220b189e3d32df6af"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "843e6110092b052e8ae75c720974a77079c33b160443043e7da4dbdeaaff77e8"
+      "sha256": "f847891f2941769827cc13112dbf3612ad7d26e981630155a01f6b07a786be5f"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "9d0bea867c6969847cab6bb22878f721338c8a3c261e5d148a6bae8f989c5d6b"
+      "sha256": "f7bcb1b3df52e7dc7acc4d3cd1cfe345f072dde0f2485ac4207849cbabac609e"
     }
   ],
   "checks": [
@@ -395,7 +395,7 @@
     "Gate:GATE-006",
     "Gate:GATE-009"
   ],
-  "created_at_utc": "2026-06-11T05:06:36Z",
+  "created_at_utc": "2026-06-13T16:06:13Z",
   "events": {
     "event_refs": [
       {
