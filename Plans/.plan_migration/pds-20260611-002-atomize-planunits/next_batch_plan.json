@@ -5,31 +5,32 @@
     "docs": [
       "Plans/Contracts_V0.md"
     ],
-    "justified_residual_source_preserving_plan_unit_ids": [
-      "CV-001"
-    ],
+    "justified_residual_source_preserving_plan_unit_ids": [],
     "plan_unit_ids": [
       "CV-001"
     ],
-    "residual_source_preserving_plan_unit_ids": [
-      "CV-001"
-    ],
+    "residual_source_preserving_plan_unit_ids": [],
     "source_line_end": 2835,
     "source_line_start": 1,
+    "source_lineage_residual_plan_unit_ids": [
+      "CV-001"
+    ],
     "source_path": "Plans/Contracts_V0.md",
     "span_end": "Contracts_V0-S0122",
     "span_start": "Contracts_V0-S0001"
   },
   "final_state": {
-    "active_source_preserving_planunit_count": 1,
+    "active_source_preserving_planunit_count": 0,
     "governance_seal_required": true,
-    "justified_residual_source_preserving_plan_unit_ids": [
+    "justified_residual_source_preserving_plan_unit_ids": [],
+    "node_readiness": "blocked_compiler_contract_incomplete",
+    "source_lineage_residual_count": 1,
+    "source_lineage_residual_plan_unit_ids": [
       "CV-001"
     ],
-    "node_readiness": "blocked_compiler_contract_incomplete",
     "unjustified_source_preserving_planunit_count": 0
   },
-  "generated_at_utc": "2026-06-13T08:42:13Z",
+  "generated_at_utc": "2026-06-13T15:33:34Z",
   "hard_stops_preserved": [
     "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.",
     "Do not update Spec Lock, shards, evidence, plan_graph, or auto_decisions before explicit governance seal.",

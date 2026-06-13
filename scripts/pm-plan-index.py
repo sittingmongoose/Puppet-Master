@@ -23,7 +23,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
 INDEX_DIR = PLANS / ".plan_index"
-MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-001-standardize-plans"
+MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-002-atomize-planunits"
 
 PLAN_UNIT_REQUIRED_FIELDS = {
     "plan_unit_id",
@@ -46,6 +46,19 @@ PLAN_UNIT_REQUIRED_FIELDS = {
 
 PLAN_UNIT_FENCE_PATTERN = re.compile(r"```yaml\n(.*?)\n```", re.DOTALL)
 HEADING_PATTERN = re.compile(r"^(#{1,6})\s*(.*?)\s*$")
+NEW_PLAN_PROFILE_NORMALIZED = "**PlanProfile:** New Plan Authoring Profile"
+NEW_PLAN_PROFILE_EXEMPT_PATTERN = re.compile(r"^\*\*PlanProfile:\*\* New Plan Authoring Profile \((?:Exempt|Exempted)")
+REQUIRED_NEW_PLAN_BASE_HEADINGS = [
+    "0. Scope",
+    "1. Ownership And Consumers",
+    "2. Canonical PlanUnits",
+    "3. Contracts, Schemas, Events, Or Data Shapes",
+    "4. Integration Surfaces",
+    "5. Validation And Acceptance",
+    "6. Plan-To-Node Readiness",
+    "7. Deferred, Retired, Compatibility, And Non-Goals",
+    "8. Source Lineage And Governance",
+]
 
 
 class UniqueKeySafeLoader(yaml.SafeLoader):
@@ -137,6 +150,82 @@ def markdown_headings(text: str) -> list[dict[str, Any]]:
         if match:
             headings.append({"line": line_no, "level": len(match.group(1)), "title": match.group(2).strip()})
     return headings
+
+
+def authority_preamble_lines(text: str) -> list[str]:
+    lines: list[str] = []
+    fence: str | None = None
+    for line in text.splitlines():
+        stripped = line.lstrip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            marker = stripped[:3]
+            fence = None if fence == marker else marker
+            continue
+        if fence:
+            continue
+        if stripped.startswith("## "):
+            break
+        lines.append(stripped.strip())
+    return lines
+
+
+def normalize_authority_line(line: str) -> str:
+    return line[1:].strip() if line.startswith(">") else line.strip()
+
+
+def declared_plan_profile(text: str) -> str:
+    preamble = [normalize_authority_line(line) for line in authority_preamble_lines(text)]
+    if any(NEW_PLAN_PROFILE_EXEMPT_PATTERN.match(line) for line in preamble):
+        return "new_authoring_exempted"
+    if NEW_PLAN_PROFILE_NORMALIZED in preamble:
+        return "new_authoring"
+    return "legacy_or_unspecified"
+
+
+def validate_new_plan_authoring_profiles() -> tuple[list[dict[str, Any]], set[str]]:
+    failures: list[dict[str, Any]] = []
+    new_profile_docs: set[str] = set()
+
+    for path in top_level_plan_docs():
+        text = path.read_text(encoding="utf-8")
+        profile = declared_plan_profile(text)
+        if profile == "legacy_or_unspecified":
+            continue
+
+        path_ref = rel(path)
+        preamble = [normalize_authority_line(line) for line in authority_preamble_lines(text)]
+        if profile == "new_authoring_exempted":
+            if not any(line.startswith("**Profile Exemption:**") for line in preamble):
+                failures.append(
+                    {
+                        "path": path_ref,
+                        "error": "new_plan_profile_exemption_missing_reason",
+                    }
+                )
+            continue
+
+        new_profile_docs.add(path_ref)
+        if not any(line.startswith("**Compliance:**") for line in preamble):
+            failures.append({"path": path_ref, "error": "new_plan_profile_missing_compliance_authority_note"})
+
+        level_two_headings = [heading["title"] for heading in markdown_headings(text) if heading["level"] == 2]
+        positions: list[int] = []
+        for required in REQUIRED_NEW_PLAN_BASE_HEADINGS:
+            try:
+                positions.append(level_two_headings.index(required))
+            except ValueError:
+                failures.append({"path": path_ref, "error": "missing_new_plan_base_heading", "heading": required})
+        if len(positions) == len(REQUIRED_NEW_PLAN_BASE_HEADINGS) and positions != sorted(positions):
+            failures.append(
+                {
+                    "path": path_ref,
+                    "error": "new_plan_base_headings_out_of_order",
+                    "expected_order": REQUIRED_NEW_PLAN_BASE_HEADINGS,
+                    "actual_level_two_headings": level_two_headings,
+                }
+            )
+
+    return failures, new_profile_docs
 
 
 def doc_title(path: Path, headings: list[dict[str, Any]]) -> str:
@@ -417,6 +506,7 @@ def acceptance_units(units: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def migration_summary() -> dict[str, Any]:
     summary: dict[str, Any] = {
         "run_dir": rel(MIGRATION_RUN),
+        "run_id": MIGRATION_RUN.name,
         "available": MIGRATION_RUN.exists(),
     }
     if not MIGRATION_RUN.exists():
@@ -428,12 +518,19 @@ def migration_summary() -> dict[str, Any]:
     coverage_path = MIGRATION_RUN / "coverage_map.jsonl"
     if validation_path.exists():
         validation = read_json(validation_path)
+        summary["run_id"] = validation.get("run_id", summary["run_id"])
         summary["validation_status"] = validation.get("status")
         summary["validation_failures"] = validation.get("failures", [])
         summary["checks"] = validation.get("checks", {})
     if final_summary_path.exists():
         final_summary = read_json(final_summary_path)
         summary["final_status"] = final_summary.get("status")
+        summary["next_batch_cursor"] = final_summary.get("next_batch_cursor")
+        summary["live_plan_unit_count"] = final_summary.get("live_plan_unit_count")
+        summary["source_preserving_unit_count_after_batch"] = final_summary.get("source_preserving_unit_count_after_batch")
+        summary["residual_source_preserving_plan_units"] = final_summary.get("residual_source_preserving_plan_units", [])
+        summary["source_lineage_residual_plan_units"] = final_summary.get("source_lineage_residual_plan_units", [])
+        summary["allowed_residuals"] = final_summary.get("allowed_residuals", [])
         summary["standard_run_gates_status"] = final_summary.get("standard_run_gates_status")
         summary["standard_run_gates_expected_seal_failures"] = final_summary.get("standard_run_gates_expected_seal_failures", [])
         summary["shard_check_status"] = final_summary.get("shard_check_status")
@@ -681,11 +778,28 @@ def validate() -> dict[str, Any]:
     coverage = read_json(INDEX_DIR / "coverage_report.json")
     readiness = read_json(INDEX_DIR / "node_readiness_report.json")
     live_units, live_parse_errors, live_docs = extract_plan_units()
+    profile_failures, new_profile_docs = validate_new_plan_authoring_profiles()
+    failures.extend(profile_failures)
     live_ids = sorted(unit_id(unit) for unit in live_units)
     index_ids = sorted(unit_id(unit) for unit in plan_units)
 
     if live_parse_errors:
         failures.append({"path": "Plans/*.md", "error": "live_planunit_parse_errors", "items": live_parse_errors})
+    for unit in live_units:
+        source_path = unit.get("source_location", {}).get("path")
+        node_hint = unit.get("node_compile_hint")
+        if (
+            source_path in new_profile_docs
+            and isinstance(node_hint, dict)
+            and node_hint.get("mode") == "source_preserving_planunit"
+        ):
+            failures.append(
+                {
+                    "path": source_path,
+                    "plan_unit_id": unit_id(unit),
+                    "error": "new_plan_profile_uses_source_preserving_planunit",
+                }
+            )
     if index_ids != live_ids:
         failures.append({"path": "Plans/.plan_index/plan_units.jsonl", "error": "plan_unit_ids_do_not_match_live_plans"})
     if len(set(index_ids)) != len(index_ids):
@@ -718,6 +832,72 @@ def validate() -> dict[str, Any]:
         failures.append({"path": "Plans/.plan_index/dependencies.json", "error": "unresolved_dependency_references"})
     if coverage.get("summary", {}).get("plan_unit_count") != len(plan_units):
         failures.append({"path": "Plans/.plan_index/coverage_report.json", "error": "coverage_plan_unit_count_mismatch"})
+    migration = coverage.get("migration_coverage", {})
+    expected_run_dir = rel(MIGRATION_RUN)
+    if migration.get("run_dir") != expected_run_dir:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/coverage_report.json",
+                "error": "coverage_migration_run_dir_stale",
+                "expected": expected_run_dir,
+                "actual": migration.get("run_dir"),
+            }
+        )
+    if migration.get("run_id") != MIGRATION_RUN.name:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/coverage_report.json",
+                "error": "coverage_migration_run_id_stale",
+                "expected": MIGRATION_RUN.name,
+                "actual": migration.get("run_id"),
+            }
+        )
+    migration_checks = migration.get("checks", {})
+    if migration_checks.get("live_plan_unit_count") not in {None, len(plan_units)}:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/coverage_report.json",
+                "error": "coverage_migration_live_plan_unit_count_stale",
+                "expected": len(plan_units),
+                "actual": migration_checks.get("live_plan_unit_count"),
+            }
+        )
+    coverage_map_path = MIGRATION_RUN / "coverage_map.jsonl"
+    if coverage_map_path.exists() and migration.get("coverage_rows") not in {None, len(read_jsonl(coverage_map_path))}:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/coverage_report.json",
+                "error": "coverage_migration_row_count_stale",
+                "expected": len(read_jsonl(coverage_map_path)),
+                "actual": migration.get("coverage_rows"),
+            }
+        )
+    if str(migration.get("final_status", "")).upper() == "COMPLETE":
+        if migration.get("next_batch_cursor") is not None:
+            failures.append(
+                {
+                    "path": "Plans/.plan_index/coverage_report.json",
+                    "error": "complete_migration_next_batch_cursor_not_null",
+                    "actual": migration.get("next_batch_cursor"),
+                }
+            )
+        if migration.get("coverage_status_counts", {}).get("pre_conversion_preserved_in_place", 0):
+            failures.append(
+                {
+                    "path": "Plans/.plan_index/coverage_report.json",
+                    "error": "complete_migration_pre_conversion_rows_present",
+                    "count": migration["coverage_status_counts"]["pre_conversion_preserved_in_place"],
+                }
+            )
+        if migration.get("live_plan_unit_count") not in {None, len(plan_units)}:
+            failures.append(
+                {
+                    "path": "Plans/.plan_index/coverage_report.json",
+                    "error": "complete_migration_final_summary_plan_unit_count_stale",
+                    "expected": len(plan_units),
+                    "actual": migration.get("live_plan_unit_count"),
+                }
+            )
     if readiness.get("source_plan_unit_index") != "Plans/.plan_index/plan_units.jsonl":
         failures.append({"path": "Plans/.plan_index/node_readiness_report.json", "error": "bad_source_plan_unit_index"})
     if readiness.get("no_worknodes_created") is not True:

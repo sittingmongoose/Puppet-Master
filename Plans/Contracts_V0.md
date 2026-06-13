@@ -16275,10 +16275,10 @@ owner_hints:
 
 ```yaml
 plan_unit_id: CV-001
-unit_type: source_preserving_residual_disposition
+unit_type: source_lineage_residual_disposition
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: 'CV-001 is an explicit justified residual source-preserving disposition for Contracts_V0-S0001. The span is
+canonical_text: 'CV-001 is an explicit justified source-lineage residual disposition for Contracts_V0-S0001. The span is
   a source-token bank rather than coherent canonical product prose: it preserves exact tokens, aliases, owner hints, ContractRefs,
   audit counts, stale lineage refs, and isolated vocabulary fragments. Creating new implementation-ready PlanUnits from the
   remaining S0001 material would require inferring missing relationships and would risk duplicating completed CV-002 through
@@ -16582,7 +16582,7 @@ context_scope: contracts_v0_residual_source
 implementation_surfaces:
 - Plans/Contracts_V0.md
 node_compile_hint:
-  mode: source_preserving_planunit
+  mode: source_lineage_residual_disposition
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0001
@@ -16680,7 +16680,7 @@ preserved_exact_tokens:
 - working_ledger.md:L5990-L6015
 - working_ledger.md:L6442-L6490
 negative_constraints:
-- Residual source-preserving coverage must not override CV-002 through CV-278 for already atomized or structurally dispositioned
+- Residual source-lineage disposition must not override CV-002 through CV-278 for already atomized or structurally dispositioned
   spans.
 - New implementation-ready PlanUnits must not be inferred from S0001 token-list fragments without coherent source prose or
   coverage proof.
@@ -16713,4 +16713,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `Contracts_V0-S0001` through `Contracts_V0-S0118` are preserved in place. Phase 2B batch 032 atomized or structurally dispositioned `Contracts_V0-S0002` through `Contracts_V0-S0024` into fine-grained PlanUnits `CV-002` through `CV-010` or explicit structural dispositions, and partially mapped route/open compatibility material from `Contracts_V0-S0001`. Phase 2B batch 033 atomized `Contracts_V0-S0025` through `Contracts_V0-S0026` into fine-grained PlanUnits `CV-011` through `CV-023`. Phase 2B batch 034 atomized `Contracts_V0-S0027` into fine-grained PlanUnits `CV-024` through `CV-060`. Phase 2B batch 035 atomized `Contracts_V0-S0028` through `Contracts_V0-S0036` into fine-grained PlanUnits `CV-061` through `CV-096`. Phase 2B batch 036 atomized `Contracts_V0-S0037` through `Contracts_V0-S0049` into fine-grained PlanUnits `CV-097` through `CV-141`. Phase 2B batch 037 atomized `Contracts_V0-S0050` through `Contracts_V0-S0061` into fine-grained PlanUnits `CV-142` through `CV-174`. Phase 2B batch 038 atomized or structurally dispositioned `Contracts_V0-S0062` through `Contracts_V0-S0090` into fine-grained PlanUnits `CV-175` through `CV-229` or explicit structural dispositions. Phase 2B batch 039 atomized or structurally dispositioned `Contracts_V0-S0091` through `Contracts_V0-S0115` into fine-grained PlanUnits `CV-230` through `CV-271` or explicit structural dispositions. Phase 2B batch 040 atomized or structurally dispositioned `Contracts_V0-S0116` through `Contracts_V0-S0118` into fine-grained PlanUnits `CV-272` through `CV-278` or explicit structural dispositions. Phase 2B batch 117 reviewed `Contracts_V0-S0001` as a bounded residual-only source-token-bank and preserved `CV-001` as an explicit justified residual source-preserving disposition because additional PlanUnits would require semantic overreach or duplicate `CV-002` through `CV-278`. Phase 2B batch 141 structurally dispositioned generated PDS/reporting spans `Contracts_V0-S0119` through `Contracts_V0-S0122`: Owner / Consumer Map, PlanUnits container, prior broad bridge audit material, and Migration Coverage are audit/reporting structure only; implementation-facing product coverage remains `CV-002` through `CV-278` plus the explicit `CV-001` residual for `Contracts_V0-S0001`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+All original spans from `Contracts_V0-S0001` through `Contracts_V0-S0118` are preserved in place. Phase 2B batch 032 atomized or structurally dispositioned `Contracts_V0-S0002` through `Contracts_V0-S0024` into fine-grained PlanUnits `CV-002` through `CV-010` or explicit structural dispositions, and partially mapped route/open compatibility material from `Contracts_V0-S0001`. Phase 2B batch 033 atomized `Contracts_V0-S0025` through `Contracts_V0-S0026` into fine-grained PlanUnits `CV-011` through `CV-023`. Phase 2B batch 034 atomized `Contracts_V0-S0027` into fine-grained PlanUnits `CV-024` through `CV-060`. Phase 2B batch 035 atomized `Contracts_V0-S0028` through `Contracts_V0-S0036` into fine-grained PlanUnits `CV-061` through `CV-096`. Phase 2B batch 036 atomized `Contracts_V0-S0037` through `Contracts_V0-S0049` into fine-grained PlanUnits `CV-097` through `CV-141`. Phase 2B batch 037 atomized `Contracts_V0-S0050` through `Contracts_V0-S0061` into fine-grained PlanUnits `CV-142` through `CV-174`. Phase 2B batch 038 atomized or structurally dispositioned `Contracts_V0-S0062` through `Contracts_V0-S0090` into fine-grained PlanUnits `CV-175` through `CV-229` or explicit structural dispositions. Phase 2B batch 039 atomized or structurally dispositioned `Contracts_V0-S0091` through `Contracts_V0-S0115` into fine-grained PlanUnits `CV-230` through `CV-271` or explicit structural dispositions. Phase 2B batch 040 atomized or structurally dispositioned `Contracts_V0-S0116` through `Contracts_V0-S0118` into fine-grained PlanUnits `CV-272` through `CV-278` or explicit structural dispositions. Phase 2B batch 117 reviewed `Contracts_V0-S0001` as a bounded residual-only source-token-bank and preserved `CV-001` as an explicit justified source-lineage residual disposition because additional PlanUnits would require semantic overreach or duplicate `CV-002` through `CV-278`. Phase 2B batch 141 structurally dispositioned generated PDS/reporting spans `Contracts_V0-S0119` through `Contracts_V0-S0122`: Owner / Consumer Map, PlanUnits container, prior broad bridge audit material, and Migration Coverage are audit/reporting structure only; implementation-facing product coverage remains `CV-002` through `CV-278` plus the explicit `CV-001` residual for `Contracts_V0-S0001`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
