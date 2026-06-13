@@ -2,20 +2,20 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L942-L952
+Source lines: L4506-L4516
 
-Source SHA256: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`
+Source SHA256: `ef69b571982bda45fb2c7d166d4bc5c319e1cae036edf9cec63593a653cc94e7`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `44aa62f786c236bd90ea4a00cb250c8dd0666ed982b4facf60d5088b93b9754e`.
+Original hash: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `Multi-Account-S0001` through `Multi-Account-S0037` are preserved in place and mapped in `coverage_map.jsonl` to `MA-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch `phase2b-100-multi-account-lines-1-400` atomized `Multi-Account-S0002` through `Multi-Account-S0018` into `MA-002` through `MA-017`, dispositioned `Multi-Account-S0001` as the structural title anchor, and left `Multi-Account-S0019` as the next residual source-preserving cursor because that span crossed the line-400 window. Phase 2B batch `phase2b-101-multi-account-lines-354-740` atomized `Multi-Account-S0019` through `Multi-Account-S0034` into `MA-018` through `MA-053` and left `Multi-Account-S0035` as the next residual source-preserving cursor because that span crossed the line-740 window. Phase 2B batch `phase2b-102-multi-account-lines-740-952` atomized `Multi-Account-S0035` through `Multi-Account-S0037` into `MA-054` through `MA-059`, dispositioned `Multi-Account-S0038`, `Multi-Account-S0039`, and `Multi-Account-S0041` as structural rows, and retired `MA-001` to `source_preserving_bridge_retired` migration-lineage compatibility for `Multi-Account-S0040`. `Plans/Multi-Account.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

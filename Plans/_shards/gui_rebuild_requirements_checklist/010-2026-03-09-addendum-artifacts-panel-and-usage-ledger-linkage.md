@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L124-L130
+Source lines: L124-L129
 
-Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a`
+Source SHA256: `391caac1cbf802ad04f7f522d2ac9524074421cb913066491528d63ce3328694`
 
 ---
 
@@ -14,4 +14,3 @@ Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a
 - [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).
 - [ ] Panel toggling: Git, Docker, Source Control, Unraid, Artifacts, Chat, Files (single side-panel slot, last-click wins).
 - [ ] Usage/Ledger linkage from cost_usage artifact (Show in Ledger / Show in Usage actions).
-

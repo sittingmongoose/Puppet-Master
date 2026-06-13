@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L4-L22
+Source lines: L4-L21
 
-Source SHA256: `ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d`
+Source SHA256: `00e380b6cdbb2a8aa93a389640fe144613ef220028731cc2b333edef29e8aae3`
 
 ---
 
@@ -26,4 +26,3 @@ ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
 - If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
-

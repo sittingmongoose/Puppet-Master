@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L224-L299
+Source lines: L224-L298
 
-Source SHA256: `15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021`
+Source SHA256: `829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb`
 
 ---
 
@@ -83,4 +83,3 @@ ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
 - Use "Puppet Master" naming consistently throughout this document.
 -->
-

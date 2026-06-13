@@ -2,12 +2,10 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `87ebb933f2415c333d7ad4923c41ef1ab01731b9d27a51485636e3800ee50120`
+Source SHA256: `e283765c71f305daeef1982657f9929aacda6cb1da9ddbda8e667b6273d12437`
 
 ---
 
 # Widget System -- Cross-Cutting Specification
-
-

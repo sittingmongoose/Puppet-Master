@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2256-L2287
+Source lines: L2256-L2286
 
-Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346`
+Source SHA256: `1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1`
 
 ---
 
@@ -39,4 +39,3 @@ Route targets carry enough subfocus for the destination, not just "open object X
 Wizard/interview output must converge on graph-native planning. `chain-wizard-flexibility` and `chain-wizard-flexibility.md` produce plan-graph output for Orchestrator/GUI consumption, while older `/Task/Subtask/Iteration` and `/Interview` vocabulary is compatibility context. The compact status model is `Activity`: `idle | running | paused | queued | background_active`; `Attention`: `none | attention_required | blocked | degraded`; and `Health`: setup `/config/repo` integrity. Conversational `/document-production` surfaces expose runtime-identity, effective-runtime, effective platform `/model`, skipped-control disclosure, `/pass` stage context, `/task/runtime` identity in-thread, and requested/effective visibility fields.
 
 Provider/account identity fields remain concrete: `effective_auth_mode`, `effective_account_id`, `effective_project_id`, and `operational_identity`. Cross-surface explanation must account for `/work-type` biases without dumping internals. Shared actions include `Show in Usage`, `Show in Ledger`, `Resume Wizard`, message deep links, `wizard_id`, `wizard_step`, `message_id`, `artifact_id`, `document_id`, and `usage_event_ref`. Coverage notes preserve re-audited, six-pass, `39`, `22`, `Plans/*.md`, and top-level counts without treating them as planning blockers.
-

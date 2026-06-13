@@ -2,9 +2,9 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L71-L87
+Source lines: L71-L86
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 ---
 
@@ -24,4 +24,3 @@ Highlights:
 - distinct Mermaid and inline visualizer behavior
 - four-step approval ladder and MCP owner-doc alignment
 - Docker reference parity combines `docker/vscode-extension` / `/vscode-extension` authoring cues with Container Tools management and `/registry` behavior; Docker Hub management parity is not satisfied by the extension reference alone
-

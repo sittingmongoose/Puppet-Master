@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3302-L3317
+Source lines: L3302-L3316
 
-Source SHA256: `70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f`
+Source SHA256: `93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5`
 
 ---
 
@@ -23,4 +23,3 @@ A CtA card, blocked notice, search result, artifact pivot, thread usage jump, an
 Route catalog policy is deterministic. Do not make a large public `cmd.nav.*` or `cmd.nav` family the main catalog-facing answer. Do not use hedge words such as `optional` or `maybe` when stating canonical direction. State allowed serialized data classes directly: wizard-step detail is a narrow serialized anchor, not a top-level base route field. `OpenFile` stays path `/editor` scoped; `OpenSubject` is the identity-open contract consumed by FileManager and assistant chat.
 
 owner-consumer reconciliation treats these gaps as spec-integrity failures, not fresh design space. The remaining work is reconciliation-order implementation, not open-ended research or model invention.
-

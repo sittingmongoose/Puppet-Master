@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L24-L57
+Source lines: L24-L56
 
-Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a`
+Source SHA256: `391caac1cbf802ad04f7f522d2ac9524074421cb913066491528d63ce3328694`
 
 ---
 
@@ -41,4 +41,3 @@ Container packaging checklist rows reference `Plans/Containers_Registry_and_Unra
 Usage artifact checklist rows reference `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, `/FinalGUISpec.md`, `/usage-feature.md`, and `/Runtime_Artifacts_Panel.md`.
 
 Orchestrator artifact checklist rows reference `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/Runtime_Artifacts_Panel.md`, `/FinalGUISpec.md`, `/Orchestrator_Page.md`, and `/Runtime_Artifacts_Panel.md`.
-

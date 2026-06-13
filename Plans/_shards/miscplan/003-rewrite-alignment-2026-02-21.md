@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L18-L40
+Source lines: L18-L39
 
-Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4`
+Source SHA256: `6d7bc55edd7df066ae075e61cfca78603323fa5c3048f195fa4cd18e55430cc2`
 
 ---
 
@@ -30,4 +30,3 @@ This plan's cleanup/artifact retention requirements remain authoritative, but im
 **ELI5/Expert copy alignment:** Any authored tooltip/help/discoverability copy in this plan (for example shortcut/tooling hints) must provide both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. App-level **Interaction Mode (Expert/ELI5)** selects variant display; chat-level **Chat ELI5** is separate and chat-only.
 
 ---
-

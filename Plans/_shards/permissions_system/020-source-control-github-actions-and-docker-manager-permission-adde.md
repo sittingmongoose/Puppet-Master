@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1212-L1239
+Source lines: L1212-L1238
 
-Source SHA256: `b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926`
+Source SHA256: `261b53b1f52cd493a20ed9021bf5b6942600cfbfbbc1bdba19e6a06cd018cb4e`
 
 ---
 
@@ -35,4 +35,3 @@ Sensitive metadata minimization covers remote URLs, private repo names, registry
 Session-style privileged operations include `docker exec/attach`, `kubectl exec`, `kubectl port-forward`, remote SCM-over-SSH mutation sessions, and browser/device auth handoffs. Persist bounded metadata only: actor, target, started/ended timestamps, credential realm, transport, local bind address/port when relevant, and requested vs effective state. Do not persist interactive transcript or `stdin` by default.
 
 Build/deploy secret-handling uses no-persist/no-echo rules for docker build secrets, build args, compose env files, registry auth helpers, kube Secret manifests, and generated deployment YAML containing sensitive values. Secret resources are never rendered back in full, indexed, or included in receipts/evidence beyond kind/name/namespace and redacted status. ConfigMap rendering follows a separate configurable redaction policy because it may contain sensitive plaintext.
-

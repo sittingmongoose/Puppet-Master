@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1057-L1211
+Source lines: L1057-L1210
 
-Source SHA256: `b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926`
+Source SHA256: `261b53b1f52cd493a20ed9021bf5b6942600cfbfbbc1bdba19e6a06cd018cb4e`
 
 ---
 
@@ -162,4 +162,3 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 ### Target-bound domain approvals and preflight revalidation
 
 Domain approval and preflight decisions close the historical blind-spot where an action name was approved without the exact mutable target. SCM approvals carry `project_id`, `repo_id`, optional `worktree_id`, `/worktree/context`, `branch`, and `commit`; GitHub Actions approvals carry `repo_remote`, optional `workflow_id`, `run_id`, and `/environment`; Docker approvals carry `runtime`, `registry_host`, `namespace`, `/repository`, and optional `image_ref`; Kubernetes approvals carry `kube_context`, `namespace`, optional `workload_ref`, and optional `resource_ref`. Permission evaluation runs static policy, cheap capability or `/precondition` preflight, approval request only while still actionable, and full execution-time `/revalidate` immediately before mutation. Each approval records a `preflight_revision`; any stale-preflight evidence or changed target identity invalidates reuse and returns the action to blocked state.
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3264-L3285
+Source lines: L3264-L3284
 
-Source SHA256: `70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f`
+Source SHA256: `93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5`
 
 ---
 
@@ -29,4 +29,3 @@ Source SHA256: `70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f
 - Blocked notices are distinct from errors; they indicate that the chat agent is functioning correctly but the requested work is out of scope.
 
 `blocked_notice` packets include the blocked reason, detail ref, `/attempt` and node references when applicable, preserved-local-work summary, and ordered `allowed_action_ids[]` / `allowed_action_ids` action rendering. `wizard.blocked` and `node.blocked` consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state.
-

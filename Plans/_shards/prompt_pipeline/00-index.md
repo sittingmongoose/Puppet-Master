@@ -1,23 +1,23 @@
 # Shard Index: Plans/Prompt_Pipeline.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc`
+Source SHA256: `8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `0c8d2848ef494b638d3c50546c97d188d52545e4213dc3967dfc026b3e1b5701`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L13 `ef06af22ec2eb3917759db6239386e68fbe45e491d27d526b5509284020f1c48`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L45 `272190c4d7d0c113ba332325e9be56416288cc476870b9c3037c2c51a51f5bd2`
-- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L227 `cc2743d6e2fd283cd56646d560cfc5f46fc151b9d976448c985ad689615dbb80`
-- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L228-L380 `f1592fd4f091429ad04ac8c84c342f810bf57230cf8a4056b682a13c6091de08`
-- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L381-L398 `0cff238140c91e4666593845d6563f0ec7afe669568d6c56b40c24a3386f306b`
-- [007 - 4. GUI integration](007-4.-gui-integration.md) L399-L410 `f5364a5f1ef2e8ae9ad2abeeafa9d742ae1e18cc195ca93943b0f95bebd6c4cd`
-- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L411-L423 `5d2127afd74583ddf6197c8ccd85f8269c1f1999f1f966b59b30b32ad9c2e293`
-- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L424-L648 `2e4883e8112d92b4d49315fdf833719c56ea6aea25e5ac958be48ddc9ef33443`
-- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L649-L656 `df97fd51b4d79e4a3911b0fe804bfe92ec3a88f9073675527b9934fadd33cc81`
-- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L657-L662 `237b57ccd4d87919ad182ed17130f3c3a99309147fc7caae9914d4789ea31e76`
-- [012 - PlanUnits](012-planunits.md) L663-L825 `13543aaf8dc8170b0ba5cadb8a1450edd6bd1bc3d376234126b35b78718c401f`
-- [013 - Migration Coverage](013-migration-coverage.md) L826-L836 `e6723e1b4a6e50dccb39d9393e6d93f47c468be4824850c0098307c38f875852`
+- [001 - Preamble](001-preamble.md) L1-L1 `ff42ef9e3f195edcd7fb9ad0c5e7e367b4cfca73826ac4317012a258fe710920`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `19b0de1db5fc7b33a08e09efe56ee038148c5e5903d59bf0c99b1b456e06ea85`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L44 `200659e634a46a7229f7b3768002e585933010c209075e5be621a986342496f4`
+- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L226 `39289a6d90fa89344360992e8b7893393afc2baf03587b70369de9aa3b7ff8e5`
+- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L228-L380 `4aa5e82bef7bd53f706bef12d0c47585e9b69e8d83f216417aec74006455ab93`
+- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L381-L397 `29cdb9c797797f23571f4fc700f9b7e0caa94ee938ded683ffd7831da9734645`
+- [007 - 4. GUI integration](007-4.-gui-integration.md) L399-L409 `1a0d62daf4a8940f5b9c38f7281c32b61b0699f7c2e2bfdd1032a7402ad0195f`
+- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L411-L423 `fab6ac19366e52f3f99294c008cb477ecd0e0e15c3094df546b9b3b7e9336ba1`
+- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L424-L647 `93614573e8a22e50b12dec85eb3c9cb383f1017586ed25085be27a4f39e636af`
+- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L649-L655 `4fd6bd33fe6721d7057d8bfde46c40124ba8b237d8db495988e04d5c7c239fce`
+- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L657-L661 `1c65fa0c59f447493595dfb7dc7c15d23af9555f061e0abc8f86a2e6339ebc8c`
+- [012 - PlanUnits](012-planunits.md) L663-L3464 `37bcf8c1f00fdb6d62295f4ee4fa3c6c145ffc045913ee261c547928ea2b126c`
+- [013 - Migration Coverage](013-migration-coverage.md) L3466-L3476 `fee891c331b245208d0ad8df22f4694ddf34f50b2eae163919c5eafc972dce66`

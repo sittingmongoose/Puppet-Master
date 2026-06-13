@@ -2,12 +2,10 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc`
+Source SHA256: `8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754`
 
 ---
 
 # Prompt Pipeline (Canonical SSOT)
-
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L99-L119
+Source lines: L99-L118
 
-Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a`
+Source SHA256: `391caac1cbf802ad04f7f522d2ac9524074421cb913066491528d63ce3328694`
 
 ---
 
@@ -28,4 +28,3 @@ Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
 
 Stale checklist proof text is not a readiness signal. Checklist consumers must use the first-class `Source Control`, `GitHub Actions`, and `Docker Manager` surfaces; `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/GUI_Rebuild_Requirements_Checklist.md` are runtime consumers of those owner docs rather than alternate owners. Persona-related checklist references use canonical `requested_persona` and `effective_persona` naming from runtime contracts. Older generated-actions-settings, combined Git/GitHub, `Docker Manage`, and side-panel occupant lists are migration evidence only when they conflict with the accepted IA above.
-

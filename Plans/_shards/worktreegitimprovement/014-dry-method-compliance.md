@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L611-L651
+Source lines: L611-L650
 
-Source SHA256: `9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907`
+Source SHA256: `23cb0b72532edc27c0cba9ee984f576fc46cb3b7cbf9e463f5bc9841d4279154`
 
 ---
 
@@ -48,4 +48,3 @@ This plan must be implemented in line with **AGENTS.md** (reuse-first DRY method
 - **Pre-completion:** Before marking any task done, run the AGENTS.md "Pre-Completion Verification Checklist" (cargo check/test, DRY checks, no hardcoded platform data, scope, gitignore rules).
 
 ---
-

@@ -2,20 +2,20 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L354-L364
+Source lines: L1795-L1805
 
-Source SHA256: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3`
+Source SHA256: `828862ab660d6c9c5430c0426a0b518ba1f3ebeeb98c8584ba0a54bed8abea5e`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `83409aeac5a71e7400edf7a289fafd72d57317cc9693777bfa53107aa25bed59`.
+Original hash: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `GitHub_Integration-S0001` through `GitHub_Integration-S0012` are preserved in place and mapped in `coverage_map.jsonl` to `GI-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 077 atomized `GitHub_Integration-S0002`, `GitHub_Integration-S0004`, `GitHub_Integration-S0006`, and `GitHub_Integration-S0008` through `GitHub_Integration-S0012` into `GI-002` through `GI-030`, repeating dense source lineage where the original source span contains multiple safe atoms. `GitHub_Integration-S0001`, `GitHub_Integration-S0003`, `GitHub_Integration-S0005`, `GitHub_Integration-S0007`, `GitHub_Integration-S0013`, `GitHub_Integration-S0014`, and `GitHub_Integration-S0016` are structural or migration-history dispositions. `GitHub_Integration-S0015` maps to retired bridge lineage `GI-001`; `GI-001` no longer uses source-preserving compile mode, and `Plans/GitHub_Integration.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

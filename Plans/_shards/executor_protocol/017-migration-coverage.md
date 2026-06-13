@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L1062-L1072
+Source lines: L5689-L5701
 
-Source SHA256: `dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d`
+Source SHA256: `f033403ab85f4df1793c5b80359486f87ba1af2cc853995d301f406b321c29eb`
 
 ---
 
@@ -17,5 +17,7 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
 
-All original spans from `Executor_Protocol-S0001` through `Executor_Protocol-S0067` are preserved in place and mapped in `coverage_map.jsonl` to `EP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 050 atomized or structurally dispositioned `Executor_Protocol-S0001` through `Executor_Protocol-S0029` into `EP-002` through `EP-033`. Phase 2B batch 051 atomized or structurally dispositioned `Executor_Protocol-S0030` through `Executor_Protocol-S0065` into `EP-034` through `EP-086`. Phase 2B batch 052 atomized `Executor_Protocol-S0066` through `Executor_Protocol-S0067` into `EP-087` through `EP-095`, structurally dispositioned `Executor_Protocol-S0068`, `Executor_Protocol-S0069`, and `Executor_Protocol-S0071`, and retired `EP-001` as migration lineage for `Executor_Protocol-S0070`. No residual source-preserving Executor Protocol PlanUnit remains. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.

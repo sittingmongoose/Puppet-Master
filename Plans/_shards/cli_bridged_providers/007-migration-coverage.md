@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L234-L244
+Source lines: L1051-L1061
 
-Source SHA256: `e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36`
+Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `CLI_Bridged_Providers-S0001` through `CLI_Bridged_Providers-S0010` are preserved in place and mapped in `coverage_map.jsonl` to `CBP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B atomized `CLI_Bridged_Providers-S0001` through `CLI_Bridged_Providers-S0010` into fine-grained PlanUnits `CBP-002` through `CBP-018`. `CBP-001` is retained only as a retired migration-lineage bridge and must not re-own atomized source coverage. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.

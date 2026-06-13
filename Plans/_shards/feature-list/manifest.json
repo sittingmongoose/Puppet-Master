@@ -1,32 +1,32 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/feature-list/00-index.md",
-  "index_sha256": "8ee38ec33a3b69363a5d15a47b9ffd3e33cb191f978878b80ab5dae01d421ac6",
+  "index_sha256": "facce6cc95d76db1333680ce4e4ee5ad0d555e008736b3c16acc7efd889447cc",
   "manifest_path": "Plans/_shards/feature-list/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/feature-list/001-preamble.md",
-      "sha256": "56192bebb3801fe9b21e6e9007db7da1e7cc76d3462e90c25dcac3174d1f97e6",
+      "sha256": "59f1dc7c7012cca4c56c4b1c59df75026f858d7dc3160861bb5ab5c209c27348",
       "shard_id": "001",
-      "source_line_end": 10,
+      "source_line_end": 9,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "Part 1 - Planned and New Features (from Plans)",
       "path": "Plans/_shards/feature-list/002-part-1-planned-and-new-features-from-plans.md",
-      "sha256": "9c6f4348c9a1585993c4ad3a5b786c41e1e97e4b538935eee25ff9cac91bd9cd",
+      "sha256": "76442db904e5cfa38615948a2ce4561e8f4f45c129df0595cb73603c699669b4",
       "shard_id": "002",
-      "source_line_end": 12,
+      "source_line_end": 11,
       "source_line_start": 11,
       "split_rule": "heading-##"
     },
     {
       "heading": "Reference anchors used in this document",
       "path": "Plans/_shards/feature-list/003-reference-anchors-used-in-this-document.md",
-      "sha256": "2f810d81841399e6b775f82d69a2460ad18dde0d86d65ce4126516b6a1631843",
+      "sha256": "6e861204a4a68ef755da53015c53d4ad4aa796fff6997ef9b9ef9732065a547a",
       "shard_id": "003",
       "source_line_end": 124,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)",
       "path": "Plans/_shards/feature-list/004-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-.md",
-      "sha256": "c04d04554554ee2429a66a1473f2acb0ace128a47e3b1ee3241cb5cef6fbb9a1",
+      "sha256": "f65bc051a53a59a23b146720cabc1535690151b1c1376b187f1ab2d7d2856e4f",
       "shard_id": "004",
       "source_line_end": 146,
       "source_line_start": 125,
@@ -44,7 +44,7 @@
     {
       "heading": "Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)",
       "path": "Plans/_shards/feature-list/005-source-control-github-actions-and-docker-manager-mvp-consolidati.md",
-      "sha256": "2f6ab15b873081e25d03b7626c744fd84df3d94976ee3089e1a1b475af22e9ad",
+      "sha256": "19756b0706ffd3ca5f284c187c9b48aac1374aa641482c7b6b4a28a23a0db2f8",
       "shard_id": "005",
       "source_line_end": 179,
       "source_line_start": 147,
@@ -53,52 +53,52 @@
     {
       "heading": "Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/feature-list/006-runtime-scheduler-recovery-summary-consolidation-addendum-2026-0.md",
-      "sha256": "8c7803ed766dcedb11b8a617055a91dbd1fdc7c53399f5d7dfade2db6c79e1e1",
+      "sha256": "2a9349916156c0b2c1cf1729915f61279c1eb9acf0b58931a6da1e625d079916",
       "shard_id": "006",
-      "source_line_end": 197,
+      "source_line_end": 196,
       "source_line_start": 180,
       "split_rule": "heading-##"
     },
     {
       "heading": "Web tools, skills, planning, and approval owner alignment (2026-04-04)",
       "path": "Plans/_shards/feature-list/007-web-tools-skills-planning-and-approval-owner-alignment-2026-04-0.md",
-      "sha256": "e537d37bf038adc2bde5d8e5b9e07aa591a22e65c877a48d3257d0221bb96fda",
+      "sha256": "9a2eb7ee0d5390064c56fe94235ad310afcfe841309e180b2eee48ce832c7625",
       "shard_id": "007",
-      "source_line_end": 212,
+      "source_line_end": 211,
       "source_line_start": 198,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/feature-list/008-owner-consumer-map.md",
-      "sha256": "dee713a856119fbf1f60159e3b7319e037c0d9577fbd3beb3721cd9e8e46d885",
+      "sha256": "a2ebaf9e73f0b9cdb3a44f35193e924f9c7f175a1524bc8bffddb36b7dfedd07",
       "shard_id": "008",
-      "source_line_end": 218,
+      "source_line_end": 217,
       "source_line_start": 213,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/feature-list/009-planunits.md",
-      "sha256": "23398fa4e8e01c3e939ed328546a59c48e3aa553522c97d71961316740e8067f",
+      "sha256": "c4d54e14fe7fd84c6f42478e7043893056dbdfd1eac029762d39fbf9932885c6",
       "shard_id": "009",
-      "source_line_end": 329,
+      "source_line_end": 1570,
       "source_line_start": 219,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/feature-list/010-migration-coverage.md",
-      "sha256": "e2f3f2350608e86d598055d780824b83b1a842f5211c3ec471044d23208cea67",
+      "sha256": "4025674d245814b9c777df91c56fbc233242f129991b56e87dfa142e06ed0553",
       "shard_id": "010",
-      "source_line_end": 340,
-      "source_line_start": 330,
+      "source_line_end": 1581,
+      "source_line_start": 1571,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 340,
+    "line_count": 1581,
     "path": "Plans/feature-list.md",
-    "sha256": "698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c"
+    "sha256": "daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4"
   }
 }

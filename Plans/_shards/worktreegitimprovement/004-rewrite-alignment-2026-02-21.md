@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L35-L42
+Source lines: L35-L41
 
-Source SHA256: `9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907`
+Source SHA256: `23cb0b72532edc27c0cba9ee984f576fc46cb3b7cbf9e463f5bc9841d4279154`
 
 ---
 
@@ -15,4 +15,3 @@ This plan's correctness requirements remain authoritative. As the rewrite lands 
 - Worktrees/branches/sandboxes are part of the **patch/apply/verify/rollback pipeline** (core reliability), not just a Git feature
 - Provider working directories (and MCP injection) must respect worktree execution contexts deterministically
 - Config references to YAML files should be treated as *current representations*; the rewrite may project settings via redb while retaining import/export
-

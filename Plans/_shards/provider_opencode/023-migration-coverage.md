@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L877-L887
+Source lines: L3369-L3379
 
-Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1`
+Source SHA256: `77af10af12edf5386148e66a96ae4e462118622bb649c318d11c785b4276451e`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Provider_OpenCode-S0001` through `Provider_OpenCode-S0054` are preserved in place and mapped in `coverage_map.jsonl` to `PO-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Original spans from `Provider_OpenCode-S0001` through `Provider_OpenCode-S0054` are preserved in place and atomized into fine-grained PlanUnits `PO-002` through `PO-046` or explicit structural/reference dispositions. Generated tail spans `Provider_OpenCode-S0055` through `Provider_OpenCode-S0058` are structurally dispositioned, and `PO-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode=retired_source_preserving_bridge`. No residual source-preserving product bridge remains for `Plans/Provider_OpenCode.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

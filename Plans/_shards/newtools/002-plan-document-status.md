@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L6-L15
+Source lines: L6-L14
 
-Source SHA256: `6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9`
+Source SHA256: `f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2`
 
 ---
 
@@ -17,4 +17,3 @@ Source SHA256: `6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9
 - Integrating chosen tools into test strategy and execution plans so agents perform deeper, framework-appropriate testing
 
 Implementation must follow the **DRY Method** (AGENTS.md): reuse-first, single source of truth for tool/framework data, tagging of reusable items. **Rollout:** All items in this plan (including Doctor platform versions, MCP Doctor check, and catalog version) are in scope for a single implementation; no phased rollout.
-

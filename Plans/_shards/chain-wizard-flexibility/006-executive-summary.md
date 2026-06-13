@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L59-L78
+Source lines: L59-L77
 
-Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346`
+Source SHA256: `1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1`
 
 ---
 
@@ -27,4 +27,3 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 - **Change Summary:** Update record for sharded user-project output contracts.
 
 **DRY:** Reuse `platform_specs`, `docs/gui-widget-catalog.md`, rules pipeline (agent-rules-context.md), git/worktree (WorktreeGitImprovement.md, MiscPlan), subagent registry (orchestrator/interview plans), and Assistant/Interview UI patterns (assistant-chat-design.md, interview-subagent-integration.md).
-

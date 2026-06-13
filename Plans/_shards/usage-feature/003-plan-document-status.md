@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L21-L28
+Source lines: L21-L27
 
-Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1`
+Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
 
 ---
 
@@ -15,4 +15,3 @@ Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1
 - Describes scope, data sources, and UX goals
 - References existing usage tracking and related plans
 - Remains implementation-agnostic so it stays valid across tech stack changes
-

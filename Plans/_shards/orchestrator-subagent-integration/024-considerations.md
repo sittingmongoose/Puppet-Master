@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3324-L3332
+Source lines: L3324-L3331
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -16,4 +16,3 @@ Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241
 4. **Configuration Overrides:** Allow manual overrides for edge cases
 5. **Language Detection:** Handle multi-language projects (e.g., Rust + TypeScript)
 6. **Subagent Availability:** Check if subagent files exist before selection
-

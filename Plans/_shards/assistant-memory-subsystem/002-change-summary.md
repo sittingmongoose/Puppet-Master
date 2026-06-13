@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L6-L14
+Source lines: L6-L13
 
-Source SHA256: `bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38`
+Source SHA256: `3499a421184fcdcfbb419516be60af5c0f33ef8a082be8dfa388f90fa62c5729`
 
 ---
 
@@ -16,4 +16,3 @@ Source SHA256: `bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38
 **Cross-references:** `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/agent-rules-context.md`, `Plans/rewrite-tie-in-memo.md`, `Plans/Decision_Policy.md`, `Plans/auto_decisions.jsonl`, `Plans/evidence.schema.json`
 
 ---
-

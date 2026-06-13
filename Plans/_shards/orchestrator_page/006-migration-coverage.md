@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L594-L604
+Source lines: L1394-L1404
 
-Source SHA256: `9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8`
+Source SHA256: `a69447324b34fc51527d3f5595547ef476cceaf6f163f113b089a65ef52cf434`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Orchestrator_Page-S0001` through `Orchestrator_Page-S0074` are preserved in place and mapped in `coverage_map.jsonl` to `OP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Original spans from `Orchestrator_Page-S0001` through `Orchestrator_Page-S0076` are preserved in place and covered by fine-grained PlanUnits `OP-002` through `OP-019` or explicit structural dispositions. `Orchestrator_Page-S0077` is retired bridge lineage for the former broad `OP-001` source-preserving bridge, and `Orchestrator_Page-S0078` is Migration Coverage metadata. No residual `source_preserving_planunit` product coverage remains for `Plans/Orchestrator_Page.md`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L5576-L5593
+Source lines: L5576-L5592
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -25,4 +25,3 @@ Use MCP for tool exposure and interoperability where supported. Tool permissions
 ### Strategy 4: CLI Invocation as Execution Truth
 
 All subagent work executes through provider CLI commands. Determinism comes from explicit args/env plus normalized event parsing from CLI output.
-

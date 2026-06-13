@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6389-L6413
+Source lines: L6389-L6412
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -32,4 +32,3 @@ Required rules:
 ### Same-cycle scheduling
 Newly unblocked canonical nodes and remediation children that become runnable in a wake cycle MUST be considered before that wake cycle ends. Orchestrator projections MUST update from committed runtime events/projections rather than timer polling.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
-

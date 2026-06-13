@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L1786-L1928
+Source lines: L1786-L1927
 
-Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346`
+Source SHA256: `1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1`
 
 ---
 
@@ -150,4 +150,3 @@ Requirements Builder UI should display:
 - Drafting does not require a protected core Document Writer; `technical-writer` is specialty-scoped and may be used only when retained/configured for that stage.
 - Reviewer Personas are distinct from drafting Personas for review passes.
 - Builder UI must expose effective Persona/model/platform and any skipped unsupported Persona controls.
-

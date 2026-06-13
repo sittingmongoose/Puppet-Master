@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L761-L867
+Source lines: L761-L866
 
-Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1`
+Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
 
 ---
 
@@ -114,4 +114,3 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 - Plans/Multi-Account.md -- multi-account data model and GUI requirements
 - Plans/FinalGUISpec.md -- responsive grid (section 12.3), existing Usage view (section 7.8)
 - Plans/storage-plan.md -- redb rollup keys for usage data
-

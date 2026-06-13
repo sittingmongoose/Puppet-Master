@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2311-L2332
+Source lines: L2311-L2331
 
-Source SHA256: `e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2`
+Source SHA256: `f0a581e7023cfbd53b256e790b691253eee4994e579048ac57160820c7253c62`
 
 ---
 
@@ -29,4 +29,3 @@ These decisions are final and must not be revisited during implementation:
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
-

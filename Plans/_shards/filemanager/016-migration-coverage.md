@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L727-L737
+Source lines: L4175-L4185
 
-Source SHA256: `ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a`
+Source SHA256: `9b3728947067fc1565aa540c0eacd71e57bcc7a81e66b98f1ae53b0cae5cd819`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `FileManager-S0001` through `FileManager-S0054` are preserved in place and mapped in `coverage_map.jsonl` to `F-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 054 atomized or structurally dispositioned `FileManager-S0001` through `FileManager-S0032` into `F-002` through `F-033`. Phase 2B batch 055 atomized `FileManager-S0033` through `FileManager-S0054` into `F-034` through `F-066`, structurally dispositioned `FileManager-S0055`, `FileManager-S0056`, and `FileManager-S0058`, and retired `F-001` as a `source_preserving_bridge_retired` migration-lineage unit for `FileManager-S0057`. FileManager.md now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.

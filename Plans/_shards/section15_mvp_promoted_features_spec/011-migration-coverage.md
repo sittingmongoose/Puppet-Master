@@ -2,20 +2,20 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L979-L989
+Source lines: L8169-L8179
 
-Source SHA256: `8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf`
+Source SHA256: `9131a99c4642c084a0d0d13b4e5550d8eaa6d575aadfe0f52f8d50be485a8bec`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `14af3d5908476634b4ede0f0747b7d037058aadcf9105813bb2bab9548f5e083`.
+Original hash: `8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `Section15_MVP_Promoted_Features_Spec-S0001` through `Section15_MVP_Promoted_Features_Spec-S0050` are preserved in place and mapped in `coverage_map.jsonl` to `SMPFS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 168 atomized `Section15_MVP_Promoted_Features_Spec-S0001` through `Section15_MVP_Promoted_Features_Spec-S0020` into fine-grained PlanUnits `SMPFS-002` through `SMPFS-028`. Phase 2B batch 169 atomized `Section15_MVP_Promoted_Features_Spec-S0021` through `Section15_MVP_Promoted_Features_Spec-S0048` into fine-grained PlanUnits `SMPFS-029` through `SMPFS-102` with `Section15_MVP_Promoted_Features_Spec-S0023` retained as structural section organization. Phase 2B batch 170 atomized `Section15_MVP_Promoted_Features_Spec-S0049` and `Section15_MVP_Promoted_Features_Spec-S0050` into fine-grained PlanUnits `SMPFS-103` through `SMPFS-123`, structurally dispositioned generated tail spans `Section15_MVP_Promoted_Features_Spec-S0051`, `S0052`, and `S0054`, and retired `Section15_MVP_Promoted_Features_Spec-S0053` as the `SMPFS-001` bridge lineage. `SMPFS-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

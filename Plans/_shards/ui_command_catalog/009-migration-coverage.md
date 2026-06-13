@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1425-L1435
+Source lines: L6755-L6765
 
-Source SHA256: `ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d`
+Source SHA256: `00e380b6cdbb2a8aa93a389640fe144613ef220028731cc2b333edef29e8aae3`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `UI_Command_Catalog-S0001` through `UI_Command_Catalog-S0052` are preserved in place and mapped in `coverage_map.jsonl` to `UCC-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 188 atomized `UI_Command_Catalog-S0001` through `UI_Command_Catalog-S0024` into fine-grained PlanUnits `UCC-002` through `UCC-036`. Phase 2B batch 189 atomized `UI_Command_Catalog-S0025` through `UI_Command_Catalog-S0032`, `UI_Command_Catalog-S0034` through `UI_Command_Catalog-S0036` into fine-grained PlanUnits `UCC-037` through `UCC-060` and structurally dispositioned `UI_Command_Catalog-S0033`. Phase 2B batch 190 atomized `UI_Command_Catalog-S0037` through `UI_Command_Catalog-S0046`, `UI_Command_Catalog-S0048`, and runtime recovery material in `UI_Command_Catalog-S0049` into fine-grained PlanUnits `UCC-061` through `UCC-090`, while structurally dispositioning `UI_Command_Catalog-S0047` and the references portion of `UI_Command_Catalog-S0049`. Phase 2B batch 191 atomized `UI_Command_Catalog-S0050` through `UI_Command_Catalog-S0052` into fine-grained PlanUnits `UCC-091` through `UCC-095`, structurally dispositioned generated tail spans `UI_Command_Catalog-S0053`, `UI_Command_Catalog-S0054`, and `UI_Command_Catalog-S0056`, and retired `UI_Command_Catalog-S0055` / `UCC-001` as generated artifact residual lineage. `Plans/UI_Command_Catalog.md` now has no active `source_preserving_planunit`; `UCC-001` remains migration lineage only and must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

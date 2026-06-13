@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L6-L13
+Source lines: L6-L12
 
-Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1`
+Source SHA256: `77af10af12edf5386148e66a96ae4e462118622bb649c318d11c785b4276451e`
 
 ---
 
@@ -15,4 +15,3 @@ Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1
 - 2026-02-24: Initial creation. Defines OpenCode as a server-bridged provider for Puppet Master.
 
 ---
-

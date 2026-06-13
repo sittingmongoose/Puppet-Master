@@ -1,19 +1,19 @@
 # Shard Index: Plans/rewrite-tie-in-memo.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L12 `e66033f09d36b8dd3a3b1045def4743993c179ad84c45481537c910b5261c205`
-- [002 - Provided memo (verbatim)](002-provided-memo-verbatim.md) L13-L88 `1f289184dcba43fd06a002da202a7b12c37b2e0ec2e5913e26fd0c14bceb2dc8`
-- [003 - Impacts on existing Plans (deltas to keep consistency)](003-impacts-on-existing-plans-deltas-to-keep-consistency.md) L89-L140 `b74bb121a5a4555deabc6453f8c85c0d6fbdaebc15e5bbb93d9689c9ddbd2afa`
-- [004 - Suggested "single source of truth" rule for the rewrite](004-suggested-single-source-of-truth-rule-for-the-rewrite.md) L141-L151 `8a52bd5689a26b36fdd4cb384b1813262e9ecda178cb45e96ebc5d1272e54162`
-- [005 - Unified Document/Media Rendering Contract (2026-03-07)](005-unified-document-media-rendering-contract-2026-03-07.md) L152-L485 `ec8ea684697ba2fe31e150d140c058b82ba0d48f0593610a4634b54b6d44e915`
-- [006 - Runtime Scheduler Packet Tie-In Note (2026-03-08)](006-runtime-scheduler-packet-tie-in-note-2026-03-08.md) L486-L495 `c02a6b63185da663da3fc005ca41a5acc0bdb8c00739818af8f7e379ef84f4fa`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L496-L501 `6c35c11225971f7eb51a1dcc520d3242090cc0295fc92f27d529e1ff7cb08778`
-- [008 - PlanUnits](008-planunits.md) L502-L664 `4ad190de6983186acf5e915638640ec9838b920e85715aeebc0dc46d928bb806`
-- [009 - Migration Coverage](009-migration-coverage.md) L665-L675 `b6685724cd0de28bbb57ae5b9788a88ab1419dc6208379693f679bf835e98157`
+- [001 - Preamble](001-preamble.md) L1-L11 `9d978a8d15057d0834046a1b19d1d49f5a85ad6f45dce3e718814a581fa643bb`
+- [002 - Provided memo (verbatim)](002-provided-memo-verbatim.md) L13-L87 `3734ba3164387a190030380bdbf66b83cb3d371883f724df811e8ae2f6ba4466`
+- [003 - Impacts on existing Plans (deltas to keep consistency)](003-impacts-on-existing-plans-deltas-to-keep-consistency.md) L89-L139 `8548fd2e99fdced753843844a103a9312cdef031d22fdf3bcc4ad19cef9e8065`
+- [004 - Suggested "single source of truth" rule for the rewrite](004-suggested-single-source-of-truth-rule-for-the-rewrite.md) L141-L150 `46cac5e80acc6f4b3981986440cebe7b597dd8655852c253140e6cad972bce96`
+- [005 - Unified Document/Media Rendering Contract (2026-03-07)](005-unified-document-media-rendering-contract-2026-03-07.md) L152-L484 `f736f68f298e94109d95722a3d73daa7b2a86cdfa2e1e466ab3e3f338ab5c083`
+- [006 - Runtime Scheduler Packet Tie-In Note (2026-03-08)](006-runtime-scheduler-packet-tie-in-note-2026-03-08.md) L486-L494 `0baf0bb2d48ac9dd54d0ac6b586af00bb31fd64164b68097e81e8af9f87e2b58`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L496-L500 `5ab17265a4b60ec72b4ffca4a707f01e06d5a33a9d5810a9505c908cbbaa342b`
+- [008 - PlanUnits](008-planunits.md) L502-L834 `205d42f20865d3f52b538db303c63f6f1c69d50b2d3efad35b8949d64118e238`
+- [009 - Migration Coverage](009-migration-coverage.md) L836-L846 `a1b7a89b63f4cfe2d7bb5956ff51bf85bebc0afb1d00ba0e06db1c27826c851c`

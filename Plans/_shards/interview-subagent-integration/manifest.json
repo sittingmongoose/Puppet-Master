@@ -1,77 +1,77 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/interview-subagent-integration/00-index.md",
-  "index_sha256": "5991324e6793f5d54575834f4401edbcc5632b48e63a15a40e203a2b5f400f7d",
+  "index_sha256": "616f8a0bf2c09d3f081ba8a04bc1325bc237614afd8e0af8104ea2be0bdc960f",
   "manifest_path": "Plans/_shards/interview-subagent-integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/interview-subagent-integration/001-preamble.md",
-      "sha256": "5c7729546463c159bbd91978fdfda32229158612d32056fa194631f11940e0c2",
+      "sha256": "348a6df3ff352222fabcbcf5896b5db39e6a1a68253196e25e881dfed62b5c7e",
       "shard_id": "001",
-      "source_line_end": 3,
+      "source_line_end": 1,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md",
-      "sha256": "51581c187c40013af8d82aae70c8f03d83b9d12e6fca09e88215ed8e0f203e87",
+      "sha256": "5b8ab4b5c7ff8018090d89c6d0092812d257c129aaa35a759c1787de105a8524",
       "shard_id": "002",
-      "source_line_end": 11,
+      "source_line_end": 9,
       "source_line_start": 4,
       "split_rule": "heading-##"
     },
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/interview-subagent-integration/003-change-summary.md",
-      "sha256": "6483a731264222e1e278db5b368ab65eaebf95f856732c7fc83f71f5f491ac58",
+      "sha256": "12de550a29f6c955ae7235f098db77d7d996987d2b3482f71704c4e9f55d9f82",
       "shard_id": "003",
-      "source_line_end": 19,
+      "source_line_end": 18,
       "source_line_start": 12,
       "split_rule": "heading-##"
     },
     {
       "heading": "Interview runtime boundary and handoff lineage",
       "path": "Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md",
-      "sha256": "fe80c76bb22538df41317e6936246299fa81cb043a93e75b4089246d551486fc",
+      "sha256": "f63ec6e4f12c0495a36db5a7dbdb9b5a42382a73d84c46a5c6fc862e55fbb246",
       "shard_id": "004",
-      "source_line_end": 55,
+      "source_line_end": 54,
       "source_line_start": 20,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/interview-subagent-integration/005-owner-consumer-map.md",
-      "sha256": "3b16c5678e7924e5c31295b7712ec2cc199c4a01b4362326bf82596000bb53ac",
+      "sha256": "7ea893a5856d375514734f321ec749eaf12dc5098b3aff7889b8c275d0f6116a",
       "shard_id": "005",
-      "source_line_end": 61,
+      "source_line_end": 60,
       "source_line_start": 56,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/interview-subagent-integration/006-planunits.md",
-      "sha256": "5aaf5d0a57854a2499fe27dfade701ef4f2e2fea481787b183ded2b4d202977b",
+      "sha256": "ea8a5d465016b465941b528f6782716a96fdbc9153bf7b6bc6643d7421cf986f",
       "shard_id": "006",
-      "source_line_end": 147,
+      "source_line_end": 980,
       "source_line_start": 62,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/interview-subagent-integration/007-migration-coverage.md",
-      "sha256": "7e6ada79bfc9fa61396b6f2e91cbb446209e44c03fce148547f47c9e146574af",
+      "sha256": "a703f55bb7f7db9188a6af41591838562b7e27f019870f56bce2a1456e9643d9",
       "shard_id": "007",
-      "source_line_end": 158,
-      "source_line_start": 148,
+      "source_line_end": 992,
+      "source_line_start": 982,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 158,
+    "line_count": 992,
     "path": "Plans/interview-subagent-integration.md",
-    "sha256": "faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6"
+    "sha256": "ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc"
   }
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L4-L11
+Source lines: L4-L9
 
-Source SHA256: `faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6`
+Source SHA256: `ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc`
 
 ---
 
@@ -14,5 +14,3 @@ These requirements are canonical live specification text for this owner document
 
 ### Shared conversational/runtime boundary
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-
-

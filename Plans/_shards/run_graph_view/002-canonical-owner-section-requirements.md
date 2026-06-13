@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L4-L13
+Source lines: L4-L11
 
-Source SHA256: `88b59545c38655934469f01f9488055853e22aa4a0ce623f1eac7bf2dd351790`
+Source SHA256: `e3e923ed5c31385eb7e21a1b9d96f73fdcd93e72c72e84bde596d2c336835cd2`
 
 ---
 
@@ -16,5 +16,3 @@ These requirements are canonical live specification text for this owner document
 
 
 ### Focused run and historical routing contract
-
-

@@ -129,6 +129,11 @@ def normalize_generated_markdown(text: str) -> str:
 
 
 def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
+    def trimmed_section_end(start: int, end: int) -> int:
+        while end > start and not lines[end - 1].strip():
+            end -= 1
+        return end
+
     fence = False
     starts: list[int] = []
     for i, line in enumerate(lines):
@@ -145,7 +150,7 @@ def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
         if starts[0] > 0:
             starts = [0] + starts
         for index, start in enumerate(starts):
-            end = starts[index + 1] if index + 1 < len(starts) else len(lines)
+            end = trimmed_section_end(start, starts[index + 1] if index + 1 < len(starts) else len(lines))
             heading = lines[start].strip() if lines[start].startswith("##") else "Preamble"
             heading = heading.lstrip("#").strip() or "Preamble"
             sections.append(

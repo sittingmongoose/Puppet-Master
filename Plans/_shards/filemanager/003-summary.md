@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L20-L121
+Source lines: L20-L120
 
-Source SHA256: `ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a`
+Source SHA256: `9b3728947067fc1565aa540c0eacd71e57bcc7a81e66b98f1ae53b0cae5cd819`
 
 ---
 
@@ -109,4 +109,3 @@ The editor buffer transaction model is explicit: user edits, preview edits, agen
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 ---
-

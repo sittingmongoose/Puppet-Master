@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L4-L19
+Source lines: L4-L18
 
-Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a`
+Source SHA256: `391caac1cbf802ad04f7f522d2ac9524074421cb913066491528d63ce3328694`
 
 ---
 
@@ -23,4 +23,3 @@ ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
 - If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
-

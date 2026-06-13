@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L726-L736
+Source lines: L2897-L2911
 
-Source SHA256: `e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750`
+Source SHA256: `9a3d13a03b8c46c28563641fffa66b598a67c024710ae025ad492caec8769960`
 
 ---
 
@@ -18,4 +18,8 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Wiring_Matrix-S0001` through `Wiring_Matrix-S0043` are preserved in place and mapped in `coverage_map.jsonl` to `WM-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 199 atomized `Wiring_Matrix-S0001` through `Wiring_Matrix-S0031` into fine-grained PlanUnits `WM-002` through `WM-023`, while structurally dispositioning references and container headings in `Wiring_Matrix-S0015`, `Wiring_Matrix-S0027`, and `Wiring_Matrix-S0029`. `WM-001` is narrowed to residual source-preserving coverage for `Wiring_Matrix-S0032` through `Wiring_Matrix-S0047` only and must not override the fine-grained units. Batch 199 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 200 atomized `Wiring_Matrix-S0032` through `Wiring_Matrix-S0043` into fine-grained PlanUnits `WM-024` through `WM-035`, while structurally dispositioning container headings in `Wiring_Matrix-S0033`, `Wiring_Matrix-S0036`, `Wiring_Matrix-S0037`, `Wiring_Matrix-S0039`, and `Wiring_Matrix-S0041`. `WM-001` is narrowed to residual source-preserving generated-tail coverage for `Wiring_Matrix-S0044` through `Wiring_Matrix-S0047` only and must not override `WM-002` through `WM-035`. Batch 200 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 201 structurally dispositioned generated tail spans `Wiring_Matrix-S0044` through `Wiring_Matrix-S0047`: Owner / Consumer Map, PlanUnits heading, the former generated `WM-001` bridge, and Migration Coverage. `WM-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode: source_preserving_bridge_retired`; `Plans/Wiring_Matrix.md` no longer has active `source_preserving_planunit` coverage. Batch 201 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

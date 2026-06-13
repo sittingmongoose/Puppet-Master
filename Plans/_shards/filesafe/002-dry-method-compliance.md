@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L11-L22
+Source lines: L11-L21
 
-Source SHA256: `e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214`
+Source SHA256: `ce8a36a9373b073b4bed0c7aaaa342feae332bdd0f84f032c32a673b65ee402b`
 
 ---
 
@@ -19,4 +19,3 @@ Source SHA256: `e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214
 - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI widgets
 
 ---
-

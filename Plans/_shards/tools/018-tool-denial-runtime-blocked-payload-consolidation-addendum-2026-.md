@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L1486-L1508
+Source lines: L1486-L1507
 
-Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c`
+Source SHA256: `dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a`
 
 ---
 
@@ -30,4 +30,3 @@ Runtime-facing denial paths MUST expose:
 
 ### No success-shaped fallback rule
 Tools MUST NOT convert denied work into success-shaped or generic-failure fallbacks. The blocked state must remain inspectable so scheduler, chat, and GUI surfaces can render the correct recovery path.
-

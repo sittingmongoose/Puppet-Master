@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L504-L573
+Source lines: L504-L572
 
-Source SHA256: `dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d`
+Source SHA256: `f033403ab85f4df1793c5b80359486f87ba1af2cc853995d301f406b321c29eb`
 
 ---
 
@@ -77,4 +77,3 @@ Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `re
 ### Degradation boundary
 Invalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L4-L11
+Source lines: L4-L10
 
-Source SHA256: `b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926`
+Source SHA256: `261b53b1f52cd493a20ed9021bf5b6942600cfbfbbc1bdba19e6a06cd018cb4e`
 
 ---
 
@@ -15,4 +15,3 @@ These requirements are canonical live specification text for this owner document
 ### Requested/effective account identity contract
 - Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L344-L400
+Source lines: L344-L399
 
-Source SHA256: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b`
+Source SHA256: `258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5`
 
 ---
 
@@ -64,4 +64,3 @@ After decline/reject, the surface MUST choose among:
 - `Replan` when the canonical classification is `replan_required`
 - `Skip node` only when the node contract explicitly allows skip without violating graph integrity
 - Debug verification reruns the same named-action scenario in the active isolated automation session unless corrupted state requires a fresh isolated session.
-

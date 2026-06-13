@@ -2,9 +2,9 @@
 
 Source: `Plans/LSPSupport.md`
 
-Source lines: L853-L909
+Source lines: L853-L908
 
-Source SHA256: `df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278`
+Source SHA256: `25d77e1ce97ddd3de440ac0f0b083cb77b496e8fbd281ab73a19d1c9727534ff`
 
 ---
 
@@ -64,4 +64,3 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 - [ ] **Optional:** Interview "Structure of this file" via documentSymbol; diagnostics in interview context (same as Assistant). Other §9.1 editor enhancements (go to type definition, implementation, document links, call hierarchy, folding range, selection range, document highlight) as natural next steps.
 
 ---
-

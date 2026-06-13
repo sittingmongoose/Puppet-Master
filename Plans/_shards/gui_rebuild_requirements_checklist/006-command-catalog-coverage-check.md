@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L75-L92
+Source lines: L75-L91
 
-Source SHA256: `d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a`
+Source SHA256: `391caac1cbf802ad04f7f522d2ac9524074421cb913066491528d63ce3328694`
 
 ---
 
@@ -25,4 +25,3 @@ The following command groups introduced by the 2026-02-23 docs are now listed in
 - `cmd.chat.close_usage_popout`
 
 REF: `Plans/UI_Command_Catalog.md` sections 2.3 through 2.6.
-

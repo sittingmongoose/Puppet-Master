@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3286-L3301
+Source lines: L3286-L3300
 
-Source SHA256: `70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f`
+Source SHA256: `93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5`
 
 ---
 
@@ -23,4 +23,3 @@ Cross-doc parity references are `Plans/assistant-chat-design.md`, `/assistant-ch
 `package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries.
 
 `auto` persona or model selection must never appear as an opaque state with no resolved `/reason`; historical runs preserve the resolved effective persona and reason from the time of execution.
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L13-L88
+Source lines: L13-L87
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 ---
 
@@ -83,4 +83,3 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
   ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md
 
 ---
-

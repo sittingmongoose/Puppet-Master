@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L4-L20
+Source lines: L4-L18
 
-Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1`
+Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
 
 ---
 
@@ -23,5 +23,3 @@ These requirements are canonical live specification text for this owner document
 ### Blocked-owner eight-kind taxonomy and escalation ladder surfaces
 ### Artifact envelope routing preference
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-
-

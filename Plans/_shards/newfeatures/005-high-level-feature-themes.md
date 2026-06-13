@@ -2,9 +2,9 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L28-L54
+Source lines: L28-L53
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 ---
 
@@ -34,4 +34,3 @@ Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63
 - historical runs distinct from superseded objects unless explicit lineage says otherwise
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
-

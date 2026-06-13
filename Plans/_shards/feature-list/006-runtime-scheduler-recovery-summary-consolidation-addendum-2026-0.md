@@ -2,9 +2,9 @@
 
 Source: `Plans/feature-list.md`
 
-Source lines: L180-L197
+Source lines: L180-L196
 
-Source SHA256: `698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c`
+Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
 
 ---
 
@@ -25,4 +25,3 @@ Remove or revise older summary phrasing that implies lexical dispatch, node-cent
 **Detailed spec:** `Plans/Executor_Protocol.md`, `Plans/Run_Graph_View.md`, [storage-plan](#storage-plan-ref)
 
 **Artifacts panel and panels (from GUI/Artifacts/Usage scope):** Artifacts panel (runtime artifacts, 19 types, cost_usage, Show in Ledger/Usage); side-panel toggling for Git, Docker, Unraid, Artifacts, Chat, Files (single slot, last-click wins); layout save per project; OpenCode-style usage-on-message reference; AI in Git; multi-repo source control (or explicit deferral).
-

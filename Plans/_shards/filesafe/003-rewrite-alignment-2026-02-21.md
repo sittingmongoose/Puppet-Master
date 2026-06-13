@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L23-L69
+Source lines: L23-L68
 
-Source SHA256: `e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214`
+Source SHA256: `ce8a36a9373b073b4bed0c7aaaa342feae332bdd0f84f032c32a673b65ee402b`
 
 ---
 
@@ -54,4 +54,3 @@ Shell/view restore fields such as `active_subview`, compare target, widget confi
 Execution/runtime transport remains a separate seam with explicit request/response/error ownership before spawn. FileSafe may block terminal-first, Unix-native, single-snippet, and `/browser-runner` flows that depend on direct `/bin/sh`, Unix signals, VTE/TTY, `/input/cursor/selection`, IME, platform-specific `/reveal`, `/compile`, runtime `/auth` or `/polling`, asset serving, persistence, remote `/bootstrap`, packaging/startup, or macOS/Linux/Windows portability assumptions when those paths would bypass canonical scope, recovery, or event logging.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
-

@@ -2,20 +2,20 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L148-L158
+Source lines: L982-L992
 
-Source SHA256: `faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6`
+Source SHA256: `ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `a37ba96cc71a9c228151f80b446bc4037ca424e89484d2e58574674882e45efa`.
+Original hash: `faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `interview-subagent-integration-S0001` through `interview-subagent-integration-S0011` are preserved in place and mapped in `coverage_map.jsonl` to `ISI-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 083 atomized `interview-subagent-integration-S0004` through `interview-subagent-integration-S0011` into `ISI-002` through `ISI-018`, with dense change-summary, runtime-boundary, question, requested/effective, and handoff spans split where safe. `interview-subagent-integration-S0001`, `interview-subagent-integration-S0002`, `interview-subagent-integration-S0003`, `interview-subagent-integration-S0012`, `interview-subagent-integration-S0013`, and `interview-subagent-integration-S0015` are structural or reference dispositions. `ISI-001` is retired as migration-lineage compatibility coverage for `interview-subagent-integration-S0014`; `Plans/interview-subagent-integration.md` has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

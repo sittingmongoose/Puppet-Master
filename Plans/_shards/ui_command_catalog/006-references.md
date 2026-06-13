@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1112-L1206
+Source lines: L1112-L1205
 
-Source SHA256: `ad58b1dca161fb370311eca7ca7375897f23379170f0dfd4884b0dd6dfe9ac0d`
+Source SHA256: `00e380b6cdbb2a8aa93a389640fe144613ef220028731cc2b333edef29e8aae3`
 
 ---
 
@@ -102,4 +102,3 @@ Behavioral rules:
 
 Permission carry-through:
 - ordered `allowed_action_ids[]`
-

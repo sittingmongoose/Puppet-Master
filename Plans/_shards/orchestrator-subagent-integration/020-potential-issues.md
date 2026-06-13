@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1114-L1204
+Source lines: L1114-L1203
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -98,4 +98,3 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 - **Mitigation:** (1) Persona edits apply to any subagent name that exists in the current list (imported from provider-native seed files or user-created in Puppet Master storage). The canonical content lives in Puppet Master Persona storage; do not maintain a second runtime source in config. (2) Optionally cap length of editable Persona instruction/description content in UI and storage workflows (e.g. 500-1000 chars for inline override affordances) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (canonical Puppet Master Persona content, with optional re-import/trim refresh) in both orchestrator and interview.
 
 ---
-

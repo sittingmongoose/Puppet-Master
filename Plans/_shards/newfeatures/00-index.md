@@ -1,20 +1,20 @@
 # Shard Index: Plans/newfeatures.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `b46d359ded962173811457fe246b6e2bd40d8becada3ebe8ab34c77c8b8e86a4`
-- [002 - Plan Document Status](002-plan-document-status.md) L4-L7 `7b2928df28c443ba9feff0af614a0fa1c8ba1ece137944c4faa8d26d514ded20`
-- [003 - Rewrite alignment (2026-03-17)](003-rewrite-alignment-2026-03-17.md) L8-L24 `f63daf58e339f1eedb02ddc94178190ed5e2efd5af85146080cb35874e245e98`
-- [004 - Executive Summary](004-executive-summary.md) L25-L27 `b0f60dbf87693c3f5ea49cee16d5d7cb5f32e917a8e8bf42a80a32b276f5223b`
-- [005 - High-level feature themes](005-high-level-feature-themes.md) L28-L54 `b8fad463fae8b33d9c5bd7b0f98186299e87daec69305991c9c8d80b56077c0e`
-- [006 - 24. Browser preview and code-context integration](006-24.-browser-preview-and-code-context-integration.md) L55-L70 `34abb3945df34e0b7be65c8aac3efbf3edfc6928afd274924174797c91df97d7`
-- [007 - Web tools, provider routing, and shared UI alignment addendum (2026-04-04)](007-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026.md) L71-L87 `46ba7a34445deece72bcfb4df0329d82aedd975097c242ca23d523805dbd0392`
-- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L88-L93 `cfe031e82831d27633bfde56b299d5f699244e1b2f4fca5c97deb47f7b455bef`
-- [009 - PlanUnits](009-planunits.md) L94-L188 `1692642c4e1807cd6d2bef822292fa74788dc716c6a78a572ef6be05dcf335de`
-- [010 - Migration Coverage](010-migration-coverage.md) L189-L199 `9d7b2b21a840f9263fe7ffad96519abbb68a1296377ab61ac0e1f9605054df6e`
+- [001 - Preamble](001-preamble.md) L1-L1 `506748f3ede6a588e62eb1d5210ba3879e4753f91bd7dd4dea7d5ade94ede29d`
+- [002 - Plan Document Status](002-plan-document-status.md) L4-L6 `399ba8cbe815b0f4a17c113f1b7aabb98562a9bf044877c1c77e0aac6c88a793`
+- [003 - Rewrite alignment (2026-03-17)](003-rewrite-alignment-2026-03-17.md) L8-L23 `098819283953e5acd8cf3fbb798659ad0441a644b28ed8dfd9c26776500b0b0b`
+- [004 - Executive Summary](004-executive-summary.md) L25-L26 `252817f7765b611740769f3aa480381dfe8019a090b6c99f5367123a2829508a`
+- [005 - High-level feature themes](005-high-level-feature-themes.md) L28-L53 `1b07956b2dfe95f04b561c738a056c002b85ddfa54a7f69de0cfdb058214755d`
+- [006 - 24. Browser preview and code-context integration](006-24.-browser-preview-and-code-context-integration.md) L55-L69 `bbf18c52c03e669f8adaf5e883a30a1faba2f6221b54f38337635e43a7d4f9e4`
+- [007 - Web tools, provider routing, and shared UI alignment addendum (2026-04-04)](007-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026.md) L71-L86 `a405981fe715336bb44b6d0b2c0027a8f420e0db66653f6ba0150d9d5876434a`
+- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L88-L92 `fe12a60dc2802e69be4b4c46b8933d74d987b6037ee4e05be2c04fdfa25c2ef9`
+- [009 - PlanUnits](009-planunits.md) L94-L1200 `285d2ab6ee5a87e191b1e57199c423094432e56969430255e3ef898f3faf26fa`
+- [010 - Migration Coverage](010-migration-coverage.md) L1202-L1212 `05a3a411680de00f96754038469d746841a566db1163f07181849297ef22d64e`

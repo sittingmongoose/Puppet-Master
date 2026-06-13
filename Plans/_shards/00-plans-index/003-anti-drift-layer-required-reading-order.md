@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L18-L176
+Source lines: L18-L175
 
-Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
+Source SHA256: `28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f`
 
 ---
 
@@ -166,4 +166,3 @@ This index records these routing relationships only; it does not re-own contract
 - Runtime-recovery duplicate-canon seam: `runtime-recovery` addenda and same-file canon duplication are cleanup inputs for `Plans/Crosswalk.md`, `Plans/human-in-the-loop.md`, and `Plans/storage-plan.md`; this index records routing only and does not make duplicated addenda canonical.
 - Runtime scheduler/executor blocked-sequence seam: `blocked_sequence` is owned by the runtime scheduler/executor layer through `Plans/Executor_Protocol.md` and `Plans/Contracts_V0.md`; UI/HITL/chat/storage docs, including the legacy `/HITL/chat/storage` bucket shorthand, are consumers and must not re-own the blocked episode.
 - Orchestrator subagent coordination-canon seam: `Plans/orchestrator-subagent-integration.md` owns live `coordination-canon` contradictions in its runtime scheduler consumer model; same-file contradictions must be resolved there before `Plans/FileManager.md` or index consumers mirror them.
-

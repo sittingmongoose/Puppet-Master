@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L36-L130
+Source lines: L36-L129
 
-Source SHA256: `e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36`
+Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
 
 ---
 
@@ -102,4 +102,3 @@ Malformed tool-call JSON is validated when the bridge stores or admits the tool-
 Gemini CLI account, `/session/config`, subagents, extensions, model routing, telemetry, and `OTLP` output are CLI-bridged provider surfaces rooted under the selected `GEMINI_CLI_HOME`. PM must provision and launch the account root through the account resolver, then surface requested/effective model-routing evidence instead of collapsing Gemini CLI state into the direct Gemini provider entry. Gemini CLI probe evidence may include `ACP`, headless prompt mode, JSON `/stream-json` output, policy loading, MCP, extensions, hooks, and native skill management; PM records those as provider-protocol capabilities instead of assuming they are available for every account or auth family.
 
 `ACP` is tracked as provider-protocol capability metadata for CLI-bridged adapters. Cursor `ACP` support supersedes stale assumptions in `Plans/rewrite-tie-in-memo.md` that Cursor cannot expose ACP; PM still keeps provider ontology, account identity, and transport/runtime boundaries separate, so ACP support does not turn Cursor into a PM orchestration node and does not replace account-root isolation.
-

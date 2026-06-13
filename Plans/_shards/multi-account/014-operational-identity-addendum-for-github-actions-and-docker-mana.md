@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L757-L772
+Source lines: L757-L771
 
-Source SHA256: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`
+Source SHA256: `ef69b571982bda45fb2c7d166d4bc5c319e1cae036edf9cec63593a653cc94e7`
 
 ---
 
@@ -23,4 +23,3 @@ Rules:
 - requested vs effective state remains visible when an identity exists but capability is partial
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md
-

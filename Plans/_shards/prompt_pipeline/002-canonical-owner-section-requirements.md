@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L4-L13
+Source lines: L4-L12
 
-Source SHA256: `ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc`
+Source SHA256: `8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754`
 
 ---
 
@@ -17,4 +17,3 @@ These requirements are canonical live specification text for this owner document
 
 - Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2393-L2537
+Source lines: L2393-L2536
 
-Source SHA256: `15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021`
+Source SHA256: `829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb`
 
 ---
 
@@ -152,4 +152,3 @@ ContractRef: Parent orchestration MUST preserve required-vs-optional child depen
 
 Blocked state means external or runtime constraints prevent progress. `awaiting_parent` means the child is paused pending parent decision, clarification, context expansion, or user response. These are not interchangeable.
 ContractRef: `blocked` and `awaiting_parent` MUST remain distinct canonical runtime meanings across permissions, events, chat projection, and recovery. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; assistant-chat-design.md#14-subagents--crew]
-

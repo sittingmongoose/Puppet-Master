@@ -2,12 +2,10 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1`
+Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
 
 ---
 
 # Usage Feature -- App/GUI Plan
-
-

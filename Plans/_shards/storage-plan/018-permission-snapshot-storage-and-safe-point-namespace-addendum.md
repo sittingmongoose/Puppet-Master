@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2131-L2163
+Source lines: L2131-L2162
 
-Source SHA256: `e511858de8d0a127d40bda1e315d00ac4987efaaa217bddbf3de189ca16e46da`
+Source SHA256: `724d991489b78694bdb30f7995fb3ffdb72cce1ee0c4e629e0b26ee66bfbe6b1`
 
 ---
 
@@ -40,4 +40,3 @@ Safe points and restore points use distinct storage key prefixes:
 These namespaces MUST NOT overlap. Queries for safe points MUST use the `sp:` prefix; queries for restore points MUST use the `rp:` prefix.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/newfeatures.md, ContractName:Plans/Contracts_V0.md
-

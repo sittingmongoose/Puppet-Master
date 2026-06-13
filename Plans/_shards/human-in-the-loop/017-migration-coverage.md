@@ -2,20 +2,20 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L596-L606
+Source lines: L2397-L2407
 
-Source SHA256: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b`
+Source SHA256: `258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `1d422c28121f5136cf861604a3df266fb3bb96deca8fc1dd177205c530863fb9`.
+Original hash: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `human-in-the-loop-S0001` through `human-in-the-loop-S0044` are preserved in place and mapped in `coverage_map.jsonl` to `HITL-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 081 atomized `human-in-the-loop-S0001` through `human-in-the-loop-S0043` into `HITL-002` through `HITL-033`, with dense shared-runtime, recovery-label, run-loop, tier-retirement, and recovery-action spans split where safe. Phase 2B batch 082 atomized `human-in-the-loop-S0044` into `HITL-034` and `HITL-035`, structurally dispositioned `human-in-the-loop-S0045`, `human-in-the-loop-S0046`, and `human-in-the-loop-S0048`, and retired `HITL-001` as migration-lineage compatibility coverage for `human-in-the-loop-S0047`. `Plans/human-in-the-loop.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

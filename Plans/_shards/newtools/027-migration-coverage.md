@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1512-L1522
+Source lines: L8591-L8601
 
-Source SHA256: `6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9`
+Source SHA256: `f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2`
 
 ---
 
@@ -13,9 +13,9 @@ Source SHA256: `6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9
 Original hash: `e71a3c15b076255cc614c4ef56c333212e88f0cb72c6d02b58af24ebe454f904`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `newtools-S0001` through `newtools-S0078` are preserved in place and mapped in `coverage_map.jsonl` to `N2-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batches 104 through 107 atomized source spans `newtools-S0002` through `newtools-S0078` into fine-grained PlanUnits `N2-002` through `N2-150`, except for structural, reference-only, and migration-lineage dispositions. `newtools-S0001`, `newtools-S0007`, `newtools-S0013`, `newtools-S0017`, `newtools-S0030`, `newtools-S0035`, `newtools-S0057`, `newtools-S0072`, `newtools-S0073`, and `newtools-S0076` are structurally or reference-only dispositioned; `newtools-S0034` is fully covered by `N2-048` and `N2-049`; `newtools-S0052` is split across `N2-096`, `N2-097`, and `N2-098`. `N2-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

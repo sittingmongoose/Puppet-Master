@@ -2,12 +2,10 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 ---
 
 # New Features Implementation Plan
-
-

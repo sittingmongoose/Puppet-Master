@@ -2,9 +2,9 @@
 
 Source: `Plans/feature-list.md`
 
-Source lines: L198-L212
+Source lines: L198-L211
 
-Source SHA256: `698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c`
+Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
 
 ---
 
@@ -22,4 +22,3 @@ Summary:
 - refined tool behavior for web, LSP, skill, permission, planning/TODO, question, operation-card, and visualizer summaries defers to the repaired owner sections
 - Feature-list summaries remain consumers of those owner docs for repaired web, question, tool, TODO, permission, operation-card, and visualizer behavior; summary copy must stay accurate to the owner sections instead of restating lower-level contracts.
 - Help and teaching surfaces may expose `Feature Seam` through user-facing ELI5 language in `/help`, but that aliasing cannot rename the canonical graph object or hide the owning feature-seam contract.
-

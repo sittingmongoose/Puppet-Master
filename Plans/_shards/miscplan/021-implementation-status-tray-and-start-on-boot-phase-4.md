@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1277-L1284
+Source lines: L1277-L1283
 
-Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4`
+Source SHA256: `6d7bc55edd7df066ae075e61cfca78603323fa5c3048f195fa4cd18e55430cc2`
 
 ---
 
@@ -15,4 +15,3 @@ Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4
 - **Summary:** Tray minimize-to-tray fix and start-on-boot setting (Linux/macOS/Windows).  
 - **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
 - **Commands run:** cargo check, cargo test (in puppet-master-rs).
-

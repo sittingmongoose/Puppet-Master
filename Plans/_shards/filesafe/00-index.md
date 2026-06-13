@@ -1,39 +1,39 @@
 # Shard Index: Plans/FileSafe.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214`
+Source SHA256: `ce8a36a9373b073b4bed0c7aaaa342feae332bdd0f84f032c32a673b65ee402b`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L10 `10890d43a1ebc18558b5530b308e3f2f5b65ee076a956fce9c4edaa6b4113800`
-- [002 - DRY Method Compliance](002-dry-method-compliance.md) L11-L22 `eee5ceb2814882bb1b96456b5f1ce6b07761353788cae54f56f23f5aab3993e8`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L23-L69 `22e011e5fe9e38e2f186d2b721f9820bc45cb03674dfa9570e80b1ea22cf1626`
-- [004 - Executive Summary](004-executive-summary.md) L70-L102 `22997531076bb69b27b55a6d1d3d6cbe5b481afc0b82d95341cfccfc8bd851b2`
-- [005 - Table of Contents](005-table-of-contents.md) L103-L115 `aaafe0c5f83feef46a7d901b004ab00847323da2028b98e9a0c043d08ff950c8`
-- [006 - 1. Architecture Overview](006-1.-architecture-overview.md) L116-L166 `aa816a4d110e5388f98c35c0f4b36641c4374d31b2f708db6af5c0606c281947`
-- [007 - 2. Implementation Details](007-2.-implementation-details.md) L167-L658 `9a3aa662657055995686ebb935b5c290eab7c96145ef944a50a5d6007f71c208`
-- [008 - 3. Integration with Platform Runner](008-3.-integration-with-platform-runner.md) L659-L873 `40dc70c5fb797be594b62d3109545986dc644aed23b9baa2fb49b45c0f13f7f2`
-- [009 - 4. Pattern File](009-4.-pattern-file.md) L874-L956 `e4b7b541815fdc2695869b853615bc71faa1ab9f0a1fb55ce57da2e882e07000`
-- [010 - 5. Configuration Options](010-5.-configuration-options.md) L957-L1006 `3a2e3bf903007ace54eb10271f5f3c1a48c0e79f2b29777e31f1aca02683517c`
-- [011 - 6. Event Logging](011-6.-event-logging.md) L1007-L1040 `73db36921fa2330b41149eef06c8af237d890b3bd458d642d4868749b3462274`
-- [012 - 7. Error Messages](012-7.-error-messages.md) L1041-L1065 `f17e8f035bd9c9c3e94e402e5835878fc19bc560a583e109c6a3d51f720eac58`
-- [013 - 8. Testing](013-8.-testing.md) L1066-L1169 `f21bd547b008ef68553d6ae4043b0f1ca70764c414d2f8cd410ae4078e42f21e`
-- [014 - 9. Implementation Checklist](014-9.-implementation-checklist.md) L1170-L1242 `7416c411dcc2c6d7e385ef2787065bca33be870d3b79b8d1dd09c29d6aa16880`
-- [015 - 10. Relationship to Other Plans](015-10.-relationship-to-other-plans.md) L1243-L1271 `a0862bf2372e5aa6413ed858425aadbebc75e139cccc3bbb9ec9c9062eaa91e7`
-- [016 - 10a. FileSafe and Assistant YOLO mode](016-10a.-filesafe-and-assistant-yolo-mode.md) L1272-L1288 `6a41a90edfa1e61654ccc18c7b21ded26a134cf18bf6ad7b2bef571df915f6fe`
-- [017 - 11. Additional FileSafe Features](017-11.-additional-filesafe-features.md) L1289-L1756 `048a339c60bb347f9287aa37ff1038512c3c1de23fe0fdbb1af4794548f37823`
-- [018 - 12. Gaps and Potential Issues](018-12.-gaps-and-potential-issues.md) L1757-L1835 `42ee091a29c2a662591c2057e6f5e6da1849846eb4e2063e28f12e6c5bbe531a`
-- [019 - 13. Enhancements](019-13.-enhancements.md) L1836-L1899 `af80b49a4c3cbdcef901c4d785270a71e2ca7aebd90585baa1581ed69fa03611`
-- [020 - 14. Historical note on moved context-compilation canon](020-14.-historical-note-on-moved-context-compilation-canon.md) L1900-L1917 `3912a9ccbb744b7336e34f3d1098c862e7f996763994b15b7fd1decfffb834b2`
-- [021 - 15. System Integration Analysis](021-15.-system-integration-analysis.md) L1918-L2536 `eb5dfccb7516017277208ba20d26211f09207ee9a6b2f00f13e45e3e36c1eabd`
-- [022 - 16. References](022-16.-references.md) L2537-L2555 `36ab652d3573834847a8f568ac0c771c41e01d38d13b43c8b24aa2d3c568a95d`
-- [023 - 17. Implementation Order and Dependencies](023-17.-implementation-order-and-dependencies.md) L2556-L2601 `dec602ac46f72041df7c94318675f22e367e865000736cea8679b56817934423`
-- [024 - Runtime Blocked-State Integration Addendum (2026-03-08)](024-runtime-blocked-state-integration-addendum-2026-03-08.md) L2602-L2657 `b09da545ac3b49b8e96a2e61b6d04ca076e363f55864fa1edc9142c319101ad8`
-- [025 - FileSafe Blocked Outcome Alignment Addendum (2026-03-09)](025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) L2658-L2668 `c201662e3970d4757e8bc580a372af94e421e55a71e8df0e01d5978b965c8479`
-- [026 - FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)](026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md) L2669-L2711 `05a9aad0cee136e8de56a5823bfc0d1201322cabf24b616f2cb649f298a155ce`
-- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2712-L2717 `80e310dcd21a92f5586c65ab9fc31f5f43711a908ab0b67a31aca9f559b2f88d`
-- [028 - PlanUnits](028-planunits.md) L2718-L2966 `f5eaf26495a7cd3cc14fe39f93cc0d42299d3af9501e10cc21d2e190abb1eced`
-- [029 - Migration Coverage](029-migration-coverage.md) L2967-L2977 `dd5ee24b0c0c086191301c49ceffa3f010b3991b47d03e33f50a52eee6b02d33`
+- [001 - Preamble](001-preamble.md) L1-L9 `4ad370d214e2412aa3f34e6f4e1386f6ed8e76094730d02cc694f70d8a4ea743`
+- [002 - DRY Method Compliance](002-dry-method-compliance.md) L11-L21 `9d53a361df7d55fafb41bb4446bc98b31d0ec299e7d0c0c52bb580744684aa51`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L23-L68 `6eb0261d903a99a0c4ec11407f07fa44d97ca0060b1405f7f73ce5024c5fd462`
+- [004 - Executive Summary](004-executive-summary.md) L70-L101 `ac4747554dfa9102660758dba67b41449a7eadd261d2b46a85c2451aeee81fa4`
+- [005 - Table of Contents](005-table-of-contents.md) L103-L114 `1290042dfcaec712952592eeedea1d8e82c185b91f161a214230969d0dc9e257`
+- [006 - 1. Architecture Overview](006-1.-architecture-overview.md) L116-L165 `309700e419bc71d0ba9bcdda2755b37d6c2183abe279ab0c5e4393b09c0738a7`
+- [007 - 2. Implementation Details](007-2.-implementation-details.md) L167-L657 `db9225f05dcfd46b4420ddbf5b6964e781f66ca185ec21a7f42e0d814fdb7b57`
+- [008 - 3. Integration with Platform Runner](008-3.-integration-with-platform-runner.md) L659-L872 `e03249e753a1e0d39ed3f45cf23ffa8d24a6bbeef21a706228feb6da52e179a9`
+- [009 - 4. Pattern File](009-4.-pattern-file.md) L874-L955 `dc84e93a5b460a1a5a049216d46fe885b27701ca50a24d36bcc2f9813c2bc050`
+- [010 - 5. Configuration Options](010-5.-configuration-options.md) L957-L1005 `1e6d14efa616ad563e3ecb9d9323c320a81f971d82437a64f8fea9ddb5dfae2d`
+- [011 - 6. Event Logging](011-6.-event-logging.md) L1007-L1040 `d5b415eba121d426c04cf506da358356d695182fd34b455764cece3d08d32798`
+- [012 - 7. Error Messages](012-7.-error-messages.md) L1041-L1064 `d2d0ae0b66bfadd15a4e78d7b13dac3ab467b90c2c0ed69db021ddc60504d8ef`
+- [013 - 8. Testing](013-8.-testing.md) L1066-L1168 `9cf70a5c7f3ba95111922c3c78d90413d955f1470e0d925807eeba720c621485`
+- [014 - 9. Implementation Checklist](014-9.-implementation-checklist.md) L1170-L1242 `54db2091afbe045f19458ceaf0ba3fe6102194bd4facacc9c6ef85c76936e400`
+- [015 - 10. Relationship to Other Plans](015-10.-relationship-to-other-plans.md) L1243-L1270 `d8dcf7b943cc2d24094ba243e5cb03cd0f7dfd5ac31fc1e0874f287c6938f181`
+- [016 - 10a. FileSafe and Assistant YOLO mode](016-10a.-filesafe-and-assistant-yolo-mode.md) L1272-L1287 `1c063c55255cdb90bf565f4f530d47601355fd2c85f850295b770abe476189e9`
+- [017 - 11. Additional FileSafe Features](017-11.-additional-filesafe-features.md) L1289-L1755 `1fa730e284d57e2e23f9f1caa4c6cde28c790b5679337010c1cd48f52dabf385`
+- [018 - 12. Gaps and Potential Issues](018-12.-gaps-and-potential-issues.md) L1757-L1834 `1a4215dba7128699086d54dbfa5654381b50e057d12f08517f957cf059687161`
+- [019 - 13. Enhancements](019-13.-enhancements.md) L1836-L1898 `c3c3a087e91a1c9794390d6eb426a8ce6a60b14c35144d2df76948c0646bd2da`
+- [020 - 14. Historical note on moved context-compilation canon](020-14.-historical-note-on-moved-context-compilation-canon.md) L1900-L1916 `741443e7056b6ec9fee0c551acf0e12f9c05b356b6472e4cc5dad595a317fab3`
+- [021 - 15. System Integration Analysis](021-15.-system-integration-analysis.md) L1918-L2536 `84a260689f79491d6511ba073ba7d95b08272a4f9a548fbbd88c7b4483866791`
+- [022 - 16. References](022-16.-references.md) L2537-L2554 `9a63fc1838deb97bf69144a27ea95d31a4ce1ced45ed9bee06b0f8462efa1ef7`
+- [023 - 17. Implementation Order and Dependencies](023-17.-implementation-order-and-dependencies.md) L2556-L2600 `f9b15e7a54be5f51084dd3b1fd06251273730f98f27782c55ee7c23145550c7b`
+- [024 - Runtime Blocked-State Integration Addendum (2026-03-08)](024-runtime-blocked-state-integration-addendum-2026-03-08.md) L2602-L2657 `a0f30091657e0156bcbc205e4da341f2f596a91499fb8a83c764cfd68b079fbf`
+- [025 - FileSafe Blocked Outcome Alignment Addendum (2026-03-09)](025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) L2658-L2668 `846d02eb358f2180c6e5df066aa68c6e386b5c5472d48c0771e5bae8f3078ceb`
+- [026 - FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)](026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md) L2669-L2710 `ab1fe10b5efe9d1ec5a781e4a8980772796f464fee3ccbb3e1c6aa178168b64f`
+- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2712-L2716 `fcbddf6635d423aba71656b2f03aa8b2adce4ea785f9319bb6921613e97a41a4`
+- [028 - PlanUnits](028-planunits.md) L2718-L12972 `c5a6aa5c231980700e3f7aa8f981cb5eead7fb0b280d01cdf4219aa34eee118e`
+- [029 - Migration Coverage](029-migration-coverage.md) L12974-L12984 `a2bab6ddf50d0c7d16ada12eef091f273e7b79621816f6165957c86e5d6d3bae`

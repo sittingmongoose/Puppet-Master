@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L34-L69
+Source lines: L34-L68
 
-Source SHA256: `6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9`
+Source SHA256: `f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2`
 
 ---
 
@@ -43,4 +43,3 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
    - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`
 
 ---
-

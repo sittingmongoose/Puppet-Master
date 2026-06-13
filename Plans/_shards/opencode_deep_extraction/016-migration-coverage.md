@@ -2,20 +2,20 @@
 
 Source: `Plans/OpenCode_Deep_Extraction.md`
 
-Source lines: L961-L971
+Source lines: L4596-L4606
 
-Source SHA256: `a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21`
+Source SHA256: `94d90e1b96e4279245b315d43a1d76e793ad806e933f30d16a15e2dc82442b8b`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `5bac461d5373c11d1990980310ef3502de74ad5370c8b496d9cf1413a8df6409`.
+Original hash: `a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `OpenCode_Deep_Extraction-S0001` through `OpenCode_Deep_Extraction-S0070` are preserved in place and mapped in `coverage_map.jsonl` to `ODE-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Original spans `OpenCode_Deep_Extraction-S0001` through `OpenCode_Deep_Extraction-S0070` are atomized or structurally dispositioned in the active coverage map. `ODE-001` is retired to migration-lineage-only compatibility disposition and no longer carries source-preserving product coverage. The Owner / Consumer Map, PlanUnits, and Migration Coverage metadata spans are structurally dispositioned. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.

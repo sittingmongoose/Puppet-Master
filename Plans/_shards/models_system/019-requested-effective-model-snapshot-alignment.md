@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1130-L1159
+Source lines: L1130-L1158
 
-Source SHA256: `c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c`
+Source SHA256: `bcf41bf5ec3cf129fbb96225f82075c1171231ba75be555ae4921259568a1b43`
 
 ---
 
@@ -37,4 +37,3 @@ Minimum Default Crew settings model:
 - immediate normalization of the whole crew to `Copilot` when any member selects Copilot, because Copilot is a crew-level provider selection constraint and is not a per-member freely mixed provider in the default crew editor
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
-

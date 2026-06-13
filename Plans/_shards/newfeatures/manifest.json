@@ -1,104 +1,104 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/newfeatures/00-index.md",
-  "index_sha256": "efd9eace0feb48a10cf9f785d316c0bcca7b538fce1091b254e761525de22c19",
+  "index_sha256": "597b24f9923d3617ba33e2ca9b6c700079bd78f9d1a4c647ebe911542e8d51aa",
   "manifest_path": "Plans/_shards/newfeatures/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/newfeatures/001-preamble.md",
-      "sha256": "b46d359ded962173811457fe246b6e2bd40d8becada3ebe8ab34c77c8b8e86a4",
+      "sha256": "506748f3ede6a588e62eb1d5210ba3879e4753f91bd7dd4dea7d5ade94ede29d",
       "shard_id": "001",
-      "source_line_end": 3,
+      "source_line_end": 1,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/newfeatures/002-plan-document-status.md",
-      "sha256": "7b2928df28c443ba9feff0af614a0fa1c8ba1ece137944c4faa8d26d514ded20",
+      "sha256": "399ba8cbe815b0f4a17c113f1b7aabb98562a9bf044877c1c77e0aac6c88a793",
       "shard_id": "002",
-      "source_line_end": 7,
+      "source_line_end": 6,
       "source_line_start": 4,
       "split_rule": "heading-##"
     },
     {
       "heading": "Rewrite alignment (2026-03-17)",
       "path": "Plans/_shards/newfeatures/003-rewrite-alignment-2026-03-17.md",
-      "sha256": "f63daf58e339f1eedb02ddc94178190ed5e2efd5af85146080cb35874e245e98",
+      "sha256": "098819283953e5acd8cf3fbb798659ad0441a644b28ed8dfd9c26776500b0b0b",
       "shard_id": "003",
-      "source_line_end": 24,
+      "source_line_end": 23,
       "source_line_start": 8,
       "split_rule": "heading-##"
     },
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/newfeatures/004-executive-summary.md",
-      "sha256": "b0f60dbf87693c3f5ea49cee16d5d7cb5f32e917a8e8bf42a80a32b276f5223b",
+      "sha256": "252817f7765b611740769f3aa480381dfe8019a090b6c99f5367123a2829508a",
       "shard_id": "004",
-      "source_line_end": 27,
+      "source_line_end": 26,
       "source_line_start": 25,
       "split_rule": "heading-##"
     },
     {
       "heading": "High-level feature themes",
       "path": "Plans/_shards/newfeatures/005-high-level-feature-themes.md",
-      "sha256": "b8fad463fae8b33d9c5bd7b0f98186299e87daec69305991c9c8d80b56077c0e",
+      "sha256": "1b07956b2dfe95f04b561c738a056c002b85ddfa54a7f69de0cfdb058214755d",
       "shard_id": "005",
-      "source_line_end": 54,
+      "source_line_end": 53,
       "source_line_start": 28,
       "split_rule": "heading-##"
     },
     {
       "heading": "24. Browser preview and code-context integration",
       "path": "Plans/_shards/newfeatures/006-24.-browser-preview-and-code-context-integration.md",
-      "sha256": "34abb3945df34e0b7be65c8aac3efbf3edfc6928afd274924174797c91df97d7",
+      "sha256": "bbf18c52c03e669f8adaf5e883a30a1faba2f6221b54f38337635e43a7d4f9e4",
       "shard_id": "006",
-      "source_line_end": 70,
+      "source_line_end": 69,
       "source_line_start": 55,
       "split_rule": "heading-##"
     },
     {
       "heading": "Web tools, provider routing, and shared UI alignment addendum (2026-04-04)",
       "path": "Plans/_shards/newfeatures/007-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026.md",
-      "sha256": "46ba7a34445deece72bcfb4df0329d82aedd975097c242ca23d523805dbd0392",
+      "sha256": "a405981fe715336bb44b6d0b2c0027a8f420e0db66653f6ba0150d9d5876434a",
       "shard_id": "007",
-      "source_line_end": 87,
+      "source_line_end": 86,
       "source_line_start": 71,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/newfeatures/008-owner-consumer-map.md",
-      "sha256": "cfe031e82831d27633bfde56b299d5f699244e1b2f4fca5c97deb47f7b455bef",
+      "sha256": "fe12a60dc2802e69be4b4c46b8933d74d987b6037ee4e05be2c04fdfa25c2ef9",
       "shard_id": "008",
-      "source_line_end": 93,
+      "source_line_end": 92,
       "source_line_start": 88,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/newfeatures/009-planunits.md",
-      "sha256": "1692642c4e1807cd6d2bef822292fa74788dc716c6a78a572ef6be05dcf335de",
+      "sha256": "285d2ab6ee5a87e191b1e57199c423094432e56969430255e3ef898f3faf26fa",
       "shard_id": "009",
-      "source_line_end": 188,
+      "source_line_end": 1200,
       "source_line_start": 94,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/newfeatures/010-migration-coverage.md",
-      "sha256": "9d7b2b21a840f9263fe7ffad96519abbb68a1296377ab61ac0e1f9605054df6e",
+      "sha256": "05a3a411680de00f96754038469d746841a566db1163f07181849297ef22d64e",
       "shard_id": "010",
-      "source_line_end": 199,
-      "source_line_start": 189,
+      "source_line_end": 1212,
+      "source_line_start": 1202,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 199,
+    "line_count": 1212,
     "path": "Plans/newfeatures.md",
-    "sha256": "a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63"
+    "sha256": "650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988"
   }
 }

@@ -1,86 +1,86 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/usage-feature/00-index.md",
-  "index_sha256": "41eb29e8fd533c3f2bbcb8a4e5ce3cb565bd760ad6f50a6a654b8b34262dfd73",
+  "index_sha256": "cf2c5b5e226f76daa65302485eea0358f4bd1a332be3fc8606eeb2ce7f0cb08e",
   "manifest_path": "Plans/_shards/usage-feature/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/usage-feature/001-preamble.md",
-      "sha256": "cc2fcd16a448adaf4013c3180a21acf81bc92d608d2cf53c8db7d570b5ef03ea",
+      "sha256": "18cb5d129880bd391902d4c98d5ca7d918de7d701976be4ae07a755fa3eef9d7",
       "shard_id": "001",
-      "source_line_end": 3,
+      "source_line_end": 1,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/usage-feature/002-canonical-owner-section-requirements.md",
-      "sha256": "252f9043047ff84bb3d7de64c11a2cb1cbd5521e7eb7c77362c7b1d257134adf",
+      "sha256": "43039fd33fa29aafa15d62a4a205f1221ce3a09ae84a879a4b27a1350f2f9efe",
       "shard_id": "002",
-      "source_line_end": 20,
+      "source_line_end": 18,
       "source_line_start": 4,
       "split_rule": "heading-##"
     },
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/usage-feature/003-plan-document-status.md",
-      "sha256": "b2781f2b05e620d78050555754a29cf0c4d436988cc47af979b97bb0090b690e",
+      "sha256": "02006c3817510289253fdc51a329dfa4e67e10a6f9d09b9c1beecda2f6a96689",
       "shard_id": "003",
-      "source_line_end": 28,
+      "source_line_end": 27,
       "source_line_start": 21,
       "split_rule": "heading-##"
     },
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/usage-feature/004-rewrite-alignment-2026-02-21.md",
-      "sha256": "fe4a2f03cfeb237e64d3ee26ef6589dacc215e6bc9e45b1724636ece07331205",
+      "sha256": "2487ee38d069199a3977a51c17755d749b6a65b6044d59a373e6c296e9a45ae4",
       "shard_id": "004",
-      "source_line_end": 34,
+      "source_line_end": 33,
       "source_line_start": 29,
       "split_rule": "heading-##"
     },
     {
       "heading": "Storage dependency (implementation)",
       "path": "Plans/_shards/usage-feature/005-storage-dependency-implementation.md",
-      "sha256": "c626c1ab82906aa6aefed808eef65968ad9d194bd8df4fbf6b4f1cccf9927a8b",
+      "sha256": "ff49642fdaf45b674fc8d8854298076a65a9e64f49c69094db79d954670ba410",
       "shard_id": "005",
-      "source_line_end": 94,
+      "source_line_end": 93,
       "source_line_start": 35,
       "split_rule": "heading-##"
     },
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/usage-feature/006-executive-summary.md",
-      "sha256": "b4ebc724dbef3fc8bfe3bc4a4fa177b165b5bef48f78a5850943088405628f77",
+      "sha256": "429daf97cc38700ea3fb4744040f9d9ab38eff0277325834a3321c1c9835da8f",
       "shard_id": "006",
-      "source_line_end": 98,
+      "source_line_end": 97,
       "source_line_start": 95,
       "split_rule": "heading-##"
     },
     {
       "heading": "Relationship to Existing Docs",
       "path": "Plans/_shards/usage-feature/007-relationship-to-existing-docs.md",
-      "sha256": "2d7ee5a0daf750adfa56c50ae831826d3a706b1349c0419c4999b1cdd5e03bea",
+      "sha256": "629771c5e4e02f31dd8a0b722583a558a209f72143b6ad1139175a1d4aa93c9c",
       "shard_id": "007",
-      "source_line_end": 117,
+      "source_line_end": 116,
       "source_line_start": 99,
       "split_rule": "heading-##"
     },
     {
       "heading": "External References (Competitive & Ecosystem)",
       "path": "Plans/_shards/usage-feature/008-external-references-competitive-ecosystem.md",
-      "sha256": "ac774d4f4f9b7233388ab42fead0df841e52fea9748c1b25a947b8221002d171",
+      "sha256": "865570c442b614d37a9afb8fb157c23186dbf2f8f0c8b95c47becb44ea8dc6c7",
       "shard_id": "008",
-      "source_line_end": 127,
+      "source_line_end": 126,
       "source_line_start": 118,
       "split_rule": "heading-##"
     },
     {
       "heading": "Scope of the Usage Feature",
       "path": "Plans/_shards/usage-feature/009-scope-of-the-usage-feature.md",
-      "sha256": "c99a9e88f069608829fb6a4d109e1c05a76e1f6e80be2a2f4b08085530d16f5b",
+      "sha256": "5cc50ad7d74893b3a68fa567af60a8000888dec514efdf72656782f051077171",
       "shard_id": "009",
       "source_line_end": 374,
       "source_line_start": 128,
@@ -89,7 +89,7 @@
     {
       "heading": "Data and Backend (conceptual)",
       "path": "Plans/_shards/usage-feature/010-data-and-backend-conceptual.md",
-      "sha256": "49a1f89147ac8d1113135a12c527b51de4ea3c605e47767c514f371667f34b0a",
+      "sha256": "82da3162c9a1f4224c554131d256470bc751e0a24f3d310bbc8a981393ce029d",
       "shard_id": "010",
       "source_line_end": 415,
       "source_line_start": 375,
@@ -98,7 +98,7 @@
     {
       "heading": "GUI Placement Options",
       "path": "Plans/_shards/usage-feature/011-gui-placement-options.md",
-      "sha256": "9a3852a2e9afb1955752ab4237344f89df78b60383fd6cef89b1faab5d4eb85e",
+      "sha256": "6727a6440ed6721d5612b3abd916026c44d2b75a4f28114c5e9770d9f678f3ad",
       "shard_id": "011",
       "source_line_end": 433,
       "source_line_start": 416,
@@ -107,43 +107,43 @@
     {
       "heading": "Gaps (Current State vs. Desired)",
       "path": "Plans/_shards/usage-feature/012-gaps-current-state-vs.-desired.md",
-      "sha256": "a7e23369853fa7a84bbb48f0fd5b5af6faf9bada08517d0d4333bfa2ed4e3925",
+      "sha256": "484741e11974337ff3350fdfac95a663f954612b7aa1879e643d5b701977f2ac",
       "shard_id": "012",
-      "source_line_end": 644,
+      "source_line_end": 643,
       "source_line_start": 434,
       "split_rule": "heading-##"
     },
     {
       "heading": "Enhancements (Beyond Minimum)",
       "path": "Plans/_shards/usage-feature/013-enhancements-beyond-minimum.md",
-      "sha256": "ce5011954900ac5b14076be32628bb5cf7b687dde8ff9763866ee975d2b93f42",
+      "sha256": "b1cf2a51fac969981fb121a9f4631894baecc26a6810918fe717848e5971e51d",
       "shard_id": "013",
-      "source_line_end": 729,
+      "source_line_end": 728,
       "source_line_start": 645,
       "split_rule": "heading-##"
     },
     {
       "heading": "Out of Scope for This Plan",
       "path": "Plans/_shards/usage-feature/014-out-of-scope-for-this-plan.md",
-      "sha256": "cd0a46ab3b0ddeccd23db254707eba0ac689c01c23b260d57eb36db953047ab9",
+      "sha256": "b296c262b3c9c0463a6277ae9f94b8b2f2d78091939129d69fc794a9657c6a9a",
       "shard_id": "014",
-      "source_line_end": 735,
+      "source_line_end": 734,
       "source_line_start": 730,
       "split_rule": "heading-##"
     },
     {
       "heading": "Success Criteria",
       "path": "Plans/_shards/usage-feature/015-success-criteria.md",
-      "sha256": "20e3c3222a9e03ad383ed66c3a305fa1da29f333eb75b797cd11275840c3d591",
+      "sha256": "c2bd673e5d5abf0c90fd996010defb5aca8e4fcef84fd6dad0663746de8a610f",
       "shard_id": "015",
-      "source_line_end": 744,
+      "source_line_end": 743,
       "source_line_start": 736,
       "split_rule": "heading-##"
     },
     {
       "heading": "Version History",
       "path": "Plans/_shards/usage-feature/016-version-history.md",
-      "sha256": "d7ddc9ccd611963a9976bd8e6a12b204795a9d34617cc06aeeb588d2d9a8de88",
+      "sha256": "d16961c1a44c27f3c7367778413be47549b38e86512db5864242069b285bbdca",
       "shard_id": "016",
       "source_line_end": 760,
       "source_line_start": 745,
@@ -152,16 +152,16 @@
     {
       "heading": "Widget-Composed Page Layout (Addendum -- 2026-02-23)",
       "path": "Plans/_shards/usage-feature/017-widget-composed-page-layout-addendum-2026-02-23.md",
-      "sha256": "ecfc761a6873fc3f60e4a7d4e0fbd6fcd42f473955ec3f4c390ffde9984193f8",
+      "sha256": "bb0aa1cf4f211547e703eebf3c1335f5333f7eef2503b453127044566f2702fb",
       "shard_id": "017",
-      "source_line_end": 867,
+      "source_line_end": 866,
       "source_line_start": 761,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
       "path": "Plans/_shards/usage-feature/018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "sha256": "7ad632541269d0b356c190f13ba1b9618e381fdd0e9bab27cfe666eb24ad0a1b",
+      "sha256": "394aa8abef253a72d2b5245faa09a6507ae9f0e604e5384fe2aaf9bd75bbfdd0",
       "shard_id": "018",
       "source_line_end": 881,
       "source_line_start": 868,
@@ -170,52 +170,52 @@
     {
       "heading": "Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)",
       "path": "Plans/_shards/usage-feature/019-source-control-github-actions-and-docker-manager-cost-attributio.md",
-      "sha256": "d8601428e3b9be7c2363f50a9e71c44edccc5bf485a4fd6b7aafb6301a6f62c8",
+      "sha256": "2d3789ff10f516b631ce9ad090d06cc6b5b92df0589b8f27537900d4f9728591",
       "shard_id": "019",
-      "source_line_end": 900,
+      "source_line_end": 899,
       "source_line_start": 882,
       "split_rule": "heading-##"
     },
     {
       "heading": "Cross-Surface Usage Routing Clarifications",
       "path": "Plans/_shards/usage-feature/020-cross-surface-usage-routing-clarifications.md",
-      "sha256": "b875898e9197aa4de315958c7cb1eea161a6b0c57b4ed007372470c4f8fe85b1",
+      "sha256": "2e8f875ea28ffcf89596bd200d45daca0d780bc88c0a7e6465148839704ffb56",
       "shard_id": "020",
-      "source_line_end": 919,
+      "source_line_end": 918,
       "source_line_start": 901,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/usage-feature/021-owner-consumer-map.md",
-      "sha256": "c8eb2617671056e33a28aca1e540aab3f3a5d08814e72b70e701a11fc9a53361",
+      "sha256": "448360c961ababb0eadc4e003898a8403721ccc8985713712a5a895f9a58d836",
       "shard_id": "021",
-      "source_line_end": 925,
+      "source_line_end": 924,
       "source_line_start": 920,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/usage-feature/022-planunits.md",
-      "sha256": "9321ac8838db4b51ad08ee0bfe5255807e2f736cb3551de6ef2f2f5c49b8e64c",
+      "sha256": "d0cf435ed4722f24ffea39b848ac5c6844062dbbc2fae4536e86cbfd26cacd06",
       "shard_id": "022",
-      "source_line_end": 1165,
+      "source_line_end": 4991,
       "source_line_start": 926,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/usage-feature/023-migration-coverage.md",
-      "sha256": "6f6ea373d16e1077561dfb909e00dd5740a7bec781ddf14c906ae9ccbe13313d",
+      "sha256": "5a6fb69608cfa9abe90c755f7e97c6b5dcb1e0ab3e81d31aa50f09b381354718",
       "shard_id": "023",
-      "source_line_end": 1176,
-      "source_line_start": 1166,
+      "source_line_end": 5003,
+      "source_line_start": 4993,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1176,
+    "line_count": 5003,
     "path": "Plans/usage-feature.md",
-    "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1"
+    "sha256": "4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba"
   }
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1041-L1113
+Source lines: L1041-L1112
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -80,4 +80,3 @@ The codebase follows the **DRY method** (reuse-first) and uses a **widget catalo
 - [ ] **DRY / catalog:** Before implementing plan-mode and subagent GUI, read `docs/gui-widget-catalog.md` and use existing widgets where possible; tag new reusable widgets/helpers/data with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `generate-widget-catalog.sh` and `check-widget-reuse.sh` after UI changes.
 
 ---
-

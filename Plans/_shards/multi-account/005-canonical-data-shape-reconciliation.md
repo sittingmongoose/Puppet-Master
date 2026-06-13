@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L80-L108
+Source lines: L80-L107
 
-Source SHA256: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`
+Source SHA256: `ef69b571982bda45fb2c7d166d4bc5c319e1cae036edf9cec63593a653cc94e7`
 
 ---
 
@@ -36,4 +36,3 @@ Rules:
 - Cross-surface consumers may reuse the same requested/effective identity envelope, but they must preserve actor kind and execution context instead of collapsing everything into orchestration-only terms.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
-

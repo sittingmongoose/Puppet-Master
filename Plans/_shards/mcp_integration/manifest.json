@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/mcp_integration/00-index.md",
-  "index_sha256": "bdd18607a6ffd97f41ca1ec809c364935184c8eeb27f8615eb1565af49a19b5e",
+  "index_sha256": "c5c0ee79ab9b8d03e4122c73a6a84c4ec47c5e9e29ecf5ba11affecd7f03d3ef",
   "manifest_path": "Plans/_shards/mcp_integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/mcp_integration/001-preamble.md",
-      "sha256": "341e28c840e71cb37eed98ddc610ecd1e5fb01c029edd31f0800de8da079a91e",
+      "sha256": "2a0eb28f862c0528f0fb5f0d9bcde95e7a855ca944145e9f41c226ff917087e9",
       "shard_id": "001",
-      "source_line_end": 7,
+      "source_line_end": 6,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "1. Canonical naming",
       "path": "Plans/_shards/mcp_integration/002-1.-canonical-naming.md",
-      "sha256": "be4d6313f50e0033236380224a0c4428bc9288bd71fc750333ad77e183192902",
+      "sha256": "560b875233a59fd36c5bf3f1d95beb903eb25bc0a47c7607c91bb70f1ef847d4",
       "shard_id": "002",
       "source_line_end": 25,
       "source_line_start": 8,
@@ -26,7 +26,7 @@
     {
       "heading": "2. Requested versus effective availability",
       "path": "Plans/_shards/mcp_integration/003-2.-requested-versus-effective-availability.md",
-      "sha256": "eb00fb88b52b0e06c62f9ae965f62de0a62eb4f06b4fb863fe6bc92e09e39eae",
+      "sha256": "4da9e4c62e9c81f8320966409877419ae6dcea281fe28ca9830ae2e1c38c9d4f",
       "shard_id": "003",
       "source_line_end": 46,
       "source_line_start": 26,
@@ -35,7 +35,7 @@
     {
       "heading": "3. Credential binding and invalidation",
       "path": "Plans/_shards/mcp_integration/004-3.-credential-binding-and-invalidation.md",
-      "sha256": "94a22d8c2ec8bd6c526fdae74c3c4bc0b398f86fb306d893e2d361d17c0f394e",
+      "sha256": "1518ffe214449c665297b8eaab91f721c5e12bfa3b5a5177e0af9f0b61628729",
       "shard_id": "004",
       "source_line_end": 66,
       "source_line_start": 47,
@@ -44,70 +44,70 @@
     {
       "heading": "4. Cross-surface responsibilities",
       "path": "Plans/_shards/mcp_integration/005-4.-cross-surface-responsibilities.md",
-      "sha256": "7c2aafd6bfa25d31f2cc142072a5b845088b7aa5a7840238ed2f99fab099a03b",
+      "sha256": "9f8c2ff9c224555769fd87d01613209d17f69fafd09beabf03b59508287dfa91",
       "shard_id": "005",
-      "source_line_end": 80,
+      "source_line_end": 79,
       "source_line_start": 67,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Server config schema",
       "path": "Plans/_shards/mcp_integration/006-5.-server-config-schema.md",
-      "sha256": "1c35f79b488256b7b9016cb8ec16933f4a2c4288aa71841b5196939b9f80eca8",
+      "sha256": "e3a672c2727632376d5313acc4a3c3d11e807d02e1558c0c0a16d0c7d5288b02",
       "shard_id": "006",
-      "source_line_end": 142,
+      "source_line_end": 141,
       "source_line_start": 81,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. Supported flows",
       "path": "Plans/_shards/mcp_integration/007-6.-supported-flows.md",
-      "sha256": "b54d4787bb7d4998f289db2aaf598781aea74dc8995819b00c974e76f3a429ec",
+      "sha256": "374810ef0fcdef7e4291a4d5fa7bd190ab9ee45809020fa684361c945c76d4fe",
       "shard_id": "007",
-      "source_line_end": 154,
+      "source_line_end": 153,
       "source_line_start": 143,
       "split_rule": "heading-##"
     },
     {
       "heading": "7. Effective tool availability and GUI surfacing",
       "path": "Plans/_shards/mcp_integration/008-7.-effective-tool-availability-and-gui-surfacing.md",
-      "sha256": "f9e7478e0841efe383cfd3ef1b82678c6c77fbd80035113b6bde06d32926eddb",
+      "sha256": "9d226621f9ec080f37571670019b62ee849800da3d159c36c66767bbe6fde2f6",
       "shard_id": "008",
-      "source_line_end": 187,
+      "source_line_end": 186,
       "source_line_start": 155,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/mcp_integration/009-owner-consumer-map.md",
-      "sha256": "348a4bdf878f7f7d41bc7033eae58b48fa5cf217ebaeb1c6dfbaac4420ded2b8",
+      "sha256": "094e547c7b20aca2d41ef1297c1ccfd6088e54351f111ab4e83a100799d36105",
       "shard_id": "009",
-      "source_line_end": 193,
+      "source_line_end": 192,
       "source_line_start": 188,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/mcp_integration/010-planunits.md",
-      "sha256": "90a3bfbf4344bacbf49660df12140f159f1fccb75aabcddc92544c45277e3e44",
+      "sha256": "4f0d2a86e3844a06697cc66e0c9e518a1b4938cf0fa2e8ff4dbe20cad4c01930",
       "shard_id": "010",
-      "source_line_end": 288,
+      "source_line_end": 1911,
       "source_line_start": 194,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/mcp_integration/011-migration-coverage.md",
-      "sha256": "a37ed86354c2a30305b5443e5dab4a5075f55bbf59503b5afc18174450c91b5f",
+      "sha256": "29ed5292c5ff8c15b5bc89c78a5f90a5acff13d78ba4d556334285061094feaf",
       "shard_id": "011",
-      "source_line_end": 299,
-      "source_line_start": 289,
+      "source_line_end": 1923,
+      "source_line_start": 1913,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 299,
+    "line_count": 1923,
     "path": "Plans/MCP_Integration.md",
-    "sha256": "c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606"
+    "sha256": "20a0ff81e309c185f9c741064d9daaa379b9534633dcf46a00248fe5144b843f"
   }
 }

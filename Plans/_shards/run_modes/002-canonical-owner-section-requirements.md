@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L4-L10
+Source lines: L4-L9
 
-Source SHA256: `278c36fc1015a5ee27bf870d55c3f1147530f3880a98ebc4071ecc5e19ef74b0`
+Source SHA256: `482ca97d31afef9b1bfabbbf1e945ca82c136a7a650c002bcda64a1facdec58d`
 
 ---
 
@@ -14,4 +14,3 @@ These requirements are canonical live specification text for this owner document
 
 ### Identity and blocked-policy transfer cluster
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-

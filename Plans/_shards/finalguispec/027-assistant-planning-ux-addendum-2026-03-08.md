@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2694-L2804
+Source lines: L2694-L2803
 
-Source SHA256: `e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2`
+Source SHA256: `f0a581e7023cfbd53b256e790b691253eee4994e579048ac57160820c7253c62`
 
 ---
 
@@ -118,4 +118,3 @@ If a project is already active, the wizard should open on the preloaded feature/
 - When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
 - Accepting the CTA opens the Chain Wizard / Interview flow with visible imported context.
 - Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
-

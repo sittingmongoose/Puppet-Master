@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3370-L3428
+Source lines: L3370-L3427
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -66,4 +66,3 @@ Short notes so implementers know where to put code and what the orchestrator alr
 - "Check if subagent files exist before selection" is optional for v1. Cursor and other platforms may resolve subagent names internally (e.g. built-in or workspace config). If we later support custom agent files (e.g. under `.cursor/agents/` or similar), add a check then; for now, treat the canonical list as valid and let the platform CLI fail if a name is unsupported.
 
 ---
-

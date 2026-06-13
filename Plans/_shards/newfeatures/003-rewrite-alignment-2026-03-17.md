@@ -2,9 +2,9 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L8-L24
+Source lines: L8-L23
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 ---
 
@@ -24,4 +24,3 @@ The rewrite is aligned to these canonical decisions:
 - `feature-list`, `feature-list.md`, and `newfeatures.md` are broad drift amplifiers; their summaries must stay aligned to owner docs and cannot compress detailed rules, field schemas, examples, or operational policies into vague high-level copy.
 
 ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md
-

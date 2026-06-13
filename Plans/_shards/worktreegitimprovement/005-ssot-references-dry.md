@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L43-L56
+Source lines: L43-L55
 
-Source SHA256: `9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907`
+Source SHA256: `23cb0b72532edc27c0cba9ee984f576fc46cb3b7cbf9e463f5bc9841d4279154`
 
 ---
 
@@ -21,4 +21,3 @@ ContractRef: SchemaID:Spec_Lock.json, ContractName:Plans/DRY_Rules.md, ContractN
 **ELI5/Expert copy alignment:** Authored Git/worktree tooltip/help copy in this plan must provide both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. Use app-level **Interaction Mode (Expert/ELI5)** for variant selection; do not couple this to chat-level **Chat ELI5**.
 
 ---
-

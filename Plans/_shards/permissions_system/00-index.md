@@ -1,33 +1,33 @@
 # Shard Index: Plans/Permissions_System.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926`
+Source SHA256: `261b53b1f52cd493a20ed9021bf5b6942600cfbfbbc1bdba19e6a06cd018cb4e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `c5b6f2b3ee9c2fdb1c3e3738d105b9bfe26d6254420879fcb1d2e9078916840b`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `d59336f863dbce24beb5f5e65e601208edfcd878a7c72d50c832bf860f297a26`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L12-L33 `6855f206e781d695461b4e015ea175dfaff9bf9dc3fa1d8fc3df75dccc9b0fb4`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L34-L88 `e8ebb7a470e43d1de84e855c8d89c9ce820178c9103dd14e8075cd7f6f6474f9`
-- [005 - 1. Definitions and scope](005-1.-definitions-and-scope.md) L89-L170 `d179bfe1f7e0818bdfe88e6e582e16e9816a1d7bb4abe81c0bc3384df03855a6`
-- [006 - 2. Permission actions](006-2.-permission-actions.md) L171-L280 `50f0331bf35a91d097185c273f04ef23901e7774d1835a8b904e0b07c4b577c8`
-- [007 - 3. Granular rules](007-3.-granular-rules.md) L281-L404 `c6502e9240354e6633c59509a7141041c8dbb09ba9a3019800578c932825ebad`
-- [008 - 4. Special guards](008-4.-special-guards.md) L405-L454 `5c4aef2738991c89569732463612a2257177b68341e1b7cf7362713cfb2c0cd8`
-- [009 - 5. Tool permission keys](009-5.-tool-permission-keys.md) L455-L490 `c778c0255c75a127e4ecf819298474e81022d97a2e361b0a4c6b6d9292314570`
-- [010 - 6. Ask flow semantics](010-6.-ask-flow-semantics.md) L491-L589 `aae3698f62631a973d0a30777e43aff9ef275b8ea888cd48635a9583a17c6651`
-- [011 - 7. Deterministic defaults](011-7.-deterministic-defaults.md) L590-L621 `3744d369af1bb59de6e696d9be3d0763fab190344a7ef1a108e7cdcc85503aba`
-- [012 - 8. Resolution algorithm](012-8.-resolution-algorithm.md) L622-L669 `afcbe23a6c1675136a038fba2974db9d80703abb59abebb475e2b50034eb3f08`
-- [013 - 9. Persistence and storage](013-9.-persistence-and-storage.md) L670-L739 `9089d14190706f776a9d92f59d96bd5ccf3d5fa54977c4de4ee40d7a3a51a270`
-- [014 - 10. GUI requirements](014-10.-gui-requirements.md) L740-L894 `8f7c74d0992d56327988c0c92e181d8b9cafae6d7a800f45fbf5d781a06216dd`
-- [015 - 10A. Security model](015-10a.-security-model.md) L895-L925 `2602a943ef080051c2ff4ab2ea3f186ac106e950b6ce3ca29409b0b26e84c716`
-- [016 - 11. OpenCode baseline and Puppet Master deltas](016-11.-opencode-baseline-and-puppet-master-deltas.md) L926-L948 `20947ad8b4ba2e6c039872f975c74bccf6fedab67282c35732a3a91419a29a9e`
-- [017 - 12. Acceptance criteria](017-12.-acceptance-criteria.md) L949-L1001 `633bb8b55a9272de9e500e69f42f70b18568d38be5a97f87917cd6f404a966b7`
-- [018 - 12A. DockerHub / Unraid remote-side-effect guard addendum](018-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md) L1002-L1056 `5fc7ff684c8ec7b8c4ce24ab32b9d53dae5305ff4b14e70e1da2f6575e30cf10`
-- [019 - Runtime blocked-Outcome Integration Addendum (2026-03-08)](019-runtime-blocked-outcome-integration-addendum-2026-03-08.md) L1057-L1211 `63ba2b6180b75914a3408f33316723d51bbe1be02e8bcb20c6960ef3ccd13d65`
-- [020 - Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)](020-source-control-github-actions-and-docker-manager-permission-adde.md) L1212-L1239 `bb8497b6c9283e3bb2a600ba8f2f168642ef3a860b236a0a89c7d5c089f87db9`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L1240-L1245 `d18e3f4b66328d2898986549e1f7a318e457439336e419c1f30ef73ae425f205`
-- [022 - PlanUnits](022-planunits.md) L1246-L1454 `82d41b7c7a7ee57de65e5f3ff547fc368f331edef6c3a3a04c614b1aa6f3cd1f`
-- [023 - Migration Coverage](023-migration-coverage.md) L1455-L1465 `1120cc490be30ee39803972a91ad9f4b13b149f4e1b066eaae9040489c5a5015`
+- [001 - Preamble](001-preamble.md) L1-L1 `f51b11a996cf98e639803eced04b9cff0613a4cc67fec2b3875a5f7ffb96043b`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L10 `3e49ce79d246a2f64c8515b541d55e34bc29671f60d43121bc4eafc5d9c9d0a4`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L12-L32 `2f64100bcd3202fb5898749862bf5d229e50a962591719e9dbc1be894d69769a`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L34-L87 `72ca7bbee62d1098b3b3e95327d1142022f2d3e07aa25657da17311d9e70b35a`
+- [005 - 1. Definitions and scope](005-1.-definitions-and-scope.md) L89-L169 `124ce14c6fe40667a1d2ec53d2e753dfe4915a2fe9edf66cdc01cd4f27f89d4a`
+- [006 - 2. Permission actions](006-2.-permission-actions.md) L171-L279 `3f8feb44199aec29285a324ba396ecb9b67d17ea2abf55e7ebd6dd6d75909265`
+- [007 - 3. Granular rules](007-3.-granular-rules.md) L281-L404 `6c69b8ce9e5c3e4b2d8e5c690fd45fb485404724621360f7b687281cfc05403f`
+- [008 - 4. Special guards](008-4.-special-guards.md) L405-L453 `cf999b5fe89a32a4128b56e56596fa919114be6d85a34c4ff9fcef89676bf9e2`
+- [009 - 5. Tool permission keys](009-5.-tool-permission-keys.md) L455-L489 `a04d692b1ce310379da30e77d0bca3cf87cc88e6052902c3391dff0a6bbf6189`
+- [010 - 6. Ask flow semantics](010-6.-ask-flow-semantics.md) L491-L589 `00396b5458b811284a5c190e64741d350ff073a2c424a275c41d4bf177bed0cb`
+- [011 - 7. Deterministic defaults](011-7.-deterministic-defaults.md) L590-L620 `e8ab1ab6a63988ed4eb1c8b74c5684428624aa101dec38fb9dbdaf0f51ace11f`
+- [012 - 8. Resolution algorithm](012-8.-resolution-algorithm.md) L622-L668 `56b4203003955a2c4968f5522d51dff1f2b41f9c3d3fe9ed284df8e19895bbe5`
+- [013 - 9. Persistence and storage](013-9.-persistence-and-storage.md) L670-L738 `ba3e56a245cf9fcd7d173f51b61bf07b4fd9f2595817584766c4e37ec0d32880`
+- [014 - 10. GUI requirements](014-10.-gui-requirements.md) L740-L893 `cdb38ad31a8a62e8e3f4a641b09a20bcd424ecf8f12e160ec8458bd4188e9786`
+- [015 - 10A. Security model](015-10a.-security-model.md) L895-L924 `e690d6ccbb8469be074ac3db2a06465bd3168722fb72764c408e747311b13324`
+- [016 - 11. OpenCode baseline and Puppet Master deltas](016-11.-opencode-baseline-and-puppet-master-deltas.md) L926-L947 `85e0a483e03cf7d64879c5385d659bc87db7d0e373d8c7319c5412153fefbf81`
+- [017 - 12. Acceptance criteria](017-12.-acceptance-criteria.md) L949-L1001 `6b11a616db4f1560a31ccb70aeb171017fbd0fe43d1bc6c61680214e266b6e3e`
+- [018 - 12A. DockerHub / Unraid remote-side-effect guard addendum](018-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md) L1002-L1055 `a9964ffa1031cf157d2ba11c64e32b6f49c9c7613b8496def151836a2b52f8b9`
+- [019 - Runtime blocked-Outcome Integration Addendum (2026-03-08)](019-runtime-blocked-outcome-integration-addendum-2026-03-08.md) L1057-L1210 `05519ba3f5b15e28e0549e66fe2b93ab8c06ad1741071b8a37d885f90ce11b1e`
+- [020 - Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)](020-source-control-github-actions-and-docker-manager-permission-adde.md) L1212-L1238 `953ec68503b2f7524e68510a539ed6a947133606cf7d6de29788641a253826a9`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L1240-L1244 `6210794a617b4113918ac260cb333b7c3dba5954f2d73f6943424cc61565dde7`
+- [022 - PlanUnits](022-planunits.md) L1246-L7470 `6d1efdfe7a0ee96f4768e5b555ef3fd0719b49682bcc113fc722da0ad5339fea`
+- [023 - Migration Coverage](023-migration-coverage.md) L7472-L7487 `f785d005d99cb35288d70339d86a797f0ddfa92bc35badd050a91b9b84c602ec`

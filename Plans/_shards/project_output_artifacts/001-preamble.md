@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L1-L16
+Source lines: L1-L15
 
-Source SHA256: `d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12`
+Source SHA256: `7c6f824da7e7c08f5d14752611b799fd29f03148beb6ff6b6429abc28dfc2dc4`
 
 ---
 
@@ -23,4 +23,3 @@ It also defines:
 - **DRY, contract-referenced plan graph** requirements (**sharded-only plan graph**; machine-runnable, headless) with an **optional, non-canonical** derived export for convenience.
 
 > **Do not duplicate:** This file is the SSOT for artifact paths and sharding rules; other docs should link here instead of repeating them.
-

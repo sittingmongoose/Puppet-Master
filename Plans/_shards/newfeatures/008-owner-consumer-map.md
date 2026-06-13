@@ -2,15 +2,14 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L88-L93
+Source lines: L88-L92
 
-Source SHA256: `a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63`
+Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
 
 ---
 
 ## Owner / Consumer Map
 
-This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/newfeatures.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+This feature-summary document preserves the owner and consumer boundaries stated in its source sections. `Plans/newfeatures.md` owns high-level rewrite-era feature-summary coverage only; normative behavior remains with the referenced owner docs, ContractRefs, and boundary notes.
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
-

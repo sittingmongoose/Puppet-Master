@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L1833-L1945
+Source lines: L1833-L1944
 
-Source SHA256: `15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021`
+Source SHA256: `829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb`
 
 ---
 
@@ -120,4 +120,3 @@ This conditional-requirement contract applies uniformly wherever billing entity 
 UI readiness projections that mention `pm.lock`, viewer-mode, MCP lazy-load, or `/startup-time` are contract consumers. `pm.lock` and viewer-mode messaging follow the storage/runtime lock contract, while MCP lazy-load and startup-time UX defer to the MCP/tool owner docs; Contracts_V0 only requires those projections to preserve the referenced owner state and not mint parallel status fields.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
-

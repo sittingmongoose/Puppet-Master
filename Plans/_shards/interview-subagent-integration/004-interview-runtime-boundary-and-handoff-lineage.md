@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L20-L55
+Source lines: L20-L54
 
-Source SHA256: `faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6`
+Source SHA256: `ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc`
 
 ---
 
@@ -43,4 +43,3 @@ Interview-phase launches share the runtime identity packet with Orchestrator whi
 - Preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
-

@@ -2,20 +2,20 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L289-L299
+Source lines: L1913-L1923
 
-Source SHA256: `c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606`
+Source SHA256: `20a0ff81e309c185f9c741064d9daaa379b9534633dcf46a00248fe5144b843f`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `47c5bc2c1c6dc0199dd175d4f2a6a2ada76f0c7bd904280cbb3a9e7ff66a2d3f`.
+Original hash: `c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `MCP_Integration-S0001` through `MCP_Integration-S0008` are preserved in place and mapped in `coverage_map.jsonl` to `MI-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 087 atomized `MCP_Integration-S0001` through `MCP_Integration-S0008` into `MI-002` through `MI-030`, with dense server-config, provider, and GUI surfacing spans split where safe. `MCP_Integration-S0009`, `MCP_Integration-S0010`, and `MCP_Integration-S0012` are structural/reporting dispositions. `MCP_Integration-S0011` maps only to retired bridge lineage `MI-001`; `MI-001` no longer uses source-preserving compile mode, and `Plans/MCP_Integration.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

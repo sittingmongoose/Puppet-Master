@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L32-L200
+Source lines: L32-L199
 
-Source SHA256: `c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c`
+Source SHA256: `bcf41bf5ec3cf129fbb96225f82075c1171231ba75be555ae4921259568a1b43`
 
 ---
 
@@ -176,4 +176,3 @@ Executor compatibility keeps `Executor_Protocol`, `Executor_Protocol.md`, `/seam
 GUI/help labels keep expert and canonical terms stable. GUI, `/Expert`, `/help`, `/loaded`, and `/canonical` views may simplify loaded terms, but canonical names remain the source of truth.
 
 Tier-native ingestion and active-agent tracking are legacy compatibility inputs. tier-native, active-agent, lane-aware scheduling, and worktree tracking must resolve through package/lane ownership rather than reviving tier-native execution semantics.
-

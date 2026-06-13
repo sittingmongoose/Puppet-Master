@@ -1,20 +1,22 @@
 {
   "checks": {
+    "auto_decisions": "pass",
     "evidence": "pass",
     "full_transfer_state_committed": false,
+    "ledger_validate": "pass",
     "legacy_iced_code_removed": true,
+    "migration_validate": "pass",
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
     "p6_locked_deferred": true,
     "plan_graph": "pass",
-    "shards": "pass",
-    "spec_lock": "pass",
     "plan_index": "pass",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
-    "no_worknodes_created": true,
-    "nodeseed_candidates_created": false,
     "run_gates": "pass",
-    "auto_decisions": "pass"
+    "shards": "pass",
+    "spec_lock": "pass"
   },
-  "generated_at_utc": "2026-06-11T21:25:28Z",
+  "generated_at_utc": "2026-06-13T16:06:13Z",
   "kept_ledgers": "Plans/ledgers/**",
   "ledger_transfer": {
     "allowed_batch_results_passed": {
@@ -83,6 +85,14 @@
     },
     "source": "Derived from final Codex transfer_state evidence supplied by Jared; compacted for clean repo governance evidence."
   },
+  "plan_index": {
+    "status": "pass",
+    "plan_unit_count": 4947,
+    "acceptance_unit_count": 17603,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false
+  },
   "removed_categories": [
     "legacy Rust/Iced app",
     "installer stack",
@@ -93,13 +103,5 @@
   ],
   "schema_id": "pm.final_build_governance_seal.report.v1",
   "status": "pass",
-  "summary": "Stable ledger, Plan, and PlanUnit governance seal passed run-gates and shard verification.",
-  "plan_index": {
-    "status": "pass",
-    "plan_unit_count": 105,
-    "acceptance_unit_count": 357,
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
-    "no_worknodes_created": true,
-    "nodeseed_candidates_created": false
-  }
+  "summary": "Phase 2 Plan standardization and PlanUnit index governance seal passed configured shard verification, whitespace validation, and preserves the deferred node compiler boundary."
 }

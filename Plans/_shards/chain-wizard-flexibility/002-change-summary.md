@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L7-L25
+Source lines: L7-L24
 
-Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346`
+Source SHA256: `1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1`
 
 ---
 
@@ -26,4 +26,3 @@ Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346
 - 2026-02-23: Added relationship-table cross-reference to `Plans/Project_Output_Artifacts.md` and expanded implementation checklist with shard/index/node/seglog determinism requirements.
 - 2026-02-23: Replaced prohibited platform alias text with Puppet Master naming.
 - 2026-02-23: Updated artifact list and node shard contract to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).
-

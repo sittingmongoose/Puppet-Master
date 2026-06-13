@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
-  "index_sha256": "8ba03bd0fbd3caacb574ed286b06d910520f4fd76dc8da7abefde19f1ea7c0e7",
+  "index_sha256": "c32f0c8bafceffa21e549aa82221bc0e1d75777451a44d22f4ae6f0d9c5e3f7c",
   "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
-      "sha256": "61a41677c03f49d87a44dcbf608da9123982b0af32b5b777537cb701528a1ae4",
+      "sha256": "9b7e2a1571008d26d5c0012845491ab1ec57079715ab9878d984a9a06bbbe205",
       "shard_id": "001",
-      "source_line_end": 4,
+      "source_line_end": 3,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
-      "sha256": "f76b52dfa0b06f770fac9dc3ad70508114a055a6c19dbb3149924f9c82aed7f2",
+      "sha256": "ecf97af2e1b6e5c6de879c89909da0f6857ff3a273c4104919d70ad28d08fe4b",
       "shard_id": "002",
-      "source_line_end": 10,
+      "source_line_end": 9,
       "source_line_start": 5,
       "split_rule": "heading-##"
     },
     {
       "heading": "1. Migration Principles",
       "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
-      "sha256": "ef325aa1a5a9713f8838ab810a1168d328b2d9f17f66d66c4c5fe03e855dab5e",
+      "sha256": "5b81884aba7f12a9ef7c9ea710e7bdb4618738b7aeafd388b0c45df8de5284c4",
       "shard_id": "003",
-      "source_line_end": 20,
+      "source_line_end": 19,
       "source_line_start": 11,
       "split_rule": "heading-##"
     },
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
-      "sha256": "31880446f30f3123ab272d41f8d3c7b5a840a0897d928ef14c9ff4eeb003c2fb",
+      "sha256": "87c32d7ce046df987deccaf7399f66b81fae898a7515135210eeeb294e55e3b8",
       "shard_id": "004",
-      "source_line_end": 281,
+      "source_line_end": 280,
       "source_line_start": 21,
       "split_rule": "heading-##"
     },

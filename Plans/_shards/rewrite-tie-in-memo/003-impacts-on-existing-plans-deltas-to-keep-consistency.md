@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L89-L140
+Source lines: L89-L139
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 ---
 
@@ -59,4 +59,3 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
   - Worktree/cleanup correctness stays valid; hook/crew sections should point to a single shared lifecycle framework in the new agent-loop core
 
 ---
-

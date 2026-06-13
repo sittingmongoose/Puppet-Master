@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L486-L495
+Source lines: L486-L494
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 ---
 
@@ -17,4 +17,3 @@ The runtime scheduler/retry/safe-point packet aligns with the rewrite architectu
 - blocked outcomes remain first-class and must not be flattened into generic failures in rewrite-era UI or storage
 
 This memo should cross-reference the packet-applied SSOT docs after they are updated so the rewrite narrative does not lag behind the canonical contracts.
-

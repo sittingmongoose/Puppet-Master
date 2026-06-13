@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L5594-L5653
+Source lines: L5594-L5652
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -67,4 +67,3 @@ impl SubagentInvoker {
 ```
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/feature-list.md`
 
-Source lines: L330-L340
+Source lines: L1571-L1581
 
-Source SHA256: `698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c`
+Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `feature-list-S0001` through `feature-list-S0018` are preserved in place and mapped in `coverage_map.jsonl` to `FL-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 053 atomized `feature-list-S0001` through `feature-list-S0018` into `FL-002` through `FL-025`, structurally dispositioned `feature-list-S0019`, `feature-list-S0020`, and `feature-list-S0022`, and retired `FL-001` as migration lineage for `feature-list-S0021`. No residual source-preserving feature-list PlanUnit remains. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L200-L206
+Source lines: L200-L205
 
-Source SHA256: `e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750`
+Source SHA256: `9a3d13a03b8c46c28563641fffa66b598a67c024710ae025ad492caec8769960`
 
 ---
 
@@ -14,4 +14,3 @@ Source SHA256: `e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750
 - `Plans/UI_Command_Catalog.md` — Canonical command ID definitions
 - `Plans/Contracts_V0.md` — Core contracts (UICommand, EventRecord)
 - `Plans/Progression_Gates.md` — Gate definitions including GATE-010
-

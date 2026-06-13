@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Deep_Extraction.md`
 
-Source lines: L19-L28
+Source lines: L19-L27
 
-Source SHA256: `a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21`
+Source SHA256: `94d90e1b96e4279245b315d43a1d76e793ad806e933f30d16a15e2dc82442b8b`
 
 ---
 
@@ -17,4 +17,3 @@ Source SHA256: `a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21
 | **Version policy** | Reference the upstream repo at the above date; no local clone required. |
 
 ---
-

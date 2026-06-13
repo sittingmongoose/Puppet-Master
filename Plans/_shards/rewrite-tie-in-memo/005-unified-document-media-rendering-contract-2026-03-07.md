@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L152-L485
+Source lines: L152-L484
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 ---
 
@@ -341,4 +341,3 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 - No requirement that preview-mode editing becomes arbitrary WYSIWYG DOM editing.
 - No hidden diagram state that can drift from `.md` or `.mmd` source.
 - No full-privilege host bridge shared between generated preview content and arbitrary workspace HTML.
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L566-L599
+Source lines: L566-L598
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -41,4 +41,3 @@ Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241
 Child timeout, budget, and `/time` supervision must reuse the corrected `Plans/Run_Modes.md` kill/done `/outcome` taxonomy. The pre-fix mixed `stop.*` / `kill.*` vocabulary is retired for child supervision: pre-dispatch budget denial is `kill.budget_exceeded`, post-response overrun after durable usage recording is `done.budget_exceeded`, and child effective authority must surface the resulting outcome without inventing a local stop-state dialect.
 
 The child timeout envelope carries `timeout_ms`, request identity, `/response` identity, parent remaining-budget snapshot, and the clamped child deadline. `/propagation` is explicit: if a child asks for more time than the parent has remaining, the child timeout is clamped and the response records the clamp. shell-isolation is contract-level behavior, not governance-level guidance; each child execution boundary owns shell scope lifecycle, teardown, and leak prevention.
-

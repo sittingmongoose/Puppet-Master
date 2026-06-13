@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2995-L3062
+Source lines: L2995-L3061
 
-Source SHA256: `e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2`
+Source SHA256: `f0a581e7023cfbd53b256e790b691253eee4994e579048ac57160820c7253c62`
 
 ---
 
@@ -75,4 +75,3 @@ Canonical rule:
 3. Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
-

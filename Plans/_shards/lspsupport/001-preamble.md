@@ -2,9 +2,9 @@
 
 Source: `Plans/LSPSupport.md`
 
-Source lines: L1-L19
+Source lines: L1-L18
 
-Source SHA256: `df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278`
+Source SHA256: `25d77e1ce97ddd3de440ac0f0b083cb77b496e8fbd281ab73a19d1c9727534ff`
 
 ---
 
@@ -26,4 +26,3 @@ Source SHA256: `df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278
 **For implementation guide:** The **Appendix: Implementation plan checklist** is the single ordered checklist for implementers (Prerequisites, Phase 1-4). §§13-16 and §12 provide GUI requirements, technical implementation detail, phased build order, and open decisions.
 
 ---
-

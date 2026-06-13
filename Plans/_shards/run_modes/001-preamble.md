@@ -2,12 +2,10 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `278c36fc1015a5ee27bf870d55c3f1147530f3880a98ebc4071ecc5e19ef74b0`
+Source SHA256: `482ca97d31afef9b1bfabbbf1e945ca82c136a7a650c002bcda64a1facdec58d`
 
 ---
 
 # Run Modes (Canonical SSOT)
-
-

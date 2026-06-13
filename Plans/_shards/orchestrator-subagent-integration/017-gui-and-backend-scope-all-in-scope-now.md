@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L869-L934
+Source lines: L869-L933
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -73,4 +73,3 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contra
 See the updated **Implementation checklist** below; it includes all of the above as concrete tasks.
 
 ---
-

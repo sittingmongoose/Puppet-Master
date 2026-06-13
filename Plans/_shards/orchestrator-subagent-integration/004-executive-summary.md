@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L28-L76
+Source lines: L28-L75
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -56,4 +56,3 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 The crew message board is the normative subagent-collaboration surface. BrainStorm, Crew, and Assistant projections may show collaborative summaries, but schema, routing, priority, rate limiting, orchestrator visibility, and parent mediation remain owned by this orchestrator contract.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
-

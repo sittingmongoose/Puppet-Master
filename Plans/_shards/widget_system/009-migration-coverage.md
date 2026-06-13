@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L237-L247
+Source lines: L1014-L1024
 
-Source SHA256: `87ebb933f2415c333d7ad4923c41ef1ab01731b9d27a51485636e3800ee50120`
+Source SHA256: `e283765c71f305daeef1982657f9929aacda6cb1da9ddbda8e667b6273d12437`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Widget_System-S0001` through `Widget_System-S0009` are preserved in place and mapped in `coverage_map.jsonl` to `WS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 198 atomized `Widget_System-S0001` through `Widget_System-S0009` into fine-grained PlanUnits `WS-002` through `WS-014`, while preserving hostability scope, owner/consumer boundaries, routed GUI consumer paths, projection contracts, projection trust, compatibility retirements, layout namespaces, Progress-only composition, promoted Progress catalog IDs, Progress label taxonomy, Dashboard/Usage/Source Control hostability, and settings hierarchy. Generated Owner / Consumer Map and PlanUnits heading spans `Widget_System-S0010` and `Widget_System-S0011` were structurally dispositioned, generated bridge span `Widget_System-S0012` was retired through `WS-001` as migration-lineage-only compatibility residue, and generated Migration Coverage span `Widget_System-S0013` was structurally dispositioned. `WS-001` no longer uses `source_preserving_planunit` mode and must not own product coverage. Batch 198 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

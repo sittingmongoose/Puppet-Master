@@ -2,9 +2,9 @@
 
 Source: `Plans/rewrite-tie-in-memo.md`
 
-Source lines: L141-L151
+Source lines: L141-L150
 
-Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99`
+Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
 
 ---
 
@@ -18,4 +18,3 @@ Source SHA256: `86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99
 - The chat-widgets cluster includes code-block and `/diff` cards that can open in-app editor views with range-aware positioning, question chips/freeform paths, and Mermaid / `.mmd` native diagram rendering; owner details remain in `Plans/assistant-chat-design.md` and `Plans/FinalGUISpec.md`.
 - Thread context/detail surfaces do not use `chat-shell` popouts or `/side-panel` detail panels as their canonical target; rewrite navigation opens or focuses the thread-scoped Context Detail Pane as an `editor-tab` surface, with product behavior owned by `Plans/assistant-chat-design.md` and `Plans/usage-feature.md`.
 - Runtime identity carry-through treats legacy account-doc shorthand as retired: `Multi-Account.md` and the shared runtime contracts own `execution_role`, operational identity, handoff, and UI disclosure fields before feature-specific docs depend on them.
-

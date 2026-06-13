@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L4-L10
+Source lines: L4-L9
 
-Source SHA256: `c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c`
+Source SHA256: `bcf41bf5ec3cf129fbb96225f82075c1171231ba75be555ae4921259568a1b43`
 
 ---
 
@@ -14,4 +14,3 @@ These requirements are canonical live specification text for this owner document
 
 ### Coverage blocker provider/model precedence owner section
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-

@@ -1,31 +1,31 @@
 # Shard Index: Plans/agent-rules-context.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de`
+Source SHA256: `4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L6 `8d9398826bdf895d50bdf7cae0152a3d0e4ef0f4fbae8d0eb6b2ac43a1fdf4be`
-- [002 - Plan Document Status](002-plan-document-status.md) L7-L15 `1d53a13054e53edce5b9e7765f76be5187eb9730e92dcbeface2c356eff06add`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L27 `2fb28d7bbf28610ff41112f002906f11ee05d0b72a1315e2672d1167e2161490`
-- [004 - Executive Summary](004-executive-summary.md) L28-L38 `8a2b2b907e6587c9b43cb69fea9ec693a019a4deaace5928a343493dc70e6b3d`
-- [005 - Relationship to Other Plans](005-relationship-to-other-plans.md) L39-L51 `7db70b4c2c61d881fcc48d842cd52d9a0cba31b5f6d84abcbc4476ec07ff1903`
-- [006 - Rule Scope Model](006-rule-scope-model.md) L52-L74 `bc88361b85efd1fd5715c230da1dd5dbd86c3a5bee756d63e9c07299c50f5673`
-- [007 - Feeding Rules Into Every Agent](007-feeding-rules-into-every-agent.md) L75-L94 `a88ec3998464d2ab5365118118f2c6d148a0270fd81e966b944a0187ab8edea5`
-- [008 - Configuration and GUI (Planning Only)](008-configuration-and-gui-planning-only.md) L95-L111 `9aad9f5eab4612d2f9657f39e3d17cc5030ff650012c3e04752d5f351cc27e67`
-- [009 - Summary Table](009-summary-table.md) L112-L118 `cddd357c509ba5d8aec732c348f9cb468a0b7ec610486b6c1cb2fcbfd04e5afb`
-- [010 - Implementation Hooks (Planning Only)](010-implementation-hooks-planning-only.md) L119-L128 `acfce3e541447e9d50e091a3c06d6be28514a06a52433c0ff483ee64a1b10134`
-- [011 - Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)](011-instruction-bundle-integration-application-project-scoped-agents.md) L129-L149 `b4d6db9875464cbd70c16155e8e5fc8dd771c9cad911fbc7aa502d239a2357d3`
-- [012 - Feature Spec (Verbatim)](012-feature-spec-verbatim.md) L150-L214 `56f152aaa1c5008d0c98ea474d731b42a485684964d1b4dbae234a4c44282d60`
-- [013 - Visibility examples (coordinating run → work package → node → attempt)](013-visibility-examples-coordinating-run-work-package-node-attempt.md) L215-L236 `21967bfce8da152acf11ff4c8ad7d7403079a0bec6e493b719f111fbe1241c30`
-- [014 - Workspace & Storage (User-Project Facing Product Behavior)](014-workspace-storage-user-project-facing-product-behavior.md) L237-L246 `b7e9095cf138f725ebd3371e7683863b08d1ecd1e318bf09180614a188a664e4`
-- [015 - GUI Requirements (Product)](015-gui-requirements-product.md) L247-L258 `22b7b2311142a0f70f3384f40fcd4a0a3c9acba5b10758ba0d3cbf4446a74e75`
-- [016 - AGENTS.md Light Enforcement (Product)](016-agents.md-light-enforcement-product.md) L259-L280 `c5a05b26760c54155bd1917bb6ae74457508de99b0c7a2d6875828ef605ea0e3`
-- [017 - Acceptance Criteria (Testable)](017-acceptance-criteria-testable.md) L281-L294 `d3ee30d264aab6835ac3fd60f6e13f15a1e10b6e08584297cf09d7a7fceb2ae8`
-- [018 - Route Context and Attention Destination Rules](018-route-context-and-attention-destination-rules.md) L295-L302 `e00d203da0dcf5d535e1e7952d9b0a8d40559bb213157284519915faaca9ef7f`
-- [019 - Owner / Consumer Map](019-owner-consumer-map.md) L303-L308 `c61e3fb42a0670331bbd878ffaecc14fe041cbbaff0a40fc5819d958ab1e2a4b`
-- [020 - PlanUnits](020-planunits.md) L309-L429 `bfcaac399a5cca9e41163817256959a729ce7d081e28da9d1407308ce1d1976f`
-- [021 - Migration Coverage](021-migration-coverage.md) L430-L440 `52a6b5249cef2f3b85cd6e6aef62bd38c21b00d2472984844c2b9a00010d0bde`
+- [001 - Preamble](001-preamble.md) L1-L4 `ade3b2591bb49e9002160bd890db5aeba246ff820ea33677775b0a1a4f056832`
+- [002 - Plan Document Status](002-plan-document-status.md) L7-L14 `7a6015d60ae2b83c012f30be17875dd692d2aedaa375d09836dd24d1570a763a`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L26 `44cf3259275a7a9f4f2473cece01ed4e73154a57755c5b33a236e378b49b27b0`
+- [004 - Executive Summary](004-executive-summary.md) L28-L37 `d63f2d12595e77c009237c38c6d64ae78c58b5181c658754a0f17f6a16e38e13`
+- [005 - Relationship to Other Plans](005-relationship-to-other-plans.md) L39-L51 `edd43d147445c4d954ba38fbbf7054441ed8df979afb6ed1e3d5cbd8a5f73e4f`
+- [006 - Rule Scope Model](006-rule-scope-model.md) L52-L73 `631ee529b0c531ee62d2266f7638639e80f9d0fda85ecfb6b6d99d1c63beb207`
+- [007 - Feeding Rules Into Every Agent](007-feeding-rules-into-every-agent.md) L75-L93 `e4395891fb57df7670477040f5f7e94534b1cdbc0b3a346e30fab020bfa9d170`
+- [008 - Configuration and GUI (Planning Only)](008-configuration-and-gui-planning-only.md) L95-L110 `3ba062ff36d63752c75e23ffb7f87091bef796fcbf8a9888cfa9f949e8418614`
+- [009 - Summary Table](009-summary-table.md) L112-L117 `90ac4ba2132ad3aa776b63590a817847009ffeb123c6393d9b03bf43a9bb791f`
+- [010 - Implementation Hooks (Planning Only)](010-implementation-hooks-planning-only.md) L119-L127 `c666f4b7b4e99615f905e3ca60b195e9ee7302e0eb1c3e4d8d84dd04e3a0ba6e`
+- [011 - Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)](011-instruction-bundle-integration-application-project-scoped-agents.md) L129-L149 `de7dea68d0aad505b5f828b6d576abdf45cdf58cf7111ed71307ea8fce23cffd`
+- [012 - Feature Spec (Verbatim)](012-feature-spec-verbatim.md) L150-L214 `fbecb4422906dc48183d554541c861d0cc1dd89f553f4e1cd47996fe91a69aa4`
+- [013 - Visibility examples (coordinating run → work package → node → attempt)](013-visibility-examples-coordinating-run-work-package-node-attempt.md) L215-L236 `8f5e4534cfbf662bd6134c2dcf8786cd33da2a9bfb8f1eab9f3515dccb793f8c`
+- [014 - Workspace & Storage (User-Project Facing Product Behavior)](014-workspace-storage-user-project-facing-product-behavior.md) L237-L246 `5b9aeca1ae321026b195120afe9cad3651cc6095ed96f3ffeee8f064a40067e0`
+- [015 - GUI Requirements (Product)](015-gui-requirements-product.md) L247-L258 `1337bcc4562494b47e284472b1752e717146458cbff0a172d69f0c2f480b9aa3`
+- [016 - AGENTS.md Light Enforcement (Product)](016-agents.md-light-enforcement-product.md) L259-L280 `ae29403ebbec6d40c2ce9ac4ab1fce807882460aa9b2c74ada3b42b96b3845fe`
+- [017 - Acceptance Criteria (Testable)](017-acceptance-criteria-testable.md) L281-L294 `b68183f2414d4afdfd2d7c97914949f9820d796111188316a2ed1b407ee3d39c`
+- [018 - Route Context and Attention Destination Rules](018-route-context-and-attention-destination-rules.md) L295-L301 `9ea1fd520ab8891b07ec8114c25ea6643e064fcde6f81fb0f9fb5ec270763a87`
+- [019 - Owner / Consumer Map](019-owner-consumer-map.md) L303-L307 `9726c87f5480ca39a832aca4838c8006df2558e337385b704eb050832f8f767a`
+- [020 - PlanUnits](020-planunits.md) L309-L2286 `e816d816ad2e522f0ef7d00d2008ebbe88ade7055e2cc544f1d8ad721b13f9bd`
+- [021 - Migration Coverage](021-migration-coverage.md) L2289-L2299 `c06d5968120d23dcb99d524efcc0c2596b1beee582d0625199523b8e776adb52`

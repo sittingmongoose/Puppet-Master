@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L7-L19
+Source lines: L7-L18
 
-Source SHA256: `ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a`
+Source SHA256: `9b3728947067fc1565aa540c0eacd71e57bcc7a81e66b98f1ae53b0cae5cd819`
 
 ---
 
@@ -20,4 +20,3 @@ Source SHA256: `ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a
 **ELI5/Expert copy alignment:** Authored tooltip/help/hint copy defined by this plan must provide both Expert and ELI5 variants and follow the single checklist in `Plans/FinalGUISpec.md` §7.4.0. Dynamic external payloads (for example live LSP hover content) are not treated as authored copy variants.
 
 ---
-

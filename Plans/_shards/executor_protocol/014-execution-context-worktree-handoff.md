@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L747-L832
+Source lines: L747-L831
 
-Source SHA256: `dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d`
+Source SHA256: `f033403ab85f4df1793c5b80359486f87ba1af2cc853995d301f406b321c29eb`
 
 ---
 
@@ -93,4 +93,3 @@ All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the
 Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
-

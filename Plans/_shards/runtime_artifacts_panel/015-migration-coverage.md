@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L545-L555
+Source lines: L549-L559
 
-Source SHA256: `61408fdc7b9377e56d2d9a36661d6e8d5650ce40e634d9c10b5c95cc85dfa094`
+Source SHA256: `6dc115a693df2c3380f95cbde432e7f4a9b481d286472afdb0b19e0d71f59f9a`
 
 ---
 
@@ -13,9 +13,9 @@ Source SHA256: `61408fdc7b9377e56d2d9a36661d6e8d5650ce40e634d9c10b5c95cc85dfa094
 Original hash: `b3e07aeee00362056ec43b4d5a7fefc895678e6e419f5f40d61ba937820a1bb1`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `Runtime_Artifacts_Panel-S0001` through `Runtime_Artifacts_Panel-S0031` are preserved in place and mapped in `coverage_map.jsonl` to `RAP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 166 atomized `Runtime_Artifacts_Panel-S0001` through `Runtime_Artifacts_Panel-S0031` into fine-grained PlanUnits `RAP-002` through `RAP-024`. Phase 2B batch 167 structurally dispositioned generated tail spans `Runtime_Artifacts_Panel-S0032`, `Runtime_Artifacts_Panel-S0033`, and `Runtime_Artifacts_Panel-S0035`, and retired `Runtime_Artifacts_Panel-S0034` as the `RAP-001` bridge lineage. `RAP-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

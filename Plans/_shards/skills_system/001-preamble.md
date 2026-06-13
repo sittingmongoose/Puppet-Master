@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L1-L5
+Source lines: L1-L4
 
-Source SHA256: `000669515ae4da149f6179882db634954d230601e52e8b94108ea35216c9d3f2`
+Source SHA256: `af72c8b2b4c87a83e5c51f62c503bee27e12cfbfcfd3f468ce2b36aa8dedb235`
 
 ---
 
@@ -12,4 +12,3 @@ Source SHA256: `000669515ae4da149f6179882db634954d230601e52e8b94108ea35216c9d3f2
 
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-

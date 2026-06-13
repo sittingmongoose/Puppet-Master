@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1205-L1276
+Source lines: L1205-L1275
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -79,4 +79,3 @@ When `max_questions_per_phase` is configured:
 The **main orchestrator** (run loop) gets config via `ConfigManager::discover()` and `get_config()` (i.e. from disk as `PuppetMasterConfig`). The Config tab saves `GuiConfig` to the same path. Ensure the saved YAML shape is compatible with `PuppetMasterConfig` for all execution-affecting fields (tiers, orchestrator, interview, etc.) so that saving from the Config tab does not drop or default values that the run expects. If the run uses a project hint (e.g. current project path), prefer `ConfigManager::discover_with_hint(project_path)` so the run uses the same file the user edited.
 
 ---
-

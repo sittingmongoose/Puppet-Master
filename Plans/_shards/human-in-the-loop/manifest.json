@@ -1,77 +1,77 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/human-in-the-loop/00-index.md",
-  "index_sha256": "378665cfe5d343e13d1548315eb8f8c45598af096976fc5727cb0626ca014729",
+  "index_sha256": "6d0693bd7d5a08f1a2bea88b256ffff7d52b245b964b148a789299088b0cd3ac",
   "manifest_path": "Plans/_shards/human-in-the-loop/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/human-in-the-loop/001-preamble.md",
-      "sha256": "d2039c41f1e7e9949b8fc8563849bba06036d55bfae36cecc592d598352a4fc7",
+      "sha256": "d0d71fa37548f88010338115136c5bc93de19b40563b506fa9add5c7d25562b5",
       "shard_id": "001",
-      "source_line_end": 3,
+      "source_line_end": 1,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/human-in-the-loop/002-canonical-owner-section-requirements.md",
-      "sha256": "f3793751d1f7132b528c091ba0222409174bed6a1126d1b72e9cdf4b876edb45",
+      "sha256": "240cf7f207674d112465ea2ad8ed2ab04a0b2894334c72b3f114c53e24e92244",
       "shard_id": "002",
-      "source_line_end": 19,
+      "source_line_end": 17,
       "source_line_start": 4,
       "split_rule": "heading-##"
     },
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/human-in-the-loop/003-plan-document-status.md",
-      "sha256": "7f959c1238d1256df2abd9a290f96886dcc045f00c237237df55f9b1e430fd41",
+      "sha256": "042ed37f710ff3510485d0d7c56108041768335eed38181ae3ed9722856f9174",
       "shard_id": "003",
-      "source_line_end": 27,
+      "source_line_end": 26,
       "source_line_start": 20,
       "split_rule": "heading-##"
     },
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/human-in-the-loop/004-rewrite-alignment-2026-02-21.md",
-      "sha256": "d44593b947915fd87d9b003e45bf0c1747613b8cc20301d4b4309e29e2050254",
+      "sha256": "3e481ab68d2dc13a984fe3e34719a5f4575674d9b367add31953fa49d88233a3",
       "shard_id": "004",
-      "source_line_end": 126,
+      "source_line_end": 125,
       "source_line_start": 28,
       "split_rule": "heading-##"
     },
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/human-in-the-loop/005-executive-summary.md",
-      "sha256": "8648ee44a63e5404fd1b51dd7fcf65299a2aa4430871ecabc1588f63a15643de",
+      "sha256": "b29b9a3afa345590a67acd7cb66599e5592e6e7c98b2cdd067c6f6fb42eef656",
       "shard_id": "005",
-      "source_line_end": 135,
+      "source_line_end": 134,
       "source_line_start": 127,
       "split_rule": "heading-##"
     },
     {
       "heading": "Relationship to Other Plans",
       "path": "Plans/_shards/human-in-the-loop/006-relationship-to-other-plans.md",
-      "sha256": "0c5297554acf7892526c0cd86f31cc7c2e24945c30755bd217e4befcbebc2308",
+      "sha256": "ff5a8b5a547d690d9672316dc3ad1e0cf7604ed25ff2dda9be7c2d0aa8e786cd",
       "shard_id": "006",
-      "source_line_end": 144,
+      "source_line_end": 143,
       "source_line_start": 136,
       "split_rule": "heading-##"
     },
     {
       "heading": "Derived Grouping Boundaries (DRY)",
       "path": "Plans/_shards/human-in-the-loop/007-derived-grouping-boundaries-dry.md",
-      "sha256": "1eb701c24edf28ebedbd81698338f7deee4d0cfed2490c1e1d1df7744ab15b99",
+      "sha256": "ba3dcdfd8d76cc689372feae47e95b64bc5081411118afac235336eb91c46f3f",
       "shard_id": "007",
-      "source_line_end": 156,
+      "source_line_end": 155,
       "source_line_start": 145,
       "split_rule": "heading-##"
     },
     {
       "heading": "Package and Seam Completion Gates",
       "path": "Plans/_shards/human-in-the-loop/008-package-and-seam-completion-gates.md",
-      "sha256": "ee0b9c98c88386f19ee9ceaaaf060deb8c8da5c244f43855ccf3c34613db80a2",
+      "sha256": "1c7004668fe52ecea03bfa622451ec97f53ebf7f3df3563906b102b76b526ded",
       "shard_id": "008",
       "source_line_end": 167,
       "source_line_start": 157,
@@ -80,34 +80,34 @@
     {
       "heading": "Settings Model",
       "path": "Plans/_shards/human-in-the-loop/009-settings-model.md",
-      "sha256": "c053668b184dbac2f123482eb48ec37f7c92814347889b73a7ebd9b93269f570",
+      "sha256": "3b971d6de606ea19ade855cfffff2ca6eae1dae81f63a9590b55074e7ff9ca7f",
       "shard_id": "009",
-      "source_line_end": 255,
+      "source_line_end": 254,
       "source_line_start": 168,
       "split_rule": "heading-##"
     },
     {
       "heading": "DRY Summary",
       "path": "Plans/_shards/human-in-the-loop/010-dry-summary.md",
-      "sha256": "b66705702342b1673b6e31127745d80a420ba2134e9c010ee743630ccd467241",
+      "sha256": "27106b9fe3d992d4e60583df93893798019ae583f7f59269ae68c20fe05801a7",
       "shard_id": "010",
-      "source_line_end": 261,
+      "source_line_end": 260,
       "source_line_start": 256,
       "split_rule": "heading-##"
     },
     {
       "heading": "Implementation Hooks (Planning Only)",
       "path": "Plans/_shards/human-in-the-loop/011-implementation-hooks-planning-only.md",
-      "sha256": "c6b9141487b88446cfa0a3b7429ad185dfa45d795b31c960eee460b3dcc37779",
+      "sha256": "f582d4a56c33786741f73c99cab814b2b0816ac617e05d32b24b07d0c1f69807",
       "shard_id": "011",
-      "source_line_end": 295,
+      "source_line_end": 294,
       "source_line_start": 262,
       "split_rule": "heading-##"
     },
     {
       "heading": "HITL Retry and Safe-Point Clarification Addendum (2026-03-08)",
       "path": "Plans/_shards/human-in-the-loop/012-hitl-retry-and-safe-point-clarification-addendum-2026-03-08.md",
-      "sha256": "a6a35ef897be095eb9fd32422b4697187222e9fd6216fb807a4a6c8fd8f01037",
+      "sha256": "248a4b9391931487a430dd2f01400de06c454469673bec1f6c80d62991ceb7b4",
       "shard_id": "012",
       "source_line_end": 343,
       "source_line_start": 296,
@@ -116,52 +116,52 @@
     {
       "heading": "Canonical HITL Recovery Action Alignment Addendum (2026-03-09)",
       "path": "Plans/_shards/human-in-the-loop/013-canonical-hitl-recovery-action-alignment-addendum-2026-03-09.md",
-      "sha256": "12d7e777bf1c34cf247041ce9c809cee48ae0334c0aba8b40a6918edf78dbb3d",
+      "sha256": "bf5489ab38d989759c24ad0ca08cc97cd2b21a9f394bc0d17f5c56fdd0a1f225",
       "shard_id": "013",
-      "source_line_end": 400,
+      "source_line_end": 399,
       "source_line_start": 344,
       "split_rule": "heading-##"
     },
     {
       "heading": "Shared approval-ladder alignment (2026-04-04)",
       "path": "Plans/_shards/human-in-the-loop/014-shared-approval-ladder-alignment-2026-04-04.md",
-      "sha256": "d6209927b880591f357a3c16fd20fb902496182fc922da428bbfeea61cf113a2",
+      "sha256": "4a183d361ebb11e32a4ad9ea63506c4a54d90c2dcd3a096d0c37f564ac726583",
       "shard_id": "014",
-      "source_line_end": 414,
+      "source_line_end": 413,
       "source_line_start": 401,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/human-in-the-loop/015-owner-consumer-map.md",
-      "sha256": "43a8f69c292ae0e9fbb85200db64d30347263748687ce52d4a196db73d8ed2d4",
+      "sha256": "acae84c550735dc5e8f9ed7053e14700d8ead917aa6b8f654d202ece5e197808",
       "shard_id": "015",
-      "source_line_end": 420,
+      "source_line_end": 419,
       "source_line_start": 415,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/human-in-the-loop/016-planunits.md",
-      "sha256": "862da7f0534e6886b8f86bdda01362fa678d0fc0497a93da12c100f6ca0fd858",
+      "sha256": "c90d87f42fbaa743d02ce7f3dfad07756701f8fd9570d1340ca85f8103ae234a",
       "shard_id": "016",
-      "source_line_end": 595,
+      "source_line_end": 2395,
       "source_line_start": 421,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/human-in-the-loop/017-migration-coverage.md",
-      "sha256": "e66ddddc089ce53dc1c6166f295919d460cbe57a762ddaa303ff69f4b9cca12d",
+      "sha256": "afd1f992d750c0c337b3dce3d8f8886e7eae2cbff4b34ccf3202a5cb6f29ccc8",
       "shard_id": "017",
-      "source_line_end": 606,
-      "source_line_start": 596,
+      "source_line_end": 2407,
+      "source_line_start": 2397,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 606,
+    "line_count": 2407,
     "path": "Plans/human-in-the-loop.md",
-    "sha256": "844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b"
+    "sha256": "258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5"
   }
 }

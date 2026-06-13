@@ -1,20 +1,20 @@
 # Shard Index: Plans/feature-list.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c`
+Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L10 `56192bebb3801fe9b21e6e9007db7da1e7cc76d3462e90c25dcac3174d1f97e6`
-- [002 - Part 1 - Planned and New Features (from Plans)](002-part-1-planned-and-new-features-from-plans.md) L11-L12 `9c6f4348c9a1585993c4ad3a5b786c41e1e97e4b538935eee25ff9cac91bd9cd`
-- [003 - Reference anchors used in this document](003-reference-anchors-used-in-this-document.md) L13-L124 `2f810d81841399e6b775f82d69a2460ad18dde0d86d65ce4126516b6a1631843`
-- [004 - Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)](004-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-.md) L125-L146 `c04d04554554ee2429a66a1473f2acb0ace128a47e3b1ee3241cb5cef6fbb9a1`
-- [005 - Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)](005-source-control-github-actions-and-docker-manager-mvp-consolidati.md) L147-L179 `2f6ab15b873081e25d03b7626c744fd84df3d94976ee3089e1a1b475af22e9ad`
-- [006 - Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)](006-runtime-scheduler-recovery-summary-consolidation-addendum-2026-0.md) L180-L197 `8c7803ed766dcedb11b8a617055a91dbd1fdc7c53399f5d7dfade2db6c79e1e1`
-- [007 - Web tools, skills, planning, and approval owner alignment (2026-04-04)](007-web-tools-skills-planning-and-approval-owner-alignment-2026-04-0.md) L198-L212 `e537d37bf038adc2bde5d8e5b9e07aa591a22e65c877a48d3257d0221bb96fda`
-- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L213-L218 `dee713a856119fbf1f60159e3b7319e037c0d9577fbd3beb3721cd9e8e46d885`
-- [009 - PlanUnits](009-planunits.md) L219-L329 `23398fa4e8e01c3e939ed328546a59c48e3aa553522c97d71961316740e8067f`
-- [010 - Migration Coverage](010-migration-coverage.md) L330-L340 `e2f3f2350608e86d598055d780824b83b1a842f5211c3ec471044d23208cea67`
+- [001 - Preamble](001-preamble.md) L1-L9 `59f1dc7c7012cca4c56c4b1c59df75026f858d7dc3160861bb5ab5c209c27348`
+- [002 - Part 1 - Planned and New Features (from Plans)](002-part-1-planned-and-new-features-from-plans.md) L11-L11 `76442db904e5cfa38615948a2ce4561e8f4f45c129df0595cb73603c699669b4`
+- [003 - Reference anchors used in this document](003-reference-anchors-used-in-this-document.md) L13-L124 `6e861204a4a68ef755da53015c53d4ad4aa796fff6997ef9b9ef9732065a547a`
+- [004 - Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)](004-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-.md) L125-L146 `f65bc051a53a59a23b146720cabc1535690151b1c1376b187f1ab2d7d2856e4f`
+- [005 - Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)](005-source-control-github-actions-and-docker-manager-mvp-consolidati.md) L147-L179 `19756b0706ffd3ca5f284c187c9b48aac1374aa641482c7b6b4a28a23a0db2f8`
+- [006 - Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)](006-runtime-scheduler-recovery-summary-consolidation-addendum-2026-0.md) L180-L196 `2a9349916156c0b2c1cf1729915f61279c1eb9acf0b58931a6da1e625d079916`
+- [007 - Web tools, skills, planning, and approval owner alignment (2026-04-04)](007-web-tools-skills-planning-and-approval-owner-alignment-2026-04-0.md) L198-L211 `9a2eb7ee0d5390064c56fe94235ad310afcfe841309e180b2eee48ce832c7625`
+- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L213-L217 `a2ebaf9e73f0b9cdb3a44f35193e924f9c7f175a1524bc8bffddb36b7dfedd07`
+- [009 - PlanUnits](009-planunits.md) L219-L1570 `c4d54e14fe7fd84c6f42478e7043893056dbdfd1eac029762d39fbf9932885c6`
+- [010 - Migration Coverage](010-migration-coverage.md) L1571-L1581 `4025674d245814b9c777df91c56fbc233242f129991b56e87dfa142e06ed0553`

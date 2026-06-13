@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L8-L18
+Source lines: L8-L17
 
-Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c`
+Source SHA256: `dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a`
 
 ---
 
@@ -18,4 +18,3 @@ Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c
 - **Permission system (allow/ask/deny semantics, precedence, granular rules, defaults):** `Plans/Permissions_System.md` (canonical SSOT)
 
 ---
-

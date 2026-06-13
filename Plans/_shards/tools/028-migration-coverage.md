@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2528-L2538
+Source lines: L10722-L10732
 
-Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c`
+Source SHA256: `dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a`
 
 ---
 
@@ -13,9 +13,9 @@ Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c
 Original hash: `01fed36dead4538803197fcd86d37c352a3950e47715306fc216511d5f524f7f`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `Tools-S0001` through `Tools-S0113` are preserved in place and mapped in `coverage_map.jsonl` to `T-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batch 181 atomized `Tools-S0001` through `Tools-S0023` into fine-grained PlanUnits `T-002` through `T-020`. Phase 2B batch 182 atomized `Tools-S0024` through `Tools-S0033` into fine-grained PlanUnits `T-021` through `T-043`. Phase 2B batch 183 atomized `Tools-S0034` through `Tools-S0055` into fine-grained PlanUnits `T-044` through `T-082` and structurally dispositioned `Tools-S0048`. Phase 2B batch 184 atomized `Tools-S0056` through `Tools-S0094` into fine-grained PlanUnits `T-083` through `T-113` and structurally dispositioned `Tools-S0075` and `Tools-S0076`. Phase 2B batch 185 atomized `Tools-S0095` through `Tools-S0101` into fine-grained PlanUnits `T-114` through `T-131` and structurally dispositioned `Tools-S0102`. Phase 2B batch 186 atomized `Tools-S0103` through `Tools-S0114` into fine-grained PlanUnits `T-132` through `T-156` and structurally dispositioned `Tools-S0110`, `Tools-S0112`, and `Tools-S0115`. Phase 2B batch 187 retired `T-001` from active `source_preserving_planunit` mode into `generated_artifact_residual` lineage for generated `Tools-S0116` through `Tools-S0117`; it must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

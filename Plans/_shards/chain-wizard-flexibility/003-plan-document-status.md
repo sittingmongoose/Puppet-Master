@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L26-L36
+Source lines: L26-L35
 
-Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346`
+Source SHA256: `1ddb1c7323d67e4eccec4c54a74a00fa3a84c2ba5c4ae68cf1dce024fcafa6b1`
 
 ---
 
@@ -18,4 +18,3 @@ Source SHA256: `e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346
 - Adaptive interview phases (AI-driven cut/double-down)
 - Project setup and GitHub: create repo, fork (offer or user), PR flow (start and finish)
 - Gaps, risks, and cross-references to other plans
-

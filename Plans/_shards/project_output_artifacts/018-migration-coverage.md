@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L953-L963
+Source lines: L3102-L3112
 
-Source SHA256: `d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12`
+Source SHA256: `7c6f824da7e7c08f5d14752611b799fd29f03148beb6ff6b6429abc28dfc2dc4`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Project_Output_Artifacts-S0001` through `Project_Output_Artifacts-S0049` are preserved in place and mapped in `coverage_map.jsonl` to `POA-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Original spans from `Project_Output_Artifacts-S0001` through `Project_Output_Artifacts-S0046` are preserved in place and atomized into fine-grained PlanUnits `POA-002` through `POA-042`; `Project_Output_Artifacts-S0047` through `Project_Output_Artifacts-S0049` are covered by `POA-043` through `POA-045`. Generated structural/audit spans `Project_Output_Artifacts-S0050` through `Project_Output_Artifacts-S0053` are explicitly dispositioned; `POA-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Project_Output_Artifacts.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.

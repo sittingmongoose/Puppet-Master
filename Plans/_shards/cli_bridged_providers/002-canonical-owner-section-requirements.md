@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L4-L14
+Source lines: L4-L12
 
-Source SHA256: `e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36`
+Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
 
 ---
 
@@ -17,5 +17,3 @@ These requirements are canonical live specification text for this owner document
 
 - Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-
-

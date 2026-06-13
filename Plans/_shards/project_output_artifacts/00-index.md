@@ -1,28 +1,28 @@
 # Shard Index: Plans/Project_Output_Artifacts.md
 
-Generated: 2026-06-11T21:19:43Z
+Generated: 2026-06-13T16:19:12Z
 
-Source SHA256: `d3f7e2668f37e40cac8a8cdf7a48f9754e63b681bcccae8b141fbdac09917c12`
+Source SHA256: `7c6f824da7e7c08f5d14752611b799fd29f03148beb6ff6b6429abc28dfc2dc4`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L16 `81f1a86867b2f785963ea19537a91498c7645e62cbd6a04380c9bb93eefc112d`
-- [002 - 0. Scope (normative)](002-0.-scope-normative.md) L17-L70 `1eded623f984fd4246a2a4614554ebbe5f45a61a7720e097b897d95cc15cd33a`
-- [003 - 1. Canonical persistence vs filesystem staging](003-1.-canonical-persistence-vs-filesystem-staging.md) L71-L80 `d2dce51fa643fc2b221f93ddc964765a4ffa5cab30e771b9a54a0857d99ae3bf`
-- [004 - 2. Required artifact set (SSOT) — Project Plan Package](004-2.-required-artifact-set-ssot-project-plan-package.md) L81-L205 `bcba0f0e38df766217fb2ce7539984cdfcc77ff31debab8820a85c37e87c1ca8`
-- [005 - 3. Schema alignment (critical; do not rename fields)](005-3.-schema-alignment-critical-do-not-rename-fields.md) L206-L225 `2eb5f562e1f6d704e95d54ed69cad2df2284c97b22823937f0a16dff31fa5910`
-- [006 - 4. Contract layers (two-layer model)](006-4.-contract-layers-two-layer-model.md) L226-L257 `53abadd67f39e37a9416f08c9f8e07289c0596e854a15e98b45a97add70338c3`
-- [007 - 5. DRY enforcement (contract-referenced graph)](007-5.-dry-enforcement-contract-referenced-graph.md) L258-L288 `d28bba7d85cfabfdc8e6107b13e09225d5b803ba0df4e80512d77a2cd7820795`
-- [008 - 6. Autonomy + decision logging (no human-required decisions)](008-6.-autonomy-decision-logging-no-human-required-decisions.md) L289-L304 `e54d7174987cf7b904993d7c30fbd9f92bbe95f38987508d124ddcfb8795225a`
-- [009 - 7. Plan graph requirements (**sharded-only canonical** + optional derived export)](009-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md) L305-L426 `92f0787f4baba7a5b0f623c6ac71c302fd1cb0a1d55ff7471028182213d04923`
-- [010 - 8. Seglog canonical persistence contract (artifact events)](010-8.-seglog-canonical-persistence-contract-artifact-events.md) L427-L476 `bfdb905ee8eefc9dc53003cfe6ba6e041b699c0c55d8de8083ce8f1f7e093faf`
-- [011 - 9. Acceptance criteria (validator requirements)](011-9.-acceptance-criteria-validator-requirements.md) L477-L586 `768aff0dfbc6c0f0e0b055af929098546a940cea921f98a7e40a0918b17b0570`
-- [012 - 11. Traceability outputs](012-11.-traceability-outputs.md) L587-L724 `69b01b47ceb0c9d800535fcd5dd9f04fd22bc4af9bf786f81f5ade5592fac972`
-- [013 - 12. Optional derived `quickstart.md` contract (human convenience only)](013-12.-optional-derived-quickstart.md-contract-human-convenience-on.md) L725-L758 `f19063c7602840afba10260e05b521ff0a4eff3d0b38a2b8cae2efac2b2c644f`
-- [014 - Change Summary](014-change-summary.md) L759-L772 `ebb5ed2334edee53bce2e454441526e70dd86bfefae62ef44e8e76f1bbee0d6e`
-- [015 - Runtime Evidence and Degradation Artifact Addendum (2026-03-08)](015-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) L773-L787 `06351f9f7550536057fd88a5ad8de14a1b3098c1a3585635771b41c3557d1854`
-- [016 - Owner / Consumer Map](016-owner-consumer-map.md) L788-L793 `8e3d666dd595117b0d9ae0b86716aa36fa03c2154d06710ad181ff5b7b028a2e`
-- [017 - PlanUnits](017-planunits.md) L794-L952 `037cd5d65ccf1fa3a05851c86896394af978812b32b41d859a82428d586741ef`
-- [018 - Migration Coverage](018-migration-coverage.md) L953-L963 `b8c6d511fe2b6a8e581960651effaa590dcc0e2949875cf79b5a9c54cabeface`
+- [001 - Preamble](001-preamble.md) L1-L15 `418eafa5d80d5cae423232db2e5cf4b852fc50700f25597af3f98945a93ce0c7`
+- [002 - 0. Scope (normative)](002-0.-scope-normative.md) L17-L70 `e78a78ba13fa9351863b46cabf871c86f143a2723ef0f2cd9deb4a468a78d6ce`
+- [003 - 1. Canonical persistence vs filesystem staging](003-1.-canonical-persistence-vs-filesystem-staging.md) L71-L79 `b13bd6f0e5a8ab80cb86af986f98d60406bf6506d73fe79c381c9a2a9e22ba9a`
+- [004 - 2. Required artifact set (SSOT) — Project Plan Package](004-2.-required-artifact-set-ssot-project-plan-package.md) L81-L204 `e42bed3086572f0f265ccc2705913ebb8c327a37adb7a8033b7d1e0b25608574`
+- [005 - 3. Schema alignment (critical; do not rename fields)](005-3.-schema-alignment-critical-do-not-rename-fields.md) L206-L224 `449cba0d6a38623ee31774bb3491578f76348ccedd302b0dbf2314c182d72772`
+- [006 - 4. Contract layers (two-layer model)](006-4.-contract-layers-two-layer-model.md) L226-L256 `a4b3dcd084fb0e06f43031e661e7ec141a65269efa06d93ef1a7ebcb98e2ed74`
+- [007 - 5. DRY enforcement (contract-referenced graph)](007-5.-dry-enforcement-contract-referenced-graph.md) L258-L287 `64ce99f88796cc2a11cbc9d14d8f0f97f1e63ee1bd562571bae692f609a6c7a3`
+- [008 - 6. Autonomy + decision logging (no human-required decisions)](008-6.-autonomy-decision-logging-no-human-required-decisions.md) L289-L303 `710af4600162416c394c1ad7f2882b9b216bf598763f067987fc41efca525543`
+- [009 - 7. Plan graph requirements (**sharded-only canonical** + optional derived export)](009-7.-plan-graph-requirements-sharded-only-canonical-optional-deriv.md) L305-L425 `ba18a4e1833e79982995faec137732afc6f896089048ea98531906b55f7adbbb`
+- [010 - 8. Seglog canonical persistence contract (artifact events)](010-8.-seglog-canonical-persistence-contract-artifact-events.md) L427-L475 `1844a8673db8cae00ca651fe229a7902b7ecd2884faeabd0f184de896261efb9`
+- [011 - 9. Acceptance criteria (validator requirements)](011-9.-acceptance-criteria-validator-requirements.md) L477-L586 `5b2f55538ffd135b8445909cf19d41c92200ee8eb0d11a5800eae2dee58eb02c`
+- [012 - 11. Traceability outputs](012-11.-traceability-outputs.md) L587-L723 `e24085ce9f1fe3c50e14085edb2568a0e1a2794e0685584e47fc3f332c727902`
+- [013 - 12. Optional derived `quickstart.md` contract (human convenience only)](013-12.-optional-derived-quickstart.md-contract-human-convenience-on.md) L725-L757 `77254ea9f33c5d9a5ee38fb13d5ab1afe856c3659a1df423f46656ab23f953d3`
+- [014 - Change Summary](014-change-summary.md) L759-L771 `f1c12135815bad41bf8b6ae540ee6ee895826c726afe71ade5a01e805462bf1b`
+- [015 - Runtime Evidence and Degradation Artifact Addendum (2026-03-08)](015-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) L773-L786 `e420a49f927fc5ac3880cf1705331755c182dfa74401481bd6a496778bb63122`
+- [016 - Owner / Consumer Map](016-owner-consumer-map.md) L788-L792 `76d40aa58628cea28e9112410a9a50c874ed776dbd2e0539978e474f0a6f03d4`
+- [017 - PlanUnits](017-planunits.md) L794-L3100 `8e1768d2f38e87ec2fb007979228f5e0489fb04a49606d7c53856765ebc52aaa`
+- [018 - Migration Coverage](018-migration-coverage.md) L3102-L3112 `fbb2037dc00d54d3d347e9d92f3f6f565b48dc735e84ccbc0d331a966913bfaa`

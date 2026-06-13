@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L1509-L1530
+Source lines: L1509-L1529
 
-Source SHA256: `ac31174ea0b530c0b68fb1114c81573d9a9c472889d41690c6487d387cb97b6c`
+Source SHA256: `dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a`
 
 ---
 
@@ -29,4 +29,3 @@ Tool-originated blocked paths:
 - MUST carry prerequisite metadata needed to bind the exact recovery command
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md
-

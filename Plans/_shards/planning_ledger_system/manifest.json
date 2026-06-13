@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-06-11T21:19:43Z",
+  "generated_at_utc": "2026-06-13T16:19:12Z",
   "index_path": "Plans/_shards/planning_ledger_system/00-index.md",
-  "index_sha256": "a7584976f34b0648dc311af4c0369eaba9d3e47e0737f7248efb348fe9cfa4fd",
+  "index_sha256": "3fa2372df026a9e401248665af503d32a99133997bc65712fb8fe4803b6d7fdd",
   "manifest_path": "Plans/_shards/planning_ledger_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/planning_ledger_system/001-preamble.md",
-      "sha256": "8d273eeee9fcdd7e713cb5f2e8b910a01e9b3387d37eff2d35c0425a5ec93b9f",
+      "sha256": "a7dfc0ebd77a2a69934dc115cb750f493eef9f53a26ea87990f207f0ae768b19",
       "shard_id": "001",
-      "source_line_end": 4,
+      "source_line_end": 3,
       "source_line_start": 1,
       "split_rule": "heading-##"
     },
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/planning_ledger_system/002-0.-scope.md",
-      "sha256": "60b596526d9eaa854eb46b2a382107b09ed394b1c65d3cf384ede5e5cd21e946",
+      "sha256": "5c4a19b08e44cfd4a1d2e8d9bdbef90095fd2ae6321d1e022ccc24af023bb42f",
       "shard_id": "002",
-      "source_line_end": 12,
+      "source_line_end": 11,
       "source_line_start": 5,
       "split_rule": "heading-##"
     },
     {
       "heading": "1. Architecture Summary",
       "path": "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
-      "sha256": "2ab227f558161cbbf1582fdcd0d72b7327deb0903a55e037bc1cdcc909f6a733",
+      "sha256": "478610b17bfa531ef107a0e74cc6770f543f1b17c970c004cb9dbe837e13d2aa",
       "shard_id": "003",
-      "source_line_end": 25,
+      "source_line_end": 24,
       "source_line_start": 13,
       "split_rule": "heading-##"
     },
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/planning_ledger_system/004-2.-planunits.md",
-      "sha256": "f314fed31419d5f28c8574b40759729ddfb154287bc7c7dfa29486454fc23f09",
+      "sha256": "8a15a23de9cc67c0dd7b58cc850f46d76a83d86d5c8938d1d37a2e798a289c52",
       "shard_id": "004",
-      "source_line_end": 399,
+      "source_line_end": 398,
       "source_line_start": 26,
       "split_rule": "heading-##"
     },

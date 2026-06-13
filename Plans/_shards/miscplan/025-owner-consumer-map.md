@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1346-L1351
+Source lines: L1346-L1350
 
-Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4`
+Source SHA256: `6d7bc55edd7df066ae075e61cfca78603323fa5c3048f195fa4cd18e55430cc2`
 
 ---
 
@@ -13,4 +13,3 @@ Source SHA256: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/MiscPlan.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L34-L88
+Source lines: L34-L87
 
-Source SHA256: `b2d14327c3315b32d81cbe50a93be4e5db83b75173f12463d216d7266bbc9926`
+Source SHA256: `261b53b1f52cd493a20ed9021bf5b6942600cfbfbbc1bdba19e6a06cd018cb4e`
 
 ---
 
@@ -62,4 +62,3 @@ Route-target and subject-open permissions approve the exact target they display.
 Navigation approvals inherit the same layered target model: the shared target object comes first, specialized open `/navigation` verbs sit above it, and path-open is one specialization rather than the base primitive.
 
 Small permission surfaces keep canonical terms and compact labels. Source Control remains worktree-first, graph badges and inspector chips stay dense, and `/contextual` help links expand to deeper explanations instead of renaming local jargon.
-

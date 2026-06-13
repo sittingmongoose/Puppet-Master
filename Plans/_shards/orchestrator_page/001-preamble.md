@@ -2,12 +2,10 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L1-L3
+Source lines: L1-L1
 
-Source SHA256: `9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8`
+Source SHA256: `a69447324b34fc51527d3f5595547ef476cceaf6f163f113b089a65ef52cf434`
 
 ---
 
 # Orchestrator Page -- Single-Page 6-Tab Specification
-
-

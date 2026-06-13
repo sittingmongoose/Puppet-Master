@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e6533e20b4540dc008a71f3f4c0af00b2808668f25afca9a78188f9ade1dc86e"
+      "sha256": "e00347fb3a630f7b038547a7a6f564d23d54db8e73f7e66220b189e3d32df6af"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "03b1ff793cb6c6cecd8f1081ef77c9deabf48fd5dee290c924db7500f19df4f4"
+      "sha256": "b145a4fb22f1554c8a45e2beaa975be6c6a816dafe1483ee403bdd9aecae833e"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -18,23 +18,23 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "5633c1407ce7137b821dd8098e8406e316add306c97dd517655c33d45a968640"
+      "sha256": "62567d356c0653f0f04c7ec1bda002e7a51eafe0db659ae1aedefcb826c2acae"
     },
     {
       "path": "scripts/pm-shard-plans.py",
-      "sha256": "9780096665150fbab6996cc599888ce3665ec93d513d1ea178d9c6e830df1434"
+      "sha256": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e"
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "b9cf441f96ab72c21bb3735d09a58870ae43d1d5c9d731953234433986e06430"
+      "sha256": "33a036e1b20bf544d5b115cc79dbd3e7dd772fe6801d28d2458f799c9aa7d9f7"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "e1590ae85487706eafc48d573a0c153d0819d78cb491bf7feac57f5bbd1e7f4c"
+      "sha256": "2412f8d07b20bba1576eb3d15da6348a60cfeb5f7d804bcee8d8f27eae0d01a6"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "180924d2598ba1a3f7794048129602ce04e2861edd0567149a31b586600c8b0c"
+      "sha256": "960736926543fe47bf7222c44a3bf12bad20283b9570900a7baf332929c74397"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -42,79 +42,84 @@
     },
     {
       "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.json",
-      "sha256": "d463f00bcce0524cc0e780a05a21c0198c6b866edf516702af2c8772e3b5659a"
+      "sha256": "36b123beaeac813bf184f742fd29d0aa51bef243383e4dc6617b3f78b95475d2"
     },
     {
       "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/reports/final_build_governance_seal.md",
-      "sha256": "c988e2fbcb63afa6c2e731960fc56da6f0168d535700d224ef1ae1899daf1b48"
+      "sha256": "6d12da1027bc359bdca6f25786d13cb8828b00f9486080d189e35e4d4a935ddf"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "bc73c1d4a3c65b52547fc05a815b93b9dfaa122e35c5731a55e5182a5c9ced8f"
+      "sha256": "8e9ab0be3d789fa40fcc22bca514a34f5419431edd4fde367e2f019abcf00a65"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "8f8216f4ff383808081b4217e5f2077481299fe34197565c147feac600887bd3"
+      "sha256": "10075d12b1324b215a8e0b385314dd1e13d0c8abc78dd2238aa80e8a5f3f6bd7"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "990e7535ec0ef443b6a8b0af972af5c9600c1c96f2f0bb35df2b17d30c98ccb1"
+      "sha256": "2454b71e5dcf9073199876009eb374d633602bd8bd95bac6fcd9c5f974f4232f"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "1a7827cc9ae3bcec56346dfdfb24c8baeb4894a0338971cdee0b47777e3c8944"
+      "sha256": "1b00b6fcd2098027e2be894410b3c01e25cd3df72f3e966c44a2d7ac6be13d53"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "e7603ce61004a2bfedaa29e035a69bf9edb67062e87b50beef2c170b168a9bae"
+      "sha256": "0fe105b30c89e9b0dec9185f9ef91c0c9ea1e342fa08a4c202aaf2531c4e2827"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "c547c97ed9f213ac2e402a09f1413ed402839ebf041c6d2caebab8705415e98a"
+      "sha256": "392563b9e84b982c202cead6165ddc9562e55e24f92317fd7aa2d0093ba26e82"
     }
   ],
   "checks": [
     {
-      "name": "run-gates",
-      "result": "PASS",
-      "details": "python3 scripts/pm-plans-verify.py run-gates passed at 2026-06-11T21:24:43Z."
+      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed.",
+      "name": "migration-validate",
+      "result": "PASS"
     },
     {
-      "name": "shard-check",
-      "result": "PASS",
-      "details": "docs_checked=50; shards_checked=870; failures=[]"
-    },
-    {
+      "details": "PlanUnit index validates with 4947 PlanUnits and 17603 acceptance units.",
       "name": "plan-index-validate",
-      "result": "PASS",
-      "details": "PlanUnit index validates with 105 PlanUnits and 357 acceptance units."
+      "result": "PASS"
     },
     {
+      "details": "pldg-20260610-001-ledger-plan-system validates without errors or warnings.",
+      "name": "ledger-validate",
+      "result": "PASS"
+    },
+    {
+      "details": "docs_checked=50; shards_checked=870; failures=[]",
+      "name": "shard-check",
+      "result": "PASS"
+    },
+    {
+      "details": "node_readiness_status=blocked_compiler_contract_incomplete; no_worknodes_created=True; nodeseed_candidates_created=False.",
       "name": "node-readiness-boundary",
-      "result": "PASS",
-      "details": "node_readiness_status=blocked_compiler_contract_incomplete; no_worknodes_created=True; nodeseed_candidates_created=False."
+      "result": "PASS"
     },
     {
+      "details": "Spec Lock hashes refreshed and auto-decision dec-2026-06-13-phase2-plan-standardization-planunit-index-governance-seal upserted.",
       "name": "spec-lock-protocol",
-      "result": "PASS",
-      "details": "Spec Lock hashes refreshed and auto-decision dec-2026-06-11-planunit-index-and-governance-artifact-reseal appended."
+      "result": "PASS"
     }
   ],
   "commands_run": [
     {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; live_plan_unit_count=4947; source_preserving_unit_count=0"
+    },
+    {
       "cmd": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_unit_count=105; acceptance_unit_count=357; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; plan_unit_count=4947; acceptance_unit_count=17603; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
       "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_units_checked=35; warnings=[]"
-    },
-    {
-      "cmd": "python3 scripts/pm-plan-index.py generate",
-      "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_unit_count=105; acceptance_unit_count=357"
+      "stdout_excerpt": "status=pass; plan_units_checked=38; warnings=[]"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
@@ -122,9 +127,9 @@
       "stdout_excerpt": "status=pass; docs_generated=50; shards_generated=870"
     },
     {
-      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; failures=[]; generated_at_utc=2026-06-11T21:24:43Z"
+      "stdout_excerpt": "status=pass; docs_checked=50; shards_checked=870; failures=[]"
     }
   ],
   "contract_refs_satisfied": [
@@ -135,7 +140,7 @@
     "Gate:GATE-009",
     "SchemaID:pm.evidence.schema.v1"
   ],
-  "created_at_utc": "2026-06-11T21:25:28Z",
+  "created_at_utc": "2026-06-13T16:06:13Z",
   "events": {
     "event_refs": [
       {
@@ -147,13 +152,54 @@
   "evidence_id": "evidence.final-build-governance-seal-2026-06-09.clean-repo",
   "files_changed": [
     {
+      "path": "Plans/00-plans-index.md",
       "change_type": "modified",
-      "note": "Regenerated current governance evidence bundles.",
-      "path": "Plans/.evidence/**"
+      "note": "Governance-reference fix for illustrative shard path."
     },
     {
+      "path": "Plans/_shards/**",
       "change_type": "modified",
-      "path": "Plans/plan_graph.json"
+      "note": "Regenerated configured shards for stable Phase 2 Plan docs."
+    },
+    {
+      "path": "Plans/.evidence/**",
+      "change_type": "modified",
+      "note": "Refreshed evidence artifact hashes."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Recomputed canonical SSOT hashes."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "Recorded deterministic Phase 2 governance seal decision."
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "change_type": "modified",
+      "note": "Restamped affected 00-plans-index batch sha256_after entries after governance-reference fix."
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+      "change_type": "modified",
+      "note": "Validator refreshed migration validation report timestamp/status."
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "change_type": "modified",
+      "note": "Narrow governance lint exemption for PlanUnit YAML preserved tokens and explicit prohibition text."
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "change_type": "modified",
+      "note": "Whitespace-only trailing-space cleanup required by git diff --check."
+    },
+    {
+      "path": "scripts/pm-shard-plans.py",
+      "change_type": "modified",
+      "note": "Trim section-separator blank lines from generated shard body ranges while preserving exact body verification for declared source lines."
     }
   ],
   "node": {
@@ -166,7 +212,7 @@
     "snapshot_ref": "clean-repo-generated-from-Puppet-Master-main-4-plus-Archive991-transfer_state991"
   },
   "schema_id": "pm.evidence.schema.v1",
-  "summary": "Final governance seal passed for stable ledger, Plan, and PlanUnit changes.",
+  "summary": "Phase 2 Plan standardization and PlanUnit index governance seal passed for stable docs, indexes, shards, evidence, Spec Lock artifacts, whitespace validation, and governance verifier/sharder repairs.",
   "tool_calls": [
     {
       "count": 1,

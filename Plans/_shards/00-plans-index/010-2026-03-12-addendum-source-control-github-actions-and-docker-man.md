@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L498-L516
+Source lines: L498-L514
 
-Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
+Source SHA256: `28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f`
 
 ---
 
@@ -25,5 +25,3 @@ Restart-pass by-doc owner map:
 - Highest `stale-canon` replacement risk for this source-control/GitHub Actions/Docker Manager sweep remains concentrated in `Plans/rewrite-tie-in-memo.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/Media_Generation_and_Capabilities.md`; reconcile those consumer docs against the feature owners above before treating older wording as authoritative.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
-
-

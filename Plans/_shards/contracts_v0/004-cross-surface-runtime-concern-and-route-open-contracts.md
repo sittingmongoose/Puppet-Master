@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L312-L815
+Source lines: L312-L814
 
-Source SHA256: `15835ed96323e7cfee16f8a2b8a268cbdd9ad57efd83879f53ca07e7adc18021`
+Source SHA256: `829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb`
 
 ---
 
@@ -511,4 +511,3 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Separate blocked-episode approval scope from session-wide policy scope.
 - Persist durable approver identity fields on approval and rejection events.
 - Approval lineage stays keyed to blocked-episode identity (`run_id`, `node_id`, `blocked_sequence`, `attempt_id?`) instead of being inferred from session-wide policy state.
-

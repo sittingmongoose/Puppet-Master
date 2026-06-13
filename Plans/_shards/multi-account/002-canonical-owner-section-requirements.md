@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L4-L20
+Source lines: L4-L19
 
-Source SHA256: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`
+Source SHA256: `ef69b571982bda45fb2c7d166d4bc5c319e1cae036edf9cec63593a653cc94e7`
 
 ---
 
@@ -24,4 +24,3 @@ These requirements are canonical live specification text for this owner document
 **Cross-references:** Plans/rewrite-tie-in-memo.md, Plans/storage-plan.md, Plans/usage-feature.md, AGENTS.md (Usage Tracking, Platform CLI Commands, Gemini auth exception).
 
 ---
-

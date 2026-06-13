@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L64-L98
+Source lines: L64-L96
 
-Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1`
+Source SHA256: `77af10af12edf5386148e66a96ae4e462118622bb649c318d11c785b4276451e`
 
 ---
 
@@ -41,5 +41,3 @@ Source SHA256: `0c79b2e1085dbb56e95d90c05a6bbb966fa1b78d08709f04632790bd7624bed1
 - `Runtime_Artifacts_Panel.md` is stronger about canonical runtime identity, but its canonical ID set is still artifact-centric: - `artifact_id` - `run_id` - `thread_id` - `task_id` - `linked_artifact_id` - `logical_artifact_id`
 - `chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.
 - OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity.
-
-

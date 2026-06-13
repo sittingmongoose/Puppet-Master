@@ -2,20 +2,20 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L764-L774
+Source lines: L3745-L3755
 
-Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
+Source SHA256: `28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f`
 
 ---
 
 ## Migration Coverage
 
-Original hash: `d46f8e9167ae547a54217ea973a778718c4959076cf88898d8a1f931b030c3ce`.
+Original hash: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`.
 
 Run-scoped proof artifacts:
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
-- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
-All original spans from `00-plans-index-S0001` through `00-plans-index-S0023` are preserved in place and mapped in `coverage_map.jsonl` to `0PI-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Phase 2B batches 111 and 112 atomized source spans `00-plans-index-S0001` through `00-plans-index-S0024` into fine-grained PlanUnits `0PI-002` through `0PI-054`, except for structural heading/container dispositions. `00-plans-index-S0007` is the Plan map heading, `00-plans-index-S0025` is the PlanUnits heading/container, and `00-plans-index-S0027` is Migration Coverage metadata. `00-plans-index-S0026` is the retired `0PI-001` bridge disposition. `0PI-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.

@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L127-L135
+Source lines: L127-L134
 
-Source SHA256: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b`
+Source SHA256: `258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5`
 
 ---
 
@@ -16,4 +16,3 @@ Source SHA256: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b
 ContractRef: PolicyRule:Decision_Policy.md§4, Gate:GATE-001
 
 **Use cases:** Optional package/seam approval pauses for stakeholders (when explicitly enabled by the user).
-

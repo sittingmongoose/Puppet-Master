@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L398-L416
+Source lines: L398-L415
 
-Source SHA256: `f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682`
+Source SHA256: `e88b43bb3e48e9741c3984ff34850f091b52560bad6c3bc7d6b01c4277a87c77`
 
 ---
 
@@ -26,4 +26,3 @@ Precedence rules:
 - when a consumer doc conflicts with the owner docs above, the owner docs win
 - stale canonical text must be replaced or retired, not preserved by later additive notes alone
 - Scheduler truth must not split among lexicographic, scored, and UI-derived recovery models across `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, and `Plans/Run_Graph_View.md`; Crosswalk routes that contradiction to owner docs and requires one scheduler truth.
-

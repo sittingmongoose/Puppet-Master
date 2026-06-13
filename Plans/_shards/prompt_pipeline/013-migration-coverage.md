@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L826-L836
+Source lines: L3466-L3476
 
-Source SHA256: `ea99ebd724d97ba9cbd4937381ba12c6223b4dd129744b77fcddc053ced876fc`
+Source SHA256: `8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754`
 
 ---
 
@@ -18,4 +18,4 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
-All original spans from `Prompt_Pipeline-S0001` through `Prompt_Pipeline-S0042` are preserved in place and mapped in `coverage_map.jsonl` to `PP-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+Original spans from `Prompt_Pipeline-S0001` through `Prompt_Pipeline-S0020` are preserved in place and atomized into fine-grained PlanUnits `PP-002` through `PP-026`. Original spans from `Prompt_Pipeline-S0021` through `Prompt_Pipeline-S0042` are preserved in place and atomized into fine-grained PlanUnits `PP-027` through `PP-053`. Generated structural/audit spans `Prompt_Pipeline-S0043` through `Prompt_Pipeline-S0046` are dispositioned in Phase 2B batch 155, and `PP-001` is retired to migration-lineage-only compatibility disposition. `Plans/Prompt_Pipeline.md` has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.

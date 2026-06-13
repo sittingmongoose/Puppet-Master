@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1277-L1345
+Source lines: L1277-L1344
 
-Source SHA256: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`
+Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
 
 ---
 
@@ -76,4 +76,3 @@ To prevent users from hitting settings that exist in the UI and requirements but
 - **Validation (B)** at each Phase/Task/Subtask/Iteration catches remaining omissions and ensures that the config in effect at that tier is the one the code uses. Together, they keep "built but not wired" from reaching users.
 
 ---
-

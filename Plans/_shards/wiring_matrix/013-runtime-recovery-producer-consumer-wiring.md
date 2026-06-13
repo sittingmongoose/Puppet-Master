@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L312-L419
+Source lines: L312-L418
 
-Source SHA256: `e1c5df49364c535832aae1f2e12e624e9dfdac1ca7a5118e1845daa4621fc750`
+Source SHA256: `9a3d13a03b8c46c28563641fffa66b598a67c024710ae025ad492caec8769960`
 
 ---
 
@@ -115,4 +115,3 @@ The following rows are additionally required for Debug Mode and Investigation Co
 | Debug Automation banner `Cancel investigation` | `cmd.runtime.abort_run` | investigation banner / attention surface | runtime controller / debug investigation controller | cancel the current investigation run and record the investigation as `cancelled` with `stop_reason_code = investigation.cancelled_by_user` |
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
-

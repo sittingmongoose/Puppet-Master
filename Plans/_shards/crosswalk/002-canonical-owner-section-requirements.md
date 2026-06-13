@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L4-L24
+Source lines: L4-L23
 
-Source SHA256: `f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682`
+Source SHA256: `e88b43bb3e48e9741c3984ff34850f091b52560bad6c3bc7d6b01c4277a87c77`
 
 ---
 
@@ -28,4 +28,3 @@ ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
 - If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
-

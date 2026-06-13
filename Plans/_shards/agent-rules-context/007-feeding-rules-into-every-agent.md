@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L75-L94
+Source lines: L75-L93
 
-Source SHA256: `7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de`
+Source SHA256: `4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db`
 
 ---
 
@@ -27,4 +27,3 @@ ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline
 - **Injection location (deterministic):** Prepend the combined rules block to the main (user) prompt for every agent invocation.
   AutoDecision: Prepend-only; do not rely on platform-specific system-prompt flags.
   ContractRef: PolicyRule:Decision_Policy.md§2, Primitive:DRYRules
-

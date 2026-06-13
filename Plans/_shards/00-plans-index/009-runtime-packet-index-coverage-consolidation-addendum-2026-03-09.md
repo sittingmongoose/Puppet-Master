@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L479-L497
+Source lines: L479-L496
 
-Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
+Source SHA256: `28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f`
 
 ---
 
@@ -26,4 +26,3 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 - `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction
 - `Plans/chain-wizard-flexibility.md`, `Plans/assistant-chat-design.md`, and `Plans/interview-subagent-integration.md` for paused/degraded planning-state semantics
 - `Plans/Glossary.md` for canonical runtime terminology
-

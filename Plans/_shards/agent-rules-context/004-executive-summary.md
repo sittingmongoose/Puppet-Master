@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L28-L38
+Source lines: L28-L37
 
-Source SHA256: `7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de`
+Source SHA256: `4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db`
 
 ---
 
@@ -18,4 +18,3 @@ ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§4
 
 Rule: Both layers MUST be fed into every agent on every invocation (orchestrator iteration, interview turn, Assistant chat when attached to a project) via a **single rules pipeline** (DRY).
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
-

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L517-L582
+Source lines: L517-L581
 
-Source SHA256: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`
+Source SHA256: `28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f`
 
 ---
 
@@ -73,4 +73,3 @@ Legacy Firecrawl/missing-spec coverage labels remain live only as reset traceabi
 Additional Firecrawl/lost-spec fidelity routing is traceability-only under the same reset: `FIDELITY-01` and `FIDELITY-02` map to `MUST CHANGE` in `Plans/Tools.md`; `FIDELITY-03` maps to `MUST CHANGE` in `Plans/Tools.md`; `FIDELITY-04` maps to `MUST CHANGE` in `Plans/storage-plan.md`; `FIDELITY-05` maps to `MUST CHANGE` in `Plans/MCP_Integration.md`; `FIDELITY-06` maps to `MUST CHANGE` in `Plans/LSPSupport.md`; `FIDELITY-07` maps to `MUST CHANGE` in `Plans/UI_Command_Catalog.md`; `FIDELITY-LF-003` maps to `MUST CHANGE` in `Plans/assistant-chat-design.md`; `FIDELITY-LF-004` maps to `MUST CHANGE` in `Plans/assistant-chat-design.md` and `Plans/FinalGUISpec.md`; `FIDELITY-LF-006` maps to `MUST CHANGE` in `Plans/assistant-chat-design.md`, `Plans/storage-plan.md`, and `Plans/FinalGUISpec.md`; `FIDELITY-LF-010` maps to `MUST CHANGE` in `Plans/Section15_MVP_Promoted_Features_Spec.md`; `FIDELITY-LF-013` maps to `MUST CHANGE` in `Plans/Commands_System.md` and `Plans/assistant-chat-design.md` and `MUST RECONCILE` in `Plans/UI_Command_Catalog.md`; `FIDELITY-LF-014` maps to `MUST CHANGE` in `Plans/Skills_System.md` and `Plans/Tools.md` and `MUST RECONCILE` in `Plans/FinalGUISpec.md`; `FIDELITY-LF-018` maps to `MUST CHANGE` in `Plans/FinalGUISpec.md` and `MUST RECONCILE` in `Plans/assistant-chat-design.md` and `Plans/storage-plan.md`; `FIDELITY-LF-019` maps to `MUST CHANGE` in `Plans/Run_Modes.md`. These mappings do not promote `Plans/GitHub_Integration.md` from adjacent consumer to owner for web, chat, storage, command, skill, MCP, LSP, browser, or run-mode recovery canon.
 
 Index-only fidelity guard: `webmap` remains a minimal `url: string` input that returns `site map + source refs`, with the operation contract owned by `Plans/Tools.md` / command docs. Chat-thread docs are authoritative only from the chat-perspective for UX presentation, while GUI/runtime/system docs are authoritative from the system-perspective for contracts; when they disagree, system-perspective canon wins for contracts and chat-perspective canon wins for UX. The uppercase source term `PERSPECTIVE` is retired as audit vocabulary rather than a live UI label.
-

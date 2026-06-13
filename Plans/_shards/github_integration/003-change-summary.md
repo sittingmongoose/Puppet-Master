@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L32-L42
+Source lines: L32-L41
 
-Source SHA256: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3`
+Source SHA256: `828862ab660d6c9c5430c0426a0b518ba1f3ebeeb98c8584ba0a54bed8abea5e`
 
 ---
 
@@ -18,4 +18,3 @@ Source SHA256: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3
   All decisions resolved deterministically; no open questions.
 
 ---
-
