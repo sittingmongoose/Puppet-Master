@@ -2206,8 +2206,8 @@ impl FileGuard {
 
 **Authority:** **Plans/FinalGUISpec.md §7.4 (Advanced tab)** and **§7.16 (Assistant Chat)** are the canonical GUI spec. This section aligns FileSafe.md with that spec.
 
-**Current Architecture:**
-- Config view has 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML
+**Legacy architecture source-lineage:**
+- Config view had 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML. This is a retired compatibility note only; live Settings placement follows FinalGUISpec §7.4.4 and the required Advanced-card placement below.
 - Settings are stored in `GuiConfig` and saved to YAML
 - Config is loaded by orchestrator via `ConfigManager`
 
@@ -10016,9 +10016,13 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
 preserved_exact_tokens:
 - "Plans/FinalGUISpec.md §7.4"
 - "§7.16"
+- "Config view has 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML"
 - "not a separate tab"
 - "Settings > Advanced"
 - "collapsible card"
@@ -10029,7 +10033,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "FileSafe is not a separate tab."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The legacy 8-tab Config list is retired compatibility/source-lineage only; FileSafe lives under Settings > Advanced."
 owner_boundary_notes:
 - "Plans/FinalGUISpec.md owns GUI placement; FileSafe.md aligns with that spec."
 owner_hints:

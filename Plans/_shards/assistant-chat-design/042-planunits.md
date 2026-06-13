@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3324-L21654
+Source lines: L3324-L21661
 
-Source SHA256: `93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5`
+Source SHA256: `ce2c8cb90f41a5c3c9be7848b01147e9b3ef5318778369bbaaf5198fc45b822b`
 
 ---
 
@@ -9472,7 +9472,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   HITL pauses show a Dashboard CtA and spawn a named Assistant thread;
   orchestrator completion or pause offers `Continue in Assistant` with run
-  summary and phase, task, or subtask context injected.
+  summary and package, seam, node, or blocked episode context injected.
 gui_related: true
 gui_classification_reason: HITL Dashboard CtA, spawned thread, and Continue in Assistant handoff are visible UI.
 depends_on: [ACD-203]
@@ -9496,13 +9496,20 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:13
 preserved_exact_tokens:
   - "HITL"
   - "new thread"
   - "Continue in Assistant"
   - "run summary"
   - "phase/task/subtask id"
-negative_constraints: []
+  - "orchestrator pauses at a tier boundary"
+negative_constraints:
+  - "Assistant handoff context must not use tier boundary as live runtime authority."
+compatibility_only_notes:
+  - "phase/task/subtask id and tier-boundary examples are compatibility lineage only."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/human-in-the-loop.md

@@ -2009,7 +2009,7 @@ Reference lists must defer to live owner docs instead of stale section-number ci
 - **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.
 - **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.
 - **Plans/orchestrator-subagent-integration.md:** Subagent selection, crews, execution engine, Plan/Crew execution.
-- **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.
+- **Plans/human-in-the-loop.md:** HITL mode (blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval gates), GUI settings, Dashboard CtAs; phase/task/subtask approval wording is compatibility lineage.
 - **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).
 - **Plans/FileSafe.md:** Context compilation (orchestrator/iteration); chat uses separate conversation context.
 - **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; the live web/provider owner sections remain `Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure` and `Plans/Tools.md#12. Web tool routing algorithm`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
@@ -2041,12 +2041,12 @@ The **Dashboard** displays **warnings** and **Calls to Action (CtAs)** that requ
 - Open the Assistant and respond in natural language (e.g. "approve and continue," "what's blocking?", "run the suggested fix").
 - Use the Assistant to discuss or clarify before taking action (e.g. "summarize what was done in this phase" before approving a HITL gate).
 
-**HITL prompts:** When Human-in-the-Loop (HITL) is enabled and the orchestrator pauses at a tier boundary (phase, task, or subtask):
-  - The **Dashboard** shows a **CtA** that prompts the user to interact (e.g. "Phase X complete -- approval required to continue").
-  - A **new thread** is **spawned** with an **appropriate name** (e.g. tied to the phase/task or "Approval: Phase X") so the user has a dedicated place to respond. That thread shows the CtA; the user can address it there via the Assistant (e.g. "approve and continue" or ask for a summary and then approve). So the user is notified on the Dashboard and in a dedicated HITL thread.
+**HITL prompts:** When Human-in-the-Loop (HITL) is enabled and the orchestrator pauses on a blocked-runtime, package-complete, seam-complete, or mandatory side-effect approval gate:
+  - The **Dashboard** shows a **CtA** that prompts the user to interact (e.g. "Package gate complete -- approval required to continue").
+  - A **new thread** is **spawned** with an **appropriate name** (e.g. tied to the package/seam/node or "Approval: Package Gate") so the user has a dedicated place to respond. That thread shows the CtA; the user can address it there via the Assistant (e.g. "approve and continue" or ask for a summary and then approve). So the user is notified on the Dashboard and in a dedicated HITL thread.
   The user can also address the CtA via the Assistant in that thread (e.g. "approve and continue" or ask for a summary and then approve) or via a direct "Approve & continue" control on the Dashboard if provided. See **Plans/human-in-the-loop.md** for HITL settings (GUI) and behavior.
 
-**Orchestrator to Assistant handoff:** When the orchestrator **completes** a run or **pauses** (e.g. at a tier for HITL or at end of phase), the Dashboard/completion UI must offer the canonical CtA **Continue in Assistant**. That action opens the Assistant chat with **relevant context** injected: e.g. run summary, current phase/task/subtask id, and a short summary of what was done. The user can then continue in natural language ("approve and continue", "what should we do next?") without re-pasting. Implementation: Dashboard CtA or completion panel includes a control that switches to Assistant view, creates or selects a thread, and injects a context block (run summary, phase/task, optional suggested prompt).
+**Orchestrator to Assistant handoff:** When the orchestrator **completes** a run or **pauses** (e.g. at a blocked episode, package/seam gate, or run-completion review point), the Dashboard/completion UI must offer the canonical CtA **Continue in Assistant**. That action opens the Assistant chat with **relevant context** injected: e.g. run summary, current package/seam/node/blocked episode id, and a short summary of what was done. The user can then continue in natural language ("approve and continue", "what should we do next?") without re-pasting. Implementation: Dashboard CtA or completion panel includes a control that switches to Assistant view, creates or selects a thread, and injects a context block (run summary, package/seam/node, optional suggested prompt).
 
 ---
 
@@ -12785,7 +12785,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   HITL pauses show a Dashboard CtA and spawn a named Assistant thread;
   orchestrator completion or pause offers `Continue in Assistant` with run
-  summary and phase, task, or subtask context injected.
+  summary and package, seam, node, or blocked episode context injected.
 gui_related: true
 gui_classification_reason: HITL Dashboard CtA, spawned thread, and Continue in Assistant handoff are visible UI.
 depends_on: [ACD-203]
@@ -12809,13 +12809,20 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:13
 preserved_exact_tokens:
   - "HITL"
   - "new thread"
   - "Continue in Assistant"
   - "run summary"
   - "phase/task/subtask id"
-negative_constraints: []
+  - "orchestrator pauses at a tier boundary"
+negative_constraints:
+  - "Assistant handoff context must not use tier boundary as live runtime authority."
+compatibility_only_notes:
+  - "phase/task/subtask id and tier-boundary examples are compatibility lineage only."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/human-in-the-loop.md

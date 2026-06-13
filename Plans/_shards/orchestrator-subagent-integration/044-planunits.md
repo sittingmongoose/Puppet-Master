@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6434-L30832
+Source lines: L6436-L30903
 
-Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
+Source SHA256: `5fe8943c3c799a6ad0638813af2527938453cc4f716bb44dff99a52b10a54841`
 
 ---
 
@@ -941,7 +941,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: Scheduling is graph-native through runnable graph nodes, DAG readiness, scored ready-set selection, runtime-selection,
-  /node, /node/runtime, and graph schemas; tier and lexicographic selection terms are derived display or compatibility only.
+  /node, /node/runtime, and graph schemas; Phase, Task, Subtask, Iteration, tier_id, TierType, Tiers, and lexicographic
+  selection terms are derived display, source-lineage, or compatibility only.
 gui_related: false
 gui_classification_reason: This unit covers scheduler identity, not GUI behavior.
 split_recommended: false
@@ -967,6 +968,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
 - plan-graph
 - plan_graph
@@ -979,11 +983,18 @@ preserved_exact_tokens:
 - hard-code
 - tier_id
 - TierContext
+- Phase
+- Task
+- Subtask
+- Iteration
+- TierType
+- Tiers
 negative_constraints:
 - Graph schemas must not hard-code lexicographic selection as execution authority.
 compatibility_only_notes:
 - Phase/Task/Subtask/Iteration and tier language are derived display or compatibility context only.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Phase/Task/Subtask/Iteration and tier-era terms are retired runtime canon.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -1898,7 +1909,11 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0014
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
+- node/package/seam graph
 - Feature Seam
 - Work Package
 - Node
@@ -1910,7 +1925,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - Phase/task/subtask language is derived decomposition/view language only.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Tier-era runtime ontology is retired in favor of node/package/seam graph identity.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -3041,6 +3057,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0027
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
 - 'TierContext'
 - 'tier_id'
@@ -3055,7 +3074,8 @@ negative_constraints:
 - 'This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.'
 compatibility_only_notes:
 - 'Compatibility retirement is preserved as source disposition.'
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon are retired.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -14481,7 +14501,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
 ```
 
-### OSI-245 - Canonical File-Backed Crew Message Board
+### OSI-245 - Crew Board Coordination Surface And Persistence Boundary
 
 ```yaml
 plan_unit_id: OSI-245
@@ -14489,9 +14509,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  PM-managed multi-agent collaboration uses the canonical file-backed crew message board at
-  .puppet-master/state/agent-messages.json for durable attributable coordination that cannot be reduced to live status
-  projection alone.
+  PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for durable attributable
+  crew-board coordination that cannot be reduced to live status projection alone; `.puppet-master/state/agent-messages.json`
+  may be an optional debug or interoperability mirror, but it is not the canonical persistence store.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend durable coordination records rather than GUI presentation.
@@ -14502,6 +14522,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The crew message board is represented as durable attributable coordination, not active-status projection.
+- "`.puppet-master/state/agent-messages.json` is optional mirror lineage and not canonical persistence."
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -14511,22 +14532,28 @@ reasoning_tier: standard
 context_scope: orchestrator_subagent_standardization
 implementation_surfaces:
 - Plans/orchestrator-subagent-integration.md
-risk_class: canonical_file_backed_crew_message_board
+risk_class: crew_board_persistence_truth_split
 node_compile_hint:
-  mode: canonical_file_backed_crew_message_board
+  mode: crew_board_persistence_boundary
   create_worknodes: false
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
 preserved_exact_tokens:
 - .puppet-master/state/agent-messages.json
+- canonical file-backed message board
 - file-backed message board
 - durable questions, answers, decisions, warnings, requests, and announcements
-negative_constraints: []
+negative_constraints:
+- .puppet-master/state/agent-messages.json must not be treated as the canonical persistence store.
 compatibility_only_notes:
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
-stale_retired_dispositions: []
-owner_boundary_notes: []
+stale_retired_dispositions:
+- File-backed side-file persistence is retired as canonical truth; child-run/event-store coordination records are canonical.
+owner_boundary_notes:
+- Contracts_V0 owns child-run and side-file retirement; storage-plan owns seglog/redb persistence.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:
@@ -14817,9 +14844,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Coordination mechanisms include asynchronous shared state files, a cross-platform canonical coordination projection for
-  active agents/files/operations/platform/timestamps optionally mirrored to active-agents.json for debugging, and the durable
-  attributable crew message board for revisitable exchanges.
+  Coordination mechanisms include legacy asynchronous context files, a cross-platform canonical coordination projection for
+  active agents/files/operations/platform/timestamps optionally mirrored to active-agents.json for debugging, and durable
+  attributable crew-board records for revisitable exchanges.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination mechanisms and projection boundaries rather than GUI presentation.
@@ -14831,6 +14858,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Debug mirrors do not become canonical coordination stores.
+- Shared files such as progress.txt, AGENTS.md, prd.json, active-agents.json, and agent-messages.json do not stand beside child-run/event-store records as peer runtime truth.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -14847,18 +14875,23 @@ node_compile_hint:
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
 preserved_exact_tokens:
 - progress.txt
 - AGENTS.md
 - prd.json
 - .puppet-master/state/active-agents.json
+- .puppet-master/state/agent-messages.json
 - ALL platforms
 - Attributable crew message board
 negative_constraints:
 - active-agents.json is only an optional debug mirror and must not become canonical state.
+- agent-messages.json is only an optional debug or interoperability mirror and must not become canonical persistence.
 compatibility_only_notes:
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Shared state files are context/mirror lineage, not canonical runtime truth.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -16451,7 +16484,8 @@ canonical_text: >-
   Crew admission MUST use `executionLimits` as the sole live source for `maxConcurrentCrewsPerPlatform = 4`,
   `maxConcurrentAgentsPerCrew = 8`, `maxTotalActiveAgents = 32`, `maxNestingDepth = 4`, `maxTotalSpawnedAgents = 99`, and
   `maxToolRoundsPerAgent = 200`; availability checks may narrow admission based on support, saturation, quota posture, or
-  policy, but they MUST fail closed rather than inventing alternate per-gap ceilings.
+  policy, but they MUST fail closed rather than inventing alternate per-gap ceilings; the first `Canonical crew-cap and
+  availability rules` section is the live anchor and duplicate crew-cap copies are retired source-lineage.
 gui_related: false
 gui_classification_reason: This unit covers runtime admission limits rather than GUI presentation.
 split_recommended: false
@@ -16462,6 +16496,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
 - Later illustrative examples cannot widen or replace `executionLimits`.
+- Duplicate crew-cap subsections are source-lineage only and do not become peer anchors.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -16480,8 +16515,14 @@ source_lineage:
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0145
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0150
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:12
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:19
 preserved_exact_tokens:
 - executionLimits
+- §Subagent Configuration executionLimits (this file)
+- corrupted YAML block
+- crew-cap subsection
+- duplicated verbatim twice
 - maxConcurrentCrewsPerPlatform = 4
 - maxConcurrentAgentsPerCrew = 8
 - maxTotalActiveAgents = 32
@@ -16494,7 +16535,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Run_Modes and referenced runtime contracts own the live limit source.
+- The first `Canonical crew-cap and availability rules` section is the live same-file executionLimits anchor; duplicate crew-cap copies are retired lineage.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:
@@ -17356,7 +17397,8 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The communication system example extends coordination state with a message board/queue, preserving `.puppet-master/state/active-agents.json`
-  as an optional debug mirror and `.puppet-master/state/agent-messages.json` as agent-to-agent messages.
+  as an optional debug mirror and `.puppet-master/state/agent-messages.json` as an optional debug or interoperability mirror
+  for agent-to-agent message records.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination-state architecture rather than GUI presentation.
 split_recommended: false
@@ -17367,6 +17409,7 @@ unblocks: []
 acceptance_criteria:
 - Covered architecture example remains losslessly available for exact-text audit.
 - This duplicate-era example does not narrow prior canonical message-board coverage.
+- This example must not promote active-agents.json or agent-messages.json into canonical persistence.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -17383,6 +17426,8 @@ node_compile_hint:
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
 preserved_exact_tokens:
 - .puppet-master/state/
 - active-agents.json
@@ -17391,8 +17436,10 @@ preserved_exact_tokens:
 - agent-to-agent messages
 negative_constraints:
 - The optional active-agents debug mirror must not become the coordination source of truth.
+- The optional agent-messages mirror must not become the canonical persistence store.
 compatibility_only_notes:
 - Duplicate message-board architecture example; do not narrow OSI-245.
+- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Storage owns durable schema semantics; orchestrator owns coordination use.
@@ -18159,7 +18206,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve the `AgentCommunicator` example using `message_board_file`, `AgentCoordinator`, and `.puppet-master/state/agent-messages.json`,
-  with load/save behavior analogous to coordination state locking.
+  with load/save behavior analogous to coordination state locking as source-lineage example code, not as canonical persistence.
 gui_related: false
 gui_classification_reason: This unit covers backend placement and storage-path examples rather than GUI presentation.
 split_recommended: false
@@ -18171,6 +18218,7 @@ unblocks: []
 acceptance_criteria:
 - Covered placement and path example remains losslessly available for exact-text audit.
 - Implementation module/path tokens remain examples and do not create source files.
+- message_board_file and .puppet-master/state/agent-messages.json remain compatibility-path examples only.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -18187,6 +18235,8 @@ node_compile_hint:
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
 preserved_exact_tokens:
 - src/core/agent_communication.rs
 - AgentCommunicator
@@ -18197,8 +18247,10 @@ preserved_exact_tokens:
 - save_message_board
 negative_constraints:
 - Implementation module/path tokens are examples, not source-code creation.
+- message_board_file must not become canonical persistence.
 compatibility_only_notes:
 - Rust snippet is evidence only.
+- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Orchestrator owns communication use; storage owns durable record semantics.
@@ -18658,7 +18710,7 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Gap #28 preserves the concurrent-write risk that multiple agents writing `active-agents.json` can cause race conditions,
   file corruption, or lost updates; mitigation evidence includes advisory locks, exponential backoff, atomic temp-file rename,
-  and read-modify-write retry.
+  and read-modify-write retry for debug/projection mirrors rather than canonical persistence.
 gui_related: false
 gui_classification_reason: This unit covers coordination storage safety rather than GUI presentation.
 split_recommended: false
@@ -18669,6 +18721,7 @@ unblocks: []
 acceptance_criteria:
 - Covered Gap #28 opening and mitigation bullets remain losslessly available for exact-text audit.
 - '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
+- Concurrent-write mitigation evidence does not convert side files into canonical persistence.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -18685,6 +18738,8 @@ node_compile_hint:
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
 preserved_exact_tokens:
 - 'Gap #28: File locking and concurrent writes'
 - active-agents.json
@@ -20555,8 +20610,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Concurrency caps are execution/config concerns owned by the Subagent Configuration executionLimits contract; the plan
-  graph owns dependency/blocking structure only, and both crew and per-platform agent limits apply.
+  Concurrency caps are execution/config concerns owned by the `Canonical crew-cap and availability rules` `executionLimits`
+  anchor; the plan graph owns dependency/blocking structure only, and both crew and per-platform agent limits apply.
 gui_related: false
 gui_classification_reason: This unit covers backend execution/config ownership, not GUI presentation.
 split_recommended: false
@@ -20567,6 +20622,7 @@ unblocks: []
 acceptance_criteria:
 - Covered concurrency-cap ownership prose remains losslessly available for exact-text audit.
 - The plan graph must not own max-concurrent execution caps.
+- References to `§Subagent Configuration executionLimits (this file)` are compatibility lineage when they point at the old corrupted YAML block instead of the live crew-cap anchor.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -20583,8 +20639,11 @@ node_compile_hint:
 source_lineage:
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0158
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:12
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:19
 preserved_exact_tokens:
 - executionLimits
+- §Subagent Configuration executionLimits (this file)
 - depends_on
 - blockers
 - unblocks
@@ -20597,9 +20656,10 @@ negative_constraints:
 - The plan graph must not own max concurrent execution caps.
 - Crew spawn must not exceed either the crew cap or the per-platform agent cap.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The old `§Subagent Configuration executionLimits (this file)` pointer is retired when it resolves to the corrupted YAML block; the live same-file anchor is `Canonical crew-cap and availability rules`.
 owner_boundary_notes:
-- Crosswalk §3.7 and Subagent Configuration executionLimits own concurrency cap values.
+- Crosswalk §3.7 and the same-file `Canonical crew-cap and availability rules` executionLimits anchor own concurrency cap values.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs: []
@@ -23032,16 +23092,17 @@ owner_hints:
 preserved_contractrefs: []
 ```
 
-### OSI-402 - Persona Tier Structure And Frame Switching
+### OSI-402 - Persona Tier Label Compatibility And Frame Switching
 
 ```yaml
 plan_unit_id: OSI-402
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Persona tier structure preserves Phase, Task, Subtask, and Iteration as the tier model while allowing Persona switching
-  within the same tier by mental frame without adding tiers or implicit provider-native defaults.
+  Persona Phase, Task, Subtask, and Iteration labels are retired tier-era compatibility/defaulting labels, not live runtime
+  canon; Persona switching uses operation frame and requested/effective Persona runtime records without adding tiers or
+  restoring Phase/Task/Subtask/Iteration as execution authority.
 gui_related: false
 gui_classification_reason: This unit covers backend Persona/tier behavior, not GUI presentation.
 split_recommended: false
@@ -23050,8 +23111,8 @@ depends_on:
 - OSI-084
 unblocks: []
 acceptance_criteria:
-- Covered Persona addendum heading, tier reminder, tier defaults, and planning/execution switching sections remain losslessly available.
-- Persona switching must not add tiers.
+- Covered Persona addendum heading, tier reminder, tier defaults, and planning/execution switching sections remain losslessly available as compatibility lineage.
+- Persona switching must not add tiers or restore Phase/Task/Subtask/Iteration as live runtime canon.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -23061,9 +23122,9 @@ reasoning_tier: standard
 context_scope: orchestrator_subagent_standardization
 implementation_surfaces:
 - Plans/orchestrator-subagent-integration.md
-risk_class: persona_tier_structure_frame_switching
+risk_class: persona_tier_compatibility_drift
 node_compile_hint:
-  mode: persona_tier_structure_frame_switching
+  mode: persona_tier_label_compatibility_frame_switching
   create_worknodes: false
 source_lineage:
 - >-
@@ -23074,11 +23135,16 @@ source_lineage:
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0194
 - >-
   Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0196
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
 - Phase
 - Task
 - Subtask
 - Iteration
+- The orchestrator tier model remains
+- node/package/seam graph
 - tier_personas
 - operation frame
 - planning/discussion
@@ -23086,9 +23152,12 @@ preserved_exact_tokens:
 - review/verification
 negative_constraints:
 - Persona switching must not introduce new tiers.
+- Persona Phase/Task/Subtask/Iteration labels must not reassert tier runtime canon.
 - Leaving a tier unset does not create an implicit overseer Persona or provider-native agent-file default.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Phase, Task, Subtask, and Iteration survive only as legacy Persona defaulting labels.
+stale_retired_dispositions:
+- The earlier assertion that the orchestrator tier model remains Phase, Task, Subtask, Iteration is retired for runtime canon.
 owner_boundary_notes:
 - Persona owner docs retain Persona registry and defaulting authority.
 owner_hints:

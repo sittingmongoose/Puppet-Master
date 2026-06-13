@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L3429-L5530
+Source lines: L3429-L5532
 
-Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
+Source SHA256: `5fe8943c3c799a6ad0638813af2527938453cc4f716bb44dff99a52b10a54841`
 
 ---
 
@@ -155,7 +155,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 #### Canonical crew message-board contract
 
-PM-managed multi-agent collaboration uses a canonical file-backed message board at `.puppet-master/state/agent-messages.json` for attributable cross-agent coordination that cannot be reduced to live status projection alone.
+PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for attributable cross-agent coordination that cannot be reduced to live status projection alone. `.puppet-master/state/agent-messages.json` may exist as an optional debug or interoperability mirror, but it is not the canonical persistence store.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -236,7 +236,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 
    **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
 
-3. **Attributable crew message board (canonical):** Use `.puppet-master/state/agent-messages.json` for durable questions, answers, decisions, warnings, requests, and announcements that agents or the orchestrator need to revisit after transient status updates.
+3. **Attributable crew message board (canonical records):** Persist durable questions, answers, decisions, warnings, requests, and announcements through the child-run/event-store coordination record family; `.puppet-master/state/agent-messages.json` is an optional debug or interoperability mirror for those records.
 
 4. **Provider-bridge coordination (current):**
 
@@ -622,7 +622,9 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
-### Puppet Master Crews (Teams/Fleets Alternative)
+### Puppet Master Crews (Teams/Fleets Alternative) -- duplicate source-lineage copy
+
+This duplicate copy preserves the crew-cap and Assistant-surface lineage for audit. The first `Canonical crew-cap and availability rules` section above is the single live `executionLimits` anchor; this duplicate section is not a peer source of crew-cap authority.
 
 Crew mode is a multi-model coordination overlay over child runs.
 
@@ -649,7 +651,7 @@ Gap-era crew notes in this section are retired as canonical guidance. The live c
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 
-#### Canonical crew-cap and availability rules
+#### Duplicate crew-cap source-lineage copy (retired)
 
 Crew admission MUST use `executionLimits` as the sole live source for:
 - `maxConcurrentCrewsPerPlatform = 4`
@@ -2035,13 +2037,13 @@ pub struct Conflict {
 1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
 2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project folder. Running too many concurrent processes degrades the user's development environment.
 
-**Source of caps:** The canonical concurrency limits are defined in §Subagent Configuration `executionLimits` (this file). The plan graph defines only dependency structure (`depends_on`, plus blocking edges such as `blockers`/`unblocks` where applicable); max concurrent is an execution/config concern. See `Plans/Crosswalk.md` §3.7 for the ownership table.
+**Source of caps:** The canonical concurrency limits are defined in the `Canonical crew-cap and availability rules` `executionLimits` anchor above. The plan graph defines only dependency structure (`depends_on`, plus blocking edges such as `blockers`/`unblocks` where applicable); max concurrent is an execution/config concern. See `Plans/Crosswalk.md` §3.7 for the ownership table.
 
 **Crew limits vs agent limits:** These are separate concepts:
 - **Per-platform agent cap:** limits individual concurrent agent/subagent processes per platform. This is what hits rate limits and machine load.
 - **Crew cap** (`maxConcurrentCrewsPerPlatform`): limits concurrent crew groups per platform. A crew is a logical group of subagents working together.
 
-Both limits apply: a crew spawn must not exceed either the crew cap or the per-platform agent cap. See §Subagent Configuration `executionLimits` for canonical values.
+Both limits apply: a crew spawn must not exceed either the crew cap or the per-platform agent cap. See the `Canonical crew-cap and availability rules` `executionLimits` anchor for canonical values.
 
 ### Benefits of Parallel Subagent Execution
 

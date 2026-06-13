@@ -56,7 +56,7 @@ These requirements are canonical live specification text for this owner document
 
 Orchestrator is the core scheduling, concern tracking, blocked-state handling, and runtime-identity management system. It is not the UI, CLI, or external provider.
 
-The /page-shell is a six-tab single-page surface. Node Graph Display remains a native Orchestrator view over `Plans/Orchestrator_Page.md`, `Plans/orchestrator-subagent-integration.md`, `/Orchestrator_Page.md`, and `/orchestrator-subagent-integration.md`; the tab set includes Tiers, History, Progress, Evidence, and Ledger compatibility labels while the canonical runtime model is package/lane aware.
+The /page-shell is a six-tab single-page surface with canonical tabs `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`. Node Graph Display remains a native Orchestrator view over `Plans/Orchestrator_Page.md`, `Plans/orchestrator-subagent-integration.md`, `/Orchestrator_Page.md`, and `/orchestrator-subagent-integration.md`; `Tiers` and tier-era tab labels survive only as compatibility/search aliases while the canonical runtime model is node/package/seam/lane aware.
 
 Blocked and HITL routing records preserve `/blocking/HITL`, `/model/effort/persona/account`, `/target`, `/display`, `/snapshot`, field-shape, resolution_thread, `/severity/blocking`, `/review/corroboration`, `/chat`, `/result`, `/package`, `/fallback`, safe-point, lane, review, attempt, and promotion fields so blocked decisions remain reconstructable from the displayed page state.
 
@@ -405,7 +405,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents, while runtime, storage, and scheduler contracts own canonical truth.
+  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
 split_recommended: true
@@ -415,7 +415,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Orchestrator remains distinct from the UI, CLI, and external providers.
-  - The page shell remains a six-tab single-page surface over package/lane-aware runtime state.
+  - The page shell remains a six-tab single-page surface over node/package/seam/lane-aware runtime state.
+  - The live tab set is Progress, Seams, Node Graph, Evidence, History, and Ledger.
   - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -432,18 +433,25 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0001
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0002
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
   - "Orchestrator Page -- Single-Page 6-Tab Specification"
   - "/page-shell"
   - "six-tab single-page surface"
   - "Tiers"
-  - "History"
+  - "Progress/Seams/Node Graph/Evidence/History/Ledger"
   - "Progress"
+  - "Seams"
+  - "Node Graph"
+  - "History"
   - "Evidence"
   - "Ledger"
   - "package/lane aware"
 negative_constraints:
   - "Orchestrator must not define page-local runtime authority for enums, event semantics, or scheduler truth."
+  - "Tiers must not remain a primary tab/page authority."
 owner_hints:
   - Plans/Orchestrator_Page.md
 ```

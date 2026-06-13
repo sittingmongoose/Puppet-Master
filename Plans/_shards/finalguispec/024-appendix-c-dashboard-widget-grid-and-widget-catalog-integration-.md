@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2333-L2424
+Source lines: L2336-L2424
 
-Source SHA256: `f0a581e7023cfbd53b256e790b691253eee4994e579048ac57160820c7253c62`
+Source SHA256: `012fa1d05684ffc33fdb6bae5672543272bd5cf61ba071ff6717cf95c7bfc835`
 
 ---
 
@@ -57,19 +57,16 @@ The current **named widget catalog** includes:
 **Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
 
 Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
-### C.3 Add-Widget Flow on Dashboard
 
-The Dashboard has an explicit **"Add Widget"** control:
-- **Location**: floating action button in the bottom-right corner of the Dashboard grid area, or in a Dashboard toolbar.
-- **Behavior**: opens the Widget Catalog overlay (Plans/Widget_System.md section 4.2) filtered to Dashboard-compatible widgets.
-- **Available widgets**: all widgets from the catalog whose "Hostable Pages" includes "Dashboard" -- this includes Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.), Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.), and others.
-- **On add**: widget placed at next available grid position with its default size. Layout persisted immediately.
+### C.4.1 Larger Widget Library Compatibility Note
 
-This enables users to build a customized Dashboard that includes usage information, orchestrator progress, and other data -- all from a single surface.
+Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+
+Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
 
 ContractRef: ContractName:Plans/Widget_System.md#4
 
-### C.4 Widget Catalog vs. Core Widget Catalog
+### C.4.2 Widget Catalog vs. Core Widget Catalog
 
 Two distinct catalogs now exist. To avoid confusion:
 
@@ -85,7 +82,7 @@ The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-
 
 1. **On first load** after the widget system upgrade:
    - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
-   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding Widget Catalog ID (per the table in C.2), assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
+   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding named Widget Catalog ID from C.4, assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
    - Treat `dashboard_layout:v1` as deprecated migration input only; it does not remain canonical after migration completes.
 2. **Future reads** use `widget_layout:v1:dashboard` only.
 3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.

@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L28-L125
 
-Source SHA256: `258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5`
+Source SHA256: `a7137d8aa24f7ee49f0f74e2beed7171b16c047b814fbdf25e6ae6c4389e4766`
 
 ---
 
@@ -15,7 +15,7 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 
 - HITL approvals should be represented as explicit **events** in the unified event model (seglog ledger)
 - "Pause for approval" must be reproducible/replayable (event stream + projections), not just an in-memory UI state
-- UI can change (Slint rewrite), but tier-boundary meaning and approval requirements must not
+- UI can change (Slint rewrite), but blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval requirements must not
 
 ### Canonical HITL request contract
 

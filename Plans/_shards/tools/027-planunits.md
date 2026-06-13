@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2252-L10720
+Source lines: L2252-L10729
 
-Source SHA256: `dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a`
+Source SHA256: `b044a273575910272cff8c690950eb28020f9d4c1b0b4e9fe4aa5be4b4776e66`
 
 ---
 
@@ -7899,7 +7899,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - Batch webfetch maxes at 50 URLs with default concurrency 3 and max 10.
-- Batch webextract maxes at 10 URLs with default concurrency 3 and max 5.
+- Batch webextract maxes at 10 URLs with default concurrency 3 and max 10.
 - Batch-level timeout remains `individual_timeout × min(url_count, 5)`, cap 600s.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7914,6 +7914,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0107
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
+- Plans/Tools.md:623
+- Plans/Tools.md:669
+- Plans/Tools.md:2160
+- Plans/Tools.md:2163
+- Plans/Tools.md:2164
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -7931,7 +7939,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The older batch_webextract max concurrency 5 line is stale; the accepted canonical max concurrency is 10.
 owner_hints:
 - Plans/Tools.md
 ```

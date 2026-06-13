@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L141-L723
+Source lines: L141-L746
 
-Source SHA256: `e3e923ed5c31385eb7e21a1b9d96f73fdcd93e72c72e84bde596d2c336835cd2`
+Source SHA256: `4d49e15d61bcf949335ffdce18b066649696a348519d4561eacb7811acd7b4b3`
 
 ---
 
@@ -348,7 +348,7 @@ plan_unit_id: RGV-007
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Tiers are demoted from primary Orchestrator tab/page authority. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity and allowed_action_ids-backed runtime actions own that role.
+canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
 gui_related: true
 gui_classification_reason: This disposition retires or constrains user-visible Tiers tab/page assumptions and graph layout vocabulary.
 depends_on: [RGV-001, RGV-006]
@@ -385,12 +385,22 @@ source_lineage:
 - Plans/Run_Graph_View.md:73
 - Plans/Run_Graph_View.md:86
 - Plans/Run_Graph_View.md:89-90
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
 preserved_exact_tokens:
 - Tiers
 - Node Graph
+- Progress/Seams/Node Graph/Evidence/History/Ledger
 - hitl_request_id
 - request_id
+- blocked_sequence
 - allowed_action_ids[]
+- cmd.graph.approve_hitl/deny_hitl
+- request_id vs blocked_sequence
+- allowed_action_ids[] → cmd.runtime.*
 negative_constraints:
 - The graph view-model MUST NOT keep hitl_request_id as the durable action identity once the blocked/recovery model moves to blocked-episode identity.
 - Graph and Orchestrator command payloads must not keep request_id as the primary action target.
@@ -415,7 +425,7 @@ plan_unit_id: RGV-008
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph discloses stale or degraded projection trust before showing live claims, treats projection-trust failures and weak-integration findings as distinct concern categories, and gates actions that depend on current promotion, blocker, graph-generation, or remote-side-effect truth.
+canonical_text: Run Graph discloses stale or degraded projection trust before showing live claims, treats projection-trust failures and weak-integration findings as distinct concern categories, and gates actions that depend on current promotion, blocker, graph-generation, remote-side-effect truth, or cross-surface mutation payloads.
 gui_related: false
 gui_classification_reason: The unit primarily defines runtime trust, concern identity, and action-gating policy.
 depends_on: [RGV-001, RGV-006]
@@ -426,6 +436,7 @@ acceptance_criteria:
 - Concern merge, split, and supersession remain discussion-only until concern identity/routing rules become contract-level.
 - Concerns have durable identity, lineage, source links, status, resolution_kind, and rationale fields rather than only badges or notes.
 - Graph patch application that changes canonical graph generation is hard-gated or runtime-controlled.
+- Mutating Run Graph commands carry projection-trust payloads and route through allowed_action_ids-backed runtime actions when blocked/recovery action identity is involved.
 validation_surfaces:
 - Projection trust/manual action-gating review.
 - Concern schema owner review.
@@ -453,13 +464,17 @@ source_lineage:
 - Plans/Run_Graph_View.md:83-85
 - Plans/Run_Graph_View.md:93
 - Plans/Run_Graph_View.md:121-123
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
 preserved_exact_tokens:
 - projection-trust
+- projection-trust payload
 - weak-integration
 - hard_gate
 - concern_id
 - resolution_kind
 - blocked_episode_refs
+- allowed_action_ids[] → cmd.runtime.*
 negative_constraints:
 - Run Graph may link candidate concern operations but must not invent canonical merge authority.
 owner_hints:
@@ -480,13 +495,13 @@ plan_unit_id: RGV-009
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph records adjacent owner gaps without claiming non-local authority. Multi-account switch episodes, role enums, provider account policy references, acceptance/evidence/coverage schema extensions, and runtime scheduler ordering belong to their owner docs before Run Graph consumes them.
+canonical_text: Run Graph records adjacent owner gaps without claiming non-local authority. Durable account switch history is already owned through account_switch_event and account_pressure_episode, while role enums, provider account policy references, acceptance/evidence/coverage schema extensions, and runtime scheduler ordering belong to their owner docs before Run Graph consumes them.
 gui_related: false
 gui_classification_reason: This unit is owner-routing and schema-boundary metadata, not GUI implementation work.
 depends_on: [RGV-001, RGV-006, RGV-008]
 unblocks: [RGV-010]
 acceptance_criteria:
-- Multi-account history and role scoping gaps are routed to Multi-Account and related runtime owner docs.
+- Multi-account switch history consumes account_switch_event and account_pressure_episode rather than the stale no-durable-family claim.
 - Schema contradictions are tracked as active owner-doc gaps rather than solved locally in Run Graph.
 - Concern, corroboration, promotion, graph-patch, lane, package, and account object families are preserved as node-relevant hints without becoming final WorkNodes.
 validation_surfaces:
@@ -513,12 +528,20 @@ source_lineage:
 - Plans/Run_Graph_View.md:78
 - Plans/Run_Graph_View.md:86-87
 - Plans/Run_Graph_View.md:91-92
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:15
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
 preserved_exact_tokens:
 - account.switched
+- account_switch_event
+- Contracts_V0 now defines account_switch_event
 - policy_hash
 - actor_kind
 - execution_role
 - Schema-level contradictions are active, not hypothetical.
+- lexicographic ordering
+- scored ready-set
 negative_constraints:
 - Run Graph must not encode actor role or side-effect target identity into effective_provider_identity, provider_identity, or effective_project_id.
 owner_hints:

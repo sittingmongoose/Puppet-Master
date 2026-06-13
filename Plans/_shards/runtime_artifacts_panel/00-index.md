@@ -1,6 +1,6 @@
 # Shard Index: Plans/Runtime_Artifacts_Panel.md
 
-Generated: 2026-06-13T16:19:12Z
+Generated: 2026-06-13T21:33:39Z
 
 Source SHA256: `6dc115a693df2c3380f95cbde432e7f4a9b481d286472afdb0b19e0d71f59f9a`
 

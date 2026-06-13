@@ -1,6 +1,6 @@
 # Shard Index: Plans/Commands_System.md
 
-Generated: 2026-06-13T16:19:12Z
+Generated: 2026-06-13T21:33:39Z
 
 Source SHA256: `9bcef178bb9af4ae5ed1e392e20aa1102277a814069ffd8d5116bbacfd7be341`
 

@@ -2131,7 +2131,7 @@ Minimum payload:
 
 `remediation_ceiling_exceeded` remains a blocked-state outcome (`blocked_reason_code`), not a `remediation.resolved.resolution` value.
 
-The legacy remediation completion enum `success|failed|ceiling_exceeded` is source-lineage for older completion prose only; canonical `remediation.resolved.resolution` uses `fixed|superseded|abandoned|replan_required`, with `ceiling_exceeded` represented through blocked-state outcome vocabulary rather than the resolution enum.
+The legacy remediation completion enum `success|failed|ceiling_exceeded` is source-lineage for older completion prose only; canonical `remediation.resolved.resolution` uses `fixed|superseded|abandoned|replan_required`. Compatibility imports map `success -> fixed`, `ceiling_exceeded -> replan_required` while preserving `remediation_ceiling_exceeded` blocked-state outcome evidence when available, and `failed -> abandoned` only when the legacy producer reported terminal failure; non-terminal legacy failure must be reclassified to an explicit current value instead of guessed.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
@@ -13824,9 +13824,8 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   remediation.resolved replaces deprecated run.remediation_completed and
   preserves remediation resolution payload fields; the resolution enum is fixed,
-  superseded, abandoned, or replan_required, while legacy
-  success|failed|ceiling_exceeded is source-lineage only and
-  remediation_ceiling_exceeded remains a blocked_reason_code.
+  superseded, abandoned, or replan_required; legacy success|failed|ceiling_exceeded maps through
+  explicit compatibility rules and remediation_ceiling_exceeded remains a blocked_reason_code.
 gui_related: false
 gui_classification_reason: This unit defines remediation event compatibility and payload fields.
 split_recommended: false
@@ -13836,6 +13835,7 @@ acceptance_criteria:
   - "New producers emit remediation.resolved instead of run.remediation_completed."
   - "Payload preserves run_id, node_id, remediation_root_id, child_attempt_id, resolution, and ts."
   - "resolution accepts fixed, superseded, abandoned, and replan_required only."
+  - "Compatibility imports map success -> fixed, ceiling_exceeded -> replan_required, and failed -> abandoned only for terminal legacy failures."
   - "remediation_ceiling_exceeded remains a blocked_reason_code."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -13852,6 +13852,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0091
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:13
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:10
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
 preserved_exact_tokens:
   - "`remediation.resolved`"
   - "`run.remediation_completed`"
@@ -13865,12 +13868,17 @@ preserved_exact_tokens:
   - "`remediation_ceiling_exceeded`"
   - "`blocked_reason_code`"
   - "`success|failed|ceiling_exceeded`"
+  - "success -> fixed"
+  - "ceiling_exceeded -> replan_required"
+  - "failed -> abandoned"
   - "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md"
 compatibility_only_notes:
   - "`run.remediation_completed` is a deprecated legacy alias for remediation.resolved."
   - "The legacy remediation completion enum success|failed|ceiling_exceeded is source-lineage only."
+  - "failed maps to abandoned only when the legacy producer reported terminal failure; otherwise a current value must be explicit."
 negative_constraints:
   - "remediation_ceiling_exceeded must not become a remediation.resolved resolution value."
+  - "Legacy failed must not be guessed into abandoned for non-terminal failures."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md

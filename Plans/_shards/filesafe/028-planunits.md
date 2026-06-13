@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2718-L12972
+Source lines: L2718-L12977
 
-Source SHA256: `ce8a36a9373b073b4bed0c7aaaa342feae332bdd0f84f032c32a673b65ee402b`
+Source SHA256: `6642343f4a818301c0a88c8b6897e9871d7ea0468b00dc57603df4bbb4a4e76d`
 
 ---
 
@@ -7309,9 +7309,13 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
 preserved_exact_tokens:
 - "Plans/FinalGUISpec.md §7.4"
 - "§7.16"
+- "Config view has 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML"
 - "not a separate tab"
 - "Settings > Advanced"
 - "collapsible card"
@@ -7322,7 +7326,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "FileSafe is not a separate tab."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The legacy 8-tab Config list is retired compatibility/source-lineage only; FileSafe lives under Settings > Advanced."
 owner_boundary_notes:
 - "Plans/FinalGUISpec.md owns GUI placement; FileSafe.md aligns with that spec."
 owner_hints:

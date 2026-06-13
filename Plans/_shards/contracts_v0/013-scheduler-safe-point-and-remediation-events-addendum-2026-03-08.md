@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L1946-L2184
 
-Source SHA256: `829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb`
+Source SHA256: `dcdc2f6ff472e26276314ef291fe4870bc863e9d633ef8a6ca11c7cb668b4258`
 
 ---
 
@@ -196,7 +196,7 @@ Minimum payload:
 
 `remediation_ceiling_exceeded` remains a blocked-state outcome (`blocked_reason_code`), not a `remediation.resolved.resolution` value.
 
-The legacy remediation completion enum `success|failed|ceiling_exceeded` is source-lineage for older completion prose only; canonical `remediation.resolved.resolution` uses `fixed|superseded|abandoned|replan_required`, with `ceiling_exceeded` represented through blocked-state outcome vocabulary rather than the resolution enum.
+The legacy remediation completion enum `success|failed|ceiling_exceeded` is source-lineage for older completion prose only; canonical `remediation.resolved.resolution` uses `fixed|superseded|abandoned|replan_required`. Compatibility imports map `success -> fixed`, `ceiling_exceeded -> replan_required` while preserving `remediation_ceiling_exceeded` blocked-state outcome evidence when available, and `failed -> abandoned` only when the legacy producer reported terminal failure; non-terminal legacy failure must be reclassified to an explicit current value instead of guessed.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 

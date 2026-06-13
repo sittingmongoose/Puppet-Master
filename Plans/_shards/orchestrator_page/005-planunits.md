@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L398-L1392
+Source lines: L398-L1400
 
-Source SHA256: `a69447324b34fc51527d3f5595547ef476cceaf6f163f113b089a65ef52cf434`
+Source SHA256: `6557b699c5aba604858a120d0a3218ad29fb78fefd4b223e17888689b8cdddb7`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents, while runtime, storage, and scheduler contracts own canonical truth.
+  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
 split_recommended: true
@@ -28,7 +28,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Orchestrator remains distinct from the UI, CLI, and external providers.
-  - The page shell remains a six-tab single-page surface over package/lane-aware runtime state.
+  - The page shell remains a six-tab single-page surface over node/package/seam/lane-aware runtime state.
+  - The live tab set is Progress, Seams, Node Graph, Evidence, History, and Ledger.
   - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -45,18 +46,25 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0001
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0002
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
 preserved_exact_tokens:
   - "Orchestrator Page -- Single-Page 6-Tab Specification"
   - "/page-shell"
   - "six-tab single-page surface"
   - "Tiers"
-  - "History"
+  - "Progress/Seams/Node Graph/Evidence/History/Ledger"
   - "Progress"
+  - "Seams"
+  - "Node Graph"
+  - "History"
   - "Evidence"
   - "Ledger"
   - "package/lane aware"
 negative_constraints:
   - "Orchestrator must not define page-local runtime authority for enums, event semantics, or scheduler truth."
+  - "Tiers must not remain a primary tab/page authority."
 owner_hints:
   - Plans/Orchestrator_Page.md
 ```

@@ -128,7 +128,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "a5bca89309c1cec57a609158bac809bfcbd50846627f313b3583c5c66cb0e5d4",
+      "sha256": "28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -475,7 +475,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 21686,
+      "line_count": 21693,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 412,
       "plan_unit_ids": [
@@ -1180,7 +1180,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "93dc1617d67ab6484f0e6b7d8603aa0618e23afb27f6a857ce85a82004995dc5",
+      "sha256": "ce2c8cb90f41a5c3c9be7848b01147e9b3ef5318778369bbaaf5198fc45b822b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 412
@@ -2441,7 +2441,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 16716,
+      "line_count": 16724,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 278,
       "plan_unit_ids": [
@@ -3008,7 +3008,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb",
+      "sha256": "dcdc2f6ff472e26276314ef291fe4870bc863e9d633ef8a6ca11c7cb668b4258",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 278
@@ -3932,7 +3932,7 @@
       "implementation_surfaces": [
         "Plans/FileSafe.md"
       ],
-      "line_count": 12984,
+      "line_count": 12989,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 187,
       "plan_unit_ids": [
@@ -4133,7 +4133,7 @@
         "migration_lineage",
         "owner_boundary_drift"
       ],
-      "sha256": "ce8a36a9373b073b4bed0c7aaaa342feae332bdd0f84f032c32a673b65ee402b",
+      "sha256": "6642343f4a818301c0a88c8b6897e9871d7ea0468b00dc57603df4bbb4a4e76d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 187
@@ -4158,7 +4158,7 @@
       "implementation_surfaces": [
         "Plans/FinalGUISpec.md"
       ],
-      "line_count": 24226,
+      "line_count": 24273,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 386,
       "plan_unit_ids": [
@@ -4562,7 +4562,7 @@
         "route_drift",
         "source_preservation"
       ],
-      "sha256": "f0a581e7023cfbd53b256e790b691253eee4994e579048ac57160820c7253c62",
+      "sha256": "012fa1d05684ffc33fdb6bae5672543272bd5cf61ba071ff6717cf95c7bfc835",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 385,
@@ -4887,7 +4887,7 @@
       "implementation_surfaces": [
         "Plans/human-in-the-loop.md"
       ],
-      "line_count": 2407,
+      "line_count": 2413,
       "path": "Plans/human-in-the-loop.md",
       "plan_unit_count": 35,
       "plan_unit_ids": [
@@ -4935,7 +4935,7 @@
         "hitl_permission_ladder_drift",
         "migration_lineage"
       ],
-      "sha256": "258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5",
+      "sha256": "a7137d8aa24f7ee49f0f74e2beed7171b16c047b814fbdf25e6ae6c4389e4766",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 35
@@ -6656,7 +6656,7 @@
       "implementation_surfaces": [
         "Plans/orchestrator-subagent-integration.md"
       ],
-      "line_count": 30850,
+      "line_count": 30921,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 424,
       "plan_unit_ids": [
@@ -7129,7 +7129,6 @@
         "beforeunit_hook_execution_semantics",
         "canonical_crew_message_schema",
         "canonical_cross_run_continuity_sources",
-        "canonical_file_backed_crew_message_board",
         "canonical_tier_quality_matrix",
         "canonical_validation_table_source_of_truth",
         "capability_follow_up_checklist",
@@ -7184,6 +7183,7 @@
         "copilot_findings_regex_parser_example",
         "copilot_task_downstream_text_section_parser",
         "crew_aware_prd_plan_generation_hints",
+        "crew_board_persistence_truth_split",
         "crew_coordination_identity_keys",
         "crew_gui_assistant_consumer_projection",
         "crew_learning_and_adaptation",
@@ -7350,7 +7350,7 @@
         "persona_resolution_config_contract",
         "persona_runtime_state_ui_event_availability",
         "persona_storage_injection_boundary",
-        "persona_tier_structure_frame_switching",
+        "persona_tier_compatibility_drift",
         "phase1_memory_extraction_persona_boundary",
         "phase1_project_context_detection_backlog",
         "phase2_subagent_selector_backlog",
@@ -7514,7 +7514,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f",
+      "sha256": "5fe8943c3c799a6ad0638813af2527938453cc4f716bb44dff99a52b10a54841",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 423,
@@ -7522,8 +7522,8 @@
       },
       "title": "Orchestrator Subagent Integration -- Implementation Plan",
       "unit_type_counts": {
-        "compatibility_disposition": 1,
-        "requirement": 423
+        "compatibility_disposition": 2,
+        "requirement": 422
       },
       "validation_surfaces": [
         "python3 scripts/pm-plan-index.py validate",
@@ -7543,7 +7543,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 1404,
+      "line_count": 1412,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -7591,7 +7591,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "a69447324b34fc51527d3f5595547ef476cceaf6f163f113b089a65ef52cf434",
+      "sha256": "6557b699c5aba604858a120d0a3218ad29fb78fefd4b223e17888689b8cdddb7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18,
@@ -8873,7 +8873,7 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 738,
+      "line_count": 761,
       "path": "Plans/Run_Graph_View.md",
       "plan_unit_count": 10,
       "plan_unit_ids": [
@@ -8904,7 +8904,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "e3e923ed5c31385eb7e21a1b9d96f73fdcd93e72c72e84bde596d2c336835cd2",
+      "sha256": "4d49e15d61bcf949335ffdce18b066649696a348519d4561eacb7811acd7b4b3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 10
@@ -9719,7 +9719,7 @@
         "residual_bridge_overreach",
         "storage_plan_drift"
       ],
-      "sha256": "b3329860da55b5ff4bf67bb27331f86d40adba69f82f58f04fc4a6752008d8e2",
+      "sha256": "724d991489b78694bdb30f7995fb3ffdb72cce1ee0c4e629e0b26ee66bfbe6b1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 211,
@@ -9745,7 +9745,7 @@
       "implementation_surfaces": [
         "Plans/Tools.md"
       ],
-      "line_count": 10732,
+      "line_count": 10741,
       "path": "Plans/Tools.md",
       "plan_unit_count": 156,
       "plan_unit_ids": [
@@ -9957,7 +9957,7 @@
         "web_provider_routing_contract_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "dc472a6acc96eb142d94dc28a446743945c1a2f5e8a41a58350980401bbbd56a",
+      "sha256": "b044a273575910272cff8c690950eb28020f9d4c1b0b4e9fe4aa5be4b4776e66",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 155,
@@ -10528,7 +10528,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-13T15:36:05Z",
+  "generated_at_utc": "2026-06-13T21:44:54Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -10556,7 +10556,7 @@
       "audit_requirement": 3,
       "baseline_reference": 1,
       "capability_matrix": 1,
-      "compatibility_disposition": 110,
+      "compatibility_disposition": 111,
       "compatibility_note": 2,
       "constraint": 561,
       "consumer_alignment": 1,
@@ -10582,7 +10582,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4093,
+      "requirement": 4092,
       "risk": 1,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

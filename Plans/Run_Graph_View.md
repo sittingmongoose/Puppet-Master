@@ -44,11 +44,11 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchest
 - Graph `/search/focus-to-object` supports seam, package, node, lane, and generation focus; focus pans and applies `/zoom` to target regions while preserving `full-graph` context rather than replacing the graph with a `local-only` view, and branch `/rejoin` overlays, minimap, and search remain `generation-aware`.
 - `active_run_id` is the currently running, `/paused/interrupted`, or otherwise active run for the project; `focused_run_id` is the run shown by Orchestrator tabs, `focus_mode = live` when `focused_run_id == active_run_id`, and `focus_mode = historical` when the user inspects a non-active run.
 - The shared destination payload spans search results, command palette entries, widget `drill-downs`, deep links, resume `URLs`, cross-surface "Show in ..." pivots, preview restore, artifact opens, and `subject-open` semantics through the same identity model.
-- Run Graph still has concrete command/routing contract drift: - `cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`request_id` mismatch) - graph-local recovery IDs still conflict with the canonical `allowed_action_ids[] -> cmd.runtime.*` model - cross-surface open commands are required in prose but not bound in the Run Graph command section - no projection-trust payload exists for mutating or cross-surface actions on stale/degraded graph projections
+- Run Graph command/routing cleanup disposition: earlier `cmd.graph.approve_hitl` / `deny_hitl`, `request_id`, graph-local recovery IDs, unbound cross-surface open commands, and missing projection-trust payload notes are stale lineage. Live Run Graph actions consume `UI_Command_Catalog.md`, blocked/runtime approval identity, `blocked_sequence`, `allowed_action_ids[] -> cmd.runtime.*`, shared route/open payloads, and projection-trust payloads before mutating stale/degraded projections.
 - Node Graph tab direction was extended beyond lineage: - graph canvas + right-side detail inspector - detail inspector should expose: - requested/effective provider/model/effort/persona/account - usage/token/cost info - worker policy (agent/subagent, fresh/reused, spawn path) - retry/review/promotion state - lane/worktree/snapshot state - linked evidence/artifacts - clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied
-- `Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract: - worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id` - verifier activity is scoped to node `tier_id` - `View in Usage` still filters by `tier_id` - base data model still includes: - `worker_provider` - `worker_model` - `verifier_provider` - `verifier_model` - `hitl_request_id` - graph interactions still include: - `Open that tier in the Tiers tab` - `View in Tiers` - `Copy tier_id` - lower addenda are more aligned: - `scheduler_lane` - `allowed_action_ids[]` - `blocked_sequence` - historical lineage preservation
+- Run Graph tier-era cleanup disposition: older worker/verifier activity filtered by `tier_id`, `View in Usage`, `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`, `Open that tier in the Tiers tab`, `View in Tiers`, and `Copy tier_id` are compatibility/source-lineage tokens only. Live Run Graph joins use node_id, attempt_id, blocked episode, graph generation, lane, artifact, provider platform identity, `scheduler_lane`, `allowed_action_ids[]`, `blocked_sequence`, and historical lineage preservation.
 - Node Graph tab direction now includes: - graph canvas + right-side detail inspector - node click should expose: - requested/effective provider/model/effort/persona/account - usage/token/cost info - worker policy - retry/review/promotion state - lane/worktree/snapshot state - linked evidence/artifacts - clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected
-- Multi-account history and role scoping remain structurally under-modeled: - `Multi-Account.md` still has no durable `account.switched` / switch-episode family - `provider_accounts.run_snapshot` still stores only an opaque `policy_hash` rather than a queryable policy version/ref - no canonical role enum or `actor_kind` / `execution_role` field exists to support role-by-provider and role-by-account overrides consistently across docs
+- Multi-account history cleanup disposition: the stale claim that `Multi-Account.md` still has no durable `account.switched` / switch-episode family is retired because `Contracts_V0.md` defines `account_switch_event` and Multi-Account persists durable switch and pressure history through `account_switch_event` and `account_pressure_episode`. Remaining role-scoping concerns such as `policy_hash`, `actor_kind`, and `execution_role` stay routed to their owner docs.
 - Default Progress-widget drill targets were made deterministic: - Run Status -> `History` - Current Activity -> `Node Graph` - Attention / Blockers -> `Node Graph` - Seam Health -> `Seams` - Package Activity -> `Seams` - Promotion Queue -> `Ledger` - Worktree Lanes -> `Node Graph` - Account / Usage Pressure -> `Usage` - Recent Major Events -> `History` - Overseer Activity -> `Seams` - Corroboration Queue -> `Evidence` - Recovery State -> `Evidence` - Throughput / Capacity -> `History`
 - Likely good surface behavior: - `Progress`: show run-level trust banner or chip when projections are stale/degraded - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth - `Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale - `Evidence`: artifact browsing can remain available; live verdict/action affordances may gate - `History` / `Ledger`: usually the fallback-safe surfaces because they are closest to canonical records
 - `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` - The rerun sharpened several misses that were previously grouped too broadly: - explicit `focus_mode = live | historical` - `orchestrator.project_state.{project_id}` persistence record - page-wide shared `focused_run_id` coherence across tabs - historical Progress behavior - default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run - global-vs-local Orchestrator search distinction - explicit fallback hierarchy to History/Ledger under projection degradation
@@ -65,7 +65,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchest
 - But wizard/attention flows already use exact deep links via `resume_url`, and Usage/artifact surfaces already imply identity-native jumps using `usage_event_ref` and related canonical refs.
 - stale consumer cleanup - graph and Orchestrator command payloads - active-tier widgets and tier-targeted terminals - tier-keyed usage/evidence correlation - legacy `PuppetMasterEvent::*` source tables
 - Remove `request_id` as the primary action target from graph command payloads. - Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields.
-- **Schema-level contradictions are active, not hypothetical.** - Graph schemas still hard-code lexicographic node ordering while runtime addenda describe scored scheduler tuples. - Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require. - Acceptance/evidence/coverage schemas cannot yet express work-package/seam/promotion/account/lane identity cleanly.
+- **Schema-level contradictions are active, not hypothetical.** is preserved as stale audit-lineage for the pre-cleanup state. Live scheduler ordering consumes the executor scored ready-set; graph-schema lexicographic ordering is not execution authority. Remaining base provider envelope/spec and acceptance/evidence/coverage identity gaps route to Contracts_V0, Executor Protocol, and schema owner docs before Run Graph consumes them.
 - Recommended explicit mode: - `Historical Run Mode` - Required behavior: - all tabs clearly show the focused historical `run_id` - the page displays a persistent banner/chip that the user is viewing historical data - controls that only make sense for the active run are disabled or removed - actions route against the focused run only when they are historical-safe
 - Candidate fields: - `focused_run_id?` - `focus_mode` - `last_live_run_id?` - `selected_tab` - per-tab view state refs - maybe `auto_return_to_live = false` by default
 - Likely good direction: - in historical mode, `Progress` becomes a historical run summary surface - live-only widgets either: - switch to historical-summary rendering - or show disabled/live-unavailable state with explanation
@@ -478,7 +478,7 @@ plan_unit_id: RGV-007
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Tiers are demoted from primary Orchestrator tab/page authority. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity and allowed_action_ids-backed runtime actions own that role.
+canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
 gui_related: true
 gui_classification_reason: This disposition retires or constrains user-visible Tiers tab/page assumptions and graph layout vocabulary.
 depends_on: [RGV-001, RGV-006]
@@ -515,12 +515,22 @@ source_lineage:
 - Plans/Run_Graph_View.md:73
 - Plans/Run_Graph_View.md:86
 - Plans/Run_Graph_View.md:89-90
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
 preserved_exact_tokens:
 - Tiers
 - Node Graph
+- Progress/Seams/Node Graph/Evidence/History/Ledger
 - hitl_request_id
 - request_id
+- blocked_sequence
 - allowed_action_ids[]
+- cmd.graph.approve_hitl/deny_hitl
+- request_id vs blocked_sequence
+- allowed_action_ids[] → cmd.runtime.*
 negative_constraints:
 - The graph view-model MUST NOT keep hitl_request_id as the durable action identity once the blocked/recovery model moves to blocked-episode identity.
 - Graph and Orchestrator command payloads must not keep request_id as the primary action target.
@@ -545,7 +555,7 @@ plan_unit_id: RGV-008
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph discloses stale or degraded projection trust before showing live claims, treats projection-trust failures and weak-integration findings as distinct concern categories, and gates actions that depend on current promotion, blocker, graph-generation, or remote-side-effect truth.
+canonical_text: Run Graph discloses stale or degraded projection trust before showing live claims, treats projection-trust failures and weak-integration findings as distinct concern categories, and gates actions that depend on current promotion, blocker, graph-generation, remote-side-effect truth, or cross-surface mutation payloads.
 gui_related: false
 gui_classification_reason: The unit primarily defines runtime trust, concern identity, and action-gating policy.
 depends_on: [RGV-001, RGV-006]
@@ -556,6 +566,7 @@ acceptance_criteria:
 - Concern merge, split, and supersession remain discussion-only until concern identity/routing rules become contract-level.
 - Concerns have durable identity, lineage, source links, status, resolution_kind, and rationale fields rather than only badges or notes.
 - Graph patch application that changes canonical graph generation is hard-gated or runtime-controlled.
+- Mutating Run Graph commands carry projection-trust payloads and route through allowed_action_ids-backed runtime actions when blocked/recovery action identity is involved.
 validation_surfaces:
 - Projection trust/manual action-gating review.
 - Concern schema owner review.
@@ -583,13 +594,17 @@ source_lineage:
 - Plans/Run_Graph_View.md:83-85
 - Plans/Run_Graph_View.md:93
 - Plans/Run_Graph_View.md:121-123
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
 preserved_exact_tokens:
 - projection-trust
+- projection-trust payload
 - weak-integration
 - hard_gate
 - concern_id
 - resolution_kind
 - blocked_episode_refs
+- allowed_action_ids[] → cmd.runtime.*
 negative_constraints:
 - Run Graph may link candidate concern operations but must not invent canonical merge authority.
 owner_hints:
@@ -610,13 +625,13 @@ plan_unit_id: RGV-009
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Run Graph records adjacent owner gaps without claiming non-local authority. Multi-account switch episodes, role enums, provider account policy references, acceptance/evidence/coverage schema extensions, and runtime scheduler ordering belong to their owner docs before Run Graph consumes them.
+canonical_text: Run Graph records adjacent owner gaps without claiming non-local authority. Durable account switch history is already owned through account_switch_event and account_pressure_episode, while role enums, provider account policy references, acceptance/evidence/coverage schema extensions, and runtime scheduler ordering belong to their owner docs before Run Graph consumes them.
 gui_related: false
 gui_classification_reason: This unit is owner-routing and schema-boundary metadata, not GUI implementation work.
 depends_on: [RGV-001, RGV-006, RGV-008]
 unblocks: [RGV-010]
 acceptance_criteria:
-- Multi-account history and role scoping gaps are routed to Multi-Account and related runtime owner docs.
+- Multi-account switch history consumes account_switch_event and account_pressure_episode rather than the stale no-durable-family claim.
 - Schema contradictions are tracked as active owner-doc gaps rather than solved locally in Run Graph.
 - Concern, corroboration, promotion, graph-patch, lane, package, and account object families are preserved as node-relevant hints without becoming final WorkNodes.
 validation_surfaces:
@@ -643,12 +658,20 @@ source_lineage:
 - Plans/Run_Graph_View.md:78
 - Plans/Run_Graph_View.md:86-87
 - Plans/Run_Graph_View.md:91-92
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:15
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
 preserved_exact_tokens:
 - account.switched
+- account_switch_event
+- Contracts_V0 now defines account_switch_event
 - policy_hash
 - actor_kind
 - execution_role
 - Schema-level contradictions are active, not hypothetical.
+- lexicographic ordering
+- scored ready-set
 negative_constraints:
 - Run Graph must not encode actor role or side-effect target identity into effective_provider_identity, provider_identity, or effective_project_id.
 owner_hints:

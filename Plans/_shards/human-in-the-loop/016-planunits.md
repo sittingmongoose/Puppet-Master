@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L421-L2395
+Source lines: L421-L2401
 
-Source SHA256: `258335107791951d7805aee616ad04d09f3273c964bc83758f85f55ca003a6e5`
+Source SHA256: `a7137d8aa24f7ee49f0f74e2beed7171b16c047b814fbdf25e6ae6c4389e4766`
 
 ---
 
@@ -72,7 +72,7 @@ plan_unit_id: HITL-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: HITL approvals are explicit events in the unified event model and seglog ledger; Pause for approval must be reproducible and replayable through event stream and projections, while UI can change in the Slint rewrite without changing tier-boundary meaning or approval requirements.
+canonical_text: HITL approvals are explicit events in the unified event model and seglog ledger; Pause for approval must be reproducible and replayable through event stream and projections, while UI can change in the Slint rewrite without changing blocked-runtime, package-complete, seam-complete, or mandatory side-effect approval requirements. Tier-boundary wording is compatibility lineage only.
 gui_related: false
 gui_classification_reason: This unit defines event/persistence semantics, not visual presentation.
 split_recommended: false
@@ -96,6 +96,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0008
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:13
 preserved_exact_tokens:
 - Rewrite alignment (2026-02-21)
 - unified event model
@@ -104,10 +107,13 @@ preserved_exact_tokens:
 - reproducible/replayable
 - event stream + projections
 - Slint rewrite
+- tier-boundary meaning and approval requirements
 negative_constraints:
-- UI can change, but tier-boundary meaning and approval requirements must not.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- UI can change, but blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval requirements must not.
+compatibility_only_notes:
+- Tier-boundary wording remains compatibility lineage only.
+stale_retired_dispositions:
+- tier-boundary meaning and approval requirements is retired as live canon wording; tier-boundary examples remain display/compatibility copy.
 owner_boundary_notes:
 - Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
 owner_hints:

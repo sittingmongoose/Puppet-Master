@@ -1,16 +1,16 @@
 # Shard Index: Plans/Orchestrator_Page.md
 
-Generated: 2026-06-13T16:19:12Z
+Generated: 2026-06-13T21:33:39Z
 
-Source SHA256: `a69447324b34fc51527d3f5595547ef476cceaf6f163f113b089a65ef52cf434`
+Source SHA256: `6557b699c5aba604858a120d0a3218ad29fb78fefd4b223e17888689b8cdddb7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `81cfbf3ee02d13dadca4161d3524cccb055483b70fd511a3320131eb5d52a544`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `933bc003e313ffcf085a499a929f7935db92a05ab057f3a5f3b976fb8512b3aa`
-- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `31215f27f6aa2be0f1f8c0bbb57034460169d0b71be0152c1cc214e3e5d7ab05`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `32c3b4eb3e9b63ba1eb1b067c1d5b9e262c367117ccd5af8c23876bfadcf6992`
-- [005 - PlanUnits](005-planunits.md) L398-L1392 `93405e994bca49527afd9ce27040347ea6f1a09db5166e6d67c66e28280139d9`
-- [006 - Migration Coverage](006-migration-coverage.md) L1394-L1404 `b60082bf0d60028d9d5ee0723054df0ba8f291b94a7be748e9a0048767a29a10`
+- [001 - Preamble](001-preamble.md) L1-L1 `aaa40bd969fd00eebd09b3a58c135bef9919b64ff61066ba774560bcb7fffe4e`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `ca97f4fa8192d3d83257e2b8ef95469b7f700510d9247ecd81cea50235b05a83`
+- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `66f43d181b560ef812ca82a24a52a068364ecfe8952320c0ba286d4e789100d4`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `c37302a73b08997561e9b0ce3be9e9b41d07bfdbb46848697ba1f7db165212d2`
+- [005 - PlanUnits](005-planunits.md) L398-L1400 `3073ed7067e166e4665a0f82521002b85220cc5e0adc4e3fe3b85aa6db7c1d76`
+- [006 - Migration Coverage](006-migration-coverage.md) L1402-L1412 `63b3c79481024338baaf63cf839fccabfaccf91473710a8badcd7ef56b95dd72`

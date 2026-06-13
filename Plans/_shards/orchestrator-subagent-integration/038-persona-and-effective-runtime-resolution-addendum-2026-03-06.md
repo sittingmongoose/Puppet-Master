@@ -2,25 +2,25 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6078-L6191
+Source lines: L6080-L6193
 
-Source SHA256: `1b766e341ccbcc8592cd42f2e5be62eaffb068675017ee4bfa70384f01ab2c1f`
+Source SHA256: `5fe8943c3c799a6ad0638813af2527938453cc4f716bb44dff99a52b10a54841`
 
 ---
 
 ## Persona and Effective Runtime Resolution Addendum (2026-03-06)
 
-This addendum updates the orchestrator plan so tier execution uses the Persona system as the first-class runtime role contract.
+This addendum was written in tier-era Persona language. Phase/Task/Subtask/Iteration tokens remain compatibility labels for older Persona defaulting prose only; live runtime execution uses the node/package/seam graph and requested/effective Persona runtime records.
 
-### Canonical tier reminder
+### Compatibility tier reminder
 
-The orchestrator tier model remains:
+The retired Persona tier labels were:
 - Phase
 - Task
 - Subtask
 - Iteration
 
-Resolved reminder: **Iteration** remains the lowest tier. Persona switching should not introduce new tiers.
+Resolved compatibility reminder: **Iteration** was the lowest legacy tier label. Persona switching must not introduce new tiers and must not restore Phase/Task/Subtask/Iteration as live runtime canon.
 
 ### Tier-specific Persona defaults
 
