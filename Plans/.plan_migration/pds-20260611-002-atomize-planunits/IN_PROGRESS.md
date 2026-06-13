@@ -11,20 +11,20 @@ Completed scope:
 - Source lines: 1-2835
 - Source spans: `Contracts_V0-S0001` through `Contracts_V0-S0122`
 - PlanUnits changed: none
-- Residual bridge: `CV-001` remains only as an explicit justified residual `source_preserving_planunit` for `Contracts_V0-S0001`; it is not implementation-ready product coverage and must not override `CV-002` through `CV-278`
-- Coverage status: `phase2b_batch_212_final_justified_residual_source_token_bank` for `Contracts_V0-S0001`, plus prior atomized/structural coverage for `Contracts_V0-S0002` through `Contracts_V0-S0122`
+- Residual bridge: `CV-001` remains only as an explicit justified source-lineage residual disposition for `Contracts_V0-S0001`; it is not implementation-ready product coverage and must not override `CV-002` through `CV-278`
+- Coverage status: `source_lineage_residual` for `Contracts_V0-S0001`, plus prior atomized/structural coverage for `Contracts_V0-S0002` through `Contracts_V0-S0122`
 - Validation captures: `phase2b-batch-212-plan-index-generate.json`, `phase2b-batch-212-migration-validate.json`, `phase2b-batch-212-plan-index-validate.json`, `phase2b-batch-212-run-gates.json`, and `phase2b-batch-212-shard-check.json`
 
 Final cursor:
 - Next batch: none
-- Active source-preserving PlanUnits: `CV-001` only
-- Justified residual source-preserving PlanUnits: `CV-001`
+- Active source-preserving PlanUnits: none
+- Source-lineage residual PlanUnits: `CV-001`
 - Unjustified source-preserving PlanUnits: none
 - Node readiness: `blocked_compiler_contract_incomplete` unless and until the compiler contract exists
 - Governance seal required before updating `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`
 
 Completion notes:
-- All live `Plans/*.md` docs are either fine-grained enough or have an explicit justified residual source-preserving disposition.
+- All live `Plans/*.md` docs are either fine-grained enough, structurally dispositioned, or have an explicit source-lineage residual disposition.
 - Report docs converted, residuals audited, and validators captured through batch 212.
 - This run did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 

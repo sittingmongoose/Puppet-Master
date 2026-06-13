@@ -44,15 +44,15 @@ Do not read full events.jsonl, source shards, or legacy working_ledger.md unless
 Continue from the cursor. After each substantive turn, update the ledger and handoff state. Infer gui_related true/false for every new or changed design atom; do not ask me to label GUI work.
 ```
 
-## 3. Goal prompt — compile one ledger to new Plans docs
+## 3. Goal prompt — compile one ledger to Plans docs
 
 ```text
 /goal
 Compile PM ledger <ledger_id> to canonical Plans docs.
 
-Read AGENTS.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Bootstrap_Design_Brief.md, and the compact state for <ledger_id>. Use the $pm-bootstrap-planning-ledger skill if available.
+Read AGENTS.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Bootstrap_Design_Brief.md, and the compact state for <ledger_id>. Use the $pm-bootstrap-planning-ledger skill if available.
 
-Create/update only as needed:
+Create/update only the relevant live non-pipeline Plans docs. For the bootstrap plan-system ledger, expected targets are:
 - Plans/Planning_Ledger_System.md
 - Plans/Plan_Document_System.md
 - Plans/Plan_To_Node_Compilation.md
@@ -63,6 +63,9 @@ Rules:
 - Ledger is source/planning memory, not canon.
 - Convert accepted design atoms into stable PlanUnits.
 - Every PlanUnit must include gui_related true/false, inferred from content.
+- Newly created Plans/*.md owner docs must use the New Plan Authoring Profile from Plans/Plan_Document_System.md, including the required base layout and profile marker.
+- Existing owner docs may preserve their current profile/layout when updating them losslessly.
+- Never use source_preserving_planunit for new feature content or new owner-doc creation; that mode is only for lossless legacy Plan conversion.
 - Preserve source refs, exact tokens, negative constraints, examples, owner hints, stale/retired terms, and compatibility-only notes.
 - If owner placement is ambiguous, record candidate owners and adjudication evidence; do not ask row-by-row.
 - Do not create WorkNodes or executable build tasks.
@@ -91,6 +94,8 @@ Do not start broad rewrites until you create a migration inventory. Required pha
 Preserve ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage.
 
 Assign gui_related true/false to every PlanUnit by inference. Split mixed GUI/backend units when safe; otherwise mark gui_related=true and note split_recommended.
+
+Use source_preserving_planunit only for lossless conversion of existing legacy Plans docs. Do not use it for newly authored feature content or new owner docs.
 
 Do not create WorkNodes. Do not update Spec_Lock, generated shards, evidence bundles, or plan_graph until explicit governance seal.
 ```

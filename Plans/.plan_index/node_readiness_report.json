@@ -1764,13 +1764,13 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10310,
-    "edge_count": 11816,
-    "node_count": 4944,
-    "unblocks_edge_count": 1506,
+    "depends_on_edge_count": 10317,
+    "edge_count": 11830,
+    "node_count": 4947,
+    "unblocks_edge_count": 1513,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-13T08:42:48Z",
+  "generated_at_utc": "2026-06-13T15:36:05Z",
   "gui_related_units": {
     "count": 2089,
     "units": [
@@ -18511,8 +18511,8 @@
         "source_location": {
           "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
           "heading_level": 3,
-          "heading_line": 251,
-          "line": 253,
+          "heading_line": 293,
+          "line": 295,
           "path": "Plans/Plan_Document_System.md"
         }
       },
@@ -24761,12 +24761,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 4944,
+  "plan_unit_count": 4947,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 806,
       "low": 1,
-      "standard": 4137
+      "standard": 4140
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -24936,6 +24936,7 @@
       "auth_subject_optional_field_drift": 1,
       "auth_surface_refresh_drift": 1,
       "auth_vocabulary_collision": 1,
+      "authoring_drift": 1,
       "authstate_null_padding_drift": 1,
       "auto_auth_policy_bypass": 1,
       "auto_decision_logging_drift": 1,
@@ -25608,6 +25609,7 @@
       "fallback_cost_routing": 1,
       "fallback_e2e_snippets": 1,
       "false_completion": 2,
+      "false_layout_failure": 1,
       "false_node_generation": 1,
       "false_wiring_completion": 1,
       "family_pooling_guardrails": 1,
@@ -25891,6 +25893,7 @@
       "launch_seam_identity_drift": 1,
       "launched_run_lineage_drift": 1,
       "launcher_resolution_drift": 1,
+      "layout_drift": 1,
       "lazy_lifecycle_state_directory_permission_fallback": 1,
       "lazy_verification_state_creation_compatibility_envelope": 1,
       "legacy_effort_wording_supersession": 1,
@@ -27286,23 +27289,10 @@
       "wrong_pr_target": 1,
       "xml_shape_drift": 1
     },
-    "source_preserving_unit_count": 1,
-    "source_preserving_units": [
-      {
-        "owner_doc": "Plans/Contracts_V0.md",
-        "plan_unit_id": "CV-001",
-        "source_location": {
-          "heading": "CV-001 - Contracts V0 Explicit Residual Source-Token-Bank Disposition",
-          "heading_level": 3,
-          "heading_line": 16274,
-          "line": 16276,
-          "path": "Plans/Contracts_V0.md"
-        },
-        "split_recommended": true
-      }
-    ],
+    "source_preserving_unit_count": 0,
+    "source_preserving_units": [],
     "status_counts": {
-      "accepted": 4923,
+      "accepted": 4926,
       "deferred": 4,
       "retired": 17
     },
@@ -27342,7 +27332,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4090,
+      "requirement": 4093,
       "risk": 1,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -27354,7 +27344,7 @@
       "settings_model": 1,
       "settings_policy": 1,
       "source_lineage_disposition": 1,
-      "source_preserving_residual_disposition": 1,
+      "source_lineage_residual_disposition": 1,
       "structural_anchor": 5,
       "surface_default_policy": 1,
       "validation": 3,

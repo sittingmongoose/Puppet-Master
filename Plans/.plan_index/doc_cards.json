@@ -3008,10 +3008,8 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "b363778ce5988f31010225964544d214b497456301b0055937c95a88dce1eacb",
-      "source_preserving_unit_ids": [
-        "CV-001"
-      ],
+      "sha256": "829fc5f5df1a0495b351914bf6fae69c1dfe9ee9002232a8894a411595d386fb",
+      "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 278
       },
@@ -3020,7 +3018,7 @@
         "compatibility_disposition": 30,
         "constraint": 54,
         "requirement": 193,
-        "source_preserving_residual_disposition": 1
+        "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
         "python3 scripts/pm-plan-index.py validate",
@@ -7908,10 +7906,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 9,
+        "False": 12,
         "True": 1
       },
-      "heading_count": 15,
+      "heading_count": 22,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.plan_index",
@@ -7923,13 +7921,16 @@
         "Plans/.plan_index/plan_units.jsonl",
         "Plans/.plan_migration",
         "Plans/00-plans-index.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/bootstrap/Codex_Prompts.md",
         "Plans/ledgers/v2/schemas/plan_unit.schema.json",
         "future Settings UI",
-        "future migration inventory"
+        "future migration inventory",
+        "scripts/pm-plan-index.py"
       ],
-      "line_count": 420,
+      "line_count": 573,
       "path": "Plans/Plan_Document_System.md",
-      "plan_unit_count": 10,
+      "plan_unit_count": 13,
       "plan_unit_ids": [
         "PDS-001",
         "PDS-002",
@@ -7940,30 +7941,36 @@
         "PDS-007",
         "PDS-008",
         "PDS-009",
-        "PDS-010"
+        "PDS-010",
+        "PDS-011",
+        "PDS-012",
+        "PDS-013"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "authoring_drift",
         "content_loss",
         "execution_boundary",
+        "false_layout_failure",
         "governance_standard",
         "indexability",
+        "layout_drift",
         "migration_safety",
         "owner_drift",
         "user_visible_settings"
       ],
-      "sha256": "942608f9c851e18cfcd5f5fef53edf9e68e2a689f2244e1f0cabfeb14f0ecc57",
+      "sha256": "f1a0468560e3267ab4f2925c918ce4550d11da0f2d00fea0715153f6483d97aa",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 10
+        "accepted": 13
       },
       "title": "Plan Document System",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 9
+        "requirement": 12
       },
       "validation_surfaces": [
         "Coverage map.",
@@ -7973,6 +7980,8 @@
         "Future node-readiness report checks.",
         "Future settings UI review.",
         "Manual coverage audit during migration.",
+        "Manual plan review for profile declarations and exemptions.",
+        "Manual review during ledger-to-Plans compilation.",
         "Migration inventory coverage map.",
         "Node-readiness report generator.",
         "Owner map review.",
@@ -7986,6 +7995,7 @@
         "Post-conversion validators.",
         "Pre-hash inventory.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+        "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check"
       ]
@@ -10518,7 +10528,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-13T08:42:47Z",
+  "generated_at_utc": "2026-06-13T15:36:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -10526,13 +10536,13 @@
     "docs_with_plan_units": 67,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 2855,
+      "False": 2858,
       "True": 2089
     },
-    "plan_unit_count": 4944,
-    "source_preserving_unit_count": 1,
+    "plan_unit_count": 4947,
+    "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 4923,
+      "accepted": 4926,
       "deferred": 4,
       "retired": 17
     },
@@ -10572,7 +10582,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4090,
+      "requirement": 4093,
       "risk": 1,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -10584,7 +10594,7 @@
       "settings_model": 1,
       "settings_policy": 1,
       "source_lineage_disposition": 1,
-      "source_preserving_residual_disposition": 1,
+      "source_lineage_residual_disposition": 1,
       "structural_anchor": 5,
       "surface_default_policy": 1,
       "validation": 3,

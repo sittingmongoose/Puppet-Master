@@ -22229,6 +22229,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PDS-009",
+      "to": "PDS-011"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PDS-010",
       "to": "PDS-004"
     },
@@ -22236,6 +22241,36 @@
       "edge_type": "depends_on",
       "from": "PDS-010",
       "to": "PDS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-011",
+      "to": "PDS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-011",
+      "to": "PDS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-012",
+      "to": "PDS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-012",
+      "to": "PDS-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-013",
+      "to": "PDS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-013",
+      "to": "PDS-012"
     },
     {
       "edge_type": "depends_on",
@@ -60254,8 +60289,18 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PDS-001",
+      "to": "PDS-011"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PDS-002",
       "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-002",
+      "to": "PDS-011"
     },
     {
       "edge_type": "unblocks",
@@ -60319,8 +60364,33 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PDS-009",
+      "to": "PDS-012"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PDS-010",
       "to": "BPM-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-011",
+      "to": "BPM-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-011",
+      "to": "PDS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-011",
+      "to": "PDS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-012",
+      "to": "PDS-013"
     },
     {
       "edge_type": "unblocks",
@@ -60808,7 +60878,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-13T08:42:47Z",
+  "generated_at_utc": "2026-06-13T15:36:05Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -75088,7 +75158,7 @@
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
-      "unit_type": "source_preserving_residual_disposition"
+      "unit_type": "source_lineage_residual_disposition"
     },
     {
       "context_scope": "contracts_v0_ssot",
@@ -121629,8 +121699,8 @@
       "source_location": {
         "heading": "PDS-001 - Plan Document System Ownership",
         "heading_level": 3,
-        "heading_line": 29,
-        "line": 31,
+        "heading_line": 70,
+        "line": 72,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121646,8 +121716,8 @@
       "source_location": {
         "heading": "PDS-002 - Standard But Not Rigid Layout",
         "heading_level": 3,
-        "heading_line": 62,
-        "line": 64,
+        "heading_line": 103,
+        "line": 105,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121663,8 +121733,8 @@
       "source_location": {
         "heading": "PDS-003 - PlanUnit Required Fields",
         "heading_level": 3,
-        "heading_line": 96,
-        "line": 98,
+        "heading_line": 138,
+        "line": 140,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121680,8 +121750,8 @@
       "source_location": {
         "heading": "PDS-004 - Lossless Plan Conversion Protocol",
         "heading_level": 3,
-        "heading_line": 138,
-        "line": 140,
+        "heading_line": 180,
+        "line": 182,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121697,8 +121767,8 @@
       "source_location": {
         "heading": "PDS-005 - Owner Adjudication In PlanUnits",
         "heading_level": 3,
-        "heading_line": 175,
-        "line": 177,
+        "heading_line": 217,
+        "line": 219,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121714,8 +121784,8 @@
       "source_location": {
         "heading": "PDS-006 - Generated PlanUnit Index Boundary",
         "heading_level": 3,
-        "heading_line": 210,
-        "line": 212,
+        "heading_line": 252,
+        "line": 254,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121731,8 +121801,8 @@
       "source_location": {
         "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
         "heading_level": 3,
-        "heading_line": 251,
-        "line": 253,
+        "heading_line": 293,
+        "line": 295,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121748,8 +121818,8 @@
       "source_location": {
         "heading": "PDS-008 - PlanUnit Block Grammar And Field Semantics",
         "heading_level": 3,
-        "heading_line": 291,
-        "line": 293,
+        "heading_line": 333,
+        "line": 335,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121765,8 +121835,8 @@
       "source_location": {
         "heading": "PDS-009 - Standard Plan Document Layout Contract",
         "heading_level": 3,
-        "heading_line": 326,
-        "line": 328,
+        "heading_line": 368,
+        "line": 370,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -121782,8 +121852,59 @@
       "source_location": {
         "heading": "PDS-010 - Lossless Migration Artifact Contract",
         "heading_level": 3,
-        "heading_line": 362,
-        "line": 364,
+        "heading_line": 404,
+        "line": 406,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "all_plans",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-011",
+      "reasoning_tier": "standard",
+      "risk_class": "authoring_drift",
+      "source_location": {
+        "heading": "PDS-011 - Plan Authoring Profiles",
+        "heading_level": 3,
+        "heading_line": 447,
+        "line": 449,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "new_owner_docs",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-012",
+      "reasoning_tier": "standard",
+      "risk_class": "layout_drift",
+      "source_location": {
+        "heading": "PDS-012 - New Plan Authoring Base Layout",
+        "heading_level": 3,
+        "heading_line": 482,
+        "line": 484,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plan_index_validation",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-013",
+      "reasoning_tier": "standard",
+      "risk_class": "false_layout_failure",
+      "source_location": {
+        "heading": "PDS-013 - New Plan Layout Validation Boundary",
+        "heading_level": 3,
+        "heading_line": 522,
+        "line": 524,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -144864,10 +144985,10 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10310,
-    "edge_count": 11816,
-    "node_count": 4944,
-    "unblocks_edge_count": 1506,
+    "depends_on_edge_count": 10317,
+    "edge_count": 11830,
+    "node_count": 4947,
+    "unblocks_edge_count": 1513,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

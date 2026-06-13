@@ -13,6 +13,7 @@ import hashlib
 import json
 import re
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -51,6 +52,27 @@ CONTRACT_REF_PATTERN = re.compile(r"ContractRef:[^\n]+")
 ANCHOR_PATTERN = re.compile(r'<a\s+id="([^"]+)"\s*></a>')
 HEADING_PATTERN = re.compile(r"^(#{1,6})\s*(.*?)\s*$")
 PLAN_UNIT_FENCE_PATTERN = re.compile(r"```yaml\n(.*?)\n```", re.DOTALL)
+VALID_DISPOSITION_TYPES = {
+    "already_standardized_existing_planunits",
+    "explicit_allowed_residual",
+    "explicit_disposition",
+    "planunit",
+    "preserved_appendix_source_block",
+    "source_lineage_residual",
+    "standardized_section",
+    "standardized_section_and_planunit",
+    "structural_disposition",
+}
+FINAL_ALLOWED_DISPOSITION_TYPES = {
+    "already_standardized_existing_planunits",
+    "explicit_allowed_residual",
+    "source_lineage_residual",
+    "standardized_section",
+    "standardized_section_and_planunit",
+    "structural_disposition",
+}
+VAGUE_PRECONVERSION_STATUS = "pre_conversion_preserved_in_place"
+VAGUE_PRECONVERSION_TEXT = "Not converted in this phase yet"
 
 
 class UniqueKeySafeLoader(yaml.SafeLoader):
@@ -122,6 +144,39 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
             raise SystemExit(f"{rel(path)}:{line_no}: JSONL row is not an object")
         rows.append(row)
     return rows
+
+
+def counter_dict(values: list[Any]) -> dict[str, int]:
+    return {str(key): value for key, value in sorted(Counter(values).items(), key=lambda item: str(item[0]))}
+
+
+def is_complete_status(value: Any) -> bool:
+    return str(value or "").upper() == "COMPLETE"
+
+
+def coverage_row_has_allowed_final_disposition(row: dict[str, Any]) -> bool:
+    if row.get("allowed_residual") is True:
+        return True
+    return row.get("disposition_type") in FINAL_ALLOWED_DISPOSITION_TYPES
+
+
+def coverage_row_is_vague_preconversion(row: dict[str, Any]) -> bool:
+    disposition = str(row.get("disposition", ""))
+    return row.get("coverage_status") == VAGUE_PRECONVERSION_STATUS or VAGUE_PRECONVERSION_TEXT in disposition
+
+
+def non_null_next_cursors(value: Any, path: str = "$") -> list[dict[str, Any]]:
+    cursors: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{path}.{key}"
+            if key in {"next_cursor", "next_batch_cursor"} and child is not None:
+                cursors.append({"path": child_path, "value": child})
+            cursors.extend(non_null_next_cursors(child, child_path))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            cursors.extend(non_null_next_cursors(child, f"{path}[{index}]"))
+    return cursors
 
 
 def top_level_plan_docs() -> list[Path]:
@@ -892,8 +947,9 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
     for span_id in set(coverage_ids):
         if coverage_ids.count(span_id) != 1:
             failures.append({"path": rel(run_dir / "coverage_map.jsonl"), "span_id": span_id, "error": "coverage_span_not_exactly_once", "count": coverage_ids.count(span_id)})
+    coverage_status_counts = counter_dict([row.get("coverage_status") for row in coverage])
     for row in coverage:
-        if row.get("disposition_type") not in {"explicit_disposition", "standardized_section", "planunit", "standardized_section_and_planunit", "preserved_appendix_source_block"}:
+        if row.get("disposition_type") not in VALID_DISPOSITION_TYPES:
             failures.append({"path": rel(run_dir / "coverage_map.jsonl"), "span_id": row.get("span_id"), "error": "invalid_disposition_type"})
         if row.get("gui_related_inferred") not in {True, False}:
             failures.append({"path": rel(run_dir / "coverage_map.jsonl"), "span_id": row.get("span_id"), "error": "missing_gui_related_inferred"})
@@ -938,6 +994,91 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
                 }
             )
     batch_report_rows, batch_report_doc_entries = validate_batch_report_docs(run_dir, set(unit_locations), failures)
+    source_preserving_unit_ids = sorted(
+        str(unit.get("plan_unit_id"))
+        for unit in live_units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == "source_preserving_planunit"
+    )
+
+    final_summary_path = run_dir / "final_validation_summary.json"
+    if final_summary_path.exists():
+        final_summary = read_json(final_summary_path)
+        if is_complete_status(final_summary.get("status")):
+            if final_summary.get("run_id") != inventory.get("run_id"):
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_run_id_mismatch",
+                        "expected": inventory.get("run_id"),
+                        "actual": final_summary.get("run_id"),
+                    }
+                )
+            for cursor in non_null_next_cursors(final_summary):
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_next_cursor_not_null",
+                        "cursor_path": cursor["path"],
+                        "actual": cursor["value"],
+                    }
+                )
+            if final_summary.get("live_plan_unit_count") != len(live_units):
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_live_plan_unit_count_stale",
+                        "expected": len(live_units),
+                        "actual": final_summary.get("live_plan_unit_count"),
+                    }
+                )
+            if final_summary.get("coverage_rows") != len(coverage):
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_coverage_rows_stale",
+                        "expected": len(coverage),
+                        "actual": final_summary.get("coverage_rows"),
+                    }
+                )
+            if final_summary.get("coverage_status_counts") != coverage_status_counts:
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_coverage_status_counts_stale",
+                        "expected": coverage_status_counts,
+                        "actual": final_summary.get("coverage_status_counts"),
+                    }
+                )
+            if final_summary.get("source_preserving_unit_count_after_batch") != len(source_preserving_unit_ids):
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_source_preserving_count_stale",
+                        "expected": len(source_preserving_unit_ids),
+                        "actual": final_summary.get("source_preserving_unit_count_after_batch"),
+                    }
+                )
+            if sorted(final_summary.get("residual_source_preserving_plan_units", [])) != source_preserving_unit_ids:
+                failures.append(
+                    {
+                        "path": rel(final_summary_path),
+                        "error": "complete_final_summary_source_preserving_units_stale",
+                        "expected": source_preserving_unit_ids,
+                        "actual": final_summary.get("residual_source_preserving_plan_units", []),
+                    }
+                )
+            for row in coverage:
+                if coverage_row_is_vague_preconversion(row) and not coverage_row_has_allowed_final_disposition(row):
+                    failures.append(
+                        {
+                            "path": rel(run_dir / "coverage_map.jsonl"),
+                            "span_id": row.get("span_id"),
+                            "error": "complete_run_pre_conversion_row_without_allowed_disposition",
+                            "coverage_status": row.get("coverage_status"),
+                            "disposition_type": row.get("disposition_type"),
+                        }
+                    )
 
     return {
         "schema_id": "pm.plan_migration.validation_report.v1",
@@ -949,9 +1090,12 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
             "doc_count": len(docs),
             "span_count": len(spans),
             "coverage_rows": len(coverage),
+            "coverage_status_counts": coverage_status_counts,
             "anchor_alias_rows": len(aliases.get("aliases", [])) if isinstance(aliases.get("aliases"), list) else 0,
             "live_plan_unit_count": len(live_units),
             "unique_live_plan_unit_count": len(unit_locations),
+            "source_preserving_unit_count": len(source_preserving_unit_ids),
+            "source_preserving_unit_ids": source_preserving_unit_ids,
             "batch_report_rows": batch_report_rows,
             "batch_report_doc_entries": batch_report_doc_entries,
         },
