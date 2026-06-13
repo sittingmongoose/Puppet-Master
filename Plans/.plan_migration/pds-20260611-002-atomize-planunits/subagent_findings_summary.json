@@ -1,11 +1,1033 @@
 {
-  "generated_at_utc": "2026-06-12T00:41:24Z",
+  "findings": [
+    {
+      "batch_id": "phase2b-063-filesafe-lines-2255-2651",
+      "created_at_utc": "2026-06-12T11:11:17Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and explicit preservation markers; main agent was the only writer.",
+      "scope": "Plans/FileSafe.md source lines 2255-2651 / FileSafe-S0073 through FileSafe-S0102",
+      "status": "used_read_only",
+      "subagent_id": "019ebb81-43d5-7d33-8147-539049838dcc",
+      "subagent_name": "Bernoulli",
+      "summary": "Proposed F2-138 through F2-177, structural dispositions for S0076/S0083/S0089/S0096/S0098, and narrowing F2-001 to FileSafe-S0103 through S0110."
+    },
+    {
+      "batch_id": "phase2b-064-filesafe-lines-2652-2977",
+      "created_at_utc": "2026-06-12T11:17:52Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and F2-001 converted to source_preserving_bridge_retired compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/FileSafe.md source lines 2652-2977 / FileSafe-S0103 through FileSafe-S0114",
+      "status": "used_read_only",
+      "subagent_id": "019ebb89-1e46-7330-b787-4a89b7ed243c",
+      "subagent_name": "Pasteur",
+      "summary": "Proposed F2-178 through F2-187, structural dispositions for S0111/S0112/S0114, retired bridge mapping for S0113, and next cursor to FinalGUISpec-S0001."
+    },
+    {
+      "batch_id": "phase2b-065-finalguispec-lines-1-376",
+      "created_at_utc": "2026-06-12T11:25:49Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and explicit residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 1-376 / FinalGUISpec-S0001 through FinalGUISpec-S0035",
+      "status": "used_read_only",
+      "subagent_id": "019ebb8f-59d9-76d0-8354-b3a0f08edf9e",
+      "subagent_name": "James",
+      "summary": "Proposed F3-002 through F3-040, structural dispositions, F3-001 narrowing to FinalGUISpec-S0036 through S0237, and next cursor FinalGUISpec-S0036."
+    },
+    {
+      "batch_id": "phase2b-066-finalguispec-lines-377-771",
+      "created_at_utc": "2026-06-12T11:32:25Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and explicit residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 377-771 / FinalGUISpec-S0036 through FinalGUISpec-S0062",
+      "status": "used_read_only",
+      "subagent_id": "019ebb96-196e-79e2-a87e-be3454de0199",
+      "subagent_name": "Godel",
+      "summary": "Proposed F3-041 through F3-077, structural dispositions for S0044/S0058, F3-001 narrowing to FinalGUISpec-S0063 through S0237, and next cursor FinalGUISpec-S0063."
+    },
+    {
+      "batch_id": "phase2b-067-finalguispec-lines-772-1169",
+      "created_at_utc": "2026-06-12T11:47:26Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit gui_related correction for S0065, preserved owner-boundary mismatch for Docker payload semantics, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 772-1169 / FinalGUISpec-S0063 through FinalGUISpec-S0077",
+      "status": "used_read_only",
+      "subagent_id": "019ebb9d-4c9d-7a92-9731-a617a133bbc4",
+      "subagent_name": "Bacon",
+      "summary": "Proposed F3-078 through F3-121, structural disposition for S0072, F3-001 narrowing to FinalGUISpec-S0078 through S0237, and next cursor FinalGUISpec-S0078."
+    },
+    {
+      "batch_id": "phase2b-068-finalguispec-lines-1170-1552",
+      "created_at_utc": "2026-06-12T12:01:35Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit gui_related corrections for S0085/S0092/S0093/S0094/S0106, preserved ContractRefs for S0091 and S0107 residual, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 1170-1552 / FinalGUISpec-S0078 through FinalGUISpec-S0106",
+      "status": "used_read_only",
+      "subagent_id": "019ebbaa-1c6f-7660-bc80-f58b105551c2",
+      "subagent_name": "Dalton",
+      "summary": "Proposed F3-122 through F3-164, F3-001 narrowing to FinalGUISpec-S0107 through S0237, GUI-classification corrections for live GUI surfaces, and next cursor FinalGUISpec-S0107."
+    },
+    {
+      "batch_id": "phase2b-069-finalguispec-lines-1553-1946",
+      "created_at_utc": "2026-06-12T12:13:21Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit gui_related corrections for user-visible false-inferred spans, split directory-structure coverage, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 1553-1946 / FinalGUISpec-S0107 through FinalGUISpec-S0141",
+      "status": "used_read_only",
+      "subagent_id": "019ebbb7-8187-75a0-818d-f17e1d3ab05b",
+      "subagent_name": "Banach",
+      "summary": "Proposed F3-165 through F3-213, structural dispositions for S0108/S0125/S0129/S0134/S0140, F3-001 narrowing to FinalGUISpec-S0142 through S0237, and next cursor FinalGUISpec-S0142."
+    },
+    {
+      "batch_id": "phase2b-070-finalguispec-lines-1947-2336",
+      "created_at_utc": "2026-06-12T12:23:14Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split risk-row units, mixed GUI/backend split for usage and session recovery, preserved ContractRefs and stale/deprecated alias dispositions, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 1947-2336 / FinalGUISpec-S0142 through FinalGUISpec-S0159",
+      "status": "used_read_only",
+      "subagent_id": "019ebbc1-9c14-71a1-9b39-2de71279c49a",
+      "subagent_name": "Maxwell",
+      "summary": "Proposed F3-214 through F3-274, structural dispositions for S0144/S0150, F3-001 narrowing to FinalGUISpec-S0160 through S0237, and next cursor FinalGUISpec-S0160."
+    },
+    {
+      "batch_id": "phase2b-071-finalguispec-lines-2337-2711",
+      "created_at_utc": "2026-06-12T12:35:05Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split GUI/backend/rendering/planning units, explicit gui_related corrections for false-inferred visible controls, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 2337-2711 / FinalGUISpec-S0160 through FinalGUISpec-S0190",
+      "status": "used_read_only",
+      "subagent_id": "019ebbcb-194e-7cc2-a3fc-90226e11ec2d",
+      "subagent_name": "Nietzsche",
+      "summary": "Proposed F3-275 through F3-318, structural/reference/rollup dispositions for S0167/S0168/S0178/S0188/S0189, F3-001 narrowing to FinalGUISpec-S0191 through S0237, and next cursor FinalGUISpec-S0191."
+    },
+    {
+      "batch_id": "phase2b-072-finalguispec-lines-2712-3087",
+      "created_at_utc": "2026-06-12T12:46:20Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split planning/blocked-state/recovery/widget-catalog units, explicit gui_related corrections for false-inferred visible surfaces, and residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 2712-3087 / FinalGUISpec-S0191 through FinalGUISpec-S0229",
+      "status": "used_read_only",
+      "subagent_id": "019ebbd5-7a32-73b1-abd1-5688def4e7e8",
+      "subagent_name": "Helmholtz",
+      "summary": "Proposed F3-319 through F3-357, structural/superseded-heading/rollup dispositions for S0196/S0197/S0199/S0204/S0205/S0209/S0212/S0223, F3-001 narrowing to FinalGUISpec-S0230 through S0237, and next cursor FinalGUISpec-S0230."
+    },
+    {
+      "batch_id": "phase2b-073-finalguispec-lines-3088-3440",
+      "created_at_utc": "2026-06-12T12:55:25Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split promoted widget units, non-GUI provider/routing boundaries for F3-363 and F3-365, and F3-001 retired to migration-lineage-only compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 3088-3440 / FinalGUISpec-S0230 through FinalGUISpec-S0239",
+      "status": "used_read_only",
+      "subagent_id": "019ebbdf-a163-7b23-8165-c1961ae31051",
+      "subagent_name": "Ptolemy",
+      "summary": "Proposed F3-358 through F3-386, structural/reporting dispositions for S0235/S0238/S0239, F3-001 source-preserving bridge retirement, and next cursor FinalGUISpec-S0240."
+    },
+    {
+      "batch_id": "phase2b-074-finalguispec-lines-3441-3849",
+      "created_at_utc": "2026-06-12T12:59:40Z",
+      "main_agent_reconciliation": "Accepted without editing FinalGUISpec.md; updated coverage/report artifacts only. Main agent was the only writer.",
+      "scope": "Plans/FinalGUISpec.md source lines 3441-3849 / FinalGUISpec-S0240 through FinalGUISpec-S0241",
+      "status": "used_read_only",
+      "subagent_id": "019ebbe7-e13f-7030-9399-78cdd66c4060",
+      "subagent_name": "Feynman",
+      "summary": "Recommended no new product PlanUnits; map S0240 to retired F3-001 bridge lineage and S0241 to structural Migration Coverage disposition; next cursor Formatters_System-S0001."
+    },
+    {
+      "batch_id": "phase2b-075-formatters-system-lines-1-396",
+      "created_at_utc": "2026-06-12T13:09:39Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split S0023/S0024 across runtime/config/evidence/error/GUI units, and retired FS-001 to migration-lineage-only compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/Formatters_System.md source lines 1-396 / Formatters_System-S0001 through Formatters_System-S0028",
+      "status": "used_read_only",
+      "subagent_id": "019ebbed-1cea-7043-b6bc-a9c5c35bf35f",
+      "subagent_name": "Socrates",
+      "summary": "Proposed FS-002 through FS-015, structural dispositions for S0025/S0026/S0028, FS-001 source-preserving bridge retirement, and next cursor GitHub_API_Auth_and_Flows-S0001."
+    },
+    {
+      "batch_id": "phase2b-076-github-api-auth-and-flows-lines-1-234",
+      "created_at_utc": "2026-06-12T13:16:56Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split S0003/S0008/S0009 across auth/remote-boundary/GUI/identity/recovery/attribution units, and retired GAAAF-001 to migration-lineage-only compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/GitHub_API_Auth_and_Flows.md source lines 1-234 / GitHub_API_Auth_and_Flows-S0001 through GitHub_API_Auth_and_Flows-S0015",
+      "status": "used_read_only",
+      "subagent_id": "019ebbf5-453b-7cb3-b5bb-e6fe00158c3f",
+      "subagent_name": "Linnaeus",
+      "summary": "Proposed GAAAF-002 through GAAAF-012, structural dispositions for S0002/S0006/S0007/S0012/S0013/S0015, GAAAF-001 source-preserving bridge retirement, and next cursor GitHub_Integration-S0001."
+    },
+    {
+      "batch_id": "phase2b-077-github-integration-lines-1-364",
+      "created_at_utc": "2026-06-12T13:23:59Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, repeated dense S0008 lineage across split GUI/action/worktree units instead of inventing subspans, and retired GI-001 to migration-lineage-only compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/GitHub_Integration.md source lines 1-364 / GitHub_Integration-S0001 through GitHub_Integration-S0016",
+      "status": "used_read_only",
+      "subagent_id": "019ebbfb-d548-7f53-9148-5e46ac894c6f",
+      "subagent_name": "Boole",
+      "summary": "Proposed GI-002 through GI-030, structural dispositions for S0001/S0003/S0005/S0007/S0013/S0014/S0016, GI-001 source-preserving bridge retirement, and next cursor after GitHub_Integration."
+    },
+    {
+      "batch_id": "phase2b-078-glossary-lines-1-301",
+      "created_at_utc": "2026-06-12T13:32:32Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split S0009 and S0014 across finer-grained term-family units, intentionally classified G-016 gui_related=true for user-visible copy vocabulary, and kept G-001 as residual bridge for S0030 only; main agent was the only writer.",
+      "scope": "Plans/Glossary.md source lines 1-301 / Glossary-S0001 through Glossary-S0029",
+      "status": "used_read_only",
+      "subagent_id": "019ebc02-bf67-7c33-8a8d-2e7fb57e4bf5",
+      "subagent_name": "Zeno",
+      "summary": "Proposed G-002 through G-025, structural dispositions for S0001/S0003/S0007/S0019/S0027/S0028/S0029, and G-001 residual narrowing to Glossary-S0030."
+    },
+    {
+      "batch_id": "phase2b-079-glossary-lines-302-469",
+      "created_at_utc": "2026-06-12T13:38:38Z",
+      "main_agent_reconciliation": "Accepted; main agent was the only writer and preserved source-span GUI inference in coverage while marking the retired live bridge gui_related=false.",
+      "scope": "Plans/Glossary.md source lines 302-469 / Glossary-S0030 through Glossary-S0031",
+      "status": "used_read_only",
+      "subagent_id": "019ebc0b-4377-7591-8b4f-cbb6332bba26",
+      "subagent_name": "Kierkegaard",
+      "summary": "Proposed retyping G-001 as source_preserving_bridge_retired compatibility disposition, no new product PlanUnits for Glossary-S0030, and structural disposition for Glossary-S0031."
+    },
+    {
+      "batch_id": "phase2b-080-gui-rebuild-requirements-checklist-lines-1-294",
+      "created_at_utc": "2026-06-12T13:48:24Z",
+      "main_agent_reconciliation": "Accepted with source-preserving PlanUnits, S0012 carried as intro lineage for GRRC-025 through GRRC-029, and GRRC-001 converted to source_preserving_bridge_retired compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/GUI_Rebuild_Requirements_Checklist.md full document lines 1-294 / GUI_Rebuild_Requirements_Checklist-S0001 through S0021",
+      "status": "used_read_only",
+      "subagent_id": "019ebc10-ba19-79e0-97de-e1e2b13f433d",
+      "subagent_name": "Popper",
+      "summary": "Proposed GRRC-002 through GRRC-029, structural dispositions for S0018/S0019/S0021, and GRRC-001 bridge retirement."
+    },
+    {
+      "batch_id": "phase2b-081-human-in-the-loop-lines-1-400",
+      "created_at_utc": "2026-06-12T13:57:39Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and explicit residual coverage rows for human-in-the-loop-S0044/S0047; main agent was the only writer.",
+      "scope": "Plans/human-in-the-loop.md source lines 1-400 / human-in-the-loop-S0001 through S0043",
+      "status": "used_read_only",
+      "subagent_id": "019ebc18-d04f-7770-9daf-e4d1eb60ff36",
+      "subagent_name": "Singer",
+      "summary": "Proposed HITL-002 through HITL-033, structural dispositions, and narrowing HITL-001 to residual human-in-the-loop-S0044."
+    },
+    {
+      "batch_id": "phase2b-082-human-in-the-loop-lines-401-606",
+      "created_at_utc": "2026-06-12T14:03:28Z",
+      "main_agent_reconciliation": "Accepted; main agent was the only writer and converted HITL-001 to source_preserving_bridge_retired compatibility disposition.",
+      "scope": "Plans/human-in-the-loop.md source lines 401-606 / human-in-the-loop-S0044 through S0048",
+      "status": "used_read_only",
+      "subagent_id": "019ebc21-1f5b-7eb0-ba82-f2ab83c688ce",
+      "subagent_name": "Hypatia",
+      "summary": "Proposed HITL-034, HITL-035, structural dispositions for S0045/S0046/S0048, and HITL-001 bridge retirement."
+    },
+    {
+      "batch_id": "phase2b-083-interview-subagent-integration-lines-1-158",
+      "created_at_utc": "2026-06-12T14:10:02Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and ISI-001 converted to source_preserving_bridge_retired compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/interview-subagent-integration.md full document lines 1-158 / interview-subagent-integration-S0001 through S0015",
+      "status": "used_read_only",
+      "subagent_id": "019ebc26-72cd-7ab3-9b29-b934c4686cd4",
+      "subagent_name": "Hilbert",
+      "summary": "Proposed ISI-002 through ISI-018, structural dispositions, and ISI-001 bridge retirement."
+    },
+    {
+      "batch_id": "phase2b-115-architecture-invariants-lines-1-400",
+      "created_at_utc": "2026-06-12T19:15:51Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, full-span residual treatment for S0036, and AI-001 narrowed to the follow-up Architecture window; main agent was the only writer.",
+      "scope": "Plans/Architecture_Invariants.md source lines 1-400 / Architecture_Invariants-S0001 through Architecture_Invariants-S0036",
+      "status": "used_read_only",
+      "subagent_id": "019ebd39-65a4-7000-a370-f670473ffb0b",
+      "subagent_name": "McClintock the 2nd",
+      "summary": "Proposed AI-002 through AI-050 for S0001 through S0035 and advised residual handling for S0036 crossing the window; main agent kept S0036 fully residual instead of using partial-span coverage."
+    },
+    {
+      "batch_id": "phase2b-116-architecture-invariants-lines-398-629",
+      "created_at_utc": "2026-06-12T19:22:46Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and AI-001 converted to source_preserving_bridge_retired compatibility disposition; main agent was the only writer.",
+      "scope": "Plans/Architecture_Invariants.md source lines 398-629 / Architecture_Invariants-S0036 through S0043",
+      "status": "used_read_only",
+      "subagent_id": "019ebd45-1a18-7942-b37a-a61aa7a2f6b4",
+      "subagent_name": "Aquinas the 2nd",
+      "summary": "Proposed AI-051 through AI-067 for residual product spans S0036 through S0040, structural disposition for S0041/S0043, and retirement of AI-001."
+    },
+    {
+      "batch_id": "phase2b-117-contracts-v0-lines-1-400",
+      "created_at_utc": "2026-06-12T19:27:13Z",
+      "main_agent_reconciliation": "Accepted with explicit residual-disposition wording for CV-001 and coverage_map; main agent was the only writer.",
+      "scope": "Plans/Contracts_V0.md residual Contracts_V0-S0001 source-token bank after prior Contracts batches 032-040",
+      "status": "used_read_only",
+      "subagent_id": "019ebd4b-70d8-72a2-a347-4d5da8b852b1",
+      "subagent_name": "Ramanujan the 2nd",
+      "summary": "Confirmed no new CV-279+ units should be created; S0001 is a residual source-token bank and CV-001 should remain a justified source-preserving residual disposition."
+    },
+    {
+      "batch_id": "phase2b-118-orchestrator-subagent-integration-lines-1-400",
+      "created_at_utc": "2026-06-12T19:34:51Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text and full-span residual treatment for S0022; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 1-400 / S0001 through crossing S0022",
+      "status": "used_read_only",
+      "subagent_id": "019ebd4f-9c46-7250-a25b-7bcef418a445",
+      "subagent_name": "Plato the 2nd",
+      "summary": "Proposed OSI-002 through OSI-040 for S0001 through S0021 and residual handling for full crossing S0022."
+    },
+    {
+      "batch_id": "phase2b-119-orchestrator-subagent-integration-lines-268-565",
+      "created_at_utc": "2026-06-12T19:43:13Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, DRY ContractRef retention, and explicit residual narrowing; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 268-565 / orchestrator-subagent-integration-S0022",
+      "status": "used_read_only",
+      "subagent_id": "019ebd57-4725-7830-b29b-bfb98631aaeb",
+      "subagent_name": "Poincare the 2nd",
+      "summary": "Proposed OSI-041 through OSI-049 for S0022, coverage-only preservation for the trailing Configuration/Subagent Configuration opening fence, and narrowing OSI-001 to S0023 through S0224."
+    },
+    {
+      "batch_id": "phase2b-120-orchestrator-subagent-integration-lines-566-868",
+      "created_at_utc": "2026-06-12T19:52:06Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, split GUI/backend projection units for S0024 and S0026, ContractRef retention, and residual narrowing; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 566-868 / orchestrator-subagent-integration-S0023 through S0040",
+      "status": "used_read_only",
+      "subagent_id": "019ebd5e-c22d-7472-9cfc-8c7b1eba5b8d",
+      "subagent_name": "Heisenberg the 2nd",
+      "summary": "Proposed OSI-050 through OSI-074 for runtime context, worktree leases, SCM snapshot projections, compatibility retirement, child timeout rules, verification/test sections, and ask/plan child authority ceiling; recommended narrowing OSI-001 to S0041."
+    },
+    {
+      "batch_id": "phase2b-121-orchestrator-subagent-integration-lines-869-1260",
+      "created_at_utc": "2026-06-12T20:00:33Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, boundary span coverage for S0048/S0049/S0071, GUI/backend split units, ContractRef retention, and residual narrowing; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 869-1260 / orchestrator-subagent-integration-S0041 through S0088",
+      "status": "used_read_only",
+      "subagent_id": "019ebd65-fb39-71b2-a32d-3e26a515e15e",
+      "subagent_name": "Maxwell the 2nd",
+      "summary": "Proposed OSI-075 through OSI-098 for GUI/backend scope, plan-mode and subagent config, Persona/Gemini/Doctor boundaries, DRY/widget catalog requirements, parser recovery, potential issues, and interview min/max wiring; recommended narrowing OSI-001 to S0089."
+    },
+    {
+      "batch_id": "phase2b-122-orchestrator-subagent-integration-lines-1261-1633",
+      "created_at_utc": "2026-06-12T20:07:12Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, split start-verification units, Rust-snippet example caveats, and residual narrowing; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 1261-1633 / orchestrator-subagent-integration-S0089 through S0096",
+      "status": "used_read_only",
+      "subagent_id": "019ebd6d-8f6a-7900-aa21-e18edd446c18",
+      "subagent_name": "Locke the 2nd",
+      "summary": "Proposed OSI-099 through OSI-114 for interview architecture/vision wiring, main-run config alignment, built-but-not-wired enforcement, tier config validation, start verification lifecycle, type examples, helper boundaries, and error handling; recommended narrowing OSI-001 to S0097."
+    },
+    {
+      "batch_id": "phase2b-123-orchestrator-subagent-integration-lines-1634-2011",
+      "created_at_utc": "2026-06-12T20:12:30Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, Document Packaging and DRY ContractRef retention, Rust-snippet example caveats, and residual narrowing; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 1634-2011 / orchestrator-subagent-integration-S0097",
+      "status": "used_read_only",
+      "subagent_id": "019ebd73-8679-72b1-829a-0e8e831013ed",
+      "subagent_name": "Hegel the 2nd",
+      "summary": "Proposed OSI-115 through OSI-127 for end-tier wiring/acceptance recheck, quality verification, Document Packaging gate, tier-end lifecycle, schema/algorithm, reviewer DRY boundary, quality criteria catalog, and error handling; recommended narrowing OSI-001 to S0098."
+    },
+    {
+      "batch_id": "phase2b-124-orchestrator-subagent-integration-lines-2012-2248",
+      "created_at_utc": "2026-06-12T20:22:19Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, gui_related corrections for Assistant CTA/feedback spans, and explicit residual coverage rows; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 2012-2248 / orchestrator-subagent-integration-S0098 through S0109",
+      "status": "used_read_only",
+      "subagent_id": "019ebd79-47bf-7372-98e4-909d84862595",
+      "subagent_name": "Halley the 2nd",
+      "summary": "Proposed OSI-128 through OSI-147, attached S0099 as normative setup to OSI-129, corrected GUI classification for unrelated-failure CTA and feedback-loop spans, and narrowed OSI-001 to S0110 through S0224."
+    },
+    {
+      "batch_id": "phase2b-125-orchestrator-subagent-integration-lines-2249-2648",
+      "created_at_utc": "2026-06-12T20:29:05Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit partial-span disposition for S0110, and next cursor set to the incomplete Claude parser start; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 2249-2648 / partial orchestrator-subagent-integration-S0110",
+      "status": "used_read_only",
+      "subagent_id": "019ebd81-76c8-7231-8c16-3284d01fe6fe",
+      "subagent_name": "Kierkegaard the 2nd",
+      "summary": "Proposed OSI-148 through OSI-158 for structured handoff validation, parser extension, Cursor/Codex parser examples, and retry policy; recommended leaving lines 2640-2822 residual under OSI-001 for the follow-up S0110 tail window."
+    },
+    {
+      "batch_id": "phase2b-126-orchestrator-subagent-integration-lines-2640-2822",
+      "created_at_utc": "2026-06-12T20:34:51Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit parser-selection and silent-drop negative constraints, and S0110 completion coverage; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 2640-2822 / orchestrator-subagent-integration-S0110 tail",
+      "status": "used_read_only",
+      "subagent_id": "019ebd87-9e26-7003-9794-2de9f1cfb570",
+      "subagent_name": "Mencius the 2nd",
+      "summary": "Proposed OSI-159 through OSI-165 for Claude/Gemini/Copilot parser examples, hook-level validation, AfterTier retry policy, ParsedOutput integration, and attached boundary/benefit coverage; recommended removing S0110 from OSI-001 after this batch."
+    },
+    {
+      "batch_id": "phase2b-127-orchestrator-subagent-integration-lines-2823-3220",
+      "created_at_utc": "2026-06-12T20:42:15Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split remediation/continuity/lifecycle units, explicit stale memory and side-file compatibility notes, and partial S0119 disposition; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 2823-3220 / S0111 through partial S0119",
+      "status": "used_read_only",
+      "subagent_id": "019ebd8c-d601-7f70-bfc6-f761038c7081",
+      "subagent_name": "Feynman the 2nd",
+      "summary": "Proposed OSI-166 through OSI-190 for remediation, cross-run continuity, active tracking, safe error handling, lazy lifecycle, runtime handoff enforcement, platform summary, verification integration, and bounded S0119 lifecycle-gap material; recommended keeping S0119 lines 3221-3315 residual."
+    },
+    {
+      "batch_id": "phase2b-128-orchestrator-subagent-integration-lines-3221-3315",
+      "created_at_utc": "2026-06-12T20:47:53Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit compatibility treatment for side-file, memory, hook-performance, and persona-boundary material, and S0119 completion coverage; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 3221-3315 / S0119 tail",
+      "status": "used_read_only",
+      "subagent_id": "019ebd93-c122-7830-a335-8850b0d5ab52",
+      "subagent_name": "Boole the 2nd",
+      "summary": "Proposed OSI-191 through OSI-199 for active-subagent validation fallback, safe-hook performance, state-directory permissions, prompt-injection retry feedback, platform hook adapter, memory extraction, remediation re-execution context, hook performance/caching, and validation strictness tuning; recommended removing S0119 from OSI-001."
+    },
+    {
+      "batch_id": "phase2b-129-orchestrator-subagent-integration-lines-3316-3369",
+      "created_at_utc": "2026-06-12T20:53:31Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, duplicate-aware coverage for byte-identical span pairs, and compatibility/source-lineage treatment for next-step checklist material; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 3316-3369 / S0120 through S0125",
+      "status": "used_read_only",
+      "subagent_id": "019ebd98-e6d6-7850-b55e-9b1452194e52",
+      "subagent_name": "Hubble the 2nd",
+      "summary": "Proposed OSI-200 through OSI-208 for hook placement, continuity placement compatibility, parser placement, remediation placement, selector guardrails, and platform capability next-step coverage disposition; recommended moving OSI-001 to S0126."
+    },
+    {
+      "batch_id": "phase2b-130-orchestrator-subagent-integration-lines-3370-3428",
+      "created_at_utc": "2026-06-12T21:05:59Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit preservation markers, and span-map correction; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 3370-3428 / orchestrator-subagent-integration-S0126 through S0136",
+      "status": "used_read_only",
+      "subagent_id": "019ebd9d-fc03-7d13-8d87-9ad3d4a62f4f",
+      "subagent_name": "Erdos the 2nd",
+      "summary": "Proposed OSI-209 through OSI-234, coverage disposition for S0126-S0136, and a span-map correction narrowing batch 130 to lines 3370-3428 with next cursor S0137 line 3429."
+    },
+    {
+      "batch_id": "phase2b-131-orchestrator-subagent-integration-lines-3429-3828",
+      "created_at_utc": "2026-06-12T21:15:41Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit GUI example split, normative unresolved blocker visibility, and partial S0142 residual handling; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 3429-3828 / orchestrator-subagent-integration-S0137 through partial S0142",
+      "status": "used_read_only",
+      "subagent_id": "019ebda9-878c-7b80-961f-07c5b42ada60",
+      "subagent_name": "Ampere the 2nd",
+      "summary": "Proposed OSI-235 through OSI-259, full coverage for S0137-S0141, partial coverage for S0142 lines 3574-3828, and residual cursor S0142 line 3829."
+    },
+    {
+      "batch_id": "phase2b-132-orchestrator-subagent-integration-lines-3829-4042",
+      "created_at_utc": "2026-06-12T21:24:15Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, format! typo preserved as evidence, no-local-CLI-bridge constraint preserved, and S0142 removed from OSI-001 residual coverage; main agent was the only writer.",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 3829-4042 / orchestrator-subagent-integration-S0142 tail",
+      "status": "used_read_only",
+      "subagent_id": "019ebdb2-5cca-7ff1-aa0e-40400f6b4f37",
+      "subagent_name": "Dalton the 2nd",
+      "summary": "Proposed OSI-260 through OSI-278 to complete S0142 and move the residual cursor to S0143 line 4043."
+    },
+    {
+      "batch_id": "phase2b-150-project-output-artifacts-lines-1-363",
+      "created_at_utc": "2026-06-13T00:11:11Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit split coverage for S0004/S0006/S0007, and POA-001 narrowed to Project_Output_Artifacts-S0025 through S0049; main agent was the only writer.",
+      "scope": "Plans/Project_Output_Artifacts.md source lines 1-363 / Project_Output_Artifacts-S0001 through Project_Output_Artifacts-S0024",
+      "status": "used_read_only",
+      "subagent_id": "019ebe47-feb2-72c2-a58f-a64adca4a137",
+      "subagent_name": "Socrates the 2nd",
+      "summary": "Proposed POA-002 through POA-020, coverage for S0001 through S0024, exact window ending at line 363, and next cursor Project_Output_Artifacts-S0025."
+    },
+    {
+      "batch_id": "phase2b-151-project-output-artifacts-lines-364-758",
+      "created_at_utc": "2026-06-13T00:20:00Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit S0031 split across POA-026 through POA-029, and POA-001 narrowed to Project_Output_Artifacts-S0047 through S0049; main agent was the only writer.",
+      "scope": "Plans/Project_Output_Artifacts.md source lines 364-758 / Project_Output_Artifacts-S0025 through Project_Output_Artifacts-S0046",
+      "status": "used_read_only",
+      "subagent_id": "019ebe53-3926-7e33-b27b-faaf1f2aedfd",
+      "subagent_name": "Bacon the 2nd",
+      "summary": "Proposed POA-021 through POA-042, coverage for S0025 through S0046, exact window ending at line 758, and next residual start Project_Output_Artifacts-S0047."
+    },
+    {
+      "batch_id": "phase2b-152-project-output-artifacts-lines-759-963",
+      "created_at_utc": "2026-06-13T00:27:21Z",
+      "main_agent_reconciliation": "Accepted with POA-043 through POA-045, structural dispositions for S0050/S0051/S0053, and POA-001 converted to retired_source_preserving_bridge; main agent was the only writer.",
+      "scope": "Plans/Project_Output_Artifacts.md source lines 759-963 / Project_Output_Artifacts-S0047 through Project_Output_Artifacts-S0053",
+      "status": "used_read_only",
+      "subagent_id": "019ebe5b-518d-70b1-ba0d-57b0ea3788a1",
+      "subagent_name": "Lagrange the 2nd",
+      "summary": "Proposed POA-043 through POA-045, structural dispositions for S0050/S0051/S0053, POA-001 bridge retirement, and next cursor Prompt_Pipeline-S0001."
+    },
+    {
+      "batch_id": "phase2b-153-prompt-pipeline-lines-1-398",
+      "created_at_utc": "2026-06-13T00:34:44Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split coverage for S0010/S0012/S0016/S0017/S0018, and PP-001 narrowed to Prompt_Pipeline-S0021 through S0042; main agent was the only writer.",
+      "scope": "Plans/Prompt_Pipeline.md source lines 1-398 / Prompt_Pipeline-S0001 through Prompt_Pipeline-S0020",
+      "status": "used_read_only",
+      "subagent_id": "019ebe61-faff-7b21-8f05-60cd648afabb",
+      "subagent_name": "Carver the 2nd",
+      "summary": "Proposed PP-002 through PP-026, coverage for S0001 through S0020, exact window ending at line 398, and next residual start Prompt_Pipeline-S0021."
+    },
+    {
+      "agent": "Pasteur the 2nd",
+      "agent_id": "019ebe68-fcab-7393-9860-209e50511bac",
+      "batch_id": "phase2b-154-prompt-pipeline-lines-399-656",
+      "doc": "Plans/Prompt_Pipeline.md",
+      "main_agent_disposition": "Accepted with reconciliation: main agent kept S0031 gap material deferred/blocked by node_compile_hint modes rather than resolving cross-owner product decisions, and narrowed PP-001 to generated structural tail S0043-S0046.",
+      "proposal_summary": "Proposed PP-027 through PP-053 for GUI transparency, acceptance gates, effective runtime resolution, requested/effective identity, P5 reconciliation gaps, execution_unit_context, blocked-policy transfer, PM-native skills/MCP, runtime UI transparency, attempt snapshot, wizard lineage, and historical handoff disposition.",
+      "read_only": true,
+      "source_spans": [
+        "Prompt_Pipeline-S0021",
+        "Prompt_Pipeline-S0042"
+      ]
+    },
+    {
+      "agent": "Lovelace the 2nd",
+      "agent_id": "019ebe71-01c6-72c0-9020-290a207c423b",
+      "batch_id": "phase2b-155-prompt-pipeline-lines-657-836",
+      "doc": "Plans/Prompt_Pipeline.md",
+      "main_agent_disposition": "Accepted; PP-001 retired and cursor advanced to Plans/Provider_OpenCode.md.",
+      "proposal_summary": "Confirmed S0043-S0046 are generated structural/audit tail and recommended retiring PP-001 to retired_source_preserving_bridge compatibility disposition.",
+      "read_only": true,
+      "source_spans": [
+        "Prompt_Pipeline-S0043",
+        "Prompt_Pipeline-S0046"
+      ]
+    },
+    {
+      "agent": "Averroes the 2nd",
+      "agent_id": "019ebe76-a38b-7103-98a9-8f4ce4e28655",
+      "batch_id": "phase2b-156-provider-opencode-lines-1-400",
+      "doc": "Plans/Provider_OpenCode.md",
+      "main_agent_disposition": "Accepted with reconciliation: S0032 remains residual for the next failure/recovery body window; PO-001 narrowed to S0032-S0058.",
+      "proposal_summary": "Proposed PO-002 through PO-026 for server-bridged transport, terminology, runtime identity, server profiles, health/discovery, auth, envelope identity, provider discovery, status surface, cache metadata, lifecycle, SSE, failover, adapter policy, model discovery, model picker, ACP usage, fallback models, and capabilities/media boundary.",
+      "read_only": true,
+      "source_spans": [
+        "Provider_OpenCode-S0001",
+        "Provider_OpenCode-S0032"
+      ]
+    },
+    {
+      "batch_id": "phase2b-157-provider-opencode-lines-399-703",
+      "created_at_utc": "2026-06-13T01:08:52Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit source-lineage coverage, structural references disposition, and PO-001 narrowed to generated-tail migration/provenance coverage; main agent was the only writer.",
+      "scope": "Plans/Provider_OpenCode.md source lines 399-703 / Provider_OpenCode-S0032 through Provider_OpenCode-S0054",
+      "status": "used_read_only",
+      "subagent_id": "019ebe7f-64ab-7570-891d-a9da8f52319f",
+      "subagent_name": "Kant the 2nd",
+      "summary": "Proposed PO-027 through PO-046, structural disposition for S0049, mixed-span split recommendations for S0033/S0036/S0047/S0052, and PO-001 narrowing to Provider_OpenCode-S0055 through S0058."
+    },
+    {
+      "batch_id": "phase2b-158-provider-opencode-lines-704-887",
+      "created_at_utc": "2026-06-13T01:14:12Z",
+      "main_agent_reconciliation": "Accepted with complete required PlanUnit metadata, live gui_related=false for retired bridge, historical GUI evidence preserved in coverage_map, and main agent was the only writer.",
+      "scope": "Plans/Provider_OpenCode.md source lines 704-887 / Provider_OpenCode-S0055 through Provider_OpenCode-S0058",
+      "status": "used_read_only",
+      "subagent_id": "019ebe87-f089-7e70-84f5-d153dccec57a",
+      "subagent_name": "Kepler the 2nd",
+      "summary": "Confirmed no product PlanUnits needed for generated tail; proposed structural dispositions for S0055/S0056/S0058 and PO-001 retirement for S0057."
+    },
+    {
+      "batch_id": "phase2b-159-provider-stream-mapping-external-reference-a2a-lines-1-380",
+      "created_at_utc": "2026-06-13T01:25:07Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, actual dependency IDs, explicit deferred-reconciliation treatment for S0042, and PSMERA-001 narrowed to generated-tail migration/provenance coverage; main agent was the only writer.",
+      "scope": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md source lines 1-380 / Provider_Stream_Mapping_External_Reference_A2A-S0001 through Provider_Stream_Mapping_External_Reference_A2A-S0042",
+      "status": "used_read_only",
+      "subagent_id": "019ebe8c-c12c-7481-9d47-267a28c21910",
+      "subagent_name": "Hooke the 2nd",
+      "summary": "Proposed PSMERA-002 through PSMERA-025, structural/reference dispositions, mixed-span splits, explicit deferred reconciliation for S0042, and residual PSMERA-001 handling for generated tail."
+    },
+    {
+      "batch_id": "phase2b-160-provider-stream-mapping-external-reference-a2a-lines-381-547",
+      "created_at_utc": "2026-06-13T01:29:46Z",
+      "main_agent_reconciliation": "Accepted with complete required PlanUnit metadata, live gui_related=false for retired bridge, historical GUI/ContractRef evidence preserved in coverage_map, and main agent was the only writer.",
+      "scope": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md source lines 381-547 / Provider_Stream_Mapping_External_Reference_A2A-S0043 through S0046",
+      "status": "used_read_only",
+      "subagent_id": "019ebe96-c8a4-7561-9067-3bf9065717a8",
+      "subagent_name": "Faraday the 2nd",
+      "summary": "Confirmed no product PlanUnits needed for generated tail; proposed structural dispositions for S0043/S0044/S0046 and PSMERA-001 retirement for S0045."
+    },
+    {
+      "batch_id": "phase2b-161-rewrite-tie-in-memo-lines-1-495",
+      "created_at_utc": "2026-06-13T01:40:36Z",
+      "main_agent_reconciliation": "Accepted with compact inline-YAML PlanUnits, explicit GUI/backend splits, preservation of open design items, and RTIM-001 narrowed to generated-tail residual coverage; main agent was the only writer.",
+      "scope": "Plans/rewrite-tie-in-memo.md source lines 1-495 / rewrite-tie-in-memo-S0001 through S0038",
+      "status": "used_read_only",
+      "subagent_id": "019ebe9b-0abc-7981-a92a-a8a135a2da15",
+      "subagent_name": "Helmholtz the 2nd",
+      "summary": "Proposed RTIM-002 through RTIM-039, structural dispositions for heading/preamble spans, GUI classification corrections for selection/non-goal spans, and RTIM-001 narrowing to S0039-S0042."
+    },
+    {
+      "batch_id": "phase2b-162-rewrite-tie-in-memo-lines-496-749",
+      "created_at_utc": "2026-06-13T01:48:45Z",
+      "main_agent_reconciliation": "Accepted; main agent was the only writer and retired RTIM-001 to migration-lineage compatibility disposition using the validated retired_source_preserving_bridge pattern.",
+      "scope": "Plans/rewrite-tie-in-memo.md generated tail lines 496-749 / rewrite-tie-in-memo-S0039 through S0042",
+      "status": "used_read_only",
+      "subagent_id": "019ebea7-2696-7631-920b-b62c170ad17e",
+      "subagent_name": "Avicenna the 2nd",
+      "summary": "Confirmed no new product PlanUnits are needed for S0039-S0042; proposed structural dispositions for Owner / Consumer Map, PlanUnits heading, retired RTIM-001 bridge lineage, and Migration Coverage metadata."
+    },
+    {
+      "batch_id": "phase2b-163-run-modes-lines-1-400",
+      "created_at_utc": "2026-06-13T01:59:21Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit split coverage for S0007/S0016/S0017, and RM-001 narrowed to S0030-S0063; main agent was the only writer.",
+      "scope": "Plans/Run_Modes.md source lines 1-400 / Run_Modes-S0001 through Run_Modes-S0029",
+      "status": "used_read_only",
+      "subagent_id": "019ebeac-8862-76f0-ad95-6f19e85ee0fc",
+      "subagent_name": "James the 2nd",
+      "summary": "Proposed RM-002 through RM-024 for Run Modes identity, SSOT/DRY boundary, runtime/overlay separation, ask/plan/regular/yolo, HTE/DAE, deterministic strategy selection, governance recovery gaps, budget defaults, kill conditions, lifecycle, scans, outcome taxonomy, coverage splits, and RM-001 residual narrowing."
+    },
+    {
+      "batch_id": "phase2b-164-run-modes-lines-401-720",
+      "created_at_utc": "2026-06-13T02:06:53Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split coverage for S0039/S0048/S0053/S0055/S0056, and RM-001 narrowed to S0060-S0063 generated-tail residual; main agent was the only writer.",
+      "scope": "Plans/Run_Modes.md source lines 401-720 / Run_Modes-S0030 through Run_Modes-S0059",
+      "status": "used_read_only",
+      "subagent_id": "019ebeb6-69a8-78c0-aec7-712ef58ad4d5",
+      "subagent_name": "Mill the 2nd",
+      "summary": "Proposed RM-025 through RM-047 for terminal stop reasons, context overlays, OpenCode boundary, mode tooling deltas, acceptance criteria, failure classification, headless ask denial, safe points, worktree binding, deferred waiting, headless blocked discovery, mutation classifier alignment, runtime identity continuity, coverage splits, and RM-001 narrowing."
+    },
+    {
+      "batch_id": "phase2b-165-run-modes-lines-721-915",
+      "created_at_utc": "2026-06-13T02:12:39Z",
+      "main_agent_reconciliation": "Accepted retired RM-001 compatibility disposition, structural coverage for S0060/S0061/S0063, and retired bridge lineage for S0062; main agent was the only writer.",
+      "scope": "Plans/Run_Modes.md source lines 721-915 / Run_Modes-S0060 through Run_Modes-S0063 generated tail",
+      "status": "used_read_only",
+      "subagent_id": "019ebebd-ff3f-72e2-9e50-abe0758c20b8",
+      "subagent_name": "Kuhn the 2nd",
+      "summary": "Confirmed Run Modes generated tail can be structurally dispositioned and RM-001 retired because product coverage is already atomized into RM-002 through RM-047."
+    },
+    {
+      "batch_id": "phase2b-166-runtime-artifacts-panel-lines-1-396",
+      "created_at_utc": "2026-06-13T02:20:05Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, split coverage for S0015/S0016/S0018/S0024/S0025, and RAP-001 narrowed to S0032-S0035 generated-tail residual; main agent was the only writer.",
+      "scope": "Plans/Runtime_Artifacts_Panel.md source lines 1-396 / Runtime_Artifacts_Panel-S0001 through S0031",
+      "status": "used_read_only",
+      "subagent_id": "019ebec2-9d78-7f92-bfa2-23d37899b363",
+      "subagent_name": "Euler the 2nd",
+      "summary": "Proposed RAP-002 through RAP-024 for Runtime Artifacts Panel authority, scope, taxonomy, index/projector, attribution, route/shell boundary, identity-native opens/exports, gap evidence, retention, debug manifests, cost usage, schemas, browser evidence, receipt linkage, coverage splits, and RAP-001 narrowing."
+    },
+    {
+      "batch_id": "phase2b-167-runtime-artifacts-panel-lines-397-555",
+      "created_at_utc": "2026-06-13T02:24:46Z",
+      "main_agent_reconciliation": "Accepted retired RAP-001 compatibility disposition, structural coverage for S0032/S0033/S0035, and retired bridge lineage for S0034; main agent was the only writer.",
+      "scope": "Plans/Runtime_Artifacts_Panel.md source lines 397-555 / Runtime_Artifacts_Panel-S0032 through S0035 generated tail",
+      "status": "used_read_only",
+      "subagent_id": "019ebec9-331e-7830-8a0f-4ffb9c877ba2",
+      "subagent_name": "Arendt the 2nd",
+      "summary": "Confirmed Runtime Artifacts Panel generated tail can be structurally dispositioned and RAP-001 retired because product coverage is already atomized into RAP-002 through RAP-024."
+    },
+    {
+      "batch_id": "phase2b-176-storage-plan-lines-808-1275",
+      "created_at_utc": "2026-06-13T03:46:29Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit preservation markers, split_recommended on mixed GUI/backend units, and main agent as the only writer.",
+      "scope": "Plans/storage-plan.md source lines 808-1275 / storage-plan-S0077, reviewed as bounded sub-windows 808-1030 and 1031-1275",
+      "status": "used_read_only",
+      "subagent_id": "019ebf0a-f234-7cd3-ab89-4b2e5cae635e; 019ebf0b-1016-7e93-887d-cbf562e876a2",
+      "subagent_name": "Hypatia the 2nd; Planck the 2nd",
+      "summary": "Proposed SP-066 through SP-119 for storage-plan-S0077, including merged targeted revision run persistence across the sub-window boundary, and narrowing SP-001 to S0078-S0130."
+    },
+    {
+      "batch_id": "phase2b-177-storage-plan-lines-1276-1463",
+      "created_at_utc": "2026-06-13T03:54:32Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, explicit preservation markers, backend classification corrections for S0086, and main agent as the only writer.",
+      "scope": "Plans/storage-plan.md source lines 1276-1463 / storage-plan-S0078 through storage-plan-S0086",
+      "status": "used_read_only",
+      "subagent_id": "019ebf18-6c4c-7690-8c58-6fe5f6aefc9d",
+      "subagent_name": "Raman the 2nd",
+      "summary": "Proposed SP-120 through SP-139 for runtime artifact restore/projection, terminal persistence, migration/lock/rewrite/root/bounded collection rules, regex-index and projector checkpoint boundaries, and narrowing SP-001 to S0087-S0130."
+    },
+    {
+      "batch_id": "phase2b-178-storage-plan-lines-1464-1833",
+      "created_at_utc": "2026-06-13T04:03:59Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, exact-token preservation, checklist-as-readiness treatment, and main agent as the only writer.",
+      "scope": "Plans/storage-plan.md source lines 1464-1833 / storage-plan-S0087 through storage-plan-S0100",
+      "status": "used_read_only",
+      "subagent_id": "019ebf1f-9a29-7ab1-8ff2-2dc7fac7be8c",
+      "subagent_name": "Nash the 2nd",
+      "summary": "Proposed SP-140 through SP-178 for analytics, assistant worktree events, checklist readiness, chat/runtime identity, question/TODO state, activity payloads, inline visualizer, editor recovery, requested/effective runtime, Search/SCM/GitHub Actions, and LSP persistence; narrowed SP-001 to S0101-S0130."
+    },
+    {
+      "batch_id": "phase2b-183-tools-lines-785-1178",
+      "created_at_utc": "2026-06-13T04:47:39Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, structural disposition for Tools-S0048, GUI/backend split where safe, and T-001 narrowed to Tools-S0056 through S0117; main agent was the only writer.",
+      "scope": "Plans/Tools.md source lines 785-1178 / Tools-S0034 through Tools-S0055",
+      "status": "used_read_only",
+      "subagent_id": "019ebf47-0c2e-70b1-b00d-c6ebfe6f4bf6",
+      "subagent_name": "Tesla the 2nd",
+      "summary": "Proposed T-044 through T-082, structural disposition for S0048, coverage rows for S0034-S0055, and T-001 residual narrowing to Tools-S0056 through S0117."
+    },
+    {
+      "batch_id": "phase2b-184-tools-lines-1179-1540",
+      "created_at_utc": "2026-06-13T04:54:46Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, structural dispositions for Tools-S0075 and S0076, checklist/table prose preserved as readiness metadata, and T-001 narrowed to Tools-S0095 through S0117; main agent was the only writer.",
+      "scope": "Plans/Tools.md source lines 1179-1540 / Tools-S0056 through Tools-S0094",
+      "status": "used_read_only",
+      "subagent_id": "019ebf50-4022-7343-9429-3badea571ee9",
+      "subagent_name": "Boyle the 2nd",
+      "summary": "Proposed T-083 through T-113, structural dispositions for S0075/S0076, coverage rows for S0056-S0094, and T-001 residual narrowing to Tools-S0095 through S0117."
+    },
+    {
+      "batch_id": "phase2b-185-tools-lines-1541-1919",
+      "created_at_utc": "2026-06-13T05:02:08Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, structural disposition for Tools-S0102, Firecrawl-specific stale aliases preserved as retired, and T-001 narrowed to Tools-S0103 through S0117; main agent was the only writer.",
+      "scope": "Plans/Tools.md source lines 1541-1919 / Tools-S0095 through Tools-S0102",
+      "status": "used_read_only",
+      "subagent_id": "019ebf56-cadf-7380-9800-c816c3b831a9",
+      "subagent_name": "Banach the 2nd",
+      "summary": "Proposed T-114 through T-131, structural disposition for S0102, coverage rows for S0095-S0102, and T-001 residual narrowing to Tools-S0103 through S0117."
+    },
+    {
+      "batch_id": "phase2b-186-tools-lines-1920-2253",
+      "created_at_utc": "2026-06-13T05:09:48Z",
+      "main_agent_reconciliation": "Accepted with compact canonical_text, structural dispositions for Tools-S0110/S0112/S0115, stale web-output markers retired as owner text, and T-001 narrowed to generated-tail Tools-S0116 through S0117; main agent was the only writer.",
+      "scope": "Plans/Tools.md source lines 1920-2253 / Tools-S0103 through Tools-S0115",
+      "status": "used_read_only",
+      "subagent_id": "019ebf5d-8985-7422-8d76-c6a5dd626b25",
+      "subagent_name": "Meitner the 2nd",
+      "summary": "Proposed T-132 through T-156, structural dispositions for S0110/S0112/S0115, coverage rows for S0103-S0115, and T-001 residual narrowing to Tools-S0116 through S0117."
+    },
+    {
+      "agent_id": "019ebf64-48ac-70b1-86cc-5f6d6c3b8a42",
+      "mode": "read_only_findings_only",
+      "nickname": "Volta the 2nd",
+      "scope": "Plans/Tools.md source lines 2254-2538 / Tools-S0116 through Tools-S0117",
+      "summary": "Confirmed Tools-S0116 is generated bridge lineage only, Tools-S0117 is Migration Coverage audit metadata only, recommended T-001 retirement to generated_artifact_residual, and recommended next cursor UI_Command_Catalog-S0001."
+    },
+    {
+      "agent_id": "019ebf6a-4a14-7511-81e3-ddcc5c652807",
+      "mode": "read_only_findings_only",
+      "nickname": "Franklin the 2nd",
+      "scope": "Plans/UI_Command_Catalog.md source lines 1-391 / UI_Command_Catalog-S0001 through UI_Command_Catalog-S0024",
+      "summary": "Proposed UCC-002 through UCC-036, residual narrowing for UCC-001 to S0025-S0056, coverage mappings for S0001-S0024, and next cursor UI_Command_Catalog-S0025 line 392."
+    },
+    {
+      "agent_id": "019ebf72-e9a1-73c0-be9b-a8f0ce379c08",
+      "mode": "read_only_findings_only",
+      "nickname": "Hilbert the 2nd",
+      "scope": "Plans/UI_Command_Catalog.md source lines 392-782 / UI_Command_Catalog-S0025 through UI_Command_Catalog-S0036",
+      "summary": "Proposed UCC-037 through UCC-060, structural disposition for S0033, residual narrowing for UCC-001 to S0037-S0056, and next cursor UI_Command_Catalog-S0037 line 783."
+    },
+    {
+      "agent_id": "019ebf78-cb37-7843-bf71-f3ad2c183b62",
+      "mode": "read_only_findings_only",
+      "nickname": "Wegener the 2nd",
+      "scope": "Plans/UI_Command_Catalog.md source lines 783-1140 / UI_Command_Catalog-S0037 through UI_Command_Catalog-S0049",
+      "summary": "Proposed UCC-061 through UCC-090, structural disposition for S0047 and reference-only material in S0049, residual narrowing for UCC-001 to S0050-S0056, and next cursor UI_Command_Catalog-S0050 line 1141."
+    }
+  ],
+  "generated_at_utc": "2026-06-13T00:59:12Z",
   "phase2b_batch_001_subagent": {
     "agent_id": "019eb93f-a874-7fa0-9b73-4291480d8d86",
     "mode": "read_only_findings_only",
     "nickname": "Ampere",
     "scope": "Plans/assistant-chat-design.md lines 1-427; main writer used bounded subset lines 1-398 / S0001-S0025",
     "summary": "Proposed ACD-002 through ACD-020 and coverage dispositions. Main writer applied ACD-002 through ACD-017 only to keep the first batch under the Phase 2A <=400-line window method."
+  },
+  "phase2b_batch_018_subagent": {
+    "agent_id": "019eb9ee-7bde-7e12-9d62-46dca51e46f0",
+    "mode": "read_only_findings_only",
+    "nickname": "Meitner",
+    "scope": "Plans/chain-wizard-flexibility.md lines 780-1165 / spans S0043-S0067",
+    "summary": "Proposed CWF-045 through CWF-069 and exact next cursor; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_019_subagent": {
+    "agent_id": "019eb9fb-a644-7491-b9a5-b92ad6eae703",
+    "mode": "read_only_findings_only",
+    "nickname": "Averroes",
+    "scope": "Plans/chain-wizard-flexibility.md lines 1166-1550 / spans S0068-S0087",
+    "summary": "Proposed CWF-070 through CWF-092 and exact next cursor; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_020_subagent": {
+    "agent_id": "019eba05-1f1d-72f0-924a-39149cc4689c",
+    "mode": "read_only_findings_only",
+    "nickname": "Plato",
+    "scope": "Plans/chain-wizard-flexibility.md lines 1551-1948 / spans S0088-S0123",
+    "summary": "Proposed CWF-093 through CWF-122 and coverage dispositions for S0088-S0123; main writer applied CWF-093 through CWF-119 after reconciling the proposal to authoritative span_map IDs and updated migration artifacts."
+  },
+  "phase2b_batch_021_subagent": {
+    "agent_id": "019eba13-5d70-7962-9d99-f3f6c582929e",
+    "mode": "read_only_findings_only",
+    "nickname": "Rawls",
+    "scope": "Plans/chain-wizard-flexibility.md lines 1949-2287 / spans S0124-S0154",
+    "summary": "Proposed CWF-120 through CWF-147 and coverage dispositions for S0124-S0154; main writer applied the final source-body units and left structural bridge-retirement spans for the next internal batch."
+  },
+  "phase2b_batch_022_subagent": {
+    "agent_id": "019eba1b-6761-70a1-98cc-ea35a4a66417",
+    "mode": "read_only_findings_only",
+    "nickname": "Planck",
+    "scope": "Plans/chain-wizard-flexibility.md structural spans S0155-S0158",
+    "summary": "Verified Owner/Consumer Map, PlanUnits heading, CWF-001 retired bridge, and Migration Coverage are structural/disposition spans; no product source remains uncovered and CWF-001 can remain source_preserving_bridge_retired."
+  },
+  "phase2b_batch_023_subagent": {
+    "agent_id": "019eba1f-264b-7b41-9104-80c87f5955a9",
+    "mode": "read_only_findings_only",
+    "nickname": "Chandrasekhar",
+    "scope": "Plans/chain-wizard.md lines 1-102 / spans S0001-S0008",
+    "summary": "Proposed CW-002 through CW-007 for product spans S0001-S0004 and structural/retired bridge dispositions for S0005-S0008; main writer applied the batch and retired CW-001."
+  },
+  "phase2b_batch_024_subagent": {
+    "agent_id": "019eba24-89b5-7343-b44b-e7b94c94a772",
+    "mode": "read_only_findings_only",
+    "nickname": "Aristotle",
+    "scope": "Plans/CLI_Bridged_Providers.md lines 1-244 / spans S0001-S0014",
+    "summary": "Proposed CBP-002 through CBP-018 for product spans S0001-S0010 and structural/retired bridge dispositions for S0011-S0014; main writer applied the batch and retired CBP-001."
+  },
+  "phase2b_batch_025_subagent": {
+    "agent_id": "019eba2d-4cc5-7fc3-85bf-fe38e6389e9d",
+    "mode": "read_only_findings_only",
+    "nickname": "Poincare",
+    "scope": "Plans/Commands_System.md lines 1-398 / spans S0001-S0034",
+    "summary": "Proposed CS-002 through CS-024 and coverage dispositions for the first Commands_System.md window; main writer applied the batch and left CS-001 as residual bridge for later spans."
+  },
+  "phase2b_batch_026_subagent": {
+    "agent_id": "019eba37-b5e2-78a3-9013-aeed460e3518",
+    "mode": "read_only_findings_only",
+    "nickname": "Kepler",
+    "scope": "Plans/Commands_System.md lines 399-673 / spans S0035-S0053",
+    "summary": "Proposed CS-025 through CS-049 and coverage dispositions for the second Commands_System.md source-body window; main writer applied the batch and left CS-001 as residual bridge for structural spans."
+  },
+  "phase2b_batch_027_subagent": {
+    "agent_id": "019eba41-3934-72d2-8137-69d6daa39a59",
+    "mode": "read_only_findings_only",
+    "nickname": "Newton",
+    "scope": "Plans/Commands_System.md structural spans S0054-S0057",
+    "summary": "Verified Owner/Consumer Map, PlanUnits heading, CS-001 retired bridge, and Migration Coverage are structural/disposition spans; CS-001 can remain source_preserving_bridge_retired and Commands_System.md has no residual source-preserving product coverage."
+  },
+  "phase2b_batch_028_subagent": {
+    "agent_id": "019eba49-bb74-72c0-bbb1-2afa43f0a821",
+    "mode": "read_only_findings_only",
+    "nickname": "Avicenna",
+    "scope": "Plans/Containers_Registry_and_Unraid.md lines 1-400 / spans S0001-S0027",
+    "summary": "Proposed CRAU-002 through CRAU-031 and coverage dispositions for the first Containers_Registry_and_Unraid.md window; main writer applied the batch and left CRAU-001 as residual bridge for S0028 onward."
+  },
+  "phase2b_batch_029_subagent": {
+    "agent_id": "019eba58-6b17-7341-a6a5-4c59c4f186a8",
+    "mode": "read_only_findings_only",
+    "nickname": "Boyle",
+    "scope": "Plans/Containers_Registry_and_Unraid.md lines 401-787 / spans S0028-S0062",
+    "summary": "Proposed CRAU-032 through CRAU-063 and coverage dispositions for the second Containers_Registry_and_Unraid.md window; main writer applied the batch and left CRAU-001 as residual bridge for S0063 onward."
+  },
+  "phase2b_batch_030_subagent": {
+    "agent_id": "019eba64-095e-76f0-9a7a-11cb0e0d518a",
+    "mode": "read_only_findings_only",
+    "nickname": "Darwin",
+    "scope": "Plans/Containers_Registry_and_Unraid.md lines 788-987 / spans S0063-S0082",
+    "summary": "Proposed CRAU-064 through CRAU-084 and coverage dispositions for the final Containers_Registry_and_Unraid.md source-body window; main writer applied the batch and narrowed CRAU-001 to structural spans S0083-S0086."
+  },
+  "phase2b_batch_031_subagent": {
+    "agent_id": "019eba70-3b3f-7d70-b022-6792552f084b",
+    "mode": "read_only_findings_only",
+    "nickname": "Copernicus",
+    "scope": "Plans/Containers_Registry_and_Unraid.md structural spans S0083-S0086",
+    "summary": "Verified Owner/Consumer Map, PlanUnits heading, CRAU-001 retired bridge, and Migration Coverage are structural/disposition spans; CRAU-001 can remain source_preserving_bridge_retired and Containers_Registry_and_Unraid.md has no residual source-preserving product coverage."
+  },
+  "phase2b_batch_032_subagent": {
+    "agent_id": "019eba75-dd99-7d12-b99d-e57e53825b19",
+    "mode": "read_only_findings_only",
+    "nickname": "Galileo",
+    "scope": "Plans/Contracts_V0.md lines 1-371 / spans S0001-S0025",
+    "summary": "Proposed CV-002 through CV-010 and coverage dispositions for the first Contracts_V0.md window; main writer applied the batch and left CV-001 residual for S0001 unassigned token-bank material and S0025 onward."
+  },
+  "phase2b_batch_033_subagent": {
+    "agent_id": "019eba7d-dbd9-7332-a6c1-ac8a51f5284d",
+    "mode": "read_only_findings_only",
+    "nickname": "Hubble",
+    "scope": "Plans/Contracts_V0.md lines 367-405 / spans S0025-S0026",
+    "summary": "Proposed CV-011 through CV-023 and coverage dispositions for the requested/effective runtime identity carry-forward window; main writer applied the batch and narrowed CV-001 to S0001 plus S0027 onward."
+  },
+  "phase2b_batch_034_subagent": {
+    "agent_id": "019eba83-7c58-7933-9242-6e481a7b579d",
+    "mode": "read_only_findings_only",
+    "nickname": "Raman",
+    "scope": "Plans/Contracts_V0.md lines 406-767 / span S0027",
+    "summary": "Proposed CV-024 through CV-060 and coverage disposition for the large runtime lineage, route, and blocked-state closure span; main writer applied the batch and narrowed CV-001 to S0001 plus S0028 onward."
+  },
+  "phase2b_batch_035_subagent": {
+    "agent_id": "019eba8d-18a7-7b62-b7c2-dd5afbba3849",
+    "mode": "read_only_findings_only",
+    "nickname": "Faraday",
+    "scope": "Plans/Contracts_V0.md lines 768-971 / spans S0028-S0036",
+    "summary": "Proposed CV-061 through CV-096 and coverage dispositions for concern lifecycle, route/open normalization, blocked approval scope, persisted events, assistant worktree events, EventEnvelopeV1, and provider stream/transport contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0037 onward."
+  },
+  "phase2b_batch_036_subagent": {
+    "agent_id": "019eba98-cd57-7942-bafb-9fafa54227af",
+    "mode": "read_only_findings_only",
+    "nickname": "Turing",
+    "scope": "Plans/Contracts_V0.md lines 972-1349 / spans S0037-S0049",
+    "summary": "Proposed CV-097 through CV-141 and coverage dispositions for tool events, web payload extensions, web error taxonomy, debug investigation events, AuthState/AuthPolicy/AuthEvent, and setup/health lifecycle contracts; main writer applied the batch, preserved the S0045/S0046 AuthState anchor split, and narrowed CV-001 to S0001 plus S0050 onward."
+  },
+  "phase2b_batch_037_subagent": {
+    "agent_id": "019ebaa5-b9f1-7c40-86da-07f47b5bbe12",
+    "mode": "read_only_findings_only",
+    "nickname": "Huygens",
+    "scope": "Plans/Contracts_V0.md lines 1350-1729 / spans S0050-S0061",
+    "summary": "Proposed CV-142 through CV-174 and coverage dispositions for provider lifecycle/account identity, context attachment, PersonaRuntime snapshot, HITL request, UICommand, RouteTarget, and debug target contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0062 onward."
+  },
+  "phase2b_batch_038_subagent": {
+    "agent_id": "019ebab1-a6e2-75a0-aaba-e201594e0ccc",
+    "mode": "read_only_findings_only",
+    "nickname": "Kuhn",
+    "scope": "Plans/Contracts_V0.md lines 1730-2117 / spans S0062-S0090",
+    "summary": "Proposed CV-175 through CV-229 and coverage dispositions for OpenSubject, panel settings/cache identity, UI scaling, usage/billing, scheduler readiness, retry/backoff, safe-point, FileSafe compatibility, and remediation-spawned contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0091 onward."
+  },
+  "phase2b_batch_039_subagent": {
+    "agent_id": "019ebabf-6d26-7252-b2fe-a3fdf2c61cca",
+    "mode": "read_only_findings_only",
+    "nickname": "Carver",
+    "scope": "Plans/Contracts_V0.md lines 2118-2511 / spans S0091-S0115",
+    "summary": "Proposed CV-230 through CV-271 and coverage dispositions for remediation/degradation/wizard events, runtime addenda, enum compatibility, child/crew/subagent lineage, and exact next cursor; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_040_subagent": {
+    "agent_id": "019ebacc-8865-7041-8248-2db1d430b535",
+    "mode": "read_only_findings_only",
+    "nickname": "Bohr",
+    "scope": "Plans/Contracts_V0.md lines 2512-2537 / spans S0116-S0118",
+    "summary": "Proposed structural coverage for S0116, CV-272 through CV-278 for S0117-S0118, CV-001 narrowed to S0001-only residual coverage, and exact next cursor at Plans/Crosswalk.md line 1."
+  },
+  "phase2b_batch_041_subagent": {
+    "agent_id": "019ebad3-c58f-7bd2-8bad-273379258a5d",
+    "mode": "read_only_findings_only",
+    "nickname": "Laplace",
+    "scope": "Plans/Crosswalk.md lines 1-397 / spans S0001-S0028",
+    "summary": "Proposed C-002 through C-037, structural dispositions for title/heading/reference spans, dense S0023 split into C-021 through C-033, C-001 narrowing to S0029-S0035 residual, and exact next cursor at Crosswalk-S0029 line 398."
+  },
+  "phase2b_batch_042_subagent": {
+    "agent_id": "019ebadf-8f80-7b63-a1b1-8d4740929f23",
+    "mode": "read_only_findings_only",
+    "nickname": "Carson",
+    "scope": "Plans/Crosswalk.md lines 398-666 / spans S0029-S0039",
+    "summary": "Proposed C-038 through C-048, structural dispositions for S0030/S0036/S0037/S0039, C-001 bridge retirement, and exact next cursor at Plans/Decision_Log.md line 1."
+  },
+  "phase2b_batch_043_subagent": {
+    "agent_id": "019ebae8-c444-7d80-bc84-a295b796dab6",
+    "mode": "read_only_findings_only",
+    "nickname": "Lagrange",
+    "scope": "Plans/Decision_Log.md lines 1-249 / spans S0001-S0026",
+    "summary": "Proposed DL-002 through DL-026, structural dispositions for title/heading/coverage spans, DL-001 bridge retirement, and exact next cursor at Plans/Decision_Policy.md line 1."
+  },
+  "phase2b_batch_044_subagent": {
+    "agent_id": "019ebaf2-5585-7013-aa81-d9b37e383a54",
+    "mode": "read_only_findings_only",
+    "nickname": "Locke",
+    "scope": "Plans/Decision_Policy.md lines 1-394 / spans S0001-S0026",
+    "summary": "Proposed DP-002 through DP-042, structural dispositions for S0017 and S0022, DP-001 residual narrowing for S0027-S0032, and exact next cursor at Decision_Policy-S0027 line 395."
+  },
+  "phase2b_batch_045_subagent": {
+    "agent_id": "019ebafd-cb43-7f42-8e3a-309b216dcf3d",
+    "mode": "read_only_findings_only",
+    "nickname": "Tesla",
+    "scope": "Plans/Decision_Policy.md lines 395-457 / spans S0027-S0032",
+    "summary": "Proposed DP-043 through DP-062, structural disposition for S0028, GUI CTA splits in S0032, DP-001 structural-residual narrowing, and exact next cursor at Decision_Policy-S0033 line 458."
+  },
+  "phase2b_batch_046_subagent": {
+    "agent_id": "019ebb04-dcc7-78e1-9698-62bcf88f9471",
+    "mode": "read_only_findings_only",
+    "nickname": "Lorentz",
+    "scope": "Plans/Decision_Policy.md structural spans S0033-S0036",
+    "summary": "Verified no product requirements remain in S0033-S0036; proposed structural dispositions, DP-001 bridge retirement, and next cursor at Plans/Document_Packaging_Policy.md line 1."
+  },
+  "phase2b_batch_047_subagent": {
+    "agent_id": "019ebb09-9806-7f23-a978-188f23582294",
+    "mode": "read_only_findings_only",
+    "nickname": "Peirce",
+    "scope": "Plans/Document_Packaging_Policy.md lines 1-339 / spans S0001-S0023",
+    "summary": "Proposed DPP-002 through DPP-029, structural dispositions for S0007/S0017, DPP-001 residual narrowing to S0024-S0028, and exact next cursor; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_048_subagent": {
+    "agent_id": "019ebb12-870b-7e62-a8b9-b14743f110a5",
+    "mode": "read_only_findings_only",
+    "nickname": "Ohm",
+    "scope": "Plans/Document_Packaging_Policy.md lines 340-487 / spans S0024-S0028",
+    "summary": "Verified References, Owner / Consumer Map, PlanUnits heading, DPP-001 retired bridge, and Migration Coverage are structural/reference/migration scaffolding or bridge lineage; DPP-001 can remain source_preserving_bridge_retired and Document_Packaging_Policy.md has no residual source-preserving product coverage."
+  },
+  "phase2b_batch_049_subagent": {
+    "agent_id": "019ebb17-0f01-7700-9d2c-c2bed08c5b65",
+    "mode": "read_only_findings_only",
+    "nickname": "Franklin",
+    "scope": "Plans/DRY_Rules.md lines 1-400 / spans S0001-S0022",
+    "summary": "Proposed DR-002 through DR-035, structural dispositions for S0018-S0020/S0022, DR-001 bridge retirement, and exact next cursor at Plans/Executor_Protocol.md line 1; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_050_subagent": {
+    "agent_id": "019ebb1f-0c20-7933-9a50-5660e973523e",
+    "mode": "read_only_findings_only",
+    "nickname": "Hegel",
+    "scope": "Plans/Executor_Protocol.md lines 1-392 / spans S0001-S0029",
+    "summary": "Proposed EP-002 through EP-033, structural dispositions for first-window parent/forward-reference spans, EP-001 residual narrowing to S0030-S0067, and exact next cursor at line 393; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_051_subagent": {
+    "agent_id": "019ebb25-a524-7761-8908-61cbcd61fdc6",
+    "mode": "read_only_findings_only",
+    "nickname": "Mill",
+    "scope": "Plans/Executor_Protocol.md lines 393-746 / spans S0030-S0065",
+    "summary": "Proposed EP-034 through EP-086, dense retry/usage/lifecycle and blocked/retry/context splits, EP-001 residual narrowing to S0066-S0067, and exact next cursor at Executor_Protocol-S0066 line 747; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_052_subagent": {
+    "agent_id": "019ebb2f-2f66-77c1-b9f0-936e617d9c0a",
+    "mode": "read_only_findings_only",
+    "nickname": "Schrodinger",
+    "scope": "Plans/Executor_Protocol.md lines 747-1072 / spans S0066-S0071",
+    "summary": "Proposed EP-087 through EP-095, split PM-native Open With from backend worktree handoff, EP-001 source-preserving bridge retirement, structural dispositions for S0068/S0069/S0071, and next cursor at Plans/feature-list.md line 1; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_053_subagent": {
+    "agent_id": "019ebb36-a533-7ce0-8a2d-ec7acee3605d",
+    "mode": "read_only_findings_only",
+    "nickname": "Curie",
+    "scope": "Plans/feature-list.md lines 1-340 / spans S0001-S0022",
+    "summary": "Proposed FL-002 through FL-025, GUI/backend splits for S0006/S0007/S0009/S0012/S0016/S0017, FL-001 source-preserving bridge retirement, structural dispositions for S0019/S0020/S0022, and next cursor at Plans/FileManager.md line 1; main writer applied the batch and updated migration artifacts."
+  },
+  "phase2b_batch_054_subagent": {
+    "agent_id": "019ebb3d-d4c0-7861-b216-e170afd54f8e",
+    "mode": "read_only_findings_only",
+    "nickname": "Erdos",
+    "scope": "Plans/FileManager.md lines 1-398 / spans S0001-S0032",
+    "summary": "Proposed F-002 through F-033, F-001 residual narrowing to FileManager-S0033 through S0054, coverage for S0001-S0032, and exact next cursor at FileManager-S0033 line 399; main agent corrected S0033 out of batch 054 before writing."
+  },
+  "phase2b_batch_055_subagent": {
+    "agent_id": "019ebb46-2efb-7f13-bafc-982eaa2d611a",
+    "mode": "read_only_findings_only",
+    "nickname": "Descartes",
+    "scope": "Plans/FileManager.md lines 399-737 / spans S0033-S0058",
+    "summary": "Proposed F-034 through F-066 for residual product spans S0033-S0054, structural dispositions for S0055/S0056/S0058, F-001 bridge retirement for S0057, and exact next cursor at Plans/FileSafe.md line 1; main agent reconciled and applied batch 055."
+  },
+  "phase2b_batch_056_subagent": {
+    "agent_id": "019ebb4e-aeac-7e20-ab17-ebfc19d899a5",
+    "mode": "read_only_findings_only",
+    "nickname": "Ramanujan",
+    "scope": "Plans/FileSafe.md lines 1-247 / spans S0001-S0014",
+    "summary": "Proposed first FileSafe window atomization, flagged FS/F2 prefix conflict, recommended residual bridge narrowing to FileSafe-S0015 through S0110 and exact next cursor S0015 line 248; main agent translated proposal to F2-002 through F2-026 and applied batch 056."
+  },
+  "phase2b_batch_057_subagent": {
+    "agent_id": "019ebb55-d3bc-7900-badc-e38a11177fe8",
+    "mode": "read_only_findings_only",
+    "nickname": "Lovelace",
+    "scope": "Plans/FileSafe.md lines 248-540 / spans S0015-S0016",
+    "summary": "Proposed F2-027 through F2-034 for dense FileSafe core type and pattern-loading implementation-reference spans, narrowed F2-001 residual to FileSafe-S0017 through S0110, and exact next cursor S0017 line 541; main agent applied batch 057."
+  },
+  "phase2b_batch_058_subagent": {
+    "agent_id": "019ebb5b-2248-70d0-ba88-659f2a6e5cb1",
+    "mode": "read_only_findings_only",
+    "nickname": "Herschel",
+    "scope": "Plans/FileSafe.md lines 541-873 / spans S0017-S0022",
+    "summary": "Proposed F2-035 through F2-049, structural disposition for S0018, residual narrowing of F2-001 to S0023-S0110, and exact next cursor at FileSafe-S0023 line 874; main agent reconciled and was the only writer."
+  },
+  "phase2b_batch_059_subagent": {
+    "agent_id": "019ebb64-2911-7c21-a31a-9cb46e9ce3ea",
+    "mode": "read_only_findings_only",
+    "nickname": "Arendt",
+    "scope": "Plans/FileSafe.md lines 874-1271 / spans S0023-S0040",
+    "summary": "Proposed F2-050 through F2-070, structural dispositions for S0024/S0030/S0034, residual narrowing of F2-001 to S0041-S0110, and exact next cursor at FileSafe-S0041 line 1272; main agent reconciled and was the only writer."
+  },
+  "phase2b_batch_060_subagent": {
+    "agent_id": "019ebb6c-3e31-75d2-889d-188bdf545b80",
+    "mode": "read_only_findings_only",
+    "nickname": "Fermat",
+    "scope": "Plans/FileSafe.md lines 1272-1478 / spans S0041-S0049",
+    "summary": "Proposed F2-071 through F2-097, structural disposition for S0042, residual narrowing of F2-001 to S0050-S0110, and exact next cursor at FileSafe-S0050 line 1479; main agent reconciled and was the only writer."
+  },
+  "phase2b_batch_061_subagent": {
+    "agent_id": "019ebb73-798d-7723-9e91-f0d5ea0ccd67",
+    "mode": "read_only_findings_only",
+    "nickname": "Beauvoir",
+    "scope": "Plans/FileSafe.md lines 1479-1875 / spans S0050-S0064",
+    "summary": "Proposed F2-098 through F2-120, structural dispositions for S0054/S0061, residual narrowing of F2-001 to S0065-S0110, and next cursor at FileSafe-S0065 line 1876; main agent reconciled and was the only writer."
+  },
+  "phase2b_batch_062_subagent": {
+    "agent_id": "019ebb7a-53cc-76f2-8c4e-c86f04bb717a",
+    "mode": "read_only_findings_only",
+    "nickname": "Leibniz",
+    "scope": "Plans/FileSafe.md lines 1876-2254 / spans S0065-S0072",
+    "summary": "Proposed F2-121 through F2-137, structural disposition for S0067, residual narrowing of F2-001 to S0073-S0110, and exact next cursor at FileSafe-S0073 line 2255; main agent reconciled and was the only writer."
+  },
+  "phase2b_batch_075_subagent": {
+    "agent_id": "019ebbed-1cea-7043-b6bc-a9c5c35bf35f",
+    "mode": "read_only_findings_only",
+    "nickname": "Socrates",
+    "scope": "Plans/Formatters_System.md source lines 1-396 / Formatters_System-S0001 through Formatters_System-S0028",
+    "summary": "Proposed FS-002 through FS-015, structural dispositions for S0025/S0026/S0028, FS-001 source-preserving bridge retirement, and next cursor GitHub_API_Auth_and_Flows-S0001."
+  },
+  "phase2b_batch_076_subagent": {
+    "agent_id": "019ebbf5-453b-7cb3-b5bb-e6fe00158c3f",
+    "mode": "read_only_findings_only",
+    "nickname": "Linnaeus",
+    "scope": "Plans/GitHub_API_Auth_and_Flows.md source lines 1-234 / GitHub_API_Auth_and_Flows-S0001 through GitHub_API_Auth_and_Flows-S0015",
+    "summary": "Proposed GAAAF-002 through GAAAF-012, structural dispositions for S0002/S0006/S0007/S0012/S0013/S0015, GAAAF-001 source-preserving bridge retirement, and next cursor GitHub_Integration-S0001."
+  },
+  "phase2b_batch_077_subagent": {
+    "agent_id": "019ebbfb-d548-7f53-9148-5e46ac894c6f",
+    "mode": "read_only_findings_only",
+    "nickname": "Boole",
+    "scope": "Plans/GitHub_Integration.md source lines 1-364 / GitHub_Integration-S0001 through GitHub_Integration-S0016",
+    "summary": "Proposed GI-002 through GI-030, structural dispositions for S0001/S0003/S0005/S0007/S0013/S0014/S0016, GI-001 source-preserving bridge retirement, and next cursor after GitHub_Integration."
+  },
+  "phase2b_batch_078_subagent": {
+    "agent_id": "019ebc02-bf67-7c33-8a8d-2e7fb57e4bf5",
+    "mode": "read_only_findings_only",
+    "nickname": "Zeno",
+    "scope": "Plans/Glossary.md source lines 1-301 / Glossary-S0001 through Glossary-S0029",
+    "summary": "Proposed G-002 through G-025, structural dispositions for S0001/S0003/S0007/S0019/S0027/S0028/S0029, and G-001 residual narrowing to Glossary-S0030."
   },
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.phase2a_subagent_findings_summary.v1",
@@ -23,6 +1045,335 @@
       "nickname": "Plato",
       "scope": "Plans/assistant-chat-design.md lines 1601-3400 in bounded windows",
       "summary": "Classified windows as layout_normalization_needed/owner_consumer_unclear/too_large_for_one_batch; proposed PlanUnit candidates for command cards, runtime identity, child-run visibility, interview cards, context/truncation, dashboard/dev-session, virtualization, validation settings, persona controls, visualizer, wizard escalation, blocked packets, worktree UI, merge/test gates, seglog events, remote SSH, and actor boundaries."
+    },
+    {
+      "agent_id": "019eb9ee-7bde-7e12-9d62-46dca51e46f0",
+      "mode": "read_only_findings_only",
+      "nickname": "Meitner",
+      "scope": "Plans/chain-wizard-flexibility.md lines 780-1165 / spans S0043-S0067",
+      "summary": "Proposed CWF-045 through CWF-069, coverage dispositions for S0043-S0067, no residual source-preserving disposition for this window, and next cursor S0068 line 1166."
+    },
+    {
+      "agent_id": "019eb9fb-a644-7491-b9a5-b92ad6eae703",
+      "mode": "read_only_findings_only",
+      "nickname": "Averroes",
+      "scope": "Plans/chain-wizard-flexibility.md lines 1166-1550 / spans S0068-S0087",
+      "summary": "Proposed CWF-070 through CWF-092, coverage dispositions for S0068-S0087, no new residual source-preserving disposition, and next cursor S0088 line 1551."
+    },
+    {
+      "agent_id": "019eba05-1f1d-72f0-924a-39149cc4689c",
+      "mode": "read_only_findings_only",
+      "nickname": "Plato",
+      "scope": "Plans/chain-wizard-flexibility.md lines 1551-1948 / spans S0088-S0123",
+      "summary": "Proposed CWF-093 through CWF-122 and coverage dispositions for S0088-S0123; main writer applied CWF-093 through CWF-119 after reconciling the proposal to authoritative span_map IDs and updated migration artifacts."
+    },
+    {
+      "agent_id": "019eba13-5d70-7962-9d99-f3f6c582929e",
+      "mode": "read_only_findings_only",
+      "nickname": "Rawls",
+      "scope": "Plans/chain-wizard-flexibility.md lines 1949-2287 / spans S0124-S0154",
+      "summary": "Proposed CWF-120 through CWF-147 and coverage dispositions for S0124-S0154; main writer applied the final source-body units and left structural bridge-retirement spans for the next internal batch."
+    },
+    {
+      "agent_id": "019eba1b-6761-70a1-98cc-ea35a4a66417",
+      "mode": "read_only_findings_only",
+      "nickname": "Planck",
+      "scope": "Plans/chain-wizard-flexibility.md structural spans S0155-S0158",
+      "summary": "Verified Owner/Consumer Map, PlanUnits heading, CWF-001 retired bridge, and Migration Coverage are structural/disposition spans; no product source remains uncovered and CWF-001 can remain source_preserving_bridge_retired."
+    },
+    {
+      "agent_id": "019eba1f-264b-7b41-9104-80c87f5955a9",
+      "mode": "read_only_findings_only",
+      "nickname": "Chandrasekhar",
+      "scope": "Plans/chain-wizard.md lines 1-102 / spans S0001-S0008",
+      "summary": "Proposed CW-002 through CW-007 for product spans S0001-S0004 and structural/retired bridge dispositions for S0005-S0008; main writer applied the batch and retired CW-001."
+    },
+    {
+      "agent_id": "019eba24-89b5-7343-b44b-e7b94c94a772",
+      "mode": "read_only_findings_only",
+      "nickname": "Aristotle",
+      "scope": "Plans/CLI_Bridged_Providers.md lines 1-244 / spans S0001-S0014",
+      "summary": "Proposed CBP-002 through CBP-018 for product spans S0001-S0010 and structural/retired bridge dispositions for S0011-S0014; main writer applied the batch and retired CBP-001."
+    },
+    {
+      "agent_id": "019eba2d-4cc5-7fc3-85bf-fe38e6389e9d",
+      "mode": "read_only_findings_only",
+      "nickname": "Poincare",
+      "scope": "Plans/Commands_System.md lines 1-398 / spans S0001-S0034",
+      "summary": "Proposed CS-002 through CS-024 and coverage dispositions for the first Commands_System.md window; main writer applied the batch and left CS-001 as residual bridge for later spans."
+    },
+    {
+      "agent_id": "019eba37-b5e2-78a3-9013-aeed460e3518",
+      "mode": "read_only_findings_only",
+      "nickname": "Kepler",
+      "scope": "Plans/Commands_System.md lines 399-673 / spans S0035-S0053",
+      "summary": "Proposed CS-025 through CS-049 and coverage dispositions for the second Commands_System.md source-body window; main writer applied the batch and left CS-001 as residual bridge for structural spans."
+    },
+    {
+      "agent_id": "019eba41-3934-72d2-8137-69d6daa39a59",
+      "mode": "read_only_findings_only",
+      "nickname": "Newton",
+      "scope": "Plans/Commands_System.md structural spans S0054-S0057",
+      "summary": "Verified Owner/Consumer Map, PlanUnits heading, CS-001 retired bridge, and Migration Coverage are structural/disposition spans; CS-001 can remain source_preserving_bridge_retired and Commands_System.md has no residual source-preserving product coverage."
+    },
+    {
+      "agent_id": "019eba49-bb74-72c0-bbb1-2afa43f0a821",
+      "mode": "read_only_findings_only",
+      "nickname": "Avicenna",
+      "scope": "Plans/Containers_Registry_and_Unraid.md lines 1-400 / spans S0001-S0027",
+      "summary": "Proposed CRAU-002 through CRAU-031 and coverage dispositions for the first Containers_Registry_and_Unraid.md window; main writer applied the batch and left CRAU-001 as residual bridge for S0028 onward."
+    },
+    {
+      "agent_id": "019eba58-6b17-7341-a6a5-4c59c4f186a8",
+      "mode": "read_only_findings_only",
+      "nickname": "Boyle",
+      "scope": "Plans/Containers_Registry_and_Unraid.md lines 401-787 / spans S0028-S0062",
+      "summary": "Proposed CRAU-032 through CRAU-063 and coverage dispositions for the second Containers_Registry_and_Unraid.md window; main writer applied the batch and left CRAU-001 as residual bridge for S0063 onward."
+    },
+    {
+      "agent_id": "019eba64-095e-76f0-9a7a-11cb0e0d518a",
+      "mode": "read_only_findings_only",
+      "nickname": "Darwin",
+      "scope": "Plans/Containers_Registry_and_Unraid.md lines 788-987 / spans S0063-S0082",
+      "summary": "Proposed CRAU-064 through CRAU-084 and coverage dispositions for the final Containers_Registry_and_Unraid.md source-body window; main writer applied the batch and narrowed CRAU-001 to structural spans S0083-S0086."
+    },
+    {
+      "agent_id": "019eba70-3b3f-7d70-b022-6792552f084b",
+      "mode": "read_only_findings_only",
+      "nickname": "Copernicus",
+      "scope": "Plans/Containers_Registry_and_Unraid.md structural spans S0083-S0086",
+      "summary": "Verified Owner/Consumer Map, PlanUnits heading, CRAU-001 retired bridge, and Migration Coverage are structural/disposition spans; CRAU-001 can remain source_preserving_bridge_retired and Containers_Registry_and_Unraid.md has no residual source-preserving product coverage."
+    },
+    {
+      "agent_id": "019eba75-dd99-7d12-b99d-e57e53825b19",
+      "mode": "read_only_findings_only",
+      "nickname": "Galileo",
+      "scope": "Plans/Contracts_V0.md lines 1-371 / spans S0001-S0025",
+      "summary": "Proposed CV-002 through CV-010 and coverage dispositions for the first Contracts_V0.md window; main writer applied the batch and left CV-001 residual for S0001 unassigned token-bank material and S0025 onward."
+    },
+    {
+      "agent_id": "019eba7d-dbd9-7332-a6c1-ac8a51f5284d",
+      "mode": "read_only_findings_only",
+      "nickname": "Hubble",
+      "scope": "Plans/Contracts_V0.md lines 367-405 / spans S0025-S0026",
+      "summary": "Proposed CV-011 through CV-023 and coverage dispositions for the requested/effective runtime identity carry-forward window; main writer applied the batch and narrowed CV-001 to S0001 plus S0027 onward."
+    },
+    {
+      "agent_id": "019eba83-7c58-7933-9242-6e481a7b579d",
+      "mode": "read_only_findings_only",
+      "nickname": "Raman",
+      "scope": "Plans/Contracts_V0.md lines 406-767 / span S0027",
+      "summary": "Proposed CV-024 through CV-060 and coverage disposition for the large runtime lineage, route, and blocked-state closure span; main writer applied the batch and narrowed CV-001 to S0001 plus S0028 onward."
+    },
+    {
+      "agent_id": "019eba8d-18a7-7b62-b7c2-dd5afbba3849",
+      "mode": "read_only_findings_only",
+      "nickname": "Faraday",
+      "scope": "Plans/Contracts_V0.md lines 768-971 / spans S0028-S0036",
+      "summary": "Proposed CV-061 through CV-096 and coverage dispositions for concern lifecycle, route/open normalization, blocked approval scope, persisted events, assistant worktree events, EventEnvelopeV1, and provider stream/transport contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0037 onward."
+    },
+    {
+      "agent_id": "019eba98-cd57-7942-bafb-9fafa54227af",
+      "mode": "read_only_findings_only",
+      "nickname": "Turing",
+      "scope": "Plans/Contracts_V0.md lines 972-1349 / spans S0037-S0049",
+      "summary": "Proposed CV-097 through CV-141 and coverage dispositions for tool events, web payload extensions, web error taxonomy, debug investigation events, AuthState/AuthPolicy/AuthEvent, and setup/health lifecycle contracts; main writer applied the batch, preserved the S0045/S0046 AuthState anchor split, and narrowed CV-001 to S0001 plus S0050 onward."
+    },
+    {
+      "agent_id": "019ebaa5-b9f1-7c40-86da-07f47b5bbe12",
+      "mode": "read_only_findings_only",
+      "nickname": "Huygens",
+      "scope": "Plans/Contracts_V0.md lines 1350-1729 / spans S0050-S0061",
+      "summary": "Proposed CV-142 through CV-174 and coverage dispositions for provider lifecycle/account identity, context attachment, PersonaRuntime snapshot, HITL request, UICommand, RouteTarget, and debug target contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0062 onward."
+    },
+    {
+      "agent_id": "019ebab1-a6e2-75a0-aaba-e201594e0ccc",
+      "mode": "read_only_findings_only",
+      "nickname": "Kuhn",
+      "scope": "Plans/Contracts_V0.md lines 1730-2117 / spans S0062-S0090",
+      "summary": "Proposed CV-175 through CV-229 and coverage dispositions for OpenSubject, panel settings/cache identity, UI scaling, usage/billing, scheduler readiness, retry/backoff, safe-point, FileSafe compatibility, and remediation-spawned contracts; main writer applied the batch and narrowed CV-001 to S0001 plus S0091 onward."
+    },
+    {
+      "agent_id": "019ebabf-6d26-7252-b2fe-a3fdf2c61cca",
+      "mode": "read_only_findings_only",
+      "nickname": "Carver",
+      "scope": "Plans/Contracts_V0.md lines 2118-2511 / spans S0091-S0115",
+      "summary": "Proposed CV-230 through CV-271 and coverage dispositions; main writer reconciled and applied batch 039."
+    },
+    {
+      "agent_id": "019ebacc-8865-7041-8248-2db1d430b535",
+      "mode": "read_only_findings_only",
+      "nickname": "Bohr",
+      "scope": "Plans/Contracts_V0.md lines 2512-2537 / spans S0116-S0118",
+      "summary": "Proposed CV-272 through CV-278 and coverage dispositions; main writer reconciled and applied batch 040."
+    },
+    {
+      "agent_id": "019ebad3-c58f-7bd2-8bad-273379258a5d",
+      "mode": "read_only_findings_only",
+      "nickname": "Laplace",
+      "scope": "Plans/Crosswalk.md lines 1-397 / spans S0001-S0028",
+      "summary": "Proposed C-002 through C-037 and coverage dispositions; main writer reconciled and applied batch 041."
+    },
+    {
+      "agent_id": "019ebadf-8f80-7b63-a1b1-8d4740929f23",
+      "mode": "read_only_findings_only",
+      "nickname": "Carson",
+      "scope": "Plans/Crosswalk.md lines 398-666 / spans S0029-S0039",
+      "summary": "Proposed C-038 through C-048 and C-001 bridge retirement; main writer reconciled and applied batch 042."
+    },
+    {
+      "agent_id": "019ebae8-c444-7d80-bc84-a295b796dab6",
+      "mode": "read_only_findings_only",
+      "nickname": "Lagrange",
+      "scope": "Plans/Decision_Log.md lines 1-249 / spans S0001-S0026",
+      "summary": "Proposed DL-002 through DL-026, structural dispositions for title/heading/coverage spans, DL-001 bridge retirement, and exact next cursor at Plans/Decision_Policy.md line 1."
+    },
+    {
+      "agent_id": "019ebaf2-5585-7013-aa81-d9b37e383a54",
+      "mode": "read_only_findings_only",
+      "nickname": "Locke",
+      "scope": "Plans/Decision_Policy.md lines 1-394 / spans S0001-S0026",
+      "summary": "Proposed DP-002 through DP-042, structural dispositions for S0017 and S0022, DP-001 residual narrowing for S0027-S0032, and exact next cursor at Decision_Policy-S0027 line 395."
+    },
+    {
+      "agent_id": "019ebafd-cb43-7f42-8e3a-309b216dcf3d",
+      "mode": "read_only_findings_only",
+      "nickname": "Tesla",
+      "scope": "Plans/Decision_Policy.md lines 395-457 / spans S0027-S0032",
+      "summary": "Proposed DP-043 through DP-062, structural disposition for S0028, GUI CTA splits in S0032, DP-001 structural-residual narrowing, and exact next cursor at Decision_Policy-S0033 line 458."
+    },
+    {
+      "agent_id": "019ebb04-dcc7-78e1-9698-62bcf88f9471",
+      "mode": "read_only_findings_only",
+      "nickname": "Lorentz",
+      "scope": "Plans/Decision_Policy.md structural spans S0033-S0036",
+      "summary": "Verified no product requirements remain in S0033-S0036; proposed structural dispositions, DP-001 bridge retirement, and next cursor at Plans/Document_Packaging_Policy.md line 1."
+    },
+    {
+      "agent_id": "019ebb09-9806-7f23-a978-188f23582294",
+      "mode": "read_only_findings_only",
+      "nickname": "Peirce",
+      "scope": "Plans/Document_Packaging_Policy.md lines 1-339 / spans S0001-S0023",
+      "summary": "Proposed DPP-002 through DPP-029, structural dispositions for S0007/S0017, DPP-001 residual narrowing to S0024-S0028, and exact next cursor; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb12-870b-7e62-a8b9-b14743f110a5",
+      "mode": "read_only_findings_only",
+      "nickname": "Ohm",
+      "scope": "Plans/Document_Packaging_Policy.md lines 340-487 / spans S0024-S0028",
+      "summary": "Verified References, Owner / Consumer Map, PlanUnits heading, DPP-001 retired bridge, and Migration Coverage are structural/reference/migration scaffolding or bridge lineage; DPP-001 can remain source_preserving_bridge_retired and Document_Packaging_Policy.md has no residual source-preserving product coverage."
+    },
+    {
+      "agent_id": "019ebb17-0f01-7700-9d2c-c2bed08c5b65",
+      "mode": "read_only_findings_only",
+      "nickname": "Franklin",
+      "scope": "Plans/DRY_Rules.md lines 1-400 / spans S0001-S0022",
+      "summary": "Proposed DR-002 through DR-035, structural dispositions for S0018-S0020/S0022, DR-001 bridge retirement, and exact next cursor at Plans/Executor_Protocol.md line 1; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb1f-0c20-7933-9a50-5660e973523e",
+      "mode": "read_only_findings_only",
+      "nickname": "Hegel",
+      "scope": "Plans/Executor_Protocol.md lines 1-392 / spans S0001-S0029",
+      "summary": "Proposed EP-002 through EP-033, structural dispositions for first-window parent/forward-reference spans, EP-001 residual narrowing to S0030-S0067, and exact next cursor at line 393; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb25-a524-7761-8908-61cbcd61fdc6",
+      "mode": "read_only_findings_only",
+      "nickname": "Mill",
+      "scope": "Plans/Executor_Protocol.md lines 393-746 / spans S0030-S0065",
+      "summary": "Proposed EP-034 through EP-086, dense retry/usage/lifecycle and blocked/retry/context splits, EP-001 residual narrowing to S0066-S0067, and exact next cursor at Executor_Protocol-S0066 line 747; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb2f-2f66-77c1-b9f0-936e617d9c0a",
+      "mode": "read_only_findings_only",
+      "nickname": "Schrodinger",
+      "scope": "Plans/Executor_Protocol.md lines 747-1072 / spans S0066-S0071",
+      "summary": "Proposed EP-087 through EP-095, split PM-native Open With from backend worktree handoff, EP-001 source-preserving bridge retirement, structural dispositions for S0068/S0069/S0071, and next cursor at Plans/feature-list.md line 1; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb36-a533-7ce0-8a2d-ec7acee3605d",
+      "mode": "read_only_findings_only",
+      "nickname": "Curie",
+      "scope": "Plans/feature-list.md lines 1-340 / spans S0001-S0022",
+      "summary": "Proposed FL-002 through FL-025, GUI/backend splits for S0006/S0007/S0009/S0012/S0016/S0017, FL-001 source-preserving bridge retirement, structural dispositions for S0019/S0020/S0022, and next cursor at Plans/FileManager.md line 1; main writer applied the batch and updated migration artifacts."
+    },
+    {
+      "agent_id": "019ebb3d-d4c0-7861-b216-e170afd54f8e",
+      "mode": "read_only_findings_only",
+      "nickname": "Erdos",
+      "scope": "Plans/FileManager.md lines 1-398 / spans S0001-S0032",
+      "summary": "Proposed F-002 through F-033, F-001 residual narrowing to FileManager-S0033 through S0054, coverage for S0001-S0032, and exact next cursor at FileManager-S0033 line 399; main agent corrected S0033 out of batch 054 before writing."
+    },
+    {
+      "agent_id": "019ebb46-2efb-7f13-bafc-982eaa2d611a",
+      "mode": "read_only_findings_only",
+      "nickname": "Descartes",
+      "scope": "Plans/FileManager.md lines 399-737 / spans S0033-S0058",
+      "summary": "Proposed F-034 through F-066 for residual product spans S0033-S0054, structural dispositions for S0055/S0056/S0058, F-001 bridge retirement for S0057, and exact next cursor at Plans/FileSafe.md line 1; main agent reconciled and applied batch 055."
+    },
+    {
+      "agent_id": "019ebb4e-aeac-7e20-ab17-ebfc19d899a5",
+      "mode": "read_only_findings_only",
+      "nickname": "Ramanujan",
+      "scope": "Plans/FileSafe.md lines 1-247 / spans S0001-S0014",
+      "summary": "Proposed first FileSafe window atomization, flagged FS/F2 prefix conflict, recommended residual bridge narrowing to FileSafe-S0015 through S0110 and exact next cursor S0015 line 248; main agent translated proposal to F2-002 through F2-026 and applied batch 056."
+    },
+    {
+      "agent_id": "019ebb55-d3bc-7900-badc-e38a11177fe8",
+      "mode": "read_only_findings_only",
+      "nickname": "Lovelace",
+      "scope": "Plans/FileSafe.md lines 248-540 / spans S0015-S0016",
+      "summary": "Proposed F2-027 through F2-034 for dense FileSafe core type and pattern-loading implementation-reference spans, narrowed F2-001 residual to FileSafe-S0017 through S0110, and exact next cursor S0017 line 541; main agent applied batch 057."
+    },
+    {
+      "agent_id": "019ebbed-1cea-7043-b6bc-a9c5c35bf35f",
+      "mode": "read_only_findings_only",
+      "nickname": "Socrates",
+      "scope": "Plans/Formatters_System.md source lines 1-396 / Formatters_System-S0001 through Formatters_System-S0028",
+      "summary": "Proposed FS-002 through FS-015, structural dispositions for S0025/S0026/S0028, FS-001 source-preserving bridge retirement, and next cursor GitHub_API_Auth_and_Flows-S0001."
+    },
+    {
+      "agent_id": "019ebbf5-453b-7cb3-b5bb-e6fe00158c3f",
+      "mode": "read_only_findings_only",
+      "nickname": "Linnaeus",
+      "scope": "Plans/GitHub_API_Auth_and_Flows.md source lines 1-234 / GitHub_API_Auth_and_Flows-S0001 through GitHub_API_Auth_and_Flows-S0015",
+      "summary": "Proposed GAAAF-002 through GAAAF-012, structural dispositions for S0002/S0006/S0007/S0012/S0013/S0015, GAAAF-001 source-preserving bridge retirement, and next cursor GitHub_Integration-S0001."
+    },
+    {
+      "agent_id": "019ebbfb-d548-7f53-9148-5e46ac894c6f",
+      "mode": "read_only_findings_only",
+      "nickname": "Boole",
+      "scope": "Plans/GitHub_Integration.md source lines 1-364 / GitHub_Integration-S0001 through GitHub_Integration-S0016",
+      "summary": "Proposed GI-002 through GI-030, structural dispositions for S0001/S0003/S0005/S0007/S0013/S0014/S0016, GI-001 source-preserving bridge retirement, and next cursor after GitHub_Integration."
+    },
+    {
+      "agent_id": "019ebc02-bf67-7c33-8a8d-2e7fb57e4bf5",
+      "mode": "read_only_findings_only",
+      "nickname": "Zeno",
+      "scope": "Plans/Glossary.md source lines 1-301 / Glossary-S0001 through Glossary-S0029",
+      "summary": "Proposed G-002 through G-025, structural dispositions for S0001/S0003/S0007/S0019/S0027/S0028/S0029, and G-001 residual narrowing to Glossary-S0030."
+    },
+    {
+      "agent_id": "019ebdba-d6aa-7903-80c9-b56464710614",
+      "mode": "read_only_findings_only",
+      "nickname": "Dewey the 2nd",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 4043-4442 / S0143-S0152 plus partial S0153",
+      "summary": "Proposed OSI-279 through OSI-308, duplicate-aware coverage for S0143-S0152, partial S0153 coverage through line 4436, flagged unsafe mid-fence cursor at 4443, and recommended residual cursor S0153 line 4437; main agent reconciled and applied batch 133."
+    },
+    {
+      "agent_id": "019ebdc7-549c-79e0-a029-a0d554a292ef",
+      "mode": "read_only_findings_only",
+      "nickname": "Gibbs the 2nd",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 4437-4836 / S0153 tail plus partial S0154",
+      "summary": "Proposed OSI-309 through OSI-327, completed S0153 tail coverage, partial S0154 coverage through line 4836, flagged active-agents projection and fail-open stale-lock policy risks, and recommended exact next cursor S0154 line 4837; main agent reconciled and applied batch 134."
+    },
+    {
+      "agent_id": "019ebdd0-bf5b-7d43-8097-f5d90673baf1",
+      "mode": "read_only_findings_only",
+      "nickname": "Einstein the 2nd",
+      "scope": "Plans/orchestrator-subagent-integration.md source lines 4837-5226 / S0154 tail",
+      "summary": "Proposed OSI-328 through OSI-345, completed S0154 coverage, preserved stale/compatibility dispositions for side-file cleanup, lock expiry, prune thresholds, and projection metrics, and recommended next cursor S0155 line 5227; main agent reconciled and applied batch 135."
     }
   ],
   "usage_in_this_phase": "Subagent findings were used as read-only proposals only. The main agent wrote PlanUnits and migration reports."

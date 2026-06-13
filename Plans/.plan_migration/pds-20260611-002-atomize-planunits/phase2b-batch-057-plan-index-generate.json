@@ -1,0 +1,15 @@
+{
+  "batch_id": "phase2b-057-filesafe-lines-248-540",
+  "captured_at_utc": "2026-06-12T10:22:01Z",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "generate"
+  ],
+  "returncode": 0,
+  "status": "pass",
+  "stderr": "",
+  "stderr_tail": "",
+  "stdout": "{\n  \"blockers\": [],\n  \"generated_at_utc\": \"2026-06-12T10:21:53Z\",\n  \"outputs\": [\n    \"Plans/.plan_index/plan_units.jsonl\",\n    \"Plans/.plan_index/doc_cards.json\",\n    \"Plans/.plan_index/dependencies.json\",\n    \"Plans/.plan_index/acceptance_units.jsonl\",\n    \"Plans/.plan_index/coverage_report.json\",\n    \"Plans/.plan_index/node_readiness_report.json\"\n  ],\n  \"schema_id\": \"pm.plan_index.generate_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5538,\n    \"coverage_status\": \"pass\",\n    \"doc_count\": 67,\n    \"no_worknodes_created\": true,\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"nodeseed_candidates_created\": false,\n    \"plan_unit_count\": 1576\n  }\n}\n",
+  "stdout_tail": "{\n  \"blockers\": [],\n  \"generated_at_utc\": \"2026-06-12T10:21:53Z\",\n  \"outputs\": [\n    \"Plans/.plan_index/plan_units.jsonl\",\n    \"Plans/.plan_index/doc_cards.json\",\n    \"Plans/.plan_index/dependencies.json\",\n    \"Plans/.plan_index/acceptance_units.jsonl\",\n    \"Plans/.plan_index/coverage_report.json\",\n    \"Plans/.plan_index/node_readiness_report.json\"\n  ],\n  \"schema_id\": \"pm.plan_index.generate_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5538,\n    \"coverage_status\": \"pass\",\n    \"doc_count\": 67,\n    \"no_worknodes_created\": true,\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"nodeseed_candidates_created\": false,\n    \"plan_unit_count\": 1576\n  }\n}\n"
+}

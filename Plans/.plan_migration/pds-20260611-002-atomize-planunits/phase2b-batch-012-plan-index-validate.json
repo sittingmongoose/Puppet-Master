@@ -1,0 +1,27 @@
+{
+  "batch_id": "phase2b-012-assistant-memory-subsystem-lines-397-704",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "generated_at_utc": "2026-06-12T02:59:09Z",
+  "parsed_stdout": {
+    "failures": [],
+    "generated_at_utc": "2026-06-12T02:59:09Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 1654,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_compiler_contract_incomplete",
+      "plan_unit_count": 565
+    }
+  },
+  "returncode": 0,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_index.validator_capture.v1",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T02:59:09Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 1654,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 565\n  }\n}\n"
+}

@@ -1,0 +1,15 @@
+{
+  "batch_id": "phase2b-096-models-system-lines-1-400",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "expected_preseal_failure": false,
+  "generated_at_utc": "2026-06-12T16:16:27Z",
+  "returncode": 0,
+  "schema_id": "pm.plan_migration.validation_capture.v1",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T16:16:27Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 9734,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 2600\n  }\n}\n"
+}

@@ -1,0 +1,15 @@
+{
+  "batch_id": "phase2b-052-executor-protocol-lines-747-1072",
+  "captured_at_utc": "2026-06-12T09:42:27Z",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "returncode": 0,
+  "status": "pass",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T09:42:27Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5050,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 1454\n  }\n}\n",
+  "stderr": "",
+  "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T09:42:27Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 5050,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 1454\n  }\n}\n",
+  "stderr_tail": ""
+}

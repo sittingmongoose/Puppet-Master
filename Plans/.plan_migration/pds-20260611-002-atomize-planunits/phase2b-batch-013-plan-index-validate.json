@@ -1,0 +1,12 @@
+{
+  "batch_id": "phase2b-013-binarylocator-spec-lines-1-342",
+  "command": "python3 scripts/pm-plan-index.py validate",
+  "ended_at_utc": "2026-06-12T03:08:21.707821Z",
+  "label": "plan-index-validate",
+  "returncode": 0,
+  "schema_id": "pm.plan_migration.command_capture.v1",
+  "started_at_utc": "2026-06-12T03:08:17.472008Z",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T03:08:21Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 1742,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 584\n  }\n}\n"
+}

@@ -1,0 +1,17 @@
+{
+  "batch_id": "phase2b-048-document-packaging-policy-structural-lines-340-487",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "command_label": "plan-index-validate",
+  "completed_at_utc": "2026-06-12T09:07:50Z",
+  "returncode": 0,
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "schema_id": "pm.plan_migration.validation_capture.v1",
+  "started_at_utc": "2026-06-12T09:07:43Z",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T09:07:50Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 4535,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 1326\n  }\n}\n"
+}

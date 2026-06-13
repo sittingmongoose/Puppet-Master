@@ -2,26 +2,33 @@
 
 Run: `pds-20260611-002-atomize-planunits`
 
-Completed batch: `phase2b-001-assistant-chat-design-lines-1-398`
+Status: `COMPLETE`
+
+Completed batch: `phase2b-212-contracts-v0-residual-justification-audit`
 
 Completed scope:
-- Doc: `Plans/assistant-chat-design.md`
-- Source lines: 1-398
-- Source spans: `assistant-chat-design-S0001` through `assistant-chat-design-S0025`
-- Added PlanUnits: `ACD-002` through `ACD-017`
-- Coverage status: `phase2b_batch_001_atomized_covered`
+- Doc: `Plans/Contracts_V0.md`
+- Source lines: 1-2835
+- Source spans: `Contracts_V0-S0001` through `Contracts_V0-S0122`
+- PlanUnits changed: none
+- Residual bridge: `CV-001` remains only as an explicit justified residual `source_preserving_planunit` for `Contracts_V0-S0001`; it is not implementation-ready product coverage and must not override `CV-002` through `CV-278`
+- Coverage status: `phase2b_batch_212_final_justified_residual_source_token_bank` for `Contracts_V0-S0001`, plus prior atomized/structural coverage for `Contracts_V0-S0002` through `Contracts_V0-S0122`
+- Validation captures: `phase2b-batch-212-plan-index-generate.json`, `phase2b-batch-212-migration-validate.json`, `phase2b-batch-212-plan-index-validate.json`, `phase2b-batch-212-run-gates.json`, and `phase2b-batch-212-shard-check.json`
 
-Residual bridge:
-- `ACD-001` remains the source-preserving bridge for unatomized later spans.
+Final cursor:
+- Next batch: none
+- Active source-preserving PlanUnits: `CV-001` only
+- Justified residual source-preserving PlanUnits: `CV-001`
+- Unjustified source-preserving PlanUnits: none
+- Node readiness: `blocked_compiler_contract_incomplete` unless and until the compiler contract exists
+- Governance seal required before updating `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`
 
-Exact next batch cursor:
-- Batch id: `phase2b-002-assistant-chat-design-lines-399-next-window`
-- Doc: `Plans/assistant-chat-design.md`
-- Start span: `assistant-chat-design-S0026`
-- Start line: 399
-- Batch limit: continue in a <=400-line window aligned to full source spans. Do not include a partial source span without explicit split disposition.
+Completion notes:
+- All live `Plans/*.md` docs are either fine-grained enough or have an explicit justified residual source-preserving disposition.
+- Report docs converted, residuals audited, and validators captured through batch 212.
+- This run did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 
-Hard stops:
+Hard stops preserved:
 - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 - Do not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl` before explicit governance seal.
-- Do not delete or semantically change source content without coverage-map proof.
+- Do not delete or semantically change source content without span-map coverage proof.

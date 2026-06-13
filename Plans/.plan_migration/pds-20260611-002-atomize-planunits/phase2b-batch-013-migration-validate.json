@@ -1,0 +1,12 @@
+{
+  "batch_id": "phase2b-013-binarylocator-spec-lines-1-342",
+  "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+  "ended_at_utc": "2026-06-12T03:08:20.387184Z",
+  "label": "migration-validate",
+  "returncode": 0,
+  "schema_id": "pm.plan_migration.command_capture.v1",
+  "started_at_utc": "2026-06-12T03:08:17.427267Z",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"checks\": {\n    \"anchor_alias_rows\": 3873,\n    \"batch_report_doc_entries\": 13,\n    \"batch_report_rows\": 13,\n    \"coverage_rows\": 3873,\n    \"doc_count\": 67,\n    \"live_plan_unit_count\": 584,\n    \"span_count\": 3873,\n    \"unique_live_plan_unit_count\": 584\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+}

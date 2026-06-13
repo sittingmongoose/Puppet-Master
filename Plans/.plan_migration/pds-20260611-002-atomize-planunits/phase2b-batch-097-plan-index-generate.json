@@ -1,0 +1,15 @@
+{
+  "batch_id": "phase2b-097-models-system-lines-393-792",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "generate"
+  ],
+  "expected_preseal_failure": false,
+  "generated_at_utc": "2026-06-12T16:23:26Z",
+  "returncode": 0,
+  "schema_id": "pm.plan_migration.validation_capture.v1",
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"blockers\": [],\n  \"generated_at_utc\": \"2026-06-12T16:23:13Z\",\n  \"outputs\": [\n    \"Plans/.plan_index/plan_units.jsonl\",\n    \"Plans/.plan_index/doc_cards.json\",\n    \"Plans/.plan_index/dependencies.json\",\n    \"Plans/.plan_index/acceptance_units.jsonl\",\n    \"Plans/.plan_index/coverage_report.json\",\n    \"Plans/.plan_index/node_readiness_report.json\"\n  ],\n  \"schema_id\": \"pm.plan_index.generate_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 9934,\n    \"coverage_status\": \"pass\",\n    \"doc_count\": 67,\n    \"no_worknodes_created\": true,\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"nodeseed_candidates_created\": false,\n    \"plan_unit_count\": 2650\n  }\n}\n"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.plan_migration.validation_capture.v1",
+  "run_id": "pds-20260611-002-atomize-planunits",
+  "batch_id": "phase2b-043-decision-log-lines-1-249",
+  "command_name": "migration-validate",
+  "command": [
+    "python3",
+    "scripts/pm-plan-migration.py",
+    "validate",
+    "--run-dir",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  ],
+  "started_at_utc": "2026-06-12T08:27:18Z",
+  "ended_at_utc": "2026-06-12T08:27:23Z",
+  "returncode": 0,
+  "status": "pass",
+  "stdout": "{\n  \"checks\": {\n    \"anchor_alias_rows\": 3873,\n    \"batch_report_doc_entries\": 43,\n    \"batch_report_rows\": 43,\n    \"coverage_rows\": 3873,\n    \"doc_count\": 67,\n    \"live_plan_unit_count\": 1237,\n    \"span_count\": 3873,\n    \"unique_live_plan_unit_count\": 1237\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n",
+  "stderr": ""
+}

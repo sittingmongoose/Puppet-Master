@@ -1,0 +1,13 @@
+{
+  "batch_id": "phase2b-101-multi-account-lines-354-740",
+  "captured_at_utc": "2026-06-12T17:01:22Z",
+  "command": [
+    "python3",
+    "scripts/pm-plan-index.py",
+    "validate"
+  ],
+  "returncode": 0,
+  "status": "pass",
+  "stderr": "",
+  "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-12T17:01:22Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 10368,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 2735\n  }\n}\n"
+}
