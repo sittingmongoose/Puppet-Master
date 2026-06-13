@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
   "title": "Part 1 Cleanup Fable Audit of Plans",
   "created_at_utc": "2026-06-13T19:40:33Z",
-  "updated_at_utc": "2026-06-13T21:36:42Z",
+  "updated_at_utc": "2026-06-13T22:53:22Z",
   "status": "compiled",
   "profile": "bootstrap_planning",
   "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for Part 1 Cleanup Fable Audit of Plans on 2026-06-13. This is a conversational cleanup/spec thread, not a Goal run and not canonical Plans prose.",
@@ -32,5 +32,5 @@
     "blockers": 0,
     "corrections": 0
   },
-  "notes": "Section A cleanup compiled to Plans and governance seal artifacts refreshed. Spec Lock, generated shards, evidence hashes, migration validation, PlanUnit index validation, and shard validation are clean; node readiness remains intentionally blocked by compiler_contract_incomplete."
+  "notes": "Evidence-only governance seal refreshed stale hashes for regenerated Plans/.plan_index artifacts: doc_cards.json, dependencies.json, coverage_report.json, and node_readiness_report.json. Spec Lock, plan_graph, auto_decisions, product prose, and Plans/.plan_index were not changed; node readiness remains blocked_compiler_contract_incomplete."
 }

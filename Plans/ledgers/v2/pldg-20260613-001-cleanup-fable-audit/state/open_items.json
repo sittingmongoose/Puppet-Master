@@ -7,20 +7,20 @@
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "notes": "All Section A questions are answered, Section A cleanup is compiled to Plans, and governance seal artifacts are refreshed. No product/canon questions remain open. Node readiness remains blocked by compiler_contract_incomplete.",
-  "updated_at_utc": "2026-06-13T21:36:42Z",
+  "notes": "All Section A questions are answered, Section A cleanup is compiled to Plans, and governance evidence is refreshed for regenerated PlanUnit index artifacts. No product/canon questions remain open. Node readiness remains blocked by compiler_contract_incomplete.",
+  "updated_at_utc": "2026-06-13T22:53:22Z",
   "sealed_governance": [
     {
       "item_id": "gov-0001",
       "status": "sealed",
-      "summary": "Section A compiled Plan docs and Plans/.plan_index outputs have had governance artifacts refreshed: migration batch hashes, generated shards, shard report, Spec_Lock hashes, and evidence artifact hashes.",
+      "summary": "Evidence-only governance seal refreshed stale hashes for regenerated Plans/.plan_index artifacts: doc_cards.json, dependencies.json, coverage_report.json, and node_readiness_report.json. Spec Lock, plan_graph, auto_decisions, product prose, and Plans/.plan_index were not changed; node readiness remains blocked_compiler_contract_incomplete.",
       "source_refs": [
-        "goal:governance-seal",
-        "Plans/Spec_Lock.json",
-        "Plans/_shards/**",
-        "Plans/.evidence/**",
-        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json"
+        "goal:evidence-only-governance-seal-after-plan-index-regeneration",
+        "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
       ]
     }
   ]

@@ -33,23 +33,21 @@
     "Plans/.plan_index/plan_units.jsonl"
   ],
   "governance_status": "sealed",
-  "next_safe_action": "Section A cleanup is compiled and governance seal artifacts are refreshed. Continue with the next cleanup section if desired. Node readiness remains intentionally blocked by compiler_contract_incomplete; do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
+  "next_safe_action": "Evidence-only governance seal is refreshed for regenerated PlanUnit index artifacts. Continue with the next cleanup section if desired. Node readiness remains intentionally blocked by compiler_contract_incomplete; do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
   "validation_state": {
     "safe_content_checks": [
-      "governance-seal python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed after batch sha256_after refresh",
-      "governance-seal python3 scripts/pm-plan-index.py validate passed with 4947 PlanUnits, 17616 acceptance units, and node_readiness_status=blocked_compiler_contract_incomplete",
-      "governance-seal python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json passed with 50 docs and 870 shards",
-      "governance-seal python3 scripts/pm-shard-plans.py --check passed",
-      "governance-seal python3 scripts/pm-plans-verify.py verify-spec-lock passed after refreshing Contracts_V0 and orchestrator-subagent-integration hashes",
-      "governance-seal python3 scripts/pm-plans-verify.py validate-evidence passed after evidence artifact-hash refresh",
-      "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "evidence-only seal refreshed Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json for regenerated .plan_index artifact hashes",
+      "pre-final python3 scripts/pm-plans-verify.py validate-evidence passed after targeted evidence refresh",
+      "pre-final python3 scripts/pm-plans-verify.py verify-spec-lock passed; Spec_Lock refresh was not required",
+      "No ordinary Plan prose edits were pending before this evidence-only seal; git diff --name-only -- Plans/*.md was empty",
+      "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created"
     ],
-    "seal_request": "Explicit governance seal phase requested after Section A ledger compile and PlanUnit index updates stabilized.",
+    "seal_request": "Explicit evidence-only governance seal phase requested after regenerated PlanUnit index artifacts made evidence hashes stale.",
     "final_governance_checks": [
-      "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "python3 scripts/pm-plans-verify.py validate-auto-decisions",
@@ -65,5 +63,5 @@
     "Do not recreate the removed legacy Iced app.",
     "Do not ask Jared to label GUI work; infer gui_related true/false."
   ],
-  "updated_at_utc": "2026-06-13T21:36:42Z"
+  "updated_at_utc": "2026-06-13T22:53:22Z"
 }
