@@ -1,27 +1,28 @@
 # Shard Index: Plans/Executor_Protocol.md
 
-Generated: 2026-06-13T21:33:39Z
+Generated: 2026-06-14T21:33:36Z
 
-Source SHA256: `f033403ab85f4df1793c5b80359486f87ba1af2cc853995d301f406b321c29eb`
+Source SHA256: `f9e32225fef0b959cf660c9516902c35a56ac5ebc239f10fa0de8b7c3b9fc8ff`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `0348e3884acf433c9ad8c0f0040facfb7e30d9f7cfcab2990d6962c87927fe7f`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L15 `ae297b3f207442d420470f84598959756561399b77b911d14c88451462481202`
-- [003 - 0. Purpose and scope](003-0.-purpose-and-scope.md) L18-L29 `1ca035432d5d907f699d9a58b20865fdf84f722da3fa21f47bb867caadccc3c2`
-- [004 - 1. Role definitions](004-1.-role-definitions.md) L31-L77 `02d0085a822d518d4dab88f361dc0a799418731285333177f88af31cf8d40946`
-- [005 - 2. Deterministic readiness](005-2.-deterministic-readiness.md) L78-L109 `40bfcb993afb0062adc6f7383ef893a2ff6ec9d4fcd7ab16f02fce7bb26e4797`
-- [006 - 3. Canonical status lifecycle](006-3.-canonical-status-lifecycle.md) L111-L126 `775a151a5fea6f5ac44d70ff46b6eccd4c7cbe322952480dbee356f7325d39da`
-- [007 - 4. Auto-marking rule](007-4.-auto-marking-rule.md) L128-L234 `562b353a5e00d829f88dc2e8042fe8c648917ca7844df7d321dc638600b077c7`
-- [008 - 6. Overseer dispatch algorithm (deterministic)](008-6.-overseer-dispatch-algorithm-deterministic.md) L235-L257 `a77581e476471ecd740057918d6f75b5bc8315801bebc387d9463210fec78e50`
-- [009 - Runtime Scheduler Addendum (2026-03-08)](009-runtime-scheduler-addendum-2026-03-08.md) L259-L503 `c0cad20e4c9e62b4281582c923c946a77e0e4fb689527b2c5384efa3c56387b6`
-- [010 - Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)](010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md) L504-L572 `d746e935e36877971e50203e79cebd4f683bb5c565f575ba821ee7029f1e5c54`
-- [011 - Canonical Runtime Scheduler Canonical Alignment (2026-03-09)](011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md) L574-L656 `69f5c1af0a8d71af6e7aaa59af3e08a1c7008226791d0bd72b7339beb0bdb117`
-- [012 - Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)](012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md) L657-L703 `4ced0428de258f2899bc37b72aaf304d7243dbccac85f2860c3975d8c28a4281`
-- [013 - Counter Relationships and Event Ordering Addendum](013-counter-relationships-and-event-ordering-addendum.md) L704-L745 `6b9135ffdc0b1aa01d4eb4023659d4ea45a934ec104c3bb71a3b7db391f0f561`
-- [014 - Execution Context: Worktree Handoff](014-execution-context-worktree-handoff.md) L747-L831 `d17cd0fd4c6dd9e48dd92c8ad6100d6528740a6429dccc2a3a41550d33813a4d`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L833-L837 `9affc95eb2ca1ee2a89565a9a47a70c580528e0f15150ae55366ecb17998ba33`
-- [016 - PlanUnits](016-planunits.md) L839-L5688 `18c5042a54048e73a4476b12d78c6646d46f4721ab9c9c3430362a8cf4820096`
-- [017 - Migration Coverage](017-migration-coverage.md) L5689-L5701 `d9e6819073e15017cd44ec9b4ffff37b3a0ab983a7c734175dcf6a4a12840162`
+- [001 - Preamble](001-preamble.md) L1-L1 `05e6e26cc58a1f8d59711adae022c0e7b092c3eba8135ce0354041bf1c480e20`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L15 `3b4cfb4be00c58d5ffc671253309943d57d5074646a3cdf185f39b92ea9101a2`
+- [003 - 0. Purpose and scope](003-0.-purpose-and-scope.md) L18-L29 `5e0fdd24ad062e68d85c02af441ab99d54b97b20090f3c125d9a3908735e8699`
+- [004 - 1. Role definitions](004-1.-role-definitions.md) L31-L77 `38f4553ad3b0e5ab5ef3f3d3431be5189f2fd14db0c65fe24b0cc2567ac474a3`
+- [005 - 2. Deterministic readiness](005-2.-deterministic-readiness.md) L78-L109 `7f602b8f4819d146b7b3267d2b0eae0b5f843c38c19a9f46c7bda6c9120ea1df`
+- [006 - 3. Canonical status lifecycle](006-3.-canonical-status-lifecycle.md) L111-L126 `427eaefb408b73393c6daabfb614b65c88c561451f693358b357ba8db0951002`
+- [007 - 4. Auto-marking rule](007-4.-auto-marking-rule.md) L128-L234 `c5ef975fe8e1b4a68bc496d335c68797b0c5121430d8033bcb04bf0601be961d`
+- [008 - 6. Overseer dispatch algorithm (deterministic)](008-6.-overseer-dispatch-algorithm-deterministic.md) L235-L257 `52ca31a53f509a626e78aafb22f35d531ee9c7a948288210511b5fb4af255524`
+- [009 - Runtime Scheduler Addendum (2026-03-08)](009-runtime-scheduler-addendum-2026-03-08.md) L259-L503 `feed23374b8d460c2ade214f005fc2879316326d86f848cb9816f4cd04007f68`
+- [010 - Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)](010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md) L504-L572 `339ac8565bfbb3c45a92e3b51393ab30076477a441e7efed364c6318906d8288`
+- [011 - Canonical Runtime Scheduler Canonical Alignment (2026-03-09)](011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md) L574-L656 `7f999871b38a7c1852a5aac0db89d7e1c25bbe3f3ada3feb801e2313955d9953`
+- [012 - Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)](012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md) L657-L703 `567d6c944e2115445597427301b58a20db19577164ed98bb27c94c7c91f9ffcf`
+- [013 - Counter Relationships and Event Ordering Addendum](013-counter-relationships-and-event-ordering-addendum.md) L704-L745 `d846ac1f89c94d2e95e00ed292dbf138e0353b7f67506fdfcad0c615df52d438`
+- [014 - Execution Context: Worktree Handoff](014-execution-context-worktree-handoff.md) L747-L831 `1c1f9817e901f0f3dc8240f788f86715738ba74a7e2543184780121cc4e2b13d`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L833-L837 `5404452a777a99b5c6075bd8d74ad143513e42cc85a7068fd3804bdc37030435`
+- [016 - PlanUnits](016-planunits.md) L839-L5688 `30d26522332bc80d5bf4c662bec0d07b3412b26f020ba608aa5aec563ddf88b6`
+- [017 - Migration Coverage](017-migration-coverage.md) L5689-L5701 `99ace1fd90f64b069c40a1a5b98d67989289ab28228146829482f1c9343fb3d5`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L5703-L5741 `a2c1d72b592ef190316b837929aaa46ef992edf407f319538406844024acdf37`

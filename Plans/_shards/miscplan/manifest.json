@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-13T21:33:39Z",
+  "generated_at_utc": "2026-06-14T21:33:36Z",
   "index_path": "Plans/_shards/miscplan/00-index.md",
-  "index_sha256": "d598de6dba026de2c6b165f7564be72641600c3c398d5a5d758a110665885ffb",
+  "index_sha256": "190dbbcf145bb23fdddc1acdb391759b26c7152a6708a52aac119936174cb23d",
   "manifest_path": "Plans/_shards/miscplan/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/miscplan/001-preamble.md",
-      "sha256": "1e65bb7633162acc5445c6d933c864039da5e13c903219e5e20b5379f62c11b4",
+      "sha256": "cc4359226ac8ad521bac8e0639a236459fc3d797979cc205be7d9b7329da372e",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/miscplan/002-plan-document-status.md",
-      "sha256": "a5392b66ef68977a509eda1a27b9b3814d4ac14d68adf6d82c56258d0749345c",
+      "sha256": "e787debac309002df4946807ea6a16874f3b100d32c000fe07d1a6057a3ddbc9",
       "shard_id": "002",
       "source_line_end": 16,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/miscplan/003-rewrite-alignment-2026-02-21.md",
-      "sha256": "b2785c8dd3f26ae60bef252cf4c8070361f96861d5d2412dd0226ebeda82a238",
+      "sha256": "e67798fd91c6c691890c72f4ae53cfc6a11cb2316268b1649da1a3ccf5323a2e",
       "shard_id": "003",
       "source_line_end": 39,
       "source_line_start": 18,
@@ -35,7 +35,7 @@
     {
       "heading": "Table of Contents",
       "path": "Plans/_shards/miscplan/004-table-of-contents.md",
-      "sha256": "38837dd5749276091b78737d48325c17a15e32463bf3bb82d2842573f26a5bd0",
+      "sha256": "6efbb19f8226615b75ee8fc9e662996d28468d9e9d9148a13f771039bc9ea3bd",
       "shard_id": "004",
       "source_line_end": 55,
       "source_line_start": 41,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Executive Summary",
       "path": "Plans/_shards/miscplan/005-1.-executive-summary.md",
-      "sha256": "b7e7af434a9e89796122fef8c9a00510dffbe505343991f096f0dd323dd28163",
+      "sha256": "501f7910ad5cbada81db233340084605647a19f05a85b9ac556e49734a2503d7",
       "shard_id": "005",
       "source_line_end": 75,
       "source_line_start": 57,
@@ -53,7 +53,7 @@
     {
       "heading": "2. Problem Statement",
       "path": "Plans/_shards/miscplan/006-2.-problem-statement.md",
-      "sha256": "10be6083c8f956c823710c05fa94cb7da269d4344c63eea9089ecd35328814ed",
+      "sha256": "fd575ccd6bf2936d47ad39705353c5b4bc782ec6d6aa3dbc40e47321f590bc0d",
       "shard_id": "006",
       "source_line_end": 89,
       "source_line_start": 77,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Cleanup Policy",
       "path": "Plans/_shards/miscplan/007-3.-cleanup-policy.md",
-      "sha256": "33f6a075a8bd6fe3d5b979821dfb8497bc858fca6f48f35719018dc0bbbcd2d2",
+      "sha256": "ff779b3642b906b2ae58fff302fd0bcfc9cc6c7e9279403c2d572eeb3d6a9205",
       "shard_id": "007",
       "source_line_end": 198,
       "source_line_start": 91,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Runner Contract Implementation",
       "path": "Plans/_shards/miscplan/008-4.-runner-contract-implementation.md",
-      "sha256": "be34c9a028484d60e0abed35618380f0fbe3f42a6fed827e09db453ce3d53e55",
+      "sha256": "c5e618a505517cacbdcaa40550e1b701bcdc6bd43b98c88d9dc8fe29e9a91fc8",
       "shard_id": "008",
       "source_line_end": 353,
       "source_line_start": 200,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Agent Output Directory",
       "path": "Plans/_shards/miscplan/009-5.-agent-output-directory.md",
-      "sha256": "2ebe7a16ff9df1e938c63fd157bf421890d9bfbabef71b0547290407f48cc1ad",
+      "sha256": "ba8dd30b1fa00e950b3bda125d6ea3162935486eafc5d6cfa5ba5e16042bad88",
       "shard_id": "009",
       "source_line_end": 379,
       "source_line_start": 355,
@@ -89,7 +89,7 @@
     {
       "heading": "6. Evidence Retention & Pruning",
       "path": "Plans/_shards/miscplan/010-6.-evidence-retention-pruning.md",
-      "sha256": "e3d19da1304b6fac5c8f8cd36d60e79ed743d5711d3d0786b7768196729b41a3",
+      "sha256": "46c991ea262bdd41c2d117011f7164aa90676d076b00abd7457951e8516d1313",
       "shard_id": "010",
       "source_line_end": 406,
       "source_line_start": 381,
@@ -98,7 +98,7 @@
     {
       "heading": "7. Cleanup UX & Config",
       "path": "Plans/_shards/miscplan/011-7.-cleanup-ux-config.md",
-      "sha256": "b33c9a538f0378da5655c273dc73d3a519c2beb3f82f507ac7bd0ebcc5db15f6",
+      "sha256": "7f1650ba5ca8df91884a72d6e068912c4137aa858c0aa9d6214e12bb45c75a46",
       "shard_id": "011",
       "source_line_end": 865,
       "source_line_start": 408,
@@ -107,7 +107,7 @@
     {
       "heading": "8. Implementation Checklist",
       "path": "Plans/_shards/miscplan/012-8.-implementation-checklist.md",
-      "sha256": "2d8f53893cc12d8d8cf5d5316d1667994da06bb9dbd7218ff68b812b5f047f7b",
+      "sha256": "acd3459ec587fd726c767b69cc5f8fed4a19f02116ec6a21c3cf5d3631ae071c",
       "shard_id": "012",
       "source_line_end": 971,
       "source_line_start": 867,
@@ -116,7 +116,7 @@
     {
       "heading": "9. Risks & Notes",
       "path": "Plans/_shards/miscplan/013-9.-risks-notes.md",
-      "sha256": "0c81551edde38e3ec4442e6277621e913badc3c56e76e86b2eb75b8c25b24cbb",
+      "sha256": "ff2e4337fefdc5195425fb4c1827110bb747c470092e884d303f7fc42e744b81",
       "shard_id": "013",
       "source_line_end": 982,
       "source_line_start": 973,
@@ -125,7 +125,7 @@
     {
       "heading": "9.1 Gaps and Potential Issues",
       "path": "Plans/_shards/miscplan/014-9.1-gaps-and-potential-issues.md",
-      "sha256": "739e72542fd3d5b9be1977e422918bc14cac3e069c0a269dc170f5e4232f2880",
+      "sha256": "9d97d06e301edc91404858bf7aa09a0c286a3a25a5e4f5e8aadab7448efb2eec",
       "shard_id": "014",
       "source_line_end": 1139,
       "source_line_start": 984,
@@ -134,7 +134,7 @@
     {
       "heading": "10. Cross-Plan Dependencies and Impacts",
       "path": "Plans/_shards/miscplan/015-10.-cross-plan-dependencies-and-impacts.md",
-      "sha256": "a2da6def76b34ab78cfae862b4b20a001e3f85fba73b94eb0bcafad49e3b95cd",
+      "sha256": "e7c0f2555ae429cbe6bf21efa621a59523dede652885380efb51b6f291f4d52c",
       "shard_id": "015",
       "source_line_end": 1212,
       "source_line_start": 1141,
@@ -143,7 +143,7 @@
     {
       "heading": "10.5 Crews and Subagent Communication Enhancements for Cleanup Operations",
       "path": "Plans/_shards/miscplan/016-10.5-crews-and-subagent-communication-enhancements-for-cleanup-o.md",
-      "sha256": "8f75c8d90394b138e2f96e452a83e02667baaa198362d28b88ceeec15137e50c",
+      "sha256": "e74d6b117f2a61aaf8e45a8e30a7aee3c35ff5f1cffe91fa2edd614596ed4ac1",
       "shard_id": "016",
       "source_line_end": 1226,
       "source_line_start": 1214,
@@ -152,7 +152,7 @@
     {
       "heading": "10.6 Lifecycle and Quality Enhancements for Cleanup Operations",
       "path": "Plans/_shards/miscplan/017-10.6-lifecycle-and-quality-enhancements-for-cleanup-operations.md",
-      "sha256": "93a0f0803110bc993bd8e2f530fb957dff48fb96ae70c53ae0aea8e799605bd6",
+      "sha256": "6548465ecaa599dc201101cf3c9d5abd9db9f20773c5480cc9d4cf9367cadf5b",
       "shard_id": "017",
       "source_line_end": 1239,
       "source_line_start": 1227,
@@ -161,7 +161,7 @@
     {
       "heading": "11. References",
       "path": "Plans/_shards/miscplan/018-11.-references.md",
-      "sha256": "6dd2d5e598d349f6e9d227f96c9e0998701728090acca011559c50e415b33f8f",
+      "sha256": "6a58dc5c09dd362cf0983508a05c87e15a6c74c627472dc92c95190dacdf8c8f",
       "shard_id": "018",
       "source_line_end": 1251,
       "source_line_start": 1240,
@@ -170,7 +170,7 @@
     {
       "heading": "Implementation status (Tray and Start-on-Boot, Phase 4)",
       "path": "Plans/_shards/miscplan/019-implementation-status-tray-and-start-on-boot-phase-4.md",
-      "sha256": "94a3ad3ee96d5d585aeff6042a173fb9a7052b561b5c66b4537b8ddec02f140d",
+      "sha256": "f9a54c927d0e2224d0ff7320cb89497bc1fe29ff8204b4970a0e03145124738b",
       "shard_id": "019",
       "source_line_end": 1262,
       "source_line_start": 1253,
@@ -179,7 +179,7 @@
     {
       "heading": "11. References",
       "path": "Plans/_shards/miscplan/020-11.-references.md",
-      "sha256": "da9ecf72e89a0b2f2657dd6c5aff9cdbe12445bcf513c4c4ef277b8526c840d8",
+      "sha256": "a86dc19dbbf3b7e6aa96fafaea8355a54122c7d2497c55e7cdf40e5efc684d04",
       "shard_id": "020",
       "source_line_end": 1275,
       "source_line_start": 1264,
@@ -188,7 +188,7 @@
     {
       "heading": "Implementation status (Tray and Start-on-Boot, Phase 4)",
       "path": "Plans/_shards/miscplan/021-implementation-status-tray-and-start-on-boot-phase-4.md",
-      "sha256": "e47297b5d9053a78ae0cad25b046b87ba67c9e3f0e081dd3aa375785758c50b3",
+      "sha256": "6879050d015d3fda440959e67ac062404c4916ce06dc358bd67d3248822360bf",
       "shard_id": "021",
       "source_line_end": 1283,
       "source_line_start": 1277,
@@ -197,7 +197,7 @@
     {
       "heading": "Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)",
       "path": "Plans/_shards/miscplan/022-runner-preparation-cleanup-and-safe-point-canonical-alignment-20.md",
-      "sha256": "ad3c66b13b49f3c216a13f21bf53ff060c6d4d99665d6216f5b610fa3e951d25",
+      "sha256": "26989951c519db97fd284f43a6868795b59c772f67ccb3dbdc1c096ee49001ca",
       "shard_id": "022",
       "source_line_end": 1306,
       "source_line_start": 1285,
@@ -206,7 +206,7 @@
     {
       "heading": "Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)",
       "path": "Plans/_shards/miscplan/023-runtime-cleanup-recovery-preservation-addendum-2026-03-09.md",
-      "sha256": "af29348c990f9042ba2a60044ae7e7f4b8bcd678e67789908b2c5ecf9e87e699",
+      "sha256": "086f73129363bdb33091c42ea5d6d27feddd5220d5f832a3e1f7feaff6d0eb72",
       "shard_id": "023",
       "source_line_end": 1315,
       "source_line_start": 1307,
@@ -215,7 +215,7 @@
     {
       "heading": "Debug investigation instrumentation cleanup addendum (2026-03-23)",
       "path": "Plans/_shards/miscplan/024-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md",
-      "sha256": "1d7aba067677d42b5c95e66d34cfb9e24ae77317c729ade2b719a9b0965533bd",
+      "sha256": "646890476558f7fdcf468006ee06a1db70030bf4ea34ac0e02744cf55f202c9d",
       "shard_id": "024",
       "source_line_end": 1344,
       "source_line_start": 1317,
@@ -224,7 +224,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/miscplan/025-owner-consumer-map.md",
-      "sha256": "ddad8418ca05d51d823c3599ba12c7bed3f80913948176a7875193e0ec088b7f",
+      "sha256": "df0cebbf94e184435589b1647464131c183aa884934d624dca82d018c9cfa2f9",
       "shard_id": "025",
       "source_line_end": 1350,
       "source_line_start": 1346,
@@ -233,7 +233,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/miscplan/026-planunits.md",
-      "sha256": "ba88d03e978bd9ec770eaef315aef5e31a643a471273f1992ce7626d3ee34438",
+      "sha256": "084ae2fad25f2c0763c545b7c8f019035d099fcfcf1f474eeb3c3f48e97f1fe2",
       "shard_id": "026",
       "source_line_end": 6285,
       "source_line_start": 1352,
@@ -242,16 +242,25 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/miscplan/027-migration-coverage.md",
-      "sha256": "b40536cc495350174c57b565704dbca3433fe60933085913f1608eac11f680ba",
+      "sha256": "37288a070d69f98d9eba23c21837c45447fd12c5487737babd17826a6eb819bd",
       "shard_id": "027",
       "source_line_end": 6303,
       "source_line_start": 6287,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260614-001",
+      "path": "Plans/_shards/miscplan/028-ledger-compile-addendum-pldg-20260614-001.md",
+      "sha256": "840a621ea179e2a10cc47a2f24a8faff0b3da016cbc4f6274ac7c0eab67926db",
+      "shard_id": "028",
+      "source_line_end": 6340,
+      "source_line_start": 6305,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 6303,
+    "line_count": 6340,
     "path": "Plans/MiscPlan.md",
-    "sha256": "6d7bc55edd7df066ae075e61cfca78603323fa5c3048f195fa4cd18e55430cc2"
+    "sha256": "e3702928607ae00fe4a6e15849069b9a9b13307cc40229cfa96fa167183bd667"
   }
 }

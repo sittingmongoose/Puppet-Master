@@ -1,33 +1,34 @@
 # Shard Index: Plans/storage-plan.md
 
-Generated: 2026-06-13T21:33:39Z
+Generated: 2026-06-14T21:33:36Z
 
-Source SHA256: `724d991489b78694bdb30f7995fb3ffdb72cce1ee0c4e629e0b26ee66bfbe6b1`
+Source SHA256: `c3366f4b448e29158da5e452f1fb251b4e20d4ce6deb7e9e5480d942085833f0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `355857ce111e7e2e45d0a83b973961e849016ba833a800518761d94b0a35bdba`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `a59721494fb684c865ff63ffd8c7dc71515a6177843e75384e851840fa80a879`
-- [003 - Summary](003-summary.md) L171-L175 `8908b5b46f61409479095b5b759aaf645866f4dcce361fdb1bcd2b7c548371f2`
-- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `10a962758bc2ffe2092c1a21d79a7cc15e8e3ff5dbdbade2ddb277696104a3ac`
-- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L228 `3696bfb0d1f45612b2be8b37731abcf720410faa2fe7468047dc20baa846c9bc`
-- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L229-L1500 `8f1774083b6d9491f884030f8c161f91081b3a52642226c4fce08a66f739d62a`
-- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1502-L1517 `106233261022d0faddc40f29291b7b7c6c83f87c2ef3797466360b317d9ca2c3`
-- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1519-L1745 `78dc91822821825fbbedd35d33aab9d232d7cef018d738c62d5f5c27b94fbe3b`
-- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1746-L1832 `d1c7c9dd7a90faf23d8c62d220ae4f293b07663a26325828fd4ff652392bb1f8`
-- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1834-L1857 `9c118f6f736b2bc9822782193611ba345bad4f42e69d50d92d885e4faf9f2159`
-- [011 - 7. Enhancements](011-7.-enhancements.md) L1859-L1869 `c86245632e9b7b1e25f24122d6d922007c7020ef5a5d92730677fecb67aa7bec`
-- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L1871-L1991 `44b748a9d11ea4adb2d687d5a9a6e0cbdd595aa2ccffe2202987f650ce2e2d27`
-- [013 - Version history](013-version-history.md) L1993-L2000 `d56f748fb8800dfc323e2312f3b77d13610d1b3d580ffaa4227e26fd1f6bbccc`
-- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2002-L2039 `84542daeb76712ef78c4c84efb66f3442093c3cd4b5df61353d0dc6a5569833f`
-- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2040-L2054 `5f476fe74a9eb1d1eb694ad840f4f2c1c2ce52c21426768bac526a3514724d67`
-- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2055-L2109 `4363597f1f6fafd4d35cb43ba44e018858c1bace5257dd2f8748b6c3951bb7fe`
-- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2110-L2130 `f6b966bc079171ae3111255f2e5f32d27eaea28ae6ac80fed15074f882db8c6c`
-- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2131-L2162 `9ba66d459a0c73044e2cfd84a56a8f6c18db60da0a7732ab57f0308b0b09c02d`
-- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2164-L2169 `1ad4cd2524fe7091fd2f083174becd5bbacc0a4275b171ee35f501d0f9387c58`
-- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2170-L2224 `95a230c0df5f12f26685c71bad911092e86abe42343ce12e7533fd5111bfca1b`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2226-L2230 `9c9765dfb73dc6827e2e9ebae6b92774ccc66ef6ba386b3d098a064404cdfb1a`
-- [022 - PlanUnits](022-planunits.md) L2232-L14810 `5f98b08245268c28e81dbcd604901fbb7f393e0c27a5e49849b5451be4a256fc`
-- [023 - Migration Coverage](023-migration-coverage.md) L14812-L14822 `f8f50b95f49bcd3c0b8572398300892e40c629e0408d125bc00326d4a49d8e56`
+- [001 - Preamble](001-preamble.md) L1-L1 `92fc31aa6b4b73e31c2fcfe558ea888a3ae729b3cf6a64e0cf847010c887b3fa`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `b82d23b2e02b8967b5d22764c6e537937f8aa1b7965dba95493c92b5ee7d0af4`
+- [003 - Summary](003-summary.md) L171-L175 `d8f81671c1fd3514fbfeda9d562d8413a43aeba5e51e91104399685bd310295d`
+- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `045e5fe54fa7f9b91f7fd3500db623082bab1f4e96d9d76d33fb918fa9bf31e2`
+- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L228 `673330f89a5e00cfd619119db7fb4decbfa26e45d9dc9e4dfb8ef9f8784680f4`
+- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L229-L1500 `4ca5578c3df051bf7020744a963f27386036021c86cf806ca5c72b85aac0b455`
+- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1502-L1517 `9c5db4a00d69963cad65ee62b72806872177ceca8979a149648c4326319b8ac4`
+- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1519-L1745 `b56ec599a820527c027f6556df674f02af798169cdeb4a6b0255feddf9ca3df5`
+- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1746-L1832 `12746333fc56d560e16ef1041f17b9828d93380d54e697b158839de6a6e390e8`
+- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1834-L1857 `db01c612089793d22ced8b78c71f57474e1f0ac1a63d4ef694f7b9c638b109f8`
+- [011 - 7. Enhancements](011-7.-enhancements.md) L1859-L1869 `64f2897b88b0777cbeb07307e5b962f7dc69d85ca5c4b1263616348cf1f063c1`
+- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L1871-L1991 `4956639d4b46971e157f22502628c48691fbddc0a5255b4380725afd98052e85`
+- [013 - Version history](013-version-history.md) L1993-L2000 `2d9ea3721ab9b54a7df4a035bea735959d92c728e8c88ab7c6f572f240d5f973`
+- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2002-L2039 `bf854ede4217e004ac5f7a4b1f08a60fd8065a06af1a033d013a4a58f2d293b5`
+- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2040-L2054 `bac9ab24da2822b9f22d10982f9cc58356c968948b5cafae26db34de7772b495`
+- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2055-L2109 `8fb83c660eab34341cc798f623253f14162cbd053845f6c49222087c4bac470b`
+- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2110-L2130 `c22483789a84bc3e20706661c3d6bd908c6252dd64134d22b5b8d84be1e2e5ee`
+- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2131-L2162 `8d7f1509a73d68190359e848c5bc3d16124c70f6c2fbfb406a1ec12a44d6ee1e`
+- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2164-L2169 `a55007c4f71b3f3d12b90734f4e6bc721cdcb99c73d9ad1d77f58954e555ad97`
+- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2170-L2224 `8e3ddd6a4590ef8380f9c71f7557d1692cbc9aafb05f8114404e66b2c1f461e0`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2226-L2230 `792b6a7348e8d679799e3c11290861110b1696f24bdcc67f1179eb59cac6eafa`
+- [022 - PlanUnits](022-planunits.md) L2232-L14810 `79dcd9c19a1b81f4daf8cc0c28d223ba4c4319750287181f53b54680b9f426c3`
+- [023 - Migration Coverage](023-migration-coverage.md) L14812-L14822 `19c036d39fe652a026b26c5c3a37936fd2d245b17f1c11f15b35142b6980cb7e`
+- [024 - Ledger Compile Addendum - pldg-20260614-001](024-ledger-compile-addendum-pldg-20260614-001.md) L14824-L14864 `973914c6a8a925fd7a2f4d9ec48973d860947bc59ffa0c91fdc0e5b7dedb4503`

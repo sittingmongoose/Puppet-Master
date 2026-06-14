@@ -1,16 +1,17 @@
 # Shard Index: Plans/Orchestrator_Page.md
 
-Generated: 2026-06-13T21:33:39Z
+Generated: 2026-06-14T21:33:36Z
 
-Source SHA256: `6557b699c5aba604858a120d0a3218ad29fb78fefd4b223e17888689b8cdddb7`
+Source SHA256: `abd68bf8c65e9bc34ecb2b2ead5ead86576f273ac981424b2c87913eefb5a8d0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `aaa40bd969fd00eebd09b3a58c135bef9919b64ff61066ba774560bcb7fffe4e`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `ca97f4fa8192d3d83257e2b8ef95469b7f700510d9247ecd81cea50235b05a83`
-- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `66f43d181b560ef812ca82a24a52a068364ecfe8952320c0ba286d4e789100d4`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `c37302a73b08997561e9b0ce3be9e9b41d07bfdbb46848697ba1f7db165212d2`
-- [005 - PlanUnits](005-planunits.md) L398-L1400 `3073ed7067e166e4665a0f82521002b85220cc5e0adc4e3fe3b85aa6db7c1d76`
-- [006 - Migration Coverage](006-migration-coverage.md) L1402-L1412 `63b3c79481024338baaf63cf839fccabfaccf91473710a8badcd7ef56b95dd72`
+- [001 - Preamble](001-preamble.md) L1-L1 `957d6dcde8d15b5da59228d3b0e7089ab72e3ad69a9c6c21e804ffe6d1bf9497`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `e58d7057f26828b6dce2427ab6451e76ae2421435e77b8055ade85e609e2b36a`
+- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `634f583dc47ab7a6bb8b741156ba91b06058ae209c240f787e33c326617f6460`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `23d622de97a4f1620b6f5d02cffb76316bb88dc047e4ba65ee110e06a509ab5c`
+- [005 - PlanUnits](005-planunits.md) L398-L1400 `a92c1956b4159a4f4e75a8a9d41ac10c0340b8ff70db810497673e494c9f0c64`
+- [006 - Migration Coverage](006-migration-coverage.md) L1402-L1412 `cba5a8fa45a99637038f9e333212b7c621f2dd1f70e06b7c94691169bd609c19`
+- [007 - Ledger Compile Addendum - pldg-20260614-001](007-ledger-compile-addendum-pldg-20260614-001.md) L1414-L1494 `fd7d6a07d390048c22d44e79d9ce1439d0f6cedbb631bb7c7ab9e12bebb191cb`

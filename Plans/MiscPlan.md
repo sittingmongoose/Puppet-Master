@@ -6301,3 +6301,40 @@ Phase 2B batch 093 atomized `MiscPlan-S0036` through `S0049` and `MiscPlan-S0050
 Phase 2B batch 094 atomized `MiscPlan-S0050` source lines 801-866 and `MiscPlan-S0051` through `S0088` into `M-037` through `M-072`, with `MiscPlan-S0063` structurally dispositioned through the adjacent risk/gap units. `M-001` remains a narrowed residual source-preserving bridge only for `MiscPlan-S0089` source line 1199 through `MiscPlan-S0105`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 
 Phase 2B batch 095 atomized `MiscPlan-S0089`, `S0091`, `S0092`, and `S0097` through `S0101` into `M-073` through `M-081`; structurally dispositioned `MiscPlan-S0090`, `S0093` through `S0096`, `S0102`, `S0103`, and `S0105`; and retired `M-001` as migration-lineage compatibility for `MiscPlan-S0104`. `Plans/MiscPlan.md` now has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### M-082 - References Status And Section 9.1.20 Recovery
+
+```yaml
+plan_unit_id: M-082
+unit_type: constraint
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: >-
+  MiscPlan duplicate References and Implementation status sections plus missing Section 9.1.20 are structural cleanup issues. Recovery should
+  deduplicate repeated section bodies, preserve source-lineage for moved text, and restore or explicitly disposition the missing 9.1.20 anchor
+  without changing product behavior.
+gui_related: false
+gui_classification_reason: MiscPlan section cleanup is documentation structure, not GUI presentation.
+depends_on: [M-001]
+unblocks: []
+acceptance_criteria:
+  - Duplicate References and Implementation status sections have one canonical live location each.
+  - Section 9.1.20 resolves or is explicitly marked non-applicable/source-lineage.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual heading/anchor review
+risk_class: misc_doc_structure_drift
+reasoning_tier: low
+context_scope: misc_plan_doc_structure
+implementation_surfaces: [Plans/MiscPlan.md]
+node_compile_hint: {mode: structural_heading_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0041
+preserved_exact_tokens: ["References", "Implementation status", "§9.1.20"]
+negative_constraints:
+  - Do not change product behavior while deduplicating structural sections.
+owner_hints: [Plans/MiscPlan.md]
+```

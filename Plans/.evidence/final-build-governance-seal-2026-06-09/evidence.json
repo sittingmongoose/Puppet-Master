@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b504bfdb49a8b8f14f804bf4d02f7b7c66d070a98d0891d64db20b303d46bcba"
+      "sha256": "00f5c2667f354af3ca15ced7bf8250cc22cf4e5a637694f3fee68ad1f791c420"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "b145a4fb22f1554c8a45e2beaa975be6c6a816dafe1483ee403bdd9aecae833e"
+      "sha256": "0d7725ba8fbd169c5cff82fa271e6aeaebe8a8d1d85f5a694f5f61ee4e8aa4a0"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "eec5a5da578e1ceb745b4198a4ca08fa42fac5ab756996156f1503748ce169ff"
+      "sha256": "b4807f9d7a78a34666b827809c86bda0f58207a491771b5c3d6ac7e62aa04198"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "b98a25a3e912a3a041a96fc4009aff9e0ce01c0a8a9e7d1c1a55fc6186dc35a0"
+      "sha256": "bc316513846545a8baa457cd2f89fba086b55cc4fcc9a1da39e6326b95a1f054"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "131a13f29c17c3f7194d54ee33ed57cfa07c522764357719fe3c3fba57865daf"
+      "sha256": "36a5695b7997fbcfe607c8de4ed79f02f930ec8f8ba248ac7988baf2e7f952f2"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "ec6a6185ed97bb9ff855d8d151f9ff57a5266897ba02edae031a7bafaaaa25a2"
+      "sha256": "95fbe380ff103d866fc8f4935dcf63afe50ae737887ea121bbcc8efba6becae2"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "04c6f374136add6795cbaf8cee7f2f84553414e4f9b8fe305f13712f350aabed"
+      "sha256": "35af72de3e072052c3fc34ae3ecf3da05995116ee171e5c505a3ae66fab8ca5b"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "aae4784d10078c70000a63484a1bfe2fb3592551a9b84493a241d67f4e025253"
+      "sha256": "5ee378f67df6c3757f04f400661b05fb5f50deb247943d4226c8d22ee4900ab6"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "601a914635d5411ee8909ae2944f06a4334e4027111a3dda99b9b224c9156fd5"
+      "sha256": "54db890365cb02753e072b6c2ff79882eda00d537cf8e3382766e9c666b691ba"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "aa09c428f0ef4ab528ac2a1dc7bd85ed76fed4010e79127a61dc7d7b11b8f0b3"
+      "sha256": "4645e314f646a708f36d03813a9a664efba273a885d00651c5765b60761da76d"
     }
   ],
   "checks": [
@@ -152,54 +152,54 @@
   "evidence_id": "evidence.final-build-governance-seal-2026-06-09.clean-repo",
   "files_changed": [
     {
-      "path": "Plans/00-plans-index.md",
       "change_type": "modified",
-      "note": "Governance-reference fix for illustrative shard path."
+      "note": "Governance-reference fix for illustrative shard path.",
+      "path": "Plans/00-plans-index.md"
     },
     {
-      "path": "Plans/_shards/**",
       "change_type": "modified",
-      "note": "Regenerated configured shards for stable Phase 2 Plan docs."
+      "note": "Regenerated configured shards for stable Phase 2 Plan docs.",
+      "path": "Plans/_shards/**"
     },
     {
-      "path": "Plans/.evidence/**",
       "change_type": "modified",
-      "note": "Refreshed evidence artifact hashes."
+      "note": "Refreshed evidence artifact hashes.",
+      "path": "Plans/.evidence/**"
     },
     {
-      "path": "Plans/Spec_Lock.json",
       "change_type": "modified",
-      "note": "Recomputed canonical SSOT hashes."
+      "note": "Recomputed canonical SSOT hashes.",
+      "path": "Plans/Spec_Lock.json"
     },
     {
-      "path": "Plans/auto_decisions.jsonl",
       "change_type": "modified",
-      "note": "Recorded deterministic Phase 2 governance seal decision."
+      "note": "Recorded deterministic Phase 2 governance seal decision.",
+      "path": "Plans/auto_decisions.jsonl"
     },
     {
-      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
       "change_type": "modified",
-      "note": "Restamped affected 00-plans-index batch sha256_after entries after governance-reference fix."
+      "note": "Restamped affected 00-plans-index batch sha256_after entries after governance-reference fix.",
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl"
     },
     {
-      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
       "change_type": "modified",
-      "note": "Validator refreshed migration validation report timestamp/status."
+      "note": "Validator refreshed migration validation report timestamp/status.",
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json"
     },
     {
-      "path": "scripts/pm-plans-verify.py",
       "change_type": "modified",
-      "note": "Narrow governance lint exemption for PlanUnit YAML preserved tokens and explicit prohibition text."
+      "note": "Narrow governance lint exemption for PlanUnit YAML preserved tokens and explicit prohibition text.",
+      "path": "scripts/pm-plans-verify.py"
     },
     {
-      "path": "Plans/storage-plan.md",
       "change_type": "modified",
-      "note": "Whitespace-only trailing-space cleanup required by git diff --check."
+      "note": "Whitespace-only trailing-space cleanup required by git diff --check.",
+      "path": "Plans/storage-plan.md"
     },
     {
-      "path": "scripts/pm-shard-plans.py",
       "change_type": "modified",
-      "note": "Trim section-separator blank lines from generated shard body ranges while preserving exact body verification for declared source lines."
+      "note": "Trim section-separator blank lines from generated shard body ranges while preserving exact body verification for declared source lines.",
+      "path": "scripts/pm-shard-plans.py"
     }
   ],
   "node": {

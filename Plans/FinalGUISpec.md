@@ -1002,6 +1002,12 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 - Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`
 - Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
 
+### 7.2 Dashboard
+
+Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.
+
+Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+
 ### 7.3 Shared route and open behavior
 
 All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the `/serialization` transport form of that payload, not a hidden canonical route contract or second routing model.
@@ -1158,7 +1164,7 @@ Panel-specific persistence and visibility controls live in Settings only when th
 
 Agent-Config is the visible provider/model/account/instruction management surface for the now-locked `/provider` model. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.
 
-### 7.4 Terminal Settings Ownership
+#### 7.4.1 Terminal Settings Ownership
 
 Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
 
@@ -1170,7 +1176,7 @@ Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, 
 
 Shortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.
 
-### 7.4A Agent Config Skills tab
+#### 7.4.2 Agent Config Skills tab
 
 Agent Config surfaces a Skills tab that mirrors the Skills owner contract. Skill rows show source/readiness and contextual badges, including `referenced_by_persona`, `auto_invokable`, `requires_missing_capability`, and `catalog_update_available`, without turning Settings into the skill-management owner.
 
@@ -1266,6 +1272,46 @@ Non-active project issues surface as compact global attention items with a proje
 When mirrored surfaces disagree, each issue class declares freshness/authority order (`/authority`). Secondary surfaces with older data say `updating` or `state may be outdated` instead of presenting conflicting definitive copy.
 
 Bulk action families include stage/unstage/discard (`/unstage/discard`), rerun/cancel, cleanup/prune (`/prune`), apply/delete, and pin/unpin. Before execution, every bulk action shows target preview plus scope summary/count (`/count`). Completion state represents result state, `partial-success`, and a `per-target` failure list; when possible, the action exposes rollback/undo expectations, and when rollback is unavailable the UI says so before execution. Bulk action history and `/exported` views preserve the same per-target result state and spawned attempt/remediation refs used by receipt/evidence records.
+
+### 7.6 Wizard
+
+Wizard view anchors are source-backed entrypoints for requirements, PRD, plan review, blocked-question, and approval workflows. Wizard pages consume Chain Wizard, Contracts, HITL, storage, and assistant-chat owners; this section is a route and presentation anchor, not the owner of blocked lifecycle records.
+
+### 7.7 Legacy Tiers Alias
+
+`FinalGUISpec section 7.7`, `Tab 2: Tiers`, and `orchestrator:tiers` are legacy aliases only. They remain searchable compatibility labels that route to native Orchestrator package, seam, lane, node, and Progress views rather than restoring a Tiers tab as canonical navigation.
+
+### 7.8 Usage
+
+Usage view anchors route cost, token, provider, account, model, and runtime usage pivots through `Plans/usage-feature.md`, storage projections, Runtime Artifacts, and object-first route payloads. Usage may surface account pressure and switching history, but it does not redefine usage record schemas.
+
+### 7.9 History
+
+History is the chronological durable story. It presents run, concern, recovery, usage, account-switch, artifact, and worktree timeline entries from canonical records and keeps filters, focus mode, and historical/live state visible.
+
+### 7.10 Ledger
+
+Ledger is exact record inspection. It exposes durable event, projection, receipt, artifact, and source-lineage records with routeable ids and must not flatten them into summary-only history rows.
+
+### 7.11 Evidence
+
+Evidence presents artifact, receipt, validation, and corroboration references through owner-routed records. It consumes Runtime Artifacts, storage, Contracts, Orchestrator, and FileManager references instead of inventing a GUI-local evidence schema.
+
+### 7.12 Artifacts
+
+Artifacts routes to Runtime Artifacts Panel and project-output artifact owners. It may mirror previews and links from Dashboard or Orchestrator, but artifact kind, envelope, projector, and schema authority stay with the artifact owners.
+
+### 7.13 Source Control
+
+Source Control is the Git/worktree mutation and inspection surface. It consumes WorktreeGitImprovement, storage, Contracts, and FileManager open/review behavior while preserving lane, package, safe-point, and worktree identity.
+
+### 7.14 GitHub Actions And Docker Manager
+
+GitHub Actions and Docker Manager are operational destination surfaces for branch/workflow and container/Kubernetes attention. Dashboard and Orchestrator mirror their active attention items but do not own their mutation semantics.
+
+### 7.15 Command Contract Anchor
+
+Section 7.15 is a thin anchor for command wiring references from GUI views. Concrete command ids, command arguments, handler locations, expected events, and permission gates remain owned by `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, and the destination owner docs.
 
 ### 7.16 Chat Panel
 
@@ -24271,3 +24317,129 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 065 atomized or structurally dispositioned `FinalGUISpec-S0001` through `FinalGUISpec-S0035` into `F3-002` through `F3-040`. Phase 2B batch 066 atomized or structurally dispositioned `FinalGUISpec-S0036` through `FinalGUISpec-S0062` into `F3-041` through `F3-077`. Phase 2B batch 067 atomized or structurally dispositioned `FinalGUISpec-S0063` through `FinalGUISpec-S0077` into `F3-078` through `F3-121`, with `FinalGUISpec-S0072` retained as a structural parent-heading disposition. Phase 2B batch 068 atomized `FinalGUISpec-S0078` through `FinalGUISpec-S0106` into `F3-122` through `F3-164`. Phase 2B batch 069 atomized or structurally dispositioned `FinalGUISpec-S0107` through `FinalGUISpec-S0141` into `F3-165` through `F3-213`, with `FinalGUISpec-S0108`, `FinalGUISpec-S0125`, `FinalGUISpec-S0129`, `FinalGUISpec-S0134`, and `FinalGUISpec-S0140` retained as structural parent-heading dispositions. Phase 2B batch 070 atomized or structurally dispositioned `FinalGUISpec-S0142` through `FinalGUISpec-S0159` into `F3-214` through `F3-274`, with `FinalGUISpec-S0144` and `FinalGUISpec-S0150` retained as structural parent-heading dispositions. Phase 2B batch 071 atomized or structurally dispositioned `FinalGUISpec-S0160` through `FinalGUISpec-S0190` into `F3-275` through `F3-318`, with `FinalGUISpec-S0167`, `FinalGUISpec-S0168`, `FinalGUISpec-S0178`, `FinalGUISpec-S0188`, and `FinalGUISpec-S0189` retained as structural/reference/rollup dispositions. Phase 2B batch 072 atomized or structurally dispositioned `FinalGUISpec-S0191` through `FinalGUISpec-S0229` into `F3-319` through `F3-357`, with `FinalGUISpec-S0196`, `FinalGUISpec-S0197`, `FinalGUISpec-S0199`, `FinalGUISpec-S0204`, `FinalGUISpec-S0205`, `FinalGUISpec-S0209`, `FinalGUISpec-S0212`, and `FinalGUISpec-S0223` retained as structural/superseded-heading/rollup dispositions. Phase 2B batch 073 atomized or structurally dispositioned `FinalGUISpec-S0230` through `FinalGUISpec-S0239` into `F3-358` through `F3-386`, with `FinalGUISpec-S0235`, `FinalGUISpec-S0238`, and `FinalGUISpec-S0239` retained as structural/reporting dispositions; `F3-001` is retired to migration-lineage-only compatibility coverage. `FinalGUISpec-S0240` and `FinalGUISpec-S0241` remain structural/bridge/migration spans reserved for the final FinalGUISpec window. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### F3-387 - View Anchor And Numbering Recovery Compile Addendum
+
+```yaml
+plan_unit_id: F3-387
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec owns user-visible view anchors and must resolve the missing Dashboard section, missing Views anchors 7.6 through 7.15,
+  duplicate 7.4 sections, and duplicate chapter 15 ambiguity by source-first recovery. Existing references to Dashboard, Wizard,
+  Projects, Usage, History, Ledger, Evidence, browser, terminal, and promoted widget catalog sections must land on a stable owner
+  anchor or an explicit compatibility/source-lineage disposition instead of an empty or ambiguous heading.
+gui_related: true
+gui_classification_reason: This unit governs GUI views, pages, anchors, layout, and user-visible navigation sections.
+depends_on: [PDS-003]
+unblocks: [F-067, OP-020]
+acceptance_criteria:
+  - References to Section 7.2 Dashboard and Sections 7.6 through 7.15 resolve to live view anchors or explicit compatibility dispositions.
+  - Duplicate 7.4 and duplicate chapter 15 references no longer make cross-references such as Section 15.3 ambiguous.
+  - FinalGUISpec consumer references do not re-own FileManager browser/terminal/hot-reload behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual markdown anchor/cross-reference review
+risk_class: gui_anchor_drift
+reasoning_tier: standard
+context_scope: final_gui_view_map
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/FileManager.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: gui_view_anchor_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0015
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0044
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0045
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0046
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0047
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0074
+  - source_ref:chat:next-gui-filemanager-cluster
+preserved_exact_tokens: ["§7.2", "Dashboard", "§7.6", "§7.15", "Wizard", "Projects", "Usage", "History", "Ledger", "Evidence", "§7.4", "## 15", "§15.3", "Promoted widget catalog"]
+negative_constraints:
+  - Do not invent new views beyond live source references during anchor recovery.
+  - Do not leave duplicate section numbering as the only live target for cross-references.
+owner_hints: [Plans/FinalGUISpec.md, Plans/Widget_System.md, Plans/Orchestrator_Page.md, Plans/UI_Command_Catalog.md]
+```
+
+### F3-388 - Persona And Advanced Subagent Control Presentation
+
+```yaml
+plan_unit_id: F3-388
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI presents Persona controls as the ordinary user-facing flow and keeps raw subagent_registry controls advanced-only.
+  Settings and Agent Config surfaces must distinguish protected platform Personas, tweakable built-ins, and user-created Personas;
+  Simple v1 tier override controls may select Personas for phase, task, subtask, and iteration while preserving requested and
+  effective Persona disclosure.
+gui_related: true
+gui_classification_reason: This unit owns visible settings and Agent Config presentation for Personas and subagent controls.
+depends_on: [P-053, OSI-425, OSI-426]
+unblocks: []
+acceptance_criteria:
+  - Protected Personas appear locked and explain why they cannot be edited.
+  - Tweakable built-ins expose reset/restore semantics against shipped defaults.
+  - Advanced raw subagent registry controls are visually separated from ordinary Persona selection.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Settings/Agent Config UI review
+risk_class: user_visible_config_drift
+reasoning_tier: standard
+context_scope: persona_settings_ui
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Personas.md, Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: gui_persona_settings_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0025
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0026
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0028
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0029
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0030
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0031
+  - source_ref:chat:persona-simple-v1-advanced-mutability
+preserved_exact_tokens: ["Simple Persona-aware overrides", "advanced-only", "protected", "tweakable", "user-created", "phase", "task", "subtask", "iteration", "requested_persona", "effective_persona"]
+negative_constraints:
+  - Do not require the user to understand raw subagent launch internals for ordinary Persona selection.
+  - Do not let advanced registry controls mutate protected Persona bodies.
+owner_hints: [Plans/FinalGUISpec.md, Plans/Personas.md, Plans/orchestrator-subagent-integration.md]
+```
+
+### F3-389 - FinalGUISpec Numbering Deconfliction
+
+```yaml
+plan_unit_id: F3-389
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec numbering cleanup is structural only. The live Persistence chapter keeps the Section 15 persistence anchor and
+  Section 15.3 Tantivy Indices reference; promoted-widget catalog material must use a non-conflicting addendum anchor or an
+  explicitly named promoted-widget section. Terminal Settings Ownership and Agent Config Skills are nested under Settings and
+  inspectors rather than remaining competing Section 7.4 headings.
+gui_related: true
+gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
+depends_on: [F3-387]
+unblocks: []
+acceptance_criteria:
+  - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
+  - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
+  - Structural renumbering does not change GUI behavior or widget ownership.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual FinalGUISpec heading review
+risk_class: gui_cross_reference_ambiguity
+reasoning_tier: standard
+context_scope: final_gui_numbering_cleanup
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint: {mode: numbering_deconfliction, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0047
+  - source_ref:chat:next-gui-filemanager-cluster
+preserved_exact_tokens: ["## 15. Persistence", "### 15.3 Tantivy Indices", "## 15. Promoted widget catalog", "### 7.4 Terminal Settings Ownership", "### 7.4A Agent Config Skills tab", "§15.3"]
+negative_constraints:
+  - Do not change persistence, Tantivy, settings, or promoted-widget behavior while repairing numbering.
+  - Do not leave Section 15.3 ambiguous.
+owner_hints: [Plans/FinalGUISpec.md]
+```

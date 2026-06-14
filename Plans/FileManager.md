@@ -432,6 +432,30 @@ If a file path is broken or a route_target is unreachable:
 - Provide a fallback route (e.g., workspace://project/concern) for results if the primary route was unavailable.
 - Search-in-files and Search side panel handoffs use the Search-owned `cmd.search.find_in_files` and `cmd.search.open_result` route; FileManager records only route/open recovery state. For remote `/SSH` file operations, failed open, save, listing, and search handoffs classify before recovery: network or trust failures map to `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted`; access refusal maps to `permission_denied`; missing paths map to `path_not_found` / `File not found`. These classifications preserve the user-visible network vs permission vs not-found distinction and propagate to Search/FileManager UI state.
 
+## 5. Open targets and chooser behavior
+
+FileManager open targets are source-backed and identity-preserving. `cmd.file.open_with` offers PM-native targets first: `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, and `diff_review`. `system_default` is a separate future handoff through `cmd.file.open_in_system_default`, not the MVP fallback for PM-native open behavior.
+
+## 6. Preview subjects and rendered document modes
+
+Preview subjects preserve the source file or artifact identity before selecting a renderer. Markdown, Mermaid, HTML, SVG, image, and generated document previews use shared preview/session identity so chat, editor, browser, and FileManager links resolve to the same subject instead of opening unrelated panes.
+
+## 7. Browser and terminal handoff boundaries
+
+Browser and terminal entrypoints are FileManager placement/launch affordances, not runtime ownership. Browser session classes, DevTools, click-to-context, capture, takeover, and permission defaults remain owned by the promoted browser specs and UI command catalog; terminal sessions remain owned by terminal/runtime owners. FileManager records the route, target, and reveal context.
+
+## 8. Image viewer and HTML preview
+
+Image viewer and HTML preview are first-class FileManager preview surfaces. Image viewing uses `image_viewer` identity and preserves path/artifact provenance; HTML preview may open as `workspace_preview` or `detached_preview` and must disclose runtime unavailable or degraded browser capability instead of substituting screenshots as a pseudo-browser.
+
+### 8.1 Image viewer
+
+The image viewer opens workspace or artifact images with provenance, zoom, copy path, reveal, and open-with affordances while keeping image identity distinct from browser-session identity.
+
+### 8.2 HTML and browser preview
+
+HTML preview uses source-backed preview subjects and may route to workspace or detached browser preview when browser capability is available. Browser-specific capture, mutation, DevTools, and permissions remain owned by the browser specs and command catalog.
+
 ## 9. Tabs: Editor, Terminal, Browser
 
 FileManager consumes terminal and browser tab ownership without collapsing them. Terminal tabs use `terminal_tab_id`, `terminal_pane_id`, and `terminal_session_id` from the terminal model; browser tabs use browser-session identity from the browser owner docs. Pinning, capability badges, and tab labels must keep terminal tab state separate from browser-tab state, so the source shorthand `/cap/browser-tab` is retired as an ambiguous combined concept rather than a live tab type.
@@ -529,6 +553,18 @@ Conflicted markers override staged/unstaged styling until resolved, and staged a
 The diff-affecting taxonomy is canonical: source-buffer edits include typing, preview-originated bounded patch apply, assistant patch apply, and conflict-result text edits in source-backed panes; git mutations include stage, unstage, discard, `stash push/pop`, mark conflict resolved, and hunk-level Git actions; restore/rollback actions include Revert last agent edit, `Restore to…`, checkpoint restore, rewind, and rollback. These resolve to confirmed restore events that refresh affected buffers rather than popping a local editor stack.
 
 Diff undo/redo remains scoped by action class: single-file assistant edits, multi-file assistant edits, hunk-level Git actions, patch-apply / preview-apply actions, and conflict-resolution actions use the grouping rules above and never collapse into one global editor undo stack. Chat routing exposes the `files-touched strip`, `diff card`, `open-in-editor`, and `open-in-diff` as distinct affordances; revert scope must be declared as `last edit`, `last turn`, per-file, or per-thread, with audit/history representation preserved after revert or rollback. GUI ownership remains split across docked editor diff, detached review window, Source Control side-panel pivot / selection state, scrollbar heat-map / gutter change markers, and dirty / staged / conflicted / reverted feedback loops.
+
+## 13. Preview refresh and hot reload controls
+
+Preview refresh and hot reload controls live where the preview subject is visible. FileManager may expose refresh, reopen, detach, and reveal actions for workspace previews and browser-backed previews, but command ids and browser/session behavior remain with the browser and UI command owners. Hot reload state is visible as preview/runtime status, not as a hidden file watcher side effect.
+
+## 14. Rendering, browser preview, and detached preview compatibility
+
+Section 14 is the FileManager anchor for rendering and preview placement. It preserves the source-backed rendering split for Markdown, Mermaid, HTML, SVG, and images; browser preview remains editor-tab-first and detached-window-capable through `workspace_preview`, `detached_preview`, `preview_subject_id`, and `browser_session_id`. `/cap/browser-tab` is compatibility shorthand only and not a live tab type.
+
+### 14.6 Browser preview and hot reload controls
+
+Hot reload controls appear only when the owning preview/runtime session exposes a refreshable subject. FileManager may reveal, refresh, detach, or reopen that subject, while browser runtime behavior and command ids remain with the browser and UI command owners.
 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
@@ -4183,3 +4219,45 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 054 atomized or structurally dispositioned `FileManager-S0001` through `FileManager-S0032` into `F-002` through `F-033`. Phase 2B batch 055 atomized `FileManager-S0033` through `FileManager-S0054` into `F-034` through `F-066`, structurally dispositioned `FileManager-S0055`, `FileManager-S0056`, and `FileManager-S0058`, and retired `F-001` as a `source_preserving_bridge_retired` migration-lineage unit for `FileManager-S0057`. FileManager.md now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### F-067 - Preview Browser Terminal And Hot Reload Recovery Compile Addendum
+
+```yaml
+plan_unit_id: F-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
+  Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
+  terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
+gui_related: true
+gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
+depends_on: [F-002, F-009, F-010]
+unblocks: [F3-387]
+acceptance_criteria:
+  - Image viewing remains first-class where FileManager references Sections 8.1 and 14.
+  - HTML/browser preview and hot reload controls resolve to FileManager placement plus Section15/UI Command behavior owners.
+  - Section 9 Tabs covers Editor, Terminal, and Browser without re-owning terminal or browser runtime internals.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual FileManager cross-reference review
+risk_class: file_surface_anchor_loss
+reasoning_tier: standard
+context_scope: file_manager_preview_tabs
+implementation_surfaces: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: file_surface_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0016
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0048
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0049
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0050
+  - source_ref:chat:next-gui-filemanager-cluster
+preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
+negative_constraints:
+  - Do not make FileManager the browser behavior SSOT.
+  - Do not leave the Tabs section as a three-line stub when compiling this recovery.
+owner_hints: [Plans/FileManager.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/UI_Command_Catalog.md, Plans/Runtime_Artifacts_Panel.md]
+```

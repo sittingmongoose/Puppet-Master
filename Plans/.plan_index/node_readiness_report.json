@@ -1764,15 +1764,15 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10317,
-    "edge_count": 11830,
-    "node_count": 4947,
-    "unblocks_edge_count": 1513,
+    "depends_on_edge_count": 10386,
+    "edge_count": 11906,
+    "node_count": 4972,
+    "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-13T21:44:54Z",
+  "generated_at_utc": "2026-06-14T21:22:13Z",
   "gui_related_units": {
-    "count": 2089,
+    "count": 2105,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -4657,6 +4657,28 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-413",
+        "source_location": {
+          "heading": "ACD-413 - Extensibility And Traceability Recovery Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 21697,
+          "line": 21699,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-414",
+        "source_location": {
+          "heading": "ACD-414 - Stale Newfeatures Reference Retargeting",
+          "heading_level": 3,
+          "heading_line": 21736,
+          "line": 21738,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Architecture_Invariants.md",
         "plan_unit_id": "AI-007",
         "source_location": {
@@ -5478,6 +5500,17 @@
           "heading_level": 3,
           "heading_line": 3022,
           "line": 3024,
+          "path": "Plans/Crosswalk.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Crosswalk.md",
+        "plan_unit_id": "C-049",
+        "source_location": {
+          "heading": "C-049 - Boundary Stub And Route Open Fallback Recovery",
+          "heading_level": 3,
+          "heading_line": 3152,
+          "line": 3154,
           "path": "Plans/Crosswalk.md"
         }
       },
@@ -7968,6 +8001,17 @@
         }
       },
       {
+        "owner_doc": "Plans/chain-wizard-flexibility.md",
+        "plan_unit_id": "CWF-148",
+        "source_location": {
+          "heading": "CWF-148 - Section 12 Parent And Blocked Addenda Deduplication",
+          "heading_level": 3,
+          "heading_line": 9884,
+          "line": 9886,
+          "path": "Plans/chain-wizard-flexibility.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Decision_Log.md",
         "plan_unit_id": "DL-008",
         "source_location": {
@@ -8556,8 +8600,8 @@
         "source_location": {
           "heading": "F-002 - File Manager Editor Scope And Compliance",
           "heading_level": 3,
-          "heading_line": 548,
-          "line": 550,
+          "heading_line": 584,
+          "line": 586,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8567,8 +8611,8 @@
         "source_location": {
           "heading": "F-003 - Project Driven Capability Activation",
           "heading_level": 3,
-          "heading_line": 601,
-          "line": 603,
+          "heading_line": 637,
+          "line": 639,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8578,8 +8622,8 @@
         "source_location": {
           "heading": "F-004 - External Discovery Cluster Constraints",
           "heading_level": 3,
-          "heading_line": 654,
-          "line": 656,
+          "heading_line": 690,
+          "line": 692,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8589,8 +8633,8 @@
         "source_location": {
           "heading": "F-005 - Editor Archetype Constraints",
           "heading_level": 3,
-          "heading_line": 714,
-          "line": 716,
+          "heading_line": 750,
+          "line": 752,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8600,8 +8644,8 @@
         "source_location": {
           "heading": "F-007 - File Manager Editor Definitions",
           "heading_level": 3,
-          "heading_line": 817,
-          "line": 819,
+          "heading_line": 853,
+          "line": 855,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8611,8 +8655,8 @@
         "source_location": {
           "heading": "F-009 - File Manager Panel MVP Tree Behavior",
           "heading_level": 3,
-          "heading_line": 926,
-          "line": 928,
+          "heading_line": 962,
+          "line": 964,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8622,8 +8666,8 @@
         "source_location": {
           "heading": "F-010 - Worktree Aware File Identity",
           "heading_level": 3,
-          "heading_line": 980,
-          "line": 982,
+          "heading_line": 1016,
+          "line": 1018,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8633,8 +8677,8 @@
         "source_location": {
           "heading": "F-011 - Panel Placement Context Menu Keyboard And Accessibility",
           "heading_level": 3,
-          "heading_line": 1036,
-          "line": 1038,
+          "heading_line": 1072,
+          "line": 1074,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8644,8 +8688,8 @@
         "source_location": {
           "heading": "F-012 - External Drag Drop Behavior Summary",
           "heading_level": 3,
-          "heading_line": 1097,
-          "line": 1099,
+          "heading_line": 1133,
+          "line": 1135,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8655,8 +8699,8 @@
         "source_location": {
           "heading": "F-013 - Drag Drop Implementation And Feedback",
           "heading_level": 3,
-          "heading_line": 1150,
-          "line": 1152,
+          "heading_line": 1186,
+          "line": 1188,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8666,8 +8710,8 @@
         "source_location": {
           "heading": "F-014 - Drag Drop Gaps Security And Failure Handling",
           "heading_level": 3,
-          "heading_line": 1207,
-          "line": 1209,
+          "heading_line": 1243,
+          "line": 1245,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8677,8 +8721,8 @@
         "source_location": {
           "heading": "F-015 - Deferred Drag Drop Enhancements",
           "heading_level": 3,
-          "heading_line": 1262,
-          "line": 1264,
+          "heading_line": 1298,
+          "line": 1300,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8688,8 +8732,8 @@
         "source_location": {
           "heading": "F-016 - IDE Style Editor MVP Acceptance",
           "heading_level": 3,
-          "heading_line": 1311,
-          "line": 1313,
+          "heading_line": 1347,
+          "line": 1349,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8699,8 +8743,8 @@
         "source_location": {
           "heading": "F-017 - Editor Placement Layout Detach And Tabs",
           "heading_level": 3,
-          "heading_line": 1362,
-          "line": 1364,
+          "heading_line": 1398,
+          "line": 1400,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8710,8 +8754,8 @@
         "source_location": {
           "heading": "F-018 - Editing Save State Model",
           "heading_level": 3,
-          "heading_line": 1412,
-          "line": 1414,
+          "heading_line": 1448,
+          "line": 1450,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8721,8 +8765,8 @@
         "source_location": {
           "heading": "F-020 - Recover Unsaved And Remote Backed Recovery",
           "heading_level": 3,
-          "heading_line": 1519,
-          "line": 1521,
+          "heading_line": 1555,
+          "line": 1557,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8732,8 +8776,8 @@
         "source_location": {
           "heading": "F-021 - Remote Offline Cached File Wording",
           "heading_level": 3,
-          "heading_line": 1570,
-          "line": 1572,
+          "heading_line": 1606,
+          "line": 1608,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8743,8 +8787,8 @@
         "source_location": {
           "heading": "F-022 - Display Navigation Line Range And Highlighting",
           "heading_level": 3,
-          "heading_line": 1623,
-          "line": 1625,
+          "heading_line": 1659,
+          "line": 1661,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8754,8 +8798,8 @@
         "source_location": {
           "heading": "F-023 - Split Panes And Editor Groups",
           "heading_level": 3,
-          "heading_line": 1683,
-          "line": 1685,
+          "heading_line": 1719,
+          "line": 1721,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8765,8 +8809,8 @@
         "source_location": {
           "heading": "F-024 - Embedded Document Pane Shared Buffer And Write Lock",
           "heading_level": 3,
-          "heading_line": 1732,
-          "line": 1734,
+          "heading_line": 1768,
+          "line": 1770,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8776,8 +8820,8 @@
         "source_location": {
           "heading": "F-026 - Data Model Dirty State And Changed On Disk Prompt",
           "heading_level": 3,
-          "heading_line": 1838,
-          "line": 1840,
+          "heading_line": 1874,
+          "line": 1876,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8787,8 +8831,8 @@
         "source_location": {
           "heading": "F-027 - Text Encoding File Type And Read Only Reasons",
           "heading_level": 3,
-          "heading_line": 1891,
-          "line": 1893,
+          "heading_line": 1927,
+          "line": 1929,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8798,8 +8842,8 @@
         "source_location": {
           "heading": "F-028 - Large File Strategy And Limits",
           "heading_level": 3,
-          "heading_line": 1946,
-          "line": 1948,
+          "heading_line": 1982,
+          "line": 1984,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8809,8 +8853,8 @@
         "source_location": {
           "heading": "F-029 - Editor Keyboard Shortcuts And Focus Policy",
           "heading_level": 3,
-          "heading_line": 1996,
-          "line": 1998,
+          "heading_line": 2032,
+          "line": 2034,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8820,8 +8864,8 @@
         "source_location": {
           "heading": "F-030 - Editor Persistence Schema",
           "heading_level": 3,
-          "heading_line": 2047,
-          "line": 2049,
+          "heading_line": 2083,
+          "line": 2085,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8831,8 +8875,8 @@
         "source_location": {
           "heading": "F-031 - Transient Editor States And Accessibility",
           "heading_level": 3,
-          "heading_line": 2100,
-          "line": 2102,
+          "heading_line": 2136,
+          "line": 2138,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8842,8 +8886,8 @@
         "source_location": {
           "heading": "F-032 - Mention In Chat Identity Preserving References",
           "heading_level": 3,
-          "heading_line": 2157,
-          "line": 2159,
+          "heading_line": 2193,
+          "line": 2195,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8853,8 +8897,8 @@
         "source_location": {
           "heading": "F-033 - File Manager Editor Chat Shared Project Integration",
           "heading_level": 3,
-          "heading_line": 2209,
-          "line": 2211,
+          "heading_line": 2245,
+          "line": 2247,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8864,8 +8908,8 @@
         "source_location": {
           "heading": "F-034 - Identity-Based Open Routing And Worktree File Realization",
           "heading_level": 3,
-          "heading_line": 2257,
-          "line": 2259,
+          "heading_line": 2293,
+          "line": 2295,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8875,8 +8919,8 @@
         "source_location": {
           "heading": "F-035 - Artifact Identity Storage And Approval-Scoped Open Visibility",
           "heading_level": 3,
-          "heading_line": 2311,
-          "line": 2313,
+          "heading_line": 2347,
+          "line": 2349,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8886,8 +8930,8 @@
         "source_location": {
           "heading": "F-039 - File And Artifact Open Recovery Classification",
           "heading_level": 3,
-          "heading_line": 2535,
-          "line": 2537,
+          "heading_line": 2571,
+          "line": 2573,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8897,8 +8941,8 @@
         "source_location": {
           "heading": "F-040 - Terminal And Browser Tab Identity Separation",
           "heading_level": 3,
-          "heading_line": 2597,
-          "line": 2599,
+          "heading_line": 2633,
+          "line": 2635,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8908,8 +8952,8 @@
         "source_location": {
           "heading": "F-042 - Breadcrumb And Outline LSP Fallback",
           "heading_level": 3,
-          "heading_line": 2704,
-          "line": 2706,
+          "heading_line": 2740,
+          "line": 2742,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8919,8 +8963,8 @@
         "source_location": {
           "heading": "F-043 - Editor Surface Seams And Strong Preview Coverage",
           "heading_level": 3,
-          "heading_line": 2754,
-          "line": 2756,
+          "heading_line": 2790,
+          "line": 2792,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8930,8 +8974,8 @@
         "source_location": {
           "heading": "F-044 - Go To Symbol Owner And Fallbacks",
           "heading_level": 3,
-          "heading_line": 2819,
-          "line": 2821,
+          "heading_line": 2855,
+          "line": 2857,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8941,8 +8985,8 @@
         "source_location": {
           "heading": "F-045 - Symbol Index Status Search Boundary",
           "heading_level": 3,
-          "heading_line": 2872,
-          "line": 2874,
+          "heading_line": 2908,
+          "line": 2910,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8952,8 +8996,8 @@
         "source_location": {
           "heading": "F-046 - Diagnostics Gutter And Change Marker Projection",
           "heading_level": 3,
-          "heading_line": 2926,
-          "line": 2928,
+          "heading_line": 2962,
+          "line": 2964,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8963,8 +9007,8 @@
         "source_location": {
           "heading": "F-047 - Editor Semantic Actions And FileSafe Mutation Boundary",
           "heading_level": 3,
-          "heading_line": 2976,
-          "line": 2978,
+          "heading_line": 3012,
+          "line": 3014,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8974,8 +9018,8 @@
         "source_location": {
           "heading": "F-048 - Add To Assistant Chat File Reference Lock",
           "heading_level": 3,
-          "heading_line": 3028,
-          "line": 3030,
+          "heading_line": 3064,
+          "line": 3066,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8985,8 +9029,8 @@
         "source_location": {
           "heading": "F-049 - Search Entrypoint Delegation",
           "heading_level": 3,
-          "heading_line": 3081,
-          "line": 3083,
+          "heading_line": 3117,
+          "line": 3119,
           "path": "Plans/FileManager.md"
         }
       },
@@ -8996,8 +9040,8 @@
         "source_location": {
           "heading": "F-050 - Canonical File Tree Action Catalog",
           "heading_level": 3,
-          "heading_line": 3137,
-          "line": 3139,
+          "heading_line": 3173,
+          "line": 3175,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9007,8 +9051,8 @@
         "source_location": {
           "heading": "F-051 - Tree Node Clipboard And Menu Semantics",
           "heading_level": 3,
-          "heading_line": 3194,
-          "line": 3196,
+          "heading_line": 3230,
+          "line": 3232,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9018,8 +9062,8 @@
         "source_location": {
           "heading": "F-052 - Transfer Engine Progress And Hardening",
           "heading_level": 3,
-          "heading_line": 3252,
-          "line": 3254,
+          "heading_line": 3288,
+          "line": 3290,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9029,8 +9073,8 @@
         "source_location": {
           "heading": "F-053 - Local Tree Filter And Current File Reveal",
           "heading_level": 3,
-          "heading_line": 3304,
-          "line": 3306,
+          "heading_line": 3340,
+          "line": 3342,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9040,8 +9084,8 @@
         "source_location": {
           "heading": "F-054 - PM-Native Open With Target Enum",
           "heading_level": 3,
-          "heading_line": 3356,
-          "line": 3358,
+          "heading_line": 3392,
+          "line": 3394,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9051,8 +9095,8 @@
         "source_location": {
           "heading": "F-055 - Save Local Copy Copy-Out Flow",
           "heading_level": 3,
-          "heading_line": 3412,
-          "line": 3414,
+          "heading_line": 3448,
+          "line": 3450,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9062,8 +9106,8 @@
         "source_location": {
           "heading": "F-057 - File Tree Source Control Entry Points",
           "heading_level": 3,
-          "heading_line": 3521,
-          "line": 3523,
+          "heading_line": 3557,
+          "line": 3559,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9073,8 +9117,8 @@
         "source_location": {
           "heading": "F-058 - Diff Review Surface Ownership Split",
           "heading_level": 3,
-          "heading_line": 3576,
-          "line": 3578,
+          "heading_line": 3612,
+          "line": 3614,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9084,8 +9128,8 @@
         "source_location": {
           "heading": "F-059 - Compare Target Defaults And Choice Surfacing",
           "heading_level": 3,
-          "heading_line": 3643,
-          "line": 3645,
+          "heading_line": 3679,
+          "line": 3681,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9095,8 +9139,8 @@
         "source_location": {
           "heading": "F-060 - Hunk Conflict And Diff Search Launch Boundary",
           "heading_level": 3,
-          "heading_line": 3695,
-          "line": 3697,
+          "heading_line": 3731,
+          "line": 3733,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9106,8 +9150,8 @@
         "source_location": {
           "heading": "F-061 - Hunk Catalog Reconciliation Owners",
           "heading_level": 3,
-          "heading_line": 3750,
-          "line": 3752,
+          "heading_line": 3786,
+          "line": 3788,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9117,8 +9161,8 @@
         "source_location": {
           "heading": "F-062 - Change Marker Projection And Exact Revert Identity",
           "heading_level": 3,
-          "heading_line": 3814,
-          "line": 3816,
+          "heading_line": 3850,
+          "line": 3852,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9128,8 +9172,8 @@
         "source_location": {
           "heading": "F-063 - Git Mutations Versus Restore History Boundary",
           "heading_level": 3,
-          "heading_line": 3864,
-          "line": 3866,
+          "heading_line": 3900,
+          "line": 3902,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9139,8 +9183,8 @@
         "source_location": {
           "heading": "F-064 - Diff-Affecting Taxonomy And Restore Event Refresh",
           "heading_level": 3,
-          "heading_line": 3929,
-          "line": 3931,
+          "heading_line": 3965,
+          "line": 3967,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9150,8 +9194,19 @@
         "source_location": {
           "heading": "F-065 - Diff Undo Scope And Chat Diff Affordances",
           "heading_level": 3,
-          "heading_line": 3990,
-          "line": 3992,
+          "heading_line": 4026,
+          "line": 4028,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-067",
+        "source_location": {
+          "heading": "F-067 - Preview Browser Terminal And Hot Reload Recovery Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 4225,
+          "line": 4227,
           "path": "Plans/FileManager.md"
         }
       },
@@ -9414,8 +9469,8 @@
         "source_location": {
           "heading": "F3-002 - Owner Section Scope",
           "heading_level": 3,
-          "heading_line": 3441,
-          "line": 3443,
+          "heading_line": 3487,
+          "line": 3489,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9425,8 +9480,8 @@
         "source_location": {
           "heading": "F3-003 - Object-First Concern Search",
           "heading_level": 3,
-          "heading_line": 3492,
-          "line": 3494,
+          "heading_line": 3538,
+          "line": 3540,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9436,8 +9491,8 @@
         "source_location": {
           "heading": "F3-004 - Concern Surface Record Schema",
           "heading_level": 3,
-          "heading_line": 3544,
-          "line": 3546,
+          "heading_line": 3590,
+          "line": 3592,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9447,8 +9502,8 @@
         "source_location": {
           "heading": "F3-005 - Concern Lineage And Guided Actions",
           "heading_level": 3,
-          "heading_line": 3600,
-          "line": 3602,
+          "heading_line": 3646,
+          "line": 3648,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9458,8 +9513,8 @@
         "source_location": {
           "heading": "F3-006 - Projection Trust Grammar",
           "heading_level": 3,
-          "heading_line": 3654,
-          "line": 3656,
+          "heading_line": 3700,
+          "line": 3702,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9469,8 +9524,8 @@
         "source_location": {
           "heading": "F3-007 - Shared Attention Labels",
           "heading_level": 3,
-          "heading_line": 3706,
-          "line": 3708,
+          "heading_line": 3752,
+          "line": 3754,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9480,8 +9535,8 @@
         "source_location": {
           "heading": "F3-008 - Freshness Gated Mutations",
           "heading_level": 3,
-          "heading_line": 3756,
-          "line": 3758,
+          "heading_line": 3802,
+          "line": 3804,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9491,8 +9546,8 @@
         "source_location": {
           "heading": "F3-009 - Progress Only Widget Hostability",
           "heading_level": 3,
-          "heading_line": 3811,
-          "line": 3813,
+          "heading_line": 3857,
+          "line": 3859,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9502,8 +9557,8 @@
         "source_location": {
           "heading": "F3-010 - Widget Layout Migration Scope",
           "heading_level": 3,
-          "heading_line": 3868,
-          "line": 3870,
+          "heading_line": 3914,
+          "line": 3916,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9513,8 +9568,8 @@
         "source_location": {
           "heading": "F3-011 - Blocked HITL Escalation Identity",
           "heading_level": 3,
-          "heading_line": 3920,
-          "line": 3922,
+          "heading_line": 3966,
+          "line": 3968,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9524,8 +9579,8 @@
         "source_location": {
           "heading": "F3-012 - Action Confirmation Policy",
           "heading_level": 3,
-          "heading_line": 3974,
-          "line": 3976,
+          "heading_line": 4020,
+          "line": 4022,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9535,8 +9590,8 @@
         "source_location": {
           "heading": "F3-013 - Mutation Gate Preconditions",
           "heading_level": 3,
-          "heading_line": 4026,
-          "line": 4028,
+          "heading_line": 4072,
+          "line": 4074,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9546,8 +9601,8 @@
         "source_location": {
           "heading": "F3-016 - Help And Contextual Affordances",
           "heading_level": 3,
-          "heading_line": 4171,
-          "line": 4173,
+          "heading_line": 4217,
+          "line": 4219,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9557,8 +9612,8 @@
         "source_location": {
           "heading": "F3-017 - Notification Routing Semantics",
           "heading_level": 3,
-          "heading_line": 4220,
-          "line": 4222,
+          "heading_line": 4266,
+          "line": 4268,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9568,8 +9623,8 @@
         "source_location": {
           "heading": "F3-018 - Sparse Tab Badges",
           "heading_level": 3,
-          "heading_line": 4273,
-          "line": 4275,
+          "heading_line": 4319,
+          "line": 4321,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9579,8 +9634,8 @@
         "source_location": {
           "heading": "F3-019 - Object First Route Destinations",
           "heading_level": 3,
-          "heading_line": 4320,
-          "line": 4322,
+          "heading_line": 4366,
+          "line": 4368,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9590,8 +9645,8 @@
         "source_location": {
           "heading": "F3-022 - Concrete Account GUI Display",
           "heading_level": 3,
-          "heading_line": 4474,
-          "line": 4476,
+          "heading_line": 4520,
+          "line": 4522,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9601,8 +9656,8 @@
         "source_location": {
           "heading": "F3-024 - Operational Identity Rows",
           "heading_level": 3,
-          "heading_line": 4577,
-          "line": 4579,
+          "heading_line": 4623,
+          "line": 4625,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9612,8 +9667,8 @@
         "source_location": {
           "heading": "F3-026 - Compliance And Slint Baseline",
           "heading_level": 3,
-          "heading_line": 4676,
-          "line": 4678,
+          "heading_line": 4722,
+          "line": 4724,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9623,8 +9678,8 @@
         "source_location": {
           "heading": "F3-027 - GUI Rewrite Shell Summary",
           "heading_level": 3,
-          "heading_line": 4729,
-          "line": 4731,
+          "heading_line": 4775,
+          "line": 4777,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9634,8 +9689,8 @@
         "source_location": {
           "heading": "F3-028 - New Surfaces And Promoted Workflows",
           "heading_level": 3,
-          "heading_line": 4785,
-          "line": 4787,
+          "heading_line": 4831,
+          "line": 4833,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9645,8 +9700,8 @@
         "source_location": {
           "heading": "F3-029 - Core Stack Technologies",
           "heading_level": 3,
-          "heading_line": 4841,
-          "line": 4843,
+          "heading_line": 4887,
+          "line": 4889,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9656,8 +9711,8 @@
         "source_location": {
           "heading": "F3-030 - GUI Technology Exclusion",
           "heading_level": 3,
-          "heading_line": 4894,
-          "line": 4896,
+          "heading_line": 4940,
+          "line": 4942,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9667,8 +9722,8 @@
         "source_location": {
           "heading": "F3-031 - Slint Build Integration",
           "heading_level": 3,
-          "heading_line": 4944,
-          "line": 4946,
+          "heading_line": 4990,
+          "line": 4992,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9678,8 +9733,8 @@
         "source_location": {
           "heading": "F3-033 - Slint Backend Selection Diagnostics",
           "heading_level": 3,
-          "heading_line": 5045,
-          "line": 5047,
+          "heading_line": 5091,
+          "line": 5093,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9689,8 +9744,8 @@
         "source_location": {
           "heading": "F3-034 - IDE Shell Structure Diagram",
           "heading_level": 3,
-          "heading_line": 5095,
-          "line": 5097,
+          "heading_line": 5141,
+          "line": 5143,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9700,8 +9755,8 @@
         "source_location": {
           "heading": "F3-035 - Structural Zones And Side Panel Rule",
           "heading_level": 3,
-          "heading_line": 5148,
-          "line": 5150,
+          "heading_line": 5194,
+          "line": 5196,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9711,8 +9766,8 @@
         "source_location": {
           "heading": "F3-036 - Status Bar Indexing Indicator",
           "heading_level": 3,
-          "heading_line": 5204,
-          "line": 5206,
+          "heading_line": 5250,
+          "line": 5252,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9722,8 +9777,8 @@
         "source_location": {
           "heading": "F3-037 - System Tray Behavior",
           "heading_level": 3,
-          "heading_line": 5256,
-          "line": 5258,
+          "heading_line": 5302,
+          "line": 5304,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9733,8 +9788,8 @@
         "source_location": {
           "heading": "F3-038 - Workspace Tab Project Switching",
           "heading_level": 3,
-          "heading_line": 5308,
-          "line": 5310,
+          "heading_line": 5354,
+          "line": 5356,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9744,8 +9799,8 @@
         "source_location": {
           "heading": "F3-039 - Spacing And Density Tokens",
           "heading_level": 3,
-          "heading_line": 5362,
-          "line": 5364,
+          "heading_line": 5408,
+          "line": 5410,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9755,8 +9810,8 @@
         "source_location": {
           "heading": "F3-040 - Reference Space Accounting",
           "heading_level": 3,
-          "heading_line": 5415,
-          "line": 5417,
+          "heading_line": 5461,
+          "line": 5463,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9766,8 +9821,8 @@
         "source_location": {
           "heading": "F3-041 - Activity Bar Surface Slot",
           "heading_level": 3,
-          "heading_line": 5467,
-          "line": 5469,
+          "heading_line": 5513,
+          "line": 5515,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9777,8 +9832,8 @@
         "source_location": {
           "heading": "F3-042 - Canonical Side Panel Inventory",
           "heading_level": 3,
-          "heading_line": 5520,
-          "line": 5522,
+          "heading_line": 5566,
+          "line": 5568,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9788,8 +9843,8 @@
         "source_location": {
           "heading": "F3-043 - GitHub Actions Side Panel Owner Boundary",
           "heading_level": 3,
-          "heading_line": 5574,
-          "line": 5576,
+          "heading_line": 5620,
+          "line": 5622,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9799,8 +9854,8 @@
         "source_location": {
           "heading": "F3-044 - Run And Debug Side Panel Owner Boundary",
           "heading_level": 3,
-          "heading_line": 5624,
-          "line": 5626,
+          "heading_line": 5670,
+          "line": 5672,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9810,8 +9865,8 @@
         "source_location": {
           "heading": "F3-045 - Search Panel UI And Result Routing",
           "heading_level": 3,
-          "heading_line": 5675,
-          "line": 5677,
+          "heading_line": 5721,
+          "line": 5723,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9821,8 +9876,8 @@
         "source_location": {
           "heading": "F3-046 - Search Indexing Control And Freshness",
           "heading_level": 3,
-          "heading_line": 5726,
-          "line": 5728,
+          "heading_line": 5772,
+          "line": 5774,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9832,8 +9887,8 @@
         "source_location": {
           "heading": "F3-047 - Object Record Search Results",
           "heading_level": 3,
-          "heading_line": 5778,
-          "line": 5780,
+          "heading_line": 5824,
+          "line": 5826,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9843,8 +9898,8 @@
         "source_location": {
           "heading": "F3-048 - Search Ownership Taxonomy And IDs",
           "heading_level": 3,
-          "heading_line": 5827,
-          "line": 5829,
+          "heading_line": 5873,
+          "line": 5875,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9854,8 +9909,8 @@
         "source_location": {
           "heading": "F3-049 - Panel Concept And Alias Reconciliation",
           "heading_level": 3,
-          "heading_line": 5879,
-          "line": 5881,
+          "heading_line": 5925,
+          "line": 5927,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9865,8 +9920,8 @@
         "source_location": {
           "heading": "F3-050 - Account Help Copy And Pinning Propagation",
           "heading_level": 3,
-          "heading_line": 5934,
-          "line": 5936,
+          "heading_line": 5980,
+          "line": 5982,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9876,8 +9931,8 @@
         "source_location": {
           "heading": "F3-051 - Cross Surface Scaling And Stream Parity",
           "heading_level": 3,
-          "heading_line": 5987,
-          "line": 5989,
+          "heading_line": 6033,
+          "line": 6035,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9887,8 +9942,8 @@
         "source_location": {
           "heading": "F3-052 - Advanced Subview Discoverability",
           "heading_level": 3,
-          "heading_line": 6040,
-          "line": 6042,
+          "heading_line": 6086,
+          "line": 6088,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9898,8 +9953,8 @@
         "source_location": {
           "heading": "F3-053 - Panel UX State Storage Boundary",
           "heading_level": 3,
-          "heading_line": 6091,
-          "line": 6093,
+          "heading_line": 6137,
+          "line": 6139,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9909,8 +9964,8 @@
         "source_location": {
           "heading": "F3-054 - Command Palette Overlay And Prefix Modes",
           "heading_level": 3,
-          "heading_line": 6144,
-          "line": 6146,
+          "heading_line": 6190,
+          "line": 6192,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9920,8 +9975,8 @@
         "source_location": {
           "heading": "F3-055 - Command Palette Search Boundaries",
           "heading_level": 3,
-          "heading_line": 6196,
-          "line": 6198,
+          "heading_line": 6242,
+          "line": 6244,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9931,8 +9986,8 @@
         "source_location": {
           "heading": "F3-056 - Search Command Family And Domain Taxonomy",
           "heading_level": 3,
-          "heading_line": 6248,
-          "line": 6250,
+          "heading_line": 6294,
+          "line": 6296,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9942,8 +9997,8 @@
         "source_location": {
           "heading": "F3-057 - Breadcrumb Strip",
           "heading_level": 3,
-          "heading_line": 6300,
-          "line": 6302,
+          "heading_line": 6346,
+          "line": 6348,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9953,8 +10008,8 @@
         "source_location": {
           "heading": "F3-058 - Shortcut Registry And Orchestrator Candidates",
           "heading_level": 3,
-          "heading_line": 6347,
-          "line": 6349,
+          "heading_line": 6393,
+          "line": 6395,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9964,8 +10019,8 @@
         "source_location": {
           "heading": "F3-059 - Shortcut Tiers And Platform Normalization",
           "heading_level": 3,
-          "heading_line": 6399,
-          "line": 6401,
+          "heading_line": 6445,
+          "line": 6447,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9975,8 +10030,8 @@
         "source_location": {
           "heading": "F3-060 - Detachable Panel Identity And Required Surfaces",
           "heading_level": 3,
-          "heading_line": 6454,
-          "line": 6456,
+          "heading_line": 6500,
+          "line": 6502,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9986,8 +10041,8 @@
         "source_location": {
           "heading": "F3-061 - Terminal Detachment Boundaries And Labels",
           "heading_level": 3,
-          "heading_line": 6505,
-          "line": 6507,
+          "heading_line": 6551,
+          "line": 6553,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -9997,8 +10052,8 @@
         "source_location": {
           "heading": "F3-062 - Bottom Runtime Workgroup IA",
           "heading_level": 3,
-          "heading_line": 6558,
-          "line": 6560,
+          "heading_line": 6604,
+          "line": 6606,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10008,8 +10063,8 @@
         "source_location": {
           "heading": "F3-063 - Terminal Split Grid And Editor Embeddings",
           "heading_level": 3,
-          "heading_line": 6611,
-          "line": 6613,
+          "heading_line": 6657,
+          "line": 6659,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10019,8 +10074,8 @@
         "source_location": {
           "heading": "F3-064 - Terminal Drag And Drop Contract",
           "heading_level": 3,
-          "heading_line": 6663,
-          "line": 6665,
+          "heading_line": 6709,
+          "line": 6711,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10030,8 +10085,8 @@
         "source_location": {
           "heading": "F3-065 - Terminal Motion Accessibility Boundary",
           "heading_level": 3,
-          "heading_line": 6715,
-          "line": 6717,
+          "heading_line": 6761,
+          "line": 6763,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10041,8 +10096,8 @@
         "source_location": {
           "heading": "F3-066 - Panel Dock State Machine",
           "heading_level": 3,
-          "heading_line": 6762,
-          "line": 6764,
+          "heading_line": 6808,
+          "line": 6810,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10052,8 +10107,8 @@
         "source_location": {
           "heading": "F3-067 - Undock Triggers",
           "heading_level": 3,
-          "heading_line": 6813,
-          "line": 6815,
+          "heading_line": 6859,
+          "line": 6861,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10063,8 +10118,8 @@
         "source_location": {
           "heading": "F3-068 - Floating Panel Snap Zones",
           "heading_level": 3,
-          "heading_line": 6862,
-          "line": 6864,
+          "heading_line": 6908,
+          "line": 6910,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10074,8 +10129,8 @@
         "source_location": {
           "heading": "F3-069 - Slint Multi Window Shared Data",
           "heading_level": 3,
-          "heading_line": 6911,
-          "line": 6913,
+          "heading_line": 6957,
+          "line": 6959,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10085,8 +10140,8 @@
         "source_location": {
           "heading": "F3-070 - Detach Discoverability Signals",
           "heading_level": 3,
-          "heading_line": 6963,
-          "line": 6965,
+          "heading_line": 7009,
+          "line": 7011,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10096,8 +10151,8 @@
         "source_location": {
           "heading": "F3-071 - Project Scoped Panel Persistence",
           "heading_level": 3,
-          "heading_line": 7012,
-          "line": 7014,
+          "heading_line": 7058,
+          "line": 7060,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10107,8 +10162,8 @@
         "source_location": {
           "heading": "F3-072 - Panel Recovery And Focus Edge Cases",
           "heading_level": 3,
-          "heading_line": 7063,
-          "line": 7065,
+          "heading_line": 7109,
+          "line": 7111,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10118,8 +10173,8 @@
         "source_location": {
           "heading": "F3-073 - Theme Family Selector Contract",
           "heading_level": 3,
-          "heading_line": 7114,
-          "line": 7116,
+          "heading_line": 7160,
+          "line": 7162,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10129,8 +10184,8 @@
         "source_location": {
           "heading": "F3-074 - Theme Token Matrix",
           "heading_level": 3,
-          "heading_line": 7164,
-          "line": 7166,
+          "heading_line": 7210,
+          "line": 7212,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10140,8 +10195,8 @@
         "source_location": {
           "heading": "F3-075 - Retro Effects Generation And Fallback Tiling",
           "heading_level": 3,
-          "heading_line": 7219,
-          "line": 7221,
+          "heading_line": 7265,
+          "line": 7267,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10151,8 +10206,8 @@
         "source_location": {
           "heading": "F3-076 - Conditional Theme Overlay Composition",
           "heading_level": 3,
-          "heading_line": 7270,
-          "line": 7272,
+          "heading_line": 7316,
+          "line": 7318,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10162,8 +10217,8 @@
         "source_location": {
           "heading": "F3-077 - Theme Switching Live Restart Rules",
           "heading_level": 3,
-          "heading_line": 7320,
-          "line": 7322,
+          "heading_line": 7366,
+          "line": 7368,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10173,8 +10228,8 @@
         "source_location": {
           "heading": "F3-078 - Slint Theme Global Token Contract",
           "heading_level": 3,
-          "heading_line": 7372,
-          "line": 7374,
+          "heading_line": 7418,
+          "line": 7420,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10184,8 +10239,8 @@
         "source_location": {
           "heading": "F3-079 - Rust ThemeVariant Runtime Application",
           "heading_level": 3,
-          "heading_line": 7427,
-          "line": 7429,
+          "heading_line": 7473,
+          "line": 7475,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10195,8 +10250,8 @@
         "source_location": {
           "heading": "F3-080 - Custom Theme Schema And Base Inheritance",
           "heading_level": 3,
-          "heading_line": 7478,
-          "line": 7480,
+          "heading_line": 7524,
+          "line": 7526,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10206,8 +10261,8 @@
         "source_location": {
           "heading": "F3-081 - Custom Theme Loading Validation And Hot Reload",
           "heading_level": 3,
-          "heading_line": 7530,
-          "line": 7532,
+          "heading_line": 7576,
+          "line": 7578,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10217,8 +10272,8 @@
         "source_location": {
           "heading": "F3-082 - Theme Selector Management Surface",
           "heading_level": 3,
-          "heading_line": 7581,
-          "line": 7583,
+          "heading_line": 7627,
+          "line": 7629,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10228,8 +10283,8 @@
         "source_location": {
           "heading": "F3-083 - Terminal Theme Ownership And Semantic Catalog",
           "heading_level": 3,
-          "heading_line": 7634,
-          "line": 7636,
+          "heading_line": 7680,
+          "line": 7682,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10239,8 +10294,8 @@
         "source_location": {
           "heading": "F3-084 - Custom Font Fallback And Theme Preview",
           "heading_level": 3,
-          "heading_line": 7689,
-          "line": 7691,
+          "heading_line": 7735,
+          "line": 7737,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10250,8 +10305,8 @@
         "source_location": {
           "heading": "F3-085 - Theme WCAG Accessibility Contract",
           "heading_level": 3,
-          "heading_line": 7740,
-          "line": 7742,
+          "heading_line": 7786,
+          "line": 7788,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10261,8 +10316,8 @@
         "source_location": {
           "heading": "F3-086 - Views Section Owner Boundary",
           "heading_level": 3,
-          "heading_line": 7792,
-          "line": 7794,
+          "heading_line": 7838,
+          "line": 7840,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10272,8 +10327,8 @@
         "source_location": {
           "heading": "F3-087 - Orchestrator Projection Trust And Stale Mutation Gating",
           "heading_level": 3,
-          "heading_line": 7843,
-          "line": 7845,
+          "heading_line": 7889,
+          "line": 7891,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10283,8 +10338,8 @@
         "source_location": {
           "heading": "F3-088 - Orchestrator Progress Widget Scope And Tab View-State",
           "heading_level": 3,
-          "heading_line": 7898,
-          "line": 7900,
+          "heading_line": 7944,
+          "line": 7946,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10294,8 +10349,8 @@
         "source_location": {
           "heading": "F3-089 - Legacy Tier Alias Translation And Native Object Routing",
           "heading_level": 3,
-          "heading_line": 7952,
-          "line": 7954,
+          "heading_line": 7998,
+          "line": 8000,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10305,8 +10360,8 @@
         "source_location": {
           "heading": "F3-090 - Orchestrator Surface Boundaries And Record-Backed Audit",
           "heading_level": 3,
-          "heading_line": 8009,
-          "line": 8011,
+          "heading_line": 8055,
+          "line": 8057,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10316,8 +10371,8 @@
         "source_location": {
           "heading": "F3-091 - Dashboard Orchestrator Chat Attention Routing",
           "heading_level": 3,
-          "heading_line": 8061,
-          "line": 8063,
+          "heading_line": 8107,
+          "line": 8109,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10327,8 +10382,8 @@
         "source_location": {
           "heading": "F3-092 - Seams Lazy Rollups And Action-Surface Triage",
           "heading_level": 3,
-          "heading_line": 8113,
-          "line": 8115,
+          "heading_line": 8159,
+          "line": 8161,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10338,8 +10393,8 @@
         "source_location": {
           "heading": "F3-093 - Shared Runtime Status And Disabled Control Explanations",
           "heading_level": 3,
-          "heading_line": 8165,
-          "line": 8167,
+          "heading_line": 8211,
+          "line": 8213,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10349,8 +10404,8 @@
         "source_location": {
           "heading": "F3-094 - Deep-Link Context And Shell Route Contract",
           "heading_level": 3,
-          "heading_line": 8219,
-          "line": 8221,
+          "heading_line": 8265,
+          "line": 8267,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10360,8 +10415,8 @@
         "source_location": {
           "heading": "F3-095 - Explain This State Evidence Contract",
           "heading_level": 3,
-          "heading_line": 8274,
-          "line": 8276,
+          "heading_line": 8320,
+          "line": 8322,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10371,8 +10426,8 @@
         "source_location": {
           "heading": "F3-096 - Target Banners Empty States And Dense Accessibility",
           "heading_level": 3,
-          "heading_line": 8327,
-          "line": 8329,
+          "heading_line": 8373,
+          "line": 8375,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10382,8 +10437,8 @@
         "source_location": {
           "heading": "F3-097 - Blocked Recovery Owner-Routed Action Family",
           "heading_level": 3,
-          "heading_line": 8381,
-          "line": 8383,
+          "heading_line": 8427,
+          "line": 8429,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10393,8 +10448,8 @@
         "source_location": {
           "heading": "F3-098 - Governance Policy Outcomes And Partial Receipts",
           "heading_level": 3,
-          "heading_line": 8435,
-          "line": 8437,
+          "heading_line": 8481,
+          "line": 8483,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10404,8 +10459,8 @@
         "source_location": {
           "heading": "F3-099 - Progress Catalog Default Drill Targets",
           "heading_level": 3,
-          "heading_line": 8489,
-          "line": 8491,
+          "heading_line": 8535,
+          "line": 8537,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10415,8 +10470,8 @@
         "source_location": {
           "heading": "F3-100 - Progress State Action And Alert Labels",
           "heading_level": 3,
-          "heading_line": 8545,
-          "line": 8547,
+          "heading_line": 8591,
+          "line": 8593,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10426,8 +10481,8 @@
         "source_location": {
           "heading": "F3-102 - Shared Route Payload And Widget Command Routing",
           "heading_level": 3,
-          "heading_line": 8656,
-          "line": 8658,
+          "heading_line": 8702,
+          "line": 8704,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10437,8 +10492,8 @@
         "source_location": {
           "heading": "F3-103 - Chat Usage Graph Evidence Object-First Pivots",
           "heading_level": 3,
-          "heading_line": 8710,
-          "line": 8712,
+          "heading_line": 8756,
+          "line": 8758,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10448,8 +10503,8 @@
         "source_location": {
           "heading": "F3-106 - Concern Route Payload Fields And Overrides",
           "heading_level": 3,
-          "heading_line": 8878,
-          "line": 8880,
+          "heading_line": 8924,
+          "line": 8926,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10459,8 +10514,8 @@
         "source_location": {
           "heading": "F3-107 - Indexing Settings Admin Surface",
           "heading_level": 3,
-          "heading_line": 8932,
-          "line": 8934,
+          "heading_line": 8978,
+          "line": 8980,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10470,8 +10525,8 @@
         "source_location": {
           "heading": "F3-108 - Settings Provider Web Row Disclosure",
           "heading_level": 3,
-          "heading_line": 8983,
-          "line": 8985,
+          "heading_line": 9029,
+          "line": 9031,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10481,8 +10536,8 @@
         "source_location": {
           "heading": "F3-109 - Unified Settings Tab Registry",
           "heading_level": 3,
-          "heading_line": 9036,
-          "line": 9038,
+          "heading_line": 9082,
+          "line": 9084,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10492,8 +10547,8 @@
         "source_location": {
           "heading": "F3-110 - Settings Help Scope And Legacy Alias Migration",
           "heading_level": 3,
-          "heading_line": 9110,
-          "line": 9112,
+          "heading_line": 9156,
+          "line": 9158,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10503,8 +10558,8 @@
         "source_location": {
           "heading": "F3-111 - Storage Usage Inspector Owner Boundaries",
           "heading_level": 3,
-          "heading_line": 9164,
-          "line": 9166,
+          "heading_line": 9210,
+          "line": 9212,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10514,8 +10569,8 @@
         "source_location": {
           "heading": "F3-112 - Runtime Override Display And Operational Identity Grammar",
           "heading_level": 3,
-          "heading_line": 9219,
-          "line": 9221,
+          "heading_line": 9265,
+          "line": 9267,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10525,8 +10580,8 @@
         "source_location": {
           "heading": "F3-113 - Agent Config Provider Skill Row Surface",
           "heading_level": 3,
-          "heading_line": 9272,
-          "line": 9274,
+          "heading_line": 9318,
+          "line": 9320,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10536,8 +10591,8 @@
         "source_location": {
           "heading": "F3-114 - Agent Config Personas Tab Contract",
           "heading_level": 3,
-          "heading_line": 9328,
-          "line": 9330,
+          "heading_line": 9374,
+          "line": 9376,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10547,8 +10602,8 @@
         "source_location": {
           "heading": "F3-115 - Agent Config Provider Entry Diagnostics",
           "heading_level": 3,
-          "heading_line": 9383,
-          "line": 9385,
+          "heading_line": 9429,
+          "line": 9431,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10558,8 +10613,8 @@
         "source_location": {
           "heading": "F3-116 - Agent Config Setup Evidence Failover And Default Crew",
           "heading_level": 3,
-          "heading_line": 9437,
-          "line": 9439,
+          "heading_line": 9483,
+          "line": 9485,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10569,8 +10624,8 @@
         "source_location": {
           "heading": "F3-117 - Docker Manager Shell Boundary And Alias Disposition",
           "heading_level": 3,
-          "heading_line": 9497,
-          "line": 9499,
+          "heading_line": 9543,
+          "line": 9545,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10580,8 +10635,8 @@
         "source_location": {
           "heading": "F3-118 - Account Binding And Runtime Identity Resolver Display",
           "heading_level": 3,
-          "heading_line": 9554,
-          "line": 9556,
+          "heading_line": 9600,
+          "line": 9602,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10591,8 +10646,8 @@
         "source_location": {
           "heading": "F3-119 - Panel Settings Persistence And Agent-Config Naming",
           "heading_level": 3,
-          "heading_line": 9607,
-          "line": 9609,
+          "heading_line": 9653,
+          "line": 9655,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10602,8 +10657,8 @@
         "source_location": {
           "heading": "F3-120 - Terminal Settings Durable Preferences Owner",
           "heading_level": 3,
-          "heading_line": 9661,
-          "line": 9663,
+          "heading_line": 9707,
+          "line": 9709,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10613,8 +10668,8 @@
         "source_location": {
           "heading": "F3-121 - Terminal Settings Coverage Groups And Shortcut Discovery",
           "heading_level": 3,
-          "heading_line": 9718,
-          "line": 9720,
+          "heading_line": 9764,
+          "line": 9766,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10624,8 +10679,8 @@
         "source_location": {
           "heading": "F3-122 - Agent Config Skills Tab Readiness Badges",
           "heading_level": 3,
-          "heading_line": 9773,
-          "line": 9775,
+          "heading_line": 9819,
+          "line": 9821,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10635,8 +10690,8 @@
         "source_location": {
           "heading": "F3-123 - Project Summary Rollups Trust And Status Vocabulary",
           "heading_level": 3,
-          "heading_line": 9823,
-          "line": 9825,
+          "heading_line": 9869,
+          "line": 9871,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10646,8 +10701,8 @@
         "source_location": {
           "heading": "F3-124 - Project Attention Items Routing And Summary Cards",
           "heading_level": 3,
-          "heading_line": 9879,
-          "line": 9881,
+          "heading_line": 9925,
+          "line": 9927,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10657,8 +10712,8 @@
         "source_location": {
           "heading": "F3-125 - Concern Record Actions Trust Escalation And Help Terms",
           "heading_level": 3,
-          "heading_line": 9932,
-          "line": 9934,
+          "heading_line": 9978,
+          "line": 9980,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10668,8 +10723,8 @@
         "source_location": {
           "heading": "F3-126 - Notification Cadence Quieting Resurfacing And Owner Taxonomy",
           "heading_level": 3,
-          "heading_line": 9985,
-          "line": 9987,
+          "heading_line": 10031,
+          "line": 10033,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10679,8 +10734,8 @@
         "source_location": {
           "heading": "F3-128 - Alert Evidence Gate Incident Bundling And Timelines",
           "heading_level": 3,
-          "heading_line": 10097,
-          "line": 10099,
+          "heading_line": 10143,
+          "line": 10145,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10690,8 +10745,8 @@
         "source_location": {
           "heading": "F3-129 - Runtime Attention Ownership Routing And Authority",
           "heading_level": 3,
-          "heading_line": 10149,
-          "line": 10151,
+          "heading_line": 10195,
+          "line": 10197,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10701,8 +10756,8 @@
         "source_location": {
           "heading": "F3-130 - Alert Auto Resolution Aging Coalescing And Bulk Actions",
           "heading_level": 3,
-          "heading_line": 10202,
-          "line": 10204,
+          "heading_line": 10248,
+          "line": 10250,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10712,8 +10767,8 @@
         "source_location": {
           "heading": "F3-131 - Chat Panel Workspace And Layout",
           "heading_level": 3,
-          "heading_line": 10255,
-          "line": 10257,
+          "heading_line": 10301,
+          "line": 10303,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10723,8 +10778,8 @@
         "source_location": {
           "heading": "F3-132 - Thread Context Detail And Message Info Surfaces",
           "heading_level": 3,
-          "heading_line": 10307,
-          "line": 10309,
+          "heading_line": 10353,
+          "line": 10355,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10734,8 +10789,8 @@
         "source_location": {
           "heading": "F3-133 - Thread Header Live Controls",
           "heading_level": 3,
-          "heading_line": 10358,
-          "line": 10360,
+          "heading_line": 10404,
+          "line": 10406,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10745,8 +10800,8 @@
         "source_location": {
           "heading": "F3-134 - Virtualized Message Stream And Activity Cards",
           "heading_level": 3,
-          "heading_line": 10411,
-          "line": 10413,
+          "heading_line": 10457,
+          "line": 10459,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10756,8 +10811,8 @@
         "source_location": {
           "heading": "F3-135 - Composer Controls And Plan Panel Affordances",
           "heading_level": 3,
-          "heading_line": 10463,
-          "line": 10465,
+          "heading_line": 10509,
+          "line": 10511,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10767,8 +10822,8 @@
         "source_location": {
           "heading": "F3-136 - Composer Queue Rules And State Vocabulary",
           "heading_level": 3,
-          "heading_line": 10515,
-          "line": 10517,
+          "heading_line": 10561,
+          "line": 10563,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10778,8 +10833,8 @@
         "source_location": {
           "heading": "F3-137 - Slash Palette Approvals And Shell Surface Ownership",
           "heading_level": 3,
-          "heading_line": 10564,
-          "line": 10566,
+          "heading_line": 10610,
+          "line": 10612,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10789,8 +10844,8 @@
         "source_location": {
           "heading": "F3-138 - File Manager Tree Owner Boundary And Reveal Disclosure",
           "heading_level": 3,
-          "heading_line": 10624,
-          "line": 10626,
+          "heading_line": 10670,
+          "line": 10672,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10800,8 +10855,8 @@
         "source_location": {
           "heading": "F3-139 - File Manager Actions Clipboard Model And Operational Coverage",
           "heading_level": 3,
-          "heading_line": 10676,
-          "line": 10678,
+          "heading_line": 10722,
+          "line": 10724,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10811,8 +10866,8 @@
         "source_location": {
           "heading": "F3-140 - File Editor Core Capabilities And Preview Pipeline",
           "heading_level": 3,
-          "heading_line": 10733,
-          "line": 10735,
+          "heading_line": 10779,
+          "line": 10781,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10822,8 +10877,8 @@
         "source_location": {
           "heading": "F3-141 - Embedded Editor And External Reference Negative Constraints",
           "heading_level": 3,
-          "heading_line": 10786,
-          "line": 10788,
+          "heading_line": 10832,
+          "line": 10834,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10833,8 +10888,8 @@
         "source_location": {
           "heading": "F3-142 - Native Workbench Service Boundary And Rust Slint Ownership",
           "heading_level": 3,
-          "heading_line": 10842,
-          "line": 10844,
+          "heading_line": 10888,
+          "line": 10890,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10844,8 +10899,8 @@
         "source_location": {
           "heading": "F3-143 - Browser Session Vocabulary And Compatibility Aliases",
           "heading_level": 3,
-          "heading_line": 10895,
-          "line": 10897,
+          "heading_line": 10941,
+          "line": 10943,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10855,8 +10910,8 @@
         "source_location": {
           "heading": "F3-144 - Diff Review Feedback Editor Lessons And MVP Seam Inventory",
           "heading_level": 3,
-          "heading_line": 10950,
-          "line": 10952,
+          "heading_line": 10996,
+          "line": 10998,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10866,8 +10921,8 @@
         "source_location": {
           "heading": "F3-145 - Inline Note Activation And Send To Chat Chip",
           "heading_level": 3,
-          "heading_line": 11005,
-          "line": 11007,
+          "heading_line": 11051,
+          "line": 11053,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10877,8 +10932,8 @@
         "source_location": {
           "heading": "F3-146 - Annotation Persistence Status And Shared Components",
           "heading_level": 3,
-          "heading_line": 11058,
-          "line": 11060,
+          "heading_line": 11104,
+          "line": 11106,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10888,8 +10943,8 @@
         "source_location": {
           "heading": "F3-147 - Agent Activity Surface",
           "heading_level": 3,
-          "heading_line": 11112,
-          "line": 11114,
+          "heading_line": 11158,
+          "line": 11160,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10899,8 +10954,8 @@
         "source_location": {
           "heading": "F3-148 - Log And Audit Inspector",
           "heading_level": 3,
-          "heading_line": 11165,
-          "line": 11167,
+          "heading_line": 11211,
+          "line": 11213,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10910,8 +10965,8 @@
         "source_location": {
           "heading": "F3-149 - Embedded Document Pane",
           "heading_level": 3,
-          "heading_line": 11220,
-          "line": 11222,
+          "heading_line": 11266,
+          "line": 11268,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10921,8 +10976,8 @@
         "source_location": {
           "heading": "F3-150 - Bundle Controls And Review Gate",
           "heading_level": 3,
-          "heading_line": 11270,
-          "line": 11272,
+          "heading_line": 11316,
+          "line": 11318,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10932,8 +10987,8 @@
         "source_location": {
           "heading": "F3-151 - Bottom Runtime Zone Host",
           "heading_level": 3,
-          "heading_line": 11318,
-          "line": 11320,
+          "heading_line": 11364,
+          "line": 11366,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10943,8 +10998,8 @@
         "source_location": {
           "heading": "F3-152 - Terminal And Browser Tab Identity",
           "heading_level": 3,
-          "heading_line": 11369,
-          "line": 11371,
+          "heading_line": 11415,
+          "line": 11417,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10954,8 +11009,8 @@
         "source_location": {
           "heading": "F3-153 - Debug Problems Output And Ports",
           "heading_level": 3,
-          "heading_line": 11420,
-          "line": 11422,
+          "heading_line": 11466,
+          "line": 11468,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10965,8 +11020,8 @@
         "source_location": {
           "heading": "F3-154 - Atomic Widget Catalog Scope",
           "heading_level": 3,
-          "heading_line": 11471,
-          "line": 11473,
+          "heading_line": 11517,
+          "line": 11519,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10976,8 +11031,8 @@
         "source_location": {
           "heading": "F3-155 - SelectableText Contract",
           "heading_level": 3,
-          "heading_line": 11517,
-          "line": 11519,
+          "heading_line": 11563,
+          "line": 11565,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10987,8 +11042,8 @@
         "source_location": {
           "heading": "F3-156 - Widget Categories And Catalog Rules",
           "heading_level": 3,
-          "heading_line": 11566,
-          "line": 11568,
+          "heading_line": 11612,
+          "line": 11614,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -10998,8 +11053,8 @@
         "source_location": {
           "heading": "F3-157 - State Management Reactive Tree",
           "heading_level": 3,
-          "heading_line": 11620,
-          "line": 11622,
+          "heading_line": 11666,
+          "line": 11668,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11009,8 +11064,8 @@
         "source_location": {
           "heading": "F3-158 - State Architecture And Slint Projection Updates",
           "heading_level": 3,
-          "heading_line": 11666,
-          "line": 11668,
+          "heading_line": 11712,
+          "line": 11714,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11020,8 +11075,8 @@
         "source_location": {
           "heading": "F3-159 - State Category Taxonomy",
           "heading_level": 3,
-          "heading_line": 11715,
-          "line": 11717,
+          "heading_line": 11761,
+          "line": 11763,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11031,8 +11086,8 @@
         "source_location": {
           "heading": "F3-160 - Command Mutation State Flow",
           "heading_level": 3,
-          "heading_line": 11766,
-          "line": 11768,
+          "heading_line": 11812,
+          "line": 11814,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11042,8 +11097,8 @@
         "source_location": {
           "heading": "F3-161 - State Conflict Resolution",
           "heading_level": 3,
-          "heading_line": 11816,
-          "line": 11818,
+          "heading_line": 11862,
+          "line": 11864,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11053,8 +11108,8 @@
         "source_location": {
           "heading": "F3-162 - Persistence Promotion Shell Records And Widget Layout",
           "heading_level": 3,
-          "heading_line": 11864,
-          "line": 11866,
+          "heading_line": 11910,
+          "line": 11912,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11064,8 +11119,8 @@
         "source_location": {
           "heading": "F3-163 - View State Boundaries And FileManager Handoff Identity",
           "heading_level": 3,
-          "heading_line": 11921,
-          "line": 11923,
+          "heading_line": 11967,
+          "line": 11969,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11075,8 +11130,8 @@
         "source_location": {
           "heading": "F3-164 - Context Management Provenance And Disclosure",
           "heading_level": 3,
-          "heading_line": 11975,
-          "line": 11977,
+          "heading_line": 12021,
+          "line": 12023,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11086,8 +11141,8 @@
         "source_location": {
           "heading": "F3-165 - Agent Config Instruction Source And Projection Preview",
           "heading_level": 3,
-          "heading_line": 12030,
-          "line": 12032,
+          "heading_line": 12076,
+          "line": 12078,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11097,8 +11152,8 @@
         "source_location": {
           "heading": "F3-166 - Projection Control States And Manual Override",
           "heading_level": 3,
-          "heading_line": 12091,
-          "line": 12093,
+          "heading_line": 12137,
+          "line": 12139,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11108,8 +11163,8 @@
         "source_location": {
           "heading": "F3-167 - Confirmation Level Taxonomy And Reversibility",
           "heading_level": 3,
-          "heading_line": 12146,
-          "line": 12148,
+          "heading_line": 12192,
+          "line": 12194,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11119,8 +11174,8 @@
         "source_location": {
           "heading": "F3-168 - Concern Merge Split Confirmation Mapping",
           "heading_level": 3,
-          "heading_line": 12202,
-          "line": 12204,
+          "heading_line": 12248,
+          "line": 12250,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11130,8 +11185,8 @@
         "source_location": {
           "heading": "F3-170 - Reversible Editor Undo Scope",
           "heading_level": 3,
-          "heading_line": 12306,
-          "line": 12308,
+          "heading_line": 12352,
+          "line": 12354,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11141,8 +11196,8 @@
         "source_location": {
           "heading": "F3-171 - Source Control Restore And Diff Boundary",
           "heading_level": 3,
-          "heading_line": 12359,
-          "line": 12361,
+          "heading_line": 12405,
+          "line": 12407,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11152,8 +11207,8 @@
         "source_location": {
           "heading": "F3-172 - Loading States And Stale Labels",
           "heading_level": 3,
-          "heading_line": 12418,
-          "line": 12420,
+          "heading_line": 12464,
+          "line": 12466,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11163,8 +11218,8 @@
         "source_location": {
           "heading": "F3-173 - Error Display Severity Surfaces",
           "heading_level": 3,
-          "heading_line": 12468,
-          "line": 12470,
+          "heading_line": 12514,
+          "line": 12516,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11174,8 +11229,8 @@
         "source_location": {
           "heading": "F3-174 - Empty State Onboarding And Shortcuts",
           "heading_level": 3,
-          "heading_line": 12519,
-          "line": 12521,
+          "heading_line": 12565,
+          "line": 12567,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11185,8 +11240,8 @@
         "source_location": {
           "heading": "F3-175 - Blocked And Recovery Surface Distinction",
           "heading_level": 3,
-          "heading_line": 12567,
-          "line": 12569,
+          "heading_line": 12613,
+          "line": 12615,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11196,8 +11251,8 @@
         "source_location": {
           "heading": "F3-176 - Event Driven Refresh Canon",
           "heading_level": 3,
-          "heading_line": 12619,
-          "line": 12621,
+          "heading_line": 12665,
+          "line": 12667,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11207,8 +11262,8 @@
         "source_location": {
           "heading": "F3-177 - Polling Freshness Exception",
           "heading_level": 3,
-          "heading_line": 12669,
-          "line": 12671,
+          "heading_line": 12715,
+          "line": 12717,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11218,8 +11273,8 @@
         "source_location": {
           "heading": "F3-178 - Human In The Loop Approval Surfaces",
           "heading_level": 3,
-          "heading_line": 12720,
-          "line": 12722,
+          "heading_line": 12766,
+          "line": 12768,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11229,8 +11284,8 @@
         "source_location": {
           "heading": "F3-179 - Context Menus And Clipboard Payload Families",
           "heading_level": 3,
-          "heading_line": 12771,
-          "line": 12773,
+          "heading_line": 12817,
+          "line": 12819,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11240,8 +11295,8 @@
         "source_location": {
           "heading": "F3-180 - Exact Path And Value Copy",
           "heading_level": 3,
-          "heading_line": 12831,
-          "line": 12833,
+          "heading_line": 12877,
+          "line": 12879,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11251,8 +11306,8 @@
         "source_location": {
           "heading": "F3-181 - Read Only Selection Copy",
           "heading_level": 3,
-          "heading_line": 12879,
-          "line": 12881,
+          "heading_line": 12925,
+          "line": 12927,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11262,8 +11317,8 @@
         "source_location": {
           "heading": "F3-182 - Clipboard Safety Feedback",
           "heading_level": 3,
-          "heading_line": 12931,
-          "line": 12933,
+          "heading_line": 12977,
+          "line": 12979,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11273,8 +11328,8 @@
         "source_location": {
           "heading": "F3-184 - LSP GUI Labels And Rename Approval",
           "heading_level": 3,
-          "heading_line": 13037,
-          "line": 13039,
+          "heading_line": 13083,
+          "line": 13085,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11284,8 +11339,8 @@
         "source_location": {
           "heading": "F3-185 - Loading To Live Layout Stability",
           "heading_level": 3,
-          "heading_line": 13099,
-          "line": 13101,
+          "heading_line": 13145,
+          "line": 13147,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11295,8 +11350,8 @@
         "source_location": {
           "heading": "F3-186 - Detached Surface Continuity",
           "heading_level": 3,
-          "heading_line": 13147,
-          "line": 13149,
+          "heading_line": 13193,
+          "line": 13195,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11306,8 +11361,8 @@
         "source_location": {
           "heading": "F3-187 - Sound Effects Accessibility Boundary",
           "heading_level": 3,
-          "heading_line": 13197,
-          "line": 13199,
+          "heading_line": 13243,
+          "line": 13245,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11317,8 +11372,8 @@
         "source_location": {
           "heading": "F3-188 - Anti Flicker Core Principle",
           "heading_level": 3,
-          "heading_line": 13250,
-          "line": 13252,
+          "heading_line": 13296,
+          "line": 13298,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11328,8 +11383,8 @@
         "source_location": {
           "heading": "F3-189 - Scroll Preservation And New Content Indicator",
           "heading_level": 3,
-          "heading_line": 13299,
-          "line": 13301,
+          "heading_line": 13345,
+          "line": 13347,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11339,8 +11394,8 @@
         "source_location": {
           "heading": "F3-190 - Batched Updates And Stable List Keys",
           "heading_level": 3,
-          "heading_line": 13353,
-          "line": 13355,
+          "heading_line": 13399,
+          "line": 13401,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11350,8 +11405,8 @@
         "source_location": {
           "heading": "F3-191 - Incremental VecModel Mutation",
           "heading_level": 3,
-          "heading_line": 13403,
-          "line": 13405,
+          "heading_line": 13449,
+          "line": 13451,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11361,8 +11416,8 @@
         "source_location": {
           "heading": "F3-192 - Layout Stability And Debounced Persistence",
           "heading_level": 3,
-          "heading_line": 13453,
-          "line": 13455,
+          "heading_line": 13499,
+          "line": 13501,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11372,8 +11427,8 @@
         "source_location": {
           "heading": "F3-193 - Terminal Core Anti Flicker Boundary",
           "heading_level": 3,
-          "heading_line": 13507,
-          "line": 13509,
+          "heading_line": 13553,
+          "line": 13555,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11383,8 +11438,8 @@
         "source_location": {
           "heading": "F3-194 - Terminal Projection Throttling And Ring Buffers",
           "heading_level": 3,
-          "heading_line": 13561,
-          "line": 13563,
+          "heading_line": 13607,
+          "line": 13609,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11394,8 +11449,8 @@
         "source_location": {
           "heading": "F3-195 - Responsive Breakpoints And Overlay Drawers",
           "heading_level": 3,
-          "heading_line": 13616,
-          "line": 13618,
+          "heading_line": 13662,
+          "line": 13664,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11405,8 +11460,8 @@
         "source_location": {
           "heading": "F3-196 - Side Panel Responsive Widths",
           "heading_level": 3,
-          "heading_line": 13670,
-          "line": 13672,
+          "heading_line": 13716,
+          "line": 13718,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11416,8 +11471,8 @@
         "source_location": {
           "heading": "F3-197 - Dashboard Grid Responsive Columns",
           "heading_level": 3,
-          "heading_line": 13722,
-          "line": 13724,
+          "heading_line": 13768,
+          "line": 13770,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11427,8 +11482,8 @@
         "source_location": {
           "heading": "F3-198 - Activity Bar Responsive Navigation",
           "heading_level": 3,
-          "heading_line": 13772,
-          "line": 13774,
+          "heading_line": 13818,
+          "line": 13820,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11438,8 +11493,8 @@
         "source_location": {
           "heading": "F3-199 - Binder Review Placement And Chat Separation",
           "heading_level": 3,
-          "heading_line": 13827,
-          "line": 13829,
+          "heading_line": 13873,
+          "line": 13875,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11449,8 +11504,8 @@
         "source_location": {
           "heading": "F3-200 - Basic Theme Accessibility Option",
           "heading_level": 3,
-          "heading_line": 13888,
-          "line": 13890,
+          "heading_line": 13934,
+          "line": 13936,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11460,8 +11515,8 @@
         "source_location": {
           "heading": "F3-201 - Focus Indicator Theme Rules",
           "heading_level": 3,
-          "heading_line": 13944,
-          "line": 13946,
+          "heading_line": 13990,
+          "line": 13992,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11471,8 +11526,8 @@
         "source_location": {
           "heading": "F3-202 - Keyboard Navigation Contract",
           "heading_level": 3,
-          "heading_line": 13994,
-          "line": 13996,
+          "heading_line": 14040,
+          "line": 14042,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11482,8 +11537,8 @@
         "source_location": {
           "heading": "F3-203 - Screen Reader Mitigation Contract",
           "heading_level": 3,
-          "heading_line": 14048,
-          "line": 14050,
+          "heading_line": 14094,
+          "line": 14096,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11493,8 +11548,8 @@
         "source_location": {
           "heading": "F3-204 - Minimum Touch And Click Targets",
           "heading_level": 3,
-          "heading_line": 14100,
-          "line": 14102,
+          "heading_line": 14146,
+          "line": 14148,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11504,8 +11559,8 @@
         "source_location": {
           "heading": "F3-205 - Slint Root Widgets And Views Layout",
           "heading_level": 3,
-          "heading_line": 14147,
-          "line": 14149,
+          "heading_line": 14193,
+          "line": 14195,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11515,8 +11570,8 @@
         "source_location": {
           "heading": "F3-206 - Slint Panels And Windows Layout",
           "heading_level": 3,
-          "heading_line": 14209,
-          "line": 14211,
+          "heading_line": 14255,
+          "line": 14257,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11526,8 +11581,8 @@
         "source_location": {
           "heading": "F3-207 - Rust App And Bridge Layout",
           "heading_level": 3,
-          "heading_line": 14262,
-          "line": 14264,
+          "heading_line": 14308,
+          "line": 14310,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11537,8 +11592,8 @@
         "source_location": {
           "heading": "F3-208 - Rust Panels Effects And Theme Layout",
           "heading_level": 3,
-          "heading_line": 14317,
-          "line": 14319,
+          "heading_line": 14363,
+          "line": 14365,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11548,8 +11603,8 @@
         "source_location": {
           "heading": "F3-209 - Browser Integration Layout",
           "heading_level": 3,
-          "heading_line": 14378,
-          "line": 14380,
+          "heading_line": 14424,
+          "line": 14426,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11559,8 +11614,8 @@
         "source_location": {
           "heading": "F3-214 - Slint Conditional View Switching",
           "heading_level": 3,
-          "heading_line": 14641,
-          "line": 14643,
+          "heading_line": 14687,
+          "line": 14689,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11570,8 +11625,8 @@
         "source_location": {
           "heading": "F3-215 - Standard Virtualized List Models",
           "heading_level": 3,
-          "heading_line": 14692,
-          "line": 14694,
+          "heading_line": 14738,
+          "line": 14740,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11581,8 +11636,8 @@
         "source_location": {
           "heading": "F3-216 - Large Dataset And Terminal List Boundary",
           "heading_level": 3,
-          "heading_line": 14741,
-          "line": 14743,
+          "heading_line": 14787,
+          "line": 14789,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11592,8 +11647,8 @@
         "source_location": {
           "heading": "F3-217 - Shell Layout And Editor Persistence Keys",
           "heading_level": 3,
-          "heading_line": 14796,
-          "line": 14798,
+          "heading_line": 14842,
+          "line": 14844,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11603,8 +11658,8 @@
         "source_location": {
           "heading": "F3-218 - Chat Settings Review Persistence Keys",
           "heading_level": 3,
-          "heading_line": 14859,
-          "line": 14861,
+          "heading_line": 14905,
+          "line": 14907,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11614,8 +11669,8 @@
         "source_location": {
           "heading": "F3-219 - Preview Browser LSP Account Remote Keys",
           "heading_level": 3,
-          "heading_line": 14921,
-          "line": 14923,
+          "heading_line": 14967,
+          "line": 14969,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11625,8 +11680,8 @@
         "source_location": {
           "heading": "F3-220 - GUI Persistence Alias And Owner Routing Notes",
           "heading_level": 3,
-          "heading_line": 14986,
-          "line": 14988,
+          "heading_line": 15032,
+          "line": 15034,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11636,8 +11691,8 @@
         "source_location": {
           "heading": "F3-221 - Terminal Persistence Compatibility Boundary",
           "heading_level": 3,
-          "heading_line": 15051,
-          "line": 15053,
+          "heading_line": 15097,
+          "line": 15099,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11647,8 +11702,8 @@
         "source_location": {
           "heading": "F3-223 - Usage Dashboard Rollup Consumption",
           "heading_level": 3,
-          "heading_line": 15173,
-          "line": 15175,
+          "heading_line": 15219,
+          "line": 15221,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11658,8 +11713,8 @@
         "source_location": {
           "heading": "F3-224 - Tantivy GUI Search Indices",
           "heading_level": 3,
-          "heading_line": 15223,
-          "line": 15225,
+          "heading_line": 15269,
+          "line": 15271,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11669,8 +11724,8 @@
         "source_location": {
           "heading": "F3-225 - Startup Shell State Restore",
           "heading_level": 3,
-          "heading_line": 15272,
-          "line": 15274,
+          "heading_line": 15318,
+          "line": 15320,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11680,8 +11735,8 @@
         "source_location": {
           "heading": "F3-226 - Startup Terminal Restore Boundary",
           "heading_level": 3,
-          "heading_line": 15330,
-          "line": 15332,
+          "heading_line": 15376,
+          "line": 15378,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11691,8 +11746,8 @@
         "source_location": {
           "heading": "F3-227 - Crash Recovery Nonterminal State",
           "heading_level": 3,
-          "heading_line": 15393,
-          "line": 15395,
+          "heading_line": 15439,
+          "line": 15441,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11702,8 +11757,8 @@
         "source_location": {
           "heading": "F3-228 - Terminal Dev And Privileged Session Recovery",
           "heading_level": 3,
-          "heading_line": 15454,
-          "line": 15456,
+          "heading_line": 15500,
+          "line": 15502,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11713,8 +11768,8 @@
         "source_location": {
           "heading": "F3-229 - Log Stream GitHub Actions And Historical Restore",
           "heading_level": 3,
-          "heading_line": 15516,
-          "line": 15518,
+          "heading_line": 15562,
+          "line": 15564,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11724,8 +11779,8 @@
         "source_location": {
           "heading": "F3-231 - Composer Queue Restore Rules",
           "heading_level": 3,
-          "heading_line": 15642,
-          "line": 15644,
+          "heading_line": 15688,
+          "line": 15690,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11735,8 +11790,8 @@
         "source_location": {
           "heading": "F3-232 - Browser Runtime Artifact Recovery Boundary",
           "heading_level": 3,
-          "heading_line": 15698,
-          "line": 15700,
+          "heading_line": 15744,
+          "line": 15746,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11746,8 +11801,8 @@
         "source_location": {
           "heading": "F3-233 - Iced To Slint Existing View Mapping",
           "heading_level": 3,
-          "heading_line": 15762,
-          "line": 15764,
+          "heading_line": 15808,
+          "line": 15810,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11757,8 +11812,8 @@
         "source_location": {
           "heading": "F3-234 - New Slint Surfaces Mapping",
           "heading_level": 3,
-          "heading_line": 15829,
-          "line": 15831,
+          "heading_line": 15875,
+          "line": 15877,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11768,8 +11823,8 @@
         "source_location": {
           "heading": "F3-235 - Widget Migration Equivalents",
           "heading_level": 3,
-          "heading_line": 15881,
-          "line": 15883,
+          "heading_line": 15927,
+          "line": 15929,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11779,8 +11834,8 @@
         "source_location": {
           "heading": "F3-236 - Slint Event Animation Scaling Migration",
           "heading_level": 3,
-          "heading_line": 15942,
-          "line": 15944,
+          "heading_line": 15988,
+          "line": 15990,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11790,8 +11845,8 @@
         "source_location": {
           "heading": "F3-238 - Clipboard Migration Gate",
           "heading_level": 3,
-          "heading_line": 16058,
-          "line": 16060,
+          "heading_line": 16104,
+          "line": 16106,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11801,8 +11856,8 @@
         "source_location": {
           "heading": "F3-239 - ImageFit Repeat Fallback Risk",
           "heading_level": 3,
-          "heading_line": 16120,
-          "line": 16122,
+          "heading_line": 16166,
+          "line": 16168,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11812,8 +11867,8 @@
         "source_location": {
           "heading": "F3-240 - Multi Window Lifecycle Risk",
           "heading_level": 3,
-          "heading_line": 16168,
-          "line": 16170,
+          "heading_line": 16214,
+          "line": 16216,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11823,8 +11878,8 @@
         "source_location": {
           "heading": "F3-241 - Limited Screen Reader Risk",
           "heading_level": 3,
-          "heading_line": 16219,
-          "line": 16221,
+          "heading_line": 16265,
+          "line": 16267,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11834,8 +11889,8 @@
         "source_location": {
           "heading": "F3-242 - Context Menu Risk",
           "heading_level": 3,
-          "heading_line": 16268,
-          "line": 16270,
+          "heading_line": 16314,
+          "line": 16316,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11845,8 +11900,8 @@
         "source_location": {
           "heading": "F3-243 - Docking Framework Risk",
           "heading_level": 3,
-          "heading_line": 16319,
-          "line": 16321,
+          "heading_line": 16365,
+          "line": 16367,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11856,8 +11911,8 @@
         "source_location": {
           "heading": "F3-244 - Font Family Restart Risk",
           "heading_level": 3,
-          "heading_line": 16369,
-          "line": 16371,
+          "heading_line": 16415,
+          "line": 16417,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11867,8 +11922,8 @@
         "source_location": {
           "heading": "F3-245 - Four Split Terminal Performance Risk",
           "heading_level": 3,
-          "heading_line": 16417,
-          "line": 16419,
+          "heading_line": 16463,
+          "line": 16465,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11878,8 +11933,8 @@
         "source_location": {
           "heading": "F3-246 - Platform Window Manager Risk",
           "heading_level": 3,
-          "heading_line": 16470,
-          "line": 16472,
+          "heading_line": 16516,
+          "line": 16518,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11889,8 +11944,8 @@
         "source_location": {
           "heading": "F3-247 - Large Settings Navigation Risk",
           "heading_level": 3,
-          "heading_line": 16518,
-          "line": 16520,
+          "heading_line": 16564,
+          "line": 16566,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11900,8 +11955,8 @@
         "source_location": {
           "heading": "F3-248 - Migration Scope Risk",
           "heading_level": 3,
-          "heading_line": 16575,
-          "line": 16577,
+          "heading_line": 16621,
+          "line": 16623,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11911,8 +11966,8 @@
         "source_location": {
           "heading": "F3-249 - Invoke From Event Loop Saturation Risk",
           "heading_level": 3,
-          "heading_line": 16625,
-          "line": 16627,
+          "heading_line": 16671,
+          "line": 16673,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11922,8 +11977,8 @@
         "source_location": {
           "heading": "F3-250 - Chat Message Memory Bounds Risk",
           "heading_level": 3,
-          "heading_line": 16676,
-          "line": 16678,
+          "heading_line": 16722,
+          "line": 16724,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11933,8 +11988,8 @@
         "source_location": {
           "heading": "F3-251 - Theme Property Update Batching Risk",
           "heading_level": 3,
-          "heading_line": 16725,
-          "line": 16727,
+          "heading_line": 16771,
+          "line": 16773,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11944,8 +11999,8 @@
         "source_location": {
           "heading": "F3-252 - Dashboard Drag Reorder Risk",
           "heading_level": 3,
-          "heading_line": 16773,
-          "line": 16775,
+          "heading_line": 16819,
+          "line": 16821,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11955,8 +12010,8 @@
         "source_location": {
           "heading": "F3-253 - Floating Window Model Sync Risk",
           "heading_level": 3,
-          "heading_line": 16822,
-          "line": 16824,
+          "heading_line": 16868,
+          "line": 16870,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11966,8 +12021,8 @@
         "source_location": {
           "heading": "F3-254 - LSP Lifecycle Risk",
           "heading_level": 3,
-          "heading_line": 16872,
-          "line": 16874,
+          "heading_line": 16918,
+          "line": 16920,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11977,8 +12032,8 @@
         "source_location": {
           "heading": "F3-255 - External Drag Drop Platform Risk",
           "heading_level": 3,
-          "heading_line": 16924,
-          "line": 16926,
+          "heading_line": 16970,
+          "line": 16972,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11988,8 +12043,8 @@
         "source_location": {
           "heading": "F3-256 - HTML Preview Webview Risk",
           "heading_level": 3,
-          "heading_line": 16974,
-          "line": 16976,
+          "heading_line": 17020,
+          "line": 17022,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -11999,8 +12054,8 @@
         "source_location": {
           "heading": "F3-257 - Steer Mid Stream Risk",
           "heading_level": 3,
-          "heading_line": 17026,
-          "line": 17028,
+          "heading_line": 17072,
+          "line": 17074,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12010,8 +12065,8 @@
         "source_location": {
           "heading": "F3-258 - Webview Embedding Conflict Risk",
           "heading_level": 3,
-          "heading_line": 17074,
-          "line": 17076,
+          "heading_line": 17120,
+          "line": 17122,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12021,8 +12076,8 @@
         "source_location": {
           "heading": "F3-259 - DAP Debugger Reliability Risk",
           "heading_level": 3,
-          "heading_line": 17126,
-          "line": 17128,
+          "heading_line": 17172,
+          "line": 17174,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12032,8 +12087,8 @@
         "source_location": {
           "heading": "F3-260 - SSH Connection Stability Risk",
           "heading_level": 3,
-          "heading_line": 17176,
-          "line": 17178,
+          "heading_line": 17222,
+          "line": 17224,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12043,8 +12098,8 @@
         "source_location": {
           "heading": "F3-261 - Catalog Availability Risk",
           "heading_level": 3,
-          "heading_line": 17226,
-          "line": 17228,
+          "heading_line": 17272,
+          "line": 17274,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12054,8 +12109,8 @@
         "source_location": {
           "heading": "F3-262 - Sound Effects Audio Risk",
           "heading_level": 3,
-          "heading_line": 17276,
-          "line": 17278,
+          "heading_line": 17322,
+          "line": 17324,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12065,8 +12120,8 @@
         "source_location": {
           "heading": "F3-263 - Custom Theme Validation Risk",
           "heading_level": 3,
-          "heading_line": 17326,
-          "line": 17328,
+          "heading_line": 17372,
+          "line": 17374,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12076,8 +12131,8 @@
         "source_location": {
           "heading": "F3-264 - Settings Tab Count Risk",
           "heading_level": 3,
-          "heading_line": 17376,
-          "line": 17378,
+          "heading_line": 17422,
+          "line": 17424,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12087,8 +12142,8 @@
         "source_location": {
           "heading": "F3-265 - Project Switch Reload Performance Risk",
           "heading_level": 3,
-          "heading_line": 17431,
-          "line": 17433,
+          "heading_line": 17477,
+          "line": 17479,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12098,8 +12153,8 @@
         "source_location": {
           "heading": "F3-266 - File Watcher Resource Risk",
           "heading_level": 3,
-          "heading_line": 17481,
-          "line": 17483,
+          "heading_line": 17527,
+          "line": 17529,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12109,8 +12164,8 @@
         "source_location": {
           "heading": "F3-267 - Promoted Feature Directionality Decision",
           "heading_level": 3,
-          "heading_line": 17532,
-          "line": 17534,
+          "heading_line": 17578,
+          "line": 17580,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12120,8 +12175,8 @@
         "source_location": {
           "heading": "F3-268 - Promoted Feature Owner Matrix",
           "heading_level": 3,
-          "heading_line": 17591,
-          "line": 17593,
+          "heading_line": 17637,
+          "line": 17639,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12131,8 +12186,8 @@
         "source_location": {
           "heading": "F3-270 - Appendix Cross Reference Inventory",
           "heading_level": 3,
-          "heading_line": 17709,
-          "line": 17711,
+          "heading_line": 17755,
+          "line": 17757,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12142,8 +12197,8 @@
         "source_location": {
           "heading": "F3-271 - Locked UI Framework Shell Decisions",
           "heading_level": 3,
-          "heading_line": 17784,
-          "line": 17786,
+          "heading_line": 17830,
+          "line": 17832,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12153,8 +12208,8 @@
         "source_location": {
           "heading": "F3-272 - Locked Promoted Runtime Browser Debug Decisions",
           "heading_level": 3,
-          "heading_line": 17844,
-          "line": 17846,
+          "heading_line": 17890,
+          "line": 17892,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12164,8 +12219,8 @@
         "source_location": {
           "heading": "F3-274 - Dashboard Widget Grid Addendum Scope",
           "heading_level": 3,
-          "heading_line": 17950,
-          "line": 17952,
+          "heading_line": 17996,
+          "line": 17998,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12175,8 +12230,8 @@
         "source_location": {
           "heading": "F3-275 - Dashboard Widget Grid Upgrade",
           "heading_level": 3,
-          "heading_line": 18001,
-          "line": 18003,
+          "heading_line": 18047,
+          "line": 18049,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12186,8 +12241,8 @@
         "source_location": {
           "heading": "F3-276 - Dashboard Widget Visual And CTA Continuity",
           "heading_level": 3,
-          "heading_line": 18059,
-          "line": 18061,
+          "heading_line": 18105,
+          "line": 18107,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12197,8 +12252,8 @@
         "source_location": {
           "heading": "F3-277 - Default Dashboard Widget Layout",
           "heading_level": 3,
-          "heading_line": 18116,
-          "line": 18118,
+          "heading_line": 18162,
+          "line": 18164,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12208,8 +12263,8 @@
         "source_location": {
           "heading": "F3-278 - Dashboard Add Widget Flow And Control",
           "heading_level": 3,
-          "heading_line": 18170,
-          "line": 18172,
+          "heading_line": 18216,
+          "line": 18218,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12219,8 +12274,8 @@
         "source_location": {
           "heading": "F3-279 - Exact Four-Widget Dashboard Catalog Canon",
           "heading_level": 3,
-          "heading_line": 18241,
-          "line": 18243,
+          "heading_line": 18287,
+          "line": 18289,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12230,8 +12285,8 @@
         "source_location": {
           "heading": "F3-280 - Atomic Vs Page Widget Catalog Boundary",
           "heading_level": 3,
-          "heading_line": 18313,
-          "line": 18315,
+          "heading_line": 18359,
+          "line": 18361,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12241,8 +12296,8 @@
         "source_location": {
           "heading": "F3-283 - Persona Editor Compatibility State Matrix",
           "heading_level": 3,
-          "heading_line": 18484,
-          "line": 18486,
+          "heading_line": 18530,
+          "line": 18532,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12252,8 +12307,8 @@
         "source_location": {
           "heading": "F3-285 - Expanded Persona Editor Field Set",
           "heading_level": 3,
-          "heading_line": 18589,
-          "line": 18591,
+          "heading_line": 18635,
+          "line": 18637,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12263,8 +12318,8 @@
         "source_location": {
           "heading": "F3-286 - Talkativeness Labels And Enum Values",
           "heading_level": 3,
-          "heading_line": 18644,
-          "line": 18646,
+          "heading_line": 18690,
+          "line": 18692,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12274,8 +12329,8 @@
         "source_location": {
           "heading": "F3-287 - Persona Compatibility Panel Copy Examples",
           "heading_level": 3,
-          "heading_line": 18701,
-          "line": 18703,
+          "heading_line": 18747,
+          "line": 18749,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12285,8 +12340,8 @@
         "source_location": {
           "heading": "F3-289 - Active Run Persona Display Fields",
           "heading_level": 3,
-          "heading_line": 18802,
-          "line": 18804,
+          "heading_line": 18848,
+          "line": 18850,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12296,8 +12351,8 @@
         "source_location": {
           "heading": "F3-290 - Persona Display Surface Coverage",
           "heading_level": 3,
-          "heading_line": 18853,
-          "line": 18855,
+          "heading_line": 18899,
+          "line": 18901,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12307,8 +12362,8 @@
         "source_location": {
           "heading": "F3-291 - Agent Trace Summary Operator Card Fields",
           "heading_level": 3,
-          "heading_line": 18903,
-          "line": 18905,
+          "heading_line": 18949,
+          "line": 18951,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12318,8 +12373,8 @@
         "source_location": {
           "heading": "F3-292 - Natural Language Persona Invocation Feedback",
           "heading_level": 3,
-          "heading_line": 18954,
-          "line": 18956,
+          "heading_line": 19000,
+          "line": 19002,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12329,8 +12384,8 @@
         "source_location": {
           "heading": "F3-293 - Provider Gap Disclosure Locations",
           "heading_level": 3,
-          "heading_line": 19006,
-          "line": 19008,
+          "heading_line": 19052,
+          "line": 19054,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12340,8 +12395,8 @@
         "source_location": {
           "heading": "F3-295 - Disclosure Timing Placement And Provider Naming",
           "heading_level": 3,
-          "heading_line": 19107,
-          "line": 19109,
+          "heading_line": 19153,
+          "line": 19155,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12351,8 +12406,8 @@
         "source_location": {
           "heading": "F3-296 - Persona Mapping Editors",
           "heading_level": 3,
-          "heading_line": 19157,
-          "line": 19159,
+          "heading_line": 19203,
+          "line": 19205,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12362,8 +12417,8 @@
         "source_location": {
           "heading": "F3-297 - Rendering Surface Scope And Inventory",
           "heading_level": 3,
-          "heading_line": 19209,
-          "line": 19211,
+          "heading_line": 19255,
+          "line": 19257,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12373,8 +12428,8 @@
         "source_location": {
           "heading": "F3-298 - Browser Derived Chat Capture Chips",
           "heading_level": 3,
-          "heading_line": 19274,
-          "line": 19276,
+          "heading_line": 19320,
+          "line": 19322,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12384,8 +12439,8 @@
         "source_location": {
           "heading": "F3-299 - Browser Debug UX Contract Boundary",
           "heading_level": 3,
-          "heading_line": 19327,
-          "line": 19329,
+          "heading_line": 19373,
+          "line": 19375,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12395,8 +12450,8 @@
         "source_location": {
           "heading": "F3-300 - Debug Browser Automation Safety Defaults",
           "heading_level": 3,
-          "heading_line": 19391,
-          "line": 19393,
+          "heading_line": 19437,
+          "line": 19439,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12406,8 +12461,8 @@
         "source_location": {
           "heading": "F3-301 - Debug Attention And URL Binding Rules",
           "heading_level": 3,
-          "heading_line": 19442,
-          "line": 19444,
+          "heading_line": 19488,
+          "line": 19490,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12417,8 +12472,8 @@
         "source_location": {
           "heading": "F3-302 - Browser Host Placement DevTools And Native Images",
           "heading_level": 3,
-          "heading_line": 19497,
-          "line": 19499,
+          "heading_line": 19543,
+          "line": 19545,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12428,8 +12483,8 @@
         "source_location": {
           "heading": "F3-303 - Browser Capability And Session Class UX",
           "heading_level": 3,
-          "heading_line": 19555,
-          "line": 19557,
+          "heading_line": 19601,
+          "line": 19603,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12439,8 +12494,8 @@
         "source_location": {
           "heading": "F3-304 - Chat Markdown Mermaid Rendering",
           "heading_level": 3,
-          "heading_line": 19613,
-          "line": 19615,
+          "heading_line": 19659,
+          "line": 19661,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12450,8 +12505,8 @@
         "source_location": {
           "heading": "F3-306 - Context Lens Chat Placement And Modes",
           "heading_level": 3,
-          "heading_line": 19711,
-          "line": 19713,
+          "heading_line": 19757,
+          "line": 19759,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12461,8 +12516,8 @@
         "source_location": {
           "heading": "F3-307 - File Editor Render Mode Controls",
           "heading_level": 3,
-          "heading_line": 19764,
-          "line": 19766,
+          "heading_line": 19810,
+          "line": 19812,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12472,8 +12527,8 @@
         "source_location": {
           "heading": "F3-309 - Local HTML Open Command Routing",
           "heading_level": 3,
-          "heading_line": 19868,
-          "line": 19870,
+          "heading_line": 19914,
+          "line": 19916,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12483,8 +12538,8 @@
         "source_location": {
           "heading": "F3-310 - Embedded Document Pane Rendering And Actions",
           "heading_level": 3,
-          "heading_line": 19920,
-          "line": 19922,
+          "heading_line": 19966,
+          "line": 19968,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12494,8 +12549,8 @@
         "source_location": {
           "heading": "F3-311 - Bottom Panel Browser Adjacent Roles",
           "heading_level": 3,
-          "heading_line": 19975,
-          "line": 19977,
+          "heading_line": 20021,
+          "line": 20023,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12505,8 +12560,8 @@
         "source_location": {
           "heading": "F3-312 - Bottom Panel Browser Action Ownership",
           "heading_level": 3,
-          "heading_line": 20035,
-          "line": 20037,
+          "heading_line": 20081,
+          "line": 20083,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12516,8 +12571,8 @@
         "source_location": {
           "heading": "F3-313 - Browser Windowing Runtime Baseline",
           "heading_level": 3,
-          "heading_line": 20094,
-          "line": 20096,
+          "heading_line": 20140,
+          "line": 20142,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12527,8 +12582,8 @@
         "source_location": {
           "heading": "F3-314 - Browser Runtime Disclosure And Recovery",
           "heading_level": 3,
-          "heading_line": 20147,
-          "line": 20149,
+          "heading_line": 20193,
+          "line": 20195,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12538,8 +12593,8 @@
         "source_location": {
           "heading": "F3-316 - Preview Control Accessibility",
           "heading_level": 3,
-          "heading_line": 20252,
-          "line": 20254,
+          "heading_line": 20298,
+          "line": 20300,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12549,8 +12604,8 @@
         "source_location": {
           "heading": "F3-317 - Assistant Chat Plan And Deep Plan Choices",
           "heading_level": 3,
-          "heading_line": 20300,
-          "line": 20302,
+          "heading_line": 20346,
+          "line": 20348,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12560,8 +12615,8 @@
         "source_location": {
           "heading": "F3-318 - Plan Thoroughness Control Presentation",
           "heading_level": 3,
-          "heading_line": 20347,
-          "line": 20349,
+          "heading_line": 20393,
+          "line": 20395,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12571,8 +12626,8 @@
         "source_location": {
           "heading": "F3-319 - Plan Lightweight Thread Artifact Flow",
           "heading_level": 3,
-          "heading_line": 20402,
-          "line": 20404,
+          "heading_line": 20448,
+          "line": 20450,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12582,8 +12637,8 @@
         "source_location": {
           "heading": "F3-320 - Deep Plan Artifact Review Surface",
           "heading_level": 3,
-          "heading_line": 20452,
-          "line": 20454,
+          "heading_line": 20498,
+          "line": 20500,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12593,8 +12648,8 @@
         "source_location": {
           "heading": "F3-321 - Shared Planning TODO Tracker State",
           "heading_level": 3,
-          "heading_line": 20503,
-          "line": 20505,
+          "heading_line": 20549,
+          "line": 20551,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12604,8 +12659,8 @@
         "source_location": {
           "heading": "F3-322 - Deep Plan Annotation And Revision Surface",
           "heading_level": 3,
-          "heading_line": 20564,
-          "line": 20566,
+          "heading_line": 20610,
+          "line": 20612,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12615,8 +12670,8 @@
         "source_location": {
           "heading": "F3-323 - Deep Plan Document Rendering Scope",
           "heading_level": 3,
-          "heading_line": 20621,
-          "line": 20623,
+          "heading_line": 20667,
+          "line": 20669,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12626,8 +12681,8 @@
         "source_location": {
           "heading": "F3-324 - Assistant Chain Wizard Recommendation Card",
           "heading_level": 3,
-          "heading_line": 20672,
-          "line": 20674,
+          "heading_line": 20718,
+          "line": 20720,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12637,8 +12692,8 @@
         "source_location": {
           "heading": "F3-325 - Imported Context Wizard Handoff Surface",
           "heading_level": 3,
-          "heading_line": 20724,
-          "line": 20726,
+          "heading_line": 20770,
+          "line": 20772,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12648,8 +12703,8 @@
         "source_location": {
           "heading": "F3-326 - Planning Recommendation Non-Goals",
           "heading_level": 3,
-          "heading_line": 20776,
-          "line": 20778,
+          "heading_line": 20822,
+          "line": 20824,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12659,8 +12714,8 @@
         "source_location": {
           "heading": "F3-327 - Wizard Blocked Dashboard Card",
           "heading_level": 3,
-          "heading_line": 20827,
-          "line": 20829,
+          "heading_line": 20873,
+          "line": 20875,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12670,8 +12725,8 @@
         "source_location": {
           "heading": "F3-328 - Thread Worktree Icon Presence And Placement",
           "heading_level": 3,
-          "heading_line": 20892,
-          "line": 20894,
+          "heading_line": 20938,
+          "line": 20940,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12681,8 +12736,8 @@
         "source_location": {
           "heading": "F3-329 - Thread Worktree Tooltip Stale And Accessibility Behavior",
           "heading_level": 3,
-          "heading_line": 20945,
-          "line": 20947,
+          "heading_line": 20991,
+          "line": 20993,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12692,8 +12747,8 @@
         "source_location": {
           "heading": "F3-330 - Persistent Thread Selector Badge And Branch Navigation",
           "heading_level": 3,
-          "heading_line": 21004,
-          "line": 21006,
+          "heading_line": 21050,
+          "line": 21052,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12703,8 +12758,8 @@
         "source_location": {
           "heading": "F3-331 - Scheduler Remediation Runtime Data Visibility",
           "heading_level": 3,
-          "heading_line": 21061,
-          "line": 21063,
+          "heading_line": 21107,
+          "line": 21109,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12714,8 +12769,8 @@
         "source_location": {
           "heading": "F3-332 - Blocked Outcome Copy",
           "heading_level": 3,
-          "heading_line": 21113,
-          "line": 21115,
+          "heading_line": 21159,
+          "line": 21161,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12725,8 +12780,8 @@
         "source_location": {
           "heading": "F3-333 - Event-Driven Blocked Scheduler UI Correctness",
           "heading_level": 3,
-          "heading_line": 21161,
-          "line": 21163,
+          "heading_line": 21207,
+          "line": 21209,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12736,8 +12791,8 @@
         "source_location": {
           "heading": "F3-334 - Runtime State Visible Elements",
           "heading_level": 3,
-          "heading_line": 21216,
-          "line": 21218,
+          "heading_line": 21262,
+          "line": 21264,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12747,8 +12802,8 @@
         "source_location": {
           "heading": "F3-335 - UX Safety And Disabled Action Explanations",
           "heading_level": 3,
-          "heading_line": 21274,
-          "line": 21276,
+          "heading_line": 21320,
+          "line": 21322,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12758,8 +12813,8 @@
         "source_location": {
           "heading": "F3-336 - Thread Run Status And Scheduler State Taxonomy",
           "heading_level": 3,
-          "heading_line": 21325,
-          "line": 21327,
+          "heading_line": 21371,
+          "line": 21373,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12769,8 +12824,8 @@
         "source_location": {
           "heading": "F3-337 - FileSafe Persistent Blocked Episode Rendering",
           "heading_level": 3,
-          "heading_line": 21384,
-          "line": 21386,
+          "heading_line": 21430,
+          "line": 21432,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12780,8 +12835,8 @@
         "source_location": {
           "heading": "F3-338 - Degraded Draft Warning Guardrail",
           "heading_level": 3,
-          "heading_line": 21433,
-          "line": 21435,
+          "heading_line": 21479,
+          "line": 21481,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12791,8 +12846,8 @@
         "source_location": {
           "heading": "F3-339 - All-Nodes-Blocked Boundary And Banner",
           "heading_level": 3,
-          "heading_line": 21490,
-          "line": 21492,
+          "heading_line": 21536,
+          "line": 21538,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12802,8 +12857,8 @@
         "source_location": {
           "heading": "F3-340 - Canonical Blocked Recovery GUI Summary Boundary",
           "heading_level": 3,
-          "heading_line": 21544,
-          "line": 21546,
+          "heading_line": 21590,
+          "line": 21592,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12813,8 +12868,8 @@
         "source_location": {
           "heading": "F3-341 - Blocked Payload Actions Distinct Episodes And Command Binding",
           "heading_level": 3,
-          "heading_line": 21592,
-          "line": 21594,
+          "heading_line": 21638,
+          "line": 21640,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12824,8 +12879,8 @@
         "source_location": {
           "heading": "F3-342 - No Surface-Specific Blocked Schema Synthesis",
           "heading_level": 3,
-          "heading_line": 21648,
-          "line": 21650,
+          "heading_line": 21694,
+          "line": 21696,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12835,8 +12890,8 @@
         "source_location": {
           "heading": "F3-343 - Blocked Visual Distinction And Per-Episode Controls",
           "heading_level": 3,
-          "heading_line": 21700,
-          "line": 21702,
+          "heading_line": 21746,
+          "line": 21748,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12846,8 +12901,8 @@
         "source_location": {
           "heading": "F3-344 - Safe-Point Recovery Control Language",
           "heading_level": 3,
-          "heading_line": 21753,
-          "line": 21755,
+          "heading_line": 21799,
+          "line": 21801,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12857,8 +12912,8 @@
         "source_location": {
           "heading": "F3-345 - Seam Review Output Presentation",
           "heading_level": 3,
-          "heading_line": 21805,
-          "line": 21807,
+          "heading_line": 21851,
+          "line": 21853,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12868,8 +12923,8 @@
         "source_location": {
           "heading": "F3-346 - Blocked Badge Visual Mapping",
           "heading_level": 3,
-          "heading_line": 21857,
-          "line": 21859,
+          "heading_line": 21903,
+          "line": 21905,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12879,8 +12934,8 @@
         "source_location": {
           "heading": "F3-347 - Concurrent Blocked Episodes List UX",
           "heading_level": 3,
-          "heading_line": 21914,
-          "line": 21916,
+          "heading_line": 21960,
+          "line": 21962,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12890,8 +12945,8 @@
         "source_location": {
           "heading": "F3-348 - Remediation Ceiling Exceeded UX",
           "heading_level": 3,
-          "heading_line": 21970,
-          "line": 21972,
+          "heading_line": 22016,
+          "line": 22018,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12901,8 +12956,8 @@
         "source_location": {
           "heading": "F3-350 - Promoted Widget Catalog Boundary",
           "heading_level": 3,
-          "heading_line": 22079,
-          "line": 22081,
+          "heading_line": 22125,
+          "line": 22127,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12912,8 +12967,8 @@
         "source_location": {
           "heading": "F3-352 - Web Diff Site And Search Fidelity Widgets",
           "heading_level": 3,
-          "heading_line": 22184,
-          "line": 22186,
+          "heading_line": 22230,
+          "line": 22232,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12923,8 +12978,8 @@
         "source_location": {
           "heading": "F3-353 - Web Progress Event Widget Carry-Through",
           "heading_level": 3,
-          "heading_line": 22243,
-          "line": 22245,
+          "heading_line": 22289,
+          "line": 22291,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12934,8 +12989,8 @@
         "source_location": {
           "heading": "F3-354 - Planning TODO Widget Ownership",
           "heading_level": 3,
-          "heading_line": 22299,
-          "line": 22301,
+          "heading_line": 22345,
+          "line": 22347,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12945,8 +13000,8 @@
         "source_location": {
           "heading": "F3-355 - Question Card Compatibility Normalization",
           "heading_level": 3,
-          "heading_line": 22351,
-          "line": 22353,
+          "heading_line": 22397,
+          "line": 22399,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12956,8 +13011,8 @@
         "source_location": {
           "heading": "F3-356 - Queue And Runtime Identity Widget Carry-Through",
           "heading_level": 3,
-          "heading_line": 22406,
-          "line": 22408,
+          "heading_line": 22452,
+          "line": 22454,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12967,8 +13022,8 @@
         "source_location": {
           "heading": "F3-357 - Chat Panel Widget Ownership Scope",
           "heading_level": 3,
-          "heading_line": 22467,
-          "line": 22469,
+          "heading_line": 22513,
+          "line": 22515,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12978,8 +13033,8 @@
         "source_location": {
           "heading": "F3-358 - Operation Card Rendering And Status Boundary",
           "heading_level": 3,
-          "heading_line": 22523,
-          "line": 22525,
+          "heading_line": 22569,
+          "line": 22571,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -12989,8 +13044,8 @@
         "source_location": {
           "heading": "F3-359 - Terminal Handoff And Stable Session Identity",
           "heading_level": 3,
-          "heading_line": 22576,
-          "line": 22578,
+          "heading_line": 22622,
+          "line": 22624,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13000,8 +13055,8 @@
         "source_location": {
           "heading": "F3-360 - Terminal Actions And Reveal Semantics",
           "heading_level": 3,
-          "heading_line": 22629,
-          "line": 22631,
+          "heading_line": 22675,
+          "line": 22677,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13011,8 +13066,8 @@
         "source_location": {
           "heading": "F3-361 - Terminal Preview Payload Recovery And No Pseudo-Terminal Boundary",
           "heading_level": 3,
-          "heading_line": 22685,
-          "line": 22687,
+          "heading_line": 22731,
+          "line": 22733,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13022,8 +13077,8 @@
         "source_location": {
           "heading": "F3-362 - Search Then Read Citation Provenance",
           "heading_level": 3,
-          "heading_line": 22745,
-          "line": 22747,
+          "heading_line": 22791,
+          "line": 22793,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13033,8 +13088,8 @@
         "source_location": {
           "heading": "F3-364 - Web Capability Unavailable And Site Reader Identity",
           "heading_level": 3,
-          "heading_line": 22846,
-          "line": 22848,
+          "heading_line": 22892,
+          "line": 22894,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13044,8 +13099,8 @@
         "source_location": {
           "heading": "F3-366 - Web Progress And Cancellation Payload Carry-Through",
           "heading_level": 3,
-          "heading_line": 22954,
-          "line": 22956,
+          "heading_line": 23000,
+          "line": 23002,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13055,8 +13110,8 @@
         "source_location": {
           "heading": "F3-367 - Shared Operation Card Lifecycle State Machine",
           "heading_level": 3,
-          "heading_line": 23011,
-          "line": 23013,
+          "heading_line": 23057,
+          "line": 23059,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13066,8 +13121,8 @@
         "source_location": {
           "heading": "F3-368 - Message Controls Queue And Scroll Behavior",
           "heading_level": 3,
-          "heading_line": 23074,
-          "line": 23076,
+          "heading_line": 23120,
+          "line": 23122,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13077,8 +13132,8 @@
         "source_location": {
           "heading": "F3-369 - Web Activity Payload Display Schema",
           "heading_level": 3,
-          "heading_line": 23134,
-          "line": 23136,
+          "heading_line": 23180,
+          "line": 23182,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13088,8 +13143,8 @@
         "source_location": {
           "heading": "F3-370 - Web Labels Narrative Order And Completion Rendering",
           "heading_level": 3,
-          "heading_line": 23198,
-          "line": 23200,
+          "heading_line": 23244,
+          "line": 23246,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13099,8 +13154,8 @@
         "source_location": {
           "heading": "F3-371 - Provider Runtime Identity Disclosure Widgets",
           "heading_level": 3,
-          "heading_line": 23255,
-          "line": 23257,
+          "heading_line": 23301,
+          "line": 23303,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13110,8 +13165,8 @@
         "source_location": {
           "heading": "F3-372 - Operation Card Compatibility And Terminal Action Exclusion",
           "heading_level": 3,
-          "heading_line": 23312,
-          "line": 23314,
+          "heading_line": 23358,
+          "line": 23360,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13121,8 +13176,8 @@
         "source_location": {
           "heading": "F3-373 - Blocked Unavailable And Fallback Recovery Cards",
           "heading_level": 3,
-          "heading_line": 23368,
-          "line": 23370,
+          "heading_line": 23414,
+          "line": 23416,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13132,8 +13187,8 @@
         "source_location": {
           "heading": "F3-374 - Sticky Plan Panel TODO Tracker",
           "heading_level": 3,
-          "heading_line": 23429,
-          "line": 23431,
+          "heading_line": 23475,
+          "line": 23477,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13143,8 +13198,8 @@
         "source_location": {
           "heading": "F3-375 - Plan Approval Editing Execution Milestones And History",
           "heading_level": 3,
-          "heading_line": 23485,
-          "line": 23487,
+          "heading_line": 23531,
+          "line": 23533,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13154,8 +13209,8 @@
         "source_location": {
           "heading": "F3-376 - Planning Notes Order Index And Superseded Boundary",
           "heading_level": 3,
-          "heading_line": 23541,
-          "line": 23543,
+          "heading_line": 23587,
+          "line": 23589,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13165,8 +13220,8 @@
         "source_location": {
           "heading": "F3-377 - Question Flow Draft Lifecycle",
           "heading_level": 3,
-          "heading_line": 23596,
-          "line": 23598,
+          "heading_line": 23642,
+          "line": 23644,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13176,8 +13231,8 @@
         "source_location": {
           "heading": "F3-378 - Question Options Freeform Multi-Select And Visual Draft Bridge",
           "heading_level": 3,
-          "heading_line": 23654,
-          "line": 23656,
+          "heading_line": 23700,
+          "line": 23702,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13187,8 +13242,8 @@
         "source_location": {
           "heading": "F3-379 - Question Unavailable Dismissed And Subagent Consolidation",
           "heading_level": 3,
-          "heading_line": 23709,
-          "line": 23711,
+          "heading_line": 23755,
+          "line": 23757,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13198,8 +13253,8 @@
         "source_location": {
           "heading": "F3-380 - Mermaid Visual Module Rendering Sandbox And Sanitizer",
           "heading_level": 3,
-          "heading_line": 23765,
-          "line": 23767,
+          "heading_line": 23811,
+          "line": 23813,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13209,8 +13264,8 @@
         "source_location": {
           "heading": "F3-381 - Visualizer Host Bridge And Question Flow Narrowing",
           "heading_level": 3,
-          "heading_line": 23828,
-          "line": 23830,
+          "heading_line": 23874,
+          "line": 23876,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13220,8 +13275,8 @@
         "source_location": {
           "heading": "F3-382 - Visualizer Theme Tokens Script Loading And Library Allowlist",
           "heading_level": 3,
-          "heading_line": 23885,
-          "line": 23887,
+          "heading_line": 23931,
+          "line": 23933,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13231,8 +13286,8 @@
         "source_location": {
           "heading": "F3-383 - Visualizer Logging Persistence Export And Stale Widget Retirement",
           "heading_level": 3,
-          "heading_line": 23951,
-          "line": 23953,
+          "heading_line": 23997,
+          "line": 23999,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13242,8 +13297,8 @@
         "source_location": {
           "heading": "F3-384 - Permission Owner Boundary And Four-Tier Ladder",
           "heading_level": 3,
-          "heading_line": 24022,
-          "line": 24024,
+          "heading_line": 24068,
+          "line": 24070,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13253,8 +13308,8 @@
         "source_location": {
           "heading": "F3-385 - Web Approval Summaries And Session Scope",
           "heading_level": 3,
-          "heading_line": 24088,
-          "line": 24090,
+          "heading_line": 24134,
+          "line": 24136,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -13264,8 +13319,41 @@
         "source_location": {
           "heading": "F3-386 - Persona Boundary And Todowrite Approval Prompt",
           "heading_level": 3,
-          "heading_line": 24148,
-          "line": 24150,
+          "heading_line": 24194,
+          "line": 24196,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-387",
+        "source_location": {
+          "heading": "F3-387 - View Anchor And Numbering Recovery Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 24323,
+          "line": 24325,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-388",
+        "source_location": {
+          "heading": "F3-388 - Persona And Advanced Subagent Control Presentation",
+          "heading_level": 3,
+          "heading_line": 24366,
+          "line": 24368,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-389",
+        "source_location": {
+          "heading": "F3-389 - FinalGUISpec Numbering Deconfliction",
+          "heading_level": 3,
+          "heading_line": 24409,
+          "line": 24411,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -14069,6 +14157,17 @@
           "heading_level": 3,
           "heading_line": 1613,
           "line": 1615,
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "plan_unit_id": "GRRC-030",
+        "source_location": {
+          "heading": "GRRC-030 - Concern Lifecycle Verification Coverage Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 1799,
+          "line": 1801,
           "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
         }
       },
@@ -16317,6 +16416,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-107",
+        "source_location": {
+          "heading": "MS-107 - Provider Model Precedence Owner Pointer Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 7235,
+          "line": 7237,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/newfeatures.md",
         "plan_unit_id": "N-004",
         "source_location": {
@@ -17659,13 +17769,35 @@
         }
       },
       {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-020",
+        "source_location": {
+          "heading": "OP-020 - Owner Section Hydration And Contracts Boundary Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 1416,
+          "line": 1418,
+          "path": "Plans/Orchestrator_Page.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-021",
+        "source_location": {
+          "heading": "OP-021 - Priority Cleanup Scope Guard",
+          "heading_level": 3,
+          "heading_line": 1458,
+          "line": 1460,
+          "path": "Plans/Orchestrator_Page.md"
+        }
+      },
+      {
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-002",
         "source_location": {
-          "heading": "OSI-002 - Document Canonical Owner Scope",
-          "heading_level": 3,
-          "heading_line": 6512,
-          "line": 6514,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 6531,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17673,10 +17805,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-016",
         "source_location": {
-          "heading": "OSI-016 - Crew Message Board Surface",
-          "heading_level": 3,
-          "heading_line": 7249,
-          "line": 7251,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7268,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17684,10 +17816,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-017",
         "source_location": {
-          "heading": "OSI-017 - Runtime Schema Ownership Boundary",
-          "heading_level": 3,
-          "heading_line": 7307,
-          "line": 7309,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7326,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17695,10 +17827,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-022",
         "source_location": {
-          "heading": "OSI-022 - Provider And Permission Event Projection",
-          "heading_level": 3,
-          "heading_line": 7597,
-          "line": 7599,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7616,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17706,10 +17838,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-025",
         "source_location": {
-          "heading": "OSI-025 - Destructive Action Compatibility Vocabulary",
-          "heading_level": 3,
-          "heading_line": 7761,
-          "line": 7763,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7780,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17717,10 +17849,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-027",
         "source_location": {
-          "heading": "OSI-027 - Command Metadata And GUI Execution Policy",
-          "heading_level": 3,
-          "heading_line": 7869,
-          "line": 7871,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7888,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17728,10 +17860,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-028",
         "source_location": {
-          "heading": "OSI-028 - Tier View Projection Boundary",
-          "heading_level": 3,
-          "heading_line": 7927,
-          "line": 7929,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 7946,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17739,10 +17871,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-033",
         "source_location": {
-          "heading": "OSI-033 - Config Wiring Option B",
-          "heading_level": 3,
-          "heading_line": 8196,
-          "line": 8198,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 8215,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17750,10 +17882,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-035",
         "source_location": {
-          "heading": "OSI-035 - Rewrite Runtime Ontology",
-          "heading_level": 3,
-          "heading_line": 8302,
-          "line": 8304,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 8321,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17761,10 +17893,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-051",
         "source_location": {
-          "heading": "OSI-051 - Execution Unit UI Inspection Anchor",
-          "heading_level": 3,
-          "heading_line": 9221,
-          "line": 9223,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 9240,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17772,10 +17904,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-054",
         "source_location": {
-          "heading": "OSI-054 - SCM Snapshot UI Consumer Projection",
-          "heading_level": 3,
-          "heading_line": 9389,
-          "line": 9391,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 9408,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17783,10 +17915,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-075",
         "source_location": {
-          "heading": "OSI-075 - GUI Backend Scope Now In Scope",
-          "heading_level": 3,
-          "heading_line": 10537,
-          "line": 10539,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 10556,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17794,10 +17926,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-077",
         "source_location": {
-          "heading": "OSI-077 - Plan Mode Config And Wizard Controls",
-          "heading_level": 3,
-          "heading_line": 10649,
-          "line": 10651,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 10668,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17805,10 +17937,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-082",
         "source_location": {
-          "heading": "OSI-082 - Subagents Config UI And Registry Validation",
-          "heading_level": 3,
-          "heading_line": 10951,
-          "line": 10953,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 10970,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17816,10 +17948,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-083",
         "source_location": {
-          "heading": "OSI-083 - Agent Config Personas UI And Import Seeds",
-          "heading_level": 3,
-          "heading_line": 11013,
-          "line": 11015,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11032,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17827,10 +17959,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-086",
         "source_location": {
-          "heading": "OSI-086 - Gemini Project Context UX And Copy Boundary",
-          "heading_level": 3,
-          "heading_line": 11186,
-          "line": 11188,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11205,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17838,10 +17970,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-087",
         "source_location": {
-          "heading": "OSI-087 - Config Message Variants And App Handlers",
-          "heading_level": 3,
-          "heading_line": 11241,
-          "line": 11243,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11260,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17849,10 +17981,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-088",
         "source_location": {
-          "heading": "OSI-088 - Interview Built But Not Wired Audit",
-          "heading_level": 3,
-          "heading_line": 11297,
-          "line": 11299,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11316,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17860,10 +17992,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-090",
         "source_location": {
-          "heading": "OSI-090 - Interview Question Limit UI Prompt And Test Wiring",
-          "heading_level": 3,
-          "heading_line": 11411,
-          "line": 11413,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11430,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17871,10 +18003,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-092",
         "source_location": {
-          "heading": "OSI-092 - GUI Widget Catalog And DRY Tagging",
-          "heading_level": 3,
-          "heading_line": 11528,
-          "line": 11530,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11547,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17882,10 +18014,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-094",
         "source_location": {
-          "heading": "OSI-094 - Parser Failure Recovery UX",
-          "heading_level": 3,
-          "heading_line": 11651,
-          "line": 11653,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11670,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17893,10 +18025,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-097",
         "source_location": {
-          "heading": "OSI-097 - Config Dirty State Atomic Persistence",
-          "heading_level": 3,
-          "heading_line": 11809,
-          "line": 11811,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11828,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17904,10 +18036,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-099",
         "source_location": {
-          "heading": "OSI-099 - Interview Architecture Confirmation Gate",
-          "heading_level": 3,
-          "heading_line": 11924,
-          "line": 11926,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 11943,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17915,10 +18047,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-100",
         "source_location": {
-          "heading": "OSI-100 - Interview Vision Provider Selection",
-          "heading_level": 3,
-          "heading_line": 11981,
-          "line": 11983,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12000,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17926,10 +18058,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-101",
         "source_location": {
-          "heading": "OSI-101 - Main Run Config Source Alignment",
-          "heading_level": 3,
-          "heading_line": 12036,
-          "line": 12038,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12055,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17937,10 +18069,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-102",
         "source_location": {
-          "heading": "OSI-102 - Execution Config Wiring Checklist",
-          "heading_level": 3,
-          "heading_line": 12091,
-          "line": 12093,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12110,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17948,10 +18080,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-103",
         "source_location": {
-          "heading": "OSI-103 - GUI Wiring Matrix Enforcement",
-          "heading_level": 3,
-          "heading_line": 12149,
-          "line": 12151,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12168,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17959,10 +18091,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-105",
         "source_location": {
-          "heading": "OSI-105 - Config Wiring Validator Entrypoint And Failure Policy",
-          "heading_level": 3,
-          "heading_line": 12265,
-          "line": 12267,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12284,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17970,10 +18102,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-107",
         "source_location": {
-          "heading": "OSI-107 - Tier Verification Lifecycle And HITL Boundary",
-          "heading_level": 3,
-          "heading_line": 12372,
-          "line": 12374,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12391,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17981,10 +18113,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-108",
         "source_location": {
-          "heading": "OSI-108 - Tier Start Pre-Spawn Verification Checklist",
-          "heading_level": 3,
-          "heading_line": 12431,
-          "line": 12433,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12450,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -17992,10 +18124,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-109",
         "source_location": {
-          "heading": "OSI-109 - Tier Start Responsibility Phases And Persistence",
-          "heading_level": 3,
-          "heading_line": 12487,
-          "line": 12489,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12506,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18003,10 +18135,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-111",
         "source_location": {
-          "heading": "OSI-111 - Start Verification Result Types And Categories",
-          "heading_level": 3,
-          "heading_line": 12601,
-          "line": 12603,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12620,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18014,10 +18146,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-112",
         "source_location": {
-          "heading": "OSI-112 - Verify Tier Start Algorithm",
-          "heading_level": 3,
-          "heading_line": 12663,
-          "line": 12665,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12682,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18025,10 +18157,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-113",
         "source_location": {
-          "heading": "OSI-113 - Tier Start Helper Function Boundaries",
-          "heading_level": 3,
-          "heading_line": 12721,
-          "line": 12723,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12740,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18036,10 +18168,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-114",
         "source_location": {
-          "heading": "OSI-114 - Tier Start Error Handling Policy",
-          "heading_level": 3,
-          "heading_line": 12777,
-          "line": 12779,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12796,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18047,10 +18179,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-115",
         "source_location": {
-          "heading": "OSI-115 - End Tier Wiring And Acceptance Recheck",
-          "heading_level": 3,
-          "heading_line": 12833,
-          "line": 12835,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 12852,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18058,10 +18190,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-120",
         "source_location": {
-          "heading": "OSI-120 - DuringTierEnd Verification Execution",
-          "heading_level": 3,
-          "heading_line": 13116,
-          "line": 13118,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 13135,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18069,10 +18201,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-121",
         "source_location": {
-          "heading": "OSI-121 - AfterTierEnd Persistence Feedback And Failure Handling",
-          "heading_level": 3,
-          "heading_line": 13176,
-          "line": 13178,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 13195,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18080,10 +18212,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-127",
         "source_location": {
-          "heading": "OSI-127 - End Tier Verification Error Handling Policy",
-          "heading_level": 3,
-          "heading_line": 13528,
-          "line": 13530,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 13547,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18091,10 +18223,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-128",
         "source_location": {
-          "heading": "OSI-128 - Start/End Verification Timing Matrix",
-          "heading_level": 3,
-          "heading_line": 13587,
-          "line": 13589,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 13606,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18102,10 +18234,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-129",
         "source_location": {
-          "heading": "OSI-129 - Canonical Validation Table Source Of Truth",
-          "heading_level": 3,
-          "heading_line": 13651,
-          "line": 13653,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 13670,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18113,10 +18245,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-135",
         "source_location": {
-          "heading": "OSI-135 - Interview Phase Lifecycle Mirror",
-          "heading_level": 3,
-          "heading_line": 14028,
-          "line": 14030,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 14047,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18124,10 +18256,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-136",
         "source_location": {
-          "heading": "OSI-136 - Unrelated Failure Escalation Policy",
-          "heading_level": 3,
-          "heading_line": 14090,
-          "line": 14092,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 14109,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18135,10 +18267,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-137",
         "source_location": {
-          "heading": "OSI-137 - Structured Verification Feedback Loop",
-          "heading_level": 3,
-          "heading_line": 14153,
-          "line": 14155,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 14172,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18146,10 +18278,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-222",
         "source_location": {
-          "heading": "OSI-222 - GUI Readiness Verification Criterion",
-          "heading_level": 3,
-          "heading_line": 19672,
-          "line": 19674,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 19691,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18157,10 +18289,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-238",
         "source_location": {
-          "heading": "OSI-238 - Frontend/UI Selection Example Evidence",
-          "heading_level": 3,
-          "heading_line": 20565,
-          "line": 20567,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 20584,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18168,10 +18300,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-283",
         "source_location": {
-          "heading": "OSI-283 - Crew GUI And Assistant Surfaces Are Consumer Projections",
-          "heading_level": 3,
-          "heading_line": 23027,
-          "line": 23029,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 23046,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18179,10 +18311,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-285",
         "source_location": {
-          "heading": "OSI-285 - Future Crew Template Save Surface",
-          "heading_level": 3,
-          "heading_line": 23144,
-          "line": 23146,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 23163,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18190,10 +18322,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-287",
         "source_location": {
-          "heading": "OSI-287 - Crew Performance Metrics",
-          "heading_level": 3,
-          "heading_line": 23246,
-          "line": 23248,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 23265,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18201,10 +18333,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-290",
         "source_location": {
-          "heading": "OSI-290 - User Reorders Queued Crew Execution",
-          "heading_level": 3,
-          "heading_line": 23397,
-          "line": 23399,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 23416,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18212,10 +18344,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-307",
         "source_location": {
-          "heading": "OSI-307 - Communication Pattern GUI Insights",
-          "heading_level": 3,
-          "heading_line": 24313,
-          "line": 24315,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 24332,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18223,10 +18355,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-321",
         "source_location": {
-          "heading": "OSI-321 - Agent Communication GUI Visualization Consumer",
-          "heading_level": 3,
-          "heading_line": 25079,
-          "line": 25081,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 25098,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18234,10 +18366,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-344",
         "source_location": {
-          "heading": "OSI-344 - Coordination GUI Monitoring Consumer",
-          "heading_level": 3,
-          "heading_line": 26342,
-          "line": 26344,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 26361,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18245,10 +18377,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-360",
         "source_location": {
-          "heading": "OSI-360 - Frontend UI Parallelization Example",
-          "heading_level": 3,
-          "heading_line": 27199,
-          "line": 27201,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 27218,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18256,10 +18388,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-361",
         "source_location": {
-          "heading": "OSI-361 - Dependency-Level Execution Flow Example",
-          "heading_level": 3,
-          "heading_line": 27251,
-          "line": 27253,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 27270,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18267,10 +18399,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-381",
         "source_location": {
-          "heading": "OSI-381 - Autonomous QA Visual Status Symbols",
-          "heading_level": 3,
-          "heading_line": 28365,
-          "line": 28367,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 28384,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18278,10 +18410,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-382",
         "source_location": {
-          "heading": "OSI-382 - Progress Tracking Visual Status Model",
-          "heading_level": 3,
-          "heading_line": 28416,
-          "line": 28418,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 28435,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18289,10 +18421,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-388",
         "source_location": {
-          "heading": "OSI-388 - Pause Gate GUI Event Projection",
-          "heading_level": 3,
-          "heading_line": 28760,
-          "line": 28762,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 28779,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18300,10 +18432,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-396",
         "source_location": {
-          "heading": "OSI-396 - Autonomous QA Clear Progress Visibility Evidence",
-          "heading_level": 3,
-          "heading_line": 29194,
-          "line": 29196,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 29213,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18311,10 +18443,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-399",
         "source_location": {
-          "heading": "OSI-399 - Autonomous QA Visual Status Config Knob",
-          "heading_level": 3,
-          "heading_line": 29361,
-          "line": 29363,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 29380,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18322,10 +18454,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-405",
         "source_location": {
-          "heading": "OSI-405 - Persona Runtime State UI Event Availability",
-          "heading_level": 3,
-          "heading_line": 29710,
-          "line": 29712,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 29729,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18333,10 +18465,21 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-417",
         "source_location": {
-          "heading": "OSI-417 - Event Driven GUI Projection Alignment",
-          "heading_level": 3,
-          "heading_line": 30431,
-          "line": 30433,
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 30450,
+          "path": "Plans/orchestrator-subagent-integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/orchestrator-subagent-integration.md",
+        "plan_unit_id": "OSI-425",
+        "source_location": {
+          "heading": ".puppet-master/config.yaml (additions)",
+          "heading_level": 1,
+          "heading_line": 6066,
+          "line": 30944,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18502,6 +18645,17 @@
           "heading_level": 3,
           "heading_line": 3026,
           "line": 3028,
+          "path": "Plans/Personas.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Personas.md",
+        "plan_unit_id": "P-053",
+        "source_location": {
+          "heading": "P-053 - Persona Registry Mutability And Subagent Binding Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 3189,
+          "line": 3191,
           "path": "Plans/Personas.md"
         }
       },
@@ -19888,6 +20042,17 @@
           "heading_level": 3,
           "heading_line": 525,
           "line": 527,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-025",
+        "source_location": {
+          "heading": "RAP-025 - Structural Parent Section Recovery Compile Addendum",
+          "heading_level": 3,
+          "heading_line": 563,
+          "line": 565,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -24369,6 +24534,17 @@
         }
       },
       {
+        "owner_doc": "Plans/WorktreeGitImprovement.md",
+        "plan_unit_id": "W-070",
+        "source_location": {
+          "heading": "W-070 - Worktree Allocation And Lane Cleanup Header Recovery",
+          "heading_level": 3,
+          "heading_line": 4803,
+          "line": 4805,
+          "path": "Plans/WorktreeGitImprovement.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Wiring_Matrix.md",
         "plan_unit_id": "WM-002",
         "source_location": {
@@ -24761,12 +24937,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 4947,
+  "plan_unit_count": 4972,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 806,
-      "low": 1,
-      "standard": 4140
+      "high": 808,
+      "low": 5,
+      "standard": 4159
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -24968,6 +25144,7 @@
       "billing_entity_cost_attribution": 1,
       "billing_entity_field_condition_drift": 1,
       "billing_entity_tuple_collapse": 1,
+      "binary_locator_anchor_ambiguity": 1,
       "blocked_approval_identity_drift": 2,
       "blocked_awaiting_parent_state_conflation": 1,
       "blocked_clear_counter_drift": 1,
@@ -25100,6 +25277,8 @@
       "chat_renderer_live_run_contract": 1,
       "chat_rendering_mcp_typed_content": 1,
       "chat_todo_mutation_identity_loss": 1,
+      "chat_traceability_loss": 1,
+      "checklist_owner_drift": 1,
       "checklist_validation_complementarity": 1,
       "child_authority_clamp_and_outcomes": 1,
       "child_context_disclosure": 1,
@@ -25146,6 +25325,7 @@
       "cleanup_lifecycle_continuity_drift": 1,
       "cleanup_order_false_closure": 1,
       "cleanup_risk_register_drift": 1,
+      "cleanup_scope_creep": 1,
       "cleanup_sequence_drift": 1,
       "cleanup_signature_alignment_drift": 1,
       "cleanup_tests_output_evidence_drift": 1,
@@ -25168,6 +25348,7 @@
       "command_acceptance_reserved_name_drift": 1,
       "command_acceptance_runtime_drift": 1,
       "command_alias_drift": 1,
+      "command_anchor_ambiguity": 1,
       "command_authority": 1,
       "command_block_confidence": 1,
       "command_block_identity_drift": 1,
@@ -25278,6 +25459,7 @@
       "continuity_persistence_placement_compatibility": 1,
       "continuity_persistence_run_start_loading_lifecycle": 1,
       "contract_driven_code_generation": 1,
+      "contract_owner_drift": 1,
       "contract_pack_index_drift": 1,
       "contract_ssot_drift": 1,
       "controller_split": 1,
@@ -25366,6 +25548,7 @@
       "cross_surface_owner_drift": 1,
       "cross_worktree_awareness": 1,
       "cross_worktree_data_loss": 1,
+      "crosswalk_owner_drift": 1,
       "crosswalk_owner_section_loss": 1,
       "crosswalk_scope_overreach": 1,
       "cursor_account_isolation": 1,
@@ -25432,6 +25615,7 @@
       "default_governance": 1,
       "default_model_selection_priority_baseline": 1,
       "deferred_algorithm": 1,
+      "deferred_contract_authority": 1,
       "deferred_pathing_decision": 1,
       "deferred_wizard_launch_drift": 1,
       "degradation_recovery_field_drift": 1,
@@ -25582,6 +25766,7 @@
       "execution_update_unregister_lifecycle": 1,
       "executionlimits_crew_admission_caps": 1,
       "executor_boundary": 1,
+      "executor_consumer_drift": 1,
       "executor_protocol_drift": 94,
       "executor_usage_owner_boundary_drift": 1,
       "existing_project_flow_drift": 1,
@@ -25632,6 +25817,7 @@
       "file_operation_extraction_reliability_gap": 1,
       "file_operation_extraction_sources": 1,
       "file_operation_extractor_rust_example": 1,
+      "file_surface_anchor_loss": 1,
       "filelock_and_conflict_detection_example": 1,
       "filemanager_navigation_overclaim": 1,
       "files_being_modified_prompt_aggregation": 1,
@@ -25734,6 +25920,7 @@
       "grounded_pm_debug_core_web_repro": 1,
       "gui_acceptance": 1,
       "gui_action_projection_stale": 1,
+      "gui_anchor_drift": 1,
       "gui_artifact_pair_drift": 1,
       "gui_automation_evidence_path_state_files": 1,
       "gui_automation_evidence_run_layout": 1,
@@ -25741,6 +25928,7 @@
       "gui_config_coverage_matrix_rows": 1,
       "gui_config_wiring_permissions_commands_skills": 1,
       "gui_config_wiring_plugins_models_formatters": 1,
+      "gui_cross_reference_ambiguity": 1,
       "gui_framework_detection_gap": 1,
       "gui_framework_detection_state": 1,
       "gui_headless_question_drift": 1,
@@ -25992,6 +26180,7 @@
       "migration_lineage": 37,
       "migration_safety": 2,
       "mini_surface_drift": 1,
+      "misc_doc_structure_drift": 1,
       "missing_intent_defaulting": 1,
       "mobile_stack_default_fallback_paths": 1,
       "mobile_testing_comparison_matrix": 1,
@@ -26094,6 +26283,7 @@
       "orchestrator_integration_and_overseer_role": 1,
       "orchestrator_level_versus_parser_specific_boundary": 1,
       "orchestrator_message_monitoring": 1,
+      "orchestrator_owner_hollowing": 1,
       "orchestrator_post_gate_remediation_integration": 1,
       "orchestrator_pre_execution_registration": 1,
       "orchestrator_scope_drift": 1,
@@ -26209,6 +26399,7 @@
       "persona_permission_profile_boundary": 1,
       "persona_preference_priority_fallback": 1,
       "persona_registry_boundary_drift": 1,
+      "persona_registry_drift": 1,
       "persona_registry_normalization_provider_seed_boundary": 1,
       "persona_resolution": 4,
       "persona_resolution_config_contract": 1,
@@ -26425,6 +26616,7 @@
       "provider_model_id_parsing_baseline": 1,
       "provider_model_option_scopes": 1,
       "provider_model_policy_inputs_audit_scope": 1,
+      "provider_model_precedence_drift": 1,
       "provider_model_precedence_owner_boundary": 1,
       "provider_model_selection_precedence_chain": 1,
       "provider_native_instruction_boundary": 1,
@@ -26516,6 +26708,7 @@
       "registry_backed_overseer_reviewer_reruns": 1,
       "registry_backed_selector_canonical_list": 1,
       "registry_backed_selector_validation": 1,
+      "registry_identity_drift": 1,
       "registry_validated_subagent_selection_controls": 1,
       "remediation_addendum_payload_loss": 1,
       "remediation_and_lane_evidence": 1,
@@ -26899,6 +27092,7 @@
       "stale_owner_residue": 1,
       "stale_projection_mutation": 1,
       "stale_provider_policy_drift": 1,
+      "stale_reference_drift": 1,
       "stale_runtime_rebind": 1,
       "stale_runtime_taxonomy_revival": 1,
       "stale_tier_cleanup": 1,
@@ -26915,6 +27109,7 @@
       "storage_boundary": 1,
       "storage_layout": 1,
       "storage_owner_drift": 1,
+      "storage_owner_stub_loss": 1,
       "storage_plan_drift": 211,
       "storage_scope_regression": 1,
       "storage_truth_drift": 1,
@@ -26925,6 +27120,7 @@
       "streaming_usage_payload_drift": 1,
       "streaming_usage_ui_drift": 1,
       "structural_anchor": 1,
+      "structural_anchor_loss": 1,
       "structural_boundary": 1,
       "structured_attempt_handoff": 1,
       "structured_handoff_parser_placement_summary": 1,
@@ -26939,6 +27135,7 @@
       "subagent_availability_file_existence_optional_v1": 1,
       "subagent_boundary": 1,
       "subagent_boundary_drift": 1,
+      "subagent_config_loss": 1,
       "subagent_context_injection_delta": 1,
       "subagent_crew_owner_redefinition": 1,
       "subagent_direct_user_question": 1,
@@ -27087,6 +27284,7 @@
       "token_bucket_schema_drift": 1,
       "token_buckets_are_not_storage_aggregated": 1,
       "token_counting_adapter_drift": 1,
+      "tool_anchor_and_registry_drift": 1,
       "tool_artifact_attribution_gap": 1,
       "tool_boundary": 1,
       "tool_context": 1,
@@ -27174,6 +27372,7 @@
       "usage_warning_setup_label_drift": 1,
       "user_command_definition_drift": 1,
       "user_reorders_queued_crew_execution": 1,
+      "user_visible_config_drift": 1,
       "user_visible_settings": 1,
       "validation_artifact_lineage_drift": 1,
       "validation_bypass": 1,
@@ -27244,6 +27443,7 @@
       "wildcard_matching": 1,
       "wiring_matrix_drift": 32,
       "wiring_matrix_rule_two_coverage": 1,
+      "wizard_blocked_duplicate_canon": 1,
       "wizard_blocked_route_ownership_drift": 1,
       "wizard_escalation": 3,
       "wizard_handoff": 1,
@@ -27262,6 +27462,7 @@
       "workflow_continuity": 1,
       "workflow_identity_collapse": 1,
       "workspace_tab_identity_drift": 1,
+      "worktree_allocation_drift": 1,
       "worktree_assistant": 1,
       "worktree_auto_create": 2,
       "worktree_binding": 1,
@@ -27292,8 +27493,8 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 4926,
-      "deferred": 4,
+      "accepted": 4950,
+      "deferred": 5,
       "retired": 17
     },
     "unit_type_counts": {
@@ -27308,11 +27509,11 @@
       "capability_matrix": 1,
       "compatibility_disposition": 111,
       "compatibility_note": 2,
-      "constraint": 561,
+      "constraint": 568,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
-      "deferred_decision": 2,
+      "deferred_decision": 3,
       "deferred_enhancement": 9,
       "deferred_reconciliation": 3,
       "delta_contract": 1,
@@ -27332,7 +27533,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4092,
+      "requirement": 4109,
       "risk": 1,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
