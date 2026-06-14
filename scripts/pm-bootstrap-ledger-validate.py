@@ -132,6 +132,22 @@ def count_by(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
     return counts
 
 
+def schema_enum(schema: dict[str, Any], field: str) -> set[str]:
+    values = schema.get("properties", {}).get(field, {}).get("enum", [])
+    return {str(value) for value in values}
+
+
+def contains_stale_governance_pending(value: Any) -> bool:
+    text = json.dumps(value, sort_keys=True) if not isinstance(value, str) else value
+    lowered = text.lower()
+    return (
+        "pending_governance" in lowered
+        or "pending governance" in lowered
+        or "pending_seal" in lowered
+        or "pending seal" in lowered
+    )
+
+
 def extract_plan_unit_blocks(path: Path) -> list[dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     units: list[dict[str, Any]] = []
@@ -267,6 +283,22 @@ def main() -> int:
     question_status_counts = count_by(questions, "status")
     blocker_status_counts = count_by(blockers, "status")
 
+    design_atom_schema = load_json(PLANS / "ledgers/v2/schemas/design_atom.schema.json")
+    atom_required_fields = set(map(str, design_atom_schema.get("required", [])))
+    allowed_atom_types = schema_enum(design_atom_schema, "atom_type")
+    allowed_atom_statuses = schema_enum(design_atom_schema, "status")
+    for atom in atoms:
+        atom_id = atom.get("atom_id")
+        missing_required = sorted(field for field in atom_required_fields if field not in atom)
+        if missing_required:
+            errors.append(f"atom {atom_id} missing required fields from design_atom.schema.json: {missing_required}")
+        atom_type = atom.get("atom_type")
+        if allowed_atom_types and atom_type not in allowed_atom_types:
+            errors.append(f"atom {atom_id} atom_type {atom_type!r} is not allowed by design_atom.schema.json")
+        atom_status = atom.get("status")
+        if allowed_atom_statuses and atom_status not in allowed_atom_statuses:
+            errors.append(f"atom {atom_id} status {atom_status!r} is not allowed by design_atom.schema.json")
+
     current_count_expectations = {
         "accepted_decisions_count": decision_status_counts.get("accepted", 0),
         "design_atoms_total": len(atoms),
@@ -359,6 +391,10 @@ def main() -> int:
             warnings.append(f"review gui_related=false on GUI-looking atom: {atom_id}")
         if atom.get("atom_type") == "negative_constraint" and not atom.get("negative_constraints"):
             warnings.append(f"negative_constraint atom lacks negative_constraints list: {atom_id}")
+        if current.get("governance_status") == "sealed":
+            for field in ("compile_disposition", "compile_notes", "validation_notes"):
+                if contains_stale_governance_pending(atom.get(field, "")):
+                    errors.append(f"sealed ledger atom {atom_id} has stale governance-pending {field}")
 
     queue_source_ids: set[str] = set()
     queue_plan_unit_ids: set[str] = set()
@@ -397,10 +433,11 @@ def main() -> int:
     for atom in atoms:
         atom_id = str(atom.get("atom_id"))
         targets = list(map(str, atom.get("plan_compile_targets", [])))
+        output_targets = list(map(str, atom.get("compiled_output_plan_unit_ids", [])))
         if atom.get("status") == "compiled_to_plan":
-            if not targets:
-                errors.append(f"compiled atom missing plan_compile_targets: {atom_id}")
-            if atom_id not in queue_source_ids:
+            if not targets and not output_targets:
+                errors.append(f"compiled atom missing plan_compile_targets or compiled_output_plan_unit_ids: {atom_id}")
+            if targets and atom_id not in queue_source_ids:
                 errors.append(f"compiled atom missing from compile_queue source_atom_ids: {atom_id}")
         for target in targets:
             if target not in queue_plan_unit_ids:
@@ -415,8 +452,15 @@ def main() -> int:
     if "risk" in schema_required or "risk" in plan_unit_schema.get("properties", {}):
         errors.append("plan_unit.schema.json still uses retired risk field; expected risk_class")
 
+    plan_unit_docs = set(canonical_targets)
+    plan_unit_docs.update(
+        path
+        for path in compiled_outputs
+        if path.startswith("Plans/") and path.endswith(".md")
+    )
+
     plan_units: list[dict[str, Any]] = []
-    for target_doc in sorted(canonical_targets):
+    for target_doc in sorted(plan_unit_docs):
         target_path = ROOT / target_doc
         if target_path.exists():
             plan_units.extend(extract_plan_unit_blocks(target_path))
@@ -437,6 +481,15 @@ def main() -> int:
     missing_queue_units = sorted(queue_plan_unit_ids - plan_unit_ids)
     if missing_queue_units:
         errors.append(f"compile_queue references PlanUnit ids not found in canonical docs: {missing_queue_units}")
+
+    for atom in atoms:
+        atom_id = str(atom.get("atom_id"))
+        for target in map(str, atom.get("plan_compile_targets", [])):
+            if target not in plan_unit_ids:
+                errors.append(f"atom {atom_id} plan_compile_target {target} is not present in compiled Plan docs")
+        for target in map(str, atom.get("compiled_output_plan_unit_ids", [])):
+            if target not in plan_unit_ids:
+                errors.append(f"atom {atom_id} compiled_output_plan_unit_id {target} is not present in compiled Plan docs")
 
     sharding_config = load_json(PLANS / "sharding_config.json")
     sharding_sources = set(map(str, sharding_config.get("sources", [])))

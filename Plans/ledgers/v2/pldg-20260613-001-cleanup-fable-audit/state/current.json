@@ -1,16 +1,6 @@
 {
-  "schema_id": "pm.bootstrap_ledger_current_state.v1",
-  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
-  "title": "Part 1 Cleanup Fable Audit of Plans",
-  "phase": "compiled_section_a_governance_sealed",
-  "last_event_id": "evt-0012",
   "accepted_decisions_count": 12,
-  "design_atoms_total": 15,
-  "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 0,
-  "deferred_questions_count": 0,
-  "open_blockers_count": 0,
   "canonical_plan_targets": [
     "Plans/Contracts_V0.md",
     "Plans/orchestrator-subagent-integration.md"
@@ -32,17 +22,27 @@
     "Plans/.plan_index/node_readiness_report.json",
     "Plans/.plan_index/plan_units.jsonl"
   ],
+  "deferred_questions_count": 0,
+  "design_atoms_total": 15,
   "governance_status": "sealed",
+  "last_event_id": "evt-0013",
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "must_not_do": [
+    "Do not write canonical Plans until Jared explicitly asks to compile the ledger.",
+    "Do not update Plans/Spec_Lock.json, generated shards, evidence bundles, plan graph, or governance locks during ordinary ledger writing.",
+    "Do not treat this conversational cleanup thread as a Goal run.",
+    "Do not recreate the removed legacy Iced app.",
+    "Do not ask Jared to label GUI work; infer gui_related true/false."
+  ],
   "next_safe_action": "Evidence-only governance seal is refreshed for regenerated PlanUnit index artifacts. Continue with the next cleanup section if desired. Node readiness remains intentionally blocked by compiler_contract_incomplete; do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_section_a_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "title": "Part 1 Cleanup Fable Audit of Plans",
+  "updated_at_utc": "2026-06-14T23:21:27Z",
   "validation_state": {
-    "safe_content_checks": [
-      "evidence-only seal refreshed Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json for regenerated .plan_index artifact hashes",
-      "pre-final python3 scripts/pm-plans-verify.py validate-evidence passed after targeted evidence refresh",
-      "pre-final python3 scripts/pm-plans-verify.py verify-spec-lock passed; Spec_Lock refresh was not required",
-      "No ordinary Plan prose edits were pending before this evidence-only seal; git diff --name-only -- Plans/*.md was empty",
-      "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created"
-    ],
-    "seal_request": "Explicit evidence-only governance seal phase requested after regenerated PlanUnit index artifacts made evidence hashes stale.",
     "final_governance_checks": [
       "python3 scripts/pm-plan-index.py validate",
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -54,14 +54,15 @@
       "python3 scripts/pm-plans-verify.py verify-spec-lock",
       "python3 scripts/pm-plans-verify.py validate-evidence",
       "git diff --check"
-    ]
-  },
-  "must_not_do": [
-    "Do not write canonical Plans until Jared explicitly asks to compile the ledger.",
-    "Do not update Plans/Spec_Lock.json, generated shards, evidence bundles, plan graph, or governance locks during ordinary ledger writing.",
-    "Do not treat this conversational cleanup thread as a Goal run.",
-    "Do not recreate the removed legacy Iced app.",
-    "Do not ask Jared to label GUI work; infer gui_related true/false."
-  ],
-  "updated_at_utc": "2026-06-13T22:53:22Z"
+    ],
+    "safe_content_checks": [
+      "evidence-only seal refreshed Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json for regenerated .plan_index artifact hashes",
+      "pre-final python3 scripts/pm-plans-verify.py validate-evidence passed after targeted evidence refresh",
+      "pre-final python3 scripts/pm-plans-verify.py verify-spec-lock passed; Spec_Lock refresh was not required",
+      "No ordinary Plan prose edits were pending before this evidence-only seal; git diff --name-only -- Plans/*.md was empty",
+      "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created",
+      "Ledger schema/status drift repaired: non-strict compiled output atoms normalized to design_atom.schema.json and verified by compiled_output_plan_unit_ids."
+    ],
+    "seal_request": "Explicit evidence-only governance seal phase requested after regenerated PlanUnit index artifacts made evidence hashes stale."
+  }
 }

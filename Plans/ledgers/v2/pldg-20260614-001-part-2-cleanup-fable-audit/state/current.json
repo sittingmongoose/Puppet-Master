@@ -37,7 +37,7 @@
   "deferred_questions_count": 0,
   "design_atoms_total": 77,
   "governance_status": "sealed",
-  "last_event_id": "evt-0032",
+  "last_event_id": "evt-0033",
   "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
   "must_not_do": [
     "Do not write canonical Plans during conversational planning; this ledger has already been compiled and governance-sealed only because Jared explicitly requested those later phases.",
@@ -54,7 +54,7 @@
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
   "title": "Part 2 Cleanup Fable Audit",
-  "updated_at_utc": "2026-06-14T21:40:43Z",
+  "updated_at_utc": "2026-06-14T23:19:32Z",
   "validation_state": {
     "node_readiness_status": "blocked_compiler_contract_incomplete",
     "safe_content_checks": [
@@ -63,7 +63,8 @@
       "pm-shard-plans --check passed for 50 docs and 859 shard body files after regeneration.",
       "pm-plans-verify validate-auto-decisions, validate-evidence, validate-plan-graph, verify-spec-lock, run-gates, and audit-governance passed.",
       "git diff --check passed.",
-      "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+      "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+      "Ledger schema/status drift repaired: design atom status and atom_type values normalized to design_atom.schema.json; sealed non-strict compiled outputs preserved in compile_disposition/governance_status/compile_notes/validation_notes and verified by validator."
     ],
     "standard_validation": "pass_governance_sealed"
   }

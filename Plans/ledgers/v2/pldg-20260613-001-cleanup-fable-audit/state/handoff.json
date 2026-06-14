@@ -1,31 +1,31 @@
 {
-  "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
   "current_phase": "compiled_section_a_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0012",
     "last_decision_id": "dec-0012",
+    "last_event_id": "evt-0013",
     "next_queue_id": "pcq-0003"
   },
-  "last_known_good_state": "Section A cleanup decisions are compiled into live Plans docs and Plans/.plan_index outputs. Evidence-only governance seal refreshed stale hashes for regenerated Plans/.plan_index artifacts. Node readiness remains intentionally blocked by compiler_contract_incomplete. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
-  "open_blockers": [],
-  "open_questions": [],
   "deferred_questions": [],
-  "next_action": "Continue with the next cleanup section if desired. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
-  "validation_state": {
-    "ledger_health": "pass_governance_sealed",
-    "safe_content_checks": "Evidence-only governance seal refreshed stale .plan_index evidence hashes; Spec Lock refresh, plan_graph refresh, auto_decisions update, product prose edits, and .plan_index regeneration were not required.",
-    "seal_request": "Explicit evidence-only governance seal phase requested after regenerated PlanUnit index artifacts made evidence hashes stale.",
-    "final_governance_checks": "python3 scripts/pm-plan-index.py validate, python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits, python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit, python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system, python3 scripts/pm-plans-verify.py run-gates, python3 scripts/pm-shard-plans.py --check, python3 scripts/pm-plans-verify.py validate-auto-decisions, python3 scripts/pm-plans-verify.py verify-spec-lock, python3 scripts/pm-plans-verify.py validate-evidence, git diff --check"
-  },
   "do_not_redo": [
     "Do not re-create this ledger unless Jared asks for a fresh ledger.",
     "Do not write canonical Plans during conversational planning.",
     "Do not treat `cleanup work` as a feature implementation task.",
     "Do not drop exact tokens such as `Part 1 Cleanup Fable Audit of Plans`, `less of a feature`, `more of cleanup work`, `not a Goal run`, or `collaborator`."
   ],
-  "updated_at_utc": "2026-06-13T22:53:22Z",
+  "last_completed_action": "Repaired Section A ledger schema/status drift exposed by hardened bootstrap ledger validator.",
+  "last_known_good_state": "Section A cleanup decisions are compiled, governance-sealed, and repaired for design atom schema/status drift. Non-strict compiled output atoms are schema-valid compiled_to_plan records with compiled_output_plan_unit_ids. Node readiness remains blocked_compiler_contract_incomplete.",
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "next_action": "Continue with the next cleanup section if desired. Do not create NodeSeeds, WorkNodes, executable build tasks, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
+  "next_safe_action": "Continue with the next cleanup section if desired; governance_status is sealed for Section A cleanup artifacts after the evidence-only refresh.",
+  "open_blockers": [],
+  "open_questions": [],
   "phase": "compiled_section_a_governance_sealed",
-  "last_completed_action": "Refreshed evidence hashes for regenerated PlanUnit index artifacts and preserved the node-readiness boundary.",
-  "next_safe_action": "Continue with the next cleanup section if desired; governance_status is sealed for Section A cleanup artifacts after the evidence-only refresh."
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "updated_at_utc": "2026-06-14T23:21:27Z",
+  "validation_state": {
+    "final_governance_checks": "python3 scripts/pm-plan-index.py validate, python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits, python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit, python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system, python3 scripts/pm-plans-verify.py run-gates, python3 scripts/pm-shard-plans.py --check, python3 scripts/pm-plans-verify.py validate-auto-decisions, python3 scripts/pm-plans-verify.py verify-spec-lock, python3 scripts/pm-plans-verify.py validate-evidence, git diff --check",
+    "ledger_health": "pass_governance_sealed",
+    "safe_content_checks": "Evidence-only governance seal refreshed stale .plan_index evidence hashes; Spec Lock refresh, plan_graph refresh, auto_decisions update, product prose edits, and .plan_index regeneration were not required.",
+    "seal_request": "Explicit evidence-only governance seal phase requested after regenerated PlanUnit index artifacts made evidence hashes stale."
+  }
 }
