@@ -1,24 +1,31 @@
 {
-  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "schema-drift-0001",
+      "status": "pass",
+      "summary": "Non-strict compiled output atom statuses normalized to compiled_to_plan, stale pending-governance compile notes replaced with sealed-state notes, and compiled_output_plan_unit_ids recorded for validator-backed live PlanUnit verification."
+    }
+  ],
+  "last_validated_at_utc": "2026-06-13T22:53:22Z",
   "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "notes": "Evidence-only governance seal refreshed stale .plan_index evidence hashes. Node readiness remains intentionally blocked by compiler_contract_incomplete; no NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 12,
-    "design_atoms": 15,
-    "decisions": 12,
-    "open_questions": 0,
-    "deferred_questions": 0,
-    "open_blockers": 0,
     "compile_queue_items": 2,
+    "corrections": 0,
+    "decisions": 12,
+    "deferred_questions": 0,
+    "design_atoms": 15,
+    "events": 13,
     "governance_seal": "passed",
-    "corrections": 0
+    "open_blockers": 0,
+    "open_questions": 0
   },
-  "blocking_defects": [],
+  "updated_at_utc": "2026-06-14T23:21:27Z",
   "warnings": [
     "Node-readiness remains intentionally blocked by compiler_contract_incomplete. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
     "Strict ledger canonical_plan_targets remain limited to governance-covered owner docs; additional edited owner docs are recorded in compiled_plan_outputs and atom compile_notes."
-  ],
-  "updated_at_utc": "2026-06-13T22:53:22Z",
-  "last_validated_at_utc": "2026-06-13T22:53:22Z",
-  "notes": "Evidence-only governance seal refreshed stale .plan_index evidence hashes. Node readiness remains intentionally blocked by compiler_contract_incomplete; no NodeSeeds, WorkNodes, executable build tasks, or final node queues were created."
+  ]
 }

@@ -1,36 +1,36 @@
 {
-  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
-  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
-  "title": "Part 1 Cleanup Fable Audit of Plans",
-  "created_at_utc": "2026-06-13T19:40:33Z",
-  "updated_at_utc": "2026-06-13T22:53:22Z",
-  "status": "compiled",
-  "profile": "bootstrap_planning",
-  "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for Part 1 Cleanup Fable Audit of Plans on 2026-06-13. This is a conversational cleanup/spec thread, not a Goal run and not canonical Plans prose.",
   "canonical_plan_targets": [
     "Plans/Contracts_V0.md",
     "Plans/orchestrator-subagent-integration.md"
   ],
+  "created_at_utc": "2026-06-13T19:40:33Z",
   "files": {
-    "events": "events.jsonl",
-    "design_atoms": "records/design_atoms.jsonl",
-    "decisions": "records/decisions.jsonl",
-    "questions": "records/questions.jsonl",
     "blockers": "records/blockers.jsonl",
+    "compile_queue": "state/compile_queue.json",
     "corrections": "records/corrections.jsonl",
     "current_state": "state/current.json",
+    "decisions": "records/decisions.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "events": "events.jsonl",
     "handoff": "state/handoff.json",
     "open_items": "state/open_items.json",
-    "compile_queue": "state/compile_queue.json",
-    "operating_capsule": "state/operating_capsule.json"
+    "operating_capsule": "state/operating_capsule.json",
+    "questions": "records/questions.jsonl"
   },
+  "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+  "notes": "Evidence-only governance seal refreshed stale hashes for regenerated Plans/.plan_index artifacts. Subsequent schema/status drift repair normalized non-strict compiled output atoms to design_atom.schema.json while preserving strict compile queue distinctions through compile_disposition, governance_status, compile_notes, validation_notes, and compiled_output_plan_unit_ids. Node readiness remains blocked_compiler_contract_incomplete.",
+  "profile": "bootstrap_planning",
   "record_counts": {
-    "events": 12,
-    "design_atoms": 15,
-    "decisions": 12,
-    "questions": 6,
     "blockers": 0,
-    "corrections": 0
+    "corrections": 0,
+    "decisions": 12,
+    "design_atoms": 15,
+    "events": 13,
+    "questions": 6
   },
-  "notes": "Evidence-only governance seal refreshed stale hashes for regenerated Plans/.plan_index artifacts: doc_cards.json, dependencies.json, coverage_report.json, and node_readiness_report.json. Spec Lock, plan_graph, auto_decisions, product prose, and Plans/.plan_index were not changed; node readiness remains blocked_compiler_contract_incomplete."
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for Part 1 Cleanup Fable Audit of Plans on 2026-06-13. This is a conversational cleanup/spec thread, not a Goal run and not canonical Plans prose.",
+  "status": "compiled",
+  "title": "Part 1 Cleanup Fable Audit of Plans",
+  "updated_at_utc": "2026-06-14T23:21:27Z"
 }

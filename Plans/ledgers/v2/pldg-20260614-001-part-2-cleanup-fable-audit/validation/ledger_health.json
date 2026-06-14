@@ -98,22 +98,27 @@
     {
       "check_id": "compile-0001",
       "status": "pass",
-      "summary": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; bootstrap ledger validation, PlanUnit index validation, and git diff --check pass. Migration validation reports expected stale hashes/counts pending governance seal."
+      "summary": "Earlier pending-governance compile/readiness condition is resolved by the 2026-06-14 governance seal; migration hashes/counts, PlanUnit index, configured shards, Spec Lock, evidence, auto_decisions, plan graph, run-gates, audit-governance, and git diff --check passed."
     },
     {
       "check_id": "compile-0002",
-      "status": "pass_with_pending_seal",
-      "summary": "Final compile validators recorded: pm-bootstrap-ledger-validate pass zero warnings; pm-plan-index validate pass; git diff --check pass; pm-plan-migration validate fails only on stale batch hashes and final live_plan_unit_count until separate governance seal."
+      "status": "pass",
+      "summary": "Earlier pending-governance compile/readiness condition is resolved by the 2026-06-14 governance seal; migration hashes/counts, PlanUnit index, configured shards, Spec Lock, evidence, auto_decisions, plan graph, run-gates, audit-governance, and git diff --check passed."
     },
     {
       "check_id": "readiness-0002",
-      "status": "pass_with_pending_seal",
-      "summary": "Readiness rerun after compile: pm-bootstrap-ledger-validate pass zero warnings; pm-plan-index validate pass; git diff --check pass; pm-plan-migration validate fails only on stale batch hashes and final live_plan_unit_count until separate governance seal. The validator-written migration validation_report side effect was restored from HEAD."
+      "status": "pass",
+      "summary": "Earlier pending-governance compile/readiness condition is resolved by the 2026-06-14 governance seal; migration hashes/counts, PlanUnit index, configured shards, Spec Lock, evidence, auto_decisions, plan graph, run-gates, audit-governance, and git diff --check passed."
     },
     {
       "check_id": "seal-0001",
       "status": "pass",
       "summary": "Explicit governance seal/readiness pass recorded after migration validation, PlanUnit index validation, configured shard check, Spec Lock/evidence/auto_decision/plan graph validation, run-gates, audit-governance, and git diff --check passed. Node readiness remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    },
+    {
+      "check_id": "schema-drift-0001",
+      "status": "pass",
+      "summary": "Design atom status/type drift repaired: all design atom statuses and atom_type values are expected to match design_atom.schema.json; output-only compiled atoms retain strict compile queue distinction in compile_disposition, governance_status, compile_notes, validation_notes, and compiled_output_plan_unit_ids."
     }
   ],
   "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
@@ -124,11 +129,11 @@
     "decisions": 29,
     "deferred_questions": 0,
     "design_atoms": 77,
-    "events": 32,
+    "events": 33,
     "governance_seal": "passed",
     "open_blockers": 0,
     "open_questions": 0
   },
-  "updated_at_utc": "2026-06-14T21:40:43Z",
+  "updated_at_utc": "2026-06-14T23:19:32Z",
   "warnings": []
 }

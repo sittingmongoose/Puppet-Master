@@ -2,7 +2,7 @@
   "current_phase": "compiled_part_2_cleanup_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0029",
-    "last_event_id": "evt-0032",
+    "last_event_id": "evt-0033",
     "next_atom_id": "atom-0078",
     "next_question_id": "q-0015",
     "next_queue_id": "pcq-0005"
@@ -14,8 +14,8 @@
     "Do not treat `Part 2 Cleanup Fable Audit` as a feature implementation task.",
     "Do not drop exact tokens such as `Part 2 Cleanup Fable Audit`, `not a Goal run`, `collaborator Persona`, `Plans/.plan_index`, `WorkNodes`, `NodeSeeds`, `executable queues`, `Spec_Lock`, `shards`, `evidence`, `plan_graph`, or `auto_decisions`."
   ],
-  "last_completed_action": "Completed explicit readiness/governance seal for the Part 2 cleanup compile and preserved the node-readiness boundary.",
-  "last_known_good_state": "Part 2 cleanup ledger is compiled into live Plans PlanUnits and Plans/.plan_index outputs, and governance seal/readiness now passes. Migration validation, PlanUnit index validation, shard check, Spec Lock, evidence, auto_decisions, plan graph, run-gates, audit-governance, and git diff --check pass. Node readiness remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+  "last_completed_action": "Repaired Part 2 cleanup ledger schema/status drift and hardened the bootstrap ledger validator against design_atom status/type enum drift.",
+  "last_known_good_state": "Part 2 cleanup ledger is compiled, governance-sealed, and repaired for design atom schema/status drift. Design atom statuses and atom_type values are schema-valid; sealed non-strict compiled outputs remain distinguishable from strict compile queue targets through compile_disposition, governance_status, compile_notes, validation_notes, and compiled_output_plan_unit_ids. Node readiness remains blocked_compiler_contract_incomplete.",
   "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
   "next_action": "Review the sealed diff or continue with a new requested planning/cleanup section. Do not create NodeSeeds, WorkNodes, executable build tasks, executable queues, final node manifests, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
   "next_safe_action": "Part 2 cleanup governance status is sealed; future node execution work waits for the PlanUnit-to-Node compiler contract.",
@@ -23,7 +23,7 @@
   "open_questions": [],
   "phase": "compiled_part_2_cleanup_governance_sealed",
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-06-14T21:40:43Z",
+  "updated_at_utc": "2026-06-14T23:19:32Z",
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
     "safe_content_checks": "Migration, PlanUnit index, configured shards, Spec Lock, evidence, auto_decisions, plan graph, run-gates, audit-governance, and git diff --check pass. Node readiness remains blocked_compiler_contract_incomplete."
