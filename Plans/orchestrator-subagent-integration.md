@@ -563,6 +563,19 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### Subagent Configuration
 ```yaml
+subagentConfig:
+  enable_tier_subagents: true
+  persona_override_mode: simple
+  tier_overrides:
+    phase: []
+    task: []
+    subtask: []
+    iteration: []
+  disabled_subagents: []
+  required_subagents: []
+  advanced_raw_registry_controls: false
+```
+
 ## Execution unit context and worktree allocation strategy
 
 ### Canonical runtime context
@@ -961,6 +974,10 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 ### 4. Canonical list of subagent names
 
+The canonical list of subagent names is the `subagent_registry` entry set. The registry names runnable delegated-subagent roles; it does not store Persona prompt bodies. Each subagent entry resolves to a Persona through `persona_registry`, preserving requested and effective Persona ids in runtime state. Protected platform Personas are locked, tweakable built-ins may be customized through Persona storage with upgrade-safe defaults, and user-created Personas can be bound to user-created subagent entries when validation passes.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Contracts_V0.md
+
 ### Delegated tool-contract alignment
 
 Orchestrator delegation enters the same `task` tool child-run contract used elsewhere.
@@ -986,7 +1003,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [collaborator]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
+- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
 
 ### 6. Orchestrator and subagent code not yet present
 
@@ -30919,3 +30936,92 @@ Phase 2B batch 136 supersedes the batch 135 residual sentence for S0155 through 
 Phase 2B batch 137 supersedes the batch 136 residual sentence for S0173 through S0187: batch 137 completed `orchestrator-subagent-integration-S0173` source lines 5627-5653 and atomized `orchestrator-subagent-integration-S0174` through `orchestrator-subagent-integration-S0187` into fine-grained PlanUnits `OSI-375` through `OSI-394`, preserving enhanced invoker dispatch, platform capability benefits and operational notes, capability follow-up checklist evidence, autonomous QA reference boundaries, exact visual status symbols, ProgressTracker examples, QA inspector interfaces, task/phase inspector snippets, pause-gate GUI projection, rework commit strategy example, and enhanced loop DRY/Executor ContractRefs as plan evidence only. `orchestrator-subagent-integration-S0188` source line 6027 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0188` at source line 6027.
 Phase 2B batch 138 supersedes the batch 137 residual sentence for S0188 through S0223 and partial S0224: batch 138 atomized `orchestrator-subagent-integration-S0188` through `orchestrator-subagent-integration-S0223` and `orchestrator-subagent-integration-S0224` source lines 6414-6426 into fine-grained PlanUnits `OSI-395` through `OSI-424`, preserving autonomous QA benefits/config evidence, media capability gating change summary, sharded graph consumption, Persona runtime/config boundaries, stale `explore` to `explorer` normalization, scored ready-set scheduling, worktree-native conflict control, wake/cascade semantics, temporal wait rules, runtime projection fields, remediation lineage, retry/backoff matrix, decomposition degradation boundary, event-driven GUI projection alignment, runtime scheduler consumer fields, blocked outcome handling, same-cycle scheduling, and runtime enum/counter alignment as plan evidence only. `orchestrator-subagent-integration-S0224` source line 6427 plus generated owner, PlanUnit, and migration-coverage audit spans remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0224` at source line 6427.
 Phase 2B batch 139 supersedes the batch 138 residual sentence for S0224 through S0227: batch 139 structurally dispositioned the residual `orchestrator-subagent-integration-S0224` blank boundary line 6427, generated `orchestrator-subagent-integration-S0225` Owner / Consumer Map, generated `orchestrator-subagent-integration-S0226` PlanUnits heading, and generated `orchestrator-subagent-integration-S0227` OSI-001 bridge/audit material without adding product PlanUnits. `orchestrator-subagent-integration-S0228` source lines 6817-6827 remain temporary residual source-preserving generated Migration Coverage audit/reporting material under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0228` at source line 6817.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### OSI-425 - Persona-Aware Subagent Configuration Recovery
+
+```yaml
+plan_unit_id: OSI-425
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The recovered Subagent Configuration block is a routing/config contract, not Persona storage. SubagentGuiConfig
+  serializes subagentConfig with enable_tier_subagents, tier_overrides, disabled_subagents, required_subagents, and an
+  advanced_raw_registry_controls flag. The ordinary v1 user flow is Simple Persona-aware overrides by tier; full contextual
+  keys stay advanced-only unless later promoted by a PlanUnit.
+gui_related: true
+gui_classification_reason: The configuration is exposed through user-visible Agent Config and Settings controls even though the persisted record is runtime config.
+depends_on: [P-053, OSI-081, OSI-082, OSI-084, OSI-402, OSI-403]
+unblocks: []
+acceptance_criteria:
+  - The Subagent Configuration YAML fence contains actual YAML and closes before unrelated markdown sections.
+  - Simple v1 tier override lists can express phase, task, subtask, and iteration Persona preferences.
+  - Advanced raw subagent registry controls are available only for advanced/internal use and never replace the Simple v1 flow.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - markdown fence balance review for Plans/orchestrator-subagent-integration.md
+risk_class: subagent_config_loss
+reasoning_tier: standard
+context_scope: orchestrator_subagent_config
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: subagent_config_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0025
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0026
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0027
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0028
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0029
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0033
+  - source_ref:chat:subagent-config-recovery-accepted
+  - source_ref:local:sed-orchestrator-subagent-configuration
+preserved_exact_tokens: ["Subagent Configuration", "subagentConfig", "SubagentGuiConfig", "enable_tier_subagents", "tier_overrides", "disabled_subagents", "required_subagents", "Simple", "Full", "advanced", "phase", "task", "subtask", "iteration"]
+negative_constraints:
+  - Do not keep unrelated markdown inside the Subagent Configuration YAML fence.
+  - Do not store Persona prompt bodies or canonical Persona descriptions in SubagentGuiConfig.
+  - Do not expose full contextual override keys as the default v1 user flow.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```
+
+### OSI-426 - Canonical Subagent Registry Name Recovery
+
+```yaml
+plan_unit_id: OSI-426
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The canonical list of subagent names is the subagent_registry entry set. The registry names runnable delegated-subagent
+  roles and validates launch requests; each entry resolves to Persona identity through persona_registry and records requested
+  versus effective Persona state at runtime. Fixed counts such as 42 subagent types are compatibility/source-lineage only unless
+  regenerated registry evidence proves them current.
+gui_related: false
+gui_classification_reason: Registry identity and launch validation are runtime/config contracts, not visual presentation.
+depends_on: [P-053, OSI-091, OSI-212, OSI-403]
+unblocks: []
+acceptance_criteria:
+  - Launch validation uses subagent_registry names, not provider-native /subagent, /agent, /fleet, or /delegate syntax.
+  - Every subagent registry entry resolves to a Persona or fails validation with a clear requested/effective identity record.
+  - Count-based references such as 42 subagent types remain lineage until generated registry evidence exists.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit
+risk_class: registry_identity_drift
+reasoning_tier: standard
+context_scope: delegated_subagent_registry
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/Commands_System.md]
+node_compile_hint: {mode: registry_name_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0034
+  - source_ref:chat:subagent-registry-list-recovery-accepted
+  - source_ref:Plans/orchestrator-subagent-integration.md:962
+preserved_exact_tokens: ["Canonical list of subagent names", "subagent_registry", "persona_registry", "42 subagent types", "provider-native", "/subagent", "/agent", "/fleet", "/delegate"]
+negative_constraints:
+  - Do not promote a stale inline subagent-name list or count as the registry SSOT.
+  - Do not let provider-native delegation syntax become normative PM runtime behavior.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/DRY_Rules.md]
+```

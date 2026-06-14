@@ -503,7 +503,7 @@ def acceptance_units(units: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return rows
 
 
-def migration_summary() -> dict[str, Any]:
+def migration_summary(current_plan_unit_count: int | None = None) -> dict[str, Any]:
     summary: dict[str, Any] = {
         "run_dir": rel(MIGRATION_RUN),
         "run_id": MIGRATION_RUN.name,
@@ -543,6 +543,13 @@ def migration_summary() -> dict[str, Any]:
         summary["coverage_rows"] = len(rows)
         summary["coverage_status_counts"] = counter_dict([row.get("coverage_status") for row in rows])
         summary["coverage_span_ids_unique"] = len({str(row.get("span_id")) for row in rows}) == len(rows)
+    if current_plan_unit_count is not None:
+        checks = summary.setdefault("checks", {})
+        if isinstance(checks, dict):
+            checks["live_plan_unit_count"] = current_plan_unit_count
+            checks["unique_live_plan_unit_count"] = current_plan_unit_count
+        summary["live_plan_unit_count"] = current_plan_unit_count
+        summary["live_plan_unit_count_source"] = "current_live_plan_index"
     return summary
 
 
@@ -572,7 +579,7 @@ def coverage_report(units: list[dict[str, Any]], docs: list[dict[str, Any]], iss
     if deps["unresolved_references"]:
         blockers.append({"blocker_type": "unresolved_dependency_references", "items": deps["unresolved_references"]})
 
-    migration = migration_summary()
+    migration = migration_summary(current_plan_unit_count=len(units))
     if migration.get("validation_status") not in {None, "pass"}:
         blockers.append({"blocker_type": "migration_validation_failures", "items": migration.get("validation_failures", [])})
     if migration.get("available") is False:

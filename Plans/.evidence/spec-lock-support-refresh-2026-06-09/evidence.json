@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b504bfdb49a8b8f14f804bf4d02f7b7c66d070a98d0891d64db20b303d46bcba"
+      "sha256": "00f5c2667f354af3ca15ced7bf8250cc22cf4e5a637694f3fee68ad1f791c420"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "b145a4fb22f1554c8a45e2beaa975be6c6a816dafe1483ee403bdd9aecae833e"
+      "sha256": "0d7725ba8fbd169c5cff82fa271e6aeaebe8a8d1d85f5a694f5f61ee4e8aa4a0"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -114,22 +114,22 @@
   "evidence_id": "evidence.spec-lock-support-refresh-2026-06-09.clean-repo",
   "files_changed": [
     {
-      "path": "Plans/Spec_Lock.json",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/auto_decisions.jsonl",
-      "change_type": "modified"
-    },
-    {
-      "path": "scripts/pm-plans-verify.py",
       "change_type": "modified",
-      "note": "Narrow lint false-positive repair for PlanUnit YAML preserved/prohibition text."
+      "path": "Plans/Spec_Lock.json"
     },
     {
-      "path": "scripts/pm-shard-plans.py",
       "change_type": "modified",
-      "note": "Sharder trims section separator blank lines from shard body ranges."
+      "path": "Plans/auto_decisions.jsonl"
+    },
+    {
+      "change_type": "modified",
+      "note": "Narrow lint false-positive repair for PlanUnit YAML preserved/prohibition text.",
+      "path": "scripts/pm-plans-verify.py"
+    },
+    {
+      "change_type": "modified",
+      "note": "Sharder trims section separator blank lines from shard body ranges.",
+      "path": "scripts/pm-shard-plans.py"
     }
   ],
   "node": {

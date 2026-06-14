@@ -1,0 +1,77 @@
+{
+  "items": [
+    {
+      "compile_action": "create_new_planunits_and_defer_contract_authority",
+      "compiled_plan_unit_ids": [
+        "CV-279",
+        "CV-280"
+      ],
+      "notes": "Contracts concern/approval owner-section recovery and deferred concern lineage mutation authority.",
+      "queue_id": "pcq-0001",
+      "source_atom_ids": [
+        "atom-0017",
+        "atom-0051",
+        "atom-0052",
+        "atom-0053",
+        "atom-0054",
+        "atom-0057"
+      ],
+      "status": "compiled",
+      "target_doc": "Plans/Contracts_V0.md"
+    },
+    {
+      "compile_action": "repair_yaml_fence_and_create_registry_config_planunits",
+      "compiled_plan_unit_ids": [
+        "OSI-425",
+        "OSI-426"
+      ],
+      "notes": "Recovered Subagent Configuration YAML, Simple v1 Persona-aware overrides, and canonical subagent_registry name contract.",
+      "queue_id": "pcq-0002",
+      "source_atom_ids": [
+        "atom-0014",
+        "atom-0024",
+        "atom-0025",
+        "atom-0026",
+        "atom-0027",
+        "atom-0028",
+        "atom-0029",
+        "atom-0033",
+        "atom-0034"
+      ],
+      "status": "compiled",
+      "target_doc": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "compile_action": "create_owner_pointer_planunit",
+      "compiled_plan_unit_ids": [
+        "C-049"
+      ],
+      "notes": "Crosswalk top stubs compile to boundary-map owner pointer recovery.",
+      "queue_id": "pcq-0003",
+      "source_atom_ids": [
+        "atom-0068",
+        "atom-0073"
+      ],
+      "status": "compiled",
+      "target_doc": "Plans/Crosswalk.md"
+    },
+    {
+      "compile_action": "create_structural_recovery_planunit",
+      "compiled_plan_unit_ids": [
+        "CWF-148"
+      ],
+      "notes": "Section 12 parent and wizard-blocked addenda deduplication recovery.",
+      "queue_id": "pcq-0004",
+      "source_atom_ids": [
+        "atom-0042"
+      ],
+      "status": "compiled",
+      "target_doc": "Plans/chain-wizard-flexibility.md"
+    }
+  ],
+  "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+  "notes": "Strict queue target docs remain limited to governance-covered owner docs. Part 2 cleanup compile outputs are governance-sealed: migration hashes/counts, configured shards, Spec_Lock, evidence, auto_decisions, and Plans/.plan_index validators pass. Node readiness remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or final node queues were created.",
+  "schema_id": "pm.plan_compile_queue.v1",
+  "status": "compiled_part_2_cleanup_governance_sealed",
+  "updated_at_utc": "2026-06-14T21:40:05Z"
+}

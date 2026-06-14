@@ -1667,3 +1667,39 @@ Phase 2B atomization artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl`
 
 Phase 2B batch 013 atomizes `BinaryLocator_Spec-S0001` through `BinaryLocator_Spec-S0039` into `BS-002` through `BS-020`. `BS-001` remains a temporary source-preserving bridge until the remaining BinaryLocator spans are covered and the bridge is retired in a later controlled batch. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### BS-025 - Deterministic Discovery Algorithm Heading Recovery
+
+```yaml
+plan_unit_id: BS-025
+unit_type: constraint
+status: accepted
+owner_doc: Plans/BinaryLocator_Spec.md
+canonical_text: >-
+  BinaryLocator_Spec contains duplicate Deterministic discovery algorithm headings. Recovery is anchor cleanup only: preserve the live
+  deterministic discovery algorithm behavior and make duplicate heading text an alias or compatibility/source-lineage pointer.
+gui_related: false
+gui_classification_reason: Binary discovery algorithm heading repair is backend documentation structure, not GUI presentation.
+depends_on: [BS-002]
+unblocks: []
+acceptance_criteria:
+  - The deterministic discovery algorithm has one canonical anchor.
+  - Duplicate heading text does not produce ambiguous references.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual heading/anchor review
+risk_class: binary_locator_anchor_ambiguity
+reasoning_tier: low
+context_scope: binary_locator_doc_structure
+implementation_surfaces: [Plans/BinaryLocator_Spec.md]
+node_compile_hint: {mode: structural_heading_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0039
+preserved_exact_tokens: ["Deterministic discovery algorithm"]
+negative_constraints:
+  - Do not change binary discovery precedence as part of heading repair.
+owner_hints: [Plans/BinaryLocator_Spec.md]
+```

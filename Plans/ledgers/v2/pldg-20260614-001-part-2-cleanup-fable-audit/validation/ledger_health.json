@@ -1,0 +1,134 @@
+{
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Ledger directory, manifest, events, records, compact state, compile queue, operating capsule, and registry entry were initialized."
+    },
+    {
+      "check_id": "init-0002",
+      "status": "pass",
+      "summary": "Initialization stayed out of canonical Plans, generated indexes, WorkNodes, NodeSeeds, executable queues, and governance artifacts."
+    },
+    {
+      "check_id": "init-0003",
+      "status": "pass",
+      "summary": "All initialized design atoms carry gui_related false with classification reasons."
+    },
+    {
+      "check_id": "init-0004",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings."
+    },
+    {
+      "check_id": "triage-0001",
+      "status": "pass",
+      "summary": "Post-triage validator run passed after adding Fable follow-up correction, verification atoms, decisions, and questions."
+    },
+    {
+      "check_id": "triage-0002",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Fable-finding triage."
+    },
+    {
+      "check_id": "persona-0001",
+      "status": "pass",
+      "summary": "Post-Persona cluster validator run passed after adding Persona-aware subagent override atoms, decisions, and questions."
+    },
+    {
+      "check_id": "persona-0002",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Persona-aware cluster start."
+    },
+    {
+      "check_id": "persona-0003",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Persona-aware Simple v1, advanced raw-subagent, and Persona mutability updates."
+    },
+    {
+      "check_id": "persona-0004",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after protected Persona list closure and Subagent Configuration YAML candidate recovery."
+    },
+    {
+      "check_id": "persona-0005",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Subagent Configuration recovery acceptance and canonical subagent-name candidate recovery."
+    },
+    {
+      "check_id": "persona-0006",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after canonical subagent-name recovery acceptance and empty compile_queue restoration."
+    },
+    {
+      "check_id": "structural-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after structural heading cluster closure."
+    },
+    {
+      "check_id": "gui-filemanager-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after GUI/FileManager missing-view cluster closure."
+    },
+    {
+      "check_id": "contracts-orchestrator-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Contracts/Orchestrator owner-section cluster closure."
+    },
+    {
+      "check_id": "assistant-chat-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after assistant-chat/newfeatures dangling-reference cluster closure and atom-0063 gui_related repair."
+    },
+    {
+      "check_id": "owner-section-stubs-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after owner-section stub sweep closure and atom-0068 gui_related repair."
+    },
+    {
+      "check_id": "fable-item-1-residual-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after Fable item 1 residual coverage closure."
+    },
+    {
+      "check_id": "readiness-0001",
+      "status": "pass",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit` passed with zero warnings after whole-ledger readiness check projection updates."
+    },
+    {
+      "check_id": "compile-0001",
+      "status": "pass",
+      "summary": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; bootstrap ledger validation, PlanUnit index validation, and git diff --check pass. Migration validation reports expected stale hashes/counts pending governance seal."
+    },
+    {
+      "check_id": "compile-0002",
+      "status": "pass_with_pending_seal",
+      "summary": "Final compile validators recorded: pm-bootstrap-ledger-validate pass zero warnings; pm-plan-index validate pass; git diff --check pass; pm-plan-migration validate fails only on stale batch hashes and final live_plan_unit_count until separate governance seal."
+    },
+    {
+      "check_id": "readiness-0002",
+      "status": "pass_with_pending_seal",
+      "summary": "Readiness rerun after compile: pm-bootstrap-ledger-validate pass zero warnings; pm-plan-index validate pass; git diff --check pass; pm-plan-migration validate fails only on stale batch hashes and final live_plan_unit_count until separate governance seal. The validator-written migration validation_report side effect was restored from HEAD."
+    },
+    {
+      "check_id": "seal-0001",
+      "status": "pass",
+      "summary": "Explicit governance seal/readiness pass recorded after migration validation, PlanUnit index validation, configured shard check, Spec Lock/evidence/auto_decision/plan graph validation, run-gates, audit-governance, and git diff --check passed. Node readiness remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    }
+  ],
+  "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "compile_queue_items": 4,
+    "decisions": 29,
+    "deferred_questions": 0,
+    "design_atoms": 77,
+    "events": 32,
+    "governance_seal": "passed",
+    "open_blockers": 0,
+    "open_questions": 0
+  },
+  "updated_at_utc": "2026-06-14T21:40:43Z",
+  "warnings": []
+}

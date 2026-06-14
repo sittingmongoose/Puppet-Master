@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "capsule_id": "cap-part-2-cleanup-fable-audit-current",
+  "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "continue_part_2_cleanup_fable_audit_planning_until_compile_requested",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl"
+  ],
+  "must_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "allowed_writes_during_conversation": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json"
+  ],
+  "allowed_writes_during_compile": [],
+  "forbidden_until_explicit_compile_or_governance_seal": [
+    "Plans/** live canonical plan prose",
+    "Plans/.plan_index/**",
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl",
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues"
+  ],
+  "required_end_of_turn_actions": [
+    "append_turn_event",
+    "upsert_design_atoms",
+    "update_questions_blockers",
+    "update_handoff_projection",
+    "classify_gui_related",
+    "preserve_node_readiness_boundary"
+  ],
+  "completion_blockers_visible_to_agent": [
+    "open_questions",
+    "unclassified_candidates",
+    "unresolved_contradictions",
+    "open_blockers",
+    "unsealed_governance",
+    "missing_gui_related_classification",
+    "worknode_creation_requested_before_contract"
+  ]
+}

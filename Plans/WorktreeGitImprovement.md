@@ -4797,3 +4797,42 @@ The initial source-preserving standardization preserved `WorktreeGitImprovement-
 Phase 2B batch 203 atomized `WorktreeGitImprovement-S0059` through `WorktreeGitImprovement-S0099` into fine-grained PlanUnits `W-037` through `W-069`, structurally dispositioned the retained reference span `WorktreeGitImprovement-S0091`, and split mixed GUI/backend spans where safe. `W-001` is narrowed to residual generated-tail source-preserving coverage for `WorktreeGitImprovement-S0100` through `WorktreeGitImprovement-S0103` only and must not override the fine-grained units. Batch 203 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 
 Phase 2B batch 204 structurally dispositioned generated tail spans `WorktreeGitImprovement-S0100` through `WorktreeGitImprovement-S0103`: Owner / Consumer Map, PlanUnits heading, the former generated `W-001` bridge, and Migration Coverage. `W-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode: source_preserving_bridge_retired`; `Plans/WorktreeGitImprovement.md` no longer has active `source_preserving_planunit` coverage. Batch 204 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### W-070 - Worktree Allocation And Lane Cleanup Header Recovery
+
+```yaml
+plan_unit_id: W-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  WorktreeGitImprovement owns worktree allocation, lane/worktree binding, contamination quarantine, safe-point recovery, restore-before-reuse,
+  and lane cleanup semantics. Empty worktree allocation and lane-cleanup stubs hydrate from WorktreeGit, Executor, storage, Crosswalk, and
+  orchestrator-subagent owner split; they do not revive branch-per-tier or tier-keyed worktree allocation as live canon.
+gui_related: true
+gui_classification_reason: Source Control and worktree state are user-visible surfaces, and this unit governs their visible allocation/recovery semantics.
+depends_on: [W-001]
+unblocks: []
+acceptance_criteria:
+  - Worktree allocation defaults to package/lane ownership with seam exceptions documented by policy.
+  - Contaminated worktrees quarantine until recovery clears the blocker.
+  - branch-per-tier wording remains compatibility-only.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual worktree owner-section review
+risk_class: worktree_allocation_drift
+reasoning_tier: standard
+context_scope: worktree_allocation_cleanup
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/storage-plan.md, Plans/Executor_Protocol.md, Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: worktree_owner_section_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0069
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0073
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0074
+preserved_exact_tokens: ["worktree allocation strategy", "lane-cleanup lineage", "package-based lane pools", "branch-per-tier", "contamination quarantine", "restore-before-reuse"]
+negative_constraints:
+  - Do not revive branch-per-tier as live worktree allocation canon.
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md, Plans/orchestrator-subagent-integration.md, Plans/storage-plan.md]
+```

@@ -14820,3 +14820,45 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 173 atomized `storage-plan-S0001` through `storage-plan-S0042` into fine-grained PlanUnits `SP-002` through `SP-024`. Phase 2B batch 174 atomized `storage-plan-S0043` through `storage-plan-S0075` into fine-grained PlanUnits `SP-025` through `SP-057`. Phase 2B batch 175 atomized `storage-plan-S0076` into fine-grained PlanUnits `SP-058` through `SP-065`. Phase 2B batch 176 atomized `storage-plan-S0077` into fine-grained PlanUnits `SP-066` through `SP-119`. Phase 2B batch 177 atomized `storage-plan-S0078` through `storage-plan-S0086` into fine-grained PlanUnits `SP-120` through `SP-139`. Phase 2B batch 178 atomized `storage-plan-S0087` through `storage-plan-S0100` into fine-grained PlanUnits `SP-140` through `SP-178`. Phase 2B batch 179 atomized `storage-plan-S0101` through `storage-plan-S0127` into fine-grained PlanUnits `SP-179` through `SP-212`. Phase 2B batch 180 retired `SP-001` from active `source_preserving_planunit` mode into `generated_artifact_residual` lineage for generated `storage-plan-S0128` through `storage-plan-S0130`; it must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### SP-213 - Projection Rehydration Artifact Index And Lane Cleanup Header Recovery
+
+```yaml
+plan_unit_id: SP-213
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  storage-plan top owner headers for projection fields used by startup rehydration, artifacts-index fields, lane-cleanup lineage, bridge-field
+  precedence, and related owner sections hydrate from existing SP PlanUnits and body sections. Recovery must preserve durable event/projection
+  ownership without inventing new storage record families.
+gui_related: false
+gui_classification_reason: Storage projection and durable record ownership are backend persistence contracts.
+depends_on: [SP-035, SP-037, SP-038]
+unblocks: []
+acceptance_criteria:
+  - Startup rehydration projection fields map to existing durable storage/projector ownership.
+  - artifacts-index fields and lane-cleanup lineage resolve to storage and runtime owner records.
+  - Bridge-field precedence is recorded as storage owner behavior or a consumer pointer, not a dangling header.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual storage owner-section review
+risk_class: storage_owner_stub_loss
+reasoning_tier: standard
+context_scope: storage_owner_section_recovery
+implementation_surfaces: [Plans/storage-plan.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/WorktreeGitImprovement.md]
+node_compile_hint: {mode: storage_owner_section_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0013
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0066
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0067
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0073
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0074
+preserved_exact_tokens: ["projection fields for startup rehydration", "artifacts-index fields", "lane-cleanup lineage", "bridge-field precedence", "allowed_actions[]"]
+negative_constraints:
+  - Do not create new storage record families solely to fill old stub headings.
+  - Do not preserve allowed_actions[] as a live blocked/HITL storage contract.
+owner_hints: [Plans/storage-plan.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/Orchestrator_Page.md]
+```

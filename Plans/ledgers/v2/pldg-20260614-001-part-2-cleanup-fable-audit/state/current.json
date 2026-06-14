@@ -1,0 +1,70 @@
+{
+  "accepted_decisions_count": 29,
+  "candidate_atoms_count": 0,
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/assistant-chat-design.md",
+    "Plans/BinaryLocator_Spec.md",
+    "Plans/Commands_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "Plans/MiscPlan.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Personas.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl"
+  ],
+  "deferred_questions_count": 0,
+  "design_atoms_total": 77,
+  "governance_status": "sealed",
+  "last_event_id": "evt-0032",
+  "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+  "must_not_do": [
+    "Do not write canonical Plans during conversational planning; this ledger has already been compiled and governance-sealed only because Jared explicitly requested those later phases.",
+    "Do not update Plans/Spec_Lock.json, generated shards, evidence bundles, plan graph, or auto_decisions outside an explicit governance seal.",
+    "Do not create or update WorkNodes, NodeSeeds, executable queues, or final node manifests from this ledger.",
+    "Do not treat `Part 2 Cleanup Fable Audit` as a product feature implementation task.",
+    "Do not recreate the removed legacy Iced app.",
+    "Do not ask Jared to label GUI work; infer gui_related true/false."
+  ],
+  "next_safe_action": "Review the sealed Part 2 cleanup diff or continue with a new requested planning/cleanup section. Node readiness remains intentionally blocked by compiler_contract_incomplete; do not create NodeSeeds, WorkNodes, executable build tasks, executable queues, final node manifests, or final node queues until the PlanUnit-to-Node compiler contract is defined.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_part_2_cleanup_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "title": "Part 2 Cleanup Fable Audit",
+  "updated_at_utc": "2026-06-14T21:40:43Z",
+  "validation_state": {
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "safe_content_checks": [
+      "pm-plan-migration validate passed after refreshing batch hashes and final live_plan_unit_count to 4972.",
+      "pm-plan-index validate passed: 4972 PlanUnits, 17682 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete.",
+      "pm-shard-plans --check passed for 50 docs and 859 shard body files after regeneration.",
+      "pm-plans-verify validate-auto-decisions, validate-evidence, validate-plan-graph, verify-spec-lock, run-gates, and audit-governance passed.",
+      "git diff --check passed.",
+      "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    ],
+    "standard_validation": "pass_governance_sealed"
+  }
+}

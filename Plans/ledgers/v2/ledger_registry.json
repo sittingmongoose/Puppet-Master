@@ -1,43 +1,61 @@
 {
-  "schema_id": "pm.bootstrap_ledger_registry.v1",
-  "updated_at_utc": "2026-06-13T22:53:22Z",
   "active_ledgers": [],
-  "paused_ledgers": [],
   "compiled_ledgers": [
     {
-      "ledger_id": "pldg-20260610-001-ledger-plan-system",
-      "title": "Ledger, plan document standardization, and plan-to-node readiness system",
-      "status": "compiled",
-      "phase": "compiled_initial_plan_docs_governance_sealed",
-      "created_at_utc": "2026-06-10T00:00:00Z",
-      "last_updated_at_utc": "2026-06-11T22:05:24Z",
-      "primary_goal": "Define and bootstrap the structured planning ledger, standardized Plan docs, lossless Plan conversion, PlanUnit indexing, node-readiness reporting, and simple gui_related routing.",
       "canonical_plan_targets": [
         "Plans/Planning_Ledger_System.md",
         "Plans/Plan_Document_System.md",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Bootstrap_Planning_Migration.md"
       ],
-      "resume_file": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/handoff.json",
+      "created_at_utc": "2026-06-10T00:00:00Z",
       "last_updated_at": "2026-06-11T22:05:24Z",
-      "notes": "Existing Plans conversion, migration validation, PlanUnit index, node-readiness report, and governance seal are complete; node readiness remains intentionally blocked by compiler_contract_incomplete/q-0001. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created."
+      "last_updated_at_utc": "2026-06-11T22:05:24Z",
+      "ledger_id": "pldg-20260610-001-ledger-plan-system",
+      "notes": "Existing Plans conversion, migration validation, PlanUnit index, node-readiness report, and governance seal are complete; node readiness remains intentionally blocked by compiler_contract_incomplete/q-0001. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
+      "phase": "compiled_initial_plan_docs_governance_sealed",
+      "primary_goal": "Define and bootstrap the structured planning ledger, standardized Plan docs, lossless Plan conversion, PlanUnit indexing, node-readiness reporting, and simple gui_related routing.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/handoff.json",
+      "status": "compiled",
+      "title": "Ledger, plan document standardization, and plan-to-node readiness system"
     },
     {
-      "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
-      "title": "Part 1 Cleanup Fable Audit of Plans",
-      "status": "compiled",
-      "phase": "compiled_section_a_governance_sealed",
-      "created_at_utc": "2026-06-13T19:40:33Z",
-      "last_updated_at_utc": "2026-06-13T22:53:22Z",
-      "primary_goal": "Plan and clarify Part 1 cleanup/audit work for features with conflicting canonical definitions where two truths coexist before any canonical Plans edits.",
       "canonical_plan_targets": [
         "Plans/Contracts_V0.md",
         "Plans/orchestrator-subagent-integration.md"
       ],
-      "resume_file": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/handoff.json",
+      "created_at_utc": "2026-06-13T19:40:33Z",
       "last_updated_at": "2026-06-13T22:53:22Z",
-      "notes": "Section A cleanup compiled to live Plans docs and Plans/.plan_index outputs; evidence-only governance seal refreshed stale hashes for regenerated PlanUnit index artifacts. Node readiness remains intentionally blocked by compiler_contract_incomplete. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created."
+      "last_updated_at_utc": "2026-06-13T22:53:22Z",
+      "ledger_id": "pldg-20260613-001-cleanup-fable-audit",
+      "notes": "Section A cleanup compiled to live Plans docs and Plans/.plan_index outputs; evidence-only governance seal refreshed stale hashes for regenerated PlanUnit index artifacts. Node readiness remains intentionally blocked by compiler_contract_incomplete. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
+      "phase": "compiled_section_a_governance_sealed",
+      "primary_goal": "Plan and clarify Part 1 cleanup/audit work for features with conflicting canonical definitions where two truths coexist before any canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/state/handoff.json",
+      "status": "compiled",
+      "title": "Part 1 Cleanup Fable Audit of Plans"
+    },
+    {
+      "canonical_plan_targets": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "created_at_utc": "2026-06-14T18:15:53Z",
+      "last_updated_at": "2026-06-14T21:40:05Z",
+      "last_updated_at_utc": "2026-06-14T21:40:05Z",
+      "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed. Migration validation, PlanUnit index validation, configured shard check, Spec Lock/evidence/auto_decision/plan graph validation, run-gates, audit-governance, and git diff --check pass. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+      "phase": "compiled_part_2_cleanup_governance_sealed",
+      "primary_goal": "Review Fable's stubbed/lost-content findings, agree or disagree from local Plans evidence, then collaboratively flesh agreed items into implementation-ready ledger intent before any canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit/state/handoff.json",
+      "status": "compiled",
+      "title": "Part 2 Cleanup Fable Audit"
     }
   ],
-  "sealed_ledgers": []
+  "paused_ledgers": [],
+  "schema_id": "pm.bootstrap_ledger_registry.v1",
+  "sealed_ledgers": [],
+  "updated_at_utc": "2026-06-14T21:40:05Z"
 }
