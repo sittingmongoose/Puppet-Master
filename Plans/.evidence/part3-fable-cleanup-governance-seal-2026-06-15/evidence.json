@@ -6,7 +6,7 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "e9d40157001bec1cc8aae47f88bb6d2ad68ff7688d0e7669a249eff5c774dc77"
+      "sha256": "6acdb6179bef74636c0a725908c54bbef04643e336e1a6e7a604bfcae9cef2e3"
     },
     {
       "path": "Plans/FileManager.md",
@@ -18,7 +18,7 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "5c7f1699d2c6e48719c6cbb1c19fd3cfe46fe12b63b44caa62017874f9375c3b"
+      "sha256": "e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e"
     },
     {
       "path": "Plans/Media_Generation_and_Capabilities.md",
@@ -62,43 +62,43 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3c7bccb961fafe269ba6d94c05f6a7e209434559d255a8e996563b3e86abe8f4"
+      "sha256": "d6901f30a313f0c231b77650e8eda9df309ef08990b43560a046a68643add124"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e64c137262018dd30a70fa56fb341737dc1c8b1df6605d7ad3f0b24ae49941b0"
+      "sha256": "af1f308abd75685a60a8b3a516b78c2fac04ea24ae6d883b13425caeb670b54c"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "6fd4bef6bf38179bad510beb23efe42870f5ec10e44a372cfcf0306cbdc318f2"
+      "sha256": "56f895f9e6d4289132ec0fb1fba44aca9e2c5b81d786f7ecc43691c5f1ea10bf"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "e5a60f49e362ab0e3fa03fd910a8a892d1971748ebaba51b14dc009165348f2f"
+      "sha256": "bc4bab892917dce50d45eed36a9b415203fa91c3729084384f095419b0b8235a"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "fb5a817ede4340ff41191a1a4c01087e862b79992343a51d44155b4e8b782c29"
+      "sha256": "2e6d52d96887320c6c2463e4e40c3daa12fb859ca13f03ef2ddc1b82bc196b5a"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "6bef27d53bfca1b4e73ccea197d98a70147505eefbffa7e5ad671d88f901cf2f"
+      "sha256": "f727788eb9b5cc56ffac46d3a21ab0d073febadcb57862c89a6bba19d06d65b0"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "ca5691caa783cd59e4a9788da3fd8e7d74a5391140bbf86a5b3630e9c84906ef"
+      "sha256": "9d3fa60ec73eedcc3f77e43e7e03b368624558cd859da6ab50e2d150b546ec77"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "c40e1e68a1eecd18fb2ad8b0275f8671f712c6b8c12bf6cebb992ca9bbaae3c1"
+      "sha256": "8b2078f4d335004e16d085c9df7bf06593ee0ac95dc9355aad6562abb6468ab3"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
-      "sha256": "3714386e8d1b6d8cd36a9d0433ab797e9d66e150c7b98d6d388d9504255a26dd"
+      "sha256": "99857f2316378bd87a1b3dd2a96a9ec0c1e5325620bd78ba9c8a45a182c17b40"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "20e90ae00a6d0655abbc32ac16eacd8f7bef7a60aed462b1640104afcddde697"
+      "sha256": "294871a31dc5570a7cb558893a0263bcf228fac909a0f0e443572ec0d55b2354"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "006accccae64c6a16f99a7c5d09cf1313ab00f51d2afec4d1c4af730c67e6bdf"
+      "sha256": "e3bab2001aa12e8f315a80354d3507a75d350f30539175e937f18db003cae3f5"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -119,17 +119,17 @@
   ],
   "checks": [
     {
-      "details": "Migration validation passed after refreshing generated migration bookkeeping.",
+      "details": "Migration validation passed after refreshing generated migration bookkeeping for 5005 live PlanUnits.",
       "name": "migration-validate",
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index validation passed with 4998 PlanUnits and 17770 acceptance units.",
+      "details": "PlanUnit index validation passed with 5005 PlanUnits and 17798 acceptance units.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
     {
-      "details": "Configured shard outputs validate after regeneration.",
+      "details": "Configured shard outputs validate after regeneration: docs_checked=50; shards_checked=876; failures=[].",
       "name": "shard-check",
       "result": "PASS"
     },

@@ -89,6 +89,15 @@ def upsert_check(checks: list[dict[str, Any]], name: str, details: str) -> bool:
     return True
 
 
+def split_pair(value: str, option: str) -> tuple[str, str]:
+    if "|||" not in value:
+        raise SystemExit(f"{option} expects NAME|||DETAILS or CMD|||STDOUT_EXCERPT format")
+    left, right = value.split("|||", 1)
+    if not left or not right:
+        raise SystemExit(f"{option} requires non-empty fields around |||")
+    return left, right
+
+
 def refresh_spec_lock(path: Path) -> dict[str, Any]:
     data = load_json(path)
     changed_paths: list[str] = []
@@ -129,10 +138,16 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
         changed = replace_ledger_validate_command(commands, args.ledger_command) or changed
     for cmd in args.record_command:
         changed = update_or_append_command(commands, cmd) or changed
+    for value in args.command_excerpt:
+        cmd, stdout_excerpt = split_pair(value, "--command-excerpt")
+        changed = update_or_append_command(commands, cmd, stdout_excerpt=stdout_excerpt) or changed
 
     checks = data.setdefault("checks", [])
     if args.plan_index_details:
         changed = upsert_check(checks, "plan-index-validate", args.plan_index_details) or changed
+    for value in args.check_detail:
+        name, details = split_pair(value, "--check-detail")
+        changed = upsert_check(checks, name, details) or changed
     if args.no_node_artifacts:
         changed = upsert_check(
             checks,
@@ -167,7 +182,9 @@ def main() -> int:
     refresh.add_argument("--evidence", action="append", default=[], help="Evidence bundle to refresh.")
     refresh.add_argument("--ledger-command", default=None, help="Canonical ledger validation command to record.")
     refresh.add_argument("--record-command", action="append", default=[], help="Additional successful command to record.")
+    refresh.add_argument("--command-excerpt", action="append", default=[], help="Successful command plus stdout excerpt, formatted CMD|||STDOUT_EXCERPT.")
     refresh.add_argument("--plan-index-details", default=None, help="Details text for the plan-index-validate PASS check.")
+    refresh.add_argument("--check-detail", action="append", default=[], help="PASS check upsert, formatted NAME|||DETAILS.")
     refresh.add_argument("--no-node-artifacts", action="store_true", help="Record the no node/work artifact PASS check.")
     refresh.set_defaults(func=cmd_refresh)
     args = parser.parse_args()

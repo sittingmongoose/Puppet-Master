@@ -1,0 +1,67 @@
+{
+  "accepted_decisions_count": 4,
+  "candidate_atoms_count": 0,
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "deferred_questions_count": 0,
+  "design_atoms_total": 19,
+  "governance_status": "pending_seal",
+  "last_event_id": "evt-0010",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "must_not_do": [
+    "Do not write canonical Plans until Jared explicitly asks to compile this ledger.",
+    "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions during conversational planning.",
+    "Do not ask Jared to label GUI work; infer gui_related true/false for every design atom.",
+    "Do not drop exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, or user corrections from source lineage."
+  ],
+  "next_safe_action": "Report changed files, PlanUnits, compiled atoms, owner adjudications, validators, and governance_status=pending_seal. Do not seal governance unless Jared explicitly requests a separate seal phase.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_part_4_fable_cleanup_pending_seal",
+  "ready_for_plan_compile_atoms": 0,
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "title": "Part 4 Fable Cleanup",
+  "updated_at_utc": "2026-06-15T21:11:00Z",
+  "validation_state": {
+    "ledger_health": "pass_compiled_pending_seal",
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "fail_expected_stale_migration_proof_pending_seal",
+    "git_diff_check": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "pending_seal",
+    "safe_content_checks": [
+      "Seven ready cleanup atoms were compiled to live Plans PlanUnits.",
+      "Allowed Plans/.plan_index outputs were regenerated with python3 scripts/pm-plan-index.py generate.",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup passed.",
+      "python3 scripts/pm-plan-index.py validate passed.",
+      "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits failed only because migration proof artifacts now have stale SHA/counts after live Plan edits; those artifacts were intentionally not regenerated in this compile phase.",
+      "git diff --check passed.",
+      "Spec Lock, shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, and production build tasks were not created or updated."
+    ],
+    "standard_validation": "complete_with_expected_pending_seal_migration_staleness"
+  }
+}

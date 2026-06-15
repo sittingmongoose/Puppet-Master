@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "006accccae64c6a16f99a7c5d09cf1313ab00f51d2afec4d1c4af730c67e6bdf"
+      "sha256": "e3bab2001aa12e8f315a80354d3507a75d350f30539175e937f18db003cae3f5"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "eba82f92b72512e6a66f0c08e3dd1265bb26fca4245fa145d941c9f4b8704c05"
+      "sha256": "8c745dc4de916916ce9e2ecfc884104eb24b38a76f1587f6e1fcc2ad905d4981"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "4ed6a97add92ffde88d99254d621f57eefbee98400be52c46df82a0c1589a6a4"
+      "sha256": "66c71f6efe3d6050cdab94cc348247d044a8abe888dfc1173c77bdbad09bb237"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,47 +50,47 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3c7bccb961fafe269ba6d94c05f6a7e209434559d255a8e996563b3e86abe8f4"
+      "sha256": "d6901f30a313f0c231b77650e8eda9df309ef08990b43560a046a68643add124"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e64c137262018dd30a70fa56fb341737dc1c8b1df6605d7ad3f0b24ae49941b0"
+      "sha256": "af1f308abd75685a60a8b3a516b78c2fac04ea24ae6d883b13425caeb670b54c"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "6fd4bef6bf38179bad510beb23efe42870f5ec10e44a372cfcf0306cbdc318f2"
+      "sha256": "56f895f9e6d4289132ec0fb1fba44aca9e2c5b81d786f7ecc43691c5f1ea10bf"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "e5a60f49e362ab0e3fa03fd910a8a892d1971748ebaba51b14dc009165348f2f"
+      "sha256": "bc4bab892917dce50d45eed36a9b415203fa91c3729084384f095419b0b8235a"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "fb5a817ede4340ff41191a1a4c01087e862b79992343a51d44155b4e8b782c29"
+      "sha256": "2e6d52d96887320c6c2463e4e40c3daa12fb859ca13f03ef2ddc1b82bc196b5a"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "6bef27d53bfca1b4e73ccea197d98a70147505eefbffa7e5ad671d88f901cf2f"
+      "sha256": "f727788eb9b5cc56ffac46d3a21ab0d073febadcb57862c89a6bba19d06d65b0"
     }
   ],
   "checks": [
     {
-      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed.",
+      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed with 5005 live PlanUnits.",
       "name": "migration-validate",
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index validates with 4947 PlanUnits and 17603 acceptance units.",
+      "details": "PlanUnit index validates with 5005 PlanUnits and 17798 acceptance units.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
     {
-      "details": "pldg-20260610-001-ledger-plan-system validates without errors or warnings.",
+      "details": "pldg-20260610-001-ledger-plan-system validates without errors or warnings; plan_units_checked=92.",
       "name": "ledger-validate",
       "result": "PASS"
     },
     {
-      "details": "docs_checked=50; shards_checked=870; failures=[]",
+      "details": "docs_checked=50; shards_checked=876; failures=[]",
       "name": "shard-check",
       "result": "PASS"
     },
@@ -100,36 +100,41 @@
       "result": "PASS"
     },
     {
-      "details": "Spec Lock hashes refreshed and auto-decision dec-2026-06-13-phase2-plan-standardization-planunit-index-governance-seal upserted.",
+      "details": "Spec Lock hashes refreshed for current sealed Plans and generated governance artifacts.",
       "name": "spec-lock-protocol",
       "result": "PASS"
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
     {
       "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; live_plan_unit_count=4947; source_preserving_unit_count=0"
+      "stdout_excerpt": "status=pass; live_plan_unit_count=5005; source_preserving_unit_count=0"
     },
     {
       "cmd": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_unit_count=4947; acceptance_unit_count=17603; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; plan_unit_count=5005; acceptance_unit_count=17798; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
       "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_units_checked=38; warnings=[]"
+      "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; docs_generated=50; shards_generated=870"
+      "stdout_excerpt": "status=pass; docs_generated=50; shards_generated=876"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --check",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; docs_checked=50; shards_checked=870; failures=[]"
+      "stdout_excerpt": "status=pass; docs_checked=50; shards_checked=876; failures=[]"
     }
   ],
   "contract_refs_satisfied": [
