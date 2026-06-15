@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.ledger_to_plans_audit_report.v1",
+  "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+  "created_at_utc": "2026-06-15T18:17:36Z",
+  "status": "BLOCKED",
+  "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+  "ledger_slug": "part-3-fable-cleanup",
+  "range": {
+    "baseline_ref": "e9be8144f299d0d54a40366403ab4f87f04a9df7",
+    "current_ref": "5c93f1227ec75354555e3a030a26e139805caac1",
+    "current_ref_symbolic": "HEAD",
+    "inference": "ledger_id inferred from latest non-background compiled registry entry; ledger path first appears at current_ref, so baseline_ref is parent of that commit.",
+    "range_evidence": [
+      "Plans/ledgers/v2/ledger_registry.json lists pldg-20260614-002-part-3-fable-cleanup with last_updated_at_utc 2026-06-15T13:59:47Z.",
+      "git log shows 5c93f1227ec75354555e3a030a26e139805caac1 as HEAD and first commit adding Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/.",
+      "git rev-parse 5c93f1227ec75354555e3a030a26e139805caac1^ returned e9be8144f299d0d54a40366403ab4f87f04a9df7.",
+      "The same HEAD commit carries the live Plan, .plan_index, .evidence, Spec_Lock, shard, auto_decision, plan_graph, ledger, and registry changes for this cycle."
+    ]
+  },
+  "changed_live_plan_docs": [
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/MiscPlan.md",
+    "Plans/Permissions_System.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "plan_unit_delta_summary": {
+    "added": 26,
+    "changed": 2,
+    "deleted": 0,
+    "schema_missing_in_changed_docs": 0,
+    "bad_gui_related_in_changed_docs": 0,
+    "changed_plan_units": [
+      "CRAU-041",
+      "CWF-065"
+    ],
+    "compiled_plan_units_found": 26,
+    "compiled_source_atoms_covered": 58,
+    "compiled_source_atoms_expected": 58
+  },
+  "index_summary": {
+    "plan_unit_count": 4998,
+    "acceptance_unit_count": 17760,
+    "doc_card_count": 67,
+    "plan_unit_status_counts": {
+      "accepted": 4976,
+      "deferred": 5,
+      "retired": 17
+    },
+    "gui_related_counts": {
+      "false": 2879,
+      "true": 2119
+    },
+    "missing_required_metadata": 0,
+    "dependencies": {
+      "node_count": 4998,
+      "edge_count": 11949,
+      "cycle_blocker_count": 245,
+      "unresolved_reference_count": 0
+    },
+    "node_readiness": {
+      "status": "blocked_plans_incomplete",
+      "compiler_contract_status": "blocked_compiler_contract_incomplete",
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false,
+      "no_executable_build_tasks_created": true,
+      "no_final_node_queues_created": true
+    }
+  },
+  "ledger_consistency_summary": {
+    "manifest_record_counts_match_streams": true,
+    "compile_queue_status": "compiled",
+    "compile_queue_source_atoms": 58,
+    "compile_queue_source_atom_status_counts": {
+      "compiled_to_plan": 58
+    },
+    "candidate_atoms_total": 48,
+    "candidate_compile_dispositions": {
+      "candidate_for_later_compile": 15,
+      "candidate_conversation_only": 5,
+      "source_memory_until_answered": 28
+    },
+    "open_items_claims_no_open_items": true,
+    "current_governance_status": "sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "owner_routing_collapsed_to_contracts_v0": true,
+    "operating_capsule_stale_phase": true
+  },
+  "validator_summary": {
+    "standard_suite_status": "fail_after_mutating_validation",
+    "clean_state_governance_status": "pass",
+    "mutating_validator": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "mutation": "Rewrites Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json generated_at_utc.",
+    "mutation_restored_for_audit_only": true,
+    "failed_after_mutation": [
+      "python3 scripts/pm-plans-verify.py run-gates",
+      "python3 scripts/pm-plans-verify.py validate-evidence"
+    ],
+    "clean_rerun_passed": [
+      "python3 scripts/pm-plans-verify.py run-gates",
+      "python3 scripts/pm-plans-verify.py validate-evidence"
+    ]
+  },
+  "forbidden_artifacts": {
+    "status": "pass",
+    "finding": "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or legacy Iced app recreation found. Textual boundary mentions only."
+  },
+  "blocking_findings": [
+    {
+      "id": "AUDIT-BLOCK-001",
+      "severity": "high",
+      "category": "sealed_ledger_active_candidates",
+      "summary": "Sealed ledger retains 48 active candidate atoms, including 15 candidate_for_later_compile and 28 source_memory_until_answered atoms, while open_items declares no open items.",
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/state/current.json records candidate_atoms_count: 48 and governance_status: sealed.",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/state/open_items.json has empty open_questions/open_blockers/unclassified_candidates.",
+        "records/design_atoms.jsonl contains candidate atoms atom-0010..atom-0022, atom-0024, atom-0028, atom-0030, atom-0034, atom-0038, atom-0039, atom-0043, atom-0044, atom-0054, atom-0057, atom-0060, atom-0063, atom-0066, atom-0069, atom-0072, atom-0075, atom-0078, atom-0081, atom-0084, atom-0087, atom-0090, atom-0093, atom-0096, atom-0099, atom-0102, atom-0105, atom-0108, atom-0111, atom-0114, atom-0117."
+      ]
+    },
+    {
+      "id": "AUDIT-BLOCK-002",
+      "severity": "high",
+      "category": "semantic_or_lineage_drift",
+      "summary": "Multiple compiled atoms lost exact payload fields or changed existing PlanUnits without fresh lineage; see semantic_risks.jsonl.",
+      "evidence": [
+        "CRAU-041 was promoted from compatibility_disposition/future scope to active requirement while retaining only old migration source_lineage.",
+        "CWF-065 changed behavior to explicit organization-fork preflight and typed unsupported-host outcomes while retaining old source_lineage and stale preserved tokens.",
+        "Subagent semantic review found high-risk missing payload fields across permissions, Docker Manager, FileManager, Runtime Artifacts, and related PlanUnits."
+      ]
+    },
+    {
+      "id": "AUDIT-BLOCK-003",
+      "severity": "medium",
+      "category": "governance_evidence_stale_or_wrong",
+      "summary": "Part 3 governance evidence records the wrong ledger validator command and omits run-gates; migration summary and coverage report carry pre-seal status text.",
+      "evidence": [
+        "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json commands_run records pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system.",
+        "The same evidence commands_run does not record python3 scripts/pm-plans-verify.py run-gates.",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json still records standard_run_gates_status: expected_preseal_failure and Spec Lock/evidence not updated notes.",
+        "Plans/.plan_index/coverage_report.json propagates expected_preseal_failure shard/run-gates status from migration coverage despite current clean run-gates passing."
+      ]
+    },
+    {
+      "id": "AUDIT-BLOCK-004",
+      "severity": "medium",
+      "category": "validator_mutability",
+      "summary": "pm-plan-migration.py validate mutates validation_report.json, which invalidates evidence hashes for later validators in the requested sequence.",
+      "evidence": [
+        "Observed mutation: generated_at_utc changed from 2026-06-15T14:03:46Z to 2026-06-15T18:12:03Z.",
+        "scripts/pm-plan-migration.py cmd_validate calls write_json(run_dir / \"validation_report.json\", report).",
+        "After mutation, run-gates and validate-evidence failed artifact_hash_stale for validation_report.json. After restoring the timestamp-only mutation, clean run-gates and validate-evidence passed."
+      ]
+    }
+  ],
+  "subagent_summary": {
+    "spawned": 6,
+    "completed": 6,
+    "spawn_failures": [
+      "validator mutability subagent spawn failed due to agent thread limit; main agent performed mutability audit."
+    ],
+    "roles": [
+      "changed-doc fidelity",
+      "compiled atom evidence mapping",
+      "governance/index/evidence/shards",
+      "semantic drift/exact tokens",
+      "forbidden artifacts",
+      "ledger consistency"
+    ]
+  },
+  "next_safe_action": "Repair only the ledger/projection/governance/audit artifacts in a dedicated non-audit repair cycle; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks."
+}

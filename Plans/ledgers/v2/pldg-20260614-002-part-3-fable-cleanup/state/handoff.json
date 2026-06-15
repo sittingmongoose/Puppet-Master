@@ -2,7 +2,7 @@
   "current_phase": "compiled_part_3_fable_cleanup_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0037",
-    "last_event_id": "evt-0064",
+    "last_event_id": "evt-0066",
     "next_atom_id": "atom-0121",
     "next_question_id": "q-0035",
     "next_queue_id": "pcq-0002"
@@ -14,18 +14,19 @@
     "Do not redo the governance seal unless canonical Plans or generated governance inputs change again.",
     "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks."
   ],
-  "last_completed_action": "Sealed Part 3 Fable Cleanup governance after compile: migration metadata, configured shards, evidence hashes, Spec_Lock hashes, auto_decisions, and allowed Plans/.plan_index outputs were refreshed; plan_graph validation passed without content refresh because existing governance did not require one.",
-  "last_known_good_state": "Compile and governance seal are complete. Ledger, migration validation, PlanUnit index validation, configured shard check, Spec Lock validation, evidence validation, auto-decision validation, plan_graph validation, run-gates, and git diff --check pass. Plans/.plan_index/node_readiness_report.json preserves status `blocked_plans_incomplete`; compiler_contract_status remains `blocked_compiler_contract_incomplete`; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+  "last_completed_action": "Applied and validated post-audit fidelity, ledger consistency, governance hash, and validator mutability repairs for Part 3 Fable Cleanup.",
+  "last_known_good_state": "Post-audit repair validation passed: ledger validate, migration validate, PlanUnit index validate, run-gates, shard check, auto-decision validation, Spec Lock validation, evidence validation, and git diff --check pass; validator git status before/after was unchanged.",
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
-  "next_action": "Report that the supplied Part 3 audit batch is covered and governance sealed.",
-  "next_safe_action": "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues.",
+  "next_action": "Report post-audit repair closure; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues.",
+  "next_safe_action": "Report that Part 3 Fable Cleanup post-audit repair is complete and governance sealed after validators pass; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues.",
   "open_blockers": [],
   "open_questions": [],
   "phase": "compiled_part_3_fable_cleanup_governance_sealed",
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-06-15T13:59:47Z",
+  "updated_at_utc": "2026-06-15T20:05:00Z",
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
-    "safe_content_checks": "Ledger validate, migration validate, plan-index validate, configured shard check, auto-decision validation, Spec Lock validation, evidence validation, plan_graph validation, run-gates, and git diff --check pass. Node readiness remains blocked by the incomplete compiler contract."
-  }
+    "safe_content_checks": "Post-audit repair validation passed; validator git status before/after was unchanged, generated governance artifacts are current, and node readiness remains blocked until the WorkNode compiler contract exists."
+  },
+  "last_event_id": "evt-0066"
 }

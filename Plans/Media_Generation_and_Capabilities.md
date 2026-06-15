@@ -5917,20 +5917,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
 canonical_text: >-
-  Capability responses must distinguish instance-enabled capability, currently usable capability,
-  caller scope, execution-role capture, and identity disclosure. A capability can be configured or
-  instance-enabled while not currently usable for the invoking runtime identity because of actor,
+  Capability responses must expose separate `enabled_on_instance` and `usable_now` fields plus
+  `caller_scope`, `execution_role`, and identity disclosure level. A capability can be
+  `enabled_on_instance` while not `usable_now` for the invoking runtime identity because of actor,
   account, lane, execution_role, mode, provider health, permission, quota, or degraded-state inputs.
-  `capabilities.get` must disclose the evaluated caller/runtime identity and deterministic disabled
-  reason rather than flattening availability to a global enabled flag.
+  When a capability is visible but not currently usable, `capabilities.get` must return
+  `blocked_reason`, `caller_scope`, `execution_role`, identity disclosure level, and evaluated
+  caller/runtime identity rather than flattening availability to a global enabled flag.
 gui_related: false
 gui_classification_reason: Capability state and caller/runtime identity semantics are backend/runtime contracts, not visual presentation.
 depends_on: [CV-281]
 unblocks: []
 acceptance_criteria:
-  - Capability payloads distinguish instance-enabled from currently usable.
-  - Caller scope, execution_role, runtime identity, requested/effective identity, and disabled_reason are captured when availability is evaluated.
-  - Provider, agent-rules, and Skills consumers cannot infer availability from a global provider flag alone.
+  - Capability payloads distinguish `enabled_on_instance` from `usable_now`.
+  - When visible but not currently usable, payloads include `blocked_reason`, `caller_scope`, `execution_role`, identity disclosure level, runtime identity, and requested/effective identity.
+  - Provider, agent-rules, and Skills consumers cannot infer `usable_now` from `enabled_on_instance` or a global provider flag alone.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
@@ -5942,9 +5943,9 @@ node_compile_hint: {mode: capability_usability_contract, create_worknodes: false
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0036
   - pldg-20260614-002-part-3-fable-cleanup:atom-0050
-preserved_exact_tokens: ["currently-usable-vs-instance-enabled", "caller scope", "execution-role capture", "identity disclosure", "capabilities.get"]
+preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "identity disclosure level", "visible but not currently usable", "capabilities.get"]
 negative_constraints:
-  - Do not expose capability availability as only a global enabled/disabled flag.
-  - Do not omit caller/runtime identity when reporting currently usable capabilities.
+  - Do not infer `usable_now` from `enabled_on_instance`.
+  - Do not expose a visible but not currently usable capability without `blocked_reason`, `caller_scope`, `execution_role`, and identity disclosure level.
 owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md]
 ```

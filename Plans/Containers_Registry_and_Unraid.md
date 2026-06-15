@@ -3239,11 +3239,23 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0035
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0028
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0046
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0064
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0067
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0070
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0073
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0076
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0079
 preserved_exact_tokens:
+  - "Docker Manager future-scope placeholders"
   - "Registry promotion"
   - "drift detection"
   - "access intelligence"
   - "project-focused K8s deep linkage"
+  - "needs_review vs failure-payload disagreement"
+  - "design it"
 negative_constraints:
   - "Do not leave Docker Manager registry promotion, drift detection, access intelligence, or project-focused K8s deep linkage as future-scope placeholders."
   - "Do not render these areas as vague planned placeholders without typed operation payloads."
@@ -5421,8 +5433,12 @@ canonical_text: >-
   Docker Manager operations use a shared operation result envelope with operation_id, operation_kind,
   target identity, actor/runtime_identity, project/package/seam/lane/worktree/account scope, preflight
   snapshot, approval_scope_key, status, started/updated/completed timestamps, review_payload,
-  failure_payload, allowed_action_ids, evidence refs, and emitted receipt refs. The operation status
-  enum is exactly `pending`, `running`, `needs_review`, `succeeded`, `failed`, and `cancelled`.
+  failure_payload, allowed_action_ids, evidence refs, and emitted receipt refs. `review_payload` carries
+  reviewer/actor identity, review reason, proposed action, required evidence, available actions,
+  selected_action, decision_note, and resulting_transition_target. `failure_payload` carries failure
+  code/category, failing phase/status, human-readable message, evidence/log refs, retryability,
+  remediation hint, affected target identity, and originating operation/transition context. The operation
+  status enum is exactly `pending`, `running`, `needs_review`, `succeeded`, `failed`, and `cancelled`.
   `needs_review` is non-terminal and exits only through explicit review actions to `running`,
   `failed`, or `cancelled`; `failed` is terminal and carries failure_payload.
 gui_related: false
@@ -5431,6 +5447,8 @@ depends_on: [CRAU-041, CV-281, PS-113]
 unblocks: []
 acceptance_criteria:
   - Docker operation result payloads carry operation identity, target identity, runtime identity, preflight, approval, status, evidence, and receipt refs.
+  - "`review_payload` carries reviewer/actor identity, review reason, proposed action, required evidence, available actions, selected_action, decision_note, and resulting_transition_target."
+  - "`failure_payload` carries failure code/category, failing phase/status, human-readable message, evidence/log refs, retryability, remediation hint, affected target identity, and originating operation/transition context."
   - "Status values are limited to `pending`, `running`, `needs_review`, `succeeded`, `failed`, and `cancelled`."
   - "`needs_review` is non-terminal and cannot be treated as `failed`; terminal statuses do not transition back to active operation states."
 validation_surfaces:
@@ -5453,11 +5471,13 @@ source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0065
   - pldg-20260614-002-part-3-fable-cleanup:atom-0067
   - pldg-20260614-002-part-3-fable-cleanup:atom-0068
-preserved_exact_tokens: ["needs_review vs failure-payload", "needs_review", "failed", "review_payload", "failure_payload", "pending", "running", "succeeded", "cancelled"]
+preserved_exact_tokens: ["needs_review vs failure-payload", "needs_review", "failed", "review_payload", "reviewer/actor identity", "review reason", "proposed action", "required evidence", "available actions", "selected_action", "decision_note", "resulting_transition_target", "failure_payload", "failure code/category", "failing phase/status", "human-readable message", "evidence/log refs", "retryability", "remediation hint", "affected target identity", "originating operation/transition context", "pending", "running", "succeeded", "cancelled"]
 negative_constraints:
   - Do not conflate `needs_review` with terminal `failed`.
   - Do not add Docker operation statuses beyond the accepted enum without a new PlanUnit.
   - Do not allow terminal Docker statuses to transition back into active operation states.
+  - Do not transition out of `needs_review` without persisting selected_action, reviewer identity, decision_note, and resulting_transition_target.
+  - Do not infer retry or remediation actions from free-form failure text.
 owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
 ```
 
@@ -5510,16 +5530,19 @@ owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
   Docker drift detection is an active operation kind that compares declared project container,
   registry, compose, Kubernetes, and Unraid intent with observed host or cached state. Drift payloads
-  carry observed refs, expected refs, freshness, trust/degraded state, comparison scope, drift_kind,
-  severity, affected resources, safe remediation actions, evidence refs, and operation status from
-  CRAU-085. The UI derives inspect, refresh, reconcile, ignore, and blocked actions from structured
-  drift payloads.
+  carry observed refs, expected refs, observed image/runtime identity, desired or pinned identity,
+  detection source/timestamp, freshness, trust/degraded state, comparison scope, drift_kind, diff
+  category/severity, policy impact, affected resources, safe remediation actions, remediation options,
+  evidence refs, acknowledgement/suppression scope, promotion/rollback linkage, and operation status
+  from CRAU-085. The UI derives inspect, refresh, reconcile, ignore, acknowledgement/suppression,
+  promotion/rollback, and blocked actions from structured drift payloads.
 gui_related: true
 gui_classification_reason: Drift inspection and remediation actions are user-visible Docker Manager controls.
 depends_on: [CRAU-085]
 unblocks: []
 acceptance_criteria:
   - Drift records distinguish expected state, observed state, freshness, trust, and degraded inputs.
+  - Drift payloads include detection source/timestamp, policy impact, acknowledgement/suppression scope, and promotion/rollback linkage.
   - Drift remediation actions are typed and permission/preflight-aware.
   - Cached/offline observations disclose freshness before driving reconciliation.
 validation_surfaces:
@@ -5533,10 +5556,11 @@ node_compile_hint: {mode: docker_drift_detection_contract, create_worknodes: fal
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0073
   - pldg-20260614-002-part-3-fable-cleanup:atom-0074
-preserved_exact_tokens: ["drift detection", "Docker drift UI derives actions from structured payload"]
+preserved_exact_tokens: ["drift detection", "first-class Docker operation", "shared Docker operation result envelope", "drift payload", "observed image/runtime identity", "desired or pinned identity", "diff category/severity", "detection source/timestamp", "policy impact", "remediation options", "evidence refs", "acknowledgement/suppression scope", "promotion/rollback linkage", "Docker drift UI derives actions from structured payload"]
 negative_constraints:
   - Do not treat stale cached observations as fresh host truth.
   - Do not allow drift reconciliation without typed preflight and permission outcomes.
+  - Do not expose acknowledgement/suppression or promotion/rollback actions without structured drift identity, scope, evidence, and policy impact.
 owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
 ```
 
@@ -5551,15 +5575,19 @@ canonical_text: >-
   Docker access intelligence is an active contract for explaining which registry, Unraid, Docker
   host, or Kubernetes actions are currently available. Payloads carry evaluated identity, host or
   cluster target, account/server profile, trust/proxy policy, permission snapshot, capability result,
-  degraded/offline state, required scopes, blocked reason, allowed actions, evidence refs, and
-  remediation hints. The UI derives disclosure, retry, sign-in, doctor, request-access, and blocked
-  controls from structured access-intelligence payloads.
+  degraded/offline state, required scopes, blocked reason, allowed actions, actor/runtime identity,
+  account/project/worktree target identity, registry/resource identity, effective permission set,
+  policy source, credential/secret boundary, risk classification, recommended action, evidence refs,
+  audit provenance, revocation/approval path, and remediation hints. The UI derives disclosure, retry,
+  sign-in, doctor, request-access, revocation/approval, and blocked controls from structured
+  access-intelligence payloads.
 gui_related: true
 gui_classification_reason: Access disclosure, sign-in, doctor, request-access, and blocked controls are user-visible Docker Manager behavior.
 depends_on: [CRAU-085, PS-113, MGAC-092]
 unblocks: []
 acceptance_criteria:
   - Access intelligence explains evaluated identity, trust/proxy policy, permission, capability, and degraded/offline inputs.
+  - Access payloads preserve credential/secret boundary, risk classification, recommended action, audit provenance, and revocation/approval path.
   - Required scopes and blocked reasons are structured enough for gate and UI consumers.
   - Remediation actions come from allowed_action_ids and policy outcomes, not local button guesses.
 validation_surfaces:
@@ -5573,10 +5601,11 @@ node_compile_hint: {mode: docker_access_intelligence_contract, create_worknodes:
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0076
   - pldg-20260614-002-part-3-fable-cleanup:atom-0077
-preserved_exact_tokens: ["access intelligence", "Docker access intelligence UI derives actions from structured payload"]
+preserved_exact_tokens: ["access intelligence", "first-class Docker operation/intelligence surface", "shared Docker operation result envelope", "access payload", "actor/runtime identity", "account/project/worktree target identity", "registry/resource identity", "effective permission set", "policy source", "credential/secret boundary", "risk classification", "recommended action", "evidence refs", "audit provenance", "revocation/approval path", "Docker access intelligence UI derives actions from structured payload"]
 negative_constraints:
   - Do not infer access from provider/host reachability alone.
   - Do not render access remediation without scoped identity, permission, capability, and policy inputs.
+  - Do not expose access intelligence actions from free-form risk text.
 owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Permissions_System.md]
 ```
 
@@ -5589,17 +5618,20 @@ status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
   Project-focused Kubernetes deep linkage is an active Docker Manager contract. Linkage payloads carry
-  project_id, package/seam/lane/worktree scope, cluster/context/namespace, workload refs, manifest or
-  Helm refs, image/digest refs, receipt refs, allowed verbs, trust/proxy/degraded state, preflight
-  result, status lifecycle from CRAU-085, and route objects for logs, exec, port-forward, diff, apply,
-  manifest edit, and artifact evidence. The UI derives Kubernetes deep-link actions from structured
-  linkage payloads.
+  project_id, project/worktree identity, package/seam/lane/worktree scope, cluster/context/namespace
+  identity, workload identity, manifest or Helm refs, image/deployment identity, image/digest refs,
+  registry/promotion/drift refs, actor/runtime identity, permission boundary, rollout/rollback path,
+  health/status refs, receipt refs, allowed verbs, trust/proxy/degraded state, preflight result, status
+  lifecycle from CRAU-085, evidence refs, cross-link navigation state, and route objects for logs,
+  exec, port-forward, diff, apply, manifest edit, and artifact evidence. The UI derives Kubernetes
+  deep-link actions from structured linkage payloads.
 gui_related: true
 gui_classification_reason: Kubernetes deep links to logs, exec, port-forward, diff, apply, manifest editing, and evidence are user-visible controls.
 depends_on: [CRAU-085, CV-283]
 unblocks: []
 acceptance_criteria:
   - Kubernetes linkage is scoped to project/package/seam/lane/worktree and cluster/context/namespace.
+  - Linkage payloads carry registry/promotion/drift refs, actor/runtime identity, permission boundary, rollout/rollback path, health/status refs, evidence refs, and cross-link navigation state.
   - Deep-link actions carry allowed verbs, preflight, trust/degraded state, and route-object identity.
   - Kubernetes evidence remains linked to receipts/artifacts rather than generic cluster text.
 validation_surfaces:
@@ -5613,10 +5645,11 @@ node_compile_hint: {mode: docker_k8s_deep_linkage_contract, create_worknodes: fa
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0079
   - pldg-20260614-002-part-3-fable-cleanup:atom-0080
-preserved_exact_tokens: ["project-focused K8s deep linkage", "Docker/K8s linkage UI derives actions from structured payload", "logs", "exec", "port_forward", "apply"]
+preserved_exact_tokens: ["project-focused K8s deep linkage", "first-class Docker/K8s integration operation", "shared Docker operation result envelope", "linkage payload", "project/worktree identity", "cluster/context/namespace identity", "workload identity", "image/deployment identity", "registry/promotion/drift refs", "actor/runtime identity", "permission boundary", "rollout/rollback path", "health/status refs", "evidence refs", "cross-link navigation state", "Docker/K8s linkage UI derives actions from structured payload", "logs", "exec", "port_forward", "apply"]
 negative_constraints:
   - Do not render Kubernetes linkage as a generic planned placeholder.
   - Do not deep-link into Kubernetes actions without project scope, allowed verbs, preflight, and route identity.
+  - Do not expose K8s deep links as URL-only or dashboard-only affordances.
 owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
 ```
 

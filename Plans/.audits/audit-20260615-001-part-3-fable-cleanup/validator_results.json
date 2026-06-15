@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.validator_results.v1",
+  "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+  "status": "fail_after_mutating_validation",
+  "worktree_restored_to_clean": true,
+  "standard_sequence": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false,
+      "summary": {
+        "atoms": 120,
+        "compile_queue_items": 1,
+        "corrections": 2,
+        "decisions": 37,
+        "events": 64,
+        "plan_units_checked": 2075,
+        "questions": 34
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false,
+      "summary": {
+        "plan_unit_count": 4998,
+        "acceptance_unit_count": 17760,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_plans_incomplete"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": true,
+      "mutation": {
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+        "diff": "generated_at_utc changed from 2026-06-15T14:03:46Z to 2026-06-15T18:12:03Z"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "returncode": 1,
+      "status": "fail",
+      "mutated_git_status": false,
+      "failure": "validate_evidence failed artifact_hash_stale for Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json after migration validator mutated generated_at_utc."
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false,
+      "summary": {
+        "docs_checked": 50,
+        "shards_checked": 870,
+        "source_count": 50
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "returncode": 1,
+      "status": "fail",
+      "mutated_git_status": false,
+      "failure": "artifact_hash_stale for validation_report.json after migration validator mutation"
+    },
+    {
+      "command": "git diff --check",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false
+    }
+  ],
+  "clean_state_rerun_after_restoring_validator_mutation": [
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "returncode": 0,
+      "status": "pass",
+      "mutated_git_status": false
+    }
+  ],
+  "static_mutability_evidence": {
+    "file": "scripts/pm-plan-migration.py",
+    "cmd_validate_lines": "cmd_validate calls validate_run_dir(run_dir) then write_json(run_dir / \"validation_report.json\", report).",
+    "line_evidence": [
+      "scripts/pm-plan-migration.py:1105 def cmd_validate",
+      "scripts/pm-plan-migration.py:1109 report = validate_run_dir(run_dir)",
+      "scripts/pm-plan-migration.py:1110 write_json(run_dir / \"validation_report.json\", report)"
+    ]
+  }
+}
