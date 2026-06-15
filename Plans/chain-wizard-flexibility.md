@@ -1043,7 +1043,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 - **Requirement:** For intents **Fork & evolve** and **Contribute (PR)**, we **offer** to create the fork for the user, but **allow the user to create the fork themselves**.
 - **Offer to create:**
   - User supplies **upstream repo** (URL or `owner/repo`).
-  - Button or link: **"Create fork for me."** We call the GitHub HTTPS API fork/create flow. Fork destination defaults to the authenticated user's account; org forks are future scope.
+  - Button or link: **"Create fork for me."** We call the GitHub HTTPS API fork/create flow. Fork destination defaults to the authenticated user's account. Organization forks require an explicit organization destination selector, `read:org` or equivalent scope disclosure, permission preflight, and a blocked outcome when the authenticated account cannot fork into the selected organization.
   - After creation, we resolve the fork clone URL via GitHub API, **clone** the fork to the chosen project path, set that as the working project, and optionally set `upstream` remote to the original repo. Set `fork_created_by_app: true` and store `fork_url_or_path` in wizard state.
 - **User does it themselves:**
   - Option: **"I'll create the fork myself."** We show brief instructions (e.g. "Fork the repo on GitHub, then paste your fork URL or clone path below") and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call any fork/create API. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
@@ -2259,7 +2259,7 @@ Wizard planning output must carry the same runtime identity fields consumed by e
 
 Audit refinement passes are canonical only when their exact counters and lineage are preserved. `supersedes_prior`, wave-one, `gap-007`, `gap-003`, `gap-004`, `gap-005`, exact-missing, consumer-propagation, blocker-family, affected-doc, broken-anchor, zero-finding, sixty-two, fifty-four, `canon_inventory`, `canon_inventory.json`, `Ledger Condenser`, restore points, `Plans/WorktreeGitImprovement.md`, `/WorktreeGitImprovement.md`, follow-up waves, planning_blockers, `planning_blockers = 0`, fix_backlog_items, `fix_backlog_items = 8`, total_gaps, `total_gaps = 8`, docs_affected, `docs_affected = 20`, underlying_gap_evidence_count, and `underlying_gap_evidence_count = 62` are audit values, not broad summary labels.
 
-Audit lineage that sets `supersedes_prior` can refine unresolved items without clearing material blockers: later condensation must keep the compact blocker bundle aligned to sharper live-doc evidence. `bundle-level` precision remains explicit when `gap-001` was under-reporting Interview as an affected consumer, when `gap-004` needs a Usage drill-through anchor recorded as exact-missing, and when `gap-008` removes an overstated exact-missing item while tightening identity-carrythrough. `gap-005` remains open while the blocked-packet payload is under-specified, even if assistant-chat headings are confirmed; heading precision alone does not change blocker counts, top-pressure docs, or the next stage. Source model-pass labels such as `GPT-5.3-Codex` are preserved as audit lineage for carrying the full tranche into the final pass, not as wizard runtime model requirements.
+Audit lineage that sets `supersedes_prior` can refine unresolved items without clearing material blockers: later condensation must keep the compact blocker bundle aligned to sharper live-doc evidence. `bundle-level` precision remains explicit when `gap-001` was under-reporting Interview as an affected consumer, when `gap-004` needs a Usage drill-through anchor recorded as exact-missing, and when `gap-008` removes an overstated exact-missing item while tightening identity-carrythrough. `gap-005` is resolved by the versioned blocked-packet payload contract carrying packet identity, blocker reason, source stage/surface, target action, affected inputs/outputs, actor/runtime_identity, lane/account/project/worktree scope, permission/capability impact, recoverability, required user/agent action, evidence refs, retry/override policy, stale/expiration behavior, and UI display/interaction requirements. Source model-pass labels such as `GPT-5.3-Codex` are preserved as audit lineage for carrying the full tranche into the final pass, not as wizard runtime model requirements.
 
 Early broader-second-sweep and jumbo-doc read labels are likewise audit lineage for coverage breadth, not wizard runtime states or generated project artifacts.
 
@@ -5743,7 +5743,7 @@ owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   GitHub create, fork, and PR flows require documented scopes,
   OS-credential-store auth, permission and rate-limit surfacing, GitHub-only MVP
-  scope, and future-only organization, GitLab, or Bitbucket expansion.
+  scope, explicit organization-fork preflight, and typed unsupported-host outcomes for GitLab or Bitbucket.
 gui_related: true
 gui_classification_reason: Permission errors, rate-limit messages, setup/doctor documentation, and future host options are user-visible surfaces.
 split_recommended: true
@@ -5756,7 +5756,7 @@ acceptance_criteria:
   - Required GitHub scopes include repo for MVP create repo, fork, push branch, and open PR.
   - read:org is optional for MVP and required only if organization fork is added.
   - Permission errors surface a message naming required scopes.
-  - Non-GitHub hosts remain future scope for MVP.
+  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs named for later expansion; they are not silent placeholders.
   - Rate limits are respected and surfaced to the user.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -9915,4 +9915,84 @@ preserved_exact_tokens: ["§12", "§12.x", "wizard-blocked", "blocked-record lis
 negative_constraints:
   - Do not duplicate blocked lifecycle canon inside chain-wizard-flexibility.
 owner_hints: [Plans/chain-wizard-flexibility.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/assistant-chat-design.md]
+```
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### CWF-149 - Wizard Blocked Packet Payload Contract
+
+```yaml
+plan_unit_id: CWF-149
+unit_type: requirement
+status: accepted
+owner_doc: Plans/chain-wizard-flexibility.md
+canonical_text: >-
+  Wizard `gap-005` is resolved by a versioned blocked-packet payload contract carrying packet_id,
+  blocker type/reason, source stage/surface, target action, affected inputs/outputs, actor/runtime_identity,
+  lane/account/project/worktree scope, permission/capability impact, recoverability classification,
+  required user/agent action, evidence refs, retry/override policy, stale/expiration behavior, and UI
+  display/interaction requirements. Wizard blocked-state UI derives its actions and copy from this
+  structured payload rather than heading precision or free-form blocker text.
+gui_related: true
+gui_classification_reason: Wizard blocked-state copy, actions, retry/override controls, and interaction requirements are user-visible wizard UI behavior.
+depends_on: [CWF-148, CV-281, CV-283]
+unblocks: []
+acceptance_criteria:
+  - Blocked packets carry packet identity, blocker reason, source/target, affected data, runtime identity, scope, permission/capability impact, recoverability, evidence, retry/override, stale/expiration, and UI requirements.
+  - Wizard blocked UI derives allowed actions from the payload.
+  - "`gap-005` no longer remains open due to under-specified blocked-packet payloads."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: wizard_blocked_payload_gap
+reasoning_tier: high
+context_scope: wizard_blocked_packet_payload
+implementation_surfaces: [Plans/chain-wizard-flexibility.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+node_compile_hint: {mode: wizard_blocked_packet_payload_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0112
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0113
+preserved_exact_tokens: ["gap-005", "blocked-packet payload", "remains open", "blocked_reason_code", "allowed_action_ids", "UI display/interaction requirements"]
+negative_constraints:
+  - Do not derive wizard blocked actions from heading text alone.
+  - Do not leave `gap-005` as an open blocked-packet payload design gap.
+owner_hints: [Plans/chain-wizard-flexibility.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+```
+
+### CWF-150 - Fork Destination And Unsupported Host Active Contract
+
+```yaml
+plan_unit_id: CWF-150
+unit_type: requirement
+status: accepted
+owner_doc: Plans/chain-wizard-flexibility.md
+canonical_text: >-
+  Chain Wizard fork and PR setup must not use future-scope placeholders for organization forks or
+  non-GitHub hosts. Organization fork support is an active typed path requiring destination selection,
+  scope disclosure such as `read:org` when needed, permission preflight, and blocked outcomes when the
+  authenticated account cannot fork into the selected organization. Non-GitHub hosts return typed
+  unsupported-host outcomes with owner docs named for later expansion, not silent placeholders.
+gui_related: true
+gui_classification_reason: Fork destination selection, host-support messages, and blocked outcomes are user-visible wizard setup UI.
+depends_on: [CWF-061, CWF-149]
+unblocks: []
+acceptance_criteria:
+  - Organization forks require explicit destination, scope disclosure, preflight, and blocked outcomes.
+  - Non-GitHub hosts produce typed unsupported-host outcomes.
+  - The wizard contains no canonical future-scope placeholder language for fork destinations or hosts.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - grep -n "future scope\\|future-scope" Plans/chain-wizard-flexibility.md
+risk_class: wizard_host_scope_placeholder_drift
+reasoning_tier: standard
+context_scope: chain_wizard_fork_host_scope
+implementation_surfaces: [Plans/chain-wizard-flexibility.md, Plans/GitHub_API_Auth_and_Flows.md]
+node_compile_hint: {mode: wizard_fork_host_scope_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+preserved_exact_tokens: ["Nothing in the plans is future scope at all.", "org forks are future scope", "Non-GitHub hosts remain future scope for MVP", "read:org"]
+negative_constraints:
+  - Do not leave organization forks or non-GitHub hosts as future scope placeholders.
+  - Do not silently hide unsupported host outcomes.
+owner_hints: [Plans/chain-wizard-flexibility.md, Plans/GitHub_API_Auth_and_Flows.md]
 ```

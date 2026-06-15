@@ -7485,3 +7485,45 @@ Phase 2B batch 206 atomized `Permissions_System-S0028` through `Permissions_Syst
 
 Phase 2B batch 207 atomized `Permissions_System-S0047` through `Permissions_System-S0073` into fine-grained PlanUnits `PS-060` through `PS-089`, including split coverage for mixed spans `Permissions_System-S0048`, `S0052`, `S0056`, `S0066`, and `S0069`, and structural carry-through for container headings `Permissions_System-S0058` and `S0072`. `PS-001` is narrowed to residual source-preserving coverage for `Permissions_System-S0074` through `Permissions_System-S0078` only and must not override the fine-grained units. Batch 207 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 Phase 2B batch 208 atomized `Permissions_System-S0074` through `Permissions_System-S0078` into fine-grained PlanUnits `PS-090` through `PS-112`, including split coverage for recovery-option payloads, permission snapshots, Source Control/GitHub Actions/Docker Manager addendum behavior, provider exposure, remote-side-effect provenance, sensitive metadata masking, privileged-session metadata minimization, and secret redaction. Batch 208 structurally dispositioned generated tail spans `Permissions_System-S0079`, `Permissions_System-S0080`, and `Permissions_System-S0082`, and retired generated bridge span `Permissions_System-S0081` through `PS-001` as migration-lineage-only compatibility residue. `PS-001` no longer uses `source_preserving_planunit` mode and must not own product coverage. Batch 208 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### PS-113 - Approval Scope Level And Cross-Boundary Carryover
+
+```yaml
+plan_unit_id: PS-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Permission approval reuse must resolve through an `approval_scope_key` schema that includes actor,
+  lane, package, run, account, tool, context, mode, requested identity, effective identity, and
+  execution_role inputs. Default carryover is narrow: an approval can carry across session, lane,
+  run, or account boundaries only when the key explicitly records that boundary and the target
+  permission class allows carryover. Reject-cascade must evaluate the same scoped key instead of a
+  single-session or single-lane assumption.
+gui_related: false
+gui_classification_reason: Approval scope keys and reject-cascade behavior are permission/runtime contracts, not visual presentation.
+depends_on: [CV-281]
+unblocks: []
+acceptance_criteria:
+  - "`approval_scope_key` has a defined schema over actor/lane/package/run/account/tool/context/mode/requested/effective identity/execution_role."
+  - Session approval carryover is denied by default unless the scoped key and permission class allow it.
+  - Reject-cascade is evaluated against scoped keys rather than global session state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: approval_scope_overreach
+reasoning_tier: high
+context_scope: permissions_approval_scope
+implementation_surfaces: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+node_compile_hint: {mode: approval_scope_key_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0032
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0048
+preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
+negative_constraints:
+  - Do not allow approval reuse from a provider session id alone.
+  - Do not carry approvals across actor, lane, run, or account boundaries unless the scoped key explicitly permits it.
+owner_hints: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+```

@@ -1,0 +1,65 @@
+{
+  "accepted_decisions_count": 36,
+  "candidate_atoms_count": 48,
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Contracts_V0.md",
+    "Plans/Permissions_System.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/FileSafe.md",
+    "Plans/FileManager.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/Progression_Gates.md",
+    "Plans/MiscPlan.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "deferred_questions_count": 0,
+  "design_atoms_total": 120,
+  "governance_status": "sealed",
+  "last_event_id": "evt-0064",
+  "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+  "must_not_do": [
+    "Do not update Spec_Lock, generated shards/evidence, generated plan_graph artifacts, or auto_decisions outside an explicit governance seal phase.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues.",
+    "Do not drop exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, or user corrections from source lineage."
+  ],
+  "next_safe_action": "Report that Part 3 Fable Cleanup is covered and governance sealed; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_part_3_fable_cleanup_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "title": "Part 3 Fable Cleanup",
+  "updated_at_utc": "2026-06-15T13:59:47Z",
+  "validation_state": {
+    "ledger_health": "pass_governance_sealed",
+    "safe_content_checks": [
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup passed with zero errors and warnings.",
+      "python3 scripts/pm-plan-index.py validate passed.",
+      "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed after migration metadata refresh.",
+      "python3 scripts/pm-shard-plans.py --check passed after configured shard regeneration.",
+      "python3 scripts/pm-plans-verify.py validate-auto-decisions passed.",
+      "python3 scripts/pm-plans-verify.py verify-spec-lock passed.",
+      "python3 scripts/pm-plans-verify.py validate-evidence passed.",
+      "python3 scripts/pm-plans-verify.py validate-plan-graph passed.",
+      "python3 scripts/pm-plans-verify.py run-gates passed.",
+      "git diff --check passed.",
+      "Plans/.plan_index/node_readiness_report.json preserves status `blocked_plans_incomplete`; compiler_contract_status remains `blocked_compiler_contract_incomplete`; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    ],
+    "standard_validation": "pass_governance_sealed"
+  }
+}

@@ -3413,7 +3413,7 @@ Core rules:
 - Decision #10 is resolved for the Final GUI consumer: visualizer theme-token injection is locked for MVP as CSS custom properties on the inline `style` attribute of the visualizer container. MVP tokens are `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and `--pm-viz-font-size`; visualizer fragments MUST use those tokens and hardcoded replacement colors are prohibited.
 - Bridge calls preserve exact GUI host semantics: `sendPrompt(text)` queues into the active thread composer outside question-flow contexts; question-flow embedded visuals do not receive `sendPrompt` and write draft answers only through the narrowed question bridge; `openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external; theme injection pushes the CSS custom property bundle on mount and theme change; resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.
 - PM visual-runtime script loading is closed by default: a `/third-party-library` may execute inside the inline `visual-runtime` only when it is bundled, version-pinned, integrity-recorded, declared in the artifact metadata, and loaded inside the existing sandboxed runtime. Remote CDN scripts, dynamic network import, same-origin escalation, popup/form/top-navigation permissions, and undeclared runtime script injection are not valid MVP paths.
-- Generated visual modules render as PM visual cards and follow the stricter MVP allowlist stance: allowed libraries must be BUNDLED in the source fragment, no CDN fetches at runtime, and no unvetted network requests from within the visual module. Exact allowlist TBD remains an open design item; the recommended MVP behavior is no external libraries, so the agent must inline all code. Post-MVP, a curated allowlist of bundled libraries may include examples such as D3, Chart.js, and Three.js.
+- Generated visual modules render as PM visual cards and follow the stricter MVP allowlist stance: the default allowlist is empty, so external libraries cannot execute unless a versioned allowlist entry exists. Each allowed entry must name the package and version, bundled asset, integrity record, license/security review, performance budget, rendering capability scope, fallback behavior, upgrade/removal policy, and owner approval path. D3, Chart.js, and Three.js are examples only when curated, pinned, bundled, and explicitly allowed; CDN fetches, dynamic network import, and unvetted network requests from within the visual module are prohibited.
 - Inline visualizer logging is audit-oriented and bounded: PM records render errors, sandbox violations, bridge messages, export actions, and detached-preview opens as structured activity metadata or refs. These persistence/logging/export expectations must not log arbitrary DOM contents, user secrets, or full visual payloads unless the selected export/evidence profile explicitly permits them.
 - Visualizer persistence keeps rendered output references, source data, and metadata; it must not persist transient rendering state, animation positions, scroll offsets, or ephemeral JS variables.
 - Visualizer and provider-disclosure consumer controls carry `status: "unavailable"`, `proxy_mode`, `basic`, `enhanced`, `auto`, Fire Engine limitation copy, `Copy source`, `Open in editor`, `Open detached preview`, and `Export diagram` as display fields, with audit-field logging refs rather than local owner state.
@@ -24442,4 +24442,45 @@ negative_constraints:
   - Do not change persistence, Tantivy, settings, or promoted-widget behavior while repairing numbering.
   - Do not leave Section 15.3 ambiguous.
 owner_hints: [Plans/FinalGUISpec.md]
+```
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### F3-390 - Visualizer Third Party Library Allowlist Policy
+
+```yaml
+plan_unit_id: F3-390
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Inline visualizer third-party JavaScript execution is closed by default. The default allowlist is
+  empty; a library may execute only when a versioned allowlist entry records package name, version,
+  bundled asset, integrity record, artifact metadata declaration, license/security review, performance
+  budget, rendering capability scope, fallback behavior, upgrade/removal policy, and owner approval path.
+  D3, Chart.js, and Three.js are examples only when curated, pinned, bundled, and explicitly allowed.
+gui_related: true
+gui_classification_reason: Inline visualizer rendering, fallback behavior, and library-driven visual modules are user-visible GUI behavior.
+depends_on: [F3-382]
+unblocks: []
+acceptance_criteria:
+  - No third-party visualizer library executes without a versioned allowlist entry.
+  - CDN fetches, dynamic network import, same-origin escalation, popup/form/top-navigation permissions, and undeclared script injection are invalid.
+  - Library fallback and removal behavior are documented before a visual module can depend on the library.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: visualizer_script_policy_drift
+reasoning_tier: high
+context_scope: final_gui_visualizer_allowlist
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
+node_compile_hint: {mode: visualizer_third_party_allowlist, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0109
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0110
+preserved_exact_tokens: ["visualizer third-party JS library allowlist", "TBD remains an open design item", "D3", "Chart.js", "Three.js", "sandbox='allow-scripts'"]
+negative_constraints:
+  - Do not allow remote CDN scripts or dynamic network imports in visual modules.
+  - Do not treat D3, Chart.js, or Three.js as allowed unless a versioned allowlist entry exists.
+owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
