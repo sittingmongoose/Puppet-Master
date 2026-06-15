@@ -458,9 +458,9 @@ Docker, registry, Unraid, and Kubernetes mutations run preflight before approval
 
 Kubernetes is enabled as a project-focused Docker Manager subview when manifests, Helm artifacts, kube-linked receipts, active workload refs, or explicit project settings indicate Kubernetes relevance. Kubernetes doctor checks verify `kubectl` reachability, kubeconfig/context availability, namespace access, project-focused workload scope, Helm availability when Helm actions are selected, and allowed verbs for `apply`, `diff`, `logs`, `exec`, and `port_forward`. Failed checks keep manifest editing and cached inspection available when possible, but block mutation, exec, logs, or port-forward actions with explicit preflight/permission outcomes.
 
-#### Future-scope placeholders
+#### Docker Manager active operation contracts
 
-Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage are reserved future-scope anchors for this owner doc. They may render as disabled, partial, or planned capabilities until implemented, but must not disappear from the Docker Manager contract or be replaced by generic runtime wording.
+Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage are active Docker Manager contract areas. Each one must expose typed operation identity, status/result payloads, preflight and permission outcomes, review/failure fields where applicable, and GUI action derivation from structured payloads. They must not disappear from the Docker Manager contract, be replaced by generic runtime wording, or render as vague planned placeholders.
 
 #### Event registration contract
 
@@ -3203,38 +3203,39 @@ owner_hints:
   - Plans/Containers_Registry_and_Unraid.md
 ```
 
-### CRAU-041 - Reserved Future-Scope Docker Manager Anchors
+### CRAU-041 - Active Docker Manager Operation Anchors
 
 ```yaml
 plan_unit_id: CRAU-041
-unit_type: compatibility_disposition
+unit_type: requirement
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
   Registry promotion, drift detection, access intelligence, and project-focused
-  K8s deep linkage are reserved future-scope anchors for this owner doc; they
-  may render as disabled, partial, or planned capabilities until implemented but
-  must not disappear from the Docker Manager contract or be replaced by generic
-  runtime wording.
+  K8s deep linkage are active Docker Manager contract areas. They require typed
+  operation identity, status/result payloads, preflight and permission outcomes,
+  review/failure fields where applicable, and GUI action derivation from structured
+  payloads. They must not disappear from the Docker Manager contract, be replaced
+  by generic runtime wording, or render as vague planned placeholders.
 gui_related: false
-gui_classification_reason: This unit preserves future-scope contract anchors rather than defining a present visual surface.
+gui_classification_reason: This unit defines Docker Manager runtime operation contracts rather than visual presentation.
 split_recommended: false
 depends_on: [CRAU-012, CRAU-013, CRAU-040]
 unblocks: []
 acceptance_criteria:
-  - Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage remain named Docker Manager anchors.
-  - Reserved anchors may render disabled, partial, or planned until implemented.
-  - Reserved anchors are not replaced by generic runtime wording.
+  - Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage remain named Docker Manager contract areas.
+  - Each area has typed operation identity, status/result payloads, preflight and permission outcomes, and review/failure fields where applicable.
+  - These areas are not replaced by generic runtime wording or vague planned placeholders.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: future_scope_erasure
+risk_class: docker_contract_placeholder_drift
 reasoning_tier: standard
-context_scope: reserved_future_scope_docker_manager_anchors
+context_scope: active_docker_manager_operation_anchors
 implementation_surfaces:
   - Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
-  mode: future_scope_anchor
+  mode: docker_operation_anchor_contract
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0035
@@ -3244,7 +3245,8 @@ preserved_exact_tokens:
   - "access intelligence"
   - "project-focused K8s deep linkage"
 negative_constraints:
-  - "Reserved future-scope anchors must not disappear or be replaced by generic runtime wording."
+  - "Do not leave Docker Manager registry promotion, drift detection, access intelligence, or project-focused K8s deep linkage as future-scope placeholders."
+  - "Do not render these areas as vague planned placeholders without typed operation payloads."
 owner_hints:
   - Plans/Containers_Registry_and_Unraid.md
 ```
@@ -5406,6 +5408,216 @@ negative_constraints:
 owner_hints:
   - Plans/Containers_Registry_and_Unraid.md
   - Plans/Contracts_V0.md
+```
+
+### CRAU-085 - Docker Operation Result Envelope And Status Lifecycle
+
+```yaml
+plan_unit_id: CRAU-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker Manager operations use a shared operation result envelope with operation_id, operation_kind,
+  target identity, actor/runtime_identity, project/package/seam/lane/worktree/account scope, preflight
+  snapshot, approval_scope_key, status, started/updated/completed timestamps, review_payload,
+  failure_payload, allowed_action_ids, evidence refs, and emitted receipt refs. The operation status
+  enum is exactly `pending`, `running`, `needs_review`, `succeeded`, `failed`, and `cancelled`.
+  `needs_review` is non-terminal and exits only through explicit review actions to `running`,
+  `failed`, or `cancelled`; `failed` is terminal and carries failure_payload.
+gui_related: false
+gui_classification_reason: The status lifecycle and payload envelope are runtime operation contracts, not visual presentation.
+depends_on: [CRAU-041, CV-281, PS-113]
+unblocks: []
+acceptance_criteria:
+  - Docker operation result payloads carry operation identity, target identity, runtime identity, preflight, approval, status, evidence, and receipt refs.
+  - "Status values are limited to `pending`, `running`, `needs_review`, `succeeded`, `failed`, and `cancelled`."
+  - "`needs_review` is non-terminal and cannot be treated as `failed`; terminal statuses do not transition back to active operation states."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: docker_operation_result_drift
+reasoning_tier: high
+context_scope: docker_operation_result_lifecycle
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: docker_operation_result_envelope, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0046
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0055
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0056
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0058
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0059
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0061
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0062
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0064
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0065
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0067
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0068
+preserved_exact_tokens: ["needs_review vs failure-payload", "needs_review", "failed", "review_payload", "failure_payload", "pending", "running", "succeeded", "cancelled"]
+negative_constraints:
+  - Do not conflate `needs_review` with terminal `failed`.
+  - Do not add Docker operation statuses beyond the accepted enum without a new PlanUnit.
+  - Do not allow terminal Docker statuses to transition back into active operation states.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
+```
+
+### CRAU-086 - Registry Promotion Operation Contract
+
+```yaml
+plan_unit_id: CRAU-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Registry promotion is an active Docker Manager operation kind. Promotion payloads carry source
+  image/ref, destination registry/repository/tag, digest, promotion policy, trust/proxy context,
+  target account/server profile, preflight result, approval_scope_key, status lifecycle from
+  CRAU-085, evidence refs, and rollback or remediation actions. The GUI derives promote, retry,
+  rollback, inspect, and blocked actions from structured promotion payload fields.
+gui_related: true
+gui_classification_reason: Registry promotion actions and blocked/remediation controls are user-visible Docker Manager behavior.
+depends_on: [CRAU-085]
+unblocks: []
+acceptance_criteria:
+  - Registry promotion has source/destination/digest/policy/trust/account identity before mutation.
+  - Promotion actions derive from status and payload fields, not free-form message text.
+  - Promotion receipts and evidence refs are available for artifact/usage inspection.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: registry_promotion_contract_gap
+reasoning_tier: high
+context_scope: docker_registry_promotion
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: registry_promotion_operation_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0070
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0071
+preserved_exact_tokens: ["registry promotion", "promotion UI derives actions from structured payload"]
+negative_constraints:
+  - Do not render registry promotion as a disabled placeholder.
+  - Do not infer promotion actions from unstructured logs or status text.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
+```
+
+### CRAU-087 - Drift Detection Operation Contract
+
+```yaml
+plan_unit_id: CRAU-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker drift detection is an active operation kind that compares declared project container,
+  registry, compose, Kubernetes, and Unraid intent with observed host or cached state. Drift payloads
+  carry observed refs, expected refs, freshness, trust/degraded state, comparison scope, drift_kind,
+  severity, affected resources, safe remediation actions, evidence refs, and operation status from
+  CRAU-085. The UI derives inspect, refresh, reconcile, ignore, and blocked actions from structured
+  drift payloads.
+gui_related: true
+gui_classification_reason: Drift inspection and remediation actions are user-visible Docker Manager controls.
+depends_on: [CRAU-085]
+unblocks: []
+acceptance_criteria:
+  - Drift records distinguish expected state, observed state, freshness, trust, and degraded inputs.
+  - Drift remediation actions are typed and permission/preflight-aware.
+  - Cached/offline observations disclose freshness before driving reconciliation.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: docker_drift_detection_gap
+reasoning_tier: high
+context_scope: docker_drift_detection
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: docker_drift_detection_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0073
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0074
+preserved_exact_tokens: ["drift detection", "Docker drift UI derives actions from structured payload"]
+negative_constraints:
+  - Do not treat stale cached observations as fresh host truth.
+  - Do not allow drift reconciliation without typed preflight and permission outcomes.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
+```
+
+### CRAU-088 - Access Intelligence Operation Contract
+
+```yaml
+plan_unit_id: CRAU-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker access intelligence is an active contract for explaining which registry, Unraid, Docker
+  host, or Kubernetes actions are currently available. Payloads carry evaluated identity, host or
+  cluster target, account/server profile, trust/proxy policy, permission snapshot, capability result,
+  degraded/offline state, required scopes, blocked reason, allowed actions, evidence refs, and
+  remediation hints. The UI derives disclosure, retry, sign-in, doctor, request-access, and blocked
+  controls from structured access-intelligence payloads.
+gui_related: true
+gui_classification_reason: Access disclosure, sign-in, doctor, request-access, and blocked controls are user-visible Docker Manager behavior.
+depends_on: [CRAU-085, PS-113, MGAC-092]
+unblocks: []
+acceptance_criteria:
+  - Access intelligence explains evaluated identity, trust/proxy policy, permission, capability, and degraded/offline inputs.
+  - Required scopes and blocked reasons are structured enough for gate and UI consumers.
+  - Remediation actions come from allowed_action_ids and policy outcomes, not local button guesses.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: docker_access_intelligence_gap
+reasoning_tier: high
+context_scope: docker_access_intelligence
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Permissions_System.md]
+node_compile_hint: {mode: docker_access_intelligence_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0076
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0077
+preserved_exact_tokens: ["access intelligence", "Docker access intelligence UI derives actions from structured payload"]
+negative_constraints:
+  - Do not infer access from provider/host reachability alone.
+  - Do not render access remediation without scoped identity, permission, capability, and policy inputs.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Permissions_System.md]
+```
+
+### CRAU-089 - Project-Focused Kubernetes Deep Linkage Contract
+
+```yaml
+plan_unit_id: CRAU-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Project-focused Kubernetes deep linkage is an active Docker Manager contract. Linkage payloads carry
+  project_id, package/seam/lane/worktree scope, cluster/context/namespace, workload refs, manifest or
+  Helm refs, image/digest refs, receipt refs, allowed verbs, trust/proxy/degraded state, preflight
+  result, status lifecycle from CRAU-085, and route objects for logs, exec, port-forward, diff, apply,
+  manifest edit, and artifact evidence. The UI derives Kubernetes deep-link actions from structured
+  linkage payloads.
+gui_related: true
+gui_classification_reason: Kubernetes deep links to logs, exec, port-forward, diff, apply, manifest editing, and evidence are user-visible controls.
+depends_on: [CRAU-085, CV-283]
+unblocks: []
+acceptance_criteria:
+  - Kubernetes linkage is scoped to project/package/seam/lane/worktree and cluster/context/namespace.
+  - Deep-link actions carry allowed verbs, preflight, trust/degraded state, and route-object identity.
+  - Kubernetes evidence remains linked to receipts/artifacts rather than generic cluster text.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: k8s_deep_linkage_gap
+reasoning_tier: high
+context_scope: docker_project_focused_k8s_linkage
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: docker_k8s_deep_linkage_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0079
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0080
+preserved_exact_tokens: ["project-focused K8s deep linkage", "Docker/K8s linkage UI derives actions from structured payload", "logs", "exec", "port_forward", "apply"]
+negative_constraints:
+  - Do not render Kubernetes linkage as a generic planned placeholder.
+  - Do not deep-link into Kubernetes actions without project scope, allowed verbs, preflight, and route identity.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md]
 ```
 
 ### CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving Bridge Retired

@@ -466,7 +466,7 @@
   "generated_at_utc": "2026-06-14T21:33:12Z",
   "governance_seal_required": true,
   "implementation_files_created": false,
-  "live_plan_unit_count": 4972,
+  "live_plan_unit_count": 4998,
   "next_batch_cursor": null,
   "next_cursor": null,
   "no_executable_build_tasks_created": true,
@@ -519,7 +519,7 @@
   ],
   "standard_run_gates_status": "expected_preseal_failure",
   "status": "COMPLETE",
-  "unique_live_plan_unit_count": 4972,
+  "unique_live_plan_unit_count": 4998,
   "validators": {
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",

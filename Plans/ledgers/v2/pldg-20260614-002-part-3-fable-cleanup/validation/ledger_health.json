@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "check_id": "compile-0001",
+      "status": "pass",
+      "summary": "Accepted Part 3 atoms compiled to canonical Plans PlanUnits."
+    },
+    {
+      "check_id": "compile-0002",
+      "status": "pass",
+      "summary": "Allowed Plans/.plan_index outputs were regenerated; WorkNodes and NodeSeeds were not created."
+    },
+    {
+      "check_id": "compile-0003",
+      "status": "pass",
+      "summary": "pm-bootstrap-ledger-validate passed with zero errors and warnings."
+    },
+    {
+      "check_id": "compile-0004",
+      "status": "pass",
+      "summary": "pm-plan-index validate passed."
+    },
+    {
+      "check_id": "compile-0005",
+      "status": "pass",
+      "summary": "git diff --check passed."
+    },
+    {
+      "check_id": "compile-0006",
+      "status": "pass",
+      "summary": "Explicit governance seal resolved the earlier stale Spec_Lock/evidence/shard hashes; run-gates passed after migration metadata, configured shards, evidence hashes, Spec_Lock hashes, auto_decisions, and allowed Plans/.plan_index outputs were refreshed."
+    },
+    {
+      "check_id": "compile-0007",
+      "status": "pass",
+      "summary": "Explicit governance seal resolved the earlier stale historical migration batch hashes after live Plan edits; pm-plan-migration validate passed."
+    },
+    {
+      "check_id": "seal-0001",
+      "status": "pass",
+      "summary": "Part 3 Fable Cleanup governance seal completed: ledger validate, migration validate, PlanUnit index validate, configured shard check, Spec Lock validation, evidence validation, auto-decision validation, plan_graph validation, run-gates, and git diff --check passed. Plans/.plan_index/node_readiness_report.json preserves status `blocked_plans_incomplete`; compiler_contract_status remains `blocked_compiler_contract_incomplete`; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    }
+  ],
+  "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "compile_queue_items": 1,
+    "decisions": 37,
+    "deferred_questions": 0,
+    "design_atoms": 120,
+    "events": 64,
+    "governance_seal": "passed",
+    "open_blockers": 0,
+    "open_questions": 0
+  },
+  "updated_at_utc": "2026-06-15T13:59:47Z",
+  "warnings": []
+}

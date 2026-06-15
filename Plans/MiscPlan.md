@@ -1129,7 +1129,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 - **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.claude/skills`, `.agents/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
-- **platform_specs skill injection:** How each provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
+- **platform_specs skill injection:** Each provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) receives the skill list through a versioned `platform_specs` injection contract that records platform_id, runner_id/runtime_identity, skill/package identity, injection timing, capability/permission boundary, environment/secret boundary, compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner approval path. Runner integration must validate that contract before `list_skills_for_agent` injects skills.
 
 **Before implementation plan**
 
@@ -6337,4 +6337,46 @@ preserved_exact_tokens: ["References", "Implementation status", "§9.1.20"]
 negative_constraints:
   - Do not change product behavior while deduplicating structural sections.
 owner_hints: [Plans/MiscPlan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### M-083 - Runner Platform Specs Skill Injection Contract
+
+```yaml
+plan_unit_id: M-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: >-
+  Skills integration with runners is governed by a versioned `platform_specs` injection contract rather
+  than a stub. For each provider runner, the contract records platform_id, runner_id/runtime_identity,
+  skill/package identity, injection timing, capability/permission boundary, environment/secret boundary,
+  compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner
+  approval path. `list_skills_for_agent` may inject skills only after those fields validate for the
+  target runner.
+gui_related: false
+gui_classification_reason: Runner skill injection, capability, environment, and audit boundaries are backend/runtime contracts, not visual presentation.
+depends_on: [M-082, MGAC-092, PS-113]
+unblocks: []
+acceptance_criteria:
+  - Runner skill injection has a per-platform contract before skills are delivered to Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, or Gemini runners.
+  - Injection validates runtime identity, capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, and owner approval fields.
+  - Skills runner integration is not described as stubbed in live canonical prose.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: runner_skill_injection_gap
+reasoning_tier: high
+context_scope: runner_platform_specs_skill_injection
+implementation_surfaces: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
+node_compile_hint: {mode: runner_platform_specs_skill_injection, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0118
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0119
+preserved_exact_tokens: ["per-platform skill injection for runners", "is stubbed", "platform_specs", "list_skills_for_agent", "Cursor", "Claude Code", "OpenCode", "Codex", "GitHub Copilot", "Gemini"]
+negative_constraints:
+  - Do not inject skills into a runner without validating the `platform_specs` injection contract.
+  - Do not let skill injection bypass capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, or owner approval boundaries.
+owner_hints: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
 ```

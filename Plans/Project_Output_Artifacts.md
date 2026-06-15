@@ -3110,3 +3110,46 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Original spans from `Project_Output_Artifacts-S0001` through `Project_Output_Artifacts-S0046` are preserved in place and atomized into fine-grained PlanUnits `POA-002` through `POA-042`; `Project_Output_Artifacts-S0047` through `Project_Output_Artifacts-S0049` are covered by `POA-043` through `POA-045`. Generated structural/audit spans `Project_Output_Artifacts-S0050` through `Project_Output_Artifacts-S0053` are explicitly dispositioned; `POA-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Project_Output_Artifacts.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### POA-046 - Project Artifact Open By Identity Consumer Boundary
+
+```yaml
+plan_unit_id: POA-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Project output artifact opens consume the shared artifact identity/index contract without re-owning
+  runtime artifact indexing. A project artifact open request must carry artifact identity, project
+  owner/output family, storage ref, trust/freshness state, and desired open mode; FileManager handles
+  file-backed realization only after the artifact identity boundary resolves whether the target is a
+  workspace file, generated object, record-backed preview, or owner-surface route.
+gui_related: true
+gui_classification_reason: Opening project artifacts and routing to FileManager or preview surfaces is user-visible artifact behavior.
+depends_on: [RAP-026]
+unblocks: []
+acceptance_criteria:
+  - Project output artifacts do not redefine `artifacts_index:v1:{project_id}`.
+  - FileManager open actions receive resolved target type and trust/freshness state, not only a path-like string.
+  - Runtime artifact identity and project output ownership remain distinct.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: project_artifact_open_boundary_drift
+reasoning_tier: standard
+context_scope: project_artifact_open_by_identity
+implementation_surfaces: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/FileManager.md]
+node_compile_hint: {mode: project_artifact_identity_consumer, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0040
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0051
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0097
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0098
+preserved_exact_tokens: ["Project_Output_Artifacts.md:50", "open-by-artifact-identity", "FileManager", "artifact identity"]
+negative_constraints:
+  - Do not collapse runtime artifact identity into project output ownership.
+  - Do not pass unresolved artifact identity to FileManager as if it were a workspace path.
+owner_hints: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/FileManager.md]
+```

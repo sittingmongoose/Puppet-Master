@@ -68,7 +68,7 @@ This file defines deterministic gates used to validate plan quality and implemen
 - Wrapper normalization metadata describes canonical primitive family, not serialized route payload.
 - inspector_target and `inspector_target = evidence` are required when the target object is already selected and detail focus must land on evidence.
 - GUI_Rebuild_Requirements_Checklist, GUI_Rebuild_Requirements_Checklist.md, and stale upstream PASS conditions cannot create false confidence in progression gates.
-- Transfer coverage blockers cov-034, cov-511, cov-526, transfer-coverage, owner-definition, and evidence-collection are owner-definition gaps until resolved, not just missing evidence-collection gaps.
+- Transfer coverage blockers cov-034, cov-511, cov-526, transfer-coverage, owner-definition, and evidence-collection require owner-definition records before gates can pass; each record must name coverage_id, owner doc/section, responsible domain, validation/evidence requirements, dependency/risk linkage, pass/fail criteria, affected PlanUnits or gates, escalation path, and retirement conditions.
 - Widget catalog refresh must replace widget.tier_tree and widget.progress_bars with package, seam, lane, and parallel execution visualizations before the Tiers tab can be renamed or replaced.
 - automation-first defaults must be reconciled with HITL, `/schema`, mandatory gates, optional boundaries, and settings/schema flips.
 - Shared progression states are info, warning, attention_required, blocked, and system_notification.
@@ -3375,3 +3375,48 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Original spans from `Progression_Gates-S0001` through `Progression_Gates-S0047` are preserved in place and atomized into fine-grained PlanUnits `PG-002` through `PG-057`. Generated structural/audit spans `Progression_Gates-S0048` through `Progression_Gates-S0051` are explicitly dispositioned; `PG-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Progression_Gates.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### PG-058 - Coverage Owner Definition Records
+
+```yaml
+plan_unit_id: PG-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Coverage blockers `cov-034`, `cov-511`, and `cov-526` require owner-definition records before
+  progression gates can mark them complete. Each owner-definition record carries coverage_id, owner
+  doc/section, responsible domain, required validation/evidence, dependency/risk linkage, pass/fail
+  criteria, affected PlanUnits or gates, escalation path, and retirement conditions. Gate checks must
+  also flag live canonical terms such as `future scope`, `future-scope`, `reserved anchors`, and
+  `deliberately not designed yet` as plan-readiness drift unless the terms appear only in preserved
+  source-lineage or stale/retired-token fields.
+gui_related: false
+gui_classification_reason: Progression coverage owner-definition records and gate checks are governance/validation contracts, not visual presentation.
+depends_on: [PG-057]
+unblocks: []
+acceptance_criteria:
+  - "`cov-034`, `cov-511`, and `cov-526` cannot pass without owner-definition records."
+  - Owner-definition records include owner doc/section, responsible domain, validation/evidence, dependency/risk linkage, pass/fail criteria, affected PlanUnits or gates, escalation path, and retirement conditions.
+  - Future-scope placeholder language is gate-visible drift unless quarantined as source-lineage or stale/retired text.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - rg -n "future scope|future-scope|reserved anchors|deliberately not designed yet" Plans
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: progression_owner_definition_gap
+reasoning_tier: high
+context_scope: progression_coverage_owner_records
+implementation_surfaces: [Plans/Progression_Gates.md, Plans/.plan_index]
+node_compile_hint: {mode: coverage_owner_definition_records, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0115
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0116
+preserved_exact_tokens: ["cov-034/cov-511/cov-526", "cov-034", "cov-511", "cov-526", "owner-definition gaps until resolved", "Nothing in the plans is future scope at all.", "future scope", "future-scope", "reserved anchors", "deliberately not designed yet"]
+negative_constraints:
+  - Do not mark `cov-034`, `cov-511`, or `cov-526` complete without owner-definition records.
+  - Do not leave future-scope placeholder language as live canonical plan truth.
+owner_hints: [Plans/Progression_Gates.md]
+```

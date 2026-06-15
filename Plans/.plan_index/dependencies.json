@@ -7124,6 +7124,56 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CRAU-085",
+      "to": "CRAU-041"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-085",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-085",
+      "to": "PS-113"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-086",
+      "to": "CRAU-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-087",
+      "to": "CRAU-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-088",
+      "to": "CRAU-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-088",
+      "to": "MGAC-092"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-088",
+      "to": "PS-113"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-089",
+      "to": "CRAU-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-089",
+      "to": "CV-283"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CS-003",
       "to": "CS-002"
     },
@@ -11254,6 +11304,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-281",
+      "to": "CV-279"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-282",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-283",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-284",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -12624,6 +12694,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CWF-149",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CWF-149",
+      "to": "CV-283"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CWF-149",
+      "to": "CWF-148"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CWF-150",
+      "to": "CWF-061"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CWF-150",
+      "to": "CWF-149"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DL-003",
       "to": "DL-002"
     },
@@ -13189,6 +13284,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F-068",
+      "to": "F-067"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-068",
+      "to": "F2-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-069",
+      "to": "F-068"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-070",
+      "to": "F-068"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-071",
+      "to": "F-067"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-071",
+      "to": "F-070"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-188",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F3-387",
       "to": "PDS-003"
     },
@@ -13211,6 +13341,11 @@
       "edge_type": "depends_on",
       "from": "F3-389",
       "to": "F3-387"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-390",
+      "to": "F3-382"
     },
     {
       "edge_type": "depends_on",
@@ -14376,6 +14511,21 @@
       "edge_type": "depends_on",
       "from": "M-082",
       "to": "M-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "M-083",
+      "to": "M-082"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "M-083",
+      "to": "MGAC-092"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "M-083",
+      "to": "PS-113"
     },
     {
       "edge_type": "depends_on",
@@ -15616,6 +15766,11 @@
       "edge_type": "depends_on",
       "from": "MGAC-091",
       "to": "MGAC-090"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MGAC-092",
+      "to": "CV-281"
     },
     {
       "edge_type": "depends_on",
@@ -21904,6 +22059,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "OSI-427",
+      "to": "CV-282"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-427",
+      "to": "OSI-426"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "P-001",
       "to": "P-002"
     },
@@ -23216,6 +23381,11 @@
       "edge_type": "depends_on",
       "from": "PG-057",
       "to": "PG-056"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PG-058",
+      "to": "PG-057"
     },
     {
       "edge_type": "depends_on",
@@ -25104,6 +25274,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PO-047",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "POA-001",
       "to": "POA-002"
     },
@@ -25611,6 +25786,11 @@
       "edge_type": "depends_on",
       "from": "POA-045",
       "to": "POA-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "POA-046",
+      "to": "RAP-026"
     },
     {
       "edge_type": "depends_on",
@@ -27954,6 +28134,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PS-113",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PSMERA-001",
       "to": "PSMERA-002"
     },
@@ -29739,6 +29924,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-026",
+      "to": "CV-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-026",
+      "to": "RAP-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-026",
+      "to": "RAP-020"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RGV-002",
       "to": "RGV-001"
     },
@@ -29856,6 +30056,21 @@
       "edge_type": "depends_on",
       "from": "RGV-010",
       "to": "RGV-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-011",
+      "to": "CV-283"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-011",
+      "to": "RGV-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-011",
+      "to": "RGV-010"
     },
     {
       "edge_type": "depends_on",
@@ -61258,7 +61473,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-14T21:22:13Z",
+  "generated_at_utc": "2026-06-15T13:51:02Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -73340,8 +73555,8 @@
       "source_location": {
         "heading": "CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 5411,
-        "line": 5413,
+        "heading_line": 5623,
+        "line": 5625,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74011,21 +74226,21 @@
       "unit_type": "requirement"
     },
     {
-      "context_scope": "reserved_future_scope_docker_manager_anchors",
+      "context_scope": "active_docker_manager_operation_anchors",
       "gui_related": false,
       "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
       "plan_unit_id": "CRAU-041",
       "reasoning_tier": "standard",
-      "risk_class": "future_scope_erasure",
+      "risk_class": "docker_contract_placeholder_drift",
       "source_location": {
-        "heading": "CRAU-041 - Reserved Future-Scope Docker Manager Anchors",
+        "heading": "CRAU-041 - Active Docker Manager Operation Anchors",
         "heading_level": 3,
         "heading_line": 3206,
         "line": 3208,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
-      "unit_type": "compatibility_disposition"
+      "unit_type": "requirement"
     },
     {
       "context_scope": "event_registration_boundary",
@@ -74037,8 +74252,8 @@
       "source_location": {
         "heading": "CRAU-042 - Event Registration Boundary",
         "heading_level": 3,
-        "heading_line": 3252,
-        "line": 3254,
+        "heading_line": 3254,
+        "line": 3256,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74054,8 +74269,8 @@
       "source_location": {
         "heading": "CRAU-043 - Publish Execution Approval And Blocked Outcome Contract",
         "heading_level": 3,
-        "heading_line": 3302,
-        "line": 3304,
+        "heading_line": 3304,
+        "line": 3306,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74071,8 +74286,8 @@
       "source_location": {
         "heading": "CRAU-044 - Missing Repository Push Resume",
         "heading_level": 3,
-        "heading_line": 3355,
-        "line": 3357,
+        "heading_line": 3357,
+        "line": 3359,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74088,8 +74303,8 @@
       "source_location": {
         "heading": "CRAU-045 - Auto Push Approval Gate",
         "heading_level": 3,
-        "heading_line": 3407,
-        "line": 3409,
+        "heading_line": 3409,
+        "line": 3411,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74105,8 +74320,8 @@
       "source_location": {
         "heading": "CRAU-046 - Canonical Publish Reference Selection",
         "heading_level": 3,
-        "heading_line": 3459,
-        "line": 3461,
+        "heading_line": 3461,
+        "line": 3463,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74122,8 +74337,8 @@
       "source_location": {
         "heading": "CRAU-047 - Tag Template Resolution And Sanitization",
         "heading_level": 3,
-        "heading_line": 3512,
-        "line": 3514,
+        "heading_line": 3514,
+        "line": 3516,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74139,8 +74354,8 @@
       "source_location": {
         "heading": "CRAU-048 - Post Publish Unraid Follow On Sequence",
         "heading_level": 3,
-        "heading_line": 3561,
-        "line": 3563,
+        "heading_line": 3563,
+        "line": 3565,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74156,8 +74371,8 @@
       "source_location": {
         "heading": "CRAU-049 - Managed Unraid Artifact Classes",
         "heading_level": 3,
-        "heading_line": 3608,
-        "line": 3610,
+        "heading_line": 3610,
+        "line": 3612,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74173,8 +74388,8 @@
       "source_location": {
         "heading": "CRAU-050 - Artifact Input Provenance Matrix",
         "heading_level": 3,
-        "heading_line": 3651,
-        "line": 3653,
+        "heading_line": 3653,
+        "line": 3655,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74190,8 +74405,8 @@
       "source_location": {
         "heading": "CRAU-051 - Application Template Round Trip Contract",
         "heading_level": 3,
-        "heading_line": 3703,
-        "line": 3705,
+        "heading_line": 3705,
+        "line": 3707,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74207,8 +74422,8 @@
       "source_location": {
         "heading": "CRAU-052 - ca_profile Editability And Round Trip Contract",
         "heading_level": 3,
-        "heading_line": 3750,
-        "line": 3752,
+        "heading_line": 3752,
+        "line": 3754,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74224,8 +74439,8 @@
       "source_location": {
         "heading": "CRAU-053 - Template Review Gate And needs_review State",
         "heading_level": 3,
-        "heading_line": 3803,
-        "line": 3805,
+        "heading_line": 3805,
+        "line": 3807,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74241,8 +74456,8 @@
       "source_location": {
         "heading": "CRAU-054 - Application Template XML Root And Passthrough Emission",
         "heading_level": 3,
-        "heading_line": 3854,
-        "line": 3856,
+        "heading_line": 3856,
+        "line": 3858,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74258,8 +74473,8 @@
       "source_location": {
         "heading": "CRAU-055 - Config XML Mapping And Review Fallback",
         "heading_level": 3,
-        "heading_line": 3911,
-        "line": 3913,
+        "heading_line": 3913,
+        "line": 3915,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74275,8 +74490,8 @@
       "source_location": {
         "heading": "CRAU-056 - Known XML Field Registry",
         "heading_level": 3,
-        "heading_line": 3967,
-        "line": 3969,
+        "heading_line": 3969,
+        "line": 3971,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74292,8 +74507,8 @@
       "source_location": {
         "heading": "CRAU-057 - Unmanaged Local Generation Output",
         "heading_level": 3,
-        "heading_line": 4021,
-        "line": 4023,
+        "heading_line": 4023,
+        "line": 4025,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74309,8 +74524,8 @@
       "source_location": {
         "heading": "CRAU-058 - Distribution Target Rationale And Local Result UX",
         "heading_level": 3,
-        "heading_line": 4073,
-        "line": 4075,
+        "heading_line": 4075,
+        "line": 4077,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74326,8 +74541,8 @@
       "source_location": {
         "heading": "CRAU-059 - Default Unraid Generation Toggle",
         "heading_level": 3,
-        "heading_line": 4125,
-        "line": 4127,
+        "heading_line": 4127,
+        "line": 4129,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74343,8 +74558,8 @@
       "source_location": {
         "heading": "CRAU-060 - Managed Template Repo Workflow Default",
         "heading_level": 3,
-        "heading_line": 4167,
-        "line": 4169,
+        "heading_line": 4169,
+        "line": 4171,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74360,8 +74575,8 @@
       "source_location": {
         "heading": "CRAU-061 - Template Repo Default Identity",
         "heading_level": 3,
-        "heading_line": 4208,
-        "line": 4210,
+        "heading_line": 4210,
+        "line": 4212,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74377,8 +74592,8 @@
       "source_location": {
         "heading": "CRAU-062 - Existing Template Repo Validation",
         "heading_level": 3,
-        "heading_line": 4260,
-        "line": 4262,
+        "heading_line": 4262,
+        "line": 4264,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74394,8 +74609,8 @@
       "source_location": {
         "heading": "CRAU-063 - Template Repo Status State Model",
         "heading_level": 3,
-        "heading_line": 4305,
-        "line": 4307,
+        "heading_line": 4307,
+        "line": 4309,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74411,8 +74626,8 @@
       "source_location": {
         "heading": "CRAU-064 - Template Repo Review Transition Rules",
         "heading_level": 3,
-        "heading_line": 4361,
-        "line": 4363,
+        "heading_line": 4363,
+        "line": 4365,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74428,8 +74643,8 @@
       "source_location": {
         "heading": "CRAU-065 - Auto Commit Containment And Repo Review Gate",
         "heading_level": 3,
-        "heading_line": 4408,
-        "line": 4410,
+        "heading_line": 4410,
+        "line": 4412,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74445,8 +74660,8 @@
       "source_location": {
         "heading": "CRAU-066 - Commit Push Status And Retry Transitions",
         "heading_level": 3,
-        "heading_line": 4457,
-        "line": 4459,
+        "heading_line": 4459,
+        "line": 4461,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74462,8 +74677,8 @@
       "source_location": {
         "heading": "CRAU-067 - Dirty Repo Adoption Safety",
         "heading_level": 3,
-        "heading_line": 4508,
-        "line": 4510,
+        "heading_line": 4510,
+        "line": 4512,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74479,8 +74694,8 @@
       "source_location": {
         "heading": "CRAU-068 - Template Repo Setup Choices And Repo Shape",
         "heading_level": 3,
-        "heading_line": 4551,
-        "line": 4553,
+        "heading_line": 4553,
+        "line": 4555,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74496,8 +74711,8 @@
       "source_location": {
         "heading": "CRAU-069 - Template Repo Layout And Maintainer Slug Defaults",
         "heading_level": 3,
-        "heading_line": 4595,
-        "line": 4597,
+        "heading_line": 4597,
+        "line": 4599,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74513,8 +74728,8 @@
       "source_location": {
         "heading": "CRAU-070 - Template Repo Commit Push Defaults And Status UX",
         "heading_level": 3,
-        "heading_line": 4642,
-        "line": 4644,
+        "heading_line": 4644,
+        "line": 4646,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74530,8 +74745,8 @@
       "source_location": {
         "heading": "CRAU-071 - ca_profile Generation Scope And Editability",
         "heading_level": 3,
-        "heading_line": 4687,
-        "line": 4689,
+        "heading_line": 4689,
+        "line": 4691,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74547,8 +74762,8 @@
       "source_location": {
         "heading": "CRAU-072 - ca_profile Image Handling And Public Metadata Reminder",
         "heading_level": 3,
-        "heading_line": 4736,
-        "line": 4738,
+        "heading_line": 4738,
+        "line": 4740,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74564,8 +74779,8 @@
       "source_location": {
         "heading": "CRAU-073 - Docker Manager Scope Split And Migration Alias State",
         "heading_level": 3,
-        "heading_line": 4783,
-        "line": 4785,
+        "heading_line": 4785,
+        "line": 4787,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74581,8 +74796,8 @@
       "source_location": {
         "heading": "CRAU-074 - Implementation State Inventory And Blocked Outcome State",
         "heading_level": 3,
-        "heading_line": 4837,
-        "line": 4839,
+        "heading_line": 4839,
+        "line": 4841,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74598,8 +74813,8 @@
       "source_location": {
         "heading": "CRAU-075 - Orchestrator Vocabulary Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 4888,
-        "line": 4890,
+        "heading_line": 4890,
+        "line": 4892,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74615,8 +74830,8 @@
       "source_location": {
         "heading": "CRAU-076 - Hard Gate And Action-Specific Confirmation Boundary",
         "heading_level": 3,
-        "heading_line": 4942,
-        "line": 4944,
+        "heading_line": 4944,
+        "line": 4946,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74632,8 +74847,8 @@
       "source_location": {
         "heading": "CRAU-077 - Requested Effective Execution Identity Disclosure",
         "heading_level": 3,
-        "heading_line": 4990,
-        "line": 4992,
+        "heading_line": 4992,
+        "line": 4994,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74649,8 +74864,8 @@
       "source_location": {
         "heading": "CRAU-078 - Runtime Projection Scope And Stale Key Disposition",
         "heading_level": 3,
-        "heading_line": 5040,
-        "line": 5042,
+        "heading_line": 5042,
+        "line": 5044,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74666,8 +74881,8 @@
       "source_location": {
         "heading": "CRAU-079 - Route Activation Cross-Surface SCM And Display Labels",
         "heading_level": 3,
-        "heading_line": 5094,
-        "line": 5096,
+        "heading_line": 5096,
+        "line": 5098,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74683,8 +74898,8 @@
       "source_location": {
         "heading": "CRAU-080 - Canonical Help Semantics And Runtime Recovery Vocabulary",
         "heading_level": 3,
-        "heading_line": 5152,
-        "line": 5154,
+        "heading_line": 5154,
+        "line": 5156,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74700,8 +74915,8 @@
       "source_location": {
         "heading": "CRAU-081 - Docker Unraid Safety Constraints",
         "heading_level": 3,
-        "heading_line": 5205,
-        "line": 5207,
+        "heading_line": 5207,
+        "line": 5209,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74717,8 +74932,8 @@
       "source_location": {
         "heading": "CRAU-082 - Initial Non Goals And Review Bounds",
         "heading_level": 3,
-        "heading_line": 5259,
-        "line": 5261,
+        "heading_line": 5261,
+        "line": 5263,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74734,8 +74949,8 @@
       "source_location": {
         "heading": "CRAU-083 - End To End Acceptance Criteria Overlay",
         "heading_level": 3,
-        "heading_line": 5304,
-        "line": 5306,
+        "heading_line": 5306,
+        "line": 5308,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -74751,12 +74966,97 @@
       "source_location": {
         "heading": "CRAU-084 - Remote Side Effect Blocked Payload Normalization",
         "heading_level": 3,
-        "heading_line": 5351,
-        "line": 5353,
+        "heading_line": 5353,
+        "line": 5355,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "docker_operation_result_lifecycle",
+      "gui_related": false,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-085",
+      "reasoning_tier": "high",
+      "risk_class": "docker_operation_result_drift",
+      "source_location": {
+        "heading": "CRAU-085 - Docker Operation Result Envelope And Status Lifecycle",
+        "heading_level": 3,
+        "heading_line": 5413,
+        "line": 5415,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "docker_registry_promotion",
+      "gui_related": true,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-086",
+      "reasoning_tier": "high",
+      "risk_class": "registry_promotion_contract_gap",
+      "source_location": {
+        "heading": "CRAU-086 - Registry Promotion Operation Contract",
+        "heading_level": 3,
+        "heading_line": 5464,
+        "line": 5466,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "docker_drift_detection",
+      "gui_related": true,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-087",
+      "reasoning_tier": "high",
+      "risk_class": "docker_drift_detection_gap",
+      "source_location": {
+        "heading": "CRAU-087 - Drift Detection Operation Contract",
+        "heading_level": 3,
+        "heading_line": 5503,
+        "line": 5505,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "docker_access_intelligence",
+      "gui_related": true,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-088",
+      "reasoning_tier": "high",
+      "risk_class": "docker_access_intelligence_gap",
+      "source_location": {
+        "heading": "CRAU-088 - Access Intelligence Operation Contract",
+        "heading_level": 3,
+        "heading_line": 5543,
+        "line": 5545,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "docker_project_focused_k8s_linkage",
+      "gui_related": true,
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "plan_unit_id": "CRAU-089",
+      "reasoning_tier": "high",
+      "risk_class": "k8s_deep_linkage_gap",
+      "source_location": {
+        "heading": "CRAU-089 - Project-Focused Kubernetes Deep Linkage Contract",
+        "heading_level": 3,
+        "heading_line": 5583,
+        "line": 5585,
+        "path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -80369,6 +80669,74 @@
       "unit_type": "deferred_decision"
     },
     {
+      "context_scope": "shared_runtime_identity",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-281",
+      "reasoning_tier": "high",
+      "risk_class": "runtime_identity_drift",
+      "source_location": {
+        "heading": "CV-281 - Runtime Identity Envelope And Domain Profiles",
+        "heading_level": 3,
+        "heading_line": 16809,
+        "line": 16811,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_run_knowledge_continuity",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-282",
+      "reasoning_tier": "high",
+      "risk_class": "continuity_schema_gap",
+      "source_location": {
+        "heading": "CV-282 - Runtime Continuity Event And Storage Contract",
+        "heading_level": 3,
+        "heading_line": 16849,
+        "line": 16851,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "shared_route_object_navigation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-283",
+      "reasoning_tier": "high",
+      "risk_class": "route_model_fragmentation",
+      "source_location": {
+        "heading": "CV-283 - Shared Route Object Navigation Contract",
+        "heading_level": 3,
+        "heading_line": 16888,
+        "line": 16890,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plan_graph_schema_identity",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-284",
+      "reasoning_tier": "high",
+      "risk_class": "plan_graph_identity_loss",
+      "source_location": {
+        "heading": "CV-284 - Plan Graph Schema Identity Context",
+        "heading_level": 3,
+        "heading_line": 16928,
+        "line": 16930,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -82998,6 +83366,40 @@
         "heading_level": 3,
         "heading_line": 9884,
         "line": 9886,
+        "path": "Plans/chain-wizard-flexibility.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "wizard_blocked_packet_payload",
+      "gui_related": true,
+      "owner_doc": "Plans/chain-wizard-flexibility.md",
+      "plan_unit_id": "CWF-149",
+      "reasoning_tier": "high",
+      "risk_class": "wizard_blocked_payload_gap",
+      "source_location": {
+        "heading": "CWF-149 - Wizard Blocked Packet Payload Contract",
+        "heading_level": 3,
+        "heading_line": 9922,
+        "line": 9924,
+        "path": "Plans/chain-wizard-flexibility.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "chain_wizard_fork_host_scope",
+      "gui_related": true,
+      "owner_doc": "Plans/chain-wizard-flexibility.md",
+      "plan_unit_id": "CWF-150",
+      "reasoning_tier": "standard",
+      "risk_class": "wizard_host_scope_placeholder_drift",
+      "source_location": {
+        "heading": "CWF-150 - Fork Destination And Unsupported Host Active Contract",
+        "heading_level": 3,
+        "heading_line": 9962,
+        "line": 9964,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "accepted",
@@ -88359,6 +88761,74 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "filemanager_mutation_session_actions",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-068",
+      "reasoning_tier": "high",
+      "risk_class": "filemanager_mutation_bypass",
+      "source_location": {
+        "heading": "F-068 - Shared Mutation Session Actions",
+        "heading_level": 3,
+        "heading_line": 4267,
+        "line": 4269,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "filemanager_operation_conflict_lifecycle",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-069",
+      "reasoning_tier": "high",
+      "risk_class": "file_operation_conflict_drift",
+      "source_location": {
+        "heading": "F-069 - Operation Conflict Lifecycle",
+        "heading_level": 3,
+        "heading_line": 4305,
+        "line": 4307,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "filemanager_degraded_preview_trust",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-070",
+      "reasoning_tier": "high",
+      "risk_class": "filemanager_degraded_state_drift",
+      "source_location": {
+        "heading": "F-070 - Degraded State And Preview Trust",
+        "heading_level": 3,
+        "heading_line": 4344,
+        "line": 4346,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "filemanager_workspace_adjunct_sessions",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-071",
+      "reasoning_tier": "standard",
+      "risk_class": "filemanager_adjunct_session_drift",
+      "source_location": {
+        "heading": "F-071 - Workspace Adjunct Sessions",
+        "heading_level": 3,
+        "heading_line": 4384,
+        "line": 4386,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileSafe.md",
@@ -91532,6 +92002,23 @@
         "heading_level": 3,
         "heading_line": 12867,
         "line": 12869,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "filesafe_shared_mutation_session",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-188",
+      "reasoning_tier": "high",
+      "risk_class": "mutation_safety_boundary_drift",
+      "source_location": {
+        "heading": "F2-188 - Shared Mutation Session Guard Inputs",
+        "heading_level": 3,
+        "heading_line": 12993,
+        "line": 12995,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -98151,6 +98638,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "final_gui_visualizer_allowlist",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-390",
+      "reasoning_tier": "high",
+      "risk_class": "visualizer_script_policy_drift",
+      "source_location": {
+        "heading": "F3-390 - Visualizer Third Party Library Allowlist Policy",
+        "heading_level": 3,
+        "heading_line": 24449,
+        "line": 24451,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -104628,6 +105132,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "runner_platform_specs_skill_injection",
+      "gui_related": false,
+      "owner_doc": "Plans/MiscPlan.md",
+      "plan_unit_id": "M-083",
+      "reasoning_tier": "high",
+      "risk_class": "runner_skill_injection_gap",
+      "source_location": {
+        "heading": "M-083 - Runner Platform Specs Skill Injection Contract",
+        "heading_level": 3,
+        "heading_line": 6344,
+        "line": 6346,
+        "path": "Plans/MiscPlan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Multi-Account.md",
@@ -107172,6 +107693,23 @@
         "heading_level": 3,
         "heading_line": 444,
         "line": 5739,
+        "path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "capability_usability_semantics",
+      "gui_related": false,
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_id": "MGAC-092",
+      "reasoning_tier": "high",
+      "risk_class": "capability_availability_drift",
+      "source_location": {
+        "heading": "3.4 `model_override` extraction",
+        "heading_level": 3,
+        "heading_line": 444,
+        "line": 5914,
         "path": "Plans/Media_Generation_and_Capabilities.md"
       },
       "status": "accepted",
@@ -121526,6 +122064,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "orchestrator_subagent_cross_run_continuity",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-427",
+      "reasoning_tier": "high",
+      "risk_class": "cross_run_continuity_gap",
+      "source_location": {
+        "heading": ".puppet-master/config.yaml (additions)",
+        "heading_level": 1,
+        "heading_line": 6066,
+        "line": 31033,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "personas_residual_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Personas.md",
@@ -123615,6 +124170,23 @@
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "progression_coverage_owner_records",
+      "gui_related": false,
+      "owner_doc": "Plans/Progression_Gates.md",
+      "plan_unit_id": "PG-058",
+      "reasoning_tier": "high",
+      "risk_class": "progression_owner_definition_gap",
+      "source_location": {
+        "heading": "PG-058 - Coverage Owner Definition Records",
+        "heading_level": 3,
+        "heading_line": 3381,
+        "line": 3383,
+        "path": "Plans/Progression_Gates.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "repo",
@@ -125759,6 +126331,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "opencode_provider_attempt_identity",
+      "gui_related": false,
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "plan_unit_id": "PO-047",
+      "reasoning_tier": "high",
+      "risk_class": "provider_identity_correlation_drift",
+      "source_location": {
+        "heading": "PO-047 - Requested Effective Provider Attempt Identity",
+        "heading_level": 3,
+        "heading_line": 3383,
+        "line": 3385,
+        "path": "Plans/Provider_OpenCode.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "project_output_artifacts_residual_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Project_Output_Artifacts.md",
@@ -126518,6 +127107,23 @@
         "heading_level": 3,
         "heading_line": 2957,
         "line": 2959,
+        "path": "Plans/Project_Output_Artifacts.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "project_artifact_open_by_identity",
+      "gui_related": true,
+      "owner_doc": "Plans/Project_Output_Artifacts.md",
+      "plan_unit_id": "POA-046",
+      "reasoning_tier": "standard",
+      "risk_class": "project_artifact_open_boundary_drift",
+      "source_location": {
+        "heading": "POA-046 - Project Artifact Open By Identity Consumer Boundary",
+        "heading_level": 3,
+        "heading_line": 3116,
+        "line": 3118,
         "path": "Plans/Project_Output_Artifacts.md"
       },
       "status": "accepted",
@@ -129329,6 +129935,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "permissions_approval_scope",
+      "gui_related": false,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-113",
+      "reasoning_tier": "high",
+      "risk_class": "approval_scope_overreach",
+      "source_location": {
+        "heading": "PS-113 - Approval Scope Level And Cross-Boundary Carryover",
+        "heading_level": 3,
+        "heading_line": 7491,
+        "line": 7493,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "provider_stream_mapping_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
@@ -130179,6 +130802,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "runtime_artifacts_index_open_by_identity",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-026",
+      "reasoning_tier": "high",
+      "risk_class": "artifact_identity_index_drift",
+      "source_location": {
+        "heading": "RAP-026 - Artifacts Index Identity And Open Resolution",
+        "heading_level": 3,
+        "heading_line": 602,
+        "line": 604,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "run_graph_owner_surface",
       "gui_related": true,
       "owner_doc": "Plans/Run_Graph_View.md",
@@ -130347,6 +130987,23 @@
       },
       "status": "accepted",
       "unit_type": "validation_rule"
+    },
+    {
+      "context_scope": "run_graph_historical_focus_mode",
+      "gui_related": true,
+      "owner_doc": "Plans/Run_Graph_View.md",
+      "plan_unit_id": "RGV-011",
+      "reasoning_tier": "high",
+      "risk_class": "historical_run_mode_ambiguity",
+      "source_location": {
+        "heading": "RGV-011 - Historical Run Focus Mode Persistence",
+        "heading_level": 3,
+        "heading_line": 765,
+        "line": 767,
+        "path": "Plans/Run_Graph_View.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "run_modes_retired_bridge",
@@ -145790,9 +146447,9 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10386,
-    "edge_count": 11906,
-    "node_count": 4972,
+    "depends_on_edge_count": 10429,
+    "edge_count": 11949,
+    "node_count": 4998,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },

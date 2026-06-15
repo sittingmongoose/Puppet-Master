@@ -5906,3 +5906,45 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 088 atomized `Media_Generation_and_Capabilities-S0001`, `Media_Generation_and_Capabilities-S0002`, `Media_Generation_and_Capabilities-S0005` through `Media_Generation_and_Capabilities-S0012`, and `Media_Generation_and_Capabilities-S0014` through `Media_Generation_and_Capabilities-S0020` into `MGAC-002` through `MGAC-032`, with `Media_Generation_and_Capabilities-S0003`, `S0004`, and `S0013` structurally or reference dispositioned. Phase 2B batch 089 atomized `Media_Generation_and_Capabilities-S0021` through `Media_Generation_and_Capabilities-S0023` into `MGAC-033` through `MGAC-042`. Phase 2B batch 090 partially atomized `Media_Generation_and_Capabilities-S0024` source lines 444-842 into `MGAC-043` through `MGAC-087`. Phase 2B batch 091 atomized the remaining S0024 Appendix A tail into `MGAC-088` through `MGAC-091`, structurally/reference dispositioned References, Owner / Consumer Map, PlanUnits, and Migration Coverage, and retired `MGAC-001` as compatibility-only migration lineage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### MGAC-092 - Capability Usability State Semantics
+
+```yaml
+plan_unit_id: MGAC-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  Capability responses must distinguish instance-enabled capability, currently usable capability,
+  caller scope, execution-role capture, and identity disclosure. A capability can be configured or
+  instance-enabled while not currently usable for the invoking runtime identity because of actor,
+  account, lane, execution_role, mode, provider health, permission, quota, or degraded-state inputs.
+  `capabilities.get` must disclose the evaluated caller/runtime identity and deterministic disabled
+  reason rather than flattening availability to a global enabled flag.
+gui_related: false
+gui_classification_reason: Capability state and caller/runtime identity semantics are backend/runtime contracts, not visual presentation.
+depends_on: [CV-281]
+unblocks: []
+acceptance_criteria:
+  - Capability payloads distinguish instance-enabled from currently usable.
+  - Caller scope, execution_role, runtime identity, requested/effective identity, and disabled_reason are captured when availability is evaluated.
+  - Provider, agent-rules, and Skills consumers cannot infer availability from a global provider flag alone.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: capability_availability_drift
+reasoning_tier: high
+context_scope: capability_usability_semantics
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md, Plans/Provider_OpenCode.md]
+node_compile_hint: {mode: capability_usability_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0036
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0050
+preserved_exact_tokens: ["currently-usable-vs-instance-enabled", "caller scope", "execution-role capture", "identity disclosure", "capabilities.get"]
+negative_constraints:
+  - Do not expose capability availability as only a global enabled/disabled flag.
+  - Do not omit caller/runtime identity when reporting currently usable capabilities.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md]
+```

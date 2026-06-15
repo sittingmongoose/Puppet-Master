@@ -1,6 +1,6 @@
 # Shard Index: Plans/agent-rules-context.md
 
-Generated: 2026-06-14T21:33:36Z
+Generated: 2026-06-15T13:52:02Z
 
 Source SHA256: `4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db`
 

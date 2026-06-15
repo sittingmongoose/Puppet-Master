@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L2256-L2286
 
-Source SHA256: `84477dea5e7dc5a11b5ef119babb0d0b8722dca510251f94ed3bbc1954f3700b`
+Source SHA256: `f6ef97f2582414ea974e72f7d007e5ca05240c682570a578ba4e5e70d040e0bd`
 
 ---
 
@@ -14,7 +14,7 @@ Wizard planning output must carry the same runtime identity fields consumed by e
 
 Audit refinement passes are canonical only when their exact counters and lineage are preserved. `supersedes_prior`, wave-one, `gap-007`, `gap-003`, `gap-004`, `gap-005`, exact-missing, consumer-propagation, blocker-family, affected-doc, broken-anchor, zero-finding, sixty-two, fifty-four, `canon_inventory`, `canon_inventory.json`, `Ledger Condenser`, restore points, `Plans/WorktreeGitImprovement.md`, `/WorktreeGitImprovement.md`, follow-up waves, planning_blockers, `planning_blockers = 0`, fix_backlog_items, `fix_backlog_items = 8`, total_gaps, `total_gaps = 8`, docs_affected, `docs_affected = 20`, underlying_gap_evidence_count, and `underlying_gap_evidence_count = 62` are audit values, not broad summary labels.
 
-Audit lineage that sets `supersedes_prior` can refine unresolved items without clearing material blockers: later condensation must keep the compact blocker bundle aligned to sharper live-doc evidence. `bundle-level` precision remains explicit when `gap-001` was under-reporting Interview as an affected consumer, when `gap-004` needs a Usage drill-through anchor recorded as exact-missing, and when `gap-008` removes an overstated exact-missing item while tightening identity-carrythrough. `gap-005` remains open while the blocked-packet payload is under-specified, even if assistant-chat headings are confirmed; heading precision alone does not change blocker counts, top-pressure docs, or the next stage. Source model-pass labels such as `GPT-5.3-Codex` are preserved as audit lineage for carrying the full tranche into the final pass, not as wizard runtime model requirements.
+Audit lineage that sets `supersedes_prior` can refine unresolved items without clearing material blockers: later condensation must keep the compact blocker bundle aligned to sharper live-doc evidence. `bundle-level` precision remains explicit when `gap-001` was under-reporting Interview as an affected consumer, when `gap-004` needs a Usage drill-through anchor recorded as exact-missing, and when `gap-008` removes an overstated exact-missing item while tightening identity-carrythrough. `gap-005` is resolved by the versioned blocked-packet payload contract carrying packet identity, blocker reason, source stage/surface, target action, affected inputs/outputs, actor/runtime_identity, lane/account/project/worktree scope, permission/capability impact, recoverability, required user/agent action, evidence refs, retry/override policy, stale/expiration behavior, and UI display/interaction requirements. Source model-pass labels such as `GPT-5.3-Codex` are preserved as audit lineage for carrying the full tranche into the final pass, not as wizard runtime model requirements.
 
 Early broader-second-sweep and jumbo-doc read labels are likewise audit lineage for coverage breadth, not wizard runtime states or generated project artifacts.
 

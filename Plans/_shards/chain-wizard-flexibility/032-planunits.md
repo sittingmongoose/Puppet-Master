@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L2294-L9868
 
-Source SHA256: `84477dea5e7dc5a11b5ef119babb0d0b8722dca510251f94ed3bbc1954f3700b`
+Source SHA256: `f6ef97f2582414ea974e72f7d007e5ca05240c682570a578ba4e5e70d040e0bd`
 
 ---
 
@@ -3460,7 +3460,7 @@ owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   GitHub create, fork, and PR flows require documented scopes,
   OS-credential-store auth, permission and rate-limit surfacing, GitHub-only MVP
-  scope, and future-only organization, GitLab, or Bitbucket expansion.
+  scope, explicit organization-fork preflight, and typed unsupported-host outcomes for GitLab or Bitbucket.
 gui_related: true
 gui_classification_reason: Permission errors, rate-limit messages, setup/doctor documentation, and future host options are user-visible surfaces.
 split_recommended: true
@@ -3473,7 +3473,7 @@ acceptance_criteria:
   - Required GitHub scopes include repo for MVP create repo, fork, push branch, and open PR.
   - read:org is optional for MVP and required only if organization fork is added.
   - Permission errors surface a message naming required scopes.
-  - Non-GitHub hosts remain future scope for MVP.
+  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs named for later expansion; they are not silent placeholders.
   - Rate limits are respected and surfaced to the user.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

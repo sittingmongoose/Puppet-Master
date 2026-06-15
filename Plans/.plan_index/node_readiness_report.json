@@ -1764,15 +1764,15 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10386,
-    "edge_count": 11906,
-    "node_count": 4972,
+    "depends_on_edge_count": 10429,
+    "edge_count": 11949,
+    "node_count": 4998,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-14T21:22:13Z",
+  "generated_at_utc": "2026-06-15T13:51:02Z",
   "gui_related_units": {
-    "count": 2105,
+    "count": 2119,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -5905,8 +5905,8 @@
         "source_location": {
           "heading": "CRAU-043 - Publish Execution Approval And Blocked Outcome Contract",
           "heading_level": 3,
-          "heading_line": 3302,
-          "line": 3304,
+          "heading_line": 3304,
+          "line": 3306,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5916,8 +5916,8 @@
         "source_location": {
           "heading": "CRAU-044 - Missing Repository Push Resume",
           "heading_level": 3,
-          "heading_line": 3355,
-          "line": 3357,
+          "heading_line": 3357,
+          "line": 3359,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5927,8 +5927,8 @@
         "source_location": {
           "heading": "CRAU-045 - Auto Push Approval Gate",
           "heading_level": 3,
-          "heading_line": 3407,
-          "line": 3409,
+          "heading_line": 3409,
+          "line": 3411,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5938,8 +5938,8 @@
         "source_location": {
           "heading": "CRAU-048 - Post Publish Unraid Follow On Sequence",
           "heading_level": 3,
-          "heading_line": 3561,
-          "line": 3563,
+          "heading_line": 3563,
+          "line": 3565,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5949,8 +5949,8 @@
         "source_location": {
           "heading": "CRAU-049 - Managed Unraid Artifact Classes",
           "heading_level": 3,
-          "heading_line": 3608,
-          "line": 3610,
+          "heading_line": 3610,
+          "line": 3612,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5960,8 +5960,8 @@
         "source_location": {
           "heading": "CRAU-051 - Application Template Round Trip Contract",
           "heading_level": 3,
-          "heading_line": 3703,
-          "line": 3705,
+          "heading_line": 3705,
+          "line": 3707,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5971,8 +5971,8 @@
         "source_location": {
           "heading": "CRAU-052 - ca_profile Editability And Round Trip Contract",
           "heading_level": 3,
-          "heading_line": 3750,
-          "line": 3752,
+          "heading_line": 3752,
+          "line": 3754,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5982,8 +5982,8 @@
         "source_location": {
           "heading": "CRAU-053 - Template Review Gate And needs_review State",
           "heading_level": 3,
-          "heading_line": 3803,
-          "line": 3805,
+          "heading_line": 3805,
+          "line": 3807,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -5993,8 +5993,8 @@
         "source_location": {
           "heading": "CRAU-054 - Application Template XML Root And Passthrough Emission",
           "heading_level": 3,
-          "heading_line": 3854,
-          "line": 3856,
+          "heading_line": 3856,
+          "line": 3858,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6004,8 +6004,8 @@
         "source_location": {
           "heading": "CRAU-055 - Config XML Mapping And Review Fallback",
           "heading_level": 3,
-          "heading_line": 3911,
-          "line": 3913,
+          "heading_line": 3913,
+          "line": 3915,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6015,8 +6015,8 @@
         "source_location": {
           "heading": "CRAU-056 - Known XML Field Registry",
           "heading_level": 3,
-          "heading_line": 3967,
-          "line": 3969,
+          "heading_line": 3969,
+          "line": 3971,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6026,8 +6026,8 @@
         "source_location": {
           "heading": "CRAU-058 - Distribution Target Rationale And Local Result UX",
           "heading_level": 3,
-          "heading_line": 4073,
-          "line": 4075,
+          "heading_line": 4075,
+          "line": 4077,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6037,8 +6037,8 @@
         "source_location": {
           "heading": "CRAU-059 - Default Unraid Generation Toggle",
           "heading_level": 3,
-          "heading_line": 4125,
-          "line": 4127,
+          "heading_line": 4127,
+          "line": 4129,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6048,8 +6048,8 @@
         "source_location": {
           "heading": "CRAU-062 - Existing Template Repo Validation",
           "heading_level": 3,
-          "heading_line": 4260,
-          "line": 4262,
+          "heading_line": 4262,
+          "line": 4264,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6059,8 +6059,8 @@
         "source_location": {
           "heading": "CRAU-063 - Template Repo Status State Model",
           "heading_level": 3,
-          "heading_line": 4305,
-          "line": 4307,
+          "heading_line": 4307,
+          "line": 4309,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6070,8 +6070,8 @@
         "source_location": {
           "heading": "CRAU-064 - Template Repo Review Transition Rules",
           "heading_level": 3,
-          "heading_line": 4361,
-          "line": 4363,
+          "heading_line": 4363,
+          "line": 4365,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6081,8 +6081,8 @@
         "source_location": {
           "heading": "CRAU-065 - Auto Commit Containment And Repo Review Gate",
           "heading_level": 3,
-          "heading_line": 4408,
-          "line": 4410,
+          "heading_line": 4410,
+          "line": 4412,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6092,8 +6092,8 @@
         "source_location": {
           "heading": "CRAU-066 - Commit Push Status And Retry Transitions",
           "heading_level": 3,
-          "heading_line": 4457,
-          "line": 4459,
+          "heading_line": 4459,
+          "line": 4461,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6103,8 +6103,8 @@
         "source_location": {
           "heading": "CRAU-068 - Template Repo Setup Choices And Repo Shape",
           "heading_level": 3,
-          "heading_line": 4551,
-          "line": 4553,
+          "heading_line": 4553,
+          "line": 4555,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6114,8 +6114,8 @@
         "source_location": {
           "heading": "CRAU-069 - Template Repo Layout And Maintainer Slug Defaults",
           "heading_level": 3,
-          "heading_line": 4595,
-          "line": 4597,
+          "heading_line": 4597,
+          "line": 4599,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6125,8 +6125,8 @@
         "source_location": {
           "heading": "CRAU-070 - Template Repo Commit Push Defaults And Status UX",
           "heading_level": 3,
-          "heading_line": 4642,
-          "line": 4644,
+          "heading_line": 4644,
+          "line": 4646,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6136,8 +6136,8 @@
         "source_location": {
           "heading": "CRAU-071 - ca_profile Generation Scope And Editability",
           "heading_level": 3,
-          "heading_line": 4687,
-          "line": 4689,
+          "heading_line": 4689,
+          "line": 4691,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6147,8 +6147,8 @@
         "source_location": {
           "heading": "CRAU-072 - ca_profile Image Handling And Public Metadata Reminder",
           "heading_level": 3,
-          "heading_line": 4736,
-          "line": 4738,
+          "heading_line": 4738,
+          "line": 4740,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6158,8 +6158,8 @@
         "source_location": {
           "heading": "CRAU-073 - Docker Manager Scope Split And Migration Alias State",
           "heading_level": 3,
-          "heading_line": 4783,
-          "line": 4785,
+          "heading_line": 4785,
+          "line": 4787,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6169,8 +6169,8 @@
         "source_location": {
           "heading": "CRAU-074 - Implementation State Inventory And Blocked Outcome State",
           "heading_level": 3,
-          "heading_line": 4837,
-          "line": 4839,
+          "heading_line": 4839,
+          "line": 4841,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6180,8 +6180,8 @@
         "source_location": {
           "heading": "CRAU-075 - Orchestrator Vocabulary Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 4888,
-          "line": 4890,
+          "heading_line": 4890,
+          "line": 4892,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6191,8 +6191,8 @@
         "source_location": {
           "heading": "CRAU-076 - Hard Gate And Action-Specific Confirmation Boundary",
           "heading_level": 3,
-          "heading_line": 4942,
-          "line": 4944,
+          "heading_line": 4944,
+          "line": 4946,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6202,8 +6202,8 @@
         "source_location": {
           "heading": "CRAU-077 - Requested Effective Execution Identity Disclosure",
           "heading_level": 3,
-          "heading_line": 4990,
-          "line": 4992,
+          "heading_line": 4992,
+          "line": 4994,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6213,8 +6213,8 @@
         "source_location": {
           "heading": "CRAU-078 - Runtime Projection Scope And Stale Key Disposition",
           "heading_level": 3,
-          "heading_line": 5040,
-          "line": 5042,
+          "heading_line": 5042,
+          "line": 5044,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6224,8 +6224,8 @@
         "source_location": {
           "heading": "CRAU-079 - Route Activation Cross-Surface SCM And Display Labels",
           "heading_level": 3,
-          "heading_line": 5094,
-          "line": 5096,
+          "heading_line": 5096,
+          "line": 5098,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6235,8 +6235,8 @@
         "source_location": {
           "heading": "CRAU-080 - Canonical Help Semantics And Runtime Recovery Vocabulary",
           "heading_level": 3,
-          "heading_line": 5152,
-          "line": 5154,
+          "heading_line": 5154,
+          "line": 5156,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6246,8 +6246,8 @@
         "source_location": {
           "heading": "CRAU-081 - Docker Unraid Safety Constraints",
           "heading_level": 3,
-          "heading_line": 5205,
-          "line": 5207,
+          "heading_line": 5207,
+          "line": 5209,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6257,8 +6257,8 @@
         "source_location": {
           "heading": "CRAU-082 - Initial Non Goals And Review Bounds",
           "heading_level": 3,
-          "heading_line": 5259,
-          "line": 5261,
+          "heading_line": 5261,
+          "line": 5263,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6268,8 +6268,8 @@
         "source_location": {
           "heading": "CRAU-083 - End To End Acceptance Criteria Overlay",
           "heading_level": 3,
-          "heading_line": 5304,
-          "line": 5306,
+          "heading_line": 5306,
+          "line": 5308,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -6279,8 +6279,52 @@
         "source_location": {
           "heading": "CRAU-084 - Remote Side Effect Blocked Payload Normalization",
           "heading_level": 3,
-          "heading_line": 5351,
-          "line": 5353,
+          "heading_line": 5353,
+          "line": 5355,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-086",
+        "source_location": {
+          "heading": "CRAU-086 - Registry Promotion Operation Contract",
+          "heading_level": 3,
+          "heading_line": 5464,
+          "line": 5466,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-087",
+        "source_location": {
+          "heading": "CRAU-087 - Drift Detection Operation Contract",
+          "heading_level": 3,
+          "heading_line": 5503,
+          "line": 5505,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-088",
+        "source_location": {
+          "heading": "CRAU-088 - Access Intelligence Operation Contract",
+          "heading_level": 3,
+          "heading_line": 5543,
+          "line": 5545,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-089",
+        "source_location": {
+          "heading": "CRAU-089 - Project-Focused Kubernetes Deep Linkage Contract",
+          "heading_level": 3,
+          "heading_line": 5583,
+          "line": 5585,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -8012,6 +8056,28 @@
         }
       },
       {
+        "owner_doc": "Plans/chain-wizard-flexibility.md",
+        "plan_unit_id": "CWF-149",
+        "source_location": {
+          "heading": "CWF-149 - Wizard Blocked Packet Payload Contract",
+          "heading_level": 3,
+          "heading_line": 9922,
+          "line": 9924,
+          "path": "Plans/chain-wizard-flexibility.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/chain-wizard-flexibility.md",
+        "plan_unit_id": "CWF-150",
+        "source_location": {
+          "heading": "CWF-150 - Fork Destination And Unsupported Host Active Contract",
+          "heading_level": 3,
+          "heading_line": 9962,
+          "line": 9964,
+          "path": "Plans/chain-wizard-flexibility.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Decision_Log.md",
         "plan_unit_id": "DL-008",
         "source_location": {
@@ -9207,6 +9273,50 @@
           "heading_level": 3,
           "heading_line": 4225,
           "line": 4227,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-068",
+        "source_location": {
+          "heading": "F-068 - Shared Mutation Session Actions",
+          "heading_level": 3,
+          "heading_line": 4267,
+          "line": 4269,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-069",
+        "source_location": {
+          "heading": "F-069 - Operation Conflict Lifecycle",
+          "heading_level": 3,
+          "heading_line": 4305,
+          "line": 4307,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-070",
+        "source_location": {
+          "heading": "F-070 - Degraded State And Preview Trust",
+          "heading_level": 3,
+          "heading_line": 4344,
+          "line": 4346,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-071",
+        "source_location": {
+          "heading": "F-071 - Workspace Adjunct Sessions",
+          "heading_level": 3,
+          "heading_line": 4384,
+          "line": 4386,
           "path": "Plans/FileManager.md"
         }
       },
@@ -13354,6 +13464,17 @@
           "heading_level": 3,
           "heading_line": 24409,
           "line": 24411,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-390",
+        "source_location": {
+          "heading": "F3-390 - Visualizer Third Party Library Allowlist Policy",
+          "heading_level": 3,
+          "heading_line": 24449,
+          "line": 24451,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -19199,6 +19320,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Project_Output_Artifacts.md",
+        "plan_unit_id": "POA-046",
+        "source_location": {
+          "heading": "POA-046 - Project Artifact Open By Identity Consumer Boundary",
+          "heading_level": 3,
+          "heading_line": 3116,
+          "line": 3118,
+          "path": "Plans/Project_Output_Artifacts.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Prompt_Pipeline.md",
         "plan_unit_id": "PP-003",
         "source_location": {
@@ -20057,6 +20189,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-026",
+        "source_location": {
+          "heading": "RAP-026 - Artifacts Index Identity And Open Resolution",
+          "heading_level": 3,
+          "heading_line": 602,
+          "line": 604,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Run_Graph_View.md",
         "plan_unit_id": "RGV-001",
         "source_location": {
@@ -20119,6 +20262,17 @@
           "heading_level": 3,
           "heading_line": 474,
           "line": 476,
+          "path": "Plans/Run_Graph_View.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Run_Graph_View.md",
+        "plan_unit_id": "RGV-011",
+        "source_location": {
+          "heading": "RGV-011 - Historical Run Focus Mode Persistence",
+          "heading_level": 3,
+          "heading_line": 765,
+          "line": 767,
           "path": "Plans/Run_Graph_View.md"
         }
       },
@@ -24937,12 +25091,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 4972,
+  "plan_unit_count": 4998,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 808,
+      "high": 831,
       "low": 5,
-      "standard": 4159
+      "standard": 4162
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -25048,6 +25202,7 @@
       "approval_identity_reconstruction": 1,
       "approval_preflight_order_drift": 1,
       "approval_scope_lineage_collapse": 1,
+      "approval_scope_overreach": 1,
       "approval_visibility": 1,
       "architectural_conflict_heuristic_example": 1,
       "architecture_decision_message_example": 1,
@@ -25056,6 +25211,7 @@
       "artifact_family_drift": 1,
       "artifact_hitl_tool_owner_split": 1,
       "artifact_identity": 1,
+      "artifact_identity_index_drift": 1,
       "artifact_index_projection_drift": 1,
       "artifact_index_registration_gap": 1,
       "artifact_open_identity_drift": 1,
@@ -25252,6 +25408,7 @@
       "canonical_validation_table_source_of_truth": 1,
       "canonical_workspace_boundary_drift": 1,
       "canonicalization_false_closure": 2,
+      "capability_availability_drift": 1,
       "capability_follow_up_checklist": 1,
       "capability_matrix_data_driven_checks": 1,
       "capability_operational_considerations": 1,
@@ -25458,6 +25615,7 @@
       "continuity_active_subagent_runtime_projection": 1,
       "continuity_persistence_placement_compatibility": 1,
       "continuity_persistence_run_start_loading_lifecycle": 1,
+      "continuity_schema_gap": 1,
       "contract_driven_code_generation": 1,
       "contract_owner_drift": 1,
       "contract_pack_index_drift": 1,
@@ -25543,6 +25701,7 @@
       "cross_platform_coordination_scenario_evidence": 1,
       "cross_platform_flow_registration_edit_update": 1,
       "cross_platform_reader_waits_proceeds": 1,
+      "cross_run_continuity_gap": 1,
       "cross_surface_action_drift": 1,
       "cross_surface_investigation_identity": 1,
       "cross_surface_owner_drift": 1,
@@ -25658,15 +25817,19 @@
       "discovery_determinism": 1,
       "dispatcher_integrity": 1,
       "distribution_target_confusion": 1,
+      "docker_access_intelligence_gap": 1,
       "docker_action_scope_preflight_rules": 1,
       "docker_auth_result_payload_minimum": 1,
       "docker_cli_buildx_api_responsibility_split": 1,
+      "docker_contract_placeholder_drift": 1,
       "docker_doctor_preflight_deprecated_alias": 1,
+      "docker_drift_detection_gap": 1,
       "docker_kubernetes_blocked_posture_drift": 1,
       "docker_manager_auth_ux_routing": 1,
       "docker_manager_kubernetes_cta_loss": 1,
       "docker_manager_persistence_boundary_drift": 1,
       "docker_manager_runtime_auth_surface": 1,
+      "docker_operation_result_drift": 1,
       "docker_publish_result_payload_minimum": 1,
       "docker_reference_parity": 1,
       "docker_result_payload_minima": 1,
@@ -25814,11 +25977,15 @@
       "file_manager_editor_owner_posture": 1,
       "file_manager_editor_packetization_gates": 1,
       "file_manager_worktree": 2,
+      "file_operation_conflict_drift": 1,
       "file_operation_extraction_reliability_gap": 1,
       "file_operation_extraction_sources": 1,
       "file_operation_extractor_rust_example": 1,
       "file_surface_anchor_loss": 1,
       "filelock_and_conflict_detection_example": 1,
+      "filemanager_adjunct_session_drift": 1,
+      "filemanager_degraded_state_drift": 1,
+      "filemanager_mutation_bypass": 1,
       "filemanager_navigation_overclaim": 1,
       "files_being_modified_prompt_aggregation": 1,
       "filesafe_atomic_mutation_pattern": 1,
@@ -25864,7 +26031,6 @@
       "full_featured_custom_headless_scope": 1,
       "future_assistant_crew_surface_guardrails": 1,
       "future_crew_template_save_surface": 1,
-      "future_scope_erasure": 1,
       "gap_era_crew_notes_retired": 1,
       "gate_003_non_ui_invariant_checks": 1,
       "gate_003_ui_invariant_checks": 1,
@@ -25977,6 +26143,7 @@
       "historical_handoff_drift": 1,
       "historical_projection_and_ghost_evidence": 1,
       "historical_run_focus": 1,
+      "historical_run_mode_ambiguity": 1,
       "history_performance": 1,
       "hitl_action_list_vocabulary_drift": 1,
       "hitl_and_widget_recovery_consumers": 1,
@@ -26072,6 +26239,7 @@
       "investigation_evidence_state_and_replay_heuristics": 1,
       "investigation_surface": 1,
       "justified_source_token_bank_residual": 1,
+      "k8s_deep_linkage_gap": 1,
       "k8s_scope_creep": 1,
       "kotlin_android_generated_plan_snippets": 1,
       "lane_cleanup_retention_loss": 1,
@@ -26207,6 +26375,7 @@
       "multilanguage_backend_parallelization_example": 1,
       "multiwindow_close_ui_drift": 1,
       "mutation_classifier_drift": 1,
+      "mutation_safety_boundary_drift": 1,
       "mutation_snapshot_poisoning": 1,
       "mvp_scope_drift": 1,
       "naming_compatibility_drift": 1,
@@ -26435,6 +26604,7 @@
       "picker_selection_requested_override": 1,
       "plan_crew_alignment": 1,
       "plan_graph_entrypoint_drift": 1,
+      "plan_graph_identity_loss": 1,
       "plan_graph_index_schema_drift": 1,
       "plan_graph_monolith_drift": 1,
       "plan_map_table_core_ux_owners": 1,
@@ -26532,8 +26702,10 @@
       "progress_tracking_visual_status_model": 1,
       "progress_widget_catalog_drift": 1,
       "progression_gate_drift": 56,
+      "progression_owner_definition_gap": 1,
       "project_activation_import_and_visible_ambiguity": 1,
       "project_artifact_lineage_drift": 1,
+      "project_artifact_open_boundary_drift": 1,
       "project_attention_route_loss": 1,
       "project_context_detection_cache_api": 1,
       "project_context_detection_cache_boundary": 1,
@@ -26609,6 +26781,7 @@
       "provider_format_parser_drift": 1,
       "provider_hook_dependency_drift": 1,
       "provider_identity_collapse": 1,
+      "provider_identity_correlation_drift": 1,
       "provider_identity_drift": 1,
       "provider_inventory_correction": 1,
       "provider_lifecycle_child_state_confusion": 1,
@@ -26709,6 +26882,7 @@
       "registry_backed_selector_canonical_list": 1,
       "registry_backed_selector_validation": 1,
       "registry_identity_drift": 1,
+      "registry_promotion_contract_gap": 1,
       "registry_validated_subagent_selection_controls": 1,
       "remediation_addendum_payload_loss": 1,
       "remediation_and_lane_evidence": 1,
@@ -26831,6 +27005,7 @@
       "route_identity_loss": 1,
       "route_identity_shortcut": 1,
       "route_invalid_combo_acceptance": 1,
+      "route_model_fragmentation": 1,
       "route_object_model_fragmentation": 1,
       "route_open_normalization_drift": 1,
       "route_open_object_owner_drift": 1,
@@ -26864,6 +27039,7 @@
       "run_with_cleanup_call_site_drift": 1,
       "runner_orchestration_account_contract": 1,
       "runner_output_cleanup_policy_drift": 1,
+      "runner_skill_injection_gap": 1,
       "runtime_action_drift": 1,
       "runtime_and_route_identity_normalization": 1,
       "runtime_artifact_identity_drift": 1,
@@ -26882,7 +27058,7 @@
       "runtime_identity_actor_conflation": 1,
       "runtime_identity_and_override_lifecycle": 1,
       "runtime_identity_collapse": 1,
-      "runtime_identity_drift": 5,
+      "runtime_identity_drift": 6,
       "runtime_identity_owner_drift": 1,
       "runtime_identity_packet_continuity": 1,
       "runtime_identity_ssot_fracture": 1,
@@ -27407,6 +27583,7 @@
       "visualizer_boundary": 1,
       "visualizer_bridge": 2,
       "visualizer_controls": 1,
+      "visualizer_script_policy_drift": 1,
       "visualizer_security": 3,
       "visualizer_theme": 1,
       "wait_state_inference_drift": 1,
@@ -27444,9 +27621,11 @@
       "wiring_matrix_drift": 32,
       "wiring_matrix_rule_two_coverage": 1,
       "wizard_blocked_duplicate_canon": 1,
+      "wizard_blocked_payload_gap": 1,
       "wizard_blocked_route_ownership_drift": 1,
       "wizard_escalation": 3,
       "wizard_handoff": 1,
+      "wizard_host_scope_placeholder_drift": 1,
       "wizard_launch": 2,
       "wizard_length": 1,
       "wizard_lifecycle_drift": 1,
@@ -27493,7 +27672,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 4950,
+      "accepted": 4976,
       "deferred": 5,
       "retired": 17
     },
@@ -27507,7 +27686,7 @@
       "audit_requirement": 3,
       "baseline_reference": 1,
       "capability_matrix": 1,
-      "compatibility_disposition": 111,
+      "compatibility_disposition": 110,
       "compatibility_note": 2,
       "constraint": 568,
       "consumer_alignment": 1,
@@ -27533,7 +27712,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4109,
+      "requirement": 4136,
       "risk": 1,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -27555,6 +27734,6 @@
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_compiler_contract_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata, but Plan_To_Node_Compilation.md deliberately defers the compiler algorithm and does not define a NodeSeed candidate contract."
+  "status": "blocked_plans_incomplete",
+  "status_reason": "Governance seal preserves the pre-seal readiness status per seal-phase instruction; PlanUnit coverage now validates, while Plan_To_Node_Compilation.md still deliberately defers the compiler algorithm and does not define a NodeSeed candidate contract."
 }
