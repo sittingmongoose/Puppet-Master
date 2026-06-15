@@ -1,6 +1,6 @@
 # Shard Index: Plans/LSPSupport.md
 
-Generated: 2026-06-15T13:52:02Z
+Generated: 2026-06-15T18:49:25Z
 
 Source SHA256: `25d77e1ce97ddd3de440ac0f0b083cb77b496e8fbd281ab73a19d1c9727534ff`
 

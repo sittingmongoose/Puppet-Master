@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L9920-L9998
+Source lines: L9929-L10010
 
-Source SHA256: `f6ef97f2582414ea974e72f7d007e5ca05240c682570a578ba4e5e70d040e0bd`
+Source SHA256: `2035f6da4cb81b7209ab91a00e6e0bb34e981941f1fc67e904f70f72a71c5b64`
 
 ---
 
@@ -62,7 +62,7 @@ canonical_text: >-
   non-GitHub hosts. Organization fork support is an active typed path requiring destination selection,
   scope disclosure such as `read:org` when needed, permission preflight, and blocked outcomes when the
   authenticated account cannot fork into the selected organization. Non-GitHub hosts return typed
-  unsupported-host outcomes with owner docs named for later expansion, not silent placeholders.
+  unsupported-host outcomes with owner docs and recovery/help actions, not silent placeholders.
 gui_related: true
 gui_classification_reason: Fork destination selection, host-support messages, and blocked outcomes are user-visible wizard setup UI.
 depends_on: [CWF-061, CWF-149]
@@ -73,7 +73,7 @@ acceptance_criteria:
   - The wizard contains no canonical future-scope placeholder language for fork destinations or hosts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - grep -n "future scope\\|future-scope" Plans/chain-wizard-flexibility.md
+  - PlanUnit-aware scan of live canonical_text and acceptance_criteria outside CWF-150's own placeholder-ban definition for "future scope|future-scope", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.
 risk_class: wizard_host_scope_placeholder_drift
 reasoning_tier: standard
 context_scope: chain_wizard_fork_host_scope
@@ -82,6 +82,9 @@ node_compile_hint: {mode: wizard_fork_host_scope_contract, create_worknodes: fal
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0027
 preserved_exact_tokens: ["Nothing in the plans is future scope at all.", "org forks are future scope", "Non-GitHub hosts remain future scope for MVP", "read:org"]
+stale_retired_dispositions:
+  - "`org forks are future scope` is retired source-lineage wording; organization fork support is an active typed path with destination selection and preflight."
+  - "`Non-GitHub hosts remain future scope for MVP` is retired source-lineage wording; non-GitHub hosts return typed unsupported-host outcomes with owner docs and recovery/help actions."
 negative_constraints:
   - Do not leave organization forks or non-GitHub hosts as future scope placeholders.
   - Do not silently hide unsupported host outcomes.

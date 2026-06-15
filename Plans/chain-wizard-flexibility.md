@@ -1079,14 +1079,14 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 - **PR creation:** PR creation uses the GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md`. For "Contribute (PR)" finish flow, we may use a different PR body template (e.g. "Feature: ..." + acceptance summary) but must sanitize secrets.
 - **GitHub auth:** Fork creation and PR creation require GitHub OAuth token in OS credential store; do not store tokens in seglog/redb/Tantivy or logs.
 
-**Required GitHub auth scopes (MVP):** **repo** (full) -- required for create repo, fork, push branch, open PR. **read:org** -- optional for MVP; required only if we add "Fork to organization." Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
+**Required GitHub auth scopes (MVP):** **repo** (full) -- required for create repo, fork, push branch, open PR. **read:org** is required when organization-fork destination discovery or permission preflight is enabled. Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
 
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md, PolicyRule:no_secrets_in_storage
 
 ### 7.6 Gaps and Risks
 
-- **Non-GitHub hosts:** Fork/PR flow is specified for **GitHub** only. **Future:** GitLab and Bitbucket can be stubbed with the same UX (create repo, fork, MR/PR); implementation uses the appropriate host HTTPS API per host. No implementation for non-GitHub in MVP.
-- **Org vs. user fork:** **MVP = user fork only.** Fork is created in the authenticated user's account via GitHub API. **"Fork to organization"** is a future option; when added, document the GitHub API fields and required scopes.
+- **Non-GitHub hosts:** Fork/PR flow is implemented for **GitHub** in MVP. GitLab and Bitbucket return typed unsupported-host outcomes with recovery/help actions and owner docs named for later host-specific expansion; they must not appear as silent placeholders or generic future scope.
+- **Org vs. user fork:** Fork destination is an active typed path. The authenticated user account remains the default destination, and **Fork to organization** requires explicit destination selection, scope disclosure, `read:org` when organization discovery or permission checks are enabled, permission preflight, and blocked outcomes when the account cannot fork into the selected organization.
 - **Rate limits:** Creating repo/fork and opening PR use GitHub API; respect rate limits and surface "too many requests" (or equivalent) to the user.
 
 ---
@@ -5743,7 +5743,10 @@ owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   GitHub create, fork, and PR flows require documented scopes,
   OS-credential-store auth, permission and rate-limit surfacing, GitHub-only MVP
-  scope, explicit organization-fork preflight, and typed unsupported-host outcomes for GitLab or Bitbucket.
+  scope, explicit organization-fork destination selection and preflight, and typed unsupported-host
+  outcomes for GitLab or Bitbucket. The retired source-lineage phrase `MVP = user fork only` no
+  longer constrains the active organization-fork path; `read:org` is required when organization fork
+  destination discovery or permission checks are enabled.
 gui_related: true
 gui_classification_reason: Permission errors, rate-limit messages, setup/doctor documentation, and future host options are user-visible surfaces.
 split_recommended: true
@@ -5754,9 +5757,9 @@ acceptance_criteria:
   - Push and PR creation source auth from SSH or OS credential store at runtime.
   - Tokens are not embedded in remotes or logs.
   - Required GitHub scopes include repo for MVP create repo, fork, push branch, and open PR.
-  - read:org is optional for MVP and required only if organization fork is added.
+  - Organization fork destination selection requires explicit preflight and `read:org` when organization discovery or permission checks are enabled.
   - Permission errors surface a message naming required scopes.
-  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs named for later expansion; they are not silent placeholders.
+  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs and recovery/help actions; they are not silent placeholders.
   - Rate limits are respected and surfaced to the user.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5777,6 +5780,7 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0060
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0061
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0067
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
 preserved_exact_tokens:
   - "repo"
   - "read:org"
@@ -5786,10 +5790,15 @@ preserved_exact_tokens:
   - "do not embed tokens in remotes or logs"
   - "GitHub only"
   - "MVP = user fork only"
+  - "organization-fork preflight"
+  - "typed unsupported-host outcomes"
   - "Rate limits"
+compatibility_only_notes:
+  - "`MVP = user fork only` is preserved as stale source lineage only; active canon requires a typed organization-fork path with preflight and scoped `read:org` behavior when organization forks are enabled."
 negative_constraints:
   - "Do not store tokens in seglog/redb/Tantivy or logs."
-  - "No implementation for non-GitHub in MVP."
+  - "Do not preserve `MVP = user fork only` as a blocker to organization-fork destination selection and preflight."
+  - "Do not implement non-GitHub repository hosts silently; return typed unsupported-host outcomes with owner docs and recovery/help actions."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/GitHub_API_Auth_and_Flows.md
@@ -9971,7 +9980,7 @@ canonical_text: >-
   non-GitHub hosts. Organization fork support is an active typed path requiring destination selection,
   scope disclosure such as `read:org` when needed, permission preflight, and blocked outcomes when the
   authenticated account cannot fork into the selected organization. Non-GitHub hosts return typed
-  unsupported-host outcomes with owner docs named for later expansion, not silent placeholders.
+  unsupported-host outcomes with owner docs and recovery/help actions, not silent placeholders.
 gui_related: true
 gui_classification_reason: Fork destination selection, host-support messages, and blocked outcomes are user-visible wizard setup UI.
 depends_on: [CWF-061, CWF-149]
@@ -9982,7 +9991,7 @@ acceptance_criteria:
   - The wizard contains no canonical future-scope placeholder language for fork destinations or hosts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - grep -n "future scope\\|future-scope" Plans/chain-wizard-flexibility.md
+  - PlanUnit-aware scan of live canonical_text and acceptance_criteria outside CWF-150's own placeholder-ban definition for "future scope|future-scope", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.
 risk_class: wizard_host_scope_placeholder_drift
 reasoning_tier: standard
 context_scope: chain_wizard_fork_host_scope
@@ -9991,6 +10000,9 @@ node_compile_hint: {mode: wizard_fork_host_scope_contract, create_worknodes: fal
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0027
 preserved_exact_tokens: ["Nothing in the plans is future scope at all.", "org forks are future scope", "Non-GitHub hosts remain future scope for MVP", "read:org"]
+stale_retired_dispositions:
+  - "`org forks are future scope` is retired source-lineage wording; organization fork support is an active typed path with destination selection and preflight."
+  - "`Non-GitHub hosts remain future scope for MVP` is retired source-lineage wording; non-GitHub hosts return typed unsupported-host outcomes with owner docs and recovery/help actions."
 negative_constraints:
   - Do not leave organization forks or non-GitHub hosts as future scope placeholders.
   - Do not silently hide unsupported host outcomes.

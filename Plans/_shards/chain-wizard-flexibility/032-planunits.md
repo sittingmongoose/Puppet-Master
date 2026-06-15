@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2294-L9868
+Source lines: L2294-L9877
 
-Source SHA256: `f6ef97f2582414ea974e72f7d007e5ca05240c682570a578ba4e5e70d040e0bd`
+Source SHA256: `2035f6da4cb81b7209ab91a00e6e0bb34e981941f1fc67e904f70f72a71c5b64`
 
 ---
 
@@ -3460,7 +3460,10 @@ owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   GitHub create, fork, and PR flows require documented scopes,
   OS-credential-store auth, permission and rate-limit surfacing, GitHub-only MVP
-  scope, explicit organization-fork preflight, and typed unsupported-host outcomes for GitLab or Bitbucket.
+  scope, explicit organization-fork destination selection and preflight, and typed unsupported-host
+  outcomes for GitLab or Bitbucket. The retired source-lineage phrase `MVP = user fork only` no
+  longer constrains the active organization-fork path; `read:org` is required when organization fork
+  destination discovery or permission checks are enabled.
 gui_related: true
 gui_classification_reason: Permission errors, rate-limit messages, setup/doctor documentation, and future host options are user-visible surfaces.
 split_recommended: true
@@ -3471,9 +3474,9 @@ acceptance_criteria:
   - Push and PR creation source auth from SSH or OS credential store at runtime.
   - Tokens are not embedded in remotes or logs.
   - Required GitHub scopes include repo for MVP create repo, fork, push branch, and open PR.
-  - read:org is optional for MVP and required only if organization fork is added.
+  - Organization fork destination selection requires explicit preflight and `read:org` when organization discovery or permission checks are enabled.
   - Permission errors surface a message naming required scopes.
-  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs named for later expansion; they are not silent placeholders.
+  - Non-GitHub hosts return typed unsupported-host outcomes with owner docs and recovery/help actions; they are not silent placeholders.
   - Rate limits are respected and surfaced to the user.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -3494,6 +3497,7 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0060
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0061
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0067
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
 preserved_exact_tokens:
   - "repo"
   - "read:org"
@@ -3503,10 +3507,15 @@ preserved_exact_tokens:
   - "do not embed tokens in remotes or logs"
   - "GitHub only"
   - "MVP = user fork only"
+  - "organization-fork preflight"
+  - "typed unsupported-host outcomes"
   - "Rate limits"
+compatibility_only_notes:
+  - "`MVP = user fork only` is preserved as stale source lineage only; active canon requires a typed organization-fork path with preflight and scoped `read:org` behavior when organization forks are enabled."
 negative_constraints:
   - "Do not store tokens in seglog/redb/Tantivy or logs."
-  - "No implementation for non-GitHub in MVP."
+  - "Do not preserve `MVP = user fork only` as a blocker to organization-fork destination selection and preflight."
+  - "Do not implement non-GitHub repository hosts silently; return typed unsupported-host outcomes with owner docs and recovery/help actions."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/GitHub_API_Auth_and_Flows.md

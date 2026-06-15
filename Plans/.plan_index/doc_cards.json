@@ -128,7 +128,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "28c8cd17e19dd108dee90af93d30564248e2aa5645c96a4cb395aa1b60d2bb9f",
+      "sha256": "9582dca855f673cbb28863999f130ceeabbb425dcda88895d9a06f79906a24c4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -1554,7 +1554,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 9998,
+      "line_count": 10010,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 150,
       "plan_unit_ids": [
@@ -1865,7 +1865,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "f6ef97f2582414ea974e72f7d007e5ca05240c682570a578ba4e5e70d040e0bd",
+      "sha256": "2035f6da4cb81b7209ab91a00e6e0bb34e981941f1fc67e904f70f72a71c5b64",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 150
@@ -1879,7 +1879,7 @@
         "validation_rule": 3
       },
       "validation_surfaces": [
-        "grep -n \"future scope\\\\|future-scope\" Plans/chain-wizard-flexibility.md",
+        "PlanUnit-aware scan of live canonical_text and acceptance_criteria outside CWF-150's own placeholder-ban definition for \"future scope|future-scope\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "manual heading/deduplication review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
@@ -2220,7 +2220,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 5676,
+      "line_count": 5709,
       "path": "Plans/Containers_Registry_and_Unraid.md",
       "plan_unit_count": 89,
       "plan_unit_ids": [
@@ -2406,7 +2406,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "69dbf43caacd316be93449a02fbc8cb26b15b0e111343d009e46a29f7ed33aef",
+      "sha256": "7eaaf28c06afa24aaae0b48b830712bdaad0ea3dcbe051697f138a0a0bfba442",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 89
@@ -2475,7 +2475,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 16967,
+      "line_count": 16969,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 284,
       "plan_unit_ids": [
@@ -3054,7 +3054,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "ea414228b9161c0aaca960b1f9861a43cd321adb44c823541b17742d2b1ee5ea",
+      "sha256": "e9d40157001bec1cc8aae47f88bb6d2ad68ff7688d0e7669a249eff5c774dc77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 283,
@@ -3894,7 +3894,7 @@
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "Plans/UI_Command_Catalog.md"
       ],
-      "line_count": 4421,
+      "line_count": 4436,
       "path": "Plans/FileManager.md",
       "plan_unit_count": 71,
       "plan_unit_ids": [
@@ -3983,7 +3983,7 @@
         "filemanager_mutation_bypass",
         "migration_lineage"
       ],
-      "sha256": "838b8ec40485dca2e0ba6035f654f591db53402a765cb87b5a49cd4c8b6d1b79",
+      "sha256": "9e12573817ea0ea4146565204c731afe1909798fc897ef967610d6a493e76a97",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71
@@ -4013,7 +4013,7 @@
         "Plans/FinalGUISpec.md",
         "Plans/GitHub_Integration.md"
       ],
-      "line_count": 13031,
+      "line_count": 13033,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 188,
       "plan_unit_ids": [
@@ -4217,7 +4217,7 @@
         "mutation_safety_boundary_drift",
         "owner_boundary_drift"
       ],
-      "sha256": "a6b5f0771f4c81b7be36175e9a953bd7e97567c623f65ddfbedc4901084e3cd3",
+      "sha256": "ec76f77daaf39ca82a3eb75d35cf7148ae46f8b95426d237bf9c6c2368dba74a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 188
@@ -5339,7 +5339,7 @@
         "Plans/Skills_System.md",
         "Plans/agent-rules-context.md"
       ],
-      "line_count": 5950,
+      "line_count": 5951,
       "path": "Plans/Media_Generation_and_Capabilities.md",
       "plan_unit_count": 92,
       "plan_unit_ids": [
@@ -5451,7 +5451,7 @@
         "media_ui_copy_drift",
         "migration_lineage"
       ],
-      "sha256": "de79825270e7833d5813ab949749fcadf9e40c07dbf697cef3160c6de05b9b97",
+      "sha256": "304f1062227bacb43da163b8ecc2e765ef4050720b2645994ab987447d6bc621",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 92
@@ -7776,7 +7776,7 @@
         "Plans/Prompt_Pipeline.md",
         "Plans/human-in-the-loop.md"
       ],
-      "line_count": 7529,
+      "line_count": 7532,
       "path": "Plans/Permissions_System.md",
       "plan_unit_count": 113,
       "plan_unit_ids": [
@@ -7903,7 +7903,7 @@
         "permission_system_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "38cc1ac912180e8d1e484a841c6e6441b01fb994fde3226bb2653e62c4c2d2dc",
+      "sha256": "e1197336aa13d987c2be7f761f71529c3e66f6d3bf4f79fdca27ceae214e0096",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 113
@@ -8450,10 +8450,9 @@
       },
       "heading_count": 109,
       "implementation_surfaces": [
-        "Plans/.plan_index",
         "Plans/Progression_Gates.md"
       ],
-      "line_count": 3422,
+      "line_count": 3423,
       "path": "Plans/Progression_Gates.md",
       "plan_unit_count": 58,
       "plan_unit_ids": [
@@ -8525,7 +8524,7 @@
         "progression_owner_definition_gap",
         "residual_bridge_overreach"
       ],
-      "sha256": "3b126bbed681f16de30b3cf12b0c79be830e8ee5637c3b9c313c8dacfe86ccfa",
+      "sha256": "45216e8d2e6ba9cf1fdc70560b8d0b8932fb9c98243761ffa59ab967d4e17070",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -8539,10 +8538,10 @@
         "validation_rule": 8
       },
       "validation_surfaces": [
+        "PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for \"future scope|future-scope|reserved anchors|deliberately not designed yet\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "rg -n \"future scope|future-scope|reserved anchors|deliberately not designed yet\" Plans"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
     },
     {
@@ -8557,7 +8556,7 @@
         "Plans/Project_Output_Artifacts.md",
         "Plans/Runtime_Artifacts_Panel.md"
       ],
-      "line_count": 3155,
+      "line_count": 3162,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 46,
       "plan_unit_ids": [
@@ -8659,7 +8658,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "9f84fe75add02ed3ece0daab15c18c4106204119c27a53b7fe704c9a7fbb3c10",
+      "sha256": "f945edfdf5be500354ad5fa40ac527b5b2e45211741ccd16dee2afdc26a6657b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 45,
@@ -9057,7 +9056,7 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 802,
+      "line_count": 805,
       "path": "Plans/Run_Graph_View.md",
       "plan_unit_count": 11,
       "plan_unit_ids": [
@@ -9090,7 +9089,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "cd3404679f85ba2a60f97c2da958112acf09e2633873690157fd96796bfe29b5",
+      "sha256": "c14ad4f5ec650042712ea52ac451c6e1183b0be81571ed08f26ca28f565412c8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 11
@@ -9266,7 +9265,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 643,
+      "line_count": 651,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 26,
       "plan_unit_ids": [
@@ -9330,7 +9329,7 @@
         "stream_audit_drift",
         "structural_anchor_loss"
       ],
-      "sha256": "cbb25a37fe996aeefb59a9fcbc5577fc6c2d2c1c2dcfc05f94f22f501bc9d45f",
+      "sha256": "3e45a1ea5b89f8a9ee6350a467c03e116151830b1492fadf02c1673b37724425",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25,
@@ -10742,7 +10741,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-15T13:51:02Z",
+  "generated_at_utc": "2026-06-15T18:47:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

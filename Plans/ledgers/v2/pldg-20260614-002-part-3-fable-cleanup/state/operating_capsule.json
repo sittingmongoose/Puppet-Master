@@ -1,5 +1,5 @@
 {
-  "agent_task": "hold_part_3_fable_cleanup_ledger_complete_until_compile_requested",
+  "agent_task": "preserve_compiled_part_3_fable_cleanup_governance_seal_after_post_audit_repair",
   "allowed_reads_default": [
     "Plans/ledgers/v2/ledger_registry.json",
     "state/handoff.json",
@@ -11,7 +11,8 @@
   "allowed_writes_during_conversation": [
     "events.jsonl",
     "records/*.jsonl",
-    "state/*.json"
+    "state/*.json",
+    "validation/ledger_health.json"
   ],
   "capsule_id": "cap-part-3-fable-cleanup-current",
   "completion_blockers_visible_to_agent": [
@@ -24,16 +25,23 @@
     "worknode_creation_requested_before_contract"
   ],
   "forbidden_until_explicit_compile_or_governance_seal": [
-    "Plans/** live canonical plan prose",
-    "Plans/.plan_index/**",
-    "Plans/Spec_Lock.json",
-    "Plans/_shards/**",
-    "Plans/.evidence/**",
-    "Plans/plan_graph.json",
-    "Plans/auto_decisions.jsonl",
     "WorkNodes",
     "NodeSeeds",
-    "executable queues"
+    "executable queues",
+    "final node manifests",
+    "implementation files",
+    "production build tasks",
+    "final node queues"
+  ],
+  "forbidden_without_explicit_governance_or_compiler_contract": [
+    "WorkNodes",
+    "NodeSeeds",
+    "NodeSeed candidates",
+    "executable queues",
+    "final node manifests",
+    "implementation files",
+    "production build tasks",
+    "final node queues"
   ],
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
   "ledger_profile": "bootstrap_planning",
@@ -44,12 +52,10 @@
     "**/working_ledger.md"
   ],
   "required_end_of_turn_actions": [
-    "append_turn_event",
-    "upsert_design_atoms",
-    "update_questions_blockers",
-    "update_handoff_projection",
-    "classify_gui_related",
-    "preserve_node_readiness_boundary"
+    "preserve_exact_tokens_and_source_lineage",
+    "preserve_node_readiness_boundary",
+    "run_standard_validation_before_reporting_repair_complete"
   ],
-  "schema_id": "pm.operating_capsule.v1"
+  "schema_id": "pm.operating_capsule.v1",
+  "updated_at_utc": "2026-06-15T20:05:00Z"
 }

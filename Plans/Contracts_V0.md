@@ -16933,17 +16933,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  `plan_graph.schema.json` and `project_plan_node.schema.json` must not remain node-only or
-  seam/lane-blind. They must be able to express package, seam, lane, worktree, account, runtime
-  identity refs, dependency/ownership metadata, validation status, recovery boundaries, promotion
-  boundaries, and migration compatibility without generating or updating live `plan_graph` artifacts
-  during ordinary ledger compile work.
+  `plan_graph.schema.json` and `project_plan_node.schema.json` must add a required identity context
+  object and must not remain node-only or seam/lane-blind. That object must carry
+  account/project/worktree/package/seam/lane/run identity, runtime identity refs,
+  dependency/ownership metadata, validation status, recovery boundaries, promotion boundaries,
+  promotion/recovery provenance, and migration compatibility without generating or updating live
+  `plan_graph` artifacts during ordinary ledger compile work.
 gui_related: false
 gui_classification_reason: Plan graph schema identity context is schema/governance data, not visual presentation.
 depends_on: [CV-281]
 unblocks: []
 acceptance_criteria:
-  - Schema requirements name package, seam, lane, worktree, account, runtime identity, recovery, and promotion context.
+  - Schema requirements name a required identity context object carrying account, project, worktree, package, seam, lane, run, runtime identity, recovery/promotion provenance, dependency/ownership metadata, validation status, and migration compatibility.
   - Plan graph schema changes are separated from generated `plan_graph` artifact regeneration.
   - Recovery and promotion consumers can validate identity context rather than inferring it from node ids.
 validation_surfaces:
@@ -16959,9 +16960,10 @@ source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0052
   - pldg-20260614-002-part-3-fable-cleanup:atom-0106
   - pldg-20260614-002-part-3-fable-cleanup:atom-0107
-preserved_exact_tokens: ["plan_graph.schema.json", "project_plan_node.schema.json", "must not remain node-only or seam/lane-blind", "package/seam/lane/worktree/account identity", "generated `plan_graph`"]
+preserved_exact_tokens: ["plan_graph.schema.json", "project_plan_node.schema.json", "required identity context object", "account/project/worktree/package/seam/lane/run identity", "promotion/recovery provenance", "must not remain node-only or seam/lane-blind", "generated `plan_graph`"]
 negative_constraints:
-  - Do not update generated `plan_graph` artifacts during ordinary ledger compile work.
-  - Do not infer package, seam, lane, worktree, or account identity from node id strings alone.
+  - Do not update generated `plan_graph` artifacts before explicit compile/governance.
+  - Do not keep plan graph schemas node-only or seam/lane-blind.
+  - Do not infer account, project, worktree, package, seam, lane, or run identity from node id strings alone.
 owner_hints: [Plans/Contracts_V0.md, Plans/plan_graph.schema.json, Plans/project_plan_node.schema.json]
 ```

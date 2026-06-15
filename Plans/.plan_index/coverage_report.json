@@ -18,7 +18,7 @@
     "unit_type": 4998,
     "validation_surfaces": 4998
   },
-  "generated_at_utc": "2026-06-15T13:51:02Z",
+  "generated_at_utc": "2026-06-15T18:47:42Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -904,26 +904,15 @@
     "residual_source_preserving_plan_units": [],
     "run_dir": "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
     "run_id": "pds-20260611-002-atomize-planunits",
-    "seal_phase_required": [
-      "Regenerate Plans/_shards/** with python3 scripts/pm-shard-plans.py --generate",
-      "Refresh evidence bundles that hash changed Plans docs",
-      "Refresh Plans/Spec_Lock.json through the explicit governance seal workflow",
-      "Refresh Plans/plan_graph.json only if the seal workflow requires it",
-      "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check"
-    ],
-    "shard_check_status": "expected_preseal_failure",
-    "shard_failure_count": null,
+    "seal_phase_required": [],
+    "shard_check_status": "passed_after_governance_seal",
+    "shard_failure_count": 0,
     "source_lineage_residual_plan_units": [
       "CV-001"
     ],
     "source_preserving_unit_count_after_batch": 0,
-    "standard_run_gates_expected_seal_failures": [
-      "verify_spec_lock",
-      "validate_plan_graph",
-      "validate_evidence",
-      "check_shards"
-    ],
-    "standard_run_gates_status": "expected_preseal_failure",
+    "standard_run_gates_expected_seal_failures": [],
+    "standard_run_gates_status": "passed_after_governance_seal",
     "validation_failures": [],
     "validation_status": "pass",
     "worknodes_created": null

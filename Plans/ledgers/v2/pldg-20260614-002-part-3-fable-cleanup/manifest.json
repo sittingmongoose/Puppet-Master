@@ -2,6 +2,46 @@
   "canonical_plan_targets": [
     "Plans/Contracts_V0.md"
   ],
+  "compiled_owner_docs": [
+    "Plans/Contracts_V0.md",
+    "Plans/Permissions_System.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/FileSafe.md",
+    "Plans/FileManager.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/Progression_Gates.md",
+    "Plans/MiscPlan.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Contracts_V0.md",
+    "Plans/Permissions_System.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/FileSafe.md",
+    "Plans/FileManager.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/Progression_Gates.md",
+    "Plans/MiscPlan.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
   "created_at_utc": "2026-06-14T23:40:13Z",
   "files": {
     "blockers": "records/blockers.jsonl",
@@ -17,19 +57,20 @@
     "questions": "records/questions.jsonl"
   },
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
-  "notes": "Part 3 Fable Cleanup compiled to canonical Plans PlanUnits and allowed Plans/.plan_index outputs, then governance sealed. Ledger, migration, PlanUnit index, configured shard, Spec Lock, evidence, auto-decision, plan_graph, run-gates, and git diff --check validations pass. Node readiness remains blocked by the incomplete compiler contract; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+  "notes": "Part 3 Fable Cleanup compiled to canonical Plans PlanUnits and allowed Plans/.plan_index outputs, then governance sealed. canonical_plan_targets records the strict governance-covered queue target; compiled_owner_docs records the actual live owner docs touched by the compile. Ledger, migration, PlanUnit index, configured shard, Spec Lock, evidence, auto-decision, plan_graph, run-gates, and git diff --check validations pass after post-audit repair regeneration. Node readiness remains blocked by the incomplete compiler contract; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 0,
     "corrections": 2,
     "decisions": 37,
     "design_atoms": 120,
-    "events": 64,
+    "events": 66,
     "questions": 34
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for `Part 3 Fable Cleanup` on 2026-06-14. This is a conversational design/spec thread, not a Goal run, and canonical Plans/governance/generated/index/work-node artifacts must not be written yet. Jared supplied another high-end model's audit results, selected runtime identity first, corrected that future scope is not allowed in Plans, accepted runtime identity spine decisions and expansion, accepted Docker operation result envelope/status enum/transition/review_payload/failure_payload/registry promotion/drift detection/access intelligence/project-focused K8s deep linkage semantics, accepted FileSafe/FileManager mutation session, operation/conflict lifecycle, degraded-state/preview-trust, workspace adjunct session semantics, Run Graph historical-run focus mode semantics, artifacts index / open-by-identity semantics, Cross-run knowledge continuity semantics, shared route-object / cross-surface deep-link semantics, Plan-graph JSON schema identity semantics, visualizer third-party JS library allowlist semantics, wizard blocked-packet payload `gap-005` semantics, coverage blockers `cov-034`, `cov-511`, and `cov-526` owner-definition records, and per-platform skill injection for runners in `platform_specs`, then confirmed the supplied Part 3 audit batch is ledger-complete for conversational planning pending later explicit compile.",
   "status": "compiled",
   "title": "Part 3 Fable Cleanup",
-  "updated_at_utc": "2026-06-15T13:59:47Z"
+  "updated_at_utc": "2026-06-15T20:05:00Z",
+  "last_event_id": "evt-0066"
 }

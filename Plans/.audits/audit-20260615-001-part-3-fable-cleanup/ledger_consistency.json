@@ -1,0 +1,134 @@
+{
+  "schema_id": "pm.ledger_consistency_audit.v1",
+  "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+  "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+  "status": "fail",
+  "record_counts": {
+    "manifest": {
+      "blockers": 0,
+      "corrections": 2,
+      "decisions": 37,
+      "design_atoms": 120,
+      "events": 64,
+      "questions": 34
+    },
+    "actual": {
+      "blockers": 0,
+      "corrections": 2,
+      "decisions": 37,
+      "design_atoms": 120,
+      "events": 64,
+      "questions": 34
+    },
+    "match": true
+  },
+  "projection_status": {
+    "current_phase": "compiled_part_3_fable_cleanup_governance_sealed",
+    "current_governance_status": "sealed",
+    "compile_queue_status": "compiled_part_3_fable_cleanup_governance_sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "open_items_empty": true,
+    "last_event_id": "evt-0064"
+  },
+  "compile_queue": {
+    "items": 1,
+    "compiled_plan_unit_count": 26,
+    "source_atom_count": 58,
+    "source_atom_status_counts": {
+      "compiled_to_plan": 58
+    },
+    "compiled_plan_units_found_in_live_plans": 26,
+    "source_atoms_covered_by_live_planunit_source_lineage": 58,
+    "target_doc": "Plans/Contracts_V0.md",
+    "target_doc_issue": "target_doc is compatibility-narrow; compiled_plan_outputs spans 15 live owner docs plus .plan_index outputs."
+  },
+  "active_candidate_violation": {
+    "status": "fail",
+    "candidate_atoms_total": 48,
+    "candidate_for_later_compile": [
+      "atom-0010",
+      "atom-0011",
+      "atom-0012",
+      "atom-0013",
+      "atom-0014",
+      "atom-0015",
+      "atom-0016",
+      "atom-0017",
+      "atom-0018",
+      "atom-0019",
+      "atom-0020",
+      "atom-0021",
+      "atom-0022",
+      "atom-0024",
+      "atom-0028"
+    ],
+    "source_memory_until_answered": [
+      "atom-0030",
+      "atom-0034",
+      "atom-0038",
+      "atom-0039",
+      "atom-0043",
+      "atom-0044",
+      "atom-0054",
+      "atom-0057",
+      "atom-0060",
+      "atom-0063",
+      "atom-0066",
+      "atom-0069",
+      "atom-0072",
+      "atom-0075",
+      "atom-0078",
+      "atom-0081",
+      "atom-0084",
+      "atom-0087",
+      "atom-0090",
+      "atom-0093",
+      "atom-0096",
+      "atom-0099",
+      "atom-0102",
+      "atom-0105",
+      "atom-0108",
+      "atom-0111",
+      "atom-0114",
+      "atom-0117"
+    ],
+    "candidate_conversation_only_count": 5,
+    "evidence": [
+      "state/current.json records candidate_atoms_count: 48 with governance_status: sealed.",
+      "state/open_items.json says open_questions, open_blockers, unclassified_candidates, and unresolved_contradictions are empty.",
+      "validation/ledger_health.json status is pass_governance_sealed."
+    ]
+  },
+  "answered_question_status_issue": {
+    "status": "warning",
+    "questions_answered": 34,
+    "linked_question_atoms_still_candidate_source_memory_until_answered": 28
+  },
+  "operating_capsule_issue": {
+    "status": "warning",
+    "evidence": "state/operating_capsule.json still says hold_part_3_fable_cleanup_ledger_complete_until_compile_requested while current.json is compiled_part_3_fable_cleanup_governance_sealed."
+  },
+  "owner_routing_issue": {
+    "status": "warning",
+    "canonical_plan_targets": [
+      "Plans/Contracts_V0.md"
+    ],
+    "compiled_plan_outputs": [
+      "Plans/Contracts_V0.md",
+      "Plans/Permissions_System.md",
+      "Plans/Provider_OpenCode.md",
+      "Plans/Media_Generation_and_Capabilities.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Containers_Registry_and_Unraid.md",
+      "Plans/FileSafe.md",
+      "Plans/FileManager.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/Progression_Gates.md",
+      "Plans/MiscPlan.md"
+    ]
+  }
+}

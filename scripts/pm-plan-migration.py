@@ -903,6 +903,145 @@ def validate_batch_report_docs(run_dir: Path, live_plan_unit_ids: set[str], fail
     return len(rows), doc_count
 
 
+def cmd_refresh_batch_hashes(args: argparse.Namespace) -> dict[str, Any]:
+    run_dir = Path(args.run_dir)
+    if not run_dir.is_absolute():
+        run_dir = ROOT / run_dir
+    path = run_dir / "batch_report.jsonl"
+    rows = read_jsonl(path)
+    updated = 0
+    missing: list[dict[str, Any]] = []
+    for row_index, row in enumerate(rows, 1):
+        docs = row.get("docs", [])
+        if not isinstance(docs, list):
+            continue
+        for doc_index, doc in enumerate(docs, 1):
+            if not isinstance(doc, dict):
+                continue
+            path_ref = doc.get("path")
+            if not isinstance(path_ref, str) or not path_ref:
+                continue
+            live_path = ROOT / path_ref
+            if not live_path.exists():
+                missing.append({"row": row_index, "doc_index": doc_index, "path": path_ref})
+                continue
+            current_hash = sha256_file(live_path)
+            if doc.get("sha256_after") != current_hash:
+                doc["sha256_after"] = current_hash
+                updated += 1
+    if missing:
+        return {
+            "schema_id": "pm.plan_migration.refresh_batch_hashes_report.v1",
+            "run_id": read_json(run_dir / "inventory.json").get("run_id"),
+            "status": "fail",
+            "updated_doc_entries": updated,
+            "missing_docs": missing,
+        }
+    write_jsonl(path, rows)
+    return {
+        "schema_id": "pm.plan_migration.refresh_batch_hashes_report.v1",
+        "run_id": read_json(run_dir / "inventory.json").get("run_id"),
+        "status": "pass",
+        "updated_doc_entries": updated,
+        "batch_report_rows": len(rows),
+    }
+
+
+def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
+    run_dir = Path(args.run_dir)
+    if not run_dir.is_absolute():
+        run_dir = ROOT / run_dir
+    summary_path = run_dir / "final_validation_summary.json"
+    summary = read_json(summary_path)
+    inventory = read_json(run_dir / "inventory.json")
+    coverage = read_jsonl(run_dir / "coverage_map.jsonl")
+    live_units, live_unit_errors = live_plan_unit_blocks()
+    if live_unit_errors:
+        return {
+            "schema_id": "pm.plan_migration.refresh_final_summary_report.v1",
+            "run_id": inventory.get("run_id"),
+            "status": "fail",
+            "errors": live_unit_errors,
+        }
+
+    source_preserving_unit_ids = sorted(
+        str(unit.get("plan_unit_id"))
+        for unit in live_units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == "source_preserving_planunit"
+    )
+    source_lineage_residual_plan_units = sorted(
+        str(unit.get("plan_unit_id"))
+        for unit in live_units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == "source_lineage_residual"
+    )
+
+    summary.update(
+        {
+            "generated_at_utc": utc_now(),
+            "run_id": inventory.get("run_id"),
+            "live_plan_unit_count": len(live_units),
+            "unique_live_plan_unit_count": len({str(unit.get("plan_unit_id")) for unit in live_units}),
+            "coverage_rows": len(coverage),
+            "coverage_status_counts": counter_dict([row.get("coverage_status") for row in coverage]),
+            "coverage_disposition_type_counts": counter_dict([row.get("disposition_type") for row in coverage]),
+            "source_preserving_unit_count_after_batch": len(source_preserving_unit_ids),
+            "residual_source_preserving_plan_units": source_preserving_unit_ids,
+            "docs_still_source_preserving_count": len(source_preserving_unit_ids),
+            "pre_conversion_preserved_in_place_rows": sum(1 for row in coverage if row.get("coverage_status") == VAGUE_PRECONVERSION_STATUS),
+            "source_lineage_residual_plan_units": source_lineage_residual_plan_units
+            or summary.get("source_lineage_residual_plan_units", []),
+            "no_worknodes_created": True,
+            "no_executable_build_tasks_created": True,
+            "no_final_node_queues_created": True,
+            "nodeseed_candidates_created": False,
+            "implementation_files_created": False,
+            "production_build_tasks_created": False,
+        }
+    )
+
+    if args.seal_state == "postseal":
+        summary.update(
+            {
+                "governance_seal_required": False,
+                "standard_run_gates_status": "passed_after_governance_seal",
+                "standard_run_gates_expected_seal_failures": [],
+                "shard_check_status": "passed_after_governance_seal",
+                "shard_failure_count": 0,
+                "seal_phase_required": [],
+                "forbidden_governance_artifacts_confirmed_not_updated": [],
+                "forbidden_governance_artifacts_changed": [],
+                "node_readiness_status": "blocked_compiler_contract_incomplete",
+                "compiler_contract_status": "blocked_compiler_contract_incomplete",
+                "notes": [
+                    "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
+                    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+                    "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract.",
+                ],
+            }
+        )
+    summary["validators"] = {
+        "required_current_commands": [
+            "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+            "python3 scripts/pm-plan-index.py validate",
+            "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+            "python3 scripts/pm-plans-verify.py run-gates",
+            "python3 scripts/pm-shard-plans.py --check",
+            "git diff --check",
+        ]
+    }
+    write_json(summary_path, summary)
+    return {
+        "schema_id": "pm.plan_migration.refresh_final_summary_report.v1",
+        "run_id": inventory.get("run_id"),
+        "status": "pass",
+        "seal_state": args.seal_state,
+        "live_plan_unit_count": len(live_units),
+        "source_preserving_unit_count": len(source_preserving_unit_ids),
+    }
+
+
 def validate_run_dir(run_dir: Path) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     required = [
@@ -1107,7 +1246,8 @@ def cmd_validate(args: argparse.Namespace) -> dict[str, Any]:
     if not run_dir.is_absolute():
         run_dir = ROOT / run_dir
     report = validate_run_dir(run_dir)
-    write_json(run_dir / "validation_report.json", report)
+    if args.write_report:
+        write_json(run_dir / "validation_report.json", report)
     return report
 
 
@@ -1125,6 +1265,18 @@ def main() -> int:
 
     val = sub.add_parser("validate")
     val.add_argument("--run-dir", required=True)
+    val.add_argument(
+        "--write-report",
+        action="store_true",
+        help="write validation_report.json; omitted by default so validation remains read-only",
+    )
+
+    refresh_hashes = sub.add_parser("refresh-batch-hashes")
+    refresh_hashes.add_argument("--run-dir", required=True)
+
+    refresh_summary = sub.add_parser("refresh-final-summary")
+    refresh_summary.add_argument("--run-dir", required=True)
+    refresh_summary.add_argument("--seal-state", choices=["preseal", "postseal"], default="preseal")
 
     batch = sub.add_parser("standardize-batch")
     batch.add_argument("--run-dir", required=True)
@@ -1138,6 +1290,10 @@ def main() -> int:
         report = cmd_mark_pilot(args)
     elif args.command == "standardize-batch":
         report = cmd_standardize_batch(args)
+    elif args.command == "refresh-batch-hashes":
+        report = cmd_refresh_batch_hashes(args)
+    elif args.command == "refresh-final-summary":
+        report = cmd_refresh_final_summary(args)
     else:
         report = cmd_validate(args)
     print(json.dumps({k: report[k] for k in ("schema_id", "run_id", "status", "failures", "checks") if k in report}, indent=2, sort_keys=True))

@@ -760,6 +760,41 @@ def generate() -> dict[str, Any]:
     }
 
 
+def strip_generated_timestamps(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: strip_generated_timestamps(child)
+            for key, child in value.items()
+            if key != "generated_at_utc"
+        }
+    if isinstance(value, list):
+        return [strip_generated_timestamps(child) for child in value]
+    return value
+
+
+def stable_payload_hash(value: Any) -> str:
+    stable = json.dumps(strip_generated_timestamps(value), sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(stable.encode("utf-8")).hexdigest()
+
+
+def append_stable_artifact_mismatch(
+    failures: list[dict[str, Any]],
+    path: str,
+    actual: Any,
+    expected: Any,
+) -> None:
+    if strip_generated_timestamps(actual) == strip_generated_timestamps(expected):
+        return
+    failures.append(
+        {
+            "path": path,
+            "error": "stale_generated_index_artifact",
+            "expected_stable_sha256": stable_payload_hash(expected),
+            "actual_stable_sha256": stable_payload_hash(actual),
+        }
+    )
+
+
 def validate() -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     required = [
@@ -785,6 +820,19 @@ def validate() -> dict[str, Any]:
     coverage = read_json(INDEX_DIR / "coverage_report.json")
     readiness = read_json(INDEX_DIR / "node_readiness_report.json")
     live_units, live_parse_errors, live_docs = extract_plan_units()
+    expected_units = sorted(live_units, key=unit_id)
+    expected_issues = collect_validation_issues(expected_units, live_parse_errors, live_docs)
+    expected_deps = dependency_graph(expected_units)
+    expected_docs = doc_cards(expected_units, live_docs)
+    expected_acceptance = acceptance_units(expected_units)
+    expected_coverage = coverage_report(expected_units, live_docs, expected_issues, expected_deps)
+    expected_readiness = node_readiness_report(expected_units, expected_coverage, expected_deps)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/plan_units.jsonl", plan_units, expected_units)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/doc_cards.json", docs, expected_docs)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/dependencies.json", deps, expected_deps)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/acceptance_units.jsonl", acceptance, expected_acceptance)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/coverage_report.json", coverage, expected_coverage)
+    append_stable_artifact_mismatch(failures, "Plans/.plan_index/node_readiness_report.json", readiness, expected_readiness)
     profile_failures, new_profile_docs = validate_new_plan_authoring_profiles()
     failures.extend(profile_failures)
     live_ids = sorted(unit_id(unit) for unit in live_units)

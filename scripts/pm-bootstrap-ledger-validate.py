@@ -357,6 +357,10 @@ def main() -> int:
                 errors.append("ledger_health summary.governance_seal must be passed for sealed governance")
             if handoff.get("validation_state", {}).get("ledger_health") != health.get("status"):
                 errors.append("handoff validation_state.ledger_health disagrees with ledger_health.status")
+            if atom_status_counts.get("candidate", 0):
+                errors.append("sealed ledger still has candidate design atoms")
+            if atom_status_counts.get("ready_for_plan_compile", 0):
+                errors.append("sealed ledger still has ready_for_plan_compile design atoms")
 
     last_event_id = current.get("last_event_id")
     handoff_last_event_id = handoff.get("cursor", {}).get("last_event_id")
@@ -407,6 +411,10 @@ def main() -> int:
             target_path, path_error = exact_path(str(target_doc))
             if path_error or target_path is None or not target_path.exists():
                 errors.append(f"compile_queue {queue_id} target_doc does not resolve exactly: {target_doc}")
+        for target_doc in item.get("target_docs", []):
+            target_path, path_error = exact_path(str(target_doc))
+            if path_error or target_path is None or not target_path.exists():
+                errors.append(f"compile_queue {queue_id} target_docs entry does not resolve exactly: {target_doc}")
         if not item.get("compiled_plan_unit_ids"):
             errors.append(f"compile_queue {queue_id} missing compiled_plan_unit_ids")
         queue_plan_unit_ids.update(map(str, item.get("compiled_plan_unit_ids", [])))
@@ -429,6 +437,19 @@ def main() -> int:
     compiled_outputs = set(map(str, current.get("compiled_plan_outputs", [])))
     if not canonical_targets.issubset(compiled_outputs):
         errors.append("current compiled_plan_outputs does not include every canonical_plan_target")
+    compiled_owner_docs = set(map(str, current.get("compiled_owner_docs", [])))
+    if compiled_owner_docs and not compiled_owner_docs.issubset(compiled_outputs):
+        errors.append("current compiled_plan_outputs does not include every compiled_owner_docs entry")
+    queue_owner_targets = {
+        str(target_doc)
+        for item in compile_queue.get("items", [])
+        for target_doc in item.get("target_docs", [])
+    }
+    if compiled_owner_docs and queue_owner_targets and queue_owner_targets != compiled_owner_docs:
+        errors.append(
+            "compile_queue target_docs disagree with current compiled_owner_docs: "
+            f"queue={sorted(queue_owner_targets)} current={sorted(compiled_owner_docs)}"
+        )
 
     for atom in atoms:
         atom_id = str(atom.get("atom_id"))

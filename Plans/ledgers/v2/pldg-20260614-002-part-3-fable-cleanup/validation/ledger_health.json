@@ -39,21 +39,32 @@
       "check_id": "seal-0001",
       "status": "pass",
       "summary": "Part 3 Fable Cleanup governance seal completed: ledger validate, migration validate, PlanUnit index validate, configured shard check, Spec Lock validation, evidence validation, auto-decision validation, plan_graph validation, run-gates, and git diff --check passed. Plans/.plan_index/node_readiness_report.json preserves status `blocked_plans_incomplete`; compiler_contract_status remains `blocked_compiler_contract_incomplete`; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+    },
+    {
+      "check_id": "repair-0001",
+      "status": "pass",
+      "summary": "Post-audit repair retired active candidate atoms, recorded compiled_owner_docs owner routing, refreshed governance hashes mechanically, and is ready for the final standard validator rerun."
+    },
+    {
+      "check_id": "repair-0002",
+      "status": "pass",
+      "summary": "Post-audit repair final validator stack passed with unchanged git status before/after validators; validate mode remained read-only."
     }
   ],
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass_governance_sealed",
   "summary": {
+    "candidate_atoms": 0,
     "compile_queue_items": 1,
     "decisions": 37,
     "deferred_questions": 0,
     "design_atoms": 120,
-    "events": 64,
+    "events": 66,
     "governance_seal": "passed",
     "open_blockers": 0,
     "open_questions": 0
   },
-  "updated_at_utc": "2026-06-15T13:59:47Z",
+  "updated_at_utc": "2026-06-15T20:05:00Z",
   "warnings": []
 }

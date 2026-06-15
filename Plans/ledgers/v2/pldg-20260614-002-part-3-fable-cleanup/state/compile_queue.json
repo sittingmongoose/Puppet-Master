@@ -29,7 +29,7 @@
         "CWF-149",
         "M-083"
       ],
-      "notes": "Part 3 Fable Cleanup compile batch across owner docs; see current.compiled_plan_outputs for every changed canonical output.",
+      "notes": "Part 3 Fable Cleanup compile batch across owner docs; target_doc is strict governance compatibility, target_docs is the actual owner-doc routing set, and current.compiled_plan_outputs lists owner docs plus allowed .plan_index outputs.",
       "queue_id": "pcq-0001",
       "source_atom_ids": [
         "atom-0027",
@@ -92,12 +92,30 @@
         "atom-0119"
       ],
       "status": "compiled",
-      "target_doc": "Plans/Contracts_V0.md"
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/FileSafe.md",
+        "Plans/FileManager.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Progression_Gates.md",
+        "Plans/MiscPlan.md"
+      ]
     }
   ],
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
-  "notes": "Accepted product atoms compiled to canonical PlanUnits and governance sealed. Queue target_doc is limited to governance-covered Contracts_V0 for validator compatibility; current.compiled_plan_outputs lists all owner docs and allowed .plan_index outputs changed by this compile.",
+  "notes": "Accepted product atoms compiled to canonical PlanUnits and governance sealed. item.target_doc is retained as the strict governance-covered queue target for compatibility; item.target_docs and current.compiled_owner_docs list every live owner doc changed by this compile.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_part_3_fable_cleanup_governance_sealed",
-  "updated_at_utc": "2026-06-15T13:59:47Z"
+  "updated_at_utc": "2026-06-15T20:05:00Z",
+  "last_event_id": "evt-0066"
 }

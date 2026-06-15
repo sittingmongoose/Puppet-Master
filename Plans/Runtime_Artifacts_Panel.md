@@ -22,7 +22,7 @@ The **Artifacts panel** is the single place to see everything agents produced du
 | Family | Scope | SSOT | Persistence |
 |--------|--------|------|-------------|
 | **Project Plan Package** | User-project outputs | Plans/Project_Output_Artifacts.md | .puppet-master/project/** |
-| **Runtime Artifacts** | Agent-run outputs in Artifacts panel | This document | seglog runtime_artifact.*, redb artifacts_index:v1:{project_id} |
+| **Runtime Artifacts** | Agent-run outputs in Artifacts panel | This document | seglog runtime_artifact.*, redb artifacts_index.v1:{project_id}:{artifact_id} |
 
 ContractRef: Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document, Plans/storage-plan.md#Required redb keys
 
@@ -111,7 +111,7 @@ Receipt-like exports and manifest-backed bundles preserve canonical run/thread/a
 - exact_items: - `Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`. - `Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket "missing everywhere" claim. - `Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading. - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.
 - Cross-surface usage/deep-link identity is now clearly under-typed: - `storage-plan.md` promotes `usage_event_ref?` into receipt and cross-surface bridge records but still never defines its concrete format or stability semantics - `Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`, but the promised runtime-artifact schemas are not present and no concrete usage identity payload is pinned - `Orchestrator_Page.md` and `Run_Graph_View.md` still route `View in Usage` by `run_id` or `tier_id`, not by receipt/attempt/usage-event identity
 - Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.
-- The clearest missing family is the runtime-artifact index side: - `Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}` - declares a projector from `runtime_artifact.*` events - declares envelope and per-type schema files - `storage-plan.md` still does not clearly register that artifacts index family alongside the other canonical keys, and the broader doc set still shows signs that the schema family itself may not yet exist
+- The earlier missing-family note that named `artifacts_index:v1:{project_id}` is retained as stale source-lineage evidence only; RAP-026 and the storage owner now use `artifacts_index.v1:{project_id}:{artifact_id}` for row identity, with the projector rebuilt from `runtime_artifact.*` events and the envelope/per-type schema family remaining the payload requirement until schema files materialize.
 - `Plans/Contracts_V0.md` + `Plans/storage-plan.md` - likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage
 - `Plans/usage-feature.md` is still one of the main correlation drifts: - `usage.jsonl` and canonical usage discussion still center `tier_id` - canonical `UsageRecord` still requires `tier_id` - Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?` - later navigation wording is closer to the rewrite: - `usage_event_ref` - canonical Usage surfaces - run/thread-based opens for `Show in Ledger` and `Show in Usage`
 - `Plans/usage-feature.md` - now clearly needs switch-event linkage or equivalent durable explanation path
@@ -129,7 +129,7 @@ Receipt-like exports and manifest-backed bundles preserve canonical run/thread/a
 - `Plans/usage-feature.md` duplicates the entire `Cost_usage runtime artifact and Show in Ledger / Show in Usage` section back-to-back.
 - `Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object.
 - Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters.
-- `Runtime_Artifacts_Panel.md` names `artifacts_index:v1:{project_id}` as canonical, but `storage-plan.md` does not appear to register/own that family at the same level as other redb families.
+- The stale source-lineage claim that `Runtime_Artifacts_Panel.md` named `artifacts_index:v1:{project_id}` as canonical is resolved by the storage-owned `artifacts_index.v1:{project_id}:{artifact_id}` key family; this panel owns payload/open semantics and does not re-own storage key registration.
 - cost-bearing receipt-like artifacts should always prefer `usage_event_ref` for Usage/Ledger routing, not timestamp heuristics
 - `Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook: - one event type per artifact family - `EventRecord` wrapper - per-type schemas - artifact-local IDs
 - `cost_usage` - must carry `usage_event_ref` whenever available - should also carry `attempt_id?` and `provider_attempt_ref?` when traceable
@@ -143,7 +143,7 @@ Receipt-like exports and manifest-backed bundles preserve canonical run/thread/a
 - `Plans/usage-feature.md` - `Plans/FileManager.md` - `Plans/Glossary.md` - `Plans/00-plans-index.md`
 - `storage-plan.md` already hints at export for long-term ledger/history retention.
 - Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or refs.
-- `artifacts_index:v1:{project_id}` is too underspecified to function as the sole canonical index contract; it needs row identity and projector ownership.
+- The old `artifacts_index:v1:{project_id}` shorthand is too underspecified to function as row identity; the live contract uses `artifacts_index.v1:{project_id}:{artifact_id}` with row identity and projector ownership, while the shorthand is source-lineage evidence only.
 - `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
 - `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
 - `usage_event_ref` is the canonical bridge to cost/usage history for that attempt or artifact.
@@ -607,19 +607,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  `artifacts_index:v1:{project_id}` is a versioned rebuildable index contract, not a vague lookup cache.
-  Each row must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, producer/runtime
-  refs, run_id, attempt_id, node_id, provider_attempt_ref when available, output owner, storage ref,
-  content hash or freshness marker, trust state, open target, preview capability, permission/degraded
-  state, and tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and
-  then dispatches to FileManager, owner-surface routes, or generated/object-backed previews without
-  replacing project output ownership.
+  The storage-owned row key family is `artifacts_index.v1:{project_id}:{artifact_id}`; the older
+  `artifacts_index:v1:{project_id}` shorthand names only the project-level contract, not row identity.
+  The index is a versioned rebuildable identity contract, not a vague lookup cache. Each row is keyed by
+  `artifact_id` and must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, run_id,
+  package/seam/lane/worktree/account identity, producer/runtime refs, attempt_id, node_id,
+  provider_attempt_ref when available, output owner, storage URI/path, provenance/evidence refs,
+  lifecycle status, integrity/version data, trust state, open target, display/open handlers,
+  preview capability, permissions/visibility boundary, permission/degraded state, and
+  tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and then dispatches
+  to FileManager, owner-surface routes, or generated/object-backed previews without replacing project
+  output ownership.
 gui_related: true
 gui_classification_reason: Runtime artifact panel open actions, previews, degraded state, and permissions are user-visible panel behavior.
 depends_on: [RAP-019, RAP-020, CV-281]
 unblocks: []
 acceptance_criteria:
-  - The artifacts index has a versioned row contract with identity, runtime, owner, storage, trust, open, preview, and rebuild fields.
+  - The live storage key family is `artifacts_index.v1:{project_id}:{artifact_id}` and preserves `artifact_id` as row identity.
+  - The artifacts index has a versioned row contract with project/run/package/seam/lane/worktree/account identity, runtime, owner, storage, provenance, lifecycle, integrity/version, permissions, open, preview, and rebuild fields.
   - Open-by-artifact-identity resolves through the index before dispatching to FileManager or owner-surface routes.
   - Missing or stale index rows degrade to record-backed views rather than becoming canonical artifact truth.
 validation_surfaces:
@@ -635,9 +640,12 @@ source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0051
   - pldg-20260614-002-part-3-fable-cleanup:atom-0097
   - pldg-20260614-002-part-3-fable-cleanup:atom-0098
-preserved_exact_tokens: ["artifacts_index:v1:{project_id}", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "sole canonical index contract"]
+preserved_exact_tokens: ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_index:v1:{project_id}", "artifact_id", "project/run/package/seam/lane/worktree/account identity", "artifact kind", "storage URI/path", "producer/runtime_identity", "provenance/evidence refs", "lifecycle status", "integrity/version data", "permissions/visibility boundary", "display/open handlers", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "FileManager open-by-artifact-identity resolution semantics", "sole canonical index contract"]
+compatibility_only_notes:
+  - "`artifacts_index:v1:{project_id}` is retained as source-lineage shorthand for the project-level index contract; storage owns the canonical row key family `artifacts_index.v1:{project_id}:{artifact_id}`."
 negative_constraints:
   - Do not make the rebuildable artifacts index the sole source of artifact truth.
   - Do not let FileManager open project/runtime artifacts without artifact identity resolution.
+  - Do not drop `artifact_id` row identity or replace the storage-owned dot/colon key family with a project-only shorthand.
 owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md]
 ```

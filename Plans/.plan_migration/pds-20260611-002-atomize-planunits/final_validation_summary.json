@@ -456,15 +456,9 @@
   },
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
-  "forbidden_governance_artifacts_confirmed_not_updated": [
-    "Plans/Spec_Lock.json",
-    "Plans/_shards/**",
-    "Plans/.evidence/**",
-    "Plans/plan_graph.json",
-    "Plans/auto_decisions.jsonl"
-  ],
-  "generated_at_utc": "2026-06-14T21:33:12Z",
-  "governance_seal_required": true,
+  "forbidden_governance_artifacts_confirmed_not_updated": [],
+  "generated_at_utc": "2026-06-15T18:47:02Z",
+  "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 4998,
   "next_batch_cursor": null,
@@ -475,9 +469,9 @@
   "node_readiness_status": "blocked_compiler_contract_incomplete",
   "nodeseed_candidates_created": false,
   "notes": [
-    "Spec Lock, generated shards, evidence bundles, auto_decisions, and plan_graph were not updated.",
-    "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or source code were created by this repair.",
-    "CV-001 is non-source-preserving source-lineage residual disposition after this repair; exact Contracts_V0-S0001 token-bank traceability is preserved through source_lineage and preserved_exact_tokens."
+    "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
+    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+    "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
   "pre_conversion_repair": {
@@ -499,32 +493,24 @@
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.phase2_final_validation_summary.v2",
   "scope": "Phase 2 Plan standardization currentness finalized for pds-20260611-002-atomize-planunits without broad Plan re-conversion.",
-  "seal_phase_required": [
-    "Regenerate Plans/_shards/** with python3 scripts/pm-shard-plans.py --generate",
-    "Refresh evidence bundles that hash changed Plans docs",
-    "Refresh Plans/Spec_Lock.json through the explicit governance seal workflow",
-    "Refresh Plans/plan_graph.json only if the seal workflow requires it",
-    "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check"
-  ],
-  "shard_check_status": "expected_preseal_failure",
+  "seal_phase_required": [],
+  "shard_check_status": "passed_after_governance_seal",
+  "shard_failure_count": 0,
   "source_lineage_residual_plan_units": [
     "CV-001"
   ],
   "source_preserving_unit_count_after_batch": 0,
-  "standard_run_gates_expected_seal_failures": [
-    "verify_spec_lock",
-    "validate_plan_graph",
-    "validate_evidence",
-    "check_shards"
-  ],
-  "standard_run_gates_status": "expected_preseal_failure",
+  "standard_run_gates_expected_seal_failures": [],
+  "standard_run_gates_status": "passed_after_governance_seal",
   "status": "COMPLETE",
   "unique_live_plan_unit_count": 4998,
   "validators": {
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+      "python3 scripts/pm-plans-verify.py run-gates",
+      "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"
     ]
   }

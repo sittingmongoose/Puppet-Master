@@ -3403,15 +3403,16 @@ acceptance_criteria:
   - Future-scope placeholder language is gate-visible drift unless quarantined as source-lineage or stale/retired text.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - rg -n "future scope|future-scope|reserved anchors|deliberately not designed yet" Plans
+  - PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for "future scope|future-scope|reserved anchors|deliberately not designed yet", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
 risk_class: progression_owner_definition_gap
 reasoning_tier: high
 context_scope: progression_coverage_owner_records
-implementation_surfaces: [Plans/Progression_Gates.md, Plans/.plan_index]
+implementation_surfaces: [Plans/Progression_Gates.md]
 node_compile_hint: {mode: coverage_owner_definition_records, create_worknodes: false}
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0114
   - pldg-20260614-002-part-3-fable-cleanup:atom-0115
   - pldg-20260614-002-part-3-fable-cleanup:atom-0116
 preserved_exact_tokens: ["cov-034/cov-511/cov-526", "cov-034", "cov-511", "cov-526", "owner-definition gaps until resolved", "Nothing in the plans is future scope at all.", "future scope", "future-scope", "reserved anchors", "deliberately not designed yet"]

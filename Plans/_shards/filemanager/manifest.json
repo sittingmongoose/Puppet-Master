@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-15T13:52:02Z",
+  "generated_at_utc": "2026-06-15T18:49:25Z",
   "index_path": "Plans/_shards/filemanager/00-index.md",
-  "index_sha256": "23ebb6d33cf1edaadc3c3ac2a91944b16cce865d1145abe4a0be907d3c83c306",
+  "index_sha256": "07cb5ea7fa4fc1c0f20d1a435dc0f980d6400d8b82d5df6192fb9e0c5bdbc64e",
   "manifest_path": "Plans/_shards/filemanager/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/filemanager/001-preamble.md",
-      "sha256": "a085ecf805f59012cef157a7f3529de01e10497095cde465967cef76bf4340d2",
+      "sha256": "d0d63ec9d7257d4155c8072ff3ad9b685e6b9342cd703c7f7f6aafa7266821e8",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/filemanager/002-change-summary.md",
-      "sha256": "1382e5300ed3916b24eeb406961d0441f080b4f31c1f8d41169f076720fdef68",
+      "sha256": "54914ba0354df898c2df9310d5b764f939574aef7debe3a165c8f73dc8875624",
       "shard_id": "002",
       "source_line_end": 18,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "Summary",
       "path": "Plans/_shards/filemanager/003-summary.md",
-      "sha256": "e6dde0a228bc05e316150bd15387c5c92646eddb434137d8f7f37f8c57c39c16",
+      "sha256": "b0913ed21bcf60ad36f5a665e079d39414924dba9f03188d613c67d77320693c",
       "shard_id": "003",
       "source_line_end": 120,
       "source_line_start": 20,
@@ -35,7 +35,7 @@
     {
       "heading": "Table of Contents",
       "path": "Plans/_shards/filemanager/004-table-of-contents.md",
-      "sha256": "14a4fe086b7e8ff184e47b0809c8ecc3bffed22bfa2e47d82fec3c20d62b237c",
+      "sha256": "8d20e573b559540d5ebfbd80c6d841e2e125441c3e19547361f5be0faa43da3d",
       "shard_id": "004",
       "source_line_end": 151,
       "source_line_start": 122,
@@ -44,7 +44,7 @@
     {
       "heading": "1. File Manager panel",
       "path": "Plans/_shards/filemanager/005-1.-file-manager-panel.md",
-      "sha256": "1bf6ca8c03e7080b1ef9d576c62e4bd7c93fd1da09b5d563dc1f100015c77fa7",
+      "sha256": "92ee6e0ab11fd8855c22ca68b3440d2ce1bb855395e17927d186722b4eea4680",
       "shard_id": "005",
       "source_line_end": 246,
       "source_line_start": 153,
@@ -53,7 +53,7 @@
     {
       "heading": "2. In-app IDE-style editor (MVP)",
       "path": "Plans/_shards/filemanager/006-2.-in-app-ide-style-editor-mvp.md",
-      "sha256": "102b0a7172357a0fe30f560ae0d17df2a856800f089b3c00a83aee56baea9ed5",
+      "sha256": "bc5374c211444748154c6e8f7b08589f35bd493b8b2629b528ed0220eef184b9",
       "shard_id": "006",
       "source_line_end": 380,
       "source_line_start": 248,
@@ -62,7 +62,7 @@
     {
       "heading": "3. @ mention in chat",
       "path": "Plans/_shards/filemanager/007-3.-mention-in-chat.md",
-      "sha256": "c0d62015ed4cda1b6129c0e5d73fe1e373b1c9aac4d09f45001f5883c75bf835",
+      "sha256": "c1f2408e065601904caa72815e920577ebd0a3cb633e74dae63bdd27a22fc77a",
       "shard_id": "007",
       "source_line_end": 392,
       "source_line_start": 382,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Integration: File Manager, editor, and chat",
       "path": "Plans/_shards/filemanager/008-4.-integration-file-manager-editor-and-chat.md",
-      "sha256": "4b0f29005628122c2a5e255192bb58375cab038efc269612b676295bf4b6bb72",
+      "sha256": "ca37ab9ab01a9555b323177dbd65605de477de752d1063cb5a9d50fa277ba6a5",
       "shard_id": "008",
       "source_line_end": 433,
       "source_line_start": 393,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Open targets and chooser behavior",
       "path": "Plans/_shards/filemanager/009-5.-open-targets-and-chooser-behavior.md",
-      "sha256": "58195f1bf37f131bad703cf0a2d78d95ba5b008e334d8d7ae709dc81563f2aac",
+      "sha256": "aaec4be9a82b0cf31ce52b2ceb471abb5d78a79b9dc1e055b1d851d927386ab1",
       "shard_id": "009",
       "source_line_end": 437,
       "source_line_start": 435,
@@ -89,7 +89,7 @@
     {
       "heading": "6. Preview subjects and rendered document modes",
       "path": "Plans/_shards/filemanager/010-6.-preview-subjects-and-rendered-document-modes.md",
-      "sha256": "969fb19038dec192975f65d0750a2de770efc0ce56af4054221d1e5a3cecc68c",
+      "sha256": "1eb99dd700fe3182d72474904e0e97b5c5a398c9c22e590215f80145dc32639e",
       "shard_id": "010",
       "source_line_end": 441,
       "source_line_start": 439,
@@ -98,7 +98,7 @@
     {
       "heading": "7. Browser and terminal handoff boundaries",
       "path": "Plans/_shards/filemanager/011-7.-browser-and-terminal-handoff-boundaries.md",
-      "sha256": "906ef8c7b4de11f2e930a183927b5817135b5c5bd7f80c86264460b55aa15eed",
+      "sha256": "bb5ae9e6773e8ee965fcfd7098dfa70ca0764a8796e52b140c95cd249311b56f",
       "shard_id": "011",
       "source_line_end": 445,
       "source_line_start": 443,
@@ -107,7 +107,7 @@
     {
       "heading": "8. Image viewer and HTML preview",
       "path": "Plans/_shards/filemanager/012-8.-image-viewer-and-html-preview.md",
-      "sha256": "7dff899aa706c97bdc9484b5d06d2b1326e0a0f713417d4cc5ec1a862263d7e2",
+      "sha256": "10f451a1de871ec05a70ffe5e941d540be6a6ef59187e75eb2dba6eed48e109a",
       "shard_id": "012",
       "source_line_end": 457,
       "source_line_start": 447,
@@ -116,7 +116,7 @@
     {
       "heading": "9. Tabs: Editor, Terminal, Browser",
       "path": "Plans/_shards/filemanager/013-9.-tabs-editor-terminal-browser.md",
-      "sha256": "cbd15870534808b3ed8b642c9d8aaa13c5f1c56292f8faad5cd9a33a0bc4f259",
+      "sha256": "02528666fcded1a113b3247c5ed1b3e11871ec578c1b50036bf00272fac51543",
       "shard_id": "013",
       "source_line_end": 463,
       "source_line_start": 459,
@@ -125,7 +125,7 @@
     {
       "heading": "10. Editor navigation and semantic affordances",
       "path": "Plans/_shards/filemanager/014-10.-editor-navigation-and-semantic-affordances.md",
-      "sha256": "60fb418c8535a39ba62defa94a4370c204b59b3434251eabe48d47956cd588d3",
+      "sha256": "2d0fad07819d56e5d27d72e7e8d1e624ac7ae62bca94ee2edfae2403bb972a0d",
       "shard_id": "014",
       "source_line_end": 489,
       "source_line_start": 465,
@@ -134,7 +134,7 @@
     {
       "heading": "11. File tree actions, local filter, and chat handoff",
       "path": "Plans/_shards/filemanager/015-11.-file-tree-actions-local-filter-and-chat-handoff.md",
-      "sha256": "962f0f8c810b67c7e2674492c256dd607f50f93caacacfb4b25ceb1c5e174ac8",
+      "sha256": "cc2370d2ddc20e66649c8c0196c3b7234ce1751f86560672051aac8cd0d7220c",
       "shard_id": "015",
       "source_line_end": 519,
       "source_line_start": 491,
@@ -143,7 +143,7 @@
     {
       "heading": "12. Source Control handoff, compare, and review",
       "path": "Plans/_shards/filemanager/016-12.-source-control-handoff-compare-and-review.md",
-      "sha256": "0a5bb57160474de2df589ec537d6f78f9b74c6abfcff645fde56c2e4bc57bea7",
+      "sha256": "fc156cd7a7725307708069be098ee67f361fee018e1447106a15862cf6fddef3",
       "shard_id": "016",
       "source_line_end": 555,
       "source_line_start": 521,
@@ -152,7 +152,7 @@
     {
       "heading": "13. Preview refresh and hot reload controls",
       "path": "Plans/_shards/filemanager/017-13.-preview-refresh-and-hot-reload-controls.md",
-      "sha256": "defec740b0cb4cad20c409341a3ded81963448659344669956036ebbcfd032fe",
+      "sha256": "8875f63b8355cb446ffb686891d65104e02286a8b1126caba7bf26b834a05f18",
       "shard_id": "017",
       "source_line_end": 559,
       "source_line_start": 557,
@@ -161,7 +161,7 @@
     {
       "heading": "14. Rendering, browser preview, and detached preview compatibility",
       "path": "Plans/_shards/filemanager/018-14.-rendering-browser-preview-and-detached-preview-compatibility.md",
-      "sha256": "c988b4399985c81d1cc207893b6c9d881fa44f40474725307d872a1e24d6fcb2",
+      "sha256": "46e665f0fb4008553ea73489cdc9af838060426ee019259b9de9abc8772f3987",
       "shard_id": "018",
       "source_line_end": 567,
       "source_line_start": 561,
@@ -170,7 +170,7 @@
     {
       "heading": "Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/filemanager/019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md",
-      "sha256": "b8d8f9225f002aad7084fb979c40aea703f563080c5ebdf7bdfa1a8469165a05",
+      "sha256": "6eba5cd0a6d23c850a5fd58836e7d499df8563a7278dc99127b58370da97066a",
       "shard_id": "019",
       "source_line_end": 574,
       "source_line_start": 569,
@@ -179,7 +179,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/filemanager/020-owner-consumer-map.md",
-      "sha256": "88ef4f35ada9326b84eb9f2fdd511a188eb1bef87f6cafb3e52878ec9c4cc517",
+      "sha256": "6726e698ff69ed962896824076a47d6445846bf254e9f33e1dd378593b9a08e6",
       "shard_id": "020",
       "source_line_end": 580,
       "source_line_start": 576,
@@ -188,7 +188,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/filemanager/021-planunits.md",
-      "sha256": "9c22f89f1d68cbb471545f20dee93bf74683ca95b99a08f103e6140add3a661d",
+      "sha256": "63ed001936a9e1b719ea399c2b3bf35be712aa6d70f3cf5b7c3d37ca614adf6e",
       "shard_id": "021",
       "source_line_end": 4210,
       "source_line_start": 582,
@@ -197,7 +197,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/filemanager/022-migration-coverage.md",
-      "sha256": "3ee646b973096f7fbc6aceb8f0f612ae5b4b0caf1011042723eefe956eea9db6",
+      "sha256": "e647ffbd4c056987504ce57196fac0d1086d7df55bd3cabd5caf1f6e8d95b848",
       "shard_id": "022",
       "source_line_end": 4221,
       "source_line_start": 4211,
@@ -206,7 +206,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/filemanager/023-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "4752c6e75ee120e4148b6a9e306f26434db2ef10024d08e6feb55f18aeac1028",
+      "sha256": "7835bd851e7f014b3a12e4ee767404779662c46f887e428b0d70e5e3abc87be2",
       "shard_id": "023",
       "source_line_end": 4263,
       "source_line_start": 4223,
@@ -215,16 +215,16 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/filemanager/024-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "c68e8a83afcea881f706bbc1e375cabe9aeef717f6c28962d7dce1debd6d2963",
+      "sha256": "e463c8dcf875ce9e8fabc72d37cbe48254a50e43c0a46c134a4ce3516cf801ad",
       "shard_id": "024",
-      "source_line_end": 4421,
+      "source_line_end": 4436,
       "source_line_start": 4265,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 4421,
+    "line_count": 4436,
     "path": "Plans/FileManager.md",
-    "sha256": "838b8ec40485dca2e0ba6035f654f591db53402a765cb87b5a49cd4c8b6d1b79"
+    "sha256": "9e12573817ea0ea4146565204c731afe1909798fc897ef967610d6a493e76a97"
   }
 }

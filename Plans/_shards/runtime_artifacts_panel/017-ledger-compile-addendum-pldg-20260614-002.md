@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L600-L643
+Source lines: L600-L651
 
-Source SHA256: `cbb25a37fe996aeefb59a9fcbc5577fc6c2d2c1c2dcfc05f94f22f501bc9d45f`
+Source SHA256: `3e45a1ea5b89f8a9ee6350a467c03e116151830b1492fadf02c1673b37724425`
 
 ---
 
@@ -18,19 +18,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  `artifacts_index:v1:{project_id}` is a versioned rebuildable index contract, not a vague lookup cache.
-  Each row must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, producer/runtime
-  refs, run_id, attempt_id, node_id, provider_attempt_ref when available, output owner, storage ref,
-  content hash or freshness marker, trust state, open target, preview capability, permission/degraded
-  state, and tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and
-  then dispatches to FileManager, owner-surface routes, or generated/object-backed previews without
-  replacing project output ownership.
+  The storage-owned row key family is `artifacts_index.v1:{project_id}:{artifact_id}`; the older
+  `artifacts_index:v1:{project_id}` shorthand names only the project-level contract, not row identity.
+  The index is a versioned rebuildable identity contract, not a vague lookup cache. Each row is keyed by
+  `artifact_id` and must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, run_id,
+  package/seam/lane/worktree/account identity, producer/runtime refs, attempt_id, node_id,
+  provider_attempt_ref when available, output owner, storage URI/path, provenance/evidence refs,
+  lifecycle status, integrity/version data, trust state, open target, display/open handlers,
+  preview capability, permissions/visibility boundary, permission/degraded state, and
+  tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and then dispatches
+  to FileManager, owner-surface routes, or generated/object-backed previews without replacing project
+  output ownership.
 gui_related: true
 gui_classification_reason: Runtime artifact panel open actions, previews, degraded state, and permissions are user-visible panel behavior.
 depends_on: [RAP-019, RAP-020, CV-281]
 unblocks: []
 acceptance_criteria:
-  - The artifacts index has a versioned row contract with identity, runtime, owner, storage, trust, open, preview, and rebuild fields.
+  - The live storage key family is `artifacts_index.v1:{project_id}:{artifact_id}` and preserves `artifact_id` as row identity.
+  - The artifacts index has a versioned row contract with project/run/package/seam/lane/worktree/account identity, runtime, owner, storage, provenance, lifecycle, integrity/version, permissions, open, preview, and rebuild fields.
   - Open-by-artifact-identity resolves through the index before dispatching to FileManager or owner-surface routes.
   - Missing or stale index rows degrade to record-backed views rather than becoming canonical artifact truth.
 validation_surfaces:
@@ -46,9 +51,12 @@ source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0051
   - pldg-20260614-002-part-3-fable-cleanup:atom-0097
   - pldg-20260614-002-part-3-fable-cleanup:atom-0098
-preserved_exact_tokens: ["artifacts_index:v1:{project_id}", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "sole canonical index contract"]
+preserved_exact_tokens: ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_index:v1:{project_id}", "artifact_id", "project/run/package/seam/lane/worktree/account identity", "artifact kind", "storage URI/path", "producer/runtime_identity", "provenance/evidence refs", "lifecycle status", "integrity/version data", "permissions/visibility boundary", "display/open handlers", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "FileManager open-by-artifact-identity resolution semantics", "sole canonical index contract"]
+compatibility_only_notes:
+  - "`artifacts_index:v1:{project_id}` is retained as source-lineage shorthand for the project-level index contract; storage owns the canonical row key family `artifacts_index.v1:{project_id}:{artifact_id}`."
 negative_constraints:
   - Do not make the rebuildable artifacts index the sole source of artifact truth.
   - Do not let FileManager open project/runtime artifacts without artifact identity resolution.
+  - Do not drop `artifact_id` row identity or replace the storage-owned dot/colon key family with a project-only shorthand.
 owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md]
 ```

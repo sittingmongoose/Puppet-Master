@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L7489-L7529
+Source lines: L7489-L7532
 
-Source SHA256: `38cc1ac912180e8d1e484a841c6e6441b01fb994fde3226bb2653e62c4c2d2dc`
+Source SHA256: `e1197336aa13d987c2be7f761f71529c3e66f6d3bf4f79fdca27ceae214e0096`
 
 ---
 
@@ -18,19 +18,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  Permission approval reuse must resolve through an `approval_scope_key` schema that includes actor,
-  lane, package, run, account, tool, context, mode, requested identity, effective identity, and
-  execution_role inputs. Default carryover is narrow: an approval can carry across session, lane,
-  run, or account boundaries only when the key explicitly records that boundary and the target
-  permission class allows carryover. Reject-cascade must evaluate the same scoped key instead of a
-  single-session or single-lane assumption.
+  Permission approval reuse must resolve through an `approval_scope_key` schema derived from the
+  runtime identity envelope plus tool/context/mode and including actor, lane, package, project, run,
+  account, tool, context, mode, requested identity, effective identity, execution_role, and
+  `approval_scope_level` inputs. Default carryover is narrow lane/run/actor scope: an approval must
+  not cross lane, run, project, or account boundaries unless `approval_scope_level` explicitly
+  permits that boundary, the scoped key records it, and the target permission class allows carryover.
+  Reject-cascade must evaluate the same scoped key instead of a single-session or single-lane
+  assumption.
 gui_related: false
 gui_classification_reason: Approval scope keys and reject-cascade behavior are permission/runtime contracts, not visual presentation.
 depends_on: [CV-281]
 unblocks: []
 acceptance_criteria:
-  - "`approval_scope_key` has a defined schema over actor/lane/package/run/account/tool/context/mode/requested/effective identity/execution_role."
-  - Session approval carryover is denied by default unless the scoped key and permission class allow it.
+  - "`approval_scope_key` has a defined schema from the runtime identity envelope over actor/lane/package/project/run/account/tool/context/mode/requested/effective identity/execution_role/approval_scope_level."
+  - Default carryover remains narrow lane/run/actor scope; crossing lane, run, project, or account boundaries requires explicit `approval_scope_level`, scoped key coverage, and permission-class allowance.
   - Reject-cascade is evaluated against scoped keys rather than global session state.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -43,9 +45,10 @@ node_compile_hint: {mode: approval_scope_key_contract, create_worknodes: false}
 source_lineage:
   - pldg-20260614-002-part-3-fable-cleanup:atom-0032
   - pldg-20260614-002-part-3-fable-cleanup:atom-0048
-preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
+preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "runtime identity envelope", "tool/context/mode", "narrow lane/run/actor default carryover", "approval_scope_level", "crossing lane, run, project, or account boundaries", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
 negative_constraints:
   - Do not allow approval reuse from a provider session id alone.
-  - Do not carry approvals across actor, lane, run, or account boundaries unless the scoped key explicitly permits it.
+  - Do not allow implicit cross-lane, cross-run, cross-project, or cross-account approval carryover.
+  - Do not preserve single-session/single-lane reject-cascade behavior without actor/lane/run/account identity scope.
 owner_hints: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
 ```

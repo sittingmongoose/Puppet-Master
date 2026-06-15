@@ -1,0 +1,203 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+  "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+  "status": "PASS",
+  "created_at_utc": "2026-06-15T20:10:00Z",
+  "audited_range": {
+    "baseline_ref": "e9be8144f299d0d54a40366403ab4f87f04a9df7",
+    "audited_current_ref": "5c93f1227ec75354555e3a030a26e139805caac1",
+    "repair_ref": "working-tree-on-HEAD",
+    "head": "5c93f1227ec75354555e3a030a26e139805caac1"
+  },
+  "repair_scope": {
+    "changed_live_plan_docs": [
+      "Plans/00-plans-index.md",
+      "Plans/Containers_Registry_and_Unraid.md",
+      "Plans/Contracts_V0.md",
+      "Plans/FileManager.md",
+      "Plans/FileSafe.md",
+      "Plans/Media_Generation_and_Capabilities.md",
+      "Plans/Permissions_System.md",
+      "Plans/Progression_Gates.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/chain-wizard-flexibility.md"
+    ],
+    "changed_scripts": [
+      "scripts/pm-bootstrap-ledger-validate.py",
+      "scripts/pm-governance-seal.py",
+      "scripts/pm-plan-index.py",
+      "scripts/pm-plan-migration.py"
+    ],
+    "generated_governance_refreshed": [
+      "Plans/.plan_index/**",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+      "Plans/_shards/**",
+      "Plans/.evidence/**",
+      "Plans/Spec_Lock.json"
+    ],
+    "audit_artifacts_added": [
+      "Plans/.audits/audit-20260615-001-part-3-fable-cleanup/repair_report.json",
+      "Plans/.audits/audit-20260615-001-part-3-fable-cleanup/REPAIR_REPORT.md"
+    ]
+  },
+  "findings_repaired": [
+    {
+      "finding": "PlanUnit semantic drift and missing exact tokens/source lineage",
+      "status": "repaired",
+      "evidence": [
+        "CRAU-041/085/087/088/089",
+        "F-069/F-070/F-071",
+        "F2-188",
+        "PS-113",
+        "CV-284",
+        "MGAC-092",
+        "RAP-026/POA-046",
+        "RGV-011",
+        "PG-058",
+        "CWF-065/CWF-150"
+      ]
+    },
+    {
+      "finding": "Sealed ledger retained active candidate atoms",
+      "status": "repaired",
+      "evidence": {
+        "atom_status_counts": {
+          "accepted": 12,
+          "superseded": 48,
+          "not_for_plan": 2,
+          "compiled_to_plan": 58
+        },
+        "candidate_atoms": 0,
+        "ready_for_plan_compile_atoms": 0
+      }
+    },
+    {
+      "finding": "Owner routing narrowed to one doc despite 15 live owner docs",
+      "status": "repaired",
+      "evidence": "compiled_owner_docs records 15 live owner docs while canonical_plan_targets remains the strict governance queue target accepted by the validator."
+    },
+    {
+      "finding": "Migration validation mutated validation_report.json",
+      "status": "repaired",
+      "evidence": "pm-plan-migration validate is read-only by default; --write-report is explicit. Final validator git status before/after was unchanged."
+    },
+    {
+      "finding": "Plan index validate did not detect stale generated artifacts",
+      "status": "repaired",
+      "evidence": "pm-plan-index validate now compares stable regenerated artifacts in memory against checked-in .plan_index outputs."
+    },
+    {
+      "finding": "Spec Lock/evidence/shards/migration metadata stale after repair",
+      "status": "repaired",
+      "evidence": "Generated indexes, migration hashes, shard report, Spec_Lock, and evidence artifact hashes were mechanically refreshed."
+    }
+  ],
+  "ledger_consistency": {
+    "ledger_health_status": "pass_governance_sealed",
+    "summary": {
+      "candidate_atoms": 0,
+      "compile_queue_items": 1,
+      "decisions": 37,
+      "deferred_questions": 0,
+      "design_atoms": 120,
+      "events": 66,
+      "governance_seal": "passed",
+      "open_blockers": 0,
+      "open_questions": 0
+    },
+    "events": 66,
+    "last_event_id": "evt-0066"
+  },
+  "plan_index": {
+    "plan_units": 4998,
+    "acceptance_units": 17770,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "compiler_contract_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false
+  },
+  "validators": {
+    "mutated_status": false,
+    "before_status_count": 339,
+    "after_status_count": 339,
+    "results": [
+      {
+        "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 353,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-index.py validate",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 324,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 21946,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 111,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 110,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 125,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 118,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "exit_code": 0,
+        "status": "pass",
+        "stdout_bytes": 119,
+        "stderr_bytes": 0
+      },
+      {
+        "cmd": "git diff --check",
+        "exit_code": 0,
+        "status": null,
+        "stdout_bytes": 0,
+        "stderr_bytes": 0
+      }
+    ]
+  },
+  "forbidden_artifacts": {
+    "unexpected_status_entries": [],
+    "forbidden_name_match_count": 0,
+    "result": "pass",
+    "details": "Path-level scan found no WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, production build tasks, final node queues, or legacy implementation artifacts. Changed non-Plan files are governance/validator scripts only, including scripts/pm-governance-seal.py."
+  },
+  "residual_risks": [
+    "Node readiness remains blocked by the incomplete WorkNode compiler contract by design; no WorkNodes/NodeSeeds were generated.",
+    "The repair includes large generated shard/evidence/index diffs because governance artifacts were explicitly refreshed after canonical docs changed."
+  ],
+  "next_safe_action": "Review the repair diff, then stage/commit/push the repair set. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or final node queues."
+}
