@@ -1,0 +1,18 @@
+{
+  "deferred_questions": [],
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "notes": "The seven ready Part 4 cleanup atoms have been compiled into live Plans PlanUnits. There are no open product/design questions or blockers for this compile. Governance remains unsealed because this compile intentionally did not update Spec Lock, shards, evidence, plan_graph, auto_decisions, or .plan_migration proof artifacts.",
+  "open_blockers": [],
+  "open_questions": [],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [
+    {
+      "status": "pending_seal",
+      "reason": "Plans and Plans/.plan_index changed during compile; governance seal artifacts and .plan_migration proof hashes were intentionally not updated in this phase.",
+      "requires_explicit_request": true
+    }
+  ],
+  "updated_at_utc": "2026-06-15T21:11:00Z"
+}

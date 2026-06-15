@@ -1,0 +1,68 @@
+{
+  "agent_task": "continue_part_4_fable_cleanup_design_conversation_until_explicit_compile_request",
+  "allowed_reads_default": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "state/handoff.json",
+    "state/current.json",
+    "state/open_items.json",
+    "state/operating_capsule.json"
+  ],
+  "allowed_writes_during_compile": [],
+  "allowed_writes_during_conversation": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json",
+    "validation/ledger_health.json"
+  ],
+  "capsule_id": "cap-part-4-fable-cleanup-current",
+  "completion_blockers_visible_to_agent": [
+    "open_questions",
+    "unclassified_candidates",
+    "unresolved_contradictions",
+    "open_blockers",
+    "unsealed_governance",
+    "missing_gui_related_classification",
+    "worknode_creation_requested_before_contract"
+  ],
+  "forbidden_until_explicit_compile_or_governance_seal": [
+    "canonical Plans",
+    "Plans/.plan_index",
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "Spec_Lock",
+    "shards",
+    "evidence",
+    "plan_graph",
+    "auto_decisions"
+  ],
+  "forbidden_without_explicit_governance_or_compiler_contract": [
+    "WorkNodes",
+    "NodeSeeds",
+    "NodeSeed candidates",
+    "executable queues",
+    "final node manifests",
+    "implementation files",
+    "production build tasks",
+    "final node queues"
+  ],
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "ledger_profile": "bootstrap_planning",
+  "must_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "required_end_of_turn_actions": [
+    "append_turn_event",
+    "upsert_design_atoms",
+    "update_questions_blockers",
+    "update_handoff_projection",
+    "classify_gui_related",
+    "preserve_exact_tokens_and_source_lineage",
+    "preserve_node_readiness_boundary"
+  ],
+  "schema_id": "pm.operating_capsule.v1",
+  "updated_at_utc": "2026-06-15T21:01:00Z"
+}

@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "queue_id": "pcq-0001",
+      "status": "compiled",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "source_atom_ids": [
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0015",
+        "atom-0016",
+        "atom-0017",
+        "atom-0018"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-391",
+        "F3-392",
+        "ACD-415",
+        "T-158",
+        "CV-285",
+        "EP-097",
+        "WM-036"
+      ],
+      "compiled_outputs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "owner_adjudication": "Strict canonical_plan_targets uses Contracts_V0 for governance validator compatibility; compiled_owner_docs records all live owner docs touched. Detail-loss extract cleanup compiled to FinalGUISpec, assistant-chat-design, and Tools. Addenda precedence compiled to Contracts_V0, Executor_Protocol, FinalGUISpec, and Wiring_Matrix; Run_Modes, Models_System, and chain-wizard-flexibility remain consumer/existing-coverage surfaces.",
+      "compiled_at_utc": "2026-06-15T21:10:00Z"
+    }
+  ],
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "notes": "Seven deterministic cleanup atoms were compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs. Post-compile ledger, Plan index, and diff validators passed. Migration proof artifacts are stale by design until an explicit seal/governance phase.",
+  "schema_id": "pm.plan_compile_queue.v1",
+  "status": "compiled_part_4_fable_cleanup_pending_seal",
+  "updated_at_utc": "2026-06-15T21:11:00Z",
+  "last_event_id": "evt-0010"
+}

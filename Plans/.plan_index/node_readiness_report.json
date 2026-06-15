@@ -1764,15 +1764,15 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10429,
-    "edge_count": 11949,
-    "node_count": 4998,
+    "depends_on_edge_count": 10440,
+    "edge_count": 11960,
+    "node_count": 5005,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-15T18:47:42Z",
+  "generated_at_utc": "2026-06-15T20:44:21Z",
   "gui_related_units": {
-    "count": 2119,
+    "count": 2123,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -4675,6 +4675,17 @@
           "heading_level": 3,
           "heading_line": 21736,
           "line": 21738,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-415",
+        "source_location": {
+          "heading": "ACD-415 - Extract Block Semantics Normalization",
+          "heading_level": 3,
+          "heading_line": 21779,
+          "line": 21781,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -13475,6 +13486,28 @@
           "heading_level": 3,
           "heading_line": 24449,
           "line": 24451,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-391",
+        "source_location": {
+          "heading": "F3-391 - Extract Block Semantics Normalization",
+          "heading_level": 3,
+          "heading_line": 24490,
+          "line": 24492,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-392",
+        "source_location": {
+          "heading": "F3-392 - Blocked Recovery Addenda Consolidation",
+          "heading_level": 3,
+          "heading_line": 24563,
+          "line": 24565,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -24952,6 +24985,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-036",
+        "source_location": {
+          "heading": "WM-036 - Runtime Wiring Addenda Consolidation Boundary",
+          "heading_level": 3,
+          "heading_line": 2915,
+          "line": 2917,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Widget_System.md",
         "plan_unit_id": "WS-002",
         "source_location": {
@@ -25091,10 +25135,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 4998,
+  "plan_unit_count": 5005,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 831,
+      "high": 838,
       "low": 5,
       "standard": 4162
     },
@@ -25226,6 +25270,7 @@
       "ask_approval_semantics_baseline": 1,
       "ask_plan_delegated_child_authority_ceiling": 1,
       "ask_ui_reply_semantics": 1,
+      "assistant_chat_extract_semantic_loss": 1,
       "assistant_deep_plan_escalation_drift": 1,
       "assistant_handoff_payload_drift": 1,
       "assistant_memory_injection": 1,
@@ -25620,6 +25665,7 @@
       "contract_owner_drift": 1,
       "contract_pack_index_drift": 1,
       "contract_ssot_drift": 1,
+      "contracts_precedence_drift": 1,
       "controller_split": 1,
       "cooldown_manual_control": 1,
       "coordinating_visibility_examples": 1,
@@ -25928,6 +25974,7 @@
       "execution_unit_ui_inspection_anchor": 1,
       "execution_update_unregister_lifecycle": 1,
       "executionlimits_crew_admission_caps": 1,
+      "executor_addenda_precedence_drift": 1,
       "executor_boundary": 1,
       "executor_consumer_drift": 1,
       "executor_protocol_drift": 94,
@@ -26091,10 +26138,12 @@
       "gui_automation_evidence_path_state_files": 1,
       "gui_automation_evidence_run_layout": 1,
       "gui_backend_scope_now_in_scope": 1,
+      "gui_blocked_recovery_addenda_drift": 1,
       "gui_config_coverage_matrix_rows": 1,
       "gui_config_wiring_permissions_commands_skills": 1,
       "gui_config_wiring_plugins_models_formatters": 1,
       "gui_cross_reference_ambiguity": 1,
+      "gui_extract_semantic_loss": 1,
       "gui_framework_detection_gap": 1,
       "gui_framework_detection_state": 1,
       "gui_headless_question_drift": 1,
@@ -27478,6 +27527,7 @@
       "tool_registry_drift": 1,
       "tool_selection_ui_reuse": 1,
       "toolcontext_and_tool_lifecycle_pointers": 1,
+      "tools_extract_semantic_loss": 1,
       "traceability": 1,
       "traceability_classification_drift": 1,
       "traceability_quickstart_validation_drift": 1,
@@ -27618,6 +27668,7 @@
       "widget_owner_boundary_drift": 1,
       "widget_system_drift": 13,
       "wildcard_matching": 1,
+      "wiring_addenda_precedence_drift": 1,
       "wiring_matrix_drift": 32,
       "wiring_matrix_rule_two_coverage": 1,
       "wizard_blocked_duplicate_canon": 1,
@@ -27672,7 +27723,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 4976,
+      "accepted": 4983,
       "deferred": 5,
       "retired": 17
     },
@@ -27686,7 +27737,7 @@
       "audit_requirement": 3,
       "baseline_reference": 1,
       "capability_matrix": 1,
-      "compatibility_disposition": 110,
+      "compatibility_disposition": 117,
       "compatibility_note": 2,
       "constraint": 568,
       "consumer_alignment": 1,

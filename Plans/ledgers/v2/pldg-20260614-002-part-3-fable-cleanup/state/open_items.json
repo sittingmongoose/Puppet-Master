@@ -1,12 +1,12 @@
 {
   "deferred_questions": [],
   "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
-  "notes": "Part 3 Fable Cleanup compile and post-audit repair records are complete. No open design questions/blockers/contradictions or active candidate atoms remain. Node readiness remains blocked by the incomplete Plan-to-Node compiler contract, not by Part 3 audit coverage.",
+  "notes": "Part 3 Fable Cleanup compile and post-audit repair records are complete. No open design questions/blockers/contradictions or active candidate atoms remain. Plans/.plan_index/node_readiness_report.json status is blocked_compiler_contract_incomplete because the Plan-to-Node compiler contract is incomplete, not because of Part 3 audit coverage.",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_open_items.v1",
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-06-15T20:05:00Z"
+  "updated_at_utc": "2026-06-15T20:25:00Z"
 }

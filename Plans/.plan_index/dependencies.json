@@ -11324,6 +11324,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-285",
+      "to": "CV-245"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-285",
+      "to": "CV-246"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-285",
+      "to": "CV-255"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -13269,6 +13284,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-097",
+      "to": "EP-096"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -13346,6 +13366,11 @@
       "edge_type": "depends_on",
       "from": "F3-390",
       "to": "F3-382"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-392",
+      "to": "F3-340"
     },
     {
       "edge_type": "depends_on",
@@ -53459,6 +53484,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-036",
+      "to": "WM-017"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "WS-001",
       "to": "WS-002"
     },
@@ -61473,7 +61528,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-15T18:47:42Z",
+  "generated_at_utc": "2026-06-15T20:44:21Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -69430,6 +69485,23 @@
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "assistant_chat_extract_block_cleanup",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-415",
+      "reasoning_tier": "high",
+      "risk_class": "assistant_chat_extract_semantic_loss",
+      "source_location": {
+        "heading": "ACD-415 - Extract Block Semantics Normalization",
+        "heading_level": 3,
+        "heading_line": 21779,
+        "line": 21781,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -80737,6 +80809,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "contracts_runtime_event_action_precedence",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-285",
+      "reasoning_tier": "high",
+      "risk_class": "contracts_precedence_drift",
+      "source_location": {
+        "heading": "CV-285 - Intra-File Runtime Contract Precedence",
+        "heading_level": 3,
+        "heading_line": 16973,
+        "line": 16975,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -87620,6 +87709,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "executor_runtime_addenda_consolidation",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-097",
+      "reasoning_tier": "high",
+      "risk_class": "executor_addenda_precedence_drift",
+      "source_location": {
+        "heading": "EP-097 - Runtime Addenda Consolidation Boundary",
+        "heading_level": 3,
+        "heading_line": 5745,
+        "line": 5747,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
     },
     {
       "context_scope": "plan_standardization",
@@ -98653,6 +98759,40 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "final_gui_extract_block_cleanup",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-391",
+      "reasoning_tier": "high",
+      "risk_class": "gui_extract_semantic_loss",
+      "source_location": {
+        "heading": "F3-391 - Extract Block Semantics Normalization",
+        "heading_level": 3,
+        "heading_line": 24490,
+        "line": 24492,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "final_gui_blocked_recovery_consolidation",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-392",
+      "reasoning_tier": "high",
+      "risk_class": "gui_blocked_recovery_addenda_drift",
+      "source_location": {
+        "heading": "F3-392 - Blocked Recovery Addenda Consolidation",
+        "heading_level": 3,
+        "heading_line": 24563,
+        "line": 24565,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
     },
     {
       "context_scope": "plan_standardization",
@@ -141427,6 +141567,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "tools_extract_block_cleanup",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-158",
+      "reasoning_tier": "high",
+      "risk_class": "tools_extract_semantic_loss",
+      "source_location": {
+        "heading": "T-158 - Extract Block Semantics Normalization",
+        "heading_level": 3,
+        "heading_line": 10786,
+        "line": 10788,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
+    },
+    {
       "context_scope": "ui_command_catalog_generated_tail_after_batch_191",
       "gui_related": true,
       "owner_doc": "Plans/UI_Command_Catalog.md",
@@ -146204,6 +146361,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "wiring_matrix_runtime_addenda_consolidation",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-036",
+      "reasoning_tier": "high",
+      "risk_class": "wiring_addenda_precedence_drift",
+      "source_location": {
+        "heading": "WM-036 - Runtime Wiring Addenda Consolidation Boundary",
+        "heading_level": 3,
+        "heading_line": 2915,
+        "line": 2917,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
+    },
+    {
       "context_scope": "widget_system_generated_tail_batch_198",
       "gui_related": false,
       "owner_doc": "Plans/Widget_System.md",
@@ -146447,9 +146621,9 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10429,
-    "edge_count": 11949,
-    "node_count": 4998,
+    "depends_on_edge_count": 10440,
+    "edge_count": 11960,
+    "node_count": 5005,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },

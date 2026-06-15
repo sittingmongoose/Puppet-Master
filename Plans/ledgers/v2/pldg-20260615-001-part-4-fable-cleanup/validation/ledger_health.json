@@ -1,0 +1,72 @@
+{
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Ledger directory, manifest, event stream, record streams, compact state projections, and registry entry were initialized for conversational planning."
+    },
+    {
+      "check_id": "validate-0001",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup passed with zero errors and zero warnings."
+    },
+    {
+      "check_id": "verify-0001",
+      "status": "pass",
+      "summary": "First external detail-loss extract-section finding was locally verified as real but overstated and captured as deterministic cleanup atoms."
+    },
+    {
+      "check_id": "validate-0002",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup passed with zero errors and zero warnings after the finding update."
+    },
+    {
+      "check_id": "verify-0002",
+      "status": "pass",
+      "summary": "Second external addenda pile-up finding was locally verified as real with a Contracts_V0 wording correction and captured as deterministic cleanup atoms."
+    },
+    {
+      "check_id": "validate-0003",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup passed with zero errors and zero warnings after the addenda update."
+    },
+    {
+      "check_id": "clarify-0001",
+      "status": "pass",
+      "summary": "Clarified that verified fixes are recorded as ledger compile agenda/source intent and are not applied to canonical Plans until an explicit compile/edit/validation phase succeeds."
+    },
+    {
+      "check_id": "validate-0004",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup passed with zero errors and zero warnings after compile-expectation clarification."
+    },
+    {
+      "check_id": "compile-0001",
+      "status": "pass",
+      "summary": "Compiled seven ready cleanup atoms to PlanUnits F3-391, F3-392, ACD-415, T-158, CV-285, EP-097, and WM-036 and regenerated allowed Plans/.plan_index outputs."
+    },
+    {
+      "check_id": "validate-0005",
+      "status": "pass",
+      "summary": "Final ledger validation, Plan index validation, and git diff --check passed after compile; migration validation is stale pending seal because .plan_migration proof artifacts were intentionally not regenerated."
+    }
+  ],
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_compiled_pending_seal",
+  "summary": {
+    "candidate_atoms": 0,
+    "compile_queue_items": 1,
+    "decisions": 4,
+    "deferred_questions": 0,
+    "design_atoms": 19,
+    "events": 10,
+    "governance_seal": "pending_seal",
+    "open_blockers": 0,
+    "open_questions": 0
+  },
+  "updated_at_utc": "2026-06-15T21:11:00Z",
+  "warnings": [
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits validation reports stale batch_report hashes and final live_plan_unit_count after live Plan edits; leave for explicit governance/seal phase."
+  ]
+}
