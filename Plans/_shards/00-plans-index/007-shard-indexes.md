@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L415-L470
+Source lines: L429-L485
 
-Source SHA256: `9582dca855f673cbb28863999f130ceeabbb425dcda88895d9a06f79906a24c4`
+Source SHA256: `32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5`
 
 ---
 
@@ -47,6 +47,7 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `CLI_Bridged_Providers.md` | [`Plans/_shards/cli_bridged_providers/00-index.md`](Plans/_shards/cli_bridged_providers/00-index.md) |
 | `Models_System.md` | [`Plans/_shards/models_system/00-index.md`](Plans/_shards/models_system/00-index.md) |
 | `Run_Modes.md` | [`Plans/_shards/run_modes/00-index.md`](Plans/_shards/run_modes/00-index.md) |
+| `Goal_Runtime_System.md` | [`Plans/_shards/goal_runtime_system/00-index.md`](Plans/_shards/goal_runtime_system/00-index.md) |
 | `Commands_System.md` | [`Plans/_shards/commands_system/00-index.md`](Plans/_shards/commands_system/00-index.md) |
 | `Executor_Protocol.md` | [`Plans/_shards/executor_protocol/00-index.md`](Plans/_shards/executor_protocol/00-index.md) |
 | `UI_Command_Catalog.md` | [`Plans/_shards/ui_command_catalog/00-index.md`](Plans/_shards/ui_command_catalog/00-index.md) |

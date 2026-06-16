@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L613-L3742
+Source lines: L628-L3812
 
-Source SHA256: `9582dca855f673cbb28863999f130ceeabbb425dcda88895d9a06f79906a24c4`
+Source SHA256: `32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5`
 
 ---
 
@@ -3137,4 +3137,59 @@ owner_hints:
 - Plans/00-plans-index.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+```
+
+### 0PI-055 - Goal Runtime System Owner Map
+
+```yaml
+plan_unit_id: 0PI-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+gui_related: false
+gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
+  - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
+  - The index preserves the no-WorkNode and no-governance-seal boundary for this compile.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
+risk_class: owner_map_drift
+reasoning_tier: standard
+context_scope: plans_index_goal_runtime_map
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: goal_runtime_owner_map
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0080
+  - pldg-20260616-001-goal-runtime-system:atom-0082
+  - pldg-20260616-001-goal-runtime-system:atom-0083
+  - pldg-20260616-001-goal-runtime-system:dec-0012
+preserved_exact_tokens:
+  - "Goal_Runtime_System.md"
+  - "Native Goal Runtime Map"
+  - "pldg-20260616-001-goal-runtime-system"
+  - "worker model"
+  - "verifier/adjudicator model"
+  - "WorkNodes"
+  - "NodeSeeds"
+  - "Spec_Lock"
+  - "evidence bundles"
+negative_constraints:
+  - Do not treat Plans/00-plans-index.md as the owner for Goal Runtime behavior.
+  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during this compile.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
 ```

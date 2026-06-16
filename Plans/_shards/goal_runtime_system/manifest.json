@@ -1,0 +1,104 @@
+{
+  "generated_at_utc": "2026-06-16T05:33:57Z",
+  "index_path": "Plans/_shards/goal_runtime_system/00-index.md",
+  "index_sha256": "d42a9637dbf014b96d03d935f0c2779b41a8dfcd77d86d18ef27930fca8669d5",
+  "manifest_path": "Plans/_shards/goal_runtime_system/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/goal_runtime_system/001-preamble.md",
+      "sha256": "c3059c5524c8231a30ebd9aa6861d5a2a7fe56c9f4e23a2ddabdb68c2cdbe58a",
+      "shard_id": "001",
+      "source_line_end": 5,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/goal_runtime_system/002-0.-scope.md",
+      "sha256": "346ea5630c82c5eced1acac82985fc0dc21aef42ae6fa08839d6de807603ea18",
+      "shard_id": "002",
+      "source_line_end": 13,
+      "source_line_start": 7,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Ownership And Consumers",
+      "path": "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
+      "sha256": "9566a1bb97ed7dec3c70a724cb369045317c53d8c028eb1eafa96b8f1eb179d4",
+      "shard_id": "003",
+      "source_line_end": 29,
+      "source_line_start": 15,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Canonical PlanUnits",
+      "path": "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md",
+      "sha256": "b2941061dae0a9f397916736c6eeb7ff9bfe85320d8c7c30a0a59201587b82ad",
+      "shard_id": "004",
+      "source_line_end": 1372,
+      "source_line_start": 31,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
+      "path": "Plans/_shards/goal_runtime_system/005-3.-contracts-schemas-events-or-data-shapes.md",
+      "sha256": "5f6182bc6f83ff13dbcfec582653e316b121a2777275fc78bf203a3375b86021",
+      "shard_id": "005",
+      "source_line_end": 1384,
+      "source_line_start": 1374,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Integration Surfaces",
+      "path": "Plans/_shards/goal_runtime_system/006-4.-integration-surfaces.md",
+      "sha256": "978b5345820f50f0093154eb8d5f8dc0a17f4516298a1fed6790f5aaa532202c",
+      "shard_id": "006",
+      "source_line_end": 1394,
+      "source_line_start": 1386,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Validation And Acceptance",
+      "path": "Plans/_shards/goal_runtime_system/007-5.-validation-and-acceptance.md",
+      "sha256": "90e05d93c43c4f8779a0dbae2a3b8d0bc3cbdf7d1907b8729cd7a19296e456c6",
+      "shard_id": "007",
+      "source_line_end": 1408,
+      "source_line_start": 1396,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Plan-To-Node Readiness",
+      "path": "Plans/_shards/goal_runtime_system/008-6.-plan-to-node-readiness.md",
+      "sha256": "40f6daf6aff03703e6c54ac198537bf95c164e31cb4cdb66b696ed07a02ea568",
+      "shard_id": "008",
+      "source_line_end": 1414,
+      "source_line_start": 1410,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
+      "path": "Plans/_shards/goal_runtime_system/009-7.-deferred-retired-compatibility-and-non-goals.md",
+      "sha256": "29c69cded3087de0ad1aa4751512743fa0a1befcdad3ed7f34de8125361a9b56",
+      "shard_id": "009",
+      "source_line_end": 1437,
+      "source_line_start": 1416,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Source Lineage And Governance",
+      "path": "Plans/_shards/goal_runtime_system/010-8.-source-lineage-and-governance.md",
+      "sha256": "01d4c85b0797bd93bd8fb2f06460ad6189dd98197dec1f88b8d691dd9fadfd24",
+      "shard_id": "010",
+      "source_line_end": 1457,
+      "source_line_start": 1439,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 1457,
+    "path": "Plans/Goal_Runtime_System.md",
+    "sha256": "8c6b022aac9dbea03dd702cbbc6c279eee8995ddc56ef11fa74c049c223e46d6"
+  }
+}

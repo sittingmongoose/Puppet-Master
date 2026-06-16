@@ -1,13 +1,13 @@
 {
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
-  "current_phase": "ready_for_plan_compile",
+  "current_phase": "compiled_goal_runtime_system_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0012",
-    "last_decision_id": "dec-0012",
+    "last_event_id": "evt-0023",
+    "last_decision_id": "dec-0026",
     "next_queue_id": null
   },
-  "last_known_good_state": "The Goal Mode feature design is captured as ready-for-plan-compile v2 ledger atoms covering runtime architecture, invisible/internal goals, user-facing assistant chat UI, weak-model safety, child goals/subagents, attachments, sharded document handling, completion certification, autonomous recovery, and task templates. No canonical Plans or generated governance artifacts have been written by this ledger package.",
+  "last_known_good_state": "Goal Runtime ledger compiled and governance sealed. Plans/Goal_Runtime_System.md is the strict canonical_plan_target; compiled owner docs remain Goal_Runtime_System, assistant-chat-design, FinalGUISpec, and 00-plans-index. Node readiness remains blocked_compiler_contract_incomplete; no node/build/product implementation artifacts were created.",
   "open_blockers": [],
   "open_questions": [],
   "deferred_questions": [
@@ -17,10 +17,18 @@
     "q-0004",
     "q-0005"
   ],
-  "next_action": "Compile this ledger into a new canonical Goal Runtime/System Plan doc plus related consumer PlanUnit updates. Treat q-0001 through q-0005 as deferred integration/implementation questions that should be represented in the Plan doc without blocking the core Goal Runtime design.",
+  "next_action": "Implementation planning may begin from sealed PlanUnits, or a separate future compiler-contract design phase may define NodeSeed/WorkNode creation.",
   "validation_state": {
-    "ledger_health": "pass_ready_for_plan_compile",
-    "safe_content_checks": "pm-bootstrap-ledger-validate passed with zero errors/warnings; shard check passed; full run-gates intentionally not sealed because registry/evidence governance was not updated in this ledger package."
+    "ledger_health": "pass_governance_sealed",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "git_diff_check": "pass",
+    "safe_content_checks": "Governance seal artifacts are being refreshed; node readiness remains blocked_compiler_contract_incomplete; no node/build/product implementation artifacts were created.",
+    "pm_bootstrap_ledger_validate": "pass",
+    "run_gates": "pass",
+    "shard_check": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass"
   },
   "do_not_redo": [
     "Do not redo competitor research unless implementation details are needed.",
@@ -28,8 +36,9 @@
     "Do not narrow assistant-chat Goal Mode to plan-doc tasks.",
     "Do not treat Chain Wizard current docs as final."
   ],
-  "phase": "ready_for_plan_compile",
-  "last_completed_action": "Retrospective ledger materialized from the Goal Mode design conversation and repo/Codex context.",
-  "next_safe_action": "Compile to canonical Plans with Codex Goal Mode when ready.",
-  "updated_at_utc": "2026-06-16T04:05:00Z"
+  "phase": "compiled_goal_runtime_system_governance_sealed",
+  "last_completed_action": "Prepared governance seal projections for Goal Runtime ledger after Plan/PlanUnit changes stabilized.",
+  "next_safe_action": "Goal Runtime governance is sealed. Safe next action is implementation planning from sealed PlanUnits, or a separate future compiler-contract design phase. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks unless Jared explicitly requests that separate phase.",
+  "updated_at_utc": "2026-06-16T05:36:58Z",
+  "last_event_id": "evt-0023"
 }

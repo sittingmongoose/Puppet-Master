@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L199-L392
+Source lines: L200-L406
 
-Source SHA256: `9582dca855f673cbb28863999f130ceeabbb425dcda88895d9a06f79906a24c4`
+Source SHA256: `32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5`
 
 ---
 
@@ -21,6 +21,18 @@ The bootstrap planning packet uses the following owner split:
 The ledger `Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/` is source-lineage/planning memory for these docs, not canonical product prose. Generated governance artifacts remain seal-phase only: ordinary ledger writing, plan drafting, plan conversion, PlanUnit indexing, and node-readiness reporting do not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`.
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+### Native Goal Runtime Map (2026-06-16)
+
+The native Goal Runtime packet uses the following owner split:
+- `Plans/Goal_Runtime_System.md` owns native Goal Mode runtime/control-plane behavior, invisible/internal goals, durable goal state, scheduler updates, attachments, weak-model safety, child goals, write authority, completion receipts, verifier/adjudicator policy, approval-boundary invocation, and runtime evidence requirements.
+- `Plans/assistant-chat-design.md` owns visible Assistant Chat Goal UI and thread-surface behavior, including activation, status, task tracker, controls, evidence/activity display, completion reports, and collapsible child-goal details.
+- `Plans/FinalGUISpec.md` owns Settings GUI placement for the separate Goal Mode worker model and verifier/adjudicator model selectors.
+- `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary; Goal Runtime consumes them for ledger-to-Plans goals without creating WorkNodes or NodeSeeds.
+
+The ledger `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/` is source-lineage/planning memory for this compile, not canonical product prose. Generated governance artifacts remain seal-phase only: this compile may update live Plans docs and allowed `Plans/.plan_index/**` outputs, but it does not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
 ### Instant Grep canon reconciliation note (2026-03-30)
 
@@ -156,6 +168,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, and node-readiness metadata. |
 | `Plan_To_Node_Compilation.md` | PlanUnit index and node-readiness boundary | Canonical for future PlanUnit-to-NodeSeed-to-WorkNode compiler inputs and the current readiness-only boundary. It does not create WorkNodes, executable build tasks, or NodeSeed candidates before the compiler contract is complete. |
 | `Bootstrap_Planning_Migration.md` | Bootstrap ledger migration and governance seal workflow | Canonical for AGENTS trigger use, Codex Goal-phase migration, less-than-4,000-character goal prompt posture, controlled Plan conversion batches, Spec Lock seal timing, and retired prompt-packet/tranche experiment exclusions. |
+| `Goal_Runtime_System.md` | Native Goal Mode runtime/control-plane system | Canonical owner for native Goal Runtime state, scheduler/replan behavior, invisible and visible goal execution semantics, child goals, write authority, completion receipts, evidence/certification, weak-model safety, verifier/adjudicator policy, approval-boundary invocation, and goal task templates. |
 | `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |
 | `FileSafe.md` | Safe-edit guards + context compilation | Canonical blocked destructive-command behavior and restore-before-rerun integration; maps to central tool policy + patch pipeline. |
 | `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |

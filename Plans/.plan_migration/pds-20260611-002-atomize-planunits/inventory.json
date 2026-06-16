@@ -1,5 +1,5 @@
 {
-  "doc_count": 67,
+  "doc_count": 68,
   "docs": [
     {
       "anchor_count": 0,
@@ -818,6 +818,23 @@
       "sharded": false,
       "span_count": 31,
       "spec_locked": true
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "8c6b022aac9dbea03dd702cbbc6c279eee8995ddc56ef11fa74c049c223e46d6",
+      "bytes": 66271,
+      "line_count": 1457,
+      "heading_count": 35,
+      "span_count": 35,
+      "contractref_count": 2,
+      "anchor_count": 0,
+      "plan_unit_count": 25,
+      "plan_unit_parse_errors": [],
+      "has_planunits_section": false,
+      "sharded": true,
+      "spec_locked": false,
+      "gui_related_inferred": true,
+      "recommended_batch": "governance_seal_needed"
     },
     {
       "anchor_count": 0,
@@ -2035,7 +2052,7 @@
       "spec_locked": false
     }
   ],
-  "generated_at_utc": "2026-06-11T22:35:23Z",
+  "generated_at_utc": "2026-06-16T05:27:58Z",
   "locked_doc_count": 21,
   "phase2a_classification_artifact": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2a_inventory.json",
   "phase2a_classification_summary": {
@@ -2055,10 +2072,10 @@
     }
   },
   "pilot_doc": "Plans/Run_Graph_View.md",
-  "plan_unit_count": 105,
+  "plan_unit_count": 130,
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.inventory.v1",
   "scope": "top-level Plans/*.md",
-  "sharded_doc_count": 50,
-  "span_count": 3873
+  "sharded_doc_count": 51,
+  "span_count": 3908
 }

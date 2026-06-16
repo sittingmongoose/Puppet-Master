@@ -2,27 +2,62 @@
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "title": "Native Goal Runtime and Assistant Chat Goal Mode",
-  "phase": "ready_for_plan_compile",
-  "last_event_id": "evt-0012",
-  "accepted_decisions_count": 12,
-  "design_atoms_total": 88,
-  "ready_for_plan_compile_atoms": 86,
+  "phase": "compiled_goal_runtime_system_governance_sealed",
+  "last_event_id": "evt-0023",
+  "accepted_decisions_count": 26,
+  "design_atoms_total": 110,
+  "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
   "open_questions_count": 0,
   "deferred_questions_count": 5,
   "open_blockers_count": 0,
-  "canonical_plan_targets": [],
-  "compiled_plan_outputs": [],
-  "compiled_owner_docs": [],
-  "governance_status": "not_sealed",
-  "next_safe_action": "Run a Codex Goal compile to convert this ready v2 ledger into a new canonical Goal Runtime/System Plan doc and necessary consumer PlanUnit updates. Do not create WorkNodes, NodeSeeds, executable queues, generated plan indexes, shards, evidence bundles, Spec_Lock updates, plan_graph updates, or auto_decisions during the compile unless an explicit governance seal phase is requested later.",
+  "canonical_plan_targets": [
+    "Plans/Goal_Runtime_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Goal_Runtime_System.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/00-plans-index.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Goal_Runtime_System.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/00-plans-index.md"
+  ],
+  "governance_status": "sealed",
+  "next_safe_action": "Goal Runtime governance is sealed. Safe next action is implementation planning from sealed PlanUnits, or a separate future compiler-contract design phase. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks unless Jared explicitly requests that separate phase.",
   "validation_state": {
-    "ledger_health": "pass_ready_for_plan_compile",
+    "ledger_health": "pass_governance_sealed",
+    "pm_plan_index_generate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plan_migration_validate_note": "Migration proof refresh and validation passed after governance seal; doc_count is 68 and live_plan_unit_count is 5036.",
+    "git_diff_check": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "sealed",
     "safe_content_checks": [
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings.",
-      "python3 scripts/pm-shard-plans.py --check passed on the validation repo after overlay.",
-      "Full run-gates were not expected to pass before an explicit governance seal because ledger_registry.json changes intentionally leave evidence hashes stale."
-    ]
+      "Compiled 108 ready atoms to live Plans PlanUnits; atom-0016 remains deferred and atom-0001 remains non-applicable source memory.",
+      "Created Plans/Goal_Runtime_System.md with the New Plan Authoring Profile and required base layout.",
+      "Updated Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, and Plans/00-plans-index.md with consumer/index PlanUnits.",
+      "Regenerated only allowed Plans/.plan_index outputs.",
+      "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, production build tasks, or production implementation artifacts were created; governance artifacts were refreshed in the explicit seal phase.",
+      "Strict canonical_plan_targets is empty until governance registration/seal; actual touched docs are recorded in compiled_owner_docs and compiled_plan_outputs."
+    ],
+    "post_compile_readiness_assessment": "No additional product-level blockers were identified after locking tiered certification, verifier/adjudicator policy requirements, escalation triggers, verifier-unavailable behavior, approval boundaries, evidence retention, and child write-authority defaults. Remaining deferred questions are implementation-owner or future-compiler choices, not blockers to starting implementation planning.",
+    "pm_bootstrap_ledger_validate": "pass",
+    "run_gates": "pass",
+    "shard_check": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "governance_seal_assessment": "Governance seal registered the new Goal Runtime owner doc as the strict canonical_plan_target and refreshed generated migration, shard, evidence, Spec Lock, plan graph, auto_decision, and ledger projections without changing product prose or creating node/build artifacts."
   },
   "must_not_do": [
     "Do not compile old prompt-packet/D2 workflow as the product foundation.",
@@ -31,5 +66,5 @@
     "Do not let weak agents certify global completion.",
     "Do not create WorkNodes, NodeSeeds, executable queues, or governance artifacts during this ledger phase."
   ],
-  "updated_at_utc": "2026-06-16T04:05:00Z"
+  "updated_at_utc": "2026-06-16T05:36:58Z"
 }

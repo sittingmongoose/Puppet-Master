@@ -62,13 +62,15 @@
         "Gate:GATE-009",
         "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
         "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
-        "SchemaID:pm.auto_decisions.schema.v1"
+        "SchemaID:pm.auto_decisions.schema.v1",
+        "ContractName:Plans/Goal_Runtime_System.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
-        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
+        "dec-2026-06-16-goal-runtime-system-governance-seal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -114,6 +116,10 @@
         {
           "kind": "file",
           "ref": "scripts/pm-shard-plans.py"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Goal_Runtime_System.md"
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -154,6 +160,10 @@
         {
           "kind": "file",
           "ref": "scripts/pm-shard-plans.py"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Goal_Runtime_System.md"
         }
       ],
       "policy_mode": "workspace-write",
@@ -348,13 +358,15 @@
         "SchemaID:pm.evidence.schema.v1",
         "ContractName:Plans/Progression_Gates.md",
         "ContractName:Plans/Plan_Document_System.md",
-        "ContractName:Plans/Plan_To_Node_Compilation.md"
+        "ContractName:Plans/Plan_To_Node_Compilation.md",
+        "ContractName:Plans/Goal_Runtime_System.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
-        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
+        "dec-2026-06-16-goal-runtime-system-governance-seal"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",

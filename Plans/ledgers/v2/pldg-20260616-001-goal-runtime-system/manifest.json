@@ -3,13 +3,13 @@
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "title": "Native Goal Runtime and Assistant Chat Goal Mode",
   "profile": "bootstrap_planning",
-  "status": "active",
-  "phase": "ready_for_plan_compile",
+  "status": "compiled",
+  "phase": "compiled_goal_runtime_system_governance_sealed",
   "created_at_utc": "2026-06-16T04:00:00Z",
-  "updated_at_utc": "2026-06-16T04:05:00Z",
-  "last_event_id": "evt-0012",
+  "updated_at_utc": "2026-06-16T05:27:58Z",
+  "last_event_id": "evt-0023",
   "source_context": "Retrospective planning ledger created from the Goal Mode design conversation. It captures native Goal runtime behavior, invisible Chain Wizard/internal goals, visible assistant-chat Goal Mode UI, weak-model safety, parallel child goals/subagents, sharded document handling, attachment preservation, completion certification, and compile boundaries. This is a conversational design/spec ledger, not a Goal run and not canonical Plans.",
-  "notes": "Ready for explicit compile to canonical Plans. Do not include meta commentary or old prompt methods as product direction; include retired prompt-packet/D2 material only as negative constraints where needed.",
+  "notes": "Compiled to canonical Plans, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
   "files": {
     "events": "events.jsonl",
     "design_atoms": "records/design_atoms.jsonl",
@@ -24,11 +24,14 @@
     "operating_capsule": "state/operating_capsule.json"
   },
   "record_counts": {
-    "events": 12,
-    "design_atoms": 88,
-    "decisions": 12,
+    "events": 23,
+    "design_atoms": 110,
+    "decisions": 26,
     "questions": 5,
     "blockers": 0,
     "corrections": 5
-  }
+  },
+  "canonical_plan_targets": [
+    "Plans/Goal_Runtime_System.md"
+  ]
 }

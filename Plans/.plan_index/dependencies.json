@@ -1994,6 +1994,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "0PI-055",
+      "to": "GRS-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ACD-007",
       "to": "ACD-006"
     },
@@ -4431,6 +4436,36 @@
       "edge_type": "depends_on",
       "from": "ACD-414",
       "to": "ACD-413"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-416",
+      "to": "GRS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-417",
+      "to": "GRS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-417",
+      "to": "GRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-418",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-418",
+      "to": "GRS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-419",
+      "to": "GRS-016"
     },
     {
       "edge_type": "depends_on",
@@ -13374,6 +13409,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F3-393",
+      "to": "GRS-010"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "GRRC-030",
       "to": "CV-279"
     },
@@ -13386,6 +13426,186 @@
       "edge_type": "depends_on",
       "from": "GRRC-030",
       "to": "OP-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-002",
+      "to": "GRS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-003",
+      "to": "GRS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-004",
+      "to": "GRS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-005",
+      "to": "GRS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-006",
+      "to": "GRS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-007",
+      "to": "GRS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-008",
+      "to": "GRS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-009",
+      "to": "GRS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-010",
+      "to": "GRS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-011",
+      "to": "GRS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-011",
+      "to": "GRS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-012",
+      "to": "GRS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-012",
+      "to": "GRS-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-013",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-014",
+      "to": "GRS-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-015",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-016",
+      "to": "GRS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-016",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-017",
+      "to": "GRS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-018",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-018",
+      "to": "GRS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-019",
+      "to": "GRS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-019",
+      "to": "GRS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-020",
+      "to": "GRS-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-020",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-021",
+      "to": "GRS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-022",
+      "to": "GRS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-022",
+      "to": "GRS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-022",
+      "to": "GRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-022",
+      "to": "GRS-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-023",
+      "to": "GRS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-024",
+      "to": "GRS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-024",
+      "to": "GRS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-025",
+      "to": "GRS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-025",
+      "to": "GRS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-025",
+      "to": "GRS-010"
     },
     {
       "edge_type": "depends_on",
@@ -61528,7 +61748,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-16T00:58:55Z",
+  "generated_at_utc": "2026-06-16T05:33:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -61540,8 +61760,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 615,
-        "line": 617,
+        "heading_line": 630,
+        "line": 632,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61557,8 +61777,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 730,
-        "line": 732,
+        "heading_line": 745,
+        "line": 747,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61574,8 +61794,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 778,
-        "line": 780,
+        "heading_line": 793,
+        "line": 795,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61591,8 +61811,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 829,
-        "line": 831,
+        "heading_line": 844,
+        "line": 846,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61608,8 +61828,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 884,
-        "line": 886,
+        "heading_line": 899,
+        "line": 901,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61625,8 +61845,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 933,
-        "line": 935,
+        "heading_line": 948,
+        "line": 950,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61642,8 +61862,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 984,
-        "line": 986,
+        "heading_line": 999,
+        "line": 1001,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61659,8 +61879,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1035,
-        "line": 1037,
+        "heading_line": 1050,
+        "line": 1052,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61676,8 +61896,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1088,
-        "line": 1090,
+        "heading_line": 1103,
+        "line": 1105,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61693,8 +61913,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1139,
-        "line": 1141,
+        "heading_line": 1154,
+        "line": 1156,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61710,8 +61930,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1193,
-        "line": 1195,
+        "heading_line": 1208,
+        "line": 1210,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61727,8 +61947,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1244,
-        "line": 1246,
+        "heading_line": 1259,
+        "line": 1261,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61744,8 +61964,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1296,
-        "line": 1298,
+        "heading_line": 1311,
+        "line": 1313,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61761,8 +61981,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1345,
-        "line": 1347,
+        "heading_line": 1360,
+        "line": 1362,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61778,8 +61998,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1394,
-        "line": 1396,
+        "heading_line": 1409,
+        "line": 1411,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61795,8 +62015,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1447,
-        "line": 1449,
+        "heading_line": 1462,
+        "line": 1464,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61812,8 +62032,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1499,
-        "line": 1501,
+        "heading_line": 1514,
+        "line": 1516,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61829,8 +62049,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1550,
-        "line": 1552,
+        "heading_line": 1565,
+        "line": 1567,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61846,8 +62066,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1602,
-        "line": 1604,
+        "heading_line": 1617,
+        "line": 1619,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61863,8 +62083,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1653,
-        "line": 1655,
+        "heading_line": 1668,
+        "line": 1670,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61880,8 +62100,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 1702,
-        "line": 1704,
+        "heading_line": 1717,
+        "line": 1719,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61897,8 +62117,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 1755,
-        "line": 1757,
+        "heading_line": 1770,
+        "line": 1772,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61914,8 +62134,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 1805,
-        "line": 1807,
+        "heading_line": 1820,
+        "line": 1822,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61931,8 +62151,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 1858,
-        "line": 1860,
+        "heading_line": 1873,
+        "line": 1875,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61948,8 +62168,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 1911,
-        "line": 1913,
+        "heading_line": 1926,
+        "line": 1928,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61965,8 +62185,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 1965,
-        "line": 1967,
+        "heading_line": 1980,
+        "line": 1982,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61982,8 +62202,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2017,
-        "line": 2019,
+        "heading_line": 2032,
+        "line": 2034,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -61999,8 +62219,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2076,
-        "line": 2078,
+        "heading_line": 2091,
+        "line": 2093,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62016,8 +62236,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2137,
-        "line": 2139,
+        "heading_line": 2152,
+        "line": 2154,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62033,8 +62253,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2189,
-        "line": 2191,
+        "heading_line": 2204,
+        "line": 2206,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62050,8 +62270,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2246,
-        "line": 2248,
+        "heading_line": 2261,
+        "line": 2263,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62067,8 +62287,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2295,
-        "line": 2297,
+        "heading_line": 2310,
+        "line": 2312,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62084,8 +62304,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2346,
-        "line": 2348,
+        "heading_line": 2361,
+        "line": 2363,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62101,8 +62321,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2403,
-        "line": 2405,
+        "heading_line": 2418,
+        "line": 2420,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62118,8 +62338,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2459,
-        "line": 2461,
+        "heading_line": 2474,
+        "line": 2476,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62135,8 +62355,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2513,
-        "line": 2515,
+        "heading_line": 2528,
+        "line": 2530,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62152,8 +62372,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2563,
-        "line": 2565,
+        "heading_line": 2578,
+        "line": 2580,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62169,8 +62389,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2619,
-        "line": 2621,
+        "heading_line": 2634,
+        "line": 2636,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62186,8 +62406,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2673,
-        "line": 2675,
+        "heading_line": 2688,
+        "line": 2690,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62203,8 +62423,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 2729,
-        "line": 2731,
+        "heading_line": 2744,
+        "line": 2746,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62220,8 +62440,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 2793,
-        "line": 2795,
+        "heading_line": 2808,
+        "line": 2810,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62237,8 +62457,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 2848,
-        "line": 2850,
+        "heading_line": 2863,
+        "line": 2865,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62254,8 +62474,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 2919,
-        "line": 2921,
+        "heading_line": 2934,
+        "line": 2936,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62271,8 +62491,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 2991,
-        "line": 2993,
+        "heading_line": 3006,
+        "line": 3008,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62288,8 +62508,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3063,
-        "line": 3065,
+        "heading_line": 3078,
+        "line": 3080,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62305,8 +62525,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3129,
-        "line": 3131,
+        "heading_line": 3144,
+        "line": 3146,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62322,8 +62542,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3193,
-        "line": 3195,
+        "heading_line": 3208,
+        "line": 3210,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62339,8 +62559,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3265,
-        "line": 3267,
+        "heading_line": 3280,
+        "line": 3282,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62356,8 +62576,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3338,
-        "line": 3340,
+        "heading_line": 3353,
+        "line": 3355,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62373,8 +62593,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3410,
-        "line": 3412,
+        "heading_line": 3425,
+        "line": 3427,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62390,8 +62610,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3471,
-        "line": 3473,
+        "heading_line": 3486,
+        "line": 3488,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62407,8 +62627,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3546,
-        "line": 3548,
+        "heading_line": 3561,
+        "line": 3563,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62424,8 +62644,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3614,
-        "line": 3616,
+        "heading_line": 3629,
+        "line": 3631,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -62441,8 +62661,25 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 3692,
-        "line": 3694,
+        "heading_line": 3707,
+        "line": 3709,
+        "path": "Plans/00-plans-index.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "plans_index_goal_runtime_map",
+      "gui_related": false,
+      "owner_doc": "Plans/00-plans-index.md",
+      "plan_unit_id": "0PI-055",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_map_drift",
+      "source_location": {
+        "heading": "0PI-055 - Goal Runtime System Owner Map",
+        "heading_level": 3,
+        "heading_line": 3759,
+        "line": 3761,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -69502,6 +69739,74 @@
       },
       "status": "accepted",
       "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "assistant_chat_goal_mode",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-416",
+      "reasoning_tier": "standard",
+      "risk_class": "hidden_goal_control",
+      "source_location": {
+        "heading": "ACD-416 - Goal Mode Activation Status And Thread Controls",
+        "heading_level": 3,
+        "heading_line": 21880,
+        "line": 21882,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "assistant_chat_goal_mode",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-417",
+      "reasoning_tier": "standard",
+      "risk_class": "task_status_visibility_drift",
+      "source_location": {
+        "heading": "ACD-417 - Goal Task Tracker Replan And Blocked State Projection",
+        "heading_level": 3,
+        "heading_line": 21940,
+        "line": 21942,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "assistant_chat_goal_mode",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-418",
+      "reasoning_tier": "standard",
+      "risk_class": "evidence_visibility_drift",
+      "source_location": {
+        "heading": "ACD-418 - Goal Evidence Activity And Completion Reports",
+        "heading_level": 3,
+        "heading_line": 21992,
+        "line": 21994,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "assistant_chat_goal_mode",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-419",
+      "reasoning_tier": "standard",
+      "risk_class": "child_goal_visibility_drift",
+      "source_location": {
+        "heading": "ACD-419 - Collapsible Child Goal Display",
+        "heading_level": 3,
+        "heading_line": 22044,
+        "line": 22046,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -98795,6 +99100,23 @@
       "unit_type": "compatibility_disposition"
     },
     {
+      "context_scope": "goal_mode_settings_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-393",
+      "reasoning_tier": "standard",
+      "risk_class": "user_visible_config_drift",
+      "source_location": {
+        "heading": "F3-393 - Goal Mode Worker And Verifier Model Selectors",
+        "heading_level": 3,
+        "heading_line": 24682,
+        "line": 24684,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -101122,6 +101444,431 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_system",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-001",
+      "reasoning_tier": "standard",
+      "risk_class": "product_scope_drift",
+      "source_location": {
+        "heading": "GRS-001 - Native Goal Mode Scope And Retired Prompt Boundary",
+        "heading_level": 3,
+        "heading_line": 33,
+        "line": 35,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "goal_runtime_system",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-002",
+      "reasoning_tier": "high",
+      "risk_class": "runtime_split_brain",
+      "source_location": {
+        "heading": "GRS-002 - One Runtime Engine With Visible And Invisible Presentations",
+        "heading_level": 3,
+        "heading_line": 90,
+        "line": 92,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "chain_wizard_integration",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-003",
+      "reasoning_tier": "standard",
+      "risk_class": "chain_wizard_runtime_drift",
+      "source_location": {
+        "heading": "GRS-003 - Invisible Chain Wizard Goal Boundary",
+        "heading_level": 3,
+        "heading_line": 142,
+        "line": 144,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "repo_and_goal_context",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-004",
+      "reasoning_tier": "high",
+      "risk_class": "context_fragmentation",
+      "source_location": {
+        "heading": "GRS-004 - Whole-Goal Coherence With Sharded Inputs",
+        "heading_level": 3,
+        "heading_line": 193,
+        "line": 195,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_state",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-005",
+      "reasoning_tier": "high",
+      "risk_class": "durable_state_loss",
+      "source_location": {
+        "heading": "GRS-005 - Durable Goal State And Event Log",
+        "heading_level": 3,
+        "heading_line": 252,
+        "line": 254,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_scheduler",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-006",
+      "reasoning_tier": "high",
+      "risk_class": "scheduler_drift",
+      "source_location": {
+        "heading": "GRS-006 - Scheduler Continuation And Revisioned Goal Updates",
+        "heading_level": 3,
+        "heading_line": 301,
+        "line": 303,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_updates",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-007",
+      "reasoning_tier": "high",
+      "risk_class": "silent_goal_mutation",
+      "source_location": {
+        "heading": "GRS-007 - Goal Replan Event For Material Changes",
+        "heading_level": 3,
+        "heading_line": 348,
+        "line": 350,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_inputs_and_evidence",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-008",
+      "reasoning_tier": "high",
+      "risk_class": "evidence_reproducibility",
+      "source_location": {
+        "heading": "GRS-008 - Objective Attachments And Phase-Bound Snapshots",
+        "heading_level": 3,
+        "heading_line": 402,
+        "line": 404,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_safety",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-009",
+      "reasoning_tier": "high",
+      "risk_class": "weak_worker_false_completion",
+      "source_location": {
+        "heading": "GRS-009 - Worker Role Separation And Bounded Authority",
+        "heading_level": 3,
+        "heading_line": 464,
+        "line": 466,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_model_policy",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-010",
+      "reasoning_tier": "high",
+      "risk_class": "model_role_policy_drift",
+      "source_location": {
+        "heading": "GRS-010 - Model Role Policy And Certification-Tier Verifier Requirements",
+        "heading_level": 3,
+        "heading_line": 516,
+        "line": 518,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_safety",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-011",
+      "reasoning_tier": "high",
+      "risk_class": "unsupported_completion_claim",
+      "source_location": {
+        "heading": "GRS-011 - Provider-Neutral Escalation Triggers",
+        "heading_level": 3,
+        "heading_line": 572,
+        "line": 574,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_completion",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-012",
+      "reasoning_tier": "high",
+      "risk_class": "false_completion",
+      "source_location": {
+        "heading": "GRS-012 - Goal Completion Receipt Authority",
+        "heading_level": 3,
+        "heading_line": 623,
+        "line": 625,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_completion",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-013",
+      "reasoning_tier": "high",
+      "risk_class": "certification_underfit",
+      "source_location": {
+        "heading": "GRS-013 - Risk-Tiered Completion Certification",
+        "heading_level": 3,
+        "heading_line": 677,
+        "line": 679,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "goal_completion_evidence",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-014",
+      "reasoning_tier": "high",
+      "risk_class": "evidence_retention_drift",
+      "source_location": {
+        "heading": "GRS-014 - Verifier Unavailable And Evidence Retention Policy",
+        "heading_level": 3,
+        "heading_line": 733,
+        "line": 735,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_progress",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-015",
+      "reasoning_tier": "high",
+      "risk_class": "loop_or_validator_false_completion",
+      "source_location": {
+        "heading": "GRS-015 - Progress Fingerprints, Budgets, And Validators",
+        "heading_level": 3,
+        "heading_line": 796,
+        "line": 798,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "parent_child_goal_runtime",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-016",
+      "reasoning_tier": "high",
+      "risk_class": "child_goal_authority_drift",
+      "source_location": {
+        "heading": "GRS-016 - Parallel Child Goals And Parent Completion Authority",
+        "heading_level": 3,
+        "heading_line": 845,
+        "line": 847,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "parent_child_goal_runtime",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-017",
+      "reasoning_tier": "high",
+      "risk_class": "concurrent_write_conflict",
+      "source_location": {
+        "heading": "GRS-017 - Child Goal Write Authority And Single-Writer Leases",
+        "heading_level": 3,
+        "heading_line": 908,
+        "line": 910,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "goal_runtime_templates",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-018",
+      "reasoning_tier": "standard",
+      "risk_class": "goal_template_ambiguity",
+      "source_location": {
+        "heading": "GRS-018 - Task Template Catalog And Goal-Type Completion Criteria",
+        "heading_level": 3,
+        "heading_line": 961,
+        "line": 963,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_recovery",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-019",
+      "reasoning_tier": "high",
+      "risk_class": "hidden_blocker",
+      "source_location": {
+        "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
+        "heading_level": 3,
+        "heading_line": 1019,
+        "line": 1021,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_runtime_permissions",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-020",
+      "reasoning_tier": "high",
+      "risk_class": "authority_boundary_violation",
+      "source_location": {
+        "heading": "GRS-020 - Approval Boundaries For High-Risk Goal Actions",
+        "heading_level": 3,
+        "heading_line": 1068,
+        "line": 1070,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "ledger_to_plans_compile",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-021",
+      "reasoning_tier": "high",
+      "risk_class": "governance_boundary",
+      "source_location": {
+        "heading": "GRS-021 - Goal Compile Acceptance And Governance Boundary",
+        "heading_level": 3,
+        "heading_line": 1123,
+        "line": 1125,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "goal_runtime_system",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-022",
+      "reasoning_tier": "high",
+      "risk_class": "goal_runtime_product_risk",
+      "source_location": {
+        "heading": "GRS-022 - Goal Runtime Risk Register",
+        "heading_level": 3,
+        "heading_line": 1180,
+        "line": 1182,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "risk"
+    },
+    {
+      "context_scope": "goal_runtime_source_lineage",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-023",
+      "reasoning_tier": "standard",
+      "risk_class": "external_reference_overreach",
+      "source_location": {
+        "heading": "GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners",
+        "heading_level": 3,
+        "heading_line": 1229,
+        "line": 1231,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "chain_wizard_and_compiler",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-024",
+      "reasoning_tier": "high",
+      "risk_class": "deferred_compiler_boundary",
+      "source_location": {
+        "heading": "GRS-024 - Deferred Chain Wizard And Plan Graph Decisions",
+        "heading_level": 3,
+        "heading_line": 1271,
+        "line": 1273,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "deferred",
+      "unit_type": "deferred_decision"
+    },
+    {
+      "context_scope": "goal_runtime_deferred_items",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-025",
+      "reasoning_tier": "standard",
+      "risk_class": "deferred_implementation_choice",
+      "source_location": {
+        "heading": "GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults",
+        "heading_level": 3,
+        "heading_line": 1323,
+        "line": 1325,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "deferred",
+      "unit_type": "deferred_decision"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -146621,9 +147368,9 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10440,
-    "edge_count": 11960,
-    "node_count": 5005,
+    "depends_on_edge_count": 10484,
+    "edge_count": 12004,
+    "node_count": 5036,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },
