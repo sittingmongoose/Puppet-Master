@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "eb1674cb8bd438ed5f6d3f619cefa6c0e8d6d9219f8028d0b5ff53ed64534170"
+      "sha256": "d81199a65d58672d4952f2b5dd34cb425d0ceae2797f9ea5fa5055d684bfbe07"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5"
+      "sha256": "84843205d7f8baacf5513d85b100dabb1756b515a7c2c2c02e4ecdeee00cd2a8"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -68,17 +68,17 @@
     {
       "note": "P6 node repair refs.",
       "path": "Plans/plan_graph.json",
-      "sha256": "5a572c42bce5d8dde1d42aff16b547a6a2d7022bb5cbddb9da3a7bd1621f42c3"
+      "sha256": "7d9fa20ffb5dcbdbee7da1636d9c18553952d73368c77d5094bbc283928ab07c"
     },
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a7e5ad6f12455ef4bf1699ae2d50b42ed20b14b45b28c350136d30010a8aad7"
+      "sha256": "26eb2c3789fb5097e5e4ad14363729a8f22dfd41bc9064d13ad9c182fb73e02f"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "8f779be147dd60855901e12a0963c55252799614dd6bc29edab6e6c5f5cc55ce"
+      "sha256": "1e5d19f5d213d4c704443991aca6df57a35d2bc20801384f4af48a6402426583"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "58ad527c37f3f0ab973a0ed68bd20ade4fd6d4abacaef15d8c04f37bab21033c"
+      "sha256": "35d8c5a83865cc299f428da76339f54e3949f7ab01d0973c274c419706b956f0"
     }
   ],
   "checks": [
@@ -232,6 +232,11 @@
       "name": "no-node-artifacts-created",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
     }
   ],
   "commands_run": [
@@ -384,6 +389,18 @@
       "cmd": "git diff --check",
       "exit_code": 0,
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

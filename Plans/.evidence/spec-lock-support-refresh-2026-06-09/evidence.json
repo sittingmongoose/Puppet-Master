@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a7e5ad6f12455ef4bf1699ae2d50b42ed20b14b45b28c350136d30010a8aad7"
+      "sha256": "26eb2c3789fb5097e5e4ad14363729a8f22dfd41bc9064d13ad9c182fb73e02f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -10,7 +10,7 @@
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "5a572c42bce5d8dde1d42aff16b547a6a2d7022bb5cbddb9da3a7bd1621f42c3"
+      "sha256": "7d9fa20ffb5dcbdbee7da1636d9c18553952d73368c77d5094bbc283928ab07c"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "62567d356c0653f0f04c7ec1bda002e7a51eafe0db659ae1aedefcb826c2acae"
+      "sha256": "c21c34aeeff62691b2bfdaf091bd56a5940f11948a6731bb7e01b774eae1db72"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -92,6 +92,21 @@
       "name": "no-node-artifacts-created",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "validator-evidence-node-join",
+      "result": "PASS",
+      "details": "scripts/pm-plans-verify.py validate-evidence and validate-plan-graph check evidence node ids against Plans/plan_graph.json."
+    },
+    {
+      "name": "audit-20260616-002-repair",
+      "result": "PASS",
+      "details": "Audit audit-20260616-002 repair refreshed Spec Lock support evidence after updating evidence-node validation."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
     }
   ],
   "commands_run": [
@@ -101,6 +116,42 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0
+    },
+    {
+      "cmd": "git diff --check",
       "exit_code": 0
     }
   ],

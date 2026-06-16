@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.audit.ledger_consistency.v1",
+  "audit_id": "audit-20260616-003-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "status": "pass_with_warnings",
+  "governance_status": "sealed",
+  "health_status": "pass_governance_sealed",
+  "manifest_count_mismatches": {},
+  "atom_status_counts": {
+    "not_for_plan": 1,
+    "compiled_to_plan": 108,
+    "deferred": 1
+  },
+  "question_status_counts": {
+    "deferred": 5
+  },
+  "compiled_atom_count": 108,
+  "compiled_atom_missing_plan_evidence_count": 0,
+  "compiled_atom_missing_plan_evidence": [],
+  "active_candidate_or_ready_atoms_in_sealed_ledger": [],
+  "open_questions_in_sealed_ledger": [],
+  "missing_gui_related_atoms": [],
+  "warnings": [
+    {
+      "type": "stale_compile_notes",
+      "count": 108,
+      "sample": [
+        "atom-0002",
+        "atom-0003",
+        "atom-0004",
+        "atom-0005",
+        "atom-0006",
+        "atom-0007",
+        "atom-0008",
+        "atom-0009",
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0013",
+        "atom-0014",
+        "atom-0015",
+        "atom-0017",
+        "atom-0018",
+        "atom-0019",
+        "atom-0020",
+        "atom-0021",
+        "atom-0022"
+      ]
+    },
+    {
+      "type": "sealed_projection_contains_stale_pending_or_refreshing_text"
+    },
+    {
+      "type": "q-0005_overclaims_F3-393",
+      "location": "records/questions.jsonl:q-0005"
+    },
+    {
+      "type": "q-0005_overclaims_F3-393",
+      "location": "state/open_items.json:q-0005"
+    },
+    {
+      "type": "ledger_registry_not_under_sealed_ledgers",
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "detail": "Registry keeps the ledger under compiled_ledgers with status compiled while current.json and ledger_health report sealed."
+    },
+    {
+      "type": "compile_queue_deferred_atom_double_listed",
+      "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/compile_queue.json",
+      "detail": "atom-0016 appears in source_atom_ids and deferred_atom_ids."
+    },
+    {
+      "type": "registry_manifest_timestamp_lags_projection_state",
+      "detail": "Registry/manifest stop at 2026-06-16T05:27:58Z while current/handoff/open_items/ledger_health reach 2026-06-16T05:36:58Z."
+    }
+  ],
+  "weak_output_mappings": [
+    {
+      "record_id": "q-0005",
+      "listed_plan_unit": "F3-393",
+      "coverage_plan_units": [
+        "GRS-010",
+        "GRS-025"
+      ],
+      "severity": "medium"
+    },
+    {
+      "record_id": "dec-0002",
+      "listed_plan_unit": "GRS-004",
+      "coverage_plan_units": [
+        "GRS-001"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0003",
+      "listed_plan_units": [
+        "ACD-416",
+        "ACD-418"
+      ],
+      "coverage_plan_units": [
+        "GRS-002"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0006",
+      "listed_plan_units": [
+        "GRS-012",
+        "GRS-022"
+      ],
+      "coverage_plan_units": [
+        "GRS-009"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0008",
+      "listed_plan_units": [
+        "ACD-417",
+        "ACD-418"
+      ],
+      "coverage_plan_units": [
+        "ACD-416"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0009",
+      "listed_plan_unit": "ACD-419",
+      "coverage_plan_units": [
+        "GRS-016"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0010",
+      "listed_plan_unit": "GRS-023",
+      "coverage_plan_units": [
+        "GRS-008"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0011",
+      "listed_plan_units": [
+        "GRS-024",
+        "GRS-018"
+      ],
+      "coverage_plan_units": [
+        "GRS-003"
+      ],
+      "severity": "low"
+    },
+    {
+      "record_id": "dec-0012",
+      "listed_plan_unit": "GRS-001",
+      "coverage_plan_units": [
+        "GRS-021",
+        "0PI-055"
+      ],
+      "severity": "low"
+    }
+  ]
+}

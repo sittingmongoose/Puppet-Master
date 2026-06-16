@@ -21923,10 +21923,15 @@ preserved_exact_tokens:
   - "button/chip/icon"
   - "/goal"
   - "Visible active goal indicator"
+  - "Goal: Running"
   - "Pause and resume controls"
   - "Stop and clear controls"
+  - "stopped_by_user"
+  - "cleared_from_thread"
   - "Goal update entry points"
   - "Goal chip is separate from chat mode"
+  - "Agent + Goal"
+  - "Crew + Goal"
   - "Goal menu actions"
   - "PMConcept alignment"
 negative_constraints:
@@ -21978,9 +21983,14 @@ source_lineage:
 preserved_exact_tokens:
   - "Goal task / todo tracker"
   - "Goal task item states"
+  - "pending | running | verifying | completed | blocked | failed | skipped | cancelled | stale | replanned"
   - "updates the visible task list"
   - "Goal Replan Event"
   - "Blocked status carries exact blocker"
+  - "blocker_class"
+  - "affected scope"
+  - "last attempted recovery"
+  - "next safe action"
 negative_constraints:
   - Do not hide material replan impact from the task tracker.
   - Do not render blocked goal state as a generic failure without the blocker reason.

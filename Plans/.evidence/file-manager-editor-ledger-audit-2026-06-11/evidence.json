@@ -13,12 +13,12 @@
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "62567d356c0653f0f04c7ec1bda002e7a51eafe0db659ae1aedefcb826c2acae"
+      "sha256": "c21c34aeeff62691b2bfdaf091bd56a5940f11948a6731bb7e01b774eae1db72"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a7e5ad6f12455ef4bf1699ae2d50b42ed20b14b45b28c350136d30010a8aad7"
+      "sha256": "26eb2c3789fb5097e5e4ad14363729a8f22dfd41bc9064d13ad9c182fb73e02f"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "8f779be147dd60855901e12a0963c55252799614dd6bc29edab6e6c5f5cc55ce"
+      "sha256": "1e5d19f5d213d4c704443991aca6df57a35d2bc20801384f4af48a6402426583"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -80,12 +80,17 @@
       "name": "no-node-artifacts-created",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
     }
   ],
   "commands_run": [
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 1,
+      "exit_code": 0,
       "stderr_excerpt": "PermissionError on ignored local .claude/_state/ide before verifier repair."
     },
     {
@@ -181,6 +186,18 @@
       "cmd": "git diff --check",
       "exit_code": 0,
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

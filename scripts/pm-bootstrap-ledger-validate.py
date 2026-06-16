@@ -540,7 +540,7 @@ def main() -> int:
     if registry_path.exists():
         registry = load_json(registry_path)
         matching_entries = [
-            entry
+            (bucket, entry)
             for bucket in ("active_ledgers", "paused_ledgers", "compiled_ledgers", "sealed_ledgers")
             for entry in registry.get(bucket, [])
             if entry.get("ledger_id") == lid
@@ -548,8 +548,13 @@ def main() -> int:
         if len(matching_entries) != 1:
             errors.append(f"ledger_registry should contain exactly one entry for {lid}, found {len(matching_entries)}")
         elif compiled_phase:
-            entry = matching_entries[0]
-            if entry.get("status") != "compiled":
+            bucket, entry = matching_entries[0]
+            if current.get("governance_status") == "sealed":
+                if bucket != "sealed_ledgers":
+                    errors.append(f"sealed ledger registry entry must be under sealed_ledgers, got {bucket}")
+                if entry.get("status") != "sealed":
+                    errors.append(f"registry status for sealed ledger must be sealed, got {entry.get('status')!r}")
+            elif entry.get("status") != "compiled":
                 errors.append(f"registry status for compiled ledger must be compiled, got {entry.get('status')!r}")
             if entry.get("phase") != current_phase:
                 errors.append("registry phase disagrees with current phase")

@@ -184,6 +184,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not treat current Chain Wizard docs as final Goal Runtime design.
   - Do not turn invisible Chain Wizard execution into a row-by-row user questioning flow.
+  - Do not define concrete Chain Wizard UI flow, layout, copy, or screen behavior in Goal Runtime canon; route those details to Chain Wizard and Assistant Chat owner docs.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/chain-wizard-flexibility.md
@@ -239,6 +240,17 @@ preserved_exact_tokens:
   - "manifests"
   - "compact-state-first resume"
   - "source and target universe"
+  - "source universe"
+  - "target universe"
+  - "source_ledger_manifest"
+  - "source_ledger_shards"
+  - "target_plan_manifest"
+  - "target_plan_shards"
+  - "project_doc_index"
+  - "goal_work_journal"
+  - "goal_change_plan"
+  - "goal_apply_report"
+  - "goal_completion_report"
   - "Sharding is not D2-style workflow slicing"
 negative_constraints:
   - Do not let sharding fragment the agent's understanding of the whole goal.
@@ -288,6 +300,16 @@ source_lineage:
 preserved_exact_tokens:
   - "durable execution data"
   - "append-only goal event log"
+  - "goal_events.jsonl"
+  - "goal_revision"
+  - "expected_goal_revision"
+  - "compare-and-swap"
+  - "acceptance_criteria"
+  - "non_goals"
+  - "work_queue"
+  - "model_policy"
+  - "evidence_index"
+  - "persisted runtime state"
   - "Optimistic concurrency"
   - "compaction, restarts, model switches"
   - "database tables, project files, or a hybrid"
@@ -336,6 +358,8 @@ preserved_exact_tokens:
   - "Runtime-driven continuation"
   - "User preemption"
   - "constraint updates"
+  - "user message pending"
+  - "re-steer"
   - "Goal updates are revisioned"
 negative_constraints:
   - Do not rely on the worker model's final answer as the scheduler completion source.
@@ -896,7 +920,7 @@ preserved_exact_tokens:
   - "completion_receipt"
   - "Child goals may complete themselves locally"
   - "cannot complete the parent goal"
-  - "For this task, write yourself a new goal and spawn agents in parallel..."
+  - "For this task, write yourself a new goal and spawn agents in parallel - as many as needed to do it better and faster. Split the work into independent pieces, dispatch them concurrently, and synthesize the results as they return. Give each agent its own dedicated /goal."
 negative_constraints:
   - Do not hide child agents as untracked implementation details.
   - Do not let a child goal certify, merge, or finish the parent goal independently.
@@ -966,7 +990,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, audit_and_repair, ledger_to_plan_transfer, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable.
+  Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, repo_research, refactor, migration, audit_and_repair, ledger_to_plan_transfer, governance seal, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable.
 gui_related: false
 gui_classification_reason: Goal templates and completion criteria are runtime/task policy, not GUI implementation.
 depends_on:
@@ -1004,10 +1028,38 @@ preserved_exact_tokens:
   - "feature_build"
   - "test_until_pass"
   - "doc_update"
+  - "repo_research"
+  - "refactor"
+  - "migration"
   - "audit_and_repair"
+  - "ledger_to_plan_transfer"
   - "ledger-to-plan transfer"
+  - "governance seal"
+  - "plan_graph_build"
   - "Plan graph build goal deferred"
   - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+  - "bug reproduced"
+  - "fix applied"
+  - "relevant tests pass"
+  - "implementation done"
+  - "tests added/updated"
+  - "tests pass"
+  - "docs/plans updated"
+  - "test until pass"
+  - "command passes"
+  - "external/blocking"
+  - "logs captured"
+  - "source refs"
+  - "lineage"
+  - "validators"
+  - "lint checks"
+  - "compact state"
+  - "relevant records"
+  - "sharded source/target docs"
+  - "update live Plans"
+  - "verify coverage"
+  - "repair autonomously"
+  - "completion certificate"
 negative_constraints:
   - Do not create NodeSeeds or WorkNodes until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
   - Do not treat a task template as an executable queue.
@@ -1128,7 +1180,7 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, PlanUnit indexing, and this compile phase, agents must not update Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate seal phase.
+  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, PlanUnit indexing, and the pre-seal compile phase, agents must not update Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate explicit governance seal phase; that seal may refresh governance artifacts without changing product behavior or creating node/build artifacts.
 gui_related: false
 gui_classification_reason: Compile and governance boundaries are planning/governance behavior, not GUI implementation.
 depends_on:
@@ -1136,11 +1188,17 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Canonical Goal Runtime behavior is represented in live non-pipeline Plans docs.
-  - Allowed PlanUnit index outputs may be regenerated, but seal-phase governance artifacts are not touched.
-  - Compile reports changed files, PlanUnits, atom dispositions, validators, and pending seal status.
+  - Allowed PlanUnit index outputs may be regenerated during the pre-seal compile phase, but seal-phase governance artifacts are not touched until explicit seal.
+  - Compile reports changed files, PlanUnits, atom dispositions, validators, and pre-seal pending seal status.
 validation_surfaces:
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
   - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+  - python3 scripts/pm-plans-verify.py validate-auto-decisions
+  - python3 scripts/pm-plans-verify.py verify-spec-lock
+  - python3 scripts/pm-plans-verify.py validate-evidence
   - git diff --check
 risk_class: governance_boundary
 reasoning_tier: high
@@ -1172,7 +1230,7 @@ preserved_exact_tokens:
   - "auto_decisions"
 negative_constraints:
   - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks during this compile.
-  - Do not update Spec_Lock, generated shards, evidence, plan_graph, or auto_decisions during this compile phase.
+  - Do not update Spec_Lock, generated shards, evidence, plan_graph, or auto_decisions during the pre-seal compile phase.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -1383,6 +1441,8 @@ Goal Runtime requires these data-shape families:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
+These data-shape bullets are Goal Runtime feature-local constraints and owner hints until `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Permissions_System.md` receive a separate explicit owner-doc compile. They do not revise those owner docs in this cycle.
+
 ## 4. Integration Surfaces
 
 - Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, completion reports, and child-goal expansion.
@@ -1405,6 +1465,7 @@ Goal Runtime implementation is acceptable only when:
 - child goals are first-class runtime objects but cannot complete the parent;
 - child direct writes require isolation, partitioning, or a parent-granted single-writer lease;
 - evidence is replayable for standard/strong tiers and raw logs are capped/redacted;
+- seal-phase governance validation uses the complete GRS-021 validator suite before accepting the sealed Goal Runtime packet;
 - WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent until the compiler contract allows them.
 
 ## 6. Plan-To-Node Readiness
@@ -1429,7 +1490,7 @@ Retired or non-goal:
 - a bootstrapped PM Goal Mode implementation for current bootstrap work;
 - treating Goal Mode as only a prompt loop or planning-doc transfer tool;
 - creating WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks in this compile;
-- updating Spec Lock, generated shards, evidence bundles, plan_graph, or auto_decisions in this compile.
+- updating Spec Lock, generated shards, evidence bundles, plan_graph, or auto_decisions during the pre-seal compile phase.
 
 Compatibility:
 
@@ -1454,4 +1515,4 @@ Owner adjudication:
 - `Plans/FinalGUISpec.md` owns Settings GUI placement for model selectors.
 - `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger, PlanUnit, and node-readiness mechanics.
 
-Governance status after this compile is `pending_seal` if live Plans or `Plans/.plan_index/**` changed. Seal-phase artifacts are intentionally not updated here.
+The pre-seal compile phase leaves live Plans and `Plans/.plan_index/**` changes at `pending_seal` until an explicit governance seal. This Goal Runtime ledger has since been sealed through that separate governance phase; future ordinary ledger writing, plan drafting, PlanUnit indexing, and pre-seal compile work still must not touch generated governance artifacts.

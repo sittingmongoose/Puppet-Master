@@ -398,7 +398,27 @@ def evidence_paths(explicit_paths: list[str]) -> list[Path]:
     return sorted((PLANS / ".evidence").glob("**/evidence.json"))
 
 
-def validate_evidence_file(path: Path, schema: dict[str, Any]) -> list[dict[str, Any]]:
+def plan_graph_node_ids() -> tuple[set[str], list[dict[str, Any]]]:
+    graph_path = PLANS / "plan_graph.json"
+    try:
+        graph = load_json(graph_path)
+    except Exception as exc:  # noqa: BLE001
+        return set(), [{"path": rel(graph_path), "error": str(exc)}]
+    node_ids = {
+        str(node.get("node_id"))
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict) and isinstance(node.get("node_id"), str) and node.get("node_id")
+    }
+    return node_ids, []
+
+
+def validate_evidence_file(
+    path: Path,
+    schema: dict[str, Any],
+    *,
+    known_node_ids: set[str] | None = None,
+    expected_node_id: str | None = None,
+) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     try:
         data = load_json(path)
@@ -406,6 +426,25 @@ def validate_evidence_file(path: Path, schema: dict[str, Any]) -> list[dict[str,
         return [{"path": rel(path), "error": str(exc)}]
     for error in validate_schema(data, schema, schema):
         failures.append({"path": rel(path), "error": error})
+    actual_node_id = data.get("node", {}).get("node_id")
+    if expected_node_id is not None and actual_node_id != expected_node_id:
+        failures.append(
+            {
+                "path": rel(path),
+                "error": "evidence_node_id_mismatch",
+                "expected_node_id": expected_node_id,
+                "actual_node_id": actual_node_id,
+            }
+        )
+    if known_node_ids is not None and actual_node_id not in known_node_ids:
+        failures.append(
+            {
+                "path": rel(path),
+                "node_id": actual_node_id,
+                "error": "evidence_node_id_not_in_plan_graph",
+                "plan_graph": "Plans/plan_graph.json",
+            }
+        )
     for artifact in data.get("artifacts", []):
         artifact_ref = artifact.get("path")
         expected_hash = artifact.get("sha256")
@@ -437,6 +476,8 @@ def cmd_validate_evidence(args: argparse.Namespace) -> dict[str, Any]:
     schema = load_json(PLANS / "evidence.schema.json")
     paths = evidence_paths(args.paths)
     failures: list[dict[str, Any]] = []
+    known_node_ids, graph_failures = plan_graph_node_ids()
+    failures.extend(graph_failures)
     checked = []
     for path in paths:
         path_ref = path.relative_to(ROOT).as_posix() if path.is_absolute() and path.is_relative_to(ROOT) else str(path)
@@ -449,7 +490,7 @@ def cmd_validate_evidence(args: argparse.Namespace) -> dict[str, Any]:
             failures.append({"path": rel(path) if path.is_absolute() else str(path), "error": "missing_evidence"})
             continue
         checked.append(rel(path))
-        failures.extend(validate_evidence_file(path, schema))
+        failures.extend(validate_evidence_file(path, schema, known_node_ids=known_node_ids))
     return report_status("validate-evidence", failures, evidence_files_checked=len(checked), evidence_files=checked)
 
 
@@ -473,6 +514,7 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
             failures.append({"path": rel(graph_path), "error": "entrypoint_is_example", "entrypoint": entry})
 
     node_ids = {node.get("node_id") for node in graph.get("nodes", [])}
+    known_node_ids = {str(node_id) for node_id in node_ids if isinstance(node_id, str)}
     for node in graph.get("nodes", []):
         node_id = node.get("node_id")
         if not node_id or str(node_id).startswith("EXAMPLE."):
@@ -505,7 +547,14 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
             elif evidence_path is None or not evidence_path.exists():
                 failures.append({"path": rel(graph_path), "node_id": node_id, "error": "missing_required_evidence", "evidence": evidence_ref})
             else:
-                failures.extend(validate_evidence_file(evidence_path, evidence_schema))
+                failures.extend(
+                    validate_evidence_file(
+                        evidence_path,
+                        evidence_schema,
+                        known_node_ids=known_node_ids,
+                        expected_node_id=str(node_id) if isinstance(node_id, str) else None,
+                    )
+                )
         for output in node.get("outputs", []):
             output_ref = output.get("ref")
             if not output_ref or any(token in output_ref for token in "*?[]"):

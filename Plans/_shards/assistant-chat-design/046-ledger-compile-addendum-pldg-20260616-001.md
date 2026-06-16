@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L21878-L22095
+Source lines: L21878-L22105
 
-Source SHA256: `eb1674cb8bd438ed5f6d3f619cefa6c0e8d6d9219f8028d0b5ff53ed64534170`
+Source SHA256: `d81199a65d58672d4952f2b5dd34cb425d0ceae2797f9ea5fa5055d684bfbe07`
 
 ---
 
@@ -56,10 +56,15 @@ preserved_exact_tokens:
   - "button/chip/icon"
   - "/goal"
   - "Visible active goal indicator"
+  - "Goal: Running"
   - "Pause and resume controls"
   - "Stop and clear controls"
+  - "stopped_by_user"
+  - "cleared_from_thread"
   - "Goal update entry points"
   - "Goal chip is separate from chat mode"
+  - "Agent + Goal"
+  - "Crew + Goal"
   - "Goal menu actions"
   - "PMConcept alignment"
 negative_constraints:
@@ -111,9 +116,14 @@ source_lineage:
 preserved_exact_tokens:
   - "Goal task / todo tracker"
   - "Goal task item states"
+  - "pending | running | verifying | completed | blocked | failed | skipped | cancelled | stale | replanned"
   - "updates the visible task list"
   - "Goal Replan Event"
   - "Blocked status carries exact blocker"
+  - "blocker_class"
+  - "affected scope"
+  - "last attempted recovery"
+  - "next safe action"
 negative_constraints:
   - Do not hide material replan impact from the task tracker.
   - Do not render blocked goal state as a generic failure without the blocker reason.

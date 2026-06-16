@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a7e5ad6f12455ef4bf1699ae2d50b42ed20b14b45b28c350136d30010a8aad7"
+      "sha256": "26eb2c3789fb5097e5e4ad14363729a8f22dfd41bc9064d13ad9c182fb73e02f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -10,7 +10,7 @@
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "5a572c42bce5d8dde1d42aff16b547a6a2d7022bb5cbddb9da3a7bd1621f42c3"
+      "sha256": "7d9fa20ffb5dcbdbee7da1636d9c18553952d73368c77d5094bbc283928ab07c"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "62567d356c0653f0f04c7ec1bda002e7a51eafe0db659ae1aedefcb826c2acae"
+      "sha256": "c21c34aeeff62691b2bfdaf091bd56a5940f11948a6731bb7e01b774eae1db72"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "608007d60bf0b7b4966b95dc15435079557faadd90296396033429767856f8f1"
+      "sha256": "a0f362cbf31284d455b192d9f5d3771a4e770bf2748901db12c41d38ce6800d2"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "95330977b45f533985c53d89ba97352417cf3bd062f91c9d305ff2374d3937a9"
+      "sha256": "983971f4d2b4d6b4dde4a61cb021a37317b9a2bac1a76708173a93455098d5d5"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,37 +50,37 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "8a210a1613195076090455d109e7dd373248ed2f1e85feec4d20e7554045dc93"
+      "sha256": "29e4fa28173891f181ce707cfb14e185fd98fbf4d86793a5dd27527e5a5e1df8"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "b1c9f1a2becc5ce6691ea1463f3e283c55a73ba8ac641331934986dc89f7e418"
+      "sha256": "09b0dcf4d1d17e8cf958c6fcd87730c9ad2780b6cb32628550aeaa63dec2f680"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "d24c38ba07db166db61bfdf22d4274a36cea9edd8e49f191fb08c9ec2138dcb3"
+      "sha256": "da80e7e0dd8cd29636606626296d850bcec6034b13d1c65aa44b92b69a3643a2"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "c0088584c31c586556d6abf75cb0ca195c95c8e443f38229fa7e8cd05fdadd08"
+      "sha256": "f238bd663e38da0e2de6b7765f81f86ba15289f8d2f177585b0a411d4a47b16b"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "7bbe617306dd0bfd46315ee098a2cc8826b7db0744920daa9c0e6ab4d893cdb7"
+      "sha256": "adcc434529360032911ae4ecd5d6ce8b8520b3a2e9e5b902d5675662a0840bdb"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "36977639fcd1d2c488dca34c1d1835ae31f2307a240c45e103ea07eb8571fe48"
+      "sha256": "9eb5b4d984f582c045f39972b9862b28268f08d1b57d004fbf99e600feef2ab0"
     }
   ],
   "checks": [
     {
-      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed with 5005 live PlanUnits.",
+      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed with 5036 live PlanUnits.",
       "name": "migration-validate",
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index validates with 5005 PlanUnits and 17798 acceptance units.",
+      "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -90,7 +90,7 @@
       "result": "PASS"
     },
     {
-      "details": "docs_checked=50; shards_checked=876; failures=[]",
+      "details": "docs_checked=51; shards_checked=888; failures=[]",
       "name": "shard-check",
       "result": "PASS"
     },
@@ -113,33 +113,62 @@
       "name": "audit-20260616-warning-repair-evidence-hash-refresh",
       "result": "PASS",
       "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
+    },
+    {
+      "name": "audit-20260616-002-repair",
+      "result": "PASS",
+      "details": "Audit audit-20260616-002 repair refreshed stale evidence count text and evidence-node validation without creating node/build/product implementation artifacts."
     }
   ],
   "commands_run": [
     {
       "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; live_plan_unit_count=5005; source_preserving_unit_count=0"
+      "stdout_excerpt": "status=pass; live_plan_unit_count=5036; source_preserving_unit_count=0"
     },
     {
       "cmd": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_unit_count=5005; acceptance_unit_count=17798; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; docs_generated=50; shards_generated=876"
+      "stdout_excerpt": "status=pass; docs_generated=51; shards_generated=888"
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --check",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; docs_checked=50; shards_checked=876; failures=[]"
+      "stdout_excerpt": "status=pass; docs_checked=51; shards_checked=888; failures=[]"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "exit_code": 0
+    },
+    {
+      "cmd": "git diff --check",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

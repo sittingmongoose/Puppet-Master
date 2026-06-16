@@ -119,6 +119,17 @@ def refresh_spec_lock(path: Path) -> dict[str, Any]:
 
 def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
     data = load_json(path)
+    changed_node_fields: list[str] = []
+    node = data.setdefault("node", {})
+    for field, value in [
+        ("node_id", args.evidence_node_id),
+        ("graph_id", args.evidence_graph_id),
+        ("graph_scope", args.evidence_graph_scope),
+    ]:
+        if value is not None and node.get(field) != value:
+            node[field] = value
+            changed_node_fields.append(field)
+
     changed_artifacts: list[str] = []
     for artifact in data.get("artifacts", []):
         rel = artifact.get("path")
@@ -132,7 +143,7 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
             artifact["sha256"] = digest
             changed_artifacts.append(rel)
 
-    changed = bool(changed_artifacts)
+    changed = bool(changed_artifacts or changed_node_fields)
     commands = data.setdefault("commands_run", [])
     if args.ledger_command:
         changed = replace_ledger_validate_command(commands, args.ledger_command) or changed
@@ -160,6 +171,7 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
     return {
         "path": str(path.relative_to(ROOT)),
         "changed": changed,
+        "updated_node_fields": changed_node_fields,
         "updated_artifact_hashes": changed_artifacts,
     }
 
@@ -186,6 +198,9 @@ def main() -> int:
     refresh.add_argument("--plan-index-details", default=None, help="Details text for the plan-index-validate PASS check.")
     refresh.add_argument("--check-detail", action="append", default=[], help="PASS check upsert, formatted NAME|||DETAILS.")
     refresh.add_argument("--no-node-artifacts", action="store_true", help="Record the no node/work artifact PASS check.")
+    refresh.add_argument("--evidence-node-id", default=None, help="Route evidence to an existing Plans/plan_graph.json node_id.")
+    refresh.add_argument("--evidence-graph-id", default=None, help="Set evidence node.graph_id.")
+    refresh.add_argument("--evidence-graph-scope", default=None, help="Set evidence node.graph_scope.")
     refresh.set_defaults(func=cmd_refresh)
     args = parser.parse_args()
     return args.func(args)

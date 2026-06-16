@@ -133,7 +133,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5",
+      "sha256": "84843205d7f8baacf5513d85b100dabb1756b515a7c2c2c02e4ecdeee00cd2a8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 55
@@ -482,7 +482,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 22095,
+      "line_count": 22105,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 419,
       "plan_unit_ids": [
@@ -1201,7 +1201,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "eb1674cb8bd438ed5f6d3f619cefa6c0e8d6d9219f8028d0b5ff53ed64534170",
+      "sha256": "d81199a65d58672d4952f2b5dd34cb425d0ceae2797f9ea5fa5055d684bfbe07",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 419
@@ -4996,7 +4996,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 1457,
+      "line_count": 1518,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 25,
       "plan_unit_ids": [
@@ -5057,7 +5057,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "8c6b022aac9dbea03dd702cbbc6c279eee8995ddc56ef11fa74c049c223e46d6",
+      "sha256": "e8f92ee1c4fa8c9cc5da73c3bd9b4d406cb899ede39a4de83a123ec3cc7ae4cc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
@@ -5099,7 +5099,13 @@
         "manual Goal Runtime risk review",
         "manual source-lineage review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "python3 scripts/pm-plans-verify.py validate-evidence",
+        "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "python3 scripts/pm-shard-plans.py --check"
       ]
     },
     {
@@ -10953,7 +10959,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-16T05:33:48Z",
+  "generated_at_utc": "2026-06-16T11:48:32Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

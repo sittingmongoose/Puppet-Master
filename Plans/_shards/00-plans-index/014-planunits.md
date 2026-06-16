@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L628-L3812
 
-Source SHA256: `32e9ba5465d341e4e9834d8726f5123a53fddeb34221069cc2d8d6d333ed0ab5`
+Source SHA256: `84843205d7f8baacf5513d85b100dabb1756b515a7c2c2c02e4ecdeee00cd2a8`
 
 ---
 
@@ -3156,7 +3156,7 @@ unblocks: []
 acceptance_criteria:
   - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
   - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
-  - The index preserves the no-WorkNode and no-governance-seal boundary for this compile.
+  - The index preserves the no-WorkNode boundary and separates pre-seal compile output from the later explicit governance seal.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
@@ -3188,7 +3188,7 @@ preserved_exact_tokens:
   - "evidence bundles"
 negative_constraints:
   - Do not treat Plans/00-plans-index.md as the owner for Goal Runtime behavior.
-  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during this compile.
+  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during the pre-seal compile phase.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Goal_Runtime_System.md

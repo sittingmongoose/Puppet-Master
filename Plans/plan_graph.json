@@ -803,6 +803,461 @@
         "outcome": "pass",
         "timestamp_utc": "2026-06-11T09:46:06Z"
       }
+    },
+    {
+      "node_id": "pm.ledger-transfer.final-certification",
+      "objective": "Register the compact final certification evidence for the completed allowed ledger transfer used by the clean-repo build-governance seal.",
+      "contract_refs": [
+        "SchemaID:pm.evidence.schema.v1",
+        "SchemaID:pm.plan_graph.schema.v1",
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009"
+      ],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json"
+        }
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.evidence",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.verify.plan_graph",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        }
+      ],
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Historical evidence graph coverage node; no executable node/build artifacts are created."
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
+      "blockers": [],
+      "unblocks": [],
+      "status": "done",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pass",
+        "message": "Historical evidence bundle is registered in plan_graph for evidence-node validation coverage.",
+        "timestamp_utc": "2026-06-16T07:55:00Z"
+      },
+      "decision_refs": [
+        "dec-2026-06-10-clean-repo-governance-seal"
+      ],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "auto_decisions": "pm.auto_decisions.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
+        }
+      }
+    },
+    {
+      "node_id": "pm.p6.file-manager-editor.ledger-audit",
+      "objective": "Register the P6 File Manager/Editor ledger audit evidence that closed the lane as source-lineage memory with small canonical repairs.",
+      "contract_refs": [
+        "ContractName:Plans/FileManager.md",
+        "Invariant:INV-022",
+        "SchemaID:pm.evidence.schema.v1",
+        "SchemaID:pm.plan_graph.schema.v1",
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009"
+      ],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/audit.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Architecture_Invariants.md"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-plans-verify.py"
+        }
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.evidence",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.verify.plan_graph",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        }
+      ],
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Historical evidence graph coverage node; no executable node/build artifacts are created."
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
+      "blockers": [],
+      "unblocks": [],
+      "status": "done",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pass",
+        "message": "Historical evidence bundle is registered in plan_graph for evidence-node validation coverage.",
+        "timestamp_utc": "2026-06-16T07:55:00Z"
+      },
+      "decision_refs": [
+        "dec-2026-06-11-file-manager-editor-p6-ledger-audit"
+      ],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "auto_decisions": "pm.auto_decisions.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
+        }
+      }
+    },
+    {
+      "node_id": "pm.build-governance.part3-fable-cleanup-governance-seal",
+      "objective": "Register Part 3 Fable Cleanup governance seal evidence for stable Plan docs, PlanUnit index artifacts, migration bookkeeping, shards, Spec Lock, and auto-decision refresh.",
+      "contract_refs": [
+        "SchemaID:pm.evidence.schema.v1",
+        "SchemaID:pm.plan_graph.schema.v1",
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009"
+      ],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/.plan_index"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/_shards"
+        }
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.evidence",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.verify.plan_graph",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        }
+      ],
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Historical evidence graph coverage node; no executable node/build artifacts are created."
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
+      "blockers": [],
+      "unblocks": [],
+      "status": "done",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pass",
+        "message": "Historical evidence bundle is registered in plan_graph for evidence-node validation coverage.",
+        "timestamp_utc": "2026-06-16T07:55:00Z"
+      },
+      "decision_refs": [
+        "dec-2026-06-15-part3-fable-cleanup-planunit-governance-seal"
+      ],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "auto_decisions": "pm.auto_decisions.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
+        }
+      }
+    },
+    {
+      "node_id": "pm.build-governance.part4-fable-cleanup-post-audit-repair",
+      "objective": "Register Part 4 Fable Cleanup post-audit repair evidence for bounded Plan, ledger, generated-index, shard, Spec Lock, and governance-helper repairs.",
+      "contract_refs": [
+        "SchemaID:pm.evidence.schema.v1",
+        "SchemaID:pm.plan_graph.schema.v1",
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-001",
+        "Gate:GATE-002",
+        "Gate:GATE-005",
+        "Gate:GATE-006",
+        "Gate:GATE-009"
+      ],
+      "inputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "file",
+          "ref": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/.plan_index"
+        },
+        {
+          "kind": "directory",
+          "ref": "Plans/_shards"
+        },
+        {
+          "kind": "file",
+          "ref": "scripts/pm-governance-seal.py"
+        }
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.evidence",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        },
+        {
+          "check_id": "plans.verify.plan_graph",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": [
+            "tool.invoked"
+          ]
+        }
+      ],
+      "allowed_tools": [
+        "bash",
+        "read",
+        "edit"
+      ],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": [
+          "Plans/**",
+          "scripts/**"
+        ],
+        "forbidden_paths": [
+          "Plans/.pipeline/**",
+          "legacy_quarantine/**"
+        ],
+        "forbidden_files": [
+          "AGENTS.md"
+        ],
+        "max_files_changed": 1200,
+        "max_lines_added": 200000,
+        "max_lines_deleted": 200000,
+        "max_total_loc_delta": 400000,
+        "notes": "Historical evidence graph coverage node; no executable node/build artifacts are created."
+      },
+      "evidence_required": {
+        "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+        "schema_id": "pm.evidence.schema.v1"
+      },
+      "blockers": [],
+      "unblocks": [],
+      "status": "done",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pass",
+        "message": "Historical evidence bundle is registered in plan_graph for evidence-node validation coverage.",
+        "timestamp_utc": "2026-06-16T07:55:00Z"
+      },
+      "decision_refs": [
+        "dec-2026-06-15-part4-fable-cleanup-post-audit-repair-governance-seal",
+        "dec-2026-06-16-part4-fable-cleanup-audit-warning-repair-governance-seal"
+      ],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "auto_decisions": "pm.auto_decisions.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "spec_lock": "pm.spec_lock.v1"
+        }
+      }
     }
   ],
   "schema_id": "pm.plan_graph.schema.v1"

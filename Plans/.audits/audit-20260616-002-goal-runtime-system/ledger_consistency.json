@@ -1,0 +1,145 @@
+{
+  "active_candidate_open_ready_atom_ids": [],
+  "audit_id": "audit-20260616-002-goal-runtime-system",
+  "blockers": {
+    "open_items_open_blockers_count": 0,
+    "total": 0
+  },
+  "compile_queue": {
+    "compiled_plan_unit_ids": [
+      "GRS-001",
+      "GRS-002",
+      "GRS-003",
+      "GRS-004",
+      "GRS-005",
+      "GRS-006",
+      "GRS-007",
+      "GRS-008",
+      "GRS-009",
+      "GRS-010",
+      "GRS-011",
+      "GRS-012",
+      "GRS-013",
+      "GRS-014",
+      "GRS-015",
+      "GRS-016",
+      "GRS-017",
+      "GRS-018",
+      "GRS-019",
+      "GRS-020",
+      "GRS-021",
+      "GRS-022",
+      "GRS-023",
+      "GRS-024",
+      "GRS-025",
+      "ACD-416",
+      "ACD-417",
+      "ACD-418",
+      "ACD-419",
+      "F3-393",
+      "0PI-055"
+    ],
+    "deferred_atom_ids": [
+      "atom-0016"
+    ],
+    "items": 1,
+    "non_applicable_atom_ids": [
+      "atom-0001"
+    ],
+    "source_atom_count": 109,
+    "status": "compiled_goal_runtime_system_governance_sealed"
+  },
+  "compiled_atom_count": 108,
+  "compiled_atom_lineage_missing_in_live_added_planunits": [],
+  "design_atom_status_counts": {
+    "compiled_to_plan": 108,
+    "deferred": 1,
+    "not_for_plan": 1
+  },
+  "explicit_noncompiled_atoms": {
+    "deferred": [
+      "atom-0016"
+    ],
+    "not_for_plan": [
+      "atom-0001"
+    ]
+  },
+  "gui_related_counts": {
+    "False": 86,
+    "True": 24
+  },
+  "invalid_gui_related_atom_ids": [],
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "manifest_record_counts": {
+    "blockers": 0,
+    "corrections": 5,
+    "decisions": 26,
+    "design_atoms": 110,
+    "events": 23,
+    "questions": 5
+  },
+  "projection_alignment_clean": {
+    "current_governance_status": "sealed",
+    "health_status": "pass_governance_sealed",
+    "manifest_counts_match_actual": true,
+    "no_open_blockers": true,
+    "no_open_questions": true
+  },
+  "questions": {
+    "open_items_deferred_questions_count": 5,
+    "open_items_open_questions_count": 0,
+    "status_counts": {
+      "deferred": 5
+    },
+    "total": 5
+  },
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 5,
+    "decisions": 26,
+    "design_atoms": 110,
+    "events": 23,
+    "questions": 5
+  },
+  "verdict": "pass_with_warnings",
+  "warnings": [
+    {
+      "count": 108,
+      "evidence": "records/design_atoms.jsonl: atom-0002..atom-0015 and atom-0017..atom-0110 compile_notes still say governance seal remains pending while ledger is sealed.",
+      "severity": "warning",
+      "warning_id": "stale-design-atom-compile-notes"
+    },
+    {
+      "evidence": "Strict canonical_plan_targets is empty until governance registration/seal; current canonical_plan_targets is populated and governance_status is sealed.",
+      "line": 52,
+      "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json",
+      "severity": "warning",
+      "warning_id": "stale-current-safe-content-check"
+    },
+    {
+      "evidence": "safe_content_checks says governance seal artifacts are being refreshed while ledger health/current say sealed/pass.",
+      "line": 26,
+      "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
+      "severity": "warning",
+      "warning_id": "stale-handoff-safe-content-check"
+    },
+    {
+      "evidence": "Registry note says governance_status=sealed pending final validator report; validators now pass and ledger_health is pass_governance_sealed.",
+      "line": 116,
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "severity": "warning",
+      "warning_id": "stale-registry-note"
+    },
+    {
+      "evidence": "Historical check entries compile-0001, migration-validate-0001, projection-repair-0001, and projection-repair-0002 retain pending-seal wording though active status is pass_governance_sealed.",
+      "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/validation/ledger_health.json",
+      "severity": "warning",
+      "warning_id": "historical-health-pending-wording"
+    },
+    {
+      "evidence": "manifest/registry/compile_queue/operating_capsule updated at 2026-06-16T05:27:58Z; current/handoff/open_items/ledger_health updated at 2026-06-16T05:36:58Z.",
+      "severity": "info",
+      "warning_id": "metadata-timestamp-drift"
+    }
+  ]
+}
