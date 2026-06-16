@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.deferred_item_resolution_acceptance.v1",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "status": "accepted_ready_for_plan_compile",
+  "accepted_at_utc": "2026-06-16T19:38:35Z",
+  "source_ref": "chat:user-default-models-doc-builder-agrees",
+  "accepted_recommendations": [
+    "q-0001",
+    "q-0002",
+    "q-0003",
+    "q-0004",
+    "q-0005",
+    "q-0006"
+  ],
+  "clarifications": [
+    "Default model/provider choices depend entirely on user-configured providers/accounts/model profiles; canonical Plans define lanes and Settings bindings only.",
+    "Doc Builder writes/uses the ledger while conversational, then invokes invisible Goal Mode to convert the ledger into requirements docs."
+  ],
+  "remaining_open_design_questions": [],
+  "remaining_compile_time_actions": [
+    "Rerun live repo backlink/doc-impact audit before Plan edits.",
+    "Compile canonical Plans before code implementation.",
+    "Keep executable NodeSeed/WorkNode generation gated behind the compiler contract."
+  ],
+  "next_safe_action": "Start explicit ledger-to-Plans compile goal for pldg-20260616-002-orchestrator-goal-runtime-flow."
+}

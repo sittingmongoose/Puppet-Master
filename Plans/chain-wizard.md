@@ -413,3 +413,59 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B atomized `chain-wizard-S0001` through `chain-wizard-S0004` into fine-grained PlanUnits `CW-002` through `CW-007`. `CW-001` is retained only as a retired migration-lineage bridge and must not re-own atomized source coverage. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### CW-008 - Doc Builder Invisible Goal Handoff Pointer
+
+```yaml
+plan_unit_id: CW-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/chain-wizard.md
+canonical_text: >-
+  Chain Wizard entry points may route Requirements Doc Builder users into conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
+gui_related: true
+gui_classification_reason: This unit defines visible wizard entry and handoff behavior for Requirements Doc Builder flows.
+depends_on:
+  - CW-007
+  - GRS-003
+unblocks: []
+acceptance_criteria:
+  - Wizard entry can start conversational v2 ledger capture for Requirements Doc Builder.
+  - Invisible conversion handoff occurs only after the ledger is accepted and ready.
+  - Handoffs preserve ledger source refs and conversion-audit lineage.
+  - Wizard handoff does not create default Orchestrator WorkNodes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Chain Wizard Doc Builder handoff review
+risk_class: doc_builder_handoff_drift
+reasoning_tier: standard
+context_scope: chain_wizard_doc_builder_handoff
+implementation_surfaces:
+  - Plans/chain-wizard.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: doc_builder_invisible_goal_handoff
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0007
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
+preserved_exact_tokens:
+  - "ledger to plans"
+  - "plans to work graphs"
+  - "auditing those conversions"
+  - "chain wizard"
+  - "doc builder"
+  - "Requirements Doc Builder"
+  - "invisible Goal Mode"
+negative_constraints:
+  - Do not bypass ledger preservation or conversion audit.
+  - Do not treat invisible conversion handoff as a default Orchestrator WorkNode.
+owner_hints:
+  - Plans/chain-wizard.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Goal_Runtime_System.md
+```

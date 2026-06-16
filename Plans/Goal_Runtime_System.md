@@ -87,7 +87,7 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
 
-### GRS-002 - One Runtime Engine With Visible And Invisible Presentations
+### GRS-002 - One Runtime Engine With Three Product Integrations
 
 ```yaml
 plan_unit_id: GRS-002
@@ -95,17 +95,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime uses one engine with two presentations: visible user-directed goals in Assistant Chat and invisible internal goals for product flows. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals expose control through Assistant Chat while sharing the same runtime state and lifecycle model.
+  Goal Runtime uses one engine with three product integrations: invisible internal goals for product flows, visible user-directed Goal mode in Assistant Chat, and Orchestrator Goal runtime flows that project GoalRun and WorkGraph state while delegating WorkNode readiness, backoff, capacity, and dispatch to Executor. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals and Orchestrator goals expose controls and status through their owner surfaces while sharing the same runtime state and lifecycle model.
 gui_related: false
 gui_classification_reason: This unit defines runtime presentation modes; chat-specific controls are owned by Assistant Chat consumer PlanUnits.
 depends_on:
   - GRS-001
 unblocks: []
 acceptance_criteria:
-  - Visible and invisible goals share one lifecycle/state model.
+  - Invisible internal goals, visible Assistant Chat Goal mode, and Orchestrator Goal runtime flows share one lifecycle/state model.
   - Invisible goals do not ask row-by-row or ordinary ambiguity questions.
   - Hard stops remain available for authority, safety, missing preconditions, and true blockers.
   - Hard-stop classification preserves explicit user stop, missing source ledger, missing project plans, permissions/file-system failure, unsafe/destructive, and contradictory cases.
+  - Orchestrator Goal runtime projections do not replace Executor readiness, backoff, capacity, or dispatch authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime lifecycle tests
@@ -116,6 +117,8 @@ implementation_surfaces:
   - future Goal Mode service
   - future Chain Wizard
   - Plans/assistant-chat-design.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Executor_Protocol.md
 node_compile_hint:
   mode: shared_goal_runtime
   create_worknodes: false
@@ -124,10 +127,17 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0007
   - pldg-20260616-001-goal-runtime-system:atom-0008
   - pldg-20260616-001-goal-runtime-system:dec-0003
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
 preserved_exact_tokens:
   - "same engine"
   - "invisible internal goals"
   - "visible assistant-chat goals"
+  - "Goal mode exposed to the user in chat assistant"
+  - "orchestration flow"
+  - "one Goal Runtime engine"
+  - "GoalRun"
+  - "WorkGraph"
   - "COMPLETELY hands off"
   - "from start to finish"
   - "hard-stop exceptions"
@@ -140,10 +150,12 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not create a separate invisible-goal lifecycle that diverges from visible Goal Mode.
   - Do not ask row-by-row or ordinary ambiguity questions during invisible internal goals.
+  - Do not let Orchestrator projections become Executor scheduler truth.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/Orchestrator_Page.md
 ```
 
 ### GRS-003 - Invisible Chain Wizard Goal Boundary
@@ -154,7 +166,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future Chain Wizard ledger-to-Plans transfer uses native Goal Mode invisibly after the conversation phase preserves a structured ledger. Invisible Goal Mode converts the ledger to the plan docs while the Chain Wizard UI stays minimal with statuses such as Updating plan docs, Building project plan graph, and Reconciling feature requirements. Current Chain Wizard plans are wrong/incomplete legacy context and should be completely redo all that after goal mode is finalized; exact Chain Wizard flow redesign remains deferred until Goal Runtime PlanUnits are compiled.
+  Future Chain Wizard and Requirements Doc Builder flows use the v2 ledger system conversationally first, preserving exact user intent before any invisible Goal conversion runs. After readiness, invisible Goal Mode may convert the accepted ledger to requirements docs, Plans, or graph-preparation artifacts while the Chain Wizard UI stays minimal with statuses such as Updating plan docs, Building project plan graph, and Reconciling feature requirements. Conversational Doc Builder work is not a default Orchestrator WorkNode; any later Orchestrator handoff is explicit and carries ledger lineage, readiness evidence, and Goal Runtime receipts.
 gui_related: true
 gui_classification_reason: This unit includes user-visible Chain Wizard UI minimalism during invisible goals.
 depends_on:
@@ -163,9 +175,11 @@ unblocks: []
 acceptance_criteria:
   - Ledger-to-Plans transfer can invoke invisible Goal Runtime without exposing row-by-row decisions.
   - Chain Wizard maintains structured ledger source state before invoking invisible Goal Mode to convert the ledger to the plan docs.
+  - Requirements Doc Builder uses the ledger system conversationally before invisible Goal conversion.
+  - Invisible Doc Builder conversion goals are not default Orchestrator WorkNodes.
   - Minimal Chain Wizard status examples include Updating plan docs, Building project plan graph, and Reconciling feature requirements.
   - Chain Wizard does not re-own Goal Runtime execution semantics.
-  - The exact redesigned Chain Wizard flow remains deferred and explicit.
+  - Any Orchestrator handoff from Doc Builder is explicit and preserves ledger lineage, readiness evidence, and receipts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Chain Wizard integration review
@@ -185,6 +199,9 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0015
   - pldg-20260616-001-goal-runtime-system:dec-0011
   - pldg-20260616-001-goal-runtime-system:q-0001
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0007
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
 preserved_exact_tokens:
   - "Chain Wizard ledger-to-Plans"
   - "structured ledger"
@@ -193,13 +210,16 @@ preserved_exact_tokens:
   - "Updating plan docs"
   - "Building project plan graph"
   - "Reconciling feature requirements"
-  - "current Chain Wizard docs are incomplete"
-  - "current plans for the chain wizard are wrong/incomplete"
-  - "completely redo all that after goal mode is finalized"
+  - "Requirements Doc Builder"
+  - "ledger system"
+  - "conversational"
+  - "not a default Orchestrator WorkNode"
   - "exact redesigned Chain Wizard flow"
 negative_constraints:
   - Do not treat current Chain Wizard docs as final Goal Runtime design.
   - Do not turn invisible Chain Wizard execution into a row-by-row user questioning flow.
+  - Do not treat conversational ledger capture as a Goal run by default.
+  - Do not treat invisible Doc Builder conversion goals as Orchestrator WorkNodes by default.
   - Do not define concrete Chain Wizard UI flow, layout, copy, or screen behavior in Goal Runtime canon; route those details to Chain Wizard and Assistant Chat owner docs.
 owner_hints:
   - Plans/Goal_Runtime_System.md
@@ -1727,3 +1747,128 @@ Owner adjudication:
 - `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger, PlanUnit, and node-readiness mechanics.
 
 The pre-seal compile phase leaves live Plans and `Plans/.plan_index/**` changes at `pending_seal` until an explicit governance seal. This Goal Runtime ledger has since been sealed through that separate governance phase; future ordinary ledger writing, plan drafting, PlanUnit indexing, and pre-seal compile work still must not touch generated governance artifacts.
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### GRS-026 - Orchestrator GoalRun Runtime Envelope
+
+```yaml
+plan_unit_id: GRS-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth.
+gui_related: false
+gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
+depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
+unblocks: [OP-022, OSI-428, EP-098, CV-288]
+acceptance_criteria:
+  - Orchestrator GoalRuns use Goal Runtime as the control envelope without replacing Orchestrator projections.
+  - Executor/runtime scheduler remains the canonical owner for readiness, blocked overlays, retry/backoff, capacity, wakeups, and dispatch.
+  - GoalRun completion requires receipt-backed certification rather than worker, subagent, or WorkNode success alone.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+risk_class: orchestrator_runtime_authority_drift
+reasoning_tier: high
+context_scope: orchestrator_goal_runtime
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+node_compile_hint: {mode: orchestrator_goal_runtime_envelope, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0002
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0006
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0011
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0021
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0022
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0039
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0040
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0047
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0048
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0089
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0095
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0001
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0006
+preserved_exact_tokens:
+  - "Goal Runtime"
+  - "Orchestrator"
+  - "control envelope"
+  - "GoalRun"
+  - "WorkGraph"
+  - "WorkNode"
+  - "SubagentWave"
+  - "GoalCompletionReceipt"
+  - "Completion requires receipt-backed certification"
+negative_constraints:
+  - Do not make Goal Runtime replace Orchestrator UI/projections or Executor scheduler truth.
+  - Do not dispatch graph nodes directly from Goal Runtime when Executor scheduling truth exists.
+  - Do not mark tasks or goals complete only because a worker reports success.
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+```
+
+### GRS-027 - Verification Repair Loop And Certification Policy
+
+```yaml
+plan_unit_id: GRS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Two repeated same-signature failures force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root-cause replan.
+gui_related: false
+gui_classification_reason: Verification, repair, receipts, and certification policy are runtime/governance behavior, not GUI implementation.
+depends_on: [GRS-010, GRS-012, GRS-013, GRS-014, GRS-019]
+unblocks: [OP-022, EP-098, CV-288, RAP-027]
+acceptance_criteria:
+  - A failed VerificationCycle cannot become a done-with-issues completion state.
+  - Verification reruns after every repair before a WorkNode, child goal, or GoalRun is certified.
+  - Repeated defect signatures trigger strategy adjustment after two repeats and high-end adjudication/root-cause replan on the third failed cycle.
+  - Cost controls may reduce exploratory fanout but cannot disable required verification, receipts, independent review, or certification gates.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Goal Runtime verification-loop tests
+risk_class: false_completion
+reasoning_tier: high
+context_scope: orchestrator_verification_repair
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: verification_repair_loop_policy, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0019
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0038
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0043
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0044
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0045
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0046
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0050
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0051
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0052
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0053
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0055
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0090
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0092
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0094
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0100
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0008
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0024
+preserved_exact_tokens:
+  - "verify again"
+  - "keep doing that flow until it stops finding issues"
+  - "zero findings remain"
+  - "VerificationReceipt"
+  - "DefectBundle"
+  - "RepairWorkNode"
+  - "defect signature"
+  - "two repeats"
+  - "third failed cycle"
+  - "high-end adjudicator"
+negative_constraints:
+  - Do not allow a failed verification to become a done-with-issues state.
+  - Do not reduce audit/verification strictness to save cost.
+  - Do not keep applying the same low-end patch indefinitely.
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Progression_Gates.md]
+```

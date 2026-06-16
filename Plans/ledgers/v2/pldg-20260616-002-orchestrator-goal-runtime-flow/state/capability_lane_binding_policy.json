@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.orchestrator_goal_runtime_capability_lane_binding_policy.v1",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "status": "accepted_ready_for_plan_compile",
+  "created_at_utc": "2026-06-16T19:38:35Z",
+  "source_refs": [
+    "chat:user-default-models-doc-builder-agrees",
+    "dec-0025",
+    "atom-0102"
+  ],
+  "core_rule": "Canonical Plans define capability lanes and role contracts; exact provider/model defaults are bound from the user's configured providers/accounts/model profiles in Settings.",
+  "lanes": [
+    {
+      "lane_id": "low_cost_executor",
+      "purpose": "Bounded WorkNode execution and bounded subagent tasks.",
+      "may": "execute, inspect, propose patches, return structured outputs",
+      "must_not": "certify parent GoalRun completion or decide global authority/routing"
+    },
+    {
+      "lane_id": "standard_reviewer",
+      "purpose": "Routine bounded review, simple acceptance checks, evidence mapping.",
+      "may": "review bounded outputs and produce findings",
+      "must_not": "override high-reasoning verifier/adjudicator/certifier decisions"
+    },
+    {
+      "lane_id": "high_reasoning_orchestrator",
+      "purpose": "Goal decomposition, WorkGraph shaping, authority/write-surface decisions, replans, blocker classification, route selection.",
+      "may": "govern orchestration and adjust strategy",
+      "must_not": "bypass Executor readiness/blocked/backoff/capacity truth"
+    },
+    {
+      "lane_id": "verifier_lane",
+      "purpose": "Verification checks split between bounded low-cost checks and higher-reasoning reducer/certification depending risk.",
+      "may": "produce verification evidence and findings",
+      "must_not": "mark GoalRun complete without certifier receipt"
+    },
+    {
+      "lane_id": "high_reasoning_adjudicator",
+      "purpose": "Repeated defects, conflicting verifier results, owner ambiguity, root-cause replans.",
+      "may": "adjudicate conflicts and change approach",
+      "must_not": "silently downgrade audit/verification strictness"
+    },
+    {
+      "lane_id": "high_reasoning_certifier",
+      "purpose": "WorkNode receipt certification and GoalRun completion certification.",
+      "may": "certify completion when evidence supports it",
+      "must_not": "certify with unresolved findings or stale evidence"
+    }
+  ],
+  "settings_requirements": [
+    "Settings must show lane-to-provider/model profile bindings based on configured providers/accounts.",
+    "Settings must expose unconfigured or insufficient-capability lanes before runs that require them.",
+    "Settings may offer recommended defaults only from configured providers; Plans must not name fixed provider/model defaults.",
+    "Cost/budget policy should constrain subagent fanout without weakening required verification gates."
+  ],
+  "fallback_policy": [
+    "If a noncritical low-cost lane is unconfigured, Orchestrator may offer to bind a configured compatible profile or block with a settings action.",
+    "If a governance/verifier/adjudicator/certifier lane is unconfigured for required work, block with exact configuration action; do not silently downgrade to a low-end executor.",
+    "If user changes providers, lane bindings update through Settings/policy, not canonical Plan edits."
+  ],
+  "compile_targets": [
+    "Plans/Models_System.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ]
+}

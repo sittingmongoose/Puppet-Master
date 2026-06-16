@@ -234,12 +234,15 @@ Behavioral rules:
 ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 ## 6. Overseer dispatch algorithm (deterministic)
 
-1. Evaluate readiness predicate over all queued nodes.
-2. Select smallest lexical `node_id` among ready set.
-3. Dispatch Builder for selected node.
-4. On Builder completion, set `verify_pending` and dispatch Verifier.
-5. Apply auto-marking rule from Section 4 (`verified` → `done` on pass; `failed` on fail).
-6. Repeat until no ready nodes remain.
+Compatibility/source-lineage disposition: older smallest-lexical-node dispatch wording is no longer the scheduler authority. The canonical executor pass is the scored ready-set algorithm in the Runtime Scheduler Addendum below; lexicographically smaller `node_id` is only the final deterministic tiebreak after scheduler lane, manual priority, transitive unblock count, and ready-since time.
+
+1. Evaluate readiness, blocked, backoff, graph-integrity, and capacity predicates over all candidate nodes.
+2. Build the ready set.
+3. Score the ready set with the canonical scheduler tuple.
+4. Select up to available capacity.
+5. Dispatch selected node workers.
+6. On worker completion, route verification, receipt, blocked, retry, remediation, or replan outcomes through the canonical runtime outcome taxonomy.
+7. Repeat on scheduler wake reasons until no ready nodes remain.
 
 Overseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
@@ -5829,4 +5832,61 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/storage-plan.md
   - Plans/Wiring_Matrix.md
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### EP-098 - GoalRun WorkNode Scheduler Boundary
+
+```yaml
+plan_unit_id: EP-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. WorkNode execution success is provisional until verification and receipt certification complete.
+gui_related: false
+gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
+depends_on: [GRS-026, GRS-027, PNC-009]
+unblocks: [OP-022, RGV-012]
+acceptance_criteria:
+  - Goal Runtime does not dispatch concrete graph nodes directly.
+  - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
+  - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
+  - WorkNode success alone does not certify parent GoalRun or final completion.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Executor WorkNode scheduler integration tests
+risk_class: scheduler_boundary_drift
+reasoning_tier: high
+context_scope: executor_goalrun_worknode_dispatch
+implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md]
+node_compile_hint: {mode: goalrun_worknode_scheduler_boundary, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0009
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0013
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0017
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0041
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0042
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0076
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
+preserved_exact_tokens:
+  - "readiness"
+  - "blocked state"
+  - "retry/backoff"
+  - "capacity-aware dispatch"
+  - "failure-class recovery"
+  - "ready WorkNodes"
+  - "bounded executable unit"
+  - "Execution success is not completion"
+negative_constraints:
+  - Do not bypass blocked/backoff/capacity semantics.
+  - Do not let WorkNode executors certify global completion.
+  - Do not treat design-time WorkNode terms as permission to create runtime work artifacts.
+owner_hints: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md]
 ```

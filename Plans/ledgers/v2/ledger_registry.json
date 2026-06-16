@@ -3,24 +3,6 @@
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
-        "Plans/Planning_Ledger_System.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Bootstrap_Planning_Migration.md"
-      ],
-      "created_at_utc": "2026-06-10T00:00:00Z",
-      "last_updated_at": "2026-06-11T22:05:24Z",
-      "last_updated_at_utc": "2026-06-11T22:05:24Z",
-      "ledger_id": "pldg-20260610-001-ledger-plan-system",
-      "notes": "Existing Plans conversion, migration validation, PlanUnit index, node-readiness report, and governance seal are complete; node readiness remains intentionally blocked by compiler_contract_incomplete/q-0001. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
-      "phase": "compiled_initial_plan_docs_governance_sealed",
-      "primary_goal": "Define and bootstrap the structured planning ledger, standardized Plan docs, lossless Plan conversion, PlanUnit indexing, node-readiness reporting, and simple gui_related routing.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/handoff.json",
-      "status": "compiled",
-      "title": "Ledger, plan document standardization, and plan-to-node readiness system"
-    },
-    {
-      "canonical_plan_targets": [
         "Plans/Contracts_V0.md",
         "Plans/orchestrator-subagent-integration.md"
       ],
@@ -86,16 +68,6 @@
       "title": "Part 3 Fable Cleanup"
     },
     {
-      "created_at_utc": "2026-06-15T20:30:00Z",
-      "last_updated_at": "2026-06-16T00:53:02Z",
-      "last_updated_at_utc": "2026-06-16T00:53:02Z",
-      "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
-      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after post-compile fidelity repair and audit-20260616 warning repair. Migration proof, configured shards, Spec Lock, evidence, auto_decisions, and narrowly scoped governance-helper scripts were refreshed/corrected in explicit repair/seal scope. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created.",
-      "phase": "compiled_part_4_fable_cleanup_governance_sealed",
-      "primary_goal": "Collaboratively plan and compile Part 4 Fable Cleanup, preserving exact source findings, constraints, owner hints, user corrections, and gui_related classifications while fixing verified deterministic cleanup issues in live Plans.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
-      "status": "compiled",
-      "title": "Part 4 Fable Cleanup",
       "canonical_plan_targets": [
         "Plans/Contracts_V0.md"
       ],
@@ -106,23 +78,41 @@
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
         "Plans/Wiring_Matrix.md"
-      ]
+      ],
+      "created_at_utc": "2026-06-15T20:30:00Z",
+      "last_updated_at": "2026-06-16T00:53:02Z",
+      "last_updated_at_utc": "2026-06-16T00:53:02Z",
+      "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after post-compile fidelity repair and audit-20260616 warning repair. Migration proof, configured shards, Spec Lock, evidence, auto_decisions, and narrowly scoped governance-helper scripts were refreshed/corrected in explicit repair/seal scope. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created.",
+      "phase": "compiled_part_4_fable_cleanup_governance_sealed",
+      "primary_goal": "Collaboratively plan and compile Part 4 Fable Cleanup, preserving exact source findings, constraints, owner hints, user corrections, and gui_related classifications while fixing verified deterministic cleanup issues in live Plans.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
+      "status": "compiled",
+      "title": "Part 4 Fable Cleanup"
     }
   ],
   "paused_ledgers": [],
   "schema_id": "pm.bootstrap_ledger_registry.v1",
   "sealed_ledgers": [
     {
-      "created_at_utc": "2026-06-16T04:00:00Z",
-      "last_updated_at": "2026-06-16T20:45:00Z",
-      "last_updated_at_utc": "2026-06-16T20:45:00Z",
-      "ledger_id": "pldg-20260616-001-goal-runtime-system",
-      "notes": "Compiled to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed after final validators passed. Post-audit repair aligned exact semantic fidelity, command owner registration, cross-owner consumer PlanUnits, and ledger reciprocal lineage. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created. compiled_owner_docs records actual touched docs including cross-owner and command-owner repair docs.",
-      "phase": "compiled_goal_runtime_system_governance_sealed",
-      "primary_goal": "Capture and refine native Goal runtime behavior, invisible/internal goals, user-facing assistant-chat Goal Mode UI, weak-model safety, child goals/subagents, attachments, sharded document handling, completion certification, autonomous recovery, and task templates before explicit compile.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
+      "canonical_plan_targets": [
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Bootstrap_Planning_Migration.md"
+      ],
+      "created_at_utc": "2026-06-10T00:00:00Z",
+      "last_updated_at": "2026-06-11T22:05:24Z",
+      "last_updated_at_utc": "2026-06-11T22:05:24Z",
+      "ledger_id": "pldg-20260610-001-ledger-plan-system",
+      "notes": "Existing Plans conversion, migration validation, PlanUnit index, node-readiness report, and governance seal are complete; node readiness remains intentionally blocked by compiler_contract_incomplete/q-0001. No NodeSeeds, WorkNodes, executable build tasks, or final node queues were created.",
+      "phase": "compiled_initial_plan_docs_governance_sealed",
+      "primary_goal": "Define and bootstrap the structured planning ledger, standardized Plan docs, lossless Plan conversion, PlanUnit indexing, node-readiness reporting, and simple gui_related routing.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/state/handoff.json",
       "status": "sealed",
-      "title": "Native Goal Runtime and Assistant Chat Goal Mode",
+      "title": "Ledger, plan document standardization, and plan-to-node readiness system"
+    },
+    {
       "canonical_plan_targets": [
         "Plans/Goal_Runtime_System.md"
       ],
@@ -139,8 +129,98 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Commands_System.md",
         "Plans/Wiring_Matrix.md"
-      ]
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "last_updated_at": "2026-06-16T20:45:00Z",
+      "last_updated_at_utc": "2026-06-16T20:45:00Z",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "notes": "Compiled to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed after final validators passed. Post-audit repair aligned exact semantic fidelity, command owner registration, cross-owner consumer PlanUnits, and ledger reciprocal lineage. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created. compiled_owner_docs records actual touched docs including cross-owner and command-owner repair docs.",
+      "phase": "compiled_goal_runtime_system_governance_sealed",
+      "primary_goal": "Capture and refine native Goal runtime behavior, invisible/internal goals, user-facing assistant-chat Goal Mode UI, weak-model safety, child goals/subagents, attachments, sharded document handling, completion certification, autonomous recovery, and task templates before explicit compile.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
+      "status": "sealed",
+      "title": "Native Goal Runtime and Assistant Chat Goal Mode"
+    },
+    {
+      "candidate_compile_owner_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/00-plans-index.md"
+      ],
+      "canonical_plan_targets": [
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/chain-wizard.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "GRS-002",
+        "GRS-003",
+        "GRS-026",
+        "GRS-027",
+        "OP-022",
+        "OSI-428",
+        "EP-098",
+        "PNC-009",
+        "F3-394",
+        "F3-395",
+        "ACD-420",
+        "CW-008",
+        "CWF-151",
+        "RAP-027",
+        "W-071",
+        "RGV-012",
+        "CV-288",
+        "MS-109",
+        "PS-115",
+        "SP-215",
+        "PLS-011",
+        "0PI-056"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0016",
+      "last_updated_at": "2026-06-16T21:31:00",
+      "last_updated_at_utc": "2026-06-16T21:31:00Z",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. A post-seal conversational continuation is open in ledger-only state with q-0007 through q-0009; this does not unseal or recompile the existing PlanUnits. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+      "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+      "primary_goal": "Plan the Orchestrator Goal Runtime flow rewrite, including the three Goal Mode functions, GoalRun/WorkGraph/WorkNode architecture, extensive bounded subagents, low-end/high-end agent split, verification repair loop, receipts, GUI/settings impacts, terminology cleanup, and backlink audit scope before canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+      "status": "sealed",
+      "title": "Orchestrator Goal Runtime Flow Rewrite",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
     }
   ],
-  "updated_at_utc": "2026-06-16T20:45:00Z"
+  "updated_at_utc": "2026-06-16T21:31:00Z"
 }

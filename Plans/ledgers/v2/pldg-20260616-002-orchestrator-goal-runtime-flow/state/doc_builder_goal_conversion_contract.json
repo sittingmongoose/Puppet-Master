@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.doc_builder_goal_conversion_contract.v1",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "status": "accepted_ready_for_plan_compile",
+  "created_at_utc": "2026-06-16T19:38:35Z",
+  "source_refs": [
+    "chat:user-default-models-doc-builder-agrees",
+    "dec-0028",
+    "atom-0103"
+  ],
+  "flow": [
+    {
+      "phase": "conversational_ledger_mode",
+      "mode": "not_goal_run_by_default",
+      "description": "As the user talks through requirements with Doc Builder, the system writes the v2 planning ledger after substantive turns and preserves exact tokens, examples, negative constraints, owner hints, corrections, open questions, and gui_related classification."
+    },
+    {
+      "phase": "invisible_goal_conversion",
+      "mode": "invisible_goal",
+      "description": "When the ledger is ready, Doc Builder invokes Goal Mode invisibly to convert the ledger into requirements docs, run audits/verification, and produce a completion/certification receipt for the document-production output."
+    },
+    {
+      "phase": "optional_orchestrator_handoff",
+      "mode": "explicit_only",
+      "description": "Doc Builder conversion output becomes Orchestrator work only if explicitly handed to Orchestrator execution; it is not a default WorkNode flow."
+    }
+  ],
+  "owner_doc_policy": {
+    "Goal_Runtime_System.md": "Owns engine-level invisible Goal behavior and shared visible/invisible lifecycle/state semantics.",
+    "chain-wizard.md": "Owns wizard entry, ledger-to-plan/requirements handoff, and relationship between Chain Wizard and Doc Builder.",
+    "chain-wizard-flexibility.md": "Owns Requirements Doc Builder-specific UX/activity/pause/cancel/resume/multi-pass review behavior if no dedicated Requirements_Doc_Builder.md exists.",
+    "assistant-chat-design.md": "Owns visible Assistant Chat Goal Mode, not Doc Builder internals.",
+    "FinalGUISpec.md": "Owns user-visible rendered placement, activity/status controls, and Settings surfaces."
+  },
+  "must_not_do": [
+    "Do not treat Doc Builder's conversational ledger phase as a Goal run by default.",
+    "Do not write canonical requirements docs directly from chat without ledger preservation and conversion/audit flow.",
+    "Do not treat Doc Builder invisible goals as Orchestrator WorkNodes by default.",
+    "Do not use Assistant Chat visible Goal Mode docs as the owner for Doc Builder internals."
+  ],
+  "compile_targets": [
+    "Plans/Goal_Runtime_System.md",
+    "Plans/chain-wizard.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Planning_Ledger_System.md"
+  ]
+}
