@@ -1,0 +1,54 @@
+{
+  "audit_id": "audit-20260616-005-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "ledger_summary": {
+    "atom_status_counts": {
+      "compiled_to_plan": 108,
+      "deferred": 1,
+      "not_for_plan": 1
+    },
+    "candidate_atoms_count": 0,
+    "compile_queue_status": "compiled_goal_runtime_system_governance_sealed",
+    "compiled_atoms": 108,
+    "deferred_questions_count": 5,
+    "governance_status": "sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "manifest_counts": {
+      "blockers": 0,
+      "corrections": 5,
+      "decisions": 26,
+      "design_atoms": 110,
+      "events": 23,
+      "questions": 5
+    },
+    "open_questions_count": 0,
+    "question_status_counts": {
+      "deferred": 5
+    },
+    "ready_for_plan_compile_atoms": 0
+  },
+  "projection_warnings": [
+    {
+      "description": "ledger_registry status is sealed but manifest status remains compiled while phase/notes say governance sealed.",
+      "related_risk_id": "ESF-017",
+      "severity": "medium",
+      "warning_id": "LC-001"
+    }
+  ],
+  "schema_id": "pm.audit.exact_ledger_consistency.v1",
+  "sealed_checks": {
+    "active_candidates": 0,
+    "deferred_questions": [
+      "q-0001",
+      "q-0002",
+      "q-0003",
+      "q-0004",
+      "q-0005"
+    ],
+    "open_questions": 0,
+    "pass": true,
+    "ready_for_plan_compile_atoms": 0
+  },
+  "subagent_governance_summary": "Validators and generated artifacts pass; node readiness remains blocked_compiler_contract_incomplete; no WorkNodes/NodeSeeds created.",
+  "verdict": "pass_with_warnings"
+}
