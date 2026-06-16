@@ -8,7 +8,7 @@
     {
       "check_id": "scope-0001",
       "status": "pass",
-      "summary": "Package contains source ledger and registry update only. It does not contain canonical Plans edits, generated Plan indexes, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions."
+      "summary": "Initial package contained source ledger and registry update only. The later explicit compile and governance seal added live Plans, allowed Plan indexes, and refreshed governance artifacts while still excluding WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, production build tasks, and implementation files."
     },
     {
       "check_id": "content-0001",
@@ -48,7 +48,7 @@
     {
       "check_id": "validator-0001",
       "status": "pass",
-      "summary": "pm-bootstrap-ledger-validate passed after strict canonical target alignment; 104 atoms, 14 events, one compile queue item, and 2462 PlanUnits checked."
+      "summary": "pm-bootstrap-ledger-validate passed after strict canonical target alignment; 104 atoms, 16 events, 9 questions, one compile queue item, and 2462 PlanUnits checked."
     },
     {
       "check_id": "plan-index-0001",

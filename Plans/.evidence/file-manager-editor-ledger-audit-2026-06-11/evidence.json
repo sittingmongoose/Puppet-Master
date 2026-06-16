@@ -18,17 +18,17 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a28b3953e794d2f0ff27235225637810005315f4befb92c64c47dbfb5dc91b2"
+      "sha256": "3269a1d454166917374accb1ff657411c41be65c0aa3c1d8377ea2db0059e8f8"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "73f10777cf321633be9dd5f9cacf08ae8f6e2b92b20552887de9501efbc87402"
+      "sha256": "277bcb9d6f9cbbfffdd6b7af56b780dbabbe9d47b18fd563500e857502ff6345"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "2fdb27ee54c5df5777d9e83c262a992bda2d5989862fdc4b9fdd9ec908b5965e"
+      "sha256": "ac30031510d5c981df24b063d139f18bfa87bae5db985646a26194eba07cfcd0"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validation passed with 5065 PlanUnits and 18046 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -100,6 +100,11 @@
       "name": "governance-scope-only",
       "result": "PASS",
       "details": "Product prose was not changed in this governance seal phase; generated governance artifacts and ledger projections were refreshed."
+    },
+    {
+      "name": "post-audit-repair-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
     }
   ],
   "commands_run": [
@@ -203,7 +208,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -215,7 +220,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -228,6 +233,14 @@
     },
     {
       "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     }
   ],

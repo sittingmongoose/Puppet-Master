@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L633-L3949
+Source lines: L633-L3977
 
-Source SHA256: `413b420cc766f3a85b7701bc70b538a810a1291081739549c6b3314a24234dc9`
+Source SHA256: `2475e14ed86572316567b9a08dc1dea89720a9baf17dfc8e6647c4585fc008ec`
 
 ---
 
@@ -3236,7 +3236,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split compiled from ledger pldg-20260616-002-orchestrator-goal-runtime-flow. Goal_Runtime_System owns the shared Goal Runtime engine and repair-loop policy; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, and classification; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Run_Graph_View, FinalGUISpec, Assistant Chat, Chain Wizard, Runtime Artifacts, WorktreeGitImprovement, Contracts_V0, Models_System, Permissions_System, storage-plan, and Planning_Ledger_System consume the flow through their owner surfaces. The compile phase may regenerate allowed Plans/.plan_index outputs only; Spec_Lock, shards, evidence bundles, plan_graph, auto_decisions, NodeSeeds, WorkNodes, executable queues, and governance seal remain untouched until explicitly requested.
+  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split. Goal_Runtime_System owns the shared Goal Runtime engine and repair-loop policy; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, and classification; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider-specific docs, Planning_Ledger_System, and Plan_Document_System own their contract, persistence, approval, model/account/provider, ledger, and PlanUnit/index boundaries. Run_Graph_View, FinalGUISpec, Assistant Chat, Chain Wizard, Runtime Artifacts, WorktreeGitImprovement, UI_Command_Catalog, Wiring_Matrix, usage-feature, and Glossary consume or mirror the flow through their owner surfaces. Compile-readiness records may state accepted recommendations, no remaining open design questions, and live repo backlink audit requirements for ledger-to-Plans compile, but not direct implementation readiness. The pre-seal compile phase may regenerate allowed Plans/.plan_index outputs only; a later explicit governance seal may refresh Spec_Lock, generated shards, evidence bundles, plan_graph, and auto_decisions without creating NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, production build tasks, or final node queues.
 gui_related: false
 gui_classification_reason: This unit records canonical owner routing metadata; GUI docs are referenced as consumers but not implemented here.
 depends_on:
@@ -3249,8 +3249,9 @@ unblocks: []
 acceptance_criteria:
   - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
   - Executor scheduler truth remains separate from Orchestrator projection/control truth.
-  - Capability lane, model, permission, storage, receipt, GUI, chat, chain-wizard, and runtime-artifact owner docs are recorded without taking over Goal Runtime behavior.
-  - The index preserves the no-WorkNode, no-NodeSeed, no-executable-queue, no-governance-seal boundary for this compile phase.
+  - Capability lane, model, account/provider, permission, storage, receipt, GUI, chat, chain-wizard, runtime-artifact, ledger, PlanUnit, and compiler-boundary owner docs are recorded without taking over Goal Runtime behavior.
+  - Compile-readiness records can preserve accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without authorizing direct code implementation.
+  - The index preserves the no-WorkNode, no-NodeSeed, no-executable-queue, no-final-node-manifest, no-final-build-task, no-production-build-task boundary across compile, indexing, and governance seal phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
@@ -3273,38 +3274,58 @@ implementation_surfaces:
   - Plans/WorktreeGitImprovement.md
   - Plans/Contracts_V0.md
   - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
   - Plans/Permissions_System.md
   - Plans/storage-plan.md
   - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/usage-feature.md
+  - Plans/Glossary.md
 node_compile_hint:
   mode: orchestrator_goal_runtime_flow_owner_map
   create_worknodes: false
 source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0010
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0078
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0080
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0081
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0082
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0083
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0084
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0097
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0098
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0099
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0104
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
 preserved_exact_tokens:
   - "Orchestrator Goal Runtime Flow"
   - "GoalRun"
   - "WorkGraph"
   - "SubagentWave"
   - "VerificationCycle"
+  - "ledger-to-Plans compile"
+  - "accepted"
+  - "no remaining open design questions"
+  - "live repo backlink audit"
   - "capability_lane"
   - "write_mode"
   - "pending governance seal"
   - "Spec_Lock"
   - "WorkNodes"
   - "NodeSeeds"
+  - "final build tasks"
 negative_constraints:
   - Do not treat Plans/00-plans-index.md as the owner for runtime behavior.
-  - Do not create WorkNodes, NodeSeeds, executable queues, or governance seal artifacts during this compile.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during compile, indexing, or governance seal.
   - Do not conflate ledger compile, allowed PlanUnit indexing, and governance seal phases.
+  - Do not treat plan-compile readiness as direct code implementation readiness.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Goal_Runtime_System.md
@@ -3321,7 +3342,14 @@ owner_hints:
   - Plans/WorktreeGitImprovement.md
   - Plans/Contracts_V0.md
   - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
   - Plans/Permissions_System.md
   - Plans/storage-plan.md
   - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/usage-feature.md
+  - Plans/Glossary.md
 ```

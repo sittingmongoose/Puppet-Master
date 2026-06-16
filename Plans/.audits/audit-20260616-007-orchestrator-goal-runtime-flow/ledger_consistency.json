@@ -1,0 +1,165 @@
+{
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "record_counts": {
+    "design_atoms": 104,
+    "compiled_to_plan_atoms": 102,
+    "not_for_plan_atoms": 2,
+    "decisions": 29,
+    "corrections": 9,
+    "questions": 9,
+    "events": 16
+  },
+  "projection_counts": {
+    "manifest_record_counts": {
+      "blockers": 0,
+      "corrections": 9,
+      "decisions": 29,
+      "design_atoms": 104,
+      "events": 16,
+      "questions": 9
+    },
+    "current_design_atoms_total": 104,
+    "current_open_questions_count": 3,
+    "saved_bootstrap_validator_summary": {
+      "atoms": 104,
+      "compile_queue_items": 1,
+      "corrections": 9,
+      "decisions": 29,
+      "events": 14,
+      "plan_units_checked": 2462,
+      "questions": 6
+    }
+  },
+  "status_fields": {
+    "registry_status": null,
+    "registry_governance_status": null,
+    "manifest_status": "compiled",
+    "manifest_governance_status": "sealed",
+    "current_status": "compiled",
+    "current_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "current_governance_status": "sealed",
+    "compile_queue_status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "compile_queue_notes": "Orchestrator Goal Runtime Flow ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs. Governance seal remains pending; migration proof hashes are expected to be stale until an explicit seal/repair phase refreshes governance artifacts.",
+    "handoff_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed"
+  },
+  "open_items": {
+    "open_questions": [
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened after the compiled/governance-sealed ledger was resumed for conversational continuation. This is not a compile blocker for the sealed PlanUnits; it selects the next safe planning lane.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0017",
+          "atom-0041",
+          "atom-0085",
+          "atom-0086"
+        ],
+        "question": "Should the next post-seal continuation focus on the PlanUnit-to-NodeSeed-to-WorkNode compiler contract, or on implementation planning that remains strictly non-executable until that compiler contract exists?",
+        "question_id": "q-0007",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      },
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened to prevent premature executable WorkNode semantics from leaking into planning before the compiler contract exists.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0017",
+          "atom-0041",
+          "atom-0085",
+          "atom-0086"
+        ],
+        "question": "What is the smallest future compiler output that may exist before execution: a non-executable NodeSeed candidate, a hydrated WorkNode template, or only a compiled PlanUnit reference with acceptance metadata?",
+        "question_id": "q-0008",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      },
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened to clarify the certification boundary before any future implementation planning relies on runtime completion semantics.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0044",
+          "atom-0045",
+          "atom-0053",
+          "atom-0090"
+        ],
+        "question": "Where should completion certification be bound in the future runtime: compiler-authored acceptance claims, executor-collected receipts, verifier/adjudicator judgment, or a layered combination with explicit parent-goal certification gates?",
+        "question_id": "q-0009",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      }
+    ],
+    "open_blockers": [],
+    "deferred_questions": []
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "status": "blocked",
+      "issue": "governance_status=sealed is not fully backed by visible pldg-002 auto-decision provenance; Spec_Lock requires auto-decision and evidence bundle, while auto_decisions.jsonl ends at the previous Goal Runtime seal.",
+      "evidence": [
+        "Plans/Spec_Lock.json:248",
+        "Plans/auto_decisions.jsonl:178"
+      ]
+    },
+    {
+      "severity": "medium",
+      "status": "warning",
+      "issue": "Registry/current say sealed while manifest/current status remains compiled and compile_queue notes still say governance seal remains pending.",
+      "evidence": [
+        "Plans/ledgers/v2/ledger_registry.json:220",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json:103",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json:120",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json:452"
+      ]
+    },
+    {
+      "severity": "medium",
+      "status": "warning",
+      "issue": "Committed validation report/projection counts are stale: saved report says 14 events and 6 questions; live records and current validator report 16 events and 9 questions; current validation_state says 15 events.",
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/bootstrap_ledger_validate_report.json:12",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json:98",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json:130"
+      ]
+    },
+    {
+      "severity": "medium",
+      "status": "warning",
+      "issue": "Historical evidence bundles were refreshed in place and contain conflicting old/current counts (5065 vs 5045 PlanUnits, 906 vs 892 shards).",
+      "evidence": [
+        "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json:170",
+        "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json:256",
+        "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json:8930",
+        "Plans/.evidence/plan-sharding-2026-06-09/evidence.json:4301"
+      ]
+    },
+    {
+      "severity": "low",
+      "status": "ok",
+      "issue": "Post-seal questions q-0007..q-0009 are open but marked post_seal_followup_not_compiled, so they do not block the sealed PlanUnits.",
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json:31"
+      ]
+    }
+  ]
+}

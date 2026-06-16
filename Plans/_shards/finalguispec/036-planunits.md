@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L3499-L24322
 
-Source SHA256: `31f1b356a21a6f30cb90f9f952419f29aca1fa29eebc5d7ebd3883350fb43d61`
+Source SHA256: `b7ff8d6b3458bc2cd145b9bb8c1b8ca100721a66123bfed14c40e525cf7514bc`
 
 ---
 

@@ -424,17 +424,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
-  Chain Wizard entry points may route Requirements Doc Builder users into conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
+  Chain Wizard entry points may route Requirements Doc Builder users into conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work, and routes any plans-to-work-graphs or work-graph preparation artifact boundary through Plan_To_Node_Compilation/PNC-009; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
 gui_related: true
 gui_classification_reason: This unit defines visible wizard entry and handoff behavior for Requirements Doc Builder flows.
 depends_on:
   - CW-007
   - GRS-003
+  - PNC-009
 unblocks: []
 acceptance_criteria:
   - Wizard entry can start conversational v2 ledger capture for Requirements Doc Builder.
   - Invisible conversion handoff occurs only after the ledger is accepted and ready.
   - Handoffs preserve ledger source refs and conversion-audit lineage.
+  - plans-to-work-graphs handoffs route through the Plan_To_Node_Compilation compiler boundary.
   - Wizard handoff does not create default Orchestrator WorkNodes.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -446,6 +448,7 @@ implementation_surfaces:
   - Plans/chain-wizard.md
   - Plans/chain-wizard-flexibility.md
   - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
 node_compile_hint:
   mode: doc_builder_invisible_goal_handoff
   create_worknodes: false
@@ -453,9 +456,12 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0007
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0028
 preserved_exact_tokens:
   - "ledger to plans"
   - "plans to work graphs"
+  - "work-graph preparation artifacts"
+  - "Plan_To_Node_Compilation"
   - "auditing those conversions"
   - "chain wizard"
   - "doc builder"
@@ -468,4 +474,5 @@ owner_hints:
   - Plans/chain-wizard.md
   - Plans/chain-wizard-flexibility.md
   - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
 ```

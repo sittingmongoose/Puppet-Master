@@ -1,0 +1,346 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "evidence.orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16",
+  "created_at_utc": "2026-06-16T22:26:00Z",
+  "node": {
+    "node_id": "pm.build-governance.final-seal",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Post-compile fidelity repair and governance seal evidence for pldg-20260616-002 Orchestrator Goal Runtime Flow. The repair restores exact PlanUnit semantics, reciprocal lineage, owner routing, sealed ledger projections, PlanUnit index artifacts, migration proof, shards, Spec Lock, auto-decision provenance, and evidence hashes. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, final build tasks, or final node queues were created.",
+  "commands_run": [
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 5065 PlanUnits; 18068 acceptance units; node_readiness_status blocked_compiler_contract_incomplete"
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass"
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; docs_generated 51; shards_generated 909"
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "changed true; artifact_count 1064"
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "local-shell-python",
+      "count": 6,
+      "note": "Used for deterministic generation/validation helpers and evidence hash creation."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/FINAL_REPORT.md",
+        "note": "Audit that triggered the bounded repair."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/chain-wizard.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/.plan_index/**",
+      "change_type": "modified",
+      "note": "Allowed PlanUnit index outputs regenerated."
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+      "change_type": "modified",
+      "note": "Migration proof hashes and final summary refreshed."
+    },
+    {
+      "path": "Plans/_shards/**",
+      "change_type": "modified",
+      "note": "Configured shards regenerated from stable live Plans."
+    },
+    {
+      "path": "Plans/.evidence/**",
+      "change_type": "modified",
+      "note": "Dedicated pldg-002 repair evidence and refreshed artifact hashes."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/**",
+      "change_type": "modified",
+      "note": "Projection-only sealed ledger repair."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "SchemaID:pm.auto_decisions.schema.v1",
+    "SchemaID:pm.evidence.schema.v1",
+    "ContractName:Plans/Goal_Runtime_System.md",
+    "ContractName:Plans/Plan_Document_System.md",
+    "ContractName:Plans/Planning_Ledger_System.md",
+    "ContractName:Plans/Plan_To_Node_Compilation.md",
+    "ContractName:Plans/Contracts_V0.md",
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-005",
+    "Gate:GATE-006",
+    "Gate:GATE-009"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "orchestrator-goal-runtime-flow-post-audit-repair-current-worktree",
+    "note": "Generated from current workspace after bounded audit repair and before final validator pass."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "2475e14ed86572316567b9a08dc1dea89720a9baf17dfc8e6647c4585fc008ec"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "ebc3c68907f77ac66eb2b1deb461089af20bed76a95ece6eaa5a083a39b5a91e"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "efc9369eb291be2a1f605ea6e6c5697ed2b52c5b81b8893a98a8702060048597"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "b7ff8d6b3458bc2cd145b9bb8c1b8ca100721a66123bfed14c40e525cf7514bc"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "d940e0646d4ae7fd1e92dc8f5f500632d1e65a02336bf4b6a25ba4a3eb8fb0b9"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "sha256": "901a8a7c2ecdf962e12ff1f460916a3f7d020e543c2d5e49256af35704786931"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "sha256": "2eb62ea9a21f1f96fc9fcce699d459dbf55ba8580f6d8fbf06f2cf841e0ff1b2"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "sha256": "e66bebdfa5826d23380dccc47339d0e7f11d6f12a312055a5a6cde06dacf4423"
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "sha256": "94ffcf03252b89a7535ba7f55193f8e0c0a79d37dc05e15a14cf123d3a1bf387"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "sha256": "f4fd0c47b3816fbd615609371d5b3cba424714cb2b7648331d63e613034c3bea"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "sha256": "d531c37cd2326181111816d7e50ffd9069110fca034139e93734f43d25683960"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "sha256": "e8da544ef76cde2c99723125784ce324f966a8d17f1c1a542f9268190782bf76"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "sha256": "d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a"
+    },
+    {
+      "path": "Plans/chain-wizard.md",
+      "sha256": "b554fbcb19022cba01f2b7c13943850a60fa2838cf97fdd1fb65e079a47cf2a1"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sha256": "f3d48e18324a62c3bb3589925d92cc06651b368d686cea36757e9d9cc56c9084"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "e7d2e77ccb09b5fd2c5cb96752eaebce9a4a281e7db3a5ee8c5894c69b1f45d7"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "sha256": "cf8b43533bbc7ecdf196d236585874f8bbe54defcc3df9d57543816aa581a079"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "sha256": "c3d416473abb27b27d3e1ce97f001241530e15715e073a39b9ce960380a10616"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "sha256": "3a144c45cc1f1b098ee7ee7b2250ed2a29f24b39a992281b91e12a2641760536"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "sha256": "47b7c0a813bd95f21242fd387652aaab855b8eb075d16a13d374d9c916670a3d"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "sha256": "721fde9e2bdd30872c1a5217c183f523df7d4a47b05b7f9a7f034f2e0483384a"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "sha256": "5a2aab214ddd18111f33eabd3b9aa32793bde27a825003de847a35d275e0f88d"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "sha256": "0b1c3166384fd30efddef29081b7bda357daa4ffc7d6b9adab04659b308095e0"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "sha256": "50bf6b84fcb1c2a53db146e962dfd550f9a00eac5b56a061ad1374c3c5908a5e"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+      "sha256": "550eebf99d5073dd1724059ff9b8b0f8cc0dff1e67ce35ee2dff040db1bfccd0"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "sha256": "ac30031510d5c981df24b063d139f18bfa87bae5db985646a26194eba07cfcd0"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "sha256": "49187935050b70a82a9f020febd7b240f63f282a2cd312371d1c91238e6cd972"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "3269a1d454166917374accb1ff657411c41be65c0aa3c1d8377ea2db0059e8f8"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "277bcb9d6f9cbbfffdd6b7af56b780dbabbe9d47b18fd563500e857502ff6345"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json",
+      "sha256": "4747833999ce0055de153c8a06d576f617310d91e57b24fa1b79e3cf5206c387"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json",
+      "sha256": "cf107a66c4328c61c645c9809d1b66663a4c7155d127ccb176d8718904b06932"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json",
+      "sha256": "d88d038fc4a5998d514c54e719f7ffc42814094dc760b58ad69ea21c93f73eff"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+      "sha256": "a002f1ba180a7a0abc2cf2454090c90e541ebafa3d38ffba69f9dd8aaa938994"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/bootstrap_ledger_validate_report.json",
+      "sha256": "13f1b6e220f69d200dc55708acbd6015cf39dbe46a7b3c4a93d42cbf7cf7a10a"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/ledger_health.json",
+      "sha256": "c5cc03cf6e8e12227fbf5c89e00e7135627e7a30791bc6c4b8bb3bea07e3943f"
+    }
+  ],
+  "checks": [
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "plan-index-generate",
+      "result": "PASS",
+      "details": "5065 PlanUnits, 18068 acceptance units, node_readiness_report.status blocked_compiler_contract_incomplete."
+    },
+    {
+      "name": "shard-generate",
+      "result": "PASS",
+      "details": "51 configured docs and 909 shards generated."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+    },
+    {
+      "name": "post-audit-repair-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+    }
+  ]
+}

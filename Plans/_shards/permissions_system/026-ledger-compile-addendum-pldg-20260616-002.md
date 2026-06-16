@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L7591-L7648
+Source lines: L7591-L7653
 
-Source SHA256: `6fea7cd9e8c993ab6551844d3149b3ef238328a3abe6b93c2011663974721db1`
+Source SHA256: `e66bebdfa5826d23380dccc47339d0e7f11d6f12a312055a5a6cde06dacf4423`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from runtime records and return recoverable blockers where user or settings action can resolve the issue.
+  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
 gui_related: false
 gui_classification_reason: Write authority and blocker payloads are permission/runtime policy; GUI surfaces consume their visible projections.
 depends_on:
@@ -26,7 +26,7 @@ depends_on:
   - MS-109
 unblocks: []
 acceptance_criteria:
-  - Permission checks consume write_mode values read_only, proposal_only, patch_only, leased_writer, and parent_writer.
+  - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer.
   - Missing capability lanes and overlapping write surfaces produce typed blockers.
   - Invisible/internal goals cannot exceed predeclared authority.
   - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
@@ -39,6 +39,8 @@ context_scope: goalrun_permissions
 implementation_surfaces:
   - Plans/Permissions_System.md
   - Plans/Models_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
   - Plans/WorktreeGitImprovement.md
   - Plans/Goal_Runtime_System.md
 node_compile_hint:
@@ -53,6 +55,7 @@ preserved_exact_tokens:
   - "read_only"
   - "proposal_only"
   - "patch_only"
+  - "isolated_worktree"
   - "leased_writer"
   - "parent_writer"
   - "capability_lane"
@@ -64,5 +67,7 @@ negative_constraints:
 owner_hints:
   - Plans/Permissions_System.md
   - Plans/Models_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
   - Plans/WorktreeGitImprovement.md
 ```

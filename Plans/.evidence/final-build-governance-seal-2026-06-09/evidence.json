@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6a28b3953e794d2f0ff27235225637810005315f4befb92c64c47dbfb5dc91b2"
+      "sha256": "3269a1d454166917374accb1ff657411c41be65c0aa3c1d8377ea2db0059e8f8"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "73f10777cf321633be9dd5f9cacf08ae8f6e2b92b20552887de9501efbc87402"
+      "sha256": "277bcb9d6f9cbbfffdd6b7af56b780dbabbe9d47b18fd563500e857502ff6345"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "e5caa9c004185dc36e8788c2335e53c88b97b4d75c7e0519f297f48983f7d104"
+      "sha256": "b94e64bdfd4828851f7a9ce8dc9d17468de9281119657d26a0cfd5c31a56ac7d"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "4b36d3271adcccc98b1ceb96fa2d2a16693fd633820f43999dcabfeffe7f0ede"
+      "sha256": "49187935050b70a82a9f020febd7b240f63f282a2cd312371d1c91238e6cd972"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "be143b20120a98d9a3c0267d743c1b39a33d400f198b7200ba119ab04697d66f"
+      "sha256": "8a34e6b8d2f5093f08a740c9816aa5c64d205e0699002a528304855f3257aa91"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "58629a87c999bf543f6338fe0c7f87cfbf5a9b18bb988424200c745d90747bce"
+      "sha256": "cf8b43533bbc7ecdf196d236585874f8bbe54defcc3df9d57543816aa581a079"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "19ef8f38aab3ae066a3b61dfb7791083f0b5dc7bea61f23ac611332ddb173a27"
+      "sha256": "c3d416473abb27b27d3e1ce97f001241530e15715e073a39b9ce960380a10616"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "06b4a2e503074aded7b5137fae16f1974c66439e0efa289835774f59c9f201f3"
+      "sha256": "3a144c45cc1f1b098ee7ee7b2250ed2a29f24b39a992281b91e12a2641760536"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "24c37542abd1645b1b9293a6f2f77171d108fb4bb0e57c7d52a6fdd5c54ae95f"
+      "sha256": "47b7c0a813bd95f21242fd387652aaab855b8eb075d16a13d374d9c916670a3d"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "eb14cc04afa4e7f2ffbd9a42ec6917e264d40dc28bb517e4a1c49bdac7ed0652"
+      "sha256": "721fde9e2bdd30872c1a5217c183f523df7d4a47b05b7f9a7f034f2e0483384a"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "d5e76c7660f951b6bb5231e5c6da68ec97459dcd25889355940668bee8ad140b"
+      "sha256": "5a2aab214ddd18111f33eabd3b9aa32793bde27a825003de847a35d275e0f88d"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index validation passed with 5065 PlanUnits and 18046 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete.",
+      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -133,6 +133,11 @@
       "name": "governance-scope-only",
       "result": "PASS",
       "details": "Product prose was not changed in this governance seal phase; generated governance artifacts, helper tooling, evidence hashes, and ledger projections were refreshed."
+    },
+    {
+      "name": "post-audit-repair-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
     }
   ],
   "commands_run": [
@@ -147,7 +152,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -186,7 +191,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -206,7 +211,15 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     }
   ],

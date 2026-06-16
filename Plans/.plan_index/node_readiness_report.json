@@ -1764,13 +1764,13 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10585,
-    "edge_count": 12124,
+    "depends_on_edge_count": 10599,
+    "edge_count": 12138,
     "node_count": 5065,
     "unblocks_edge_count": 1539,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-16T21:15:33Z",
+  "generated_at_utc": "2026-06-16T22:22:21Z",
   "gui_related_units": {
     "count": 2143,
     "units": [
@@ -13616,8 +13616,8 @@
         "source_location": {
           "heading": "F3-395 - Orchestrator Goal Surface Matrix",
           "heading_level": 3,
-          "heading_line": 24798,
-          "line": 24800,
+          "heading_line": 24843,
+          "line": 24845,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -14441,8 +14441,8 @@
         "source_location": {
           "heading": "GRS-003 - Invisible Chain Wizard Goal Boundary",
           "heading_level": 3,
-          "heading_line": 161,
-          "line": 163,
+          "heading_line": 164,
+          "line": 166,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14452,8 +14452,8 @@
         "source_location": {
           "heading": "GRS-007 - Goal Replan Event For Material Changes",
           "heading_level": 3,
-          "heading_line": 440,
-          "line": 442,
+          "heading_line": 446,
+          "line": 448,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14463,8 +14463,8 @@
         "source_location": {
           "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
           "heading_level": 3,
-          "heading_line": 1248,
-          "line": 1250,
+          "heading_line": 1254,
+          "line": 1256,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14474,8 +14474,8 @@
         "source_location": {
           "heading": "GRS-022 - Goal Runtime Risk Register",
           "heading_level": 3,
-          "heading_line": 1439,
-          "line": 1441,
+          "heading_line": 1445,
+          "line": 1447,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14485,8 +14485,8 @@
         "source_location": {
           "heading": "GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults",
           "heading_level": 3,
-          "heading_line": 1606,
-          "line": 1608,
+          "heading_line": 1612,
+          "line": 1614,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18806,10 +18806,10 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-425",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
-          "line": 30948,
+          "heading": "OSI-425 - Persona-Aware Subagent Configuration Recovery",
+          "heading_level": 3,
+          "heading_line": 30948,
+          "line": 30950,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },

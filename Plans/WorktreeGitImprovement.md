@@ -4847,7 +4847,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
-  Source Control and Worktrees must surface GoalRun and WorkNode write-surface policy through worktree leases, isolated writes, parent merge, blocked write reasons, and write-mode labels. Supported labels include read_only, proposal_only, patch_only, leased_writer, and parent_writer. Subagents must not mutate overlapping live surfaces concurrently, and every GoalRun write-capable action must preserve worktree_id, branch, HEAD snapshot, owner lane, and lease or blocker evidence.
+  Source Control and Worktrees must surface GoalRun and WorkNode write-surface policy through worktree leases, isolated writes, parent merge, blocked write reasons, and write-mode labels. Supported labels include read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer. Subagents must not mutate overlapping live surfaces concurrently, and every GoalRun write-capable action must preserve worktree_id, owner lane, and lease or blocker evidence.
 gui_related: true
 gui_classification_reason: Source Control, Worktrees, blocked write reasons, and lease labels are user-visible worktree/source-control UI.
 depends_on:
@@ -4857,8 +4857,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Source Control displays GoalRun and WorkNode write-surface policy and lease state.
-  - Worktree leases preserve worktree_id, branch, HEAD snapshot, owner lane, and blocker evidence.
-  - read_only, proposal_only, patch_only, leased_writer, and parent_writer labels are available to visible source-control surfaces.
+  - Worktree leases preserve worktree_id, owner lane, and blocker evidence.
+  - read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer labels are available to visible source-control surfaces.
   - Overlapping live writes by subagents are blocked or serialized through explicit parent merge policy.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -4891,6 +4891,7 @@ preserved_exact_tokens:
   - "read_only"
   - "proposal_only"
   - "patch_only"
+  - "isolated_worktree"
   - "leased_writer"
   - "parent_writer"
 negative_constraints:

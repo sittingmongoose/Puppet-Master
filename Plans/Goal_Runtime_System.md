@@ -129,6 +129,9 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:dec-0003
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0009
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0013
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
 preserved_exact_tokens:
   - "same engine"
   - "invisible internal goals"
@@ -215,6 +218,9 @@ preserved_exact_tokens:
   - "conversational"
   - "not a default Orchestrator WorkNode"
   - "exact redesigned Chain Wizard flow"
+  - "current Chain Wizard docs are incomplete"
+  - "current plans for the chain wizard are wrong/incomplete"
+  - "completely redo all that after goal mode is finalized"
 negative_constraints:
   - Do not treat current Chain Wizard docs as final Goal Runtime design.
   - Do not turn invisible Chain Wizard execution into a row-by-row user questioning flow.
@@ -1689,7 +1695,7 @@ These data-shape bullets are Goal Runtime feature-local constraints; the adjacen
 Goal Runtime implementation is acceptable only when:
 
 - all Goal Runtime PlanUnits include `gui_related: true|false`;
-- visible and invisible goals share one lifecycle/state model;
+- invisible internal goals, visible Assistant Chat goals, and Orchestrator Goal runtime flows share one lifecycle/state model;
 - every goal produces a completion, degraded, stopped, or blocked receipt;
 - strong-certification goals block when verifier/adjudicator requirements cannot be met;
 - material mid-goal changes produce Goal Replan Events;
@@ -1758,7 +1764,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth.
+  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
 gui_related: false
 gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
 depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
@@ -1780,9 +1786,12 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0006
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0009
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0011
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0013
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0021
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0022
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0039
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0040
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0047
@@ -1791,6 +1800,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0095
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0001
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0006
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
 preserved_exact_tokens:
   - "Goal Runtime"
   - "Orchestrator"
@@ -1801,6 +1811,7 @@ preserved_exact_tokens:
   - "SubagentWave"
   - "GoalCompletionReceipt"
   - "Completion requires receipt-backed certification"
+  - "isolated_worktree"
 negative_constraints:
   - Do not make Goal Runtime replace Orchestrator UI/projections or Executor scheduler truth.
   - Do not dispatch graph nodes directly from Goal Runtime when Executor scheduling truth exists.
@@ -1816,7 +1827,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Two repeated same-signature failures force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root-cause replan.
+  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
 gui_related: false
 gui_classification_reason: Verification, repair, receipts, and certification policy are runtime/governance behavior, not GUI implementation.
 depends_on: [GRS-010, GRS-012, GRS-013, GRS-014, GRS-019]
@@ -1824,7 +1835,9 @@ unblocks: [OP-022, EP-098, CV-288, RAP-027]
 acceptance_criteria:
   - A failed VerificationCycle cannot become a done-with-issues completion state.
   - Verification reruns after every repair before a WorkNode, child goal, or GoalRun is certified.
-  - Repeated defect signatures trigger strategy adjustment after two repeats and high-end adjudication/root-cause replan on the third failed cycle.
+  - Repeated defect signatures trigger strategy adjustment after two consecutive failed verification cycles and high-end adjudication/root_cause replan on the third failed cycle.
+  - VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt preserve verifier/executor/certifier identity, changed artifacts, validator outcomes, evidence refs, unresolved risks, authority checks, and repair-cycle refs.
+  - Repair strategy and evidence taxonomy values remain explicit rather than compressed into generic retry language.
   - Cost controls may reduce exploratory fanout but cannot disable required verification, receipts, independent review, or certification gates.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1837,6 +1850,10 @@ node_compile_hint: {mode: verification_repair_loop_policy, create_worknodes: fal
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0019
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0021
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0022
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0038
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0043
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0044
@@ -1849,6 +1866,9 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0053
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0055
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0065
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0066
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0067
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0090
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0092
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0094
@@ -1860,12 +1880,39 @@ preserved_exact_tokens:
   - "keep doing that flow until it stops finding issues"
   - "zero findings remain"
   - "VerificationReceipt"
+  - "WorkNodeReceipt"
+  - "GoalCompletionReceipt"
+  - "passed/failed/skipped"
+  - "repair-cycle refs"
+  - "regression checks"
+  - "executor identity"
+  - "input refs"
+  - "output refs"
+  - "changed artifacts"
+  - "validators run"
+  - "evidence refs"
+  - "unresolved risks"
+  - "validator outcomes"
+  - "authority checks"
+  - "final certifier decision"
   - "DefectBundle"
   - "RepairWorkNode"
   - "defect signature"
+  - "two consecutive failed verification cycles"
   - "two repeats"
   - "third failed cycle"
   - "high-end adjudicator"
+  - "root_cause"
+  - "patch"
+  - "replan"
+  - "split_node"
+  - "merge_node"
+  - "widen_context"
+  - "rollback"
+  - "escalate_capability_lane"
+  - "assign_specialist_subagents"
+  - "manual_decision"
+  - "authority_blocked"
 negative_constraints:
   - Do not allow a failed verification to become a done-with-issues state.
   - Do not reduce audit/verification strictness to save cost.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L141-L456
+Source lines: L141-L476
 
-Source SHA256: `fd177ebd7f7aeef8d7c2ada0e32fe83d1e39e3dcc25035208941d7f14abc4463`
+Source SHA256: `f4fd0c47b3816fbd615609371d5b3cba424714cb2b7648331d63e613034c3bea`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  A v2 ledger compile queue must preserve accepted atom dispositions, target owner docs, compiled PlanUnit ids, duplicate/deferred/non-applicable rationale, validation commands, and governance status without writing Spec_Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, or executable queues during ordinary compile. After canonical docs and allowed plan indexes change, the ledger status is compiled pending governance seal until an explicit seal phase refreshes governance artifacts.
+  A v2 ledger compile queue must preserve accepted atom dispositions, target owner docs, compile_queue.items, candidate_compile_plan, compiled_plan_unit_ids, duplicate/deferred/non-applicable rationale, validation commands, and governance status without writing Spec_Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during ordinary ledger-to-Plans compile. After canonical docs and allowed plan indexes change, the ledger status is compiled pending governance seal until an explicit seal phase refreshes governance artifacts. Compile-readiness projections may record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements, but they must not treat plan-compile readiness as direct code implementation readiness.
 gui_related: false
 gui_classification_reason: Compile queue fidelity and governance seal state are planning/governance metadata, not GUI behavior.
 depends_on:
@@ -26,10 +26,11 @@ depends_on:
   - PLS-010
 unblocks: []
 acceptance_criteria:
-  - Compile queue state records per-atom dispositions and compiled PlanUnit ids.
+  - Compile queue state records per-atom dispositions, compile_queue.items, candidate_compile_plan, compiled PlanUnit ids, and compiled_plan_unit_ids.
   - Duplicate, deferred, and non-applicable atoms preserve rationale instead of disappearing.
-  - Ordinary compile does not update Spec_Lock, shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, or executable queues.
+  - Ordinary compile does not update Spec_Lock, shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks.
   - Governance status is pending_seal after canonical docs or allowed plan indexes change.
+  - Compile readiness can record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without implying code implementation readiness.
 validation_surfaces:
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
   - python3 scripts/pm-plan-index.py validate
@@ -45,11 +46,24 @@ node_compile_hint:
   mode: compile_queue_fidelity
   create_worknodes: false
 source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0096
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0099
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0104
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
 preserved_exact_tokens:
   - "compile_queue"
+  - "compile_queue.items"
+  - "candidate_compile_plan"
   - "compiled PlanUnit ids"
+  - "compiled_plan_unit_ids"
+  - "ledger-to-Plans compile"
+  - "accepted"
+  - "no remaining open design questions"
+  - "live repo backlink audit"
   - "pending governance seal"
   - "Spec_Lock"
   - "generated shards"
@@ -58,9 +72,15 @@ preserved_exact_tokens:
   - "auto_decisions"
   - "WorkNodes"
   - "NodeSeeds"
+  - "executable queues"
+  - "final build tasks"
 negative_constraints:
   - Do not mark a ledger sealed during ordinary compile.
   - Do not create executable build tasks before the WorkNode compiler contract exists.
+  - Do not create fake compiled_plan_unit_ids before Plans are compiled.
+  - Do not create executable WorkNodes or NodeSeeds during ledger compile.
+  - Do not skip the live repo backlink audit at compile time.
+  - Do not treat plan-compile readiness as direct code implementation readiness.
 owner_hints:
   - Plans/Planning_Ledger_System.md
   - Plans/Plan_Document_System.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L5837-L5892
+Source lines: L5837-L5893
 
-Source SHA256: `cf53fd2fcb7280881a2714a0f2e2ac21b48c19170d98acf22729539c285ce466`
+Source SHA256: `efc9369eb291be2a1f605ea6e6c5697ed2b52c5b81b8893a98a8702060048597`
 
 ---
 
@@ -43,6 +43,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0041
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0042
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0048
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0076

@@ -660,7 +660,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts projects Goal Runtime receipt and verification evidence without becoming the receipt owner. It must expose WorkNodeReceipt, GoalCompletionReceipt, validator evidence, adjudication records, repair cycles, restart records, and model-switch evidence through artifact identity and open-by-artifact routing, with degraded views when underlying storage or contract records are stale.
+  Runtime Artifacts projects Goal Runtime receipt and verification evidence without becoming the receipt owner. It must expose WorkNodeReceipt, GoalCompletionReceipt, VerificationReceipt, validator evidence, adjudication records, repair cycles, restart records, model-switch evidence, skipped validator reasons, unresolved risks, certification status, and evidence taxonomy across acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence through artifact identity and open-by-artifact routing, with degraded views when underlying storage or contract records are stale.
 gui_related: true
 gui_classification_reason: Runtime Artifacts receipt, evidence, restart, and model-switch projection is a user-visible panel behavior.
 depends_on:
@@ -671,7 +671,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Runtime Artifacts can show WorkNodeReceipt and GoalCompletionReceipt references.
+  - Runtime Artifacts can show VerificationReceipt references, skipped validator reasons, unresolved risks, and certification status.
   - Validator evidence, adjudication records, repair cycles, restart records, and model-switch evidence are visible through artifact identity.
+  - Evidence projection distinguishes acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence.
   - Stale or missing owner records degrade the view rather than becoming artifact truth.
   - Runtime Artifacts does not replace Contracts_V0 or storage-plan receipt authority.
 validation_surfaces:
@@ -691,6 +693,7 @@ node_compile_hint:
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0021
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0051
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0052
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0060
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0062
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0071
@@ -698,9 +701,22 @@ source_lineage:
 preserved_exact_tokens:
   - "WorkNodeReceipt"
   - "GoalCompletionReceipt"
+  - "VerificationReceipt"
   - "validator evidence"
   - "adjudication records"
   - "repair cycles"
+  - "skipped validator reasons"
+  - "unresolved risks"
+  - "certification status"
+  - "acceptance criteria"
+  - "live evidence"
+  - "tests"
+  - "diffs"
+  - "validator outputs"
+  - "canonical evidence"
+  - "source evidence"
+  - "process evidence"
+  - "governance evidence"
   - "Runtime Artifacts"
   - "restart"
   - "model switch"

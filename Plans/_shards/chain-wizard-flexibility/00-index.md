@@ -1,46 +1,46 @@
 # Shard Index: Plans/chain-wizard-flexibility.md
 
-Generated: 2026-06-16T21:25:16Z
+Generated: 2026-06-16T22:23:45Z
 
-Source SHA256: `0b73f2f9279538abf08313620fd9f5d277911139b86a3ab9b23e127ce0b86230`
+Source SHA256: `d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `06f23e199541a417a24001896470ddb9e348fc1137d28e7d30970bab2db520ad`
-- [002 - Change Summary](002-change-summary.md) L7-L24 `7fb44af9e81312209ae719b309d28a66bf1b7fe4b2f01ba44069d3c7f57bbe07`
-- [003 - Plan Document Status](003-plan-document-status.md) L26-L35 `41f6e7e38d2fe622088c3d441dcea56aea52b774a68fe65f6ac79146cc498386`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L37-L43 `a99c9bb4b78669d9ac1814c1e052bfc4181e79e5c5559e1ee38bdb217938c718`
-- [005 - SSOT references (DRY)](005-ssot-references-dry.md) L45-L57 `3e93d9e4b51aa41ec691314852f3a381cba0e6aa5160401dd98d47d350850455`
-- [006 - Executive Summary](006-executive-summary.md) L59-L77 `1652db2d2ab2372bb20027f9ac9268d5e20a43adb0f39b0c4da88ce0a09003c5`
-- [007 - Table of Contents](007-table-of-contents.md) L79-L98 `abb4fe3bd543b99d910f16165a55c0567a3e638c557a6ca402af3a565ccbf7e4`
-- [008 - 1. Intent-Based Workflows](008-1.-intent-based-workflows.md) L100-L145 `27a0b408ba65a3e804b639b8d96ea039506676c9140df060c5de3e38eda3e663`
-- [009 - 2. How Intent Affects the Flow](009-2.-how-intent-affects-the-flow.md) L147-L386 `8c6b90271547701d5b790a96477c3c87d2ecc6ef610cbd4503ce931e021451d2`
-- [010 - 3. GUI Updates](010-3.-gui-updates.md) L388-L522 `2550bcdc2d9b2507420d76aa5db96b8686c3380d158d45f1e7feb5591ce99f62`
-- [011 - 4. Requirements: Multiple Uploads and Storage](011-4.-requirements-multiple-uploads-and-storage.md) L524-L576 `41e0260ff5af1b87e988c3f55933532bb4f3fe2f7b9a46a17f6eabfb53f51407`
-- [012 - 5. Requirements Doc Builder (Assistant → Interview Handoff)](012-5.-requirements-doc-builder-assistant-interview-handoff.md) L578-L848 `56c68f255f0f84a810cb513a2550c6bfd71c72ffa094512000c36306b7d825e2`
-- [013 - 6. Adaptive Interview Phases](013-6.-adaptive-interview-phases.md) L850-L1025 `7e0bfe387dad3cb4b16badf9c5db7f4050dc77871177c51a74bcccc924e754ef`
-- [014 - 7. Project Setup and GitHub: Create Repo, Fork, PR](014-7.-project-setup-and-github-create-repo-fork-pr.md) L1027-L1092 `b85b790fd71155da9b6974b6c0c64fadbef1232405f72d0049e2bc6808a2658a`
-- [015 - 8. Relationship to Other Plans](015-8.-relationship-to-other-plans.md) L1094-L1111 `45cb2f2664c7f12abaa2d970c94b222f61ff805b964a1bade8aa3ad24b05f743`
-- [016 - 9. Gaps and Potential Problems](016-9.-gaps-and-potential-problems.md) L1113-L1218 `64cc012877339d2feb361e092ce7f5145f73824a6d216e755b12bd13119cb3f7`
-- [017 - 10. Implementation Readiness Checklist](017-10.-implementation-readiness-checklist.md) L1220-L1282 `086abcefc43f974a990c41f5e09a090b891d7c4d633f2a559bf927998a6bdb10`
-- [018 - 11. User-Project Output Artifacts (Sharded-Only)](018-11.-user-project-output-artifacts-sharded-only.md) L1284-L1502 `dde6cfaa525dfeb7fbf363696af6cf88efd9e537b0c18f0a0e2fa6e7dbe7db7b`
-- [019 - 13. No-Wizard Project Management Flows](019-13.-no-wizard-project-management-flows.md) L1503-L1580 `5947b3d2f4080aeddd37edaf08669ce7956ff0b644eadff0e828423b2d5e9435`
-- [020 - 14. Requirements Completion Contract](020-14.-requirements-completion-contract.md) L1582-L1677 `7670977c5a6165894584ccb2ff53a324f55c4e6d2baaa1e37219a85e6aba810b`
-- [021 - 15. Requirements Quality Escalation Semantics](021-15.-requirements-quality-escalation-semantics.md) L1679-L1785 `ad4f430f79370a96f78b074610c101e2c51d359c07b9ad920e13b47f7c1c11cd`
-- [022 - Requirements Builder Persona Strategy Addendum (2026-03-06)](022-requirements-builder-persona-strategy-addendum-2026-03-06.md) L1786-L1927 `80c5c2e4ce8b82d937176b2d4190dcfc8a999cba6b6e15b0c64f3df2ee230f5b`
-- [023 - 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)](023-17.-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md) L1929-L2085 `34548462892c23721291ef5d135ec4969110fb7a22f519319175d73a51eb4196`
-- [024 - Clarification Escalation and Draft Decomposition Addendum (2026-03-08)](024-clarification-escalation-and-draft-decomposition-addendum-2026-0.md) L2087-L2135 `0dfaff3523550f15dd4c3a36b3b92d856a4f6709805058c9fd2609d0eea782ad`
-- [025 - Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)](025-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-.md) L2136-L2161 `c8093be8aed241ca7821ea4dee3b9482c31958bb174637e3ff425d8da67f749d`
-- [026 - Canonical Wizard Blocked-State Canonical Alignment (2026-03-09)](026-canonical-wizard-blocked-state-canonical-alignment-2026-03-09.md) L2162-L2182 `41c7f0d88b0c2a49a984de07e03aa5f39b5c3571ece8f00e0340e39e5fd81fb9`
-- [027 - Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)](027-wizard-escalation-degradation-and-blocked-state-consolidation-ad.md) L2183-L2216 `1321db53a3fe6eb19ef0b4168f04386816daa4d5581423552e3c8cc5ac60f199`
-- [028 - Canonical Wizard Blocked Lifecycle](028-canonical-wizard-blocked-lifecycle.md) L2217-L2247 `d78e0b37eaddff9c8af52198cbe111e8a3bce26c997c291c6b26fb98fc3eb751`
-- [029 - Wizard Status Enum Correction Addendum](029-wizard-status-enum-correction-addendum.md) L2248-L2254 `8b36745d709c5bd28cf5a3daf8e7687867e6126ac6183a7576337d8d1b95d340`
-- [030 - Runtime Identity, Route, and Audit Refinement Rules](030-runtime-identity-route-and-audit-refinement-rules.md) L2256-L2286 `ade5ccc6993f98719d2c7a5ca55dcc929b297a8b5cc894ffd1d74aaf1400602c`
-- [031 - Owner / Consumer Map](031-owner-consumer-map.md) L2288-L2292 `03e6219ccc9e691df3ed9f42e58d1423d42a846e46a64fe1fccfce9722625d3a`
-- [032 - PlanUnits](032-planunits.md) L2294-L9877 `301f961126254690e4e098a70189620376d771eabff93ce9fe753f2e4932b130`
-- [033 - Migration Coverage](033-migration-coverage.md) L9879-L9889 `e1f2ca10f9e76f38d5a66b65f9887761c885ee62d125519935704d0361f2cb9c`
-- [034 - Ledger Compile Addendum - pldg-20260614-001](034-ledger-compile-addendum-pldg-20260614-001.md) L9891-L9927 `3b042758b2c8e79843328a236421c17fe24b0ca351487dcdfa36933d1309f2bc`
-- [035 - Ledger Compile Addendum - pldg-20260614-002](035-ledger-compile-addendum-pldg-20260614-002.md) L9929-L10010 `914aa9b2ac51f3aa0611158cc75888920a98d51ce47c06d5501643e7f95e0271`
-- [036 - Ledger Compile Addendum - pldg-20260616-002](036-ledger-compile-addendum-pldg-20260616-002.md) L10012-L10067 `8a0c695e9ea44a8dd26a9ce9ec6ddde75a0a794878999576ecda39e4a8ddfba5`
+- [001 - Preamble](001-preamble.md) L1-L4 `2e17f381d2b4f68d5d954ed88d465f72f95825215e58ef39921f7c90a033a9b4`
+- [002 - Change Summary](002-change-summary.md) L7-L24 `f18fd13e2610382957e824ac09e843f9956e0874c209160be3f772fbffa0f455`
+- [003 - Plan Document Status](003-plan-document-status.md) L26-L35 `95e24679fc68bdc196766bbcdbbe7c30995efbe9e569c5c8351ffa2c8b9ace47`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L37-L43 `b9fd27ebd0a8fb87b5ec8f764404747147d6ba7ed1fd13db38fa80632859fbd5`
+- [005 - SSOT references (DRY)](005-ssot-references-dry.md) L45-L57 `4404c65319cb59eacb413f40c57e352180a30338aa869db9c12056c19ea39c07`
+- [006 - Executive Summary](006-executive-summary.md) L59-L77 `5b64c3ace4dc49be96988bfb27a71f01b89009971885a4d0df739061764db1cc`
+- [007 - Table of Contents](007-table-of-contents.md) L79-L98 `af7c6a3c80df4f74bd6a3e67161a5cba23dd4f4d054345ed439dbc2320f60c88`
+- [008 - 1. Intent-Based Workflows](008-1.-intent-based-workflows.md) L100-L145 `e3ad4b19ca2dfe3182670f630141d25eb64f0e8f6e3bcdd3f352ccf5054b5a22`
+- [009 - 2. How Intent Affects the Flow](009-2.-how-intent-affects-the-flow.md) L147-L386 `1ce5020cef8fa67ab38f4db22d19f193e5a50827a73bbdb1a64d5644529e5bb5`
+- [010 - 3. GUI Updates](010-3.-gui-updates.md) L388-L522 `cd3e599857684d265c8961ce5d8b4e2a508f74ccf452a92666710825e0d42cfc`
+- [011 - 4. Requirements: Multiple Uploads and Storage](011-4.-requirements-multiple-uploads-and-storage.md) L524-L576 `9fcfbd6d9b1e33ead5f122272de2e8631ba93af32328864ab49e3128449a2e41`
+- [012 - 5. Requirements Doc Builder (Assistant → Interview Handoff)](012-5.-requirements-doc-builder-assistant-interview-handoff.md) L578-L848 `efc169c214df61b41425bde2e1cbb345f7a593402be4c691612ffa6b7c7ec4c1`
+- [013 - 6. Adaptive Interview Phases](013-6.-adaptive-interview-phases.md) L850-L1025 `58fc2be72c6bdcebd652d25e7bba8e7e21b6da63a047242942a3d86812dc02ad`
+- [014 - 7. Project Setup and GitHub: Create Repo, Fork, PR](014-7.-project-setup-and-github-create-repo-fork-pr.md) L1027-L1092 `dc12652cc2c92a4ec7fd048a252d76ecdb4539b43f4d2e9ce787a5a4d2499b70`
+- [015 - 8. Relationship to Other Plans](015-8.-relationship-to-other-plans.md) L1094-L1111 `21221e1a576a2715f3b2f0cf4898816b8af35a30c6a77ab14cf6f8e5abd860f1`
+- [016 - 9. Gaps and Potential Problems](016-9.-gaps-and-potential-problems.md) L1113-L1218 `06e9cb20b9566d28385c9cbc4aa13d848be20b1e78324d509a1b3285cabc414d`
+- [017 - 10. Implementation Readiness Checklist](017-10.-implementation-readiness-checklist.md) L1220-L1282 `aa8bcd2cb10b12ed464deec86c68c63eb80e0b63f5b7d8d7c8ef3cf979dfda15`
+- [018 - 11. User-Project Output Artifacts (Sharded-Only)](018-11.-user-project-output-artifacts-sharded-only.md) L1284-L1502 `aab66a5b28e706157042c209d50ab1861c2719399c858110a153faad7f4a5086`
+- [019 - 13. No-Wizard Project Management Flows](019-13.-no-wizard-project-management-flows.md) L1503-L1580 `665fc76ea9e6dc7ff6e9fb8f0911c1f6b508566312d8b3ccfd4c48fac806cbce`
+- [020 - 14. Requirements Completion Contract](020-14.-requirements-completion-contract.md) L1582-L1677 `f02db138feec44936e38fc1af56110c4776e6a4f0bb65efeee24f6222c41e79b`
+- [021 - 15. Requirements Quality Escalation Semantics](021-15.-requirements-quality-escalation-semantics.md) L1679-L1785 `41e02790e6fdc8a9b366020e2a90a0ed1c3996716c6112f15d1888058be356e2`
+- [022 - Requirements Builder Persona Strategy Addendum (2026-03-06)](022-requirements-builder-persona-strategy-addendum-2026-03-06.md) L1786-L1927 `10686a32afe66869deb4cd57b9c9bbfa5f82ee4a281668bf2e9626d2c8eefc93`
+- [023 - 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)](023-17.-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md) L1929-L2085 `8ddbb9677d15a518f943ec9460215f52e0b9acd659c4db8d0718c5baed1b619b`
+- [024 - Clarification Escalation and Draft Decomposition Addendum (2026-03-08)](024-clarification-escalation-and-draft-decomposition-addendum-2026-0.md) L2087-L2135 `038bd5183447407a6f174a39392987c5438c2d84dcc62fd1930e1f0d686c8d86`
+- [025 - Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)](025-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-.md) L2136-L2161 `16e21c15f212fedf65e035c6161876ff3d34cf73db97d6e527e9a677ac5b59ef`
+- [026 - Canonical Wizard Blocked-State Canonical Alignment (2026-03-09)](026-canonical-wizard-blocked-state-canonical-alignment-2026-03-09.md) L2162-L2182 `4f1e60c8a067f5e8445fbfd64f7b5653e36994288e65f05ad4c08e875289d78f`
+- [027 - Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)](027-wizard-escalation-degradation-and-blocked-state-consolidation-ad.md) L2183-L2216 `1b51e91de9ee91eb8edb0c79027640052c89ba833c9e2fc8cc56de08f35f795d`
+- [028 - Canonical Wizard Blocked Lifecycle](028-canonical-wizard-blocked-lifecycle.md) L2217-L2247 `b7c5284e2e28f56986026984ad540bc9bd48a2c8a41c39b67ff3ec8c7cc031aa`
+- [029 - Wizard Status Enum Correction Addendum](029-wizard-status-enum-correction-addendum.md) L2248-L2254 `8d5a7881988b5ba5c020444bd20241bb78f128be70ba759ac93df13765db8a1d`
+- [030 - Runtime Identity, Route, and Audit Refinement Rules](030-runtime-identity-route-and-audit-refinement-rules.md) L2256-L2286 `ff9e75780a76620e10e8080c6cf54dce7128347ce1621893ea502b302f97353d`
+- [031 - Owner / Consumer Map](031-owner-consumer-map.md) L2288-L2292 `76da1f0ae80471029c1dd073858ee02391f1cf3663d474dc9eb2e19c56a3035f`
+- [032 - PlanUnits](032-planunits.md) L2294-L9877 `07c8c8966fac8faf6cf9cad17fd7f22d8f30f5d59281bd2c11a102877416b9b9`
+- [033 - Migration Coverage](033-migration-coverage.md) L9879-L9889 `a0ef182110b605a9fcd76cfd1572656613d844e9517b3133531c1b203c76ea96`
+- [034 - Ledger Compile Addendum - pldg-20260614-001](034-ledger-compile-addendum-pldg-20260614-001.md) L9891-L9927 `3d555a032bc56d094f6d7bbe1dfefc04f8e2646524b21a4fb239bf09892cf245`
+- [035 - Ledger Compile Addendum - pldg-20260614-002](035-ledger-compile-addendum-pldg-20260614-002.md) L9929-L10010 `52589f20f7c0d9bc587ab37d99194ff863b2ea3966848f5e90cce61d50a24e6f`
+- [036 - Ledger Compile Addendum - pldg-20260616-002](036-ledger-compile-addendum-pldg-20260616-002.md) L10012-L10074 `13785e03093a22107b372406e553d81d2baca38cfa00d960f010beea6858e11a`
