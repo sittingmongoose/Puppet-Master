@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "open_questions": [],
+  "deferred_questions": [
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "question_id": "q-0001",
+      "status": "deferred",
+      "question": "What is the exact redesigned Chain Wizard flow after native Goal Mode exists?",
+      "disposition": "Deferred intentionally. Current Chain Wizard docs are known wrong/incomplete; redesign should happen after Goal Runtime/System PlanUnits are finalized. This does not block compiling the Goal Runtime design itself.",
+      "linked_atom_ids": [
+        "atom-0013",
+        "atom-0015",
+        "atom-0016"
+      ],
+      "source_refs": [
+        "chat:chain-wizard-context"
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "updated_at_utc": "2026-06-16T04:00:00Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "question_id": "q-0002",
+      "status": "deferred",
+      "question": "What is the exact PlanUnit-to-NodeSeed-to-WorkNode compiler contract used by any future plan graph build goal?",
+      "disposition": "Deferred to the existing Plan_To_Node_Compilation blocker. Goal Mode may define a future plan_graph_build template but must not create NodeSeeds or WorkNodes until the compiler contract is defined.",
+      "linked_atom_ids": [
+        "atom-0016",
+        "atom-0065"
+      ],
+      "source_refs": [
+        "repo:Plans/Plan_To_Node_Compilation.md",
+        "chat:repo-review-context"
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "updated_at_utc": "2026-06-16T04:00:00Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "question_id": "q-0003",
+      "status": "deferred",
+      "question": "What final visual styling, iconography, and exact layout should the Goal chip/status/task drawer use?",
+      "disposition": "Deferred to GUI design implementation. This ledger captures functional UI requirements and PMConcept alignment; exact final visuals can be resolved when assistant-chat UI is implemented.",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0018",
+        "atom-0022",
+        "atom-0026",
+        "atom-0027"
+      ],
+      "source_refs": [
+        "repo:Concepts/PMConcept.html",
+        "chat:assistant-chat-ui-requirements"
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "updated_at_utc": "2026-06-16T04:00:00Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "question_id": "q-0004",
+      "status": "deferred",
+      "question": "Which persistence substrate should ship first for native Goal state: database tables, project files, or a hybrid?",
+      "disposition": "Deferred to implementation planning. The required contract is durable state, revisioned updates, event logs, attachment manifests, and runtime-readable paths; exact storage technology can be selected later.",
+      "linked_atom_ids": [
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034"
+      ],
+      "source_refs": [
+        "chat:goal-state-design"
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "updated_at_utc": "2026-06-16T04:00:00Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "question_id": "q-0005",
+      "status": "deferred",
+      "question": "What default model-role tier mappings should PM ship for worker, planner, evaluator, verifier, and adjudicator across providers?",
+      "disposition": "Deferred to provider/model policy implementation. The Plan should define role-policy surfaces and escalation rules without hard-coding one provider/model as required for correctness.",
+      "linked_atom_ids": [
+        "atom-0042",
+        "atom-0075",
+        "atom-0076"
+      ],
+      "source_refs": [
+        "chat:low-quality-agent-concern",
+        "chat:competitor-research-summary"
+      ],
+      "created_at_utc": "2026-06-16T04:00:00Z",
+      "updated_at_utc": "2026-06-16T04:00:00Z"
+    }
+  ],
+  "open_blockers": [],
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "notes": "No open blockers. Deferred questions are intentional integration/implementation follow-ups: Chain Wizard final flow, PlanUnit-to-Node graph compiler contract, final Goal UI styling/iconography, persistence substrate, and provider/model role defaults. These do not block compiling the Goal Runtime core PlanUnits.",
+  "updated_at_utc": "2026-06-16T04:05:00Z"
+}

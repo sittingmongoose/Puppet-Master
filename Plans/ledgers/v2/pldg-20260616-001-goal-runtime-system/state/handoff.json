@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "current_phase": "ready_for_plan_compile",
+  "cursor": {
+    "last_event_id": "evt-0012",
+    "last_decision_id": "dec-0012",
+    "next_queue_id": null
+  },
+  "last_known_good_state": "The Goal Mode feature design is captured as ready-for-plan-compile v2 ledger atoms covering runtime architecture, invisible/internal goals, user-facing assistant chat UI, weak-model safety, child goals/subagents, attachments, sharded document handling, completion certification, autonomous recovery, and task templates. No canonical Plans or generated governance artifacts have been written by this ledger package.",
+  "open_blockers": [],
+  "open_questions": [],
+  "deferred_questions": [
+    "q-0001",
+    "q-0002",
+    "q-0003",
+    "q-0004",
+    "q-0005"
+  ],
+  "next_action": "Compile this ledger into a new canonical Goal Runtime/System Plan doc plus related consumer PlanUnit updates. Treat q-0001 through q-0005 as deferred integration/implementation questions that should be represented in the Plan doc without blocking the core Goal Runtime design.",
+  "validation_state": {
+    "ledger_health": "pass_ready_for_plan_compile",
+    "safe_content_checks": "pm-bootstrap-ledger-validate passed with zero errors/warnings; shard check passed; full run-gates intentionally not sealed because registry/evidence governance was not updated in this ledger package."
+  },
+  "do_not_redo": [
+    "Do not redo competitor research unless implementation details are needed.",
+    "Do not reintroduce old prompt-packet pipeline as product direction.",
+    "Do not narrow assistant-chat Goal Mode to plan-doc tasks.",
+    "Do not treat Chain Wizard current docs as final."
+  ],
+  "phase": "ready_for_plan_compile",
+  "last_completed_action": "Retrospective ledger materialized from the Goal Mode design conversation and repo/Codex context.",
+  "next_safe_action": "Compile to canonical Plans with Codex Goal Mode when ready.",
+  "updated_at_utc": "2026-06-16T04:05:00Z"
+}
