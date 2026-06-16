@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L24502-L24672
+Source lines: L24502-L24678
 
-Source SHA256: `311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111`
+Source SHA256: `bbb27dab3b7ca1c9a8c0729f37621aa5f0fcb2b92e65c9970fda672e2b85f6da`
 
 ---
 
@@ -145,12 +145,12 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0016
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
-  - local:Plans/FinalGUISpec.md:2851
-  - local:Plans/FinalGUISpec.md:2927
-  - local:Plans/FinalGUISpec.md:2948
-  - local:Plans/FinalGUISpec.md:2976
-  - local:Plans/FinalGUISpec.md:2994
-  - local:Plans/FinalGUISpec.md:3041
+  - local:Plans/FinalGUISpec.md:2853
+  - local:Plans/FinalGUISpec.md:2929
+  - local:Plans/FinalGUISpec.md:2950
+  - local:Plans/FinalGUISpec.md:2978
+  - local:Plans/FinalGUISpec.md:2996
+  - local:Plans/FinalGUISpec.md:3043
 preserved_exact_tokens:
   - "Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)"
   - "Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)"
@@ -169,6 +169,12 @@ negative_constraints:
 compatibility_only_notes:
   - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface; F3-392 does not create a duplicate chain-wizard owner.
   - Earlier addenda headings are compatibility/source-lineage sections and must not be parsed as peer canonical sections.
+  - >-
+    Anchor aliases for SR-002 resolve preserved old heading tokens to the current
+    `Compatibility/source-lineage - ...` headings at local:Plans/FinalGUISpec.md:2853,
+    local:Plans/FinalGUISpec.md:2929, local:Plans/FinalGUISpec.md:2950,
+    local:Plans/FinalGUISpec.md:2978, and local:Plans/FinalGUISpec.md:3043;
+    aliases preserve source lookup only and do not restore peer canonical authority.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md

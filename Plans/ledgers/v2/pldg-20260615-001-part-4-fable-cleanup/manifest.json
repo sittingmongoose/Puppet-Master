@@ -14,20 +14,20 @@
     "questions": "records/questions.jsonl"
   },
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
-  "notes": "Part 4 Fable Cleanup is compiled and governance-sealed after post-compile fidelity repair. Live PlanUnits, allowed Plans/.plan_index outputs, migration proof, configured shards, Spec Lock, evidence, auto_decisions, and narrowly scoped governance-helper scripts were refreshed or corrected in explicit repair/seal scope. Node readiness remains blocked_compiler_contract_incomplete. No product implementation files, Rust/Slint app scaffolds, legacy Iced app files, WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or final node queues were created.",
+  "notes": "Part 4 Fable Cleanup is compiled and governance-sealed after post-compile fidelity repair and audit-20260616 warning repair. Live PlanUnits, allowed Plans/.plan_index outputs, migration proof, configured shards, Spec Lock, evidence, auto_decisions, and narrowly scoped governance-helper scripts were refreshed or corrected in explicit repair/seal scope. Node readiness remains blocked_compiler_contract_incomplete. No product implementation files, Rust/Slint app scaffolds, legacy Iced app files, WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or final node queues were created.",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 0,
-    "corrections": 1,
+    "corrections": 2,
     "decisions": 5,
     "design_atoms": 19,
-    "events": 11,
+    "events": 12,
     "questions": 3
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for `Part 4 of Fable Cleanup` on 2026-06-15. This is a conversational design/spec thread, not a Goal run. During conversational planning, canonical Plans and generated governance artifacts must not be created or updated; this post-compile repair is an explicit repair/seal phase for live Plans, allowed PlanUnit index outputs, migration proof, shards, evidence, Spec Lock, and auto_decisions. WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, and production build tasks remain forbidden. Use the collaborator Persona, preserve exact tokens/examples/negative constraints/stale or retired terms/compatibility-only notes/owner hints/user corrections, and automatically classify every design atom as gui_related true or false. Jared then supplied another high-end agent's finding about detail-loss `extract` sections in FinalGUISpec.md, assistant-chat-design.md, and Tools.md, clarifying this work is verification-and-fix cleanup rather than a fresh audit or feature. Jared next supplied the addenda pile-ups finding across Executor_Protocol.md, Run_Modes.md, Models_System.md, chain-wizard-flexibility.md, FinalGUISpec.md, Wiring_Matrix.md, and Contracts_V0.md.",
   "status": "compiled",
   "title": "Part 4 Fable Cleanup",
-  "updated_at_utc": "2026-06-15T21:53:24Z",
-  "last_event_id": "evt-0011"
+  "updated_at_utc": "2026-06-16T00:53:02Z",
+  "last_event_id": "evt-0012"
 }

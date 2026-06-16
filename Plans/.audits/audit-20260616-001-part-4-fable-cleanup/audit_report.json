@@ -1,0 +1,202 @@
+{
+  "schema_id": "pm.audit.ledger_to_plans_cycle.v1",
+  "audit_id": "audit-20260616-001-part-4-fable-cleanup",
+  "status": "PASS_WITH_WARNINGS",
+  "generated_at_utc": "2026-06-16T00:45:00Z",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "range": {
+    "baseline_ref": "085f76661b7b754f09eb4cfd429a25d42b26267e",
+    "current_ref": "790b87c4e0ea17bd58afe623dc909670609dcc86",
+    "current_ref_basis": "HEAD",
+    "earliest_cycle_commit": "a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+    "earliest_cycle_commit_basis": "First commit in recent history that creates/touches Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup and adds its registry entry.",
+    "excluded_adjacent_commit": "085f76661b7b754f09eb4cfd429a25d42b26267e touched ledger_registry.json for pldg-20260614-002-part-3-fable-cleanup only; it is used as baseline, not included in the Part 4 cycle."
+  },
+  "changed_files": {
+    "total_changed_paths": 331,
+    "live_plan_md": [
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Tools.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/assistant-chat-design.md"
+    ],
+    "part4_ledger_files": 15,
+    "registry_files": [
+      "Plans/ledgers/v2/ledger_registry.json"
+    ],
+    "plan_index_files": [
+      "Plans/.plan_index/acceptance_units.jsonl",
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl"
+    ],
+    "migration_files": [
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json"
+    ],
+    "evidence_files_count": 8,
+    "shard_files_count": 275,
+    "scripts": [
+      "scripts/pm-governance-seal.py",
+      "scripts/pm-plan-migration.py"
+    ],
+    "prior_audit_artifacts_count": 8
+  },
+  "planunit_deltas": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "baseline_units": 284,
+      "current_units": 285,
+      "added": [
+        "CV-285"
+      ],
+      "changed": [],
+      "deleted": []
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "baseline_units": 96,
+      "current_units": 97,
+      "added": [
+        "EP-097"
+      ],
+      "changed": [],
+      "deleted": []
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "baseline_units": 390,
+      "current_units": 392,
+      "added": [
+        "F3-391",
+        "F3-392"
+      ],
+      "changed": [],
+      "deleted": []
+    },
+    {
+      "path": "Plans/Tools.md",
+      "baseline_units": 157,
+      "current_units": 158,
+      "added": [
+        "T-158"
+      ],
+      "changed": [],
+      "deleted": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "baseline_units": 35,
+      "current_units": 36,
+      "added": [
+        "WM-036"
+      ],
+      "changed": [],
+      "deleted": []
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "baseline_units": 414,
+      "current_units": 415,
+      "added": [
+        "ACD-415"
+      ],
+      "changed": [],
+      "deleted": []
+    }
+  ],
+  "possible_losses_summary": {
+    "blocking_losses_found": 0,
+    "planunit_deletions": 0,
+    "contractrefs_removed": 0,
+    "semantic_drift_found": "none_blocking",
+    "warnings": [
+      "stale local source_lineage line refs",
+      "FinalGUISpec exact-heading anchor changes"
+    ]
+  },
+  "ledger_consistency_summary": {
+    "status": "warning",
+    "governance_status": "sealed",
+    "ledger_health": "pass_governance_sealed",
+    "record_counts": {
+      "design_atoms": 19,
+      "decisions": 5,
+      "corrections": 1,
+      "questions": 3,
+      "blockers": 0,
+      "events": 11
+    },
+    "warnings": [
+      "current/handoff validation_state still say git_diff_check pending_final_repair_validation",
+      "ledger_registry top-level updated_at_utc is stale"
+    ]
+  },
+  "plan_index_summary": {
+    "plan_unit_count": 5005,
+    "acceptance_unit_count": 17798,
+    "duplicate_plan_unit_id_count": 0,
+    "missing_gui_related_boolean_count": 0,
+    "missing_required_metadata_count": 0,
+    "parse_error_count": 0,
+    "node_readiness_report_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true
+  },
+  "governance_summary": {
+    "validators_status": "pass",
+    "spec_lock_hash_check": "pass",
+    "evidence_hash_check": "pass",
+    "auto_decisions_validation": "pass",
+    "shard_check": "pass",
+    "provenance_warning": "Part 4 evidence bundle hashes validate, but commands_run omits an explicit governance refresh command for Spec_Lock/auto_decisions/evidence updates."
+  },
+  "forbidden_artifacts": {
+    "status": "pass",
+    "found_in_corrected_range": 0,
+    "found_in_tracked_tree": 0,
+    "changed_scripts_classification": "governance tooling, not product implementation",
+    "out_of_range_context": [
+      "Ignored .claude credential/state files exist on disk but are untracked and not introduced by this cycle.",
+      ".claude/settings.local.json is tracked local tool state but not introduced by the corrected Part 4 range."
+    ]
+  },
+  "semantic_risk_ids": [
+    "SR-001",
+    "SR-002",
+    "SR-003",
+    "SR-004",
+    "SR-005"
+  ],
+  "validator_results": {
+    "status": "pass",
+    "mutated_worktree": false,
+    "commands_run": 9
+  },
+  "subagents": [
+    {
+      "agent": "pm_fidelity_auditor",
+      "result": "Found stale/inexact local source_lineage line refs and FinalGUISpec heading-anchor warning; no PlanUnit deletions or blocking semantic loss."
+    },
+    {
+      "agent": "pm_governance_auditor",
+      "result": "Found stale compact projection validation strings, stale registry top-level timestamp, and evidence command provenance warning."
+    },
+    {
+      "agent": "pm_scaffold_police",
+      "result": "No forbidden NodeSeed/WorkNode/app scaffold/build artifacts in corrected range; scripts are governance tooling."
+    },
+    {
+      "agent": "pm_evidence_mapper",
+      "result": "No blocking evidence/index issues; counts and hashes validate; node readiness remains blocked_compiler_contract_incomplete as expected."
+    }
+  ],
+  "next_safe_action": "Run a narrow audit-repair pass for the recorded warnings only: refresh Part 4 PlanUnit local source_lineage refs/anchor notes, synchronize current.json/handoff.json/ledger_registry timestamps, and record explicit governance refresh provenance in the Part 4 evidence bundle; then regenerate index/shards/evidence/spec-lock only through scripts and rerun the validator suite. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or build tasks."
+}

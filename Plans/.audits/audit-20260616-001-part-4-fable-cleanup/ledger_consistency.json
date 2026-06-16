@@ -1,0 +1,170 @@
+{
+  "schema_id": "pm.audit.ledger_consistency.v1",
+  "audit_id": "audit-20260616-001-part-4-fable-cleanup",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "status": "warning",
+  "record_counts": {
+    "design_atoms": 19,
+    "decisions": 5,
+    "corrections": 1,
+    "questions": 3,
+    "blockers": 0,
+    "events": 11
+  },
+  "manifest_counts_match_records": true,
+  "sealed_ledger_checks": {
+    "candidate_atoms_count": 0,
+    "ready_for_plan_compile_atoms": 0,
+    "open_questions_count": 0,
+    "open_blockers_count": 0,
+    "unsealed_governance_count": 0,
+    "active_candidate_or_open_question_atoms_in_sealed_ledger": 0,
+    "result": "pass"
+  },
+  "compile_queue": {
+    "items": 1,
+    "status": "compiled_part_4_fable_cleanup_governance_sealed",
+    "compiled_plan_unit_ids": [
+      "F3-391",
+      "F3-392",
+      "ACD-415",
+      "T-158",
+      "CV-285",
+      "EP-097",
+      "WM-036"
+    ],
+    "source_atom_ids": [
+      "atom-0010",
+      "atom-0011",
+      "atom-0012",
+      "atom-0015",
+      "atom-0016",
+      "atom-0017",
+      "atom-0018"
+    ],
+    "compiled_outputs_count": 12
+  },
+  "atom_status_counts": {
+    "accepted": 12,
+    "compiled_to_plan": 7
+  },
+  "gui_related_counts": {
+    "true": 9,
+    "false": 10,
+    "missing": 0
+  },
+  "compiled_atom_to_planunit_evidence": {
+    "atom-0010": [
+      "T-158",
+      "F3-391",
+      "ACD-415"
+    ],
+    "atom-0011": [
+      "T-158",
+      "F3-391",
+      "ACD-415"
+    ],
+    "atom-0012": [
+      "T-158",
+      "F3-391",
+      "ACD-415"
+    ],
+    "atom-0015": [
+      "EP-097",
+      "WM-036",
+      "F3-392",
+      "CV-285"
+    ],
+    "atom-0016": [
+      "F3-392"
+    ],
+    "atom-0017": [
+      "CV-285"
+    ],
+    "atom-0018": [
+      "EP-097",
+      "WM-036",
+      "F3-392",
+      "CV-285"
+    ]
+  },
+  "source_lineage_only_atoms_cited_by_planunits": {
+    "atom-0008": [
+      "T-158",
+      "F3-391",
+      "ACD-415"
+    ],
+    "atom-0009": [
+      "T-158",
+      "F3-391",
+      "ACD-415"
+    ],
+    "atom-0013": [
+      "EP-097",
+      "WM-036",
+      "F3-392",
+      "CV-285"
+    ],
+    "atom-0014": [
+      "EP-097",
+      "WM-036",
+      "F3-392",
+      "CV-285"
+    ]
+  },
+  "projection_warnings": [
+    {
+      "risk_id": "SR-003",
+      "severity": "medium_projection_warning",
+      "status": "open",
+      "title": "Sealed ledger projections still carry pending final validation strings",
+      "affected_files": [
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+          "line": 52,
+          "detail": "validation_state.git_diff_check is pending_final_repair_validation despite governance_status sealed."
+        },
+        {
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+          "line": 64,
+          "detail": "standard_validation is pass_governance_sealed_pending_final_repair_report."
+        },
+        {
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
+          "line": 32,
+          "detail": "validation_state.git_diff_check is pending_final_repair_validation."
+        }
+      ],
+      "impact": "Ledger health and validators pass, but compact projections are not fully synchronized with the post-repair validation state.",
+      "next_safe_action": "In a repair pass, update compact projections to record final git diff/validator pass state and rerun the ledger validator."
+    },
+    {
+      "risk_id": "SR-004",
+      "severity": "low_registry_warning",
+      "status": "open",
+      "title": "ledger_registry top-level timestamp is stale relative to Part 4 ledger entry",
+      "affected_files": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/ledgers/v2/ledger_registry.json",
+          "line": 91,
+          "detail": "Part 4 ledger last_updated_at_utc is 2026-06-15T21:53:24Z."
+        },
+        {
+          "path": "Plans/ledgers/v2/ledger_registry.json",
+          "line": 115,
+          "detail": "Top-level updated_at_utc remains 2026-06-15T21:11:00Z."
+        }
+      ],
+      "impact": "Registry contents identify the correct latest ledger, but top-level freshness metadata lags.",
+      "next_safe_action": "In a repair pass, update the registry top-level updated_at_utc to match the latest registry mutation and rerun ledger validation."
+    }
+  ],
+  "historical_prior_audit_artifacts": "Plans/.audits/audit-20260615-002-part-4-fable-cleanup artifacts remain as historical pre-repair audit/repair records; they are not treated as current ledger projections."
+}

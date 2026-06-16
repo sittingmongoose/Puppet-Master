@@ -3813,7 +3813,7 @@
         "executor_protocol_drift",
         "migration_lineage"
       ],
-      "sha256": "4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721",
+      "sha256": "cf630e8c9fa10c53a5ad908f5a5fef33157682ddc422b2b06245d29da0b54cb0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 97
@@ -4269,7 +4269,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 24672,
+      "line_count": 24678,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 392,
       "plan_unit_ids": [
@@ -4686,7 +4686,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111",
+      "sha256": "bbb27dab3b7ca1c9a8c0729f37621aa5f0fcb2b92e65c9970fda672e2b85f6da",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 391,
@@ -10658,7 +10658,7 @@
         "wiring_addenda_precedence_drift",
         "wiring_matrix_drift"
       ],
-      "sha256": "39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b",
+      "sha256": "250de630c47a555a13afc1944c5379ee1ca1c76f2624e71bc783073e6456a7a7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -10791,7 +10791,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-15T21:47:50Z",
+  "generated_at_utc": "2026-06-16T00:58:55Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2978,9 +2978,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Wiring_Matrix.md:207
-  - local:Plans/Wiring_Matrix.md:241
-  - local:Plans/Wiring_Matrix.md:251
-  - local:Plans/Wiring_Matrix.md:276
+  - local:Plans/Wiring_Matrix.md:243
+  - local:Plans/Wiring_Matrix.md:255
+  - local:Plans/Wiring_Matrix.md:282
 preserved_exact_tokens:
   - "Scheduler/Remediation/Event Wiring Addendum (2026-03-08)"
   - "Runtime recovery wiring requirements (2026-03-09)"

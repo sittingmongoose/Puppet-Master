@@ -1,0 +1,1283 @@
+{
+  "schema_id": "pm.post_audit_repair_report.v1",
+  "audit_id": "audit-20260616-001-part-4-fable-cleanup",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "generated_at_utc": "2026-06-16T01:12:31Z",
+  "status": "PASS",
+  "source_audit_status": "PASS_WITH_WARNINGS",
+  "audited_range": {
+    "baseline_ref": "085f76661b7b754f09eb4cfd429a25d42b26267e",
+    "current_ref": "790b87c4e0ea17bd58afe623dc909670609dcc86",
+    "current_ref_basis": "HEAD",
+    "earliest_cycle_commit": "a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+    "earliest_cycle_commit_basis": "First commit in recent history that creates/touches Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup and adds its registry entry.",
+    "excluded_adjacent_commit": "085f76661b7b754f09eb4cfd429a25d42b26267e touched ledger_registry.json for pldg-20260614-002-part-3-fable-cleanup only; it is used as baseline, not included in the Part 4 cycle."
+  },
+  "repaired_risks": [
+    {
+      "risk_id": "SR-001",
+      "status": "fixed",
+      "summary": "Refreshed stale/inexact local source_lineage refs for F3-392, EP-097, and WM-036 to current live heading lines.",
+      "evidence": [
+        "Plans/FinalGUISpec.md:24639-24644 now cites local lines 2853, 2929, 2950, 2978, 2996, and 3043.",
+        "Plans/Executor_Protocol.md:5799-5802 now cites local lines 259, 506, 578, and 663.",
+        "Plans/Wiring_Matrix.md:2980-2983 now cites local lines 207, 243, 255, and 282."
+      ]
+    },
+    {
+      "risk_id": "SR-002",
+      "status": "fixed",
+      "summary": "Added a compatibility-only source-lineage alias note for renamed FinalGUISpec compatibility headings without restoring stale normative authority.",
+      "evidence": [
+        "Plans/FinalGUISpec.md:24664 records that preserved old heading tokens resolve to current Compatibility/source-lineage headings."
+      ]
+    },
+    {
+      "risk_id": "SR-003",
+      "status": "fixed",
+      "summary": "Synchronized sealed ledger current/handoff projection validation fields after the warning repair.",
+      "evidence": [
+        "state/current.json validation_state uses pass_after_audit_warning_repair and standard_validation pass_governance_sealed_after_audit_warning_repair.",
+        "state/handoff.json cursor.last_event_id is evt-0012 and git_diff_check is pass_after_audit_warning_repair."
+      ]
+    },
+    {
+      "risk_id": "SR-004",
+      "status": "fixed",
+      "summary": "Updated Part 4 ledger registry freshness metadata to the repair event timestamp.",
+      "evidence": [
+        "Plans/ledgers/v2/ledger_registry.json top-level updated_at_utc and Part 4 entry timestamps are 2026-06-16T00:53:02Z."
+      ]
+    },
+    {
+      "risk_id": "SR-005",
+      "status": "fixed",
+      "summary": "Recorded explicit governance refresh provenance for Spec_Lock, evidence, and auto_decisions updates.",
+      "evidence": [
+        "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json commands_run includes the pm-governance-seal.py refresh command."
+      ]
+    }
+  ],
+  "false_positives": [],
+  "direct_validator_fallout": [
+    {
+      "status": "fixed",
+      "summary": "Regenerated allowed PlanUnit index, migration proof summaries, configured shards, Spec_Lock, auto_decisions, and evidence bundles after live metadata edits."
+    },
+    {
+      "status": "fixed",
+      "summary": "Refreshed plan-sharding and cross-evidence artifact hashes after run-gates exposed stale generated evidence references."
+    }
+  ],
+  "plan_units_changed": [
+    {
+      "plan_unit_id": "F3-392",
+      "file": "Plans/FinalGUISpec.md",
+      "change_type": "metadata_only_source_lineage_and_compatibility_note",
+      "source_lineage": [
+        2853,
+        2929,
+        2950,
+        2978,
+        2996,
+        3043
+      ],
+      "gui_related_preserved": true
+    },
+    {
+      "plan_unit_id": "EP-097",
+      "file": "Plans/Executor_Protocol.md",
+      "change_type": "metadata_only_source_lineage",
+      "source_lineage": [
+        259,
+        506,
+        578,
+        663
+      ],
+      "gui_related_preserved": false
+    },
+    {
+      "plan_unit_id": "WM-036",
+      "file": "Plans/Wiring_Matrix.md",
+      "change_type": "metadata_only_source_lineage",
+      "source_lineage": [
+        207,
+        243,
+        255,
+        282
+      ],
+      "gui_related_preserved": false
+    }
+  ],
+  "ledger_records_changed": {
+    "events_appended": [
+      "evt-0012"
+    ],
+    "corrections_appended": [
+      "corr-0002"
+    ],
+    "record_counts": {
+      "candidate_atoms": 0,
+      "compile_queue_items": 1,
+      "decisions": 5,
+      "deferred_questions": 0,
+      "design_atoms": 19,
+      "events": 12,
+      "governance_seal": "passed",
+      "open_blockers": 0,
+      "open_questions": 0,
+      "corrections": 2
+    },
+    "current_last_event_id": "evt-0012",
+    "handoff_last_event_id": "evt-0012",
+    "registry_updated_at_utc": "2026-06-16T00:53:02Z",
+    "governance_status": "sealed"
+  },
+  "plan_index_summary": {
+    "plan_unit_count": 5005,
+    "acceptance_unit_count": 17798,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "coverage_status": "pass"
+  },
+  "governance_status": {
+    "status": "sealed",
+    "spec_lock": "pass",
+    "auto_decisions": "pass",
+    "evidence": "pass",
+    "shards": "pass",
+    "evidence_hash_cascade": "settled_after_three_refresh_passes"
+  },
+  "validator_results": {
+    "status": "pass",
+    "git_status_changed_by_validators": false,
+    "commands": [
+      {
+        "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 4034,
+        "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260615-001-part-4-fable-cleanup\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 19,\n    \"compile_queue_items\": 1,\n    \"corrections\": 2,\n    \"decisions\": 5,\n    \"events\": 12,\n    \"plan_units_checked\": 1383,\n    \"questions\": 3\n  },\n  \"warnings\": []\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-index.py validate",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 23992,
+        "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T01:08:41Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 17798,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5005\n  }\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 15791,
+        "stdout_tail": "      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 67,\n    \"live_plan_unit_count\": 5005,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3873,\n    \"unique_live_plan_unit_count\": 5005\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 38827,
+        "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T01:09:36Z\",\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 4316,
+        "stdout_tail": "{\n  \"docs_checked\": 50,\n  \"failures\": [],\n  \"shards_checked\": 876,\n  \"source_count\": 50,\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 137,
+        "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T01:09:40Z\",\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 273,
+        "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T01:09:41Z\",\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 5231,
+        "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T01:09:46Z\",\n  \"status\": \"pass\"\n}",
+        "stderr_tail": ""
+      },
+      {
+        "cmd": "git diff --check",
+        "status": "pass",
+        "returncode": 0,
+        "duration_ms": 328,
+        "stdout_tail": "",
+        "stderr_tail": ""
+      }
+    ]
+  },
+  "forbidden_artifacts": {
+    "status": "pass",
+    "changed_path_scan": "pass",
+    "implementation_like_changed_paths": [],
+    "forbidden_path_hits": [],
+    "notes": "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created. Ledger state/compile_queue.json remains a ledger projection, not an executable queue."
+  },
+  "subagents": [
+    {
+      "agent": "Gauss",
+      "scope": "changed-doc fidelity/source-lineage",
+      "summary": "Confirmed exact current source_lineage refs for F3-392, EP-097, WM-036 and proposed the SR-002 compatibility alias note used in the repair."
+    },
+    {
+      "agent": "Bacon",
+      "scope": "ledger/governance projection consistency",
+      "summary": "Confirmed the compact projection and registry timestamp family. Main repair also appended evt-0012/corr-0002 because live PlanUnit metadata changed."
+    }
+  ],
+  "remaining_blockers": [],
+  "expected_non_blocking_state": [
+    "Plans/.plan_index/node_readiness_report.json remains blocked_compiler_contract_incomplete until a WorkNode compiler contract exists."
+  ],
+  "next_safe_action": "Review the repair artifacts and commit/push the repaired Plans/governance/audit outputs. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or build tasks until a WorkNode compiler contract exists and that phase is explicitly requested.",
+  "compact_repair_prompt": null,
+  "semantic_risks_source": [
+    {
+      "affected_plan_units": [
+        "F3-392",
+        "EP-097",
+        "WM-036"
+      ],
+      "evidence": [
+        {
+          "detail": "F3-392 cites local:Plans/FinalGUISpec.md:2851, but current line 2851 is planning prose and the renamed compatibility/source-lineage heading starts at line 2853.",
+          "line": 24639,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "EP-097 cites local:Plans/Executor_Protocol.md:504, while the target recovery heading is currently line 506.",
+          "line": 5800,
+          "path": "Plans/Executor_Protocol.md"
+        },
+        {
+          "detail": "WM-036 cites local:Plans/Wiring_Matrix.md:241, while the target runtime recovery wiring heading starts at line 243.",
+          "line": 2981,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      ],
+      "impact": "Evidence traceability can land near but not exactly on the intended source heading/token. No product behavior drift was found.",
+      "next_safe_action": "In a repair pass, refresh local source_lineage refs to heading anchors or current exact lines for the seven Part 4 PlanUnits, then regenerate index/shards/evidence/spec lock through governance scripts.",
+      "risk_id": "SR-001",
+      "severity": "high_traceability_warning",
+      "status": "open",
+      "title": "Part 4 PlanUnit local line source_lineage refs are stale or inexact"
+    },
+    {
+      "affected_plan_units": [
+        "F3-392"
+      ],
+      "evidence": [
+        {
+          "detail": "Old heading replaced by Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08).",
+          "line": 2853,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "Old Runtime Scheduler / Blocked-State GUI Parity Addendum heading replaced with compatibility/source-lineage-prefixed heading.",
+          "line": 2929,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "Old Runtime Blocked, Queue, and Recovery GUI Canonical Alignment heading replaced with compatibility/source-lineage-prefixed heading.",
+          "line": 2950,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "Old Runtime Scheduler Recovery GUI Consolidation Addendum heading replaced with compatibility/source-lineage-prefixed heading.",
+          "line": 2978,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "Old Blocked-State Visual Distinction and Recovery UX Addendum heading replaced with compatibility/source-lineage-prefixed heading.",
+          "line": 3043,
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "detail": "F3-392 preserved the original heading tokens in preserved_exact_tokens.",
+          "line": 24646,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      ],
+      "impact": "Intentional replacement clarifies authority, but consumers that link exact old headings may need aliases or updated anchors.",
+      "next_safe_action": "If exact heading anchors are consumed externally, add explicit anchor aliases or source-lineage anchor notes in a repair pass without restoring stale normative authority.",
+      "risk_id": "SR-002",
+      "severity": "medium_anchor_warning",
+      "status": "open",
+      "title": "FinalGUISpec compatibility/source-lineage heading renames may break exact-heading anchors"
+    },
+    {
+      "affected_files": [
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json"
+      ],
+      "evidence": [
+        {
+          "detail": "validation_state.git_diff_check is pending_final_repair_validation despite governance_status sealed.",
+          "line": 52,
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json"
+        },
+        {
+          "detail": "standard_validation is pass_governance_sealed_pending_final_repair_report.",
+          "line": 64,
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json"
+        },
+        {
+          "detail": "validation_state.git_diff_check is pending_final_repair_validation.",
+          "line": 32,
+          "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json"
+        }
+      ],
+      "impact": "Ledger health and validators pass, but compact projections are not fully synchronized with the post-repair validation state.",
+      "next_safe_action": "In a repair pass, update compact projections to record final git diff/validator pass state and rerun the ledger validator.",
+      "risk_id": "SR-003",
+      "severity": "medium_projection_warning",
+      "status": "open",
+      "title": "Sealed ledger projections still carry pending final validation strings"
+    },
+    {
+      "affected_files": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "evidence": [
+        {
+          "detail": "Part 4 ledger last_updated_at_utc is 2026-06-15T21:53:24Z.",
+          "line": 91,
+          "path": "Plans/ledgers/v2/ledger_registry.json"
+        },
+        {
+          "detail": "Top-level updated_at_utc remains 2026-06-15T21:11:00Z.",
+          "line": 115,
+          "path": "Plans/ledgers/v2/ledger_registry.json"
+        }
+      ],
+      "impact": "Registry contents identify the correct latest ledger, but top-level freshness metadata lags.",
+      "next_safe_action": "In a repair pass, update the registry top-level updated_at_utc to match the latest registry mutation and rerun ledger validation.",
+      "risk_id": "SR-004",
+      "severity": "low_registry_warning",
+      "status": "open",
+      "title": "ledger_registry top-level timestamp is stale relative to Part 4 ledger entry"
+    },
+    {
+      "affected_files": [
+        "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+      ],
+      "evidence": [
+        {
+          "detail": "commands_run lists plan-index, migration, and shard generation commands.",
+          "line": 11,
+          "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        },
+        {
+          "detail": "files_changed includes Plans/Spec_Lock.json.",
+          "line": 89,
+          "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        },
+        {
+          "detail": "files_changed includes Plans/auto_decisions.jsonl.",
+          "line": 93,
+          "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        }
+      ],
+      "impact": "Hash validation passes, but command provenance is less explicit than the artifact list for governance seal refreshes.",
+      "next_safe_action": "In a repair pass, record the exact governance refresh command or evidence update command used for Spec Lock/evidence/auto_decisions, then rerun evidence validation.",
+      "risk_id": "SR-005",
+      "severity": "medium_provenance_warning",
+      "status": "open",
+      "title": "Part 4 evidence bundle records changed governance artifacts but omits explicit governance refresh command"
+    }
+  ],
+  "files_changed": {
+    "live_plan_docs_changed": [
+      "Plans/FinalGUISpec.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/Wiring_Matrix.md"
+    ],
+    "ledger_files_changed": [
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/events.jsonl",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/corrections.jsonl",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/open_items.json",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/compile_queue.json",
+      "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json",
+      "Plans/ledgers/v2/ledger_registry.json"
+    ],
+    "generated_governance_changed": [
+      "Plans/.plan_index/*",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "Plans/_shards/**",
+      "Plans/.evidence/**/evidence.json",
+      "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "Plans/Spec_Lock.json",
+      "Plans/auto_decisions.jsonl"
+    ],
+    "repair_outputs": [
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/repair_report.json",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/REPAIR_REPORT.md"
+    ],
+    "pre_existing_audit_inputs": [
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/FINAL_REPORT.md",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/audit_report.json",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/changed_plan_fidelity.jsonl",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/ledger_consistency.json",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/semantic_risks.jsonl",
+      "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/validator_results.json"
+    ],
+    "tracked_changed_path_count_before_reports": 208,
+    "tracked_changed_paths_before_reports": [
+      {
+        "status": "M",
+        "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/coverage_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/dependencies.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/doc_cards.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/node_readiness_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/plan_units.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Spec_Lock.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/agent-rules-context/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/agent-rules-context/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-memory-subsystem/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-memory-subsystem/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/bootstrap_planning_migration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/bootstrap_planning_migration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/cli_bridged_providers/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/cli_bridged_providers/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/commands_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/commands_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/crosswalk/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/crosswalk/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/004-1.-role-definitions.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/006-3.-canonical-status-lifecycle.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/013-counter-relationships-and-event-ordering-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/015-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/016-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/017-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/018-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/feature-list/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/feature-list/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filemanager/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filemanager/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filesafe/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filesafe/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/003-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/004-1.-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/006-3.-master-layout.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/007-4.-navigation-architecture.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/008-5.-panel-system.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/009-6.-theme-system.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/010-7.-views-specification.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/011-8.-widget-catalog.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/012-9.-state-management.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/013-10.-ux-patterns.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/014-11.-anti-flickering-and-scroll-preservation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/015-12.-responsive-design.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/016-13.-accessibility.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/017-14.-slint-file-organization.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/018-15.-persistence.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/019-16.-migration-mapping.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/020-17.-risks-and-mitigations.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/021-18.-promoted-features-formerly-future-considerations.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/022-appendix-a-cross-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/023-appendix-b-locked-decisions-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/024-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/025-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/026-rendering-surface-addendum-2026-03-07.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/027-assistant-planning-ux-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/028-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/029-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/030-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/031-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/032-canonical-blocked-recovery-behavior.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/033-compatibility-source-lineage-blocked-state-visual-distinction-an.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/034-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/035-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/036-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/037-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/038-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/039-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/040-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/github_integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/github_integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/human-in-the-loop/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/human-in-the-loop/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/interview-subagent-integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/interview-subagent-integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/lspsupport/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/lspsupport/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/mcp_integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/mcp_integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/miscplan/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/miscplan/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/multi-account/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/multi-account/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newfeatures/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newfeatures/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newtools/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newtools/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/opencode_deep_extraction/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/opencode_deep_extraction/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/personas/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/personas/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_document_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_document_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/project_output_artifacts/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/project_output_artifacts/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/prompt_pipeline/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/prompt_pipeline/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/provider_opencode/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/provider_opencode/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/rewrite-tie-in-memo/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_modes/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_modes/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/skills_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/skills_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/tools/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/tools/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/ui_command_catalog/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/ui_command_catalog/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/usage-feature/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/usage-feature/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/widget_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/widget_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/003-0.-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/004-1.-template.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/005-2.-example-entries.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/006-3.-json-example.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/007-4.-verification.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/008-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/009-scheduler-remediation-event-wiring-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/010-runtime-recovery-wiring-requirements-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/011-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/012-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/013-runtime-recovery-producer-consumer-wiring.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/014-source-control-github-actions-and-docker-manager-wiring-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/015-route-aware-wiring-reconciliation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/016-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/017-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/018-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/019-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/ledger_registry.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/events.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/corrections.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/compile_queue.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/open_items.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json"
+      }
+    ]
+  }
+}

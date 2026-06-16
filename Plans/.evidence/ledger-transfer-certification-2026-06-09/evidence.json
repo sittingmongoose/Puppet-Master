@@ -10,6 +10,16 @@
       "details": "7,633/7,633 allowed rows terminal; P6 locked/deferred.",
       "name": "allowed-ledger-transfer-summary",
       "result": "PASS"
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
     }
   ],
   "commands_run": [

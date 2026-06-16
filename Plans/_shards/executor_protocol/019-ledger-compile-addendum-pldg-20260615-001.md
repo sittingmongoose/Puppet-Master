@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L5751-L5832
 
-Source SHA256: `4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721`
+Source SHA256: `cf630e8c9fa10c53a5ad908f5a5fef33157682ddc422b2b06245d29da0b54cb0`
 
 ---
 
@@ -57,9 +57,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Executor_Protocol.md:259
-  - local:Plans/Executor_Protocol.md:504
-  - local:Plans/Executor_Protocol.md:574
-  - local:Plans/Executor_Protocol.md:657
+  - local:Plans/Executor_Protocol.md:506
+  - local:Plans/Executor_Protocol.md:578
+  - local:Plans/Executor_Protocol.md:663
 preserved_exact_tokens:
   - "Runtime Scheduler Addendum (2026-03-08)"
   - "Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)"

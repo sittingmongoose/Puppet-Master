@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+      "sha256": "72e01f187774d5557918c4d2f9dcbb93abc172dfb67ef21ec16355e3bc5df240"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+      "sha256": "5cedac4cd43d61c4c72054f7c9420e15085ff5b17d41c4a43b01d7fa870fe9a3"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -82,6 +82,16 @@
       "details": "All listed Spec Lock paths hash current bytes.",
       "name": "verify-spec-lock",
       "result": "PASS"
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
     }
   ],
   "commands_run": [

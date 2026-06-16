@@ -24,6 +24,14 @@
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json --evidence Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json --ledger-command 'python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup' --record-command 'python3 scripts/pm-plan-index.py generate' --record-command 'python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits' --record-command 'python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260615-001-part-4-fable-cleanup' --record-command 'python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json' --check-detail 'audit-20260616-warning-repair|||Audit-20260616 warning repair refreshed local source_lineage refs, FinalGUISpec heading aliases, sealed ledger projections, registry timestamp, and governance provenance without creating node/build/product implementation artifacts.' --no-node-artifacts",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -134,7 +142,7 @@
   "artifacts": [
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111"
+      "sha256": "bbb27dab3b7ca1c9a8c0729f37621aa5f0fcb2b92e65c9970fda672e2b85f6da"
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -150,23 +158,23 @@
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "sha256": "4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721"
+      "sha256": "cf630e8c9fa10c53a5ad908f5a5fef33157682ddc422b2b06245d29da0b54cb0"
     },
     {
       "path": "Plans/Wiring_Matrix.md",
-      "sha256": "39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b"
+      "sha256": "250de630c47a555a13afc1944c5379ee1ca1c76f2624e71bc783073e6456a7a7"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "26fee545785da7d8d66ca90d6e7b12c9baa8fe5974515a356b954dd72058e42e"
+      "sha256": "7a8cd8a41b0fefa87a5f0ca1f10be5513e435e7e3413c7f26256150e80e3610e"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "a813dcd3c2c7c0e2669ef031102a61abb9d140cd9c3bfe668a8391eff084e4a3"
+      "sha256": "12051a5e65236104eb436a059e4799c22444b68092bdb3352f0c47f56fd00938"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "3fa81542fa0f42107dbe8838523d172d6809fc313a18708e1d88c760548b4f67"
+      "sha256": "718ab5bee2bd084c7fee019d06be5881c8d428810aba49e9e1f533ba054b41b6"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
@@ -174,19 +182,19 @@
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c4ed7dede06242ab6ba867ed601bcceb7d370d762a3802cdab7d11db69fff956"
+      "sha256": "b055055cd7988686c0d1f22d478017f1d1c4689435fd8d592fe4a9a37f3fd1ee"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9423fff12be129eb1c1db9f332c80638da0e778ea74b431d526a24d61c7851ba"
+      "sha256": "fe218d7cd7ffbf38358e8f777452e63874ba385069b704dcbfb0421597730355"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "a4676eb3f81910481251bdf7701db66acaf47155d971eca4808e5a07d425e9ee"
+      "sha256": "75ac27ba895629ee91160e09c6f1d52d9410c3eab6ce6c4f38e84742fb54a728"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "e0345a03ff0c337558e02817c7dd064571ec9513593900513a3cf5faaf4f157d"
+      "sha256": "f0d2697afb8ce855cd3e6791827c93943525fef6a937f7e2ccae142f131e239e"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -194,7 +202,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4838741d63aeed53c3e5824133f5dc8ba1aa3e3ba4bb1f4663d19f6c002cf1b8"
+      "sha256": "1f4b4af55d155481a2b6d87cbc4784d9d711664dda2bc97dcf7642f3577b8679"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -202,23 +210,23 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+      "sha256": "72e01f187774d5557918c4d2f9dcbb93abc172dfb67ef21ec16355e3bc5df240"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+      "sha256": "5cedac4cd43d61c4c72054f7c9420e15085ff5b17d41c4a43b01d7fa870fe9a3"
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "49fdecaf93563daa44c39f1d15504045cea6d89e96d12f8d4676ebcc6952ca5e"
+      "sha256": "e1178a2e06d6eb9097e4e0518d152cc5bd936cf1c4ededb7f1fe41c66309c1ab"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json",
-      "sha256": "d4cf7e808ae18a6e2343e2bb75a90535992aeab8d1938aa5fb302f20ece0fc54"
+      "sha256": "c10924d97cf06bb4cddbd91f64898a7b7556a67a031c33678cdeb64bad656df7"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/events.jsonl",
-      "sha256": "20722b00df5ef313bb7cac8d408e9dd514257ae9ca9c75f1d1a76f95ce60643f"
+      "sha256": "0772bc8a9c2371701ac1618c62c7b4b4e7799f74b368ee5d675f721312603fd6"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/design_atoms.jsonl",
@@ -230,23 +238,23 @@
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/corrections.jsonl",
-      "sha256": "360a32d019d9d719f2754eeefe48a4bc7bcc33db7f1824fbe6cec8919c41dc6f"
+      "sha256": "423648679950ba194f0d655327cf92ed921645ff0048fb18ff0654069425f831"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
-      "sha256": "f7131dd5a56eb84b175f18e39f298de9950b86f4147989436f3bbc6a4937c0b3"
+      "sha256": "04414c5d25b5f288399ea6cb8a6b52041969c80f5159dc9d7018d023780c4836"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
-      "sha256": "a00e6524dee6ef50bd6e9934c25fc8b47b135e131fecc838773a128186f4bbe7"
+      "sha256": "7659f0da41e285a828807f5aadf44643c9667e1cd62686d72e19e03b2c3616e0"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/open_items.json",
-      "sha256": "3f97f474d944cd2a95b362743f9ac374bea931224a0ee4e4511dc0d5db6ef1c9"
+      "sha256": "29ea9567f67a838c254f99fba285872f200afeddc2a9ea4d9fc442b5d15371ef"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/compile_queue.json",
-      "sha256": "a13043b8b54e5474324392a60ff52c0038eb04d79d42169c6762ccb24426a528"
+      "sha256": "d3d7f80ad31a9c32395ecf64af833bfb814cfe73ed12b28a401eaf6498e5e9c8"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/operating_capsule.json",
@@ -254,7 +262,7 @@
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json",
-      "sha256": "8fc8f2bbbc83f34cc53fb77f2929cb5995fcd8b8739ddadcedb0c57be4d92e76"
+      "sha256": "d926dea7ff0d2ec1a1dc2a35caa4a9f015cf8fc88969e855f6a87a039b0652e5"
     },
     {
       "path": "scripts/pm-plan-migration.py",
@@ -284,7 +292,17 @@
     {
       "name": "no-node-artifacts-created",
       "result": "PASS",
-      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created."
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "audit-20260616-warning-repair",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed local source_lineage refs, FinalGUISpec heading aliases, sealed ledger projections, registry timestamp, and governance provenance without creating WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues."
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
     }
   ]
 }

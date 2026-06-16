@@ -5797,9 +5797,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Executor_Protocol.md:259
-  - local:Plans/Executor_Protocol.md:504
-  - local:Plans/Executor_Protocol.md:574
-  - local:Plans/Executor_Protocol.md:657
+  - local:Plans/Executor_Protocol.md:506
+  - local:Plans/Executor_Protocol.md:578
+  - local:Plans/Executor_Protocol.md:663
 preserved_exact_tokens:
   - "Runtime Scheduler Addendum (2026-03-08)"
   - "Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)"
