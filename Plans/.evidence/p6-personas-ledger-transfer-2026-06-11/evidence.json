@@ -13,22 +13,22 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "8a8be4eddcf63a3f86ed7111733c46028549bff74437d299aefc517697124567"
+      "sha256": "7278e680667f873b62665cc05bff06dc7cf59f60db60f87cb1c65eeda216b594"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "2035f6da4cb81b7209ab91a00e6e0bb34e981941f1fc67e904f70f72a71c5b64"
+      "sha256": "0b73f2f9279538abf08313620fd9f5d277911139b86a3ab9b23e127ce0b86230"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "d1553bba6113a133e0e62c3573ff0fd31f053401a7c8791e74362300874846e0"
+      "sha256": "a0f35524bb4f462d214bb0a55f68613f6505a8d9dc18868532eca86b17c50f9c"
     },
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "ff643e60a441434b47f58283dcc787be77dbc1d25d21443d00bfdece1d18f188"
+      "sha256": "413b420cc766f3a85b7701bc70b538a810a1291081739549c6b3314a24234dc9"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "1da96ed7e66d444089dc5e05e472acde21559c8324fdef2ef3bedf4aaa2446ab"
+      "sha256": "6a28b3953e794d2f0ff27235225637810005315f4befb92c64c47dbfb5dc91b2"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4e5580245f210a1b82dfbce5fbd7ebcb4e4c239b4f70b2b7f82f8b7cec17bb3d"
+      "sha256": "2fdb27ee54c5df5777d9e83c262a992bda2d5989862fdc4b9fdd9ec908b5965e"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "54de8f4172617c4c82a92427d4e95192827b6d9351729467c2818e3d32714f18"
+      "sha256": "49e6feac5e55264f214e678700b39c0e1443bdcaf7c6c31d7ccd8ac6cf0f16cc"
     }
   ],
   "checks": [
@@ -236,12 +236,22 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validation passed with 5065 PlanUnits and 18046 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
       "result": "PASS",
       "details": "Audit audit-20260616-006-goal-runtime-system repair refreshed transitive evidence hashes after regenerated PlanUnit index, migration, shard report, Spec Lock, and ledger registry artifacts changed."
+    },
+    {
+      "name": "node-readiness-status-preserved",
+      "result": "PASS",
+      "details": "Plans/.plan_index/node_readiness_report.json status remains blocked_compiler_contract_incomplete."
+    },
+    {
+      "name": "governance-scope-only",
+      "result": "PASS",
+      "details": "Product prose was not changed in this governance seal phase; generated governance artifacts, helper tooling, evidence hashes, and ledger projections were refreshed."
     }
   ],
   "commands_run": [
@@ -396,7 +406,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -405,6 +415,30 @@
     },
     {
       "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0
     }
   ],

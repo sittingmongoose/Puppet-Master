@@ -1,0 +1,73 @@
+{
+  "created_at_utc": "2026-06-16T18:40:00Z",
+  "items": [
+    {
+      "compile_effect": "Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/orchestrator-subagent-integration.md, and Plans/Permissions_System.md should receive capability-lane and settings updates.",
+      "proposed_resolution": "Accepted with clarification: do not hardcode provider/model names or exact default models. Canonical Plans define capability lanes and role contracts; Settings binds each lane to the user's configured providers/accounts/model profiles. If no configured profile satisfies a required lane, surface a settings/configuration blocker rather than silently selecting an arbitrary model.",
+      "question_id": "q-0001",
+      "remaining_choice": "User may later configure provider/model profiles in Settings. No named default provider/model is required for Plan compile.",
+      "topic": "agent capability lanes and model/provider defaults"
+    },
+    {
+      "compile_effect": "Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md, Plans/Widget_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/assistant-chat-design.md, Plans/chain-wizard.md, and Plans/chain-wizard-flexibility.md should be updated/audited.",
+      "proposed_resolution": "Keep Orchestrator six-tab spine and add Goal/WorkGraph overlays instead of inventing a wholly separate Orchestrator page family. Use header for GoalRun status/authority/cost/certification; Progress for Goal tree, WorkNodes and subagent waves; Seams for owner/write-boundary/lease state; Node Graph for WorkGraph dependencies and verification overlays; Evidence for receipts/validators/findings; History for events/replans/repair cycles; Ledger for source mapping and compile lineage. Add side drawers for subagents and verification details. Settings receives dedicated capability-lane, subagent policy, verification policy, write policy, and Goal Mode policy panels.",
+      "question_id": "q-0002",
+      "remaining_choice": "Exact pixel layout, component styling, and tab microcopy remain GUI implementation choices once FinalGUISpec accepts the surface contracts.",
+      "topic": "GUI layout/tab placement"
+    },
+    {
+      "compile_effect": "Plans/Plan_To_Node_Compilation.md owns compiler contract. Plans/Orchestrator_Page.md and Plans/Executor_Protocol.md consume runtime objects without bypassing scheduler truth. Plans/Contracts_V0.md should define object contracts/ContractRefs.",
+      "proposed_resolution": "Define an Orchestrator-facing WorkGraph/WorkNode runtime contract now, but keep executable NodeSeed/WorkNode generation gated behind Plan_To_Node_Compilation. For this feature, canonical Plans should specify data shapes and boundaries: GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, GoalCompletionReceipt, CapabilityLane, and CertificationTier. PlanUnit index remains source; NodeSeed is a generated candidate artifact; WorkNode is only executable after compiler readiness, existence, dependency, acceptance, permission, and scheduler gates pass.",
+      "question_id": "q-0003",
+      "remaining_choice": "Exact generated artifact schemas and compiler output paths remain future-facing until Plan_To_Node_Compilation is explicitly implemented.",
+      "topic": "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+    },
+    {
+      "compile_effect": "State/verification_repair_loop_contract.json already records this; canonical Plans should propagate it to Orchestrator, Goal Runtime, Executor/Run modes, and Settings verification policy.",
+      "proposed_resolution": "Retain the current default: same defect signature fails twice triggers strategy adjustment; third failed cycle triggers high-end adjudicator/root-cause replan. Always rerun verification after repair. Never mark done with known findings. Keep thresholds configurable by verification policy.",
+      "question_id": "q-0004",
+      "remaining_choice": "Only change if Jared wants a different default threshold.",
+      "topic": "verification repeat policy"
+    },
+    {
+      "compile_effect": "Compile goal should update state/doc_impact_matrix only if it remains a ledger artifact; canonical Plans should encode the policy that owner-doc rewrites require consumer/backlink audits.",
+      "proposed_resolution": "Keep snapshot doc impact matrix as planning memory, but require compile goal to rerun a live backlink/reference audit before edits. Treat P0 docs as required update candidates, P1 docs as direct consumer/policy audit candidates, and P2 docs as stale-reference audit candidates. Do not treat snapshot counts as canonical if live repo differs.",
+      "question_id": "q-0005",
+      "remaining_choice": "No product choice required; this is a compile-time safety rule.",
+      "topic": "live backlink audit at compile time"
+    },
+    {
+      "compile_effect": "Update Goal_Runtime_System.md, chain-wizard.md, chain-wizard-flexibility.md, assistant-chat-design.md, and FinalGUISpec. Audit interview-subagent-integration and Planning_Ledger_System for terminology drift.",
+      "proposed_resolution": "Accepted with clarification: Requirements Doc Builder uses the ledger system while the user is talking through/designing requirements. After the conversational ledger is sufficiently complete, Doc Builder invokes invisible Goal Mode to convert the ledger into requirements docs with audit/verification. Goal_Runtime_System owns the engine-level invisible Goal behavior; Chain Wizard/Doc Builder docs own builder entry, activity, pause/cancel/resume, and document-production UX; Assistant Chat owns visible chat Goal Mode. Doc Builder invisible conversion goals are not default Orchestrator WorkNodes unless explicitly handed to Orchestrator execution.",
+      "question_id": "q-0006",
+      "remaining_choice": "If a dedicated Requirements_Doc_Builder.md owner doc exists in the live repo, compile should prefer it for builder-specific behavior; otherwise chain-wizard-flexibility remains the owner. No product design blocker remains.",
+      "topic": "Requirements Doc Builder invisible Goal owner placement"
+    }
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "must_not_do": [
+    "Do not reduce subagent usage; use bounded extensive subagents with cost-aware lanes.",
+    "Do not let low-end executors or subagents certify parent GoalRun completion.",
+    "Do not skip verification after repair.",
+    "Do not create executable WorkNodes/NodeSeeds before the compiler contract is complete.",
+    "Do not treat Chain Wizard or Doc Builder invisible goals as Orchestrator WorkNodes by default."
+  ],
+  "recommended_status_after_user_acceptance": {
+    "q-0001": "resolved_provider_configurable",
+    "q-0002": "resolved_surface_contracts_final_layout_deferred",
+    "q-0003": "resolved_runtime_contract_compiler_schema_deferred",
+    "q-0004": "resolved_default_configurable",
+    "q-0005": "snapshot_resolved_rerun_live_at_compile",
+    "q-0006": "resolved_doc_builder_ledger_then_goal"
+  },
+  "schema_id": "pm.bootstrap_open_item_resolution_workshop.v1",
+  "scope": "Resolve deferred implementation/readiness items before canonical Plan compile where possible.",
+  "source_event_id": "evt-0010",
+  "status": "accepted_by_user_with_clarifications",
+  "accepted_at_utc": "2026-06-16T19:38:35Z",
+  "acceptance_source_ref": "chat:user-default-models-doc-builder-agrees",
+  "user_clarifications": [
+    "Default model/provider values are not hardcoded and depend entirely on which providers/accounts/model profiles the user has configured.",
+    "Requirements Doc Builder uses the ledger during the conversational phase, then invisible Goal Mode converts the ledger into requirements docs."
+  ]
+}

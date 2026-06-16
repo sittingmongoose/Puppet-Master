@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "capsule_id": "cap-orchestrator-goal-runtime-flow-current",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "orchestrator_goal_runtime_flow_conversational_ledger",
+  "allowed_reads_default": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/operating_capsule.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_builder_goal_conversion_contract.json"
+  ],
+  "do_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "allowed_writes_during_conversation": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json",
+    "validation/ledger_health.json"
+  ],
+  "allowed_writes_during_compile": [],
+  "forbidden_until_explicit_compile_or_governance_seal": [
+    "canonical Plans edits",
+    "Plans/.plan_index/**",
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "Spec_Lock",
+    "shards",
+    "evidence bundles",
+    "plan_graph",
+    "auto_decisions"
+  ],
+  "forbidden_without_explicit_governance_or_compiler_contract": [
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "final node manifests",
+    "production build tasks",
+    "final node queues"
+  ],
+  "required_end_of_turn_actions": [
+    "preserve_exact_tokens",
+    "preserve_gui_related_true_false",
+    "preserve_resolved_questions_and_compile_time_actions",
+    "do_not_write_canonical_plans_until_compile"
+  ],
+  "updated_at_utc": "2026-06-16T19:38:35Z"
+}

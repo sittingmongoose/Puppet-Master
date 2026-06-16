@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L17
+Source lines: L7-L18
 
-Source SHA256: `ff643e60a441434b47f58283dcc787be77dbc1d25d21443d00bfdece1d18f188`
+Source SHA256: `413b420cc766f3a85b7701bc70b538a810a1291081739549c6b3314a24234dc9`
 
 ---
 
@@ -16,6 +16,7 @@ Source SHA256: `ff643e60a441434b47f58283dcc787be77dbc1d25d21443d00bfdece1d18f188
 - 2026-02-25: Registered Plans/GitHub_Integration.md in plan map table.
 - 2026-06-11: Registered the PM Bootstrap Planning Ledger, Plan Document System, Plan-to-node compilation boundary, and bootstrap migration owner docs compiled from ledger `pldg-20260610-001-ledger-plan-system`.
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
+- 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; governance seal remains pending.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

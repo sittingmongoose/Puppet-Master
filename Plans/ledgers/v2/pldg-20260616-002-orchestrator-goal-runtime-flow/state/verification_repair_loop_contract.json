@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.orchestrator_verification_repair_loop_contract.v1",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "status": "ready_for_plan_compile",
+  "core_rule": "Execution success is provisional. Failed verification creates repair WorkNodes and verification must run again after repair. The loop repeats until zero findings remain or a true blocker/authority boundary is reached.",
+  "state_flow": [
+    "worknode_executed",
+    "verification_cycle_started",
+    "verification_passed -> node_receipt_written",
+    "verification_failed -> findings_recorded",
+    "defect_bundle_created",
+    "repair_worknodes_created",
+    "repair_executed",
+    "verification_cycle_started_again",
+    "repeat_until_clean_or_true_blocker",
+    "goal_completion_receipt_certified"
+  ],
+  "repeated_defect_policy": {
+    "defect_signature_key": "validator/finding type + affected artifact/scope + root_cause_key when available",
+    "same_signature_repeats_before_strategy_change": 2,
+    "third_failed_cycle_escalation": "high_end_adjudicator_or_root_cause_replan",
+    "allowed_strategy_changes": [
+      "widen context",
+      "split WorkNode",
+      "change executor capability lane",
+      "add specialist subagents",
+      "rollback to safe point",
+      "escalate to adjudicator",
+      "change patch strategy"
+    ],
+    "not_allowed": [
+      "repeat same low-end patch indefinitely",
+      "mark done with known findings",
+      "skip verification after repair"
+    ]
+  },
+  "receipt_gates": [
+    "WorkNodeReceipt required for certified node",
+    "VerificationReceipt required for each verification cycle",
+    "GoalCompletionReceipt required for goal completion",
+    "skipped validator reasons must be explicit",
+    "low-end executor cannot certify parent completion"
+  ],
+  "owner_docs": [
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Runtime_Artifacts_Panel.md"
+  ]
+}

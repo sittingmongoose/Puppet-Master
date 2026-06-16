@@ -1,0 +1,313 @@
+{
+  "compiled_plan_unit_ids": [
+    "GRS-002",
+    "GRS-003",
+    "GRS-026",
+    "GRS-027",
+    "OP-022",
+    "OSI-428",
+    "EP-098",
+    "PNC-009",
+    "F3-394",
+    "F3-395",
+    "ACD-420",
+    "CW-008",
+    "CWF-151",
+    "RAP-027",
+    "W-071",
+    "RGV-012",
+    "CV-288",
+    "MS-109",
+    "PS-115",
+    "SP-215",
+    "PLS-011",
+    "0PI-056"
+  ],
+  "deferred_questions": [],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "open_blockers": [],
+  "open_questions": [
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened after the compiled/governance-sealed ledger was resumed for conversational continuation. This is not a compile blocker for the sealed PlanUnits; it selects the next safe planning lane.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "Should the next post-seal continuation focus on the PlanUnit-to-NodeSeed-to-WorkNode compiler contract, or on implementation planning that remains strictly non-executable until that compiler contract exists?",
+      "question_id": "q-0007",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to prevent premature executable WorkNode semantics from leaking into planning before the compiler contract exists.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "What is the smallest future compiler output that may exist before execution: a non-executable NodeSeed candidate, a hydrated WorkNode template, or only a compiled PlanUnit reference with acceptance metadata?",
+      "question_id": "q-0008",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to clarify the certification boundary before any future implementation planning relies on runtime completion semantics.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0044",
+        "atom-0045",
+        "atom-0053",
+        "atom-0090"
+      ],
+      "question": "Where should completion certification be bound in the future runtime: compiler-authored acceptance claims, executor-collected receipts, verifier/adjudicator judgment, or a layered combination with explicit parent-goal certification gates?",
+      "question_id": "q-0009",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    }
+  ],
+  "remaining_compile_time_actions": [
+    {
+      "action_id": "governance-seal-001",
+      "status": "completed",
+      "summary": "Spec_Lock, generated shards, evidence hashes, and migration proof were refreshed in the explicit governance seal phase."
+    },
+    {
+      "action_id": "compiler-contract-001",
+      "status": "blocked_future_contract",
+      "summary": "Executable WorkNodes, NodeSeeds, final node manifests, executable queues, and build tasks remain blocked until Plan_To_Node_Compilation defines the WorkNode compiler contract."
+    }
+  ],
+  "resolved_questions": [
+    {
+      "compile_disposition": "resolved_provider_configurable",
+      "compiled_output_plan_unit_ids": [
+        "F3-395",
+        "MS-109",
+        "F3-394",
+        "GRS-026",
+        "GRS-027",
+        "OP-022",
+        "OSI-428",
+        "PS-115"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user clarification: do not define exact default models. Canonical Plans define capability lanes/role contracts; Settings binds lanes to the user's configured providers/accounts/model profiles. Missing required lanes become explicit configuration blockers.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0063",
+        "atom-0093",
+        "atom-0029",
+        "atom-0030",
+        "atom-0102"
+      ],
+      "question": "What exact provider/model defaults should ship for low-cost executor, standard reviewer, high-reasoning orchestrator, verifier, adjudicator, and certifier lanes?",
+      "question_id": "q-0001",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-corrections-subagents-gui-verification",
+        "assistant:revised-orchestrator-architecture",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    },
+    {
+      "compile_disposition": "resolved_surface_contracts_final_layout_deferred",
+      "compiled_output_plan_unit_ids": [
+        "OP-022",
+        "F3-395",
+        "RGV-012",
+        "OSI-428",
+        "RAP-027",
+        "MS-109",
+        "F3-394",
+        "PLS-011",
+        "0PI-056",
+        "PNC-009",
+        "W-071",
+        "PS-115"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user acceptance: keep the existing Orchestrator six-tab spine with GoalRun/WorkGraph overlays, side drawers for detail, and Settings policy panels. Exact pixel layout/styling remains FinalGUISpec implementation detail.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0057",
+        "atom-0058",
+        "atom-0059",
+        "atom-0060",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0068",
+        "atom-0069",
+        "atom-0070",
+        "atom-0071",
+        "atom-0072",
+        "atom-0073"
+      ],
+      "question": "What exact final GUI layout, tab naming, and placement should the Orchestrator Goal header, WorkGraph, Subagents, Verification, Evidence, History, Ledger, Dashboard, Agents, and Settings surfaces use?",
+      "question_id": "q-0002",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-corrections-subagents-gui-verification",
+        "assistant:revised-orchestrator-architecture",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    },
+    {
+      "compile_disposition": "resolved_runtime_contract_compiler_schema_deferred",
+      "compiled_output_plan_unit_ids": [
+        "PNC-009",
+        "EP-098",
+        "OP-022",
+        "PLS-011",
+        "0PI-056",
+        "RGV-012",
+        "F3-395"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user acceptance: define Orchestrator-facing runtime objects and boundaries now; executable NodeSeed/WorkNode generation remains gated by the future Plan_To_Node_Compilation compiler contract and scheduler/permission/readiness gates.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0070",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "What is the final PlanUnit-to-NodeSeed-to-WorkNode compiler contract that creates executable WorkNodes?",
+      "question_id": "q-0003",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "assistant:three-function-analysis",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    },
+    {
+      "compile_disposition": "resolved_default_configurable",
+      "compiled_output_plan_unit_ids": [
+        "GRS-026",
+        "GRS-027",
+        "EP-098",
+        "OP-022",
+        "F3-395",
+        "CV-288",
+        "SP-215",
+        "MS-109"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user acceptance: two repeated same-signature failures trigger strategy adjustment; third failed cycle escalates to high-end adjudicator/root-cause replan; verification always reruns after repair. Thresholds remain configurable.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0044",
+        "atom-0045",
+        "atom-0053",
+        "atom-0090"
+      ],
+      "question": "Should the repeated-defect strategy-adjustment default be exactly two consecutive repeats, or should Jared choose a different default before compile?",
+      "question_id": "q-0004",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-verification-loop-requirement",
+        "assistant:ledger-reconstruction-inference",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    },
+    {
+      "compile_disposition": "snapshot_resolved_rerun_live_at_compile",
+      "compiled_output_plan_unit_ids": [
+        "0PI-056",
+        "OP-022",
+        "PLS-011"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user acceptance: snapshot backlink/doc-impact matrix is planning memory; compile must rerun the audit against the live repo before canonical Plan edits.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0083",
+        "atom-0084"
+      ],
+      "question": "What exact current backlink list should be used at compile time after rerunning the audit against the live repo?",
+      "question_id": "q-0005",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-backlink-audit-request",
+        "source_shard:orchestrator_backlink_audit_preliminary.md",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    },
+    {
+      "compile_disposition": "resolved_doc_builder_ledger_then_goal",
+      "compiled_output_plan_unit_ids": [
+        "GRS-026",
+        "GRS-027",
+        "CW-008",
+        "CWF-151",
+        "PLS-011",
+        "PNC-009",
+        "GRS-003",
+        "OP-022",
+        "ACD-420",
+        "F3-395",
+        "0PI-056"
+      ],
+      "created_at_utc": "2026-06-16T16:55:18Z",
+      "disposition": "Resolved by user clarification: Doc Builder uses the ledger while conversational, then an invisible Goal converts the ledger into requirements docs; builder-specific UX lives in Chain Wizard/Doc Builder owner docs, while visible chat Goal Mode remains in Assistant Chat.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0004",
+        "atom-0007",
+        "atom-0079",
+        "atom-0103"
+      ],
+      "question": "Where should Requirements Doc Builder-specific invisible Goal behavior live relative to Chain Wizard and Assistant Chat owner docs?",
+      "question_id": "q-0006",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-three-goal-functions",
+        "assistant:three-function-analysis",
+        "chat:user-default-models-doc-builder-agrees"
+      ],
+      "status": "resolved",
+      "updated_at_utc": "2026-06-16T19:38:35Z"
+    }
+  ],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "updated_at_utc": "2026-06-16T21:31:00Z"
+}

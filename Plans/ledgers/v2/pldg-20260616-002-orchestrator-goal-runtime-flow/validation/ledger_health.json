@@ -1,0 +1,142 @@
+{
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Retrospective Orchestrator Goal Runtime Flow v2 ledger created with events, design atoms, decisions, corrections, deferred questions, compact state, source shards, validation health, and registry entry."
+    },
+    {
+      "check_id": "scope-0001",
+      "status": "pass",
+      "summary": "Package contains source ledger and registry update only. It does not contain canonical Plans edits, generated Plan indexes, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions."
+    },
+    {
+      "check_id": "content-0001",
+      "status": "pass",
+      "summary": "Ledger captures the A/B/C Goal Mode split, Orchestrator/Executor/Goal layering, extensive bounded subagents, low-end/high-end agent split, verification repair loop, receipts, GUI/settings impacts, doc backlink audit scope, and terminology cleanup."
+    },
+    {
+      "check_id": "deferred-0001",
+      "status": "pass",
+      "summary": "Deferred questions q-0001 through q-0006 are implementation/default/compile-time choices, not hard blockers to preserving the core design in Plans."
+    },
+    {
+      "check_id": "readiness-0001",
+      "status": "pass",
+      "summary": "Implementation-readiness audit added doc_impact_matrix, gui_impact_matrix, verification_repair_loop_contract, and live snapshot backlink audit source shard."
+    },
+    {
+      "check_id": "acceptance-0001",
+      "status": "pass",
+      "summary": "User accepted deferred-item workshop recommendations with clarifications. Provider/model defaults are provider-profile bindings, not hardcoded values; Doc Builder uses ledger conversation then invisible Goal conversion to requirements docs."
+    },
+    {
+      "check_id": "final-readiness-0001",
+      "status": "pass",
+      "summary": "Final readiness review confirms no remaining product/design questions or blockers. Ledger is fully fleshed out for explicit ledger-to-Plans compile; direct code/product implementation waits for canonical Plan compile and later executable compiler contracts."
+    },
+    {
+      "check_id": "delta-intake-0001",
+      "status": "pass",
+      "summary": "Continuation opened in conversational design/spec mode. Accepted architecture, design atoms, resolved questions, blockers, compile queue, and governance boundaries remain unchanged unless the user introduces explicit delta changes."
+    },
+    {
+      "check_id": "compile-0001",
+      "status": "pass_governance_sealed",
+      "summary": "Accepted Orchestrator Goal Runtime Flow atoms were compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance seal refreshed migration proof, shards, Spec Lock, evidence hashes, and ledger projections."
+    },
+    {
+      "check_id": "validator-0001",
+      "status": "pass",
+      "summary": "pm-bootstrap-ledger-validate passed after strict canonical target alignment; 104 atoms, 14 events, one compile queue item, and 2462 PlanUnits checked."
+    },
+    {
+      "check_id": "plan-index-0001",
+      "status": "pass",
+      "summary": "pm-plan-index generate and validate passed with 5065 PlanUnits, 18046 acceptance units, and node readiness blocked_compiler_contract_incomplete."
+    },
+    {
+      "check_id": "migration-validate-0001",
+      "status": "pass",
+      "summary": "pm-plan-migration validate passes after governance-seal migration proof refresh."
+    },
+    {
+      "check_id": "run-gates-0001",
+      "status": "pass",
+      "summary": "run-gates passes after governance-seal Spec Lock and evidence refresh."
+    },
+    {
+      "check_id": "shard-check-0001",
+      "status": "pass",
+      "summary": "pm-shard-plans --check passes after configured shard regeneration."
+    },
+    {
+      "check_id": "git-diff-check-0001",
+      "status": "pass",
+      "summary": "git diff --check passed after canonical Plan, allowed plan-index, and ledger projection updates."
+    },
+    {
+      "check_id": "governance-seal-0001",
+      "status": "pass",
+      "summary": "Explicit governance seal phase refreshed configured shards, migration proof, Spec Lock, evidence hashes, ledger registry/projections, and preserved node_readiness_report.status=blocked_compiler_contract_incomplete without creating node/build artifacts."
+    },
+    {
+      "check_id": "post-seal-continuation-0001",
+      "status": "pass",
+      "summary": "Post-seal conversational continuation opened q-0007 through q-0009 as ledger-only follow-up questions while preserving compiled/governance-sealed status and forbidden-artifact exclusions."
+    }
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 0,
+    "capability_lane_binding_policy": "accepted_ready_for_plan_compile",
+    "compile_queue_items": 1,
+    "compiled_owner_docs": 18,
+    "compiled_plan_units": 22,
+    "compiled_to_plan_atoms": 102,
+    "corrections": 9,
+    "decisions": 29,
+    "deferred_questions": 0,
+    "design_atoms": 104,
+    "doc_builder_goal_conversion_contract": "accepted_ready_for_plan_compile",
+    "doc_impact_matrix_docs_accounted_for": 68,
+    "events": 16,
+    "final_readiness_review": "fully_fleshed_out_for_plan_compile",
+    "forbidden_artifacts": "not_created",
+    "git_diff_check": "pass",
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "gui_surface_contracts": 18,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "non_applicable_atoms": 2,
+    "open_blockers": 0,
+    "open_item_resolution_workshop": "accepted_by_user_with_clarifications",
+    "open_questions": 3,
+    "plan_index_acceptance_units": 18046,
+    "plan_index_plan_units": 5065,
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_generate": "pass_5065_planunits_18046_acceptance_units",
+    "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
+    "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
+    "post_seal_open_questions": [
+      "q-0007",
+      "q-0008",
+      "q-0009"
+    ],
+    "questions": 9,
+    "ready_for_plan_compile_atoms": 0,
+    "run_gates": "pass_after_governance_seal_refresh",
+    "shard_check": "pass_after_governance_seal_refresh",
+    "strict_canonical_plan_targets": [
+      "Plans/Goal_Runtime_System.md"
+    ],
+    "unclassified_candidates": 0
+  },
+  "updated_at_utc": "2026-06-16T21:31:00Z",
+  "warnings": [
+    "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and scheduler/permission/readiness gates."
+  ]
+}

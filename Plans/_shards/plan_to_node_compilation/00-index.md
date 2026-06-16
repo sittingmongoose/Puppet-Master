@@ -1,16 +1,16 @@
 # Shard Index: Plans/Plan_To_Node_Compilation.md
 
-Generated: 2026-06-16T20:15:09Z
+Generated: 2026-06-16T21:25:16Z
 
-Source SHA256: `e0fc4a6bab582e2596887df2e731d79d53f7031e6ebd7865c29496ceb79ee6f7`
+Source SHA256: `7074401b0b7d00bd10afffbbd94ac528dcf48691a5616b16864fcb1d59e4f04f`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `45331fdb23ea3f81663df5e2bdddf5a0352e22fe10a7a24a7df8e9768ed41004`
-- [002 - 0. Scope](002-0.-scope.md) L5-L9 `d9dbf6af9f0798350180b3e9184ffbabb33f322c7019bda6759ff666f18e9f4c`
-- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `31450b940f06236066ef2dff04eebcd3c69703e5ff8599233f44e20f51b710fe`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L289 `b21bd121d09b8790cb0bfa34e4cbb2a53b99f77e0e981ddb5feab2d0bf1a0cf4`
-- [005 - 4. Deferred Compiler Algorithm](005-4.-deferred-compiler-algorithm.md) L291-L326 `7ae4893cd8c8036044b6e7cf08d862450530dc014cc21d4a1fb92386e39008e6`
-- [006 - 5. Compilation Coverage](006-5.-compilation-coverage.md) L328-L347 `9a6a04be45ac435722d0c4216b8693bcf4c603980e9ced6422580c2f05ae5d8f`
+- [001 - Preamble](001-preamble.md) L1-L3 `008acf5e88a893642a5a49314f864f6f195ccab23cdf004d61110916306d30b3`
+- [002 - 0. Scope](002-0.-scope.md) L5-L9 `ff34bb36d86f96afa5e7cdd838fb50f6af2bb233b5a5bebbb51c3013f7dea669`
+- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `dba7d06fe66e7d5c0d29a394cc64c914028088d01426d54cdecb17137d701b77`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L289 `8b4c974b4f8206320426bee4a446233ab5f94285d9bed98180aa1eaf33025c9d`
+- [005 - 4. Deferred Compiler Algorithm](005-4.-deferred-compiler-algorithm.md) L291-L376 `8dc1c1fe9613551399363e8ca1c23d08311ded195e24d74c232d693c55ea8c5f`
+- [006 - 5. Compilation Coverage](006-5.-compilation-coverage.md) L378-L397 `826cd0573a61096c8abceb9a8ead2603f8a24379bf3ff09d680b52bf9072b6da`

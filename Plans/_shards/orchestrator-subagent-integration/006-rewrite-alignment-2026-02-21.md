@@ -2,16 +2,16 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L123-L159
+Source lines: L125-L161
 
-Source SHA256: `d1553bba6113a133e0e62c3573ff0fd31f053401a7c8791e74362300874846e0`
+Source SHA256: `a0f35524bb4f462d214bb0a55f68613f6505a8d9dc18868532eca86b17c50f9c`
 
 ---
 
 ## Rewrite alignment (2026-02-21)
 
 
-This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
+This plan remains authoritative for subagent selection policy and wiring/verification requirements. Any tier policy phrasing from Phase/Task/Subtask/Iteration is compatibility/source-lineage only; live runtime policy is graph/package/seam/lane based. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
 
 - Platform-specific runner details should converge on **Providers** that emit a normalized streaming **event model**
 - Tool gating/permissions should be centralized in the tool policy engine; orchestrator policy should *consume* normalized events/tools, not re-implement per-platform parsing

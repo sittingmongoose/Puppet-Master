@@ -12,6 +12,7 @@
 - 2026-02-25: Registered Plans/GitHub_Integration.md in plan map table.
 - 2026-06-11: Registered the PM Bootstrap Planning Ledger, Plan Document System, Plan-to-node compilation boundary, and bootstrap migration owner docs compiled from ledger `pldg-20260610-001-ledger-plan-system`.
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
+- 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; governance seal remains pending.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -3847,6 +3848,104 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/Multi-Account.md
   - Plans/Provider_OpenCode.md
+```
+
+### 0PI-056 - Orchestrator Goal Runtime Flow Owner Map
+
+```yaml
+plan_unit_id: 0PI-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split compiled from ledger pldg-20260616-002-orchestrator-goal-runtime-flow. Goal_Runtime_System owns the shared Goal Runtime engine and repair-loop policy; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, and classification; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Run_Graph_View, FinalGUISpec, Assistant Chat, Chain Wizard, Runtime Artifacts, WorktreeGitImprovement, Contracts_V0, Models_System, Permissions_System, storage-plan, and Planning_Ledger_System consume the flow through their owner surfaces. The compile phase may regenerate allowed Plans/.plan_index outputs only; Spec_Lock, shards, evidence bundles, plan_graph, auto_decisions, NodeSeeds, WorkNodes, executable queues, and governance seal remain untouched until explicitly requested.
+gui_related: false
+gui_classification_reason: This unit records canonical owner routing metadata; GUI docs are referenced as consumers but not implemented here.
+depends_on:
+  - 0PI-055
+  - GRS-026
+  - OP-022
+  - EP-098
+  - PNC-009
+unblocks: []
+acceptance_criteria:
+  - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
+  - Executor scheduler truth remains separate from Orchestrator projection/control truth.
+  - Capability lane, model, permission, storage, receipt, GUI, chat, chain-wizard, and runtime-artifact owner docs are recorded without taking over Goal Runtime behavior.
+  - The index preserves the no-WorkNode, no-NodeSeed, no-executable-queue, no-governance-seal boundary for this compile phase.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+risk_class: orchestrator_goal_owner_map_drift
+reasoning_tier: high
+context_scope: plans_index_orchestrator_goal_runtime_flow
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Executor_Protocol.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Run_Graph_View.md
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+  - Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: orchestrator_goal_runtime_flow_owner_map
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0078
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0080
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0081
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0082
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0083
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0084
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0097
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0098
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0099
+preserved_exact_tokens:
+  - "Orchestrator Goal Runtime Flow"
+  - "GoalRun"
+  - "WorkGraph"
+  - "SubagentWave"
+  - "VerificationCycle"
+  - "capability_lane"
+  - "write_mode"
+  - "pending governance seal"
+  - "Spec_Lock"
+  - "WorkNodes"
+  - "NodeSeeds"
+negative_constraints:
+  - Do not treat Plans/00-plans-index.md as the owner for runtime behavior.
+  - Do not create WorkNodes, NodeSeeds, executable queues, or governance seal artifacts during this compile.
+  - Do not conflate ledger compile, allowed PlanUnit indexing, and governance seal phases.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Executor_Protocol.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Run_Graph_View.md
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+  - Plans/Planning_Ledger_System.md
 ```
 
 

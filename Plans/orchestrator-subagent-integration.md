@@ -17,13 +17,15 @@ These requirements are canonical live specification text for this owner document
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
-- Dynamic subagent selection strategy for each tier level
+- Dynamic subagent selection strategy for each capability lane, agent role, write mode, and compatibility tier view
 - Language/technology detection and matching
 - Implementation architecture
 - Code changes required
 - Configuration options
 
 Browser-capability rethink entries in this planning-doc are research inputs, not direct implementation authority by themselves. They may survey capability breadth, behavior contracts and `/state` model, UX flows, safety and `/permissions`, and chat `/planning` integration, but canonical product/runtime changes must be transferred into the owning live `Plans/**` docs before implementation.
+
+Tier-level phrasing in this status block is compatibility and search-lineage only. Live orchestration uses capability_lane, agent_role, write_mode, certification_tier, and graph/package/seam/lane identity.
 
 ## Executive Summary
 Internal multi-agent orchestration in Puppet Master is PM-native. Parent and child supervision, timeout propagation, thread and run lineage, shell isolation, cancellation, and crew scheduling are owned by this document together with `Plans/Contracts_V0.md` and `Plans/storage-plan.md`.
@@ -123,7 +125,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Worktre
 ## Rewrite alignment (2026-02-21)
 
 
-This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
+This plan remains authoritative for subagent selection policy and wiring/verification requirements. Any tier policy phrasing from Phase/Task/Subtask/Iteration is compatibility/source-lineage only; live runtime policy is graph/package/seam/lane based. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
 
 - Platform-specific runner details should converge on **Providers** that emit a normalized streaming **event model**
 - Tool gating/permissions should be centralized in the tool policy engine; orchestrator policy should *consume* normalized events/tools, not re-implement per-platform parsing
@@ -177,6 +179,8 @@ Rules:
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 ## Tier-Level Subagent Strategy
 Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
+
+This heading is retained as a compatibility/search anchor. Canonical worker strategy is capability-lane and graph/package/seam/lane owned, with tier labels permitted only as legacy projection or migration vocabulary.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md
 
@@ -31066,4 +31070,64 @@ negative_constraints:
   - Do not use `.puppet-master/memory` as active continuity storage.
   - Do not treat extraction alternatives as canonical behavior without the shared continuity schema.
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### OSI-428 - Bounded Extensive Subagent Waves
+
+```yaml
+plan_unit_id: OSI-428
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions.
+gui_related: false
+gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
+depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109]
+unblocks: [OP-022, F3-394]
+acceptance_criteria:
+  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
+  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
+  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
+  - Parent synthesis and high-end certification remain required for meaningful completion.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Orchestrator subagent wave runtime review
+risk_class: subagent_authority_drift
+reasoning_tier: high
+context_scope: orchestrator_subagent_waves
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
+node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0031
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0032
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
+preserved_exact_tokens:
+  - "subagents are used extensively"
+  - "bounded"
+  - "cost per wave"
+  - "low end agents"
+  - "higher end agents"
+  - "SubagentWave"
+  - "one WorkNode execution"
+  - "one file/window analysis"
+  - "parent completion"
+negative_constraints:
+  - Do not convert Orchestrator into one smart agent doing everything.
+  - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
+  - Do not let low-end subagents certify parent completion.
+  - Do not let subagents write overlapping live surfaces concurrently.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
 ```

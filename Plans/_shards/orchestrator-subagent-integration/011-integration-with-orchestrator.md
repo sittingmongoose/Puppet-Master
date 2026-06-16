@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L262-L31069
+Source lines: L266-L31133
 
-Source SHA256: `d1553bba6113a133e0e62c3573ff0fd31f053401a7c8791e74362300874846e0`
+Source SHA256: `a0f35524bb4f462d214bb0a55f68613f6505a8d9dc18868532eca86b17c50f9c`
 
 ---
 
@@ -30815,4 +30815,64 @@ negative_constraints:
   - Do not use `.puppet-master/memory` as active continuity storage.
   - Do not treat extraction alternatives as canonical behavior without the shared continuity schema.
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### OSI-428 - Bounded Extensive Subagent Waves
+
+```yaml
+plan_unit_id: OSI-428
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions.
+gui_related: false
+gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
+depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109]
+unblocks: [OP-022, F3-394]
+acceptance_criteria:
+  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
+  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
+  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
+  - Parent synthesis and high-end certification remain required for meaningful completion.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Orchestrator subagent wave runtime review
+risk_class: subagent_authority_drift
+reasoning_tier: high
+context_scope: orchestrator_subagent_waves
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
+node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0031
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0032
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
+preserved_exact_tokens:
+  - "subagents are used extensively"
+  - "bounded"
+  - "cost per wave"
+  - "low end agents"
+  - "higher end agents"
+  - "SubagentWave"
+  - "one WorkNode execution"
+  - "one file/window analysis"
+  - "parent completion"
+negative_constraints:
+  - Do not convert Orchestrator into one smart agent doing everything.
+  - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
+  - Do not let low-end subagents certify parent completion.
+  - Do not let subagents write overlapping live surfaces concurrently.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
 ```

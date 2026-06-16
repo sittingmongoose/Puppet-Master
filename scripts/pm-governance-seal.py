@@ -176,12 +176,71 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def sync_plan_sharding_evidence(evidence_path: Path, report_path: Path) -> dict[str, Any]:
+    data = load_json(evidence_path)
+    report = load_json(report_path)
+    existing_by_path = {
+        artifact.get("path"): artifact
+        for artifact in data.get("artifacts", [])
+        if artifact.get("path")
+    }
+
+    def artifact_for(path: str, *, note: str | None = None) -> dict[str, Any]:
+        target = repo_path(path)
+        artifact = {k: v for k, v in existing_by_path.get(path, {}).items() if k not in {"sha256", "path"}}
+        artifact["path"] = path
+        if note is not None:
+            artifact["note"] = note
+        if target.exists() and target.is_file():
+            artifact["sha256"] = sha256_file(target)
+        return artifact
+
+    artifacts: list[dict[str, Any]] = [
+        artifact_for(str(report.get("config_path", "Plans/sharding_config.json"))),
+        artifact_for(str(report_path.relative_to(ROOT))),
+    ]
+    for doc in report.get("docs", []):
+        source_path = doc.get("source", {}).get("path")
+        if source_path:
+            artifacts.append(artifact_for(str(source_path), note="Configured shard source."))
+        index_path = doc.get("index_path")
+        if index_path:
+            artifacts.append(artifact_for(str(index_path)))
+        manifest_path = doc.get("manifest_path")
+        if manifest_path:
+            artifacts.append(artifact_for(str(manifest_path)))
+        for shard in doc.get("shards", []):
+            shard_path = shard.get("path")
+            if shard_path:
+                artifacts.append(artifact_for(str(shard_path)))
+
+    old_paths = [artifact.get("path") for artifact in data.get("artifacts", [])]
+    new_paths = [artifact.get("path") for artifact in artifacts]
+    changed = old_paths != new_paths or data.get("artifacts") != artifacts
+    if changed:
+        data["artifacts"] = artifacts
+        write_json(evidence_path, data)
+    return {
+        "path": str(evidence_path.relative_to(ROOT)),
+        "changed": changed,
+        "artifact_count": len(artifacts),
+        "removed_paths": sorted(set(old_paths) - set(new_paths)),
+        "added_paths": sorted(set(new_paths) - set(old_paths)),
+    }
+
+
 def cmd_refresh(args: argparse.Namespace) -> int:
     report: dict[str, Any] = {"spec_lock": None, "evidence": []}
     if args.spec_lock:
         report["spec_lock"] = refresh_spec_lock(repo_path(args.spec_lock))
     for evidence_path in args.evidence:
         report["evidence"].append(refresh_evidence(repo_path(evidence_path), args))
+    print(json.dumps(report, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_sync_plan_sharding_evidence(args: argparse.Namespace) -> int:
+    report = sync_plan_sharding_evidence(repo_path(args.evidence), repo_path(args.report))
     print(json.dumps(report, indent=2, ensure_ascii=False))
     return 0
 
@@ -202,6 +261,13 @@ def main() -> int:
     refresh.add_argument("--evidence-graph-id", default=None, help="Set evidence node.graph_id.")
     refresh.add_argument("--evidence-graph-scope", default=None, help="Set evidence node.graph_scope.")
     refresh.set_defaults(func=cmd_refresh)
+    sync = sub.add_parser(
+        "sync-plan-sharding-evidence",
+        help="Rebuild plan-sharding evidence artifact rows from a generated shard report.",
+    )
+    sync.add_argument("--evidence", required=True, help="Plan sharding evidence.json path to update.")
+    sync.add_argument("--report", required=True, help="Generated shard_report.json path to read.")
+    sync.set_defaults(func=cmd_sync_plan_sharding_evidence)
     args = parser.parse_args()
     return args.func(args)
 
