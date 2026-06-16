@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.audit.validator_results.v1",
+  "audit_id": "audit-20260616-001-part-4-fable-cleanup",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "status": "pass",
+  "git_status_before_validators": "",
+  "git_status_after_validators": "",
+  "validators_mutated_worktree": false,
+  "commands": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+      "exit_code": 0,
+      "duration_seconds": 4.047,
+      "status": "pass",
+      "summary": {
+        "atoms": 19,
+        "compile_queue_items": 1,
+        "corrections": 1,
+        "decisions": 5,
+        "events": 11,
+        "plan_units_checked": 1383,
+        "questions": 3,
+        "warnings": 0,
+        "errors": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "duration_seconds": 25.171,
+      "status": "pass",
+      "summary": {
+        "plan_unit_count": 5005,
+        "acceptance_unit_count": 17798,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "duration_seconds": 17.403,
+      "status": "pass",
+      "summary": {
+        "run_id": "pds-20260611-002-atomize-planunits",
+        "doc_count": 67,
+        "span_count": 3873,
+        "live_plan_unit_count": 5005,
+        "unique_live_plan_unit_count": 5005,
+        "source_preserving_unit_count": 0,
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "duration_seconds": 34.045,
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "duration_seconds": 3.376,
+      "status": "pass",
+      "summary": {
+        "docs_checked": 50,
+        "shards_checked": 876,
+        "source_count": 50,
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0,
+      "duration_seconds": 0.101,
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "duration_seconds": 0.184,
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "duration_seconds": 3.108,
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "duration_seconds": 0.013,
+      "status": "pass",
+      "summary": {
+        "output": "clean"
+      }
+    }
+  ]
+}

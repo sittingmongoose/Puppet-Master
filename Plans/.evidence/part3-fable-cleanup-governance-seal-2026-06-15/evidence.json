@@ -18,7 +18,7 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111"
+      "sha256": "bbb27dab3b7ca1c9a8c0729f37621aa5f0fcb2b92e65c9970fda672e2b85f6da"
     },
     {
       "path": "Plans/Media_Generation_and_Capabilities.md",
@@ -62,15 +62,15 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "26fee545785da7d8d66ca90d6e7b12c9baa8fe5974515a356b954dd72058e42e"
+      "sha256": "7a8cd8a41b0fefa87a5f0ca1f10be5513e435e7e3413c7f26256150e80e3610e"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "a813dcd3c2c7c0e2669ef031102a61abb9d140cd9c3bfe668a8391eff084e4a3"
+      "sha256": "12051a5e65236104eb436a059e4799c22444b68092bdb3352f0c47f56fd00938"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "3fa81542fa0f42107dbe8838523d172d6809fc313a18708e1d88c760548b4f67"
+      "sha256": "718ab5bee2bd084c7fee019d06be5881c8d428810aba49e9e1f533ba054b41b6"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
@@ -78,19 +78,19 @@
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c4ed7dede06242ab6ba867ed601bcceb7d370d762a3802cdab7d11db69fff956"
+      "sha256": "b055055cd7988686c0d1f22d478017f1d1c4689435fd8d592fe4a9a37f3fd1ee"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9423fff12be129eb1c1db9f332c80638da0e778ea74b431d526a24d61c7851ba"
+      "sha256": "fe218d7cd7ffbf38358e8f777452e63874ba385069b704dcbfb0421597730355"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "a4676eb3f81910481251bdf7701db66acaf47155d971eca4808e5a07d425e9ee"
+      "sha256": "75ac27ba895629ee91160e09c6f1d52d9410c3eab6ce6c4f38e84742fb54a728"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "e0345a03ff0c337558e02817c7dd064571ec9513593900513a3cf5faaf4f157d"
+      "sha256": "f0d2697afb8ce855cd3e6791827c93943525fef6a937f7e2ccae142f131e239e"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -98,7 +98,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4838741d63aeed53c3e5824133f5dc8ba1aa3e3ba4bb1f4663d19f6c002cf1b8"
+      "sha256": "1f4b4af55d155481a2b6d87cbc4784d9d711664dda2bc97dcf7642f3577b8679"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,11 +106,11 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+      "sha256": "72e01f187774d5557918c4d2f9dcbb93abc172dfb67ef21ec16355e3bc5df240"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+      "sha256": "5cedac4cd43d61c4c72054f7c9420e15085ff5b17d41c4a43b01d7fa870fe9a3"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -134,9 +134,14 @@
       "result": "PASS"
     },
     {
-      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created.",
       "name": "no-node-artifacts-created",
       "result": "PASS"
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
     }
   ],
   "commands_run": [

@@ -2,7 +2,7 @@
   "current_phase": "compiled_part_4_fable_cleanup_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0005",
-    "last_event_id": "evt-0011",
+    "last_event_id": "evt-0012",
     "next_atom_id": "atom-0020",
     "next_decision_id": "dec-0006",
     "next_question_id": "q-0004",
@@ -14,23 +14,23 @@
     "Do not recompile Part 4 from scratch; only targeted repair of audit-listed findings was applied.",
     "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues."
   ],
-  "last_completed_action": "Applied post-compile fidelity repair to live PlanUnits, compatibility/source-lineage sections, ledger projections, migration proof, PlanUnit index, shards, and reusable governance tooling.",
-  "last_known_good_state": "PlanUnits F3-391, F3-392, ACD-415, T-158, CV-285, EP-097, and WM-036 exist in live Plans with repaired source_lineage, owner metadata, compatibility/source-lineage notes, and no-product-implementation acceptance wording. Plans/.plan_index count remains 5005 and node readiness remains blocked_compiler_contract_incomplete. Migration proof is refreshed and governance_status=sealed.",
+  "last_completed_action": "Applied audit-20260616 warning repair to Part 4 source_lineage refs, FinalGUISpec compatibility/search-alias note, sealed ledger projections, registry timestamp, and governance evidence provenance.",
+  "last_known_good_state": "PlanUnits F3-391, F3-392, ACD-415, T-158, CV-285, EP-097, and WM-036 exist in live Plans with repaired source_lineage, owner metadata, compatibility/source-lineage notes, no-product-implementation acceptance wording, and audit-20260616 local-line/anchor repairs. Plans/.plan_index count remains 5005 and node readiness remains blocked_compiler_contract_incomplete. Migration proof is refreshed and governance_status=sealed.",
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
-  "next_action": "Run and report the final repair validator suite; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks.",
-  "next_safe_action": "Report repair results and validator outcomes only; WorkNode/NodeSeed/build-task creation remains forbidden.",
+  "next_action": "Report audit-warning repair results and validator outcomes only; WorkNode/NodeSeed/build-task creation remains forbidden.",
+  "next_safe_action": "Report audit-warning repair results and validator outcomes only; WorkNode/NodeSeed/build-task creation remains forbidden.",
   "open_blockers": [],
   "open_questions": [],
   "phase": "compiled_part_4_fable_cleanup_governance_sealed",
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-06-15T21:53:24Z",
+  "updated_at_utc": "2026-06-16T00:53:02Z",
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
-    "pm_bootstrap_ledger_validate": "pass_after_repair",
-    "pm_plan_index_validate": "pass_after_repair",
-    "pm_plan_migration_validate": "pass",
-    "git_diff_check": "pending_final_repair_validation",
-    "safe_content_checks": "Live Plans, allowed Plans/.plan_index outputs, migration proof, configured shards, Spec Lock, evidence, auto_decisions, and governance-helper scripts are repaired/recorded in explicit governance seal scope; no node/build/product implementation artifacts were created."
+    "pm_bootstrap_ledger_validate": "pass_after_audit_warning_repair",
+    "pm_plan_index_validate": "pass_after_audit_warning_repair",
+    "pm_plan_migration_validate": "pass_after_audit_warning_repair",
+    "git_diff_check": "pass_after_audit_warning_repair",
+    "safe_content_checks": "Live Plans, allowed Plans/.plan_index outputs, migration proof, configured shards, Spec Lock, evidence, auto_decisions, source_lineage refs, and governance-helper scripts are repaired/recorded in explicit governance seal scope; no node/build/product implementation artifacts were created."
   },
-  "last_event_id": "evt-0011"
+  "last_event_id": "evt-0012"
 }

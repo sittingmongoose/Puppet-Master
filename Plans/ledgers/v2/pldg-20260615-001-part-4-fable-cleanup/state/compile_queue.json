@@ -46,15 +46,15 @@
       ],
       "owner_adjudication": "Strict canonical_plan_targets uses Contracts_V0 for governance validator compatibility; compiled_owner_docs records all live owner docs touched. Detail-loss extract cleanup compiled to FinalGUISpec, assistant-chat-design, and Tools with source-lineage-only finding atoms cited. Addenda precedence compiled to Contracts_V0, Executor_Protocol, FinalGUISpec, and Wiring_Matrix; Run_Modes, Models_System, and chain-wizard-flexibility remain consumer/existing-coverage surfaces.",
       "compiled_at_utc": "2026-06-15T21:10:00Z",
-      "repair_disposition": "post_compile_audit_repair_applied"
+      "repair_disposition": "post_compile_audit_warning_repair_applied"
     }
   ],
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
-  "notes": "Seven deterministic cleanup atoms remain compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; post-audit repair added missing source-lineage atoms, owner metadata, compatibility/source-lineage dispositions, and corrected governance/product-implementation boundaries. Migration proof, shards, Spec Lock, evidence, auto_decisions, and governance-helper script fixes are explicit repair/seal scope.",
+  "notes": "Seven deterministic cleanup atoms remain compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; post-audit repair added missing source-lineage atoms, owner metadata, compatibility/source-lineage dispositions, corrected governance/product-implementation boundaries, and audit-20260616 warning repair for local source_lineage refs/projections/evidence provenance. Migration proof, shards, Spec Lock, evidence, auto_decisions, and governance-helper script fixes are explicit repair/seal scope.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_part_4_fable_cleanup_governance_sealed",
-  "updated_at_utc": "2026-06-15T21:53:24Z",
-  "last_event_id": "evt-0011",
+  "updated_at_utc": "2026-06-16T00:53:02Z",
+  "last_event_id": "evt-0012",
   "governance_outputs": [
     "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
     "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",

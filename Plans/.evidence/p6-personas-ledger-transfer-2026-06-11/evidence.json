@@ -63,7 +63,7 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+      "sha256": "5cedac4cd43d61c4c72054f7c9420e15085ff5b17d41c4a43b01d7fa870fe9a3"
     },
     {
       "note": "P6 node repair refs.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+      "sha256": "72e01f187774d5557918c4d2f9dcbb93abc172dfb67ef21ec16355e3bc5df240"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4838741d63aeed53c3e5824133f5dc8ba1aa3e3ba4bb1f4663d19f6c002cf1b8"
+      "sha256": "1f4b4af55d155481a2b6d87cbc4784d9d711664dda2bc97dcf7642f3577b8679"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "627e69b97559ed7b76c4ac1ea0aa63a0f513f2e689c16e063367232a6cbad836"
+      "sha256": "7134d0642bba6bcdeb30e23ab49b6b6f655b91c30afe0f7bc8f8b03f07693497"
     }
   ],
   "checks": [
@@ -222,6 +222,16 @@
       "details": ".codex/config.toml and .codex/agents/*.toml are trackable; all PM agents are gpt-5.5 xhigh with read-only sandbox_mode.",
       "name": "project-local-codex-model-lock-trackable",
       "result": "PASS"
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
     }
   ],
   "commands_run": [

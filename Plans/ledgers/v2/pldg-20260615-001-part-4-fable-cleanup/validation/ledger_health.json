@@ -54,6 +54,11 @@
       "check_id": "repair-0001",
       "status": "pass",
       "summary": "Post-compile fidelity audit repair applied: PlanUnits/source-lineage sections, ledger projections, migration proof, PlanUnit index, shards, governance evidence boundary, and reusable governance tooling were corrected without creating node/build/product implementation artifacts."
+    },
+    {
+      "check_id": "repair-0002",
+      "status": "pass",
+      "summary": "Audit-20260616 warning repair applied: inexact Part 4 local source_lineage refs, FinalGUISpec heading alias note, sealed projection validation fields, registry timestamp, and governance evidence provenance were corrected without creating WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks."
     }
   ],
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
@@ -65,11 +70,12 @@
     "decisions": 5,
     "deferred_questions": 0,
     "design_atoms": 19,
-    "events": 11,
+    "events": 12,
     "governance_seal": "passed",
     "open_blockers": 0,
-    "open_questions": 0
+    "open_questions": 0,
+    "corrections": 2
   },
-  "updated_at_utc": "2026-06-15T21:53:24Z",
+  "updated_at_utc": "2026-06-16T00:53:02Z",
   "warnings": []
 }

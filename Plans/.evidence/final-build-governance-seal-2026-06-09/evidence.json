@@ -2,11 +2,11 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+      "sha256": "72e01f187774d5557918c4d2f9dcbb93abc172dfb67ef21ec16355e3bc5df240"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+      "sha256": "5cedac4cd43d61c4c72054f7c9420e15085ff5b17d41c4a43b01d7fa870fe9a3"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "5d36c328370bab59fe77e88c7e50f4513e404b6b0ddc7a5edc7aa206368a9748"
+      "sha256": "d689bf355dd5e619eb724d84deb276fe4750b967e7db531f9cda85ff8b414586"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "e8c0981be2279fc197fd81eedffc8b67bc7c255e4508546e67cd5d1598c66cdd"
+      "sha256": "cc3a65f6b196b152b7741477ef6665e624335ee52a1a60de61e6acadbbb09411"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "960736926543fe47bf7222c44a3bf12bad20283b9570900a7baf332929c74397"
+      "sha256": "b320a164f33d4d4a4938444998c8d9cf8304851745fbc2607c621c7ffb923d64"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,15 +50,15 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "26fee545785da7d8d66ca90d6e7b12c9baa8fe5974515a356b954dd72058e42e"
+      "sha256": "7a8cd8a41b0fefa87a5f0ca1f10be5513e435e7e3413c7f26256150e80e3610e"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "a813dcd3c2c7c0e2669ef031102a61abb9d140cd9c3bfe668a8391eff084e4a3"
+      "sha256": "12051a5e65236104eb436a059e4799c22444b68092bdb3352f0c47f56fd00938"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "3fa81542fa0f42107dbe8838523d172d6809fc313a18708e1d88c760548b4f67"
+      "sha256": "718ab5bee2bd084c7fee019d06be5881c8d428810aba49e9e1f533ba054b41b6"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
@@ -66,11 +66,11 @@
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c4ed7dede06242ab6ba867ed601bcceb7d370d762a3802cdab7d11db69fff956"
+      "sha256": "b055055cd7988686c0d1f22d478017f1d1c4689435fd8d592fe4a9a37f3fd1ee"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9423fff12be129eb1c1db9f332c80638da0e778ea74b431d526a24d61c7851ba"
+      "sha256": "fe218d7cd7ffbf38358e8f777452e63874ba385069b704dcbfb0421597730355"
     }
   ],
   "checks": [
@@ -107,7 +107,12 @@
     {
       "name": "no-node-artifacts-created",
       "result": "PASS",
-      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "audit-20260616-warning-repair-evidence-hash-refresh",
+      "result": "PASS",
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
     }
   ],
   "commands_run": [

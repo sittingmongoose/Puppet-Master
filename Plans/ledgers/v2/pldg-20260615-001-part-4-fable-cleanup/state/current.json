@@ -29,27 +29,27 @@
   "deferred_questions_count": 0,
   "design_atoms_total": 19,
   "governance_status": "sealed",
-  "last_event_id": "evt-0011",
+  "last_event_id": "evt-0012",
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
   "must_not_do": [
     "Do not ask Jared to label GUI work; infer gui_related true/false for every design atom.",
     "Do not drop exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, source refs, or user corrections from source lineage.",
     "Do not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues before the WorkNode compiler contract exists and Jared explicitly requests that phase."
   ],
-  "next_safe_action": "Report repaired audit findings and validator results. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues until a WorkNode compiler contract exists and Jared explicitly requests that phase.",
+  "next_safe_action": "Report audit-warning repair results and validator results. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues until a WorkNode compiler contract exists and Jared explicitly requests that phase.",
   "open_blockers_count": 0,
   "open_questions_count": 0,
   "phase": "compiled_part_4_fable_cleanup_governance_sealed",
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
   "title": "Part 4 Fable Cleanup",
-  "updated_at_utc": "2026-06-15T21:53:24Z",
+  "updated_at_utc": "2026-06-16T00:53:02Z",
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
-    "pm_bootstrap_ledger_validate": "pass_after_repair",
-    "pm_plan_index_validate": "pass_after_repair",
-    "pm_plan_migration_validate": "pass",
-    "git_diff_check": "pending_final_repair_validation",
+    "pm_bootstrap_ledger_validate": "pass_after_audit_warning_repair",
+    "pm_plan_index_validate": "pass_after_audit_warning_repair",
+    "pm_plan_migration_validate": "pass_after_audit_warning_repair",
+    "git_diff_check": "pass_after_audit_warning_repair",
     "node_readiness_status": "blocked_compiler_contract_incomplete",
     "governance_status": "sealed",
     "safe_content_checks": [
@@ -59,8 +59,9 @@
       "Configured shards were regenerated with python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json.",
       "Spec Lock, evidence bundles, and auto_decisions are explicit governance repair/seal artifacts, not ordinary conversational ledger writes.",
       "No product implementation files, Rust/Slint app scaffolds, legacy Iced app files, WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or final node queues were created.",
-      "Governance helper scripts changed only to remove stale Part 3 validation command generation and to record no-product-implementation wording precisely."
+      "Governance helper scripts changed only to remove stale Part 3 validation command generation and to record no-product-implementation wording precisely.",
+      "Audit-20260616 warning repair refreshed inexact local source_lineage refs, added a FinalGUISpec compatibility/search-alias note, synchronized sealed projection validation fields, and refreshed governance evidence provenance."
     ],
-    "standard_validation": "pass_governance_sealed_pending_final_repair_report"
+    "standard_validation": "pass_governance_sealed_after_audit_warning_repair"
   }
 }
