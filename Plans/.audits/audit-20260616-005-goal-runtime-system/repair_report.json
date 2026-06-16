@@ -1,0 +1,220 @@
+{
+  "schema_id": "pm.audit.repair_report.v1",
+  "audit_id": "audit-20260616-005-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "created_at_utc": "2026-06-16T19:32:00Z",
+  "scope": {
+    "repair_type": "bounded_post_compile_fidelity_repair",
+    "source_audit": "Plans/.audits/audit-20260616-005-goal-runtime-system",
+    "notes": [
+      "Repaired only ESF-001 through ESF-017 plus direct validator/generation fallout.",
+      "ESF-018 was recorded out_of_scope because it is base-present local-machine state outside the audited range.",
+      "Validation used PYTHONPATH=/private/tmp/pm-py-deps because the local Xcode Python lacked PyYAML; PyYAML was installed into that temporary dependency directory."
+    ]
+  },
+  "repaired_findings": [
+    {
+      "risk_id": "ESF-001",
+      "status": "repaired",
+      "summary": "Restored Assistant Chat Goal status labels, menu/drawer actions, update entry points, and exact preserved tokens in ACD-416.",
+      "plan_units": ["ACD-416"],
+      "files": ["Plans/assistant-chat-design.md"]
+    },
+    {
+      "risk_id": "ESF-002",
+      "status": "repaired",
+      "summary": "Restored runtime popover metadata labels and activity card/message block examples in ACD-418.",
+      "plan_units": ["ACD-418"],
+      "files": ["Plans/assistant-chat-design.md"]
+    },
+    {
+      "risk_id": "ESF-003",
+      "status": "repaired",
+      "summary": "Restored attachment bundle file/path examples, local/remote image terms, and negative constraints in GRS-008.",
+      "plan_units": ["GRS-008"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-004",
+      "status": "repaired",
+      "summary": "Restored weak-worker role vocabulary, evidence fields, no-material reason fields, unsupported/canonical content terms, and negative constraint in GRS-009.",
+      "plan_units": ["GRS-009"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-005",
+      "status": "repaired",
+      "summary": "Restored budget, limit, parallelism, write-scope conflict, worktree isolation, parent synthesis, and unlimited-agent constraints across GRS-015, GRS-016, and GRS-017.",
+      "plan_units": ["GRS-015", "GRS-016", "GRS-017"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-006",
+      "status": "repaired",
+      "summary": "Restored model role-policy fields, low/high-quality model terms, and model/provider negative constraint in GRS-010.",
+      "plan_units": ["GRS-010"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-007",
+      "status": "repaired",
+      "summary": "Restored exact external/reference lineage tokens in GRS-023 while preserving the lineage-only boundary.",
+      "plan_units": ["GRS-023"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-008",
+      "status": "repaired",
+      "summary": "Separated ledger planning/compile, explicit PlanUnit indexing, and governance seal phases in GRS-021 and the Native Goal Runtime index map.",
+      "plan_units": ["GRS-021", "0PI-055"],
+      "files": ["Plans/Goal_Runtime_System.md", "Plans/00-plans-index.md"]
+    },
+    {
+      "risk_id": "ESF-009",
+      "status": "repaired",
+      "summary": "Replaced ACD-417 pipe-delimited preserved enum shape with individual source tokens.",
+      "plan_units": ["ACD-417"],
+      "files": ["Plans/assistant-chat-design.md"]
+    },
+    {
+      "risk_id": "ESF-010",
+      "status": "repaired",
+      "summary": "Added atom-0103, atom-0104, and atom-0105 reciprocal source_lineage and selector owner refs to 0PI-055.",
+      "plan_units": ["0PI-055"],
+      "files": ["Plans/00-plans-index.md"]
+    },
+    {
+      "risk_id": "ESF-011",
+      "status": "repaired",
+      "summary": "Added adjacent owner PlanUnits for Goal Runtime shared contract envelope, storage persistence/projection, and permission approval scope.",
+      "plan_units": ["CV-286", "SP-214", "PS-114"],
+      "files": ["Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/Permissions_System.md", "Plans/00-plans-index.md", "Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-012",
+      "status": "repaired",
+      "summary": "Routed model/provider/account owner impacts through Models_System, Multi-Account, Provider_OpenCode consumer refs, and GRS-010 owner hints.",
+      "plan_units": ["GRS-010", "MS-108", "MA-060", "0PI-055"],
+      "files": ["Plans/Goal_Runtime_System.md", "Plans/Models_System.md", "Plans/Multi-Account.md", "Plans/00-plans-index.md"]
+    },
+    {
+      "risk_id": "ESF-013",
+      "status": "repaired",
+      "summary": "Added Goal Mode worker/verifier-adjudicator selector entrypoint to the canonical Settings Tab Registry Models / Providers row.",
+      "plan_units": ["F3-393"],
+      "files": ["Plans/FinalGUISpec.md"]
+    },
+    {
+      "risk_id": "ESF-014",
+      "status": "repaired",
+      "summary": "Added chain-wizard-flexibility.md as the Chain Wizard consumer/ref in the Native Goal Runtime index map.",
+      "plan_units": ["0PI-055"],
+      "files": ["Plans/00-plans-index.md"]
+    },
+    {
+      "risk_id": "ESF-015",
+      "status": "repaired_with_false_positive_scope_note",
+      "summary": "Clarified GRS-014 metadata so Runtime_Artifacts_Panel/storage own runtime evidence browsing/retention and Project_Output_Artifacts remains a boundary reference only, not a Goal Runtime receipt owner.",
+      "plan_units": ["GRS-014", "0PI-055"],
+      "files": ["Plans/Goal_Runtime_System.md", "Plans/00-plans-index.md"]
+    },
+    {
+      "risk_id": "ESF-016",
+      "status": "repaired",
+      "summary": "Restored hard-stop classes and exact tokens in GRS-002.",
+      "plan_units": ["GRS-002"],
+      "files": ["Plans/Goal_Runtime_System.md"]
+    },
+    {
+      "risk_id": "ESF-017",
+      "status": "false_positive_no_edit",
+      "summary": "No ledger JSON changed. The validator requires manifest.status=compiled for compiled phases while governance_status=sealed is carried by current/handoff/registry/ledger_health. The audit warning conflated lifecycle status with governance seal status."
+    }
+  ],
+  "out_of_scope_findings": [
+    {
+      "risk_id": "ESF-018",
+      "status": "out_of_scope_no_edit",
+      "summary": "Base-present local-machine state was outside the audited range and was not repaired in this bounded audit-warning repair."
+    }
+  ],
+  "plan_units_changed": {
+    "modified": ["0PI-055", "ACD-416", "ACD-417", "ACD-418", "GRS-002", "GRS-008", "GRS-009", "GRS-010", "GRS-014", "GRS-015", "GRS-016", "GRS-017", "GRS-021", "GRS-023"],
+    "added": ["CV-286", "SP-214", "PS-114", "MS-108", "MA-060"],
+    "referenced_without_planunit_edit": ["F3-393"]
+  },
+  "files_changed_summary": {
+    "live_plan_docs": ["Plans/00-plans-index.md", "Plans/Contracts_V0.md", "Plans/FinalGUISpec.md", "Plans/Goal_Runtime_System.md", "Plans/Models_System.md", "Plans/Multi-Account.md", "Plans/Permissions_System.md", "Plans/assistant-chat-design.md", "Plans/storage-plan.md"],
+    "plan_index_files": 6,
+    "plan_migration_files": 3,
+    "evidence_files": 9,
+    "shard_files_modified": 325,
+    "shard_files_added": 4,
+    "spec_lock_changed": true
+  },
+  "generated_artifacts": {
+    "plan_index": {
+      "status": "regenerated",
+      "plan_unit_count": 5041,
+      "acceptance_unit_count": 17918,
+      "node_readiness_status": "blocked_compiler_contract_incomplete",
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false
+    },
+    "migration": {
+      "status": "refreshed_and_validated",
+      "run_dir": "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "live_plan_unit_count": 5041
+    },
+    "shards": {
+      "status": "regenerated_and_checked",
+      "docs": 51,
+      "shards": 892
+    },
+    "governance": {
+      "status": "refreshed_and_validated",
+      "spec_lock_refreshed": true,
+      "evidence_bundles_refreshed": [
+        "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+        "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+        "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+        "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+        "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+        "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+        "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+        "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+      ]
+    }
+  },
+  "ledger_records_changed": {
+    "changed": false,
+    "reason": "ESF-017 was a validator-convention false positive. manifest.status remains compiled as required by scripts/pm-bootstrap-ledger-validate.py; sealed governance remains represented in registry/current/handoff/compile_queue/ledger_health."
+  },
+  "validator_results": {
+    "all_passed": true,
+    "mutation_detected": false,
+    "git_status_before_equals_after_validators": true,
+    "commands": [
+      {"cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system", "returncode": 0},
+      {"cmd": "python3 scripts/pm-plan-index.py validate", "returncode": 0, "plan_unit_count": 5041, "acceptance_unit_count": 17918},
+      {"cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "returncode": 0},
+      {"cmd": "python3 scripts/pm-plans-verify.py run-gates", "returncode": 0},
+      {"cmd": "python3 scripts/pm-shard-plans.py --check", "returncode": 0},
+      {"cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions", "returncode": 0},
+      {"cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock", "returncode": 0},
+      {"cmd": "python3 scripts/pm-plans-verify.py validate-evidence", "returncode": 0},
+      {"cmd": "git diff --check", "returncode": 0}
+    ]
+  },
+  "forbidden_artifacts": {
+    "worknodes_created": false,
+    "nodeseeds_created": false,
+    "nodeseed_candidates_created": false,
+    "executable_queues_created": false,
+    "final_node_manifests_created": false,
+    "implementation_files_created": false,
+    "production_build_tasks_created": false
+  },
+  "remaining_blockers": [],
+  "exact_next_safe_action": "Commit the bounded repair and generated governance/index/shard refresh artifacts, then run a follow-up audit only if Jared wants independent confirmation that ESF-001 through ESF-017 are closed."
+}
