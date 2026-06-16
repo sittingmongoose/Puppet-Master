@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7270-L7332
+Source lines: L7270-L7329
 
-Source SHA256: `6da0c29a05f08d750d91c32658484506b8ec1e8eac510c6af4b41cdbf3c7879c`
+Source SHA256: `646c65b29681de63cb70fde2cdf3502e5a7fef52b68d43d0af5996b12ced3c1b`
 
 ---
 
@@ -18,9 +18,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns concrete requested/effective model resolution and capability-fit reporting for Goal Runtime worker, planner, evaluator, verifier, and adjudicator roles. Goal_Runtime_System owns certification-tier policy and block/degrade semantics; Models_System returns capability fit, selected effective model, and unsupported/blocked reason without hard-coding provider defaults.
-gui_related: true
-gui_classification_reason: Model role resolution feeds visible model selectors and Settings surfaces, though this unit owns model-resolution behavior rather than layout.
+  Models_System owns concrete requested/effective model resolution for Goal Runtime worker, planner, evaluator, verifier, and adjudicator roles, plus model capability evidence needed by Goal_Runtime_System certification policy. Goal_Runtime_System owns block/degrade semantics, and provider-specific default tier mappings remain deferred.
+gui_related: false
+gui_classification_reason: Concrete model-role resolution and capability evidence are backend provider/model policy; F3-393 owns the visible Settings selectors.
 depends_on:
   - MS-017
   - MS-073
@@ -29,7 +29,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Goal Runtime role policies can request model resolution for worker, planner, evaluator, verifier, and adjudicator roles.
-  - Resolution exposes requested/effective model identity, capability fit, and unsupported or blocked reason for each role where relevant.
+  - Resolution exposes requested/effective model identity and capability evidence for each role where relevant.
   - Models_System does not override Goal Runtime certification-tier block/degrade semantics and does not hard-code provider defaults.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -41,7 +41,6 @@ implementation_surfaces:
   - Plans/Models_System.md
   - Plans/Goal_Runtime_System.md
   - Plans/Multi-Account.md
-  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: goal_runtime_model_role_resolution
   create_worknodes: false
@@ -60,8 +59,7 @@ preserved_exact_tokens:
   - "adjudicator"
   - "verifier"
   - "requested/effective model"
-  - "capability fit"
-  - "unsupported/blocked reason"
+  - "capability evidence"
 negative_constraints:
   - Do not hard-code provider defaults in Models_System for Goal Runtime certification correctness.
   - Do not collapse verifier/adjudicator and worker model roles into one effective selection.
@@ -69,5 +67,4 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/Goal_Runtime_System.md
   - Plans/Multi-Account.md
-  - Plans/FinalGUISpec.md
 ```

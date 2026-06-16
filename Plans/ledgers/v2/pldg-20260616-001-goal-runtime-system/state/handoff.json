@@ -3,11 +3,11 @@
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "current_phase": "compiled_goal_runtime_system_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0023",
+    "last_event_id": "evt-0024",
     "last_decision_id": "dec-0026",
     "next_queue_id": null
   },
-  "last_known_good_state": "Goal Runtime ledger compiled and governance sealed. Plans/Goal_Runtime_System.md is the strict canonical_plan_target; compiled owner docs remain Goal_Runtime_System, assistant-chat-design, FinalGUISpec, and 00-plans-index. Node readiness remains blocked_compiler_contract_incomplete; no node/build/product implementation artifacts were created.",
+  "last_known_good_state": "Goal Runtime ledger compiled and governance sealed. Plans/Goal_Runtime_System.md is the strict canonical_plan_target; compiled owner docs include Goal_Runtime_System, assistant-chat-design, FinalGUISpec, 00-plans-index, Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, UI_Command_Catalog, Commands_System, and Wiring_Matrix after post-audit repair. Node readiness remains blocked_compiler_contract_incomplete; no node/build/product implementation artifacts were created.",
   "open_blockers": [],
   "open_questions": [],
   "deferred_questions": [
@@ -37,8 +37,8 @@
     "Do not treat Chain Wizard current docs as final."
   ],
   "phase": "compiled_goal_runtime_system_governance_sealed",
-  "last_completed_action": "Prepared governance seal projections for Goal Runtime ledger after Plan/PlanUnit changes stabilized.",
-  "next_safe_action": "Goal Runtime governance is sealed. Safe next action is implementation planning from sealed PlanUnits, or a separate future compiler-contract design phase. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks unless Jared explicitly requests that separate phase.",
-  "updated_at_utc": "2026-06-16T05:36:58Z",
-  "last_event_id": "evt-0023"
+  "last_completed_action": "Prepared post-audit semantic/projection repair for Goal Runtime ledger, including cross-owner PlanUnits and Goal command owner registration.",
+  "next_safe_action": "Goal Runtime governance remains sealed after post-audit semantic/projection repair. Safe next action is to run implementation planning from repaired sealed PlanUnits, or a separate future compiler-contract design phase. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks unless Jared explicitly requests that separate phase.",
+  "updated_at_utc": "2026-06-16T20:30:00Z",
+  "last_event_id": "evt-0024"
 }

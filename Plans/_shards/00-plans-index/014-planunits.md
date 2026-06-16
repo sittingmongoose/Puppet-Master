@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L632-L3848
+Source lines: L632-L3850
 
-Source SHA256: `95158470e1601e550333dfccdcf35f05bdad2208673652262add573e058ebbf8`
+Source SHA256: `ff643e60a441434b47f58283dcc787be77dbc1d25d21443d00bfdece1d18f188`
 
 ---
 
@@ -3147,7 +3147,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; chain-wizard-flexibility remains the future Chain Wizard flow consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System, Multi-Account, and provider-specific docs such as Provider_OpenCode own concrete model/account/provider capability resolution; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; chain-wizard-flexibility remains the future Chain Wizard flow consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
 gui_related: false
 gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
 depends_on:
@@ -3215,6 +3215,8 @@ negative_constraints:
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
   - Plans/chain-wizard-flexibility.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md

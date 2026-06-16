@@ -1764,13 +1764,13 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10506,
-    "edge_count": 12026,
-    "node_count": 5041,
+    "depends_on_edge_count": 10517,
+    "edge_count": 12037,
+    "node_count": 5045,
     "unblocks_edge_count": 1520,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-16T19:26:59Z",
+  "generated_at_utc": "2026-06-16T20:13:00Z",
   "gui_related_units": {
     "count": 2134,
     "units": [
@@ -4706,8 +4706,8 @@
         "source_location": {
           "heading": "ACD-417 - Goal Task Tracker Replan And Blocked State Projection",
           "heading_level": 3,
-          "heading_line": 21965,
-          "line": 21967,
+          "heading_line": 21990,
+          "line": 21992,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4717,8 +4717,8 @@
         "source_location": {
           "heading": "ACD-418 - Goal Evidence Activity And Completion Reports",
           "heading_level": 3,
-          "heading_line": 22031,
-          "line": 22033,
+          "heading_line": 22059,
+          "line": 22061,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4728,8 +4728,8 @@
         "source_location": {
           "heading": "ACD-419 - Collapsible Child Goal Display",
           "heading_level": 3,
-          "heading_line": 22102,
-          "line": 22104,
+          "heading_line": 22133,
+          "line": 22135,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -6389,8 +6389,8 @@
         "source_location": {
           "heading": "CS-003 - Command SSOT Reference Map",
           "heading_level": 3,
-          "heading_line": 736,
-          "line": 738,
+          "heading_line": 746,
+          "line": 748,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6400,8 +6400,8 @@
         "source_location": {
           "heading": "CS-005 - Chat Message and Question-Flow Command Boundaries",
           "heading_level": 3,
-          "heading_line": 861,
-          "line": 863,
+          "heading_line": 871,
+          "line": 873,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6411,8 +6411,8 @@
         "source_location": {
           "heading": "CS-006 - Registry Route Palette and Argument Contracts",
           "heading_level": 3,
-          "heading_line": 912,
-          "line": 914,
+          "heading_line": 922,
+          "line": 924,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6422,8 +6422,8 @@
         "source_location": {
           "heading": "CS-008 - Widget Artifact Checklist Availability and Confirmation Consumers",
           "heading_level": 3,
-          "heading_line": 1041,
-          "line": 1043,
+          "heading_line": 1051,
+          "line": 1053,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6433,8 +6433,8 @@
         "source_location": {
           "heading": "CS-011 - UICommand Distinction and Invocation Surfaces",
           "heading_level": 3,
-          "heading_line": 1202,
-          "line": 1204,
+          "heading_line": 1212,
+          "line": 1214,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6444,8 +6444,8 @@
         "source_location": {
           "heading": "CS-016 - File Include Resolution and Read Permission Guard",
           "heading_level": 3,
-          "heading_line": 1495,
-          "line": 1497,
+          "heading_line": 1505,
+          "line": 1507,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6455,8 +6455,8 @@
         "source_location": {
           "heading": "CS-017 - Shell Injection Resolution and Bash Permission Guard",
           "heading_level": 3,
-          "heading_line": 1549,
-          "line": 1551,
+          "heading_line": 1559,
+          "line": 1561,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6466,8 +6466,8 @@
         "source_location": {
           "heading": "CS-019 - Assistant Worktree Naming Path Display and Terminal CWD",
           "heading_level": 3,
-          "heading_line": 1664,
-          "line": 1666,
+          "heading_line": 1674,
+          "line": 1676,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6477,8 +6477,8 @@
         "source_location": {
           "heading": "CS-022 - Mode Model Account Requested-Effective Overrides",
           "heading_level": 3,
-          "heading_line": 1838,
-          "line": 1840,
+          "heading_line": 1848,
+          "line": 1850,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6488,8 +6488,8 @@
         "source_location": {
           "heading": "CS-023 - Current Working Set Retention",
           "heading_level": 3,
-          "heading_line": 1889,
-          "line": 1891,
+          "heading_line": 1899,
+          "line": 1901,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6499,8 +6499,8 @@
         "source_location": {
           "heading": "CS-027 - Commands GUI SSOT and Catalog Provenance Display",
           "heading_level": 3,
-          "heading_line": 2080,
-          "line": 2082,
+          "heading_line": 2090,
+          "line": 2092,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6510,8 +6510,8 @@
         "source_location": {
           "heading": "CS-028 - Commands Settings Scope Selector",
           "heading_level": 3,
-          "heading_line": 2132,
-          "line": 2134,
+          "heading_line": 2142,
+          "line": 2144,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6521,8 +6521,8 @@
         "source_location": {
           "heading": "CS-029 - Resolved Command List",
           "heading_level": 3,
-          "heading_line": 2178,
-          "line": 2180,
+          "heading_line": 2188,
+          "line": 2190,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6532,8 +6532,8 @@
         "source_location": {
           "heading": "CS-030 - Command Create Editor Form",
           "heading_level": 3,
-          "heading_line": 2230,
-          "line": 2232,
+          "heading_line": 2240,
+          "line": 2242,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6543,8 +6543,8 @@
         "source_location": {
           "heading": "CS-031 - Command Edit Save Targets",
           "heading_level": 3,
-          "heading_line": 2284,
-          "line": 2286,
+          "heading_line": 2294,
+          "line": 2296,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6554,8 +6554,8 @@
         "source_location": {
           "heading": "CS-032 - Command Delete and Reveal Behavior",
           "heading_level": 3,
-          "heading_line": 2326,
-          "line": 2328,
+          "heading_line": 2336,
+          "line": 2338,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6565,8 +6565,8 @@
         "source_location": {
           "heading": "CS-033 - Command Save Schema Validation",
           "heading_level": 3,
-          "heading_line": 2368,
-          "line": 2370,
+          "heading_line": 2378,
+          "line": 2380,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6576,8 +6576,8 @@
         "source_location": {
           "heading": "CS-034 - Dry-Run Preview Rendering",
           "heading_level": 3,
-          "heading_line": 2419,
-          "line": 2421,
+          "heading_line": 2429,
+          "line": 2431,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6587,8 +6587,8 @@
         "source_location": {
           "heading": "CS-040 - Reserved Command Catalog Presentation",
           "heading_level": 3,
-          "heading_line": 2743,
-          "line": 2745,
+          "heading_line": 2753,
+          "line": 2755,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6598,8 +6598,8 @@
         "source_location": {
           "heading": "CS-042 - Debug Mode UICommand Family",
           "heading_level": 3,
-          "heading_line": 2841,
-          "line": 2843,
+          "heading_line": 2851,
+          "line": 2853,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6609,8 +6609,8 @@
         "source_location": {
           "heading": "CS-046 - Puppet Master Commands GUI Delta",
           "heading_level": 3,
-          "heading_line": 3069,
-          "line": 3071,
+          "heading_line": 3079,
+          "line": 3081,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6620,8 +6620,8 @@
         "source_location": {
           "heading": "CS-049 - Acceptance GUI Validation Preview Invocation",
           "heading_level": 3,
-          "heading_line": 3216,
-          "line": 3218,
+          "heading_line": 3226,
+          "line": 3228,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -14397,8 +14397,8 @@
         "source_location": {
           "heading": "GRS-007 - Goal Replan Event For Material Changes",
           "heading_level": 3,
-          "heading_line": 379,
-          "line": 381,
+          "heading_line": 420,
+          "line": 422,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14408,8 +14408,8 @@
         "source_location": {
           "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
           "heading_level": 3,
-          "heading_line": 1142,
-          "line": 1144,
+          "heading_line": 1228,
+          "line": 1230,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14419,8 +14419,8 @@
         "source_location": {
           "heading": "GRS-022 - Goal Runtime Risk Register",
           "heading_level": 3,
-          "heading_line": 1310,
-          "line": 1312,
+          "heading_line": 1419,
+          "line": 1421,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -14430,8 +14430,8 @@
         "source_location": {
           "heading": "GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults",
           "heading_level": 3,
-          "heading_line": 1477,
-          "line": 1479,
+          "heading_line": 1586,
+          "line": 1588,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -15976,17 +15976,6 @@
         }
       },
       {
-        "owner_doc": "Plans/Multi-Account.md",
-        "plan_unit_id": "MA-060",
-        "source_location": {
-          "heading": "MA-060 - Goal Runtime Account Identity Consumer",
-          "heading_level": 3,
-          "heading_line": 4506,
-          "line": 4508,
-          "path": "Plans/Multi-Account.md"
-        }
-      },
-      {
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-002",
         "source_location": {
@@ -16698,17 +16687,6 @@
           "heading_level": 3,
           "heading_line": 7235,
           "line": 7237,
-          "path": "Plans/Models_System.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/Models_System.md",
-        "plan_unit_id": "MS-108",
-        "source_location": {
-          "heading": "MS-108 - Goal Runtime Model Role Resolution Consumer",
-          "heading_level": 3,
-          "heading_line": 7272,
-          "line": 7274,
           "path": "Plans/Models_System.md"
         }
       },
@@ -23120,8 +23098,8 @@
         "source_location": {
           "heading": "UCC-001 - UI Command Catalog Generated Artifact Residual",
           "heading_level": 3,
-          "heading_line": 6605,
-          "line": 6607,
+          "heading_line": 6679,
+          "line": 6681,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23131,8 +23109,8 @@
         "source_location": {
           "heading": "UCC-002 - Command Catalog Owner Identity",
           "heading_level": 3,
-          "heading_line": 1215,
-          "line": 1217,
+          "heading_line": 1229,
+          "line": 1231,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23142,8 +23120,8 @@
         "source_location": {
           "heading": "UCC-004 - Compliance Naming And SSOT Header",
           "heading_level": 3,
-          "heading_line": 1311,
-          "line": 1313,
+          "heading_line": 1325,
+          "line": 1327,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23153,8 +23131,8 @@
         "source_location": {
           "heading": "UCC-005 - Stable Command Id Scope",
           "heading_level": 3,
-          "heading_line": 1363,
-          "line": 1365,
+          "heading_line": 1377,
+          "line": 1379,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23164,8 +23142,8 @@
         "source_location": {
           "heading": "UCC-010 - Action Availability Gate Inputs",
           "heading_level": 3,
-          "heading_line": 1617,
-          "line": 1619,
+          "heading_line": 1631,
+          "line": 1633,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23175,8 +23153,8 @@
         "source_location": {
           "heading": "UCC-011 - Projection Freshness And Verification Lenses",
           "heading_level": 3,
-          "heading_line": 1671,
-          "line": 1673,
+          "heading_line": 1685,
+          "line": 1687,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23186,8 +23164,8 @@
         "source_location": {
           "heading": "UCC-012 - Route Open Required Fields And Audit Trail",
           "heading_level": 3,
-          "heading_line": 1722,
-          "line": 1724,
+          "heading_line": 1736,
+          "line": 1738,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23197,8 +23175,8 @@
         "source_location": {
           "heading": "UCC-013 - Panel Context And Tab Route Identity",
           "heading_level": 3,
-          "heading_line": 1774,
-          "line": 1776,
+          "heading_line": 1788,
+          "line": 1790,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23208,8 +23186,8 @@
         "source_location": {
           "heading": "UCC-014 - Navigation Wrapper Alias Discipline",
           "heading_level": 3,
-          "heading_line": 1830,
-          "line": 1832,
+          "heading_line": 1844,
+          "line": 1846,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23219,8 +23197,8 @@
         "source_location": {
           "heading": "UCC-015 - Normalized Command Record Envelope",
           "heading_level": 3,
-          "heading_line": 1887,
-          "line": 1889,
+          "heading_line": 1901,
+          "line": 1903,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23230,8 +23208,8 @@
         "source_location": {
           "heading": "UCC-017 - Stale Command Family Retirement Guard",
           "heading_level": 3,
-          "heading_line": 2001,
-          "line": 2003,
+          "heading_line": 2015,
+          "line": 2017,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23241,8 +23219,8 @@
         "source_location": {
           "heading": "UCC-018 - Artifact Drill Through Gap Guard",
           "heading_level": 3,
-          "heading_line": 2068,
-          "line": 2070,
+          "heading_line": 2082,
+          "line": 2084,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23252,8 +23230,8 @@
         "source_location": {
           "heading": "UCC-019 - Gui Readiness Command Coverage Gaps",
           "heading_level": 3,
-          "heading_line": 2119,
-          "line": 2121,
+          "heading_line": 2133,
+          "line": 2135,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23263,8 +23241,8 @@
         "source_location": {
           "heading": "UCC-020 - Readiness Blocker Owner Defects",
           "heading_level": 3,
-          "heading_line": 2177,
-          "line": 2179,
+          "heading_line": 2191,
+          "line": 2193,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23274,8 +23252,8 @@
         "source_location": {
           "heading": "UCC-021 - Uncataloged Signal And Extraction Hazard Guard",
           "heading_level": 3,
-          "heading_line": 2230,
-          "line": 2232,
+          "heading_line": 2244,
+          "line": 2246,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23285,8 +23263,8 @@
         "source_location": {
           "heading": "UCC-022 - Lean Wiring Schema And Usage Drift Boundary",
           "heading_level": 3,
-          "heading_line": 2292,
-          "line": 2294,
+          "heading_line": 2306,
+          "line": 2308,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23296,8 +23274,8 @@
         "source_location": {
           "heading": "UCC-023 - Hitl Runtime Governance Binding",
           "heading_level": 3,
-          "heading_line": 2348,
-          "line": 2350,
+          "heading_line": 2362,
+          "line": 2364,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23307,8 +23285,8 @@
         "source_location": {
           "heading": "UCC-024 - Run Graph Template And Crosswalk Boundaries",
           "heading_level": 3,
-          "heading_line": 2407,
-          "line": 2409,
+          "heading_line": 2421,
+          "line": 2423,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23318,8 +23296,8 @@
         "source_location": {
           "heading": "UCC-025 - Object Route Subject Open And Resume Url Discipline",
           "heading_level": 3,
-          "heading_line": 2463,
-          "line": 2465,
+          "heading_line": 2477,
+          "line": 2479,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23329,8 +23307,8 @@
         "source_location": {
           "heading": "UCC-026 - Operational Identity Schema Owner And Envelope Boundary",
           "heading_level": 3,
-          "heading_line": 2526,
-          "line": 2528,
+          "heading_line": 2540,
+          "line": 2542,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23340,8 +23318,8 @@
         "source_location": {
           "heading": "UCC-027 - Shell View Source Lineage And Command Backfill Guard",
           "heading_level": 3,
-          "heading_line": 2588,
-          "line": 2590,
+          "heading_line": 2602,
+          "line": 2604,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23351,8 +23329,8 @@
         "source_location": {
           "heading": "UCC-028 - Wiring Acceptance Hooks Contract",
           "heading_level": 3,
-          "heading_line": 2652,
-          "line": 2654,
+          "heading_line": 2666,
+          "line": 2668,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23362,8 +23340,8 @@
         "source_location": {
           "heading": "UCC-032 - Project Management Deferred Wizard Commands",
           "heading_level": 3,
-          "heading_line": 2862,
-          "line": 2864,
+          "heading_line": 2876,
+          "line": 2878,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23373,8 +23351,8 @@
         "source_location": {
           "heading": "UCC-033 - File Manager Command Rows And Target Enum",
           "heading_level": 3,
-          "heading_line": 2916,
-          "line": 2918,
+          "heading_line": 2930,
+          "line": 2932,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23384,8 +23362,8 @@
         "source_location": {
           "heading": "UCC-034 - Lsp Common Args Events And Surfaces",
           "heading_level": 3,
-          "heading_line": 2977,
-          "line": 2979,
+          "heading_line": 2991,
+          "line": 2993,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23395,8 +23373,8 @@
         "source_location": {
           "heading": "UCC-036 - Widget Layout Command Rows",
           "heading_level": 3,
-          "heading_line": 3086,
-          "line": 3088,
+          "heading_line": 3100,
+          "line": 3102,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23406,8 +23384,8 @@
         "source_location": {
           "heading": "UCC-037 - Run Graph Runtime Recovery Wrapper Normalization",
           "heading_level": 3,
-          "heading_line": 3141,
-          "line": 3143,
+          "heading_line": 3155,
+          "line": 3157,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23417,8 +23395,8 @@
         "source_location": {
           "heading": "UCC-038 - Orchestrator Route Wrapper And Preview Build Rows",
           "heading_level": 3,
-          "heading_line": 3194,
-          "line": 3196,
+          "heading_line": 3208,
+          "line": 3210,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23428,8 +23406,8 @@
         "source_location": {
           "heading": "UCC-039 - Orchestrator Metadata And Permission Carry Through",
           "heading_level": 3,
-          "heading_line": 3251,
-          "line": 3253,
+          "heading_line": 3265,
+          "line": 3267,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23439,8 +23417,8 @@
         "source_location": {
           "heading": "UCC-040 - Operational External System Family Boundary",
           "heading_level": 3,
-          "heading_line": 3314,
-          "line": 3316,
+          "heading_line": 3328,
+          "line": 3330,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23450,8 +23428,8 @@
         "source_location": {
           "heading": "UCC-041 - Operational Namespace Reservations And Alias Rules",
           "heading_level": 3,
-          "heading_line": 3365,
-          "line": 3367,
+          "heading_line": 3379,
+          "line": 3381,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23461,8 +23439,8 @@
         "source_location": {
           "heading": "UCC-042 - Operational Coverage Breadth And Disabled State Requirements",
           "heading_level": 3,
-          "heading_line": 3427,
-          "line": 3429,
+          "heading_line": 3441,
+          "line": 3443,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23472,8 +23450,8 @@
         "source_location": {
           "heading": "UCC-043 - Operational Route Wiring Persistence And Owner Boundaries",
           "heading_level": 3,
-          "heading_line": 3484,
-          "line": 3486,
+          "heading_line": 3498,
+          "line": 3500,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23483,8 +23461,8 @@
         "source_location": {
           "heading": "UCC-044 - Source Control Review Diff Conflict Command Rows",
           "heading_level": 3,
-          "heading_line": 3545,
-          "line": 3547,
+          "heading_line": 3559,
+          "line": 3561,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23494,8 +23472,8 @@
         "source_location": {
           "heading": "UCC-045 - Source Control Graph History Stash And Commit Assistance Rows",
           "heading_level": 3,
-          "heading_line": 3603,
-          "line": 3605,
+          "heading_line": 3617,
+          "line": 3619,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23505,8 +23483,8 @@
         "source_location": {
           "heading": "UCC-046 - Source Control Compare Persistence And Disabled Boundary",
           "heading_level": 3,
-          "heading_line": 3661,
-          "line": 3663,
+          "heading_line": 3675,
+          "line": 3677,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23516,8 +23494,8 @@
         "source_location": {
           "heading": "UCC-047 - Github Actions Run Job Log Browser Rows",
           "heading_level": 3,
-          "heading_line": 3724,
-          "line": 3726,
+          "heading_line": 3738,
+          "line": 3740,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23527,8 +23505,8 @@
         "source_location": {
           "heading": "UCC-048 - Github Actions Correlation And Legacy Alias Rules",
           "heading_level": 3,
-          "heading_line": 3782,
-          "line": 3784,
+          "heading_line": 3796,
+          "line": 3798,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23538,8 +23516,8 @@
         "source_location": {
           "heading": "UCC-049 - Docker Build Bake Container Rows",
           "heading_level": 3,
-          "heading_line": 3844,
-          "line": 3846,
+          "heading_line": 3858,
+          "line": 3860,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23549,8 +23527,8 @@
         "source_location": {
           "heading": "UCC-050 - Docker Compose Scenario Rows And Alias Boundary",
           "heading_level": 3,
-          "heading_line": 3907,
-          "line": 3909,
+          "heading_line": 3921,
+          "line": 3923,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23560,8 +23538,8 @@
         "source_location": {
           "heading": "UCC-051 - Docker Registry Publish Drift Cleanup Authority Split",
           "heading_level": 3,
-          "heading_line": 3964,
-          "line": 3966,
+          "heading_line": 3978,
+          "line": 3980,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23571,8 +23549,8 @@
         "source_location": {
           "heading": "UCC-052 - Docker Kubernetes Rows And Namespace Alias Boundary",
           "heading_level": 3,
-          "heading_line": 4023,
-          "line": 4025,
+          "heading_line": 4037,
+          "line": 4039,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23582,8 +23560,8 @@
         "source_location": {
           "heading": "UCC-053 - Docker Kubernetes Disabled State Approval Receipt Lineage",
           "heading_level": 3,
-          "heading_line": 4081,
-          "line": 4083,
+          "heading_line": 4095,
+          "line": 4097,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23593,8 +23571,8 @@
         "source_location": {
           "heading": "UCC-057 - Context Lens Placement And Mode Controls",
           "heading_level": 3,
-          "heading_line": 4322,
-          "line": 4324,
+          "heading_line": 4336,
+          "line": 4338,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23604,8 +23582,8 @@
         "source_location": {
           "heading": "UCC-058 - Assistant Thread Worktree Rows And Mvp Negative Constraints",
           "heading_level": 3,
-          "heading_line": 4378,
-          "line": 4380,
+          "heading_line": 4392,
+          "line": 4394,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23615,8 +23593,8 @@
         "source_location": {
           "heading": "UCC-060 - Chat Context Detail Routing And Superseded Usage Ids",
           "heading_level": 3,
-          "heading_line": 4492,
-          "line": 4494,
+          "heading_line": 4506,
+          "line": 4508,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23626,8 +23604,8 @@
         "source_location": {
           "heading": "UCC-061 - Render Browser Terminal Dev Owner Boundaries",
           "heading_level": 3,
-          "heading_line": 4551,
-          "line": 4553,
+          "heading_line": 4565,
+          "line": 4567,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23637,8 +23615,8 @@
         "source_location": {
           "heading": "UCC-062 - Browser Packetization Permission And Stale Label Guard",
           "heading_level": 3,
-          "heading_line": 4602,
-          "line": 4604,
+          "heading_line": 4616,
+          "line": 4618,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23648,8 +23626,8 @@
         "source_location": {
           "heading": "UCC-063 - Browser Open Focus Detach Devtools Rows",
           "heading_level": 3,
-          "heading_line": 4659,
-          "line": 4661,
+          "heading_line": 4673,
+          "line": 4675,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23659,8 +23637,8 @@
         "source_location": {
           "heading": "UCC-064 - Browser Capture Share Revoke Event Rules",
           "heading_level": 3,
-          "heading_line": 4713,
-          "line": 4715,
+          "heading_line": 4727,
+          "line": 4729,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23670,8 +23648,8 @@
         "source_location": {
           "heading": "UCC-065 - Browser Takeover Promote Recovery Rows",
           "heading_level": 3,
-          "heading_line": 4774,
-          "line": 4776,
+          "heading_line": 4788,
+          "line": 4790,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23681,8 +23659,8 @@
         "source_location": {
           "heading": "UCC-066 - Terminal Promotion Handoff And Pty Boundary",
           "heading_level": 3,
-          "heading_line": 4832,
-          "line": 4834,
+          "heading_line": 4846,
+          "line": 4848,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23692,8 +23670,8 @@
         "source_location": {
           "heading": "UCC-067 - Terminal Command Rows And Labels",
           "heading_level": 3,
-          "heading_line": 4892,
-          "line": 4894,
+          "heading_line": 4906,
+          "line": 4908,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23703,8 +23681,8 @@
         "source_location": {
           "heading": "UCC-068 - Terminal Focus Reuse Layout Identity",
           "heading_level": 3,
-          "heading_line": 4953,
-          "line": 4955,
+          "heading_line": 4967,
+          "line": 4969,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23714,8 +23692,8 @@
         "source_location": {
           "heading": "UCC-069 - Terminal Cards Output Audit Persistence Rules",
           "heading_level": 3,
-          "heading_line": 5009,
-          "line": 5011,
+          "heading_line": 5023,
+          "line": 5025,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23725,8 +23703,8 @@
         "source_location": {
           "heading": "UCC-070 - Dev Session Lifecycle Reveal Commands",
           "heading_level": 3,
-          "heading_line": 5073,
-          "line": 5075,
+          "heading_line": 5087,
+          "line": 5089,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23736,8 +23714,8 @@
         "source_location": {
           "heading": "UCC-071 - Catalog Lifecycle Rows And Missing Command Rule",
           "heading_level": 3,
-          "heading_line": 5133,
-          "line": 5135,
+          "heading_line": 5147,
+          "line": 5149,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23747,8 +23725,8 @@
         "source_location": {
           "heading": "UCC-072 - Terminal Dev Recovery And Wiring Completeness Gate",
           "heading_level": 3,
-          "heading_line": 5191,
-          "line": 5193,
+          "heading_line": 5205,
+          "line": 5207,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23758,8 +23736,8 @@
         "source_location": {
           "heading": "UCC-073 - Chat Message Rows And File Reference Signature",
           "heading_level": 3,
-          "heading_line": 5248,
-          "line": 5250,
+          "heading_line": 5262,
+          "line": 5264,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23769,8 +23747,8 @@
         "source_location": {
           "heading": "UCC-074 - Message Availability And Code Block Rows",
           "heading_level": 3,
-          "heading_line": 5306,
-          "line": 5308,
+          "heading_line": 5320,
+          "line": 5322,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23780,8 +23758,8 @@
         "source_location": {
           "heading": "UCC-075 - Rewind Revert FileSafe Semantics",
           "heading_level": 3,
-          "heading_line": 5362,
-          "line": 5364,
+          "heading_line": 5376,
+          "line": 5378,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23791,8 +23769,8 @@
         "source_location": {
           "heading": "UCC-076 - Edit Delete Shorthand Questions Activity Dimensions",
           "heading_level": 3,
-          "heading_line": 5418,
-          "line": 5420,
+          "heading_line": 5432,
+          "line": 5434,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23802,8 +23780,8 @@
         "source_location": {
           "heading": "UCC-078 - Reserved Slash Web Skill Dispatcher Invariants",
           "heading_level": 3,
-          "heading_line": 5526,
-          "line": 5528,
+          "heading_line": 5540,
+          "line": 5542,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23813,8 +23791,8 @@
         "source_location": {
           "heading": "UCC-079 - Web Activity Provenance And Locked Labels",
           "heading_level": 3,
-          "heading_line": 5589,
-          "line": 5591,
+          "heading_line": 5603,
+          "line": 5605,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23824,8 +23802,8 @@
         "source_location": {
           "heading": "UCC-080 - Reserved Override Alias Retirement Policy",
           "heading_level": 3,
-          "heading_line": 5648,
-          "line": 5650,
+          "heading_line": 5662,
+          "line": 5664,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23835,8 +23813,8 @@
         "source_location": {
           "heading": "UCC-081 - Web Provider Help Options And Category Filters",
           "heading_level": 3,
-          "heading_line": 5714,
-          "line": 5716,
+          "heading_line": 5728,
+          "line": 5730,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23846,8 +23824,8 @@
         "source_location": {
           "heading": "UCC-082 - Web Do Not Overfit Approval And Help Boundaries",
           "heading_level": 3,
-          "heading_line": 5781,
-          "line": 5783,
+          "heading_line": 5795,
+          "line": 5797,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23857,8 +23835,8 @@
         "source_location": {
           "heading": "UCC-083 - Slash Labels Dispatcher Parity And Route Mapping",
           "heading_level": 3,
-          "heading_line": 5843,
-          "line": 5845,
+          "heading_line": 5857,
+          "line": 5859,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23868,8 +23846,8 @@
         "source_location": {
           "heading": "UCC-084 - Gist Review Verification Edit Pin Commands",
           "heading_level": 3,
-          "heading_line": 5917,
-          "line": 5919,
+          "heading_line": 5931,
+          "line": 5933,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23879,8 +23857,8 @@
         "source_location": {
           "heading": "UCC-085 - Memory Maintenance Command Rows",
           "heading_level": 3,
-          "heading_line": 5976,
-          "line": 5978,
+          "heading_line": 5990,
+          "line": 5992,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23890,8 +23868,8 @@
         "source_location": {
           "heading": "UCC-086 - Artifact Side Panel Navigation Commands",
           "heading_level": 3,
-          "heading_line": 6036,
-          "line": 6038,
+          "heading_line": 6050,
+          "line": 6052,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23901,8 +23879,8 @@
         "source_location": {
           "heading": "UCC-087 - Search Panel Command Rows",
           "heading_level": 3,
-          "heading_line": 6092,
-          "line": 6094,
+          "heading_line": 6106,
+          "line": 6108,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23912,8 +23890,8 @@
         "source_location": {
           "heading": "UCC-088 - Search Routing Query Session Owner Policy",
           "heading_level": 3,
-          "heading_line": 6148,
-          "line": 6150,
+          "heading_line": 6162,
+          "line": 6164,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23923,8 +23901,8 @@
         "source_location": {
           "heading": "UCC-093 - Recovery Verb Copy Semantics",
           "heading_level": 3,
-          "heading_line": 6422,
-          "line": 6424,
+          "heading_line": 6436,
+          "line": 6438,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -23934,8 +23912,19 @@
         "source_location": {
           "heading": "UCC-094 - Allowed Action Runtime Recovery Mapping",
           "heading_level": 3,
-          "heading_line": 6483,
-          "line": 6485,
+          "heading_line": 6497,
+          "line": 6499,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-096",
+        "source_location": {
+          "heading": "UCC-096 - Assistant Chat Goal Slash Commands",
+          "heading_level": 3,
+          "heading_line": 6619,
+          "line": 6621,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -24869,8 +24858,8 @@
         "source_location": {
           "heading": "WM-002 - Document Authority And Compatibility Naming Guard",
           "heading_level": 3,
-          "heading_line": 583,
-          "line": 585,
+          "heading_line": 585,
+          "line": 587,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24880,8 +24869,8 @@
         "source_location": {
           "heading": "WM-004 - Entry Template Contract",
           "heading_level": 3,
-          "heading_line": 693,
-          "line": 695,
+          "heading_line": 695,
+          "line": 697,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24891,8 +24880,8 @@
         "source_location": {
           "heading": "WM-005 - Catalog Example Rows",
           "heading_level": 3,
-          "heading_line": 754,
-          "line": 756,
+          "heading_line": 756,
+          "line": 758,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24902,8 +24891,8 @@
         "source_location": {
           "heading": "WM-006 - Json Example Shape",
           "heading_level": 3,
-          "heading_line": 823,
-          "line": 825,
+          "heading_line": 825,
+          "line": 827,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24913,8 +24902,8 @@
         "source_location": {
           "heading": "WM-010 - Gate Schema Owner Boundary",
           "heading_level": 3,
-          "heading_line": 1074,
-          "line": 1076,
+          "heading_line": 1076,
+          "line": 1078,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24924,8 +24913,8 @@
         "source_location": {
           "heading": "WM-011 - Scheduler Analysis Wiring Row",
           "heading_level": 3,
-          "heading_line": 1173,
-          "line": 1175,
+          "heading_line": 1175,
+          "line": 1177,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24935,8 +24924,8 @@
         "source_location": {
           "heading": "WM-012 - Blocked Unblocked Wiring Rows",
           "heading_level": 3,
-          "heading_line": 1231,
-          "line": 1233,
+          "heading_line": 1233,
+          "line": 1235,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24946,8 +24935,8 @@
         "source_location": {
           "heading": "WM-013 - Safe Point Wiring Rows",
           "heading_level": 3,
-          "heading_line": 1293,
-          "line": 1295,
+          "heading_line": 1295,
+          "line": 1297,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24957,8 +24946,8 @@
         "source_location": {
           "heading": "WM-014 - Remediation And Degradation Wiring Rows",
           "heading_level": 3,
-          "heading_line": 1348,
-          "line": 1350,
+          "heading_line": 1350,
+          "line": 1352,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24968,8 +24957,8 @@
         "source_location": {
           "heading": "WM-015 - Runtime Recovery Packet Wiring",
           "heading_level": 3,
-          "heading_line": 1413,
-          "line": 1415,
+          "heading_line": 1415,
+          "line": 1417,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24979,8 +24968,8 @@
         "source_location": {
           "heading": "WM-016 - Canonical Runtime Event Rows",
           "heading_level": 3,
-          "heading_line": 1487,
-          "line": 1489,
+          "heading_line": 1489,
+          "line": 1491,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -24990,8 +24979,8 @@
         "source_location": {
           "heading": "WM-017 - Recovery Ui Action Binding",
           "heading_level": 3,
-          "heading_line": 1555,
-          "line": 1557,
+          "heading_line": 1557,
+          "line": 1559,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25001,8 +24990,8 @@
         "source_location": {
           "heading": "WM-018 - Context Lens Wiring Rows",
           "heading_level": 3,
-          "heading_line": 1607,
-          "line": 1609,
+          "heading_line": 1609,
+          "line": 1611,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25012,8 +25001,8 @@
         "source_location": {
           "heading": "WM-019 - Project Thread Minimum Rows",
           "heading_level": 3,
-          "heading_line": 1684,
-          "line": 1686,
+          "heading_line": 1686,
+          "line": 1688,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25023,8 +25012,8 @@
         "source_location": {
           "heading": "WM-020 - Browser Command Rows",
           "heading_level": 3,
-          "heading_line": 1742,
-          "line": 1744,
+          "heading_line": 1744,
+          "line": 1746,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25034,8 +25023,8 @@
         "source_location": {
           "heading": "WM-021 - Terminal Dev And Catalog Rows",
           "heading_level": 3,
-          "heading_line": 1813,
-          "line": 1815,
+          "heading_line": 1815,
+          "line": 1817,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25045,8 +25034,8 @@
         "source_location": {
           "heading": "WM-022 - Terminal Identity Constraints",
           "heading_level": 3,
-          "heading_line": 1894,
-          "line": 1896,
+          "heading_line": 1896,
+          "line": 1898,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25056,8 +25045,8 @@
         "source_location": {
           "heading": "WM-023 - Browser Session Capture And Recovery Invariants",
           "heading_level": 3,
-          "heading_line": 1967,
-          "line": 1969,
+          "heading_line": 1969,
+          "line": 1971,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25067,8 +25056,8 @@
         "source_location": {
           "heading": "WM-024 - Debug Investigation Minimum Rows",
           "heading_level": 3,
-          "heading_line": 2053,
-          "line": 2055,
+          "heading_line": 2055,
+          "line": 2057,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25078,8 +25067,8 @@
         "source_location": {
           "heading": "WM-025 - Assistant Worktree Lifecycle Wiring",
           "heading_level": 3,
-          "heading_line": 2118,
-          "line": 2120,
+          "heading_line": 2120,
+          "line": 2122,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25089,8 +25078,8 @@
         "source_location": {
           "heading": "WM-026 - Worktree Cross-Surface Identity And Execution Context",
           "heading_level": 3,
-          "heading_line": 2183,
-          "line": 2185,
+          "heading_line": 2185,
+          "line": 2187,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25100,8 +25089,8 @@
         "source_location": {
           "heading": "WM-027 - Search File And Source Control Command Handoff Rows",
           "heading_level": 3,
-          "heading_line": 2249,
-          "line": 2251,
+          "heading_line": 2251,
+          "line": 2253,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25111,8 +25100,19 @@
         "source_location": {
           "heading": "WM-029 - Search Panel Index UX And Cache Commands",
           "heading_level": 3,
-          "heading_line": 2392,
-          "line": 2394,
+          "heading_line": 2394,
+          "line": 2396,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-037",
+        "source_location": {
+          "heading": "WM-037 - Assistant Chat Goal Command Wiring",
+          "heading_level": 3,
+          "heading_line": 3024,
+          "line": 3026,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25256,12 +25256,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5041,
+  "plan_unit_count": 5045,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 863,
+      "high": 864,
       "low": 5,
-      "standard": 4173
+      "standard": 4176
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -26249,11 +26249,15 @@
       "github_pr_flow": 2,
       "github_workflow_source_truth_receipts": 1,
       "glossary_drift": 24,
+      "goal_command_owner_gap": 1,
+      "goal_command_wiring_gap": 1,
+      "goal_event_schema_under_specified": 1,
       "goal_runtime_account_identity_drift": 1,
       "goal_runtime_model_resolution_drift": 1,
       "goal_runtime_permission_scope_drift": 1,
       "goal_runtime_persistence_owner_gap": 1,
       "goal_runtime_product_risk": 1,
+      "goal_slash_override_drift": 1,
       "goal_template_ambiguity": 1,
       "governance_artifact_staleness": 1,
       "governance_boundary": 2,
@@ -27876,8 +27880,8 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5017,
-      "deferred": 7,
+      "accepted": 5020,
+      "deferred": 8,
       "retired": 17
     },
     "unit_type_counts": {
@@ -27896,7 +27900,7 @@
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
-      "deferred_decision": 5,
+      "deferred_decision": 6,
       "deferred_enhancement": 9,
       "deferred_reconciliation": 3,
       "delta_contract": 1,
@@ -27916,7 +27920,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4162,
+      "requirement": 4165,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

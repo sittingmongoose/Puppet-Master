@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L2921-L3020
+Source lines: L2923-L3083
 
-Source SHA256: `250de630c47a555a13afc1944c5379ee1ca1c76f2624e71bc783073e6456a7a7`
+Source SHA256: `c6595e09d3cb89a3e5b0d00b52a7bf02edd30ec02f997d842adc8a328be15401`
 
 ---
 
@@ -107,4 +107,65 @@ owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
   - Plans/chain-wizard-flexibility.md
+```
+
+### WM-037 - Assistant Chat Goal Command Wiring
+
+```yaml
+plan_unit_id: WM-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Wiring_Matrix binds Assistant Chat Goal Mode command producers to stable command IDs and the Goal Runtime controller. Goal button/chip/icon activation and slash `/goal` dispatch `cmd.chat.goal.start`; Goal status update icon, `/goal again`, and natural-language update requests dispatch `cmd.chat.goal.update`. Wiring uses the Goal Runtime event envelope and does not define concrete Goal event payload schemas.
+gui_related: true
+gui_classification_reason: This unit wires user-visible Assistant Chat Goal button, chip, icon, slash command, and status update surfaces to command IDs.
+depends_on:
+  - UCC-096
+  - CS-051
+  - ACD-416
+unblocks: []
+acceptance_criteria:
+  - Goal activation producers route to `cmd.chat.goal.start`.
+  - Goal update producers route to `cmd.chat.goal.update`.
+  - Goal command wiring targets the Goal Runtime controller without re-owning Goal Runtime lifecycle semantics.
+  - Wiring rows avoid inventing concrete Goal event names or payload schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future wiring coverage validation
+risk_class: goal_command_wiring_gap
+reasoning_tier: standard
+context_scope: assistant_chat_goal_commands
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: assistant_chat_goal_command_wiring
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "Goal button/chip/icon"
+  - "Goal status update icon"
+negative_constraints:
+  - Do not make Wiring_Matrix the owner of concrete Goal Runtime event payload schemas.
+  - Do not route Goal command wiring through unregistered local command IDs.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
 ```

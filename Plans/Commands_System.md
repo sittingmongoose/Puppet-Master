@@ -533,6 +533,8 @@ Labels and values:
 - /web
 - /skill
 - /cancel
+- /goal
+- /goal again
 - reserved built-ins
 
 Rules:
@@ -554,6 +556,8 @@ Rules:
 - URL normalization applies
 - parse failure shows usage
 - /cancel resolves internally to cmd.chat.stop
+- /goal resolves internally to cmd.chat.goal.start.
+- /goal again resolves internally to cmd.chat.goal.update.
 - /rewind dispatches `cmd.chat.rewind` and remains conversation-only
 - /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
 - /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
@@ -562,6 +566,12 @@ Rules:
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
+
+Goal Mode reserved slash commands:
+- `/goal` starts Goal Mode through `cmd.chat.goal.start`.
+- `/goal again` updates the active goal through `cmd.chat.goal.update`.
+- These are reserved Assistant Chat built-ins and cannot be overridden by User Commands.
+
 ## 7. UICommand catalog entry
 
 <a id="UICOMMAND-ENTRY"></a>
@@ -3444,4 +3454,58 @@ preserved_exact_tokens: ["Commands_System has two \"## 7\" sections", "command-o
 negative_constraints:
   - Do not change command semantics during heading repair.
 owner_hints: [Plans/Commands_System.md]
+```
+
+### CS-051 - Goal Slash Reservation And Override Boundary
+
+```yaml
+plan_unit_id: CS-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Commands_System reserves `/goal` and `/goal again` as Assistant Chat built-in slash commands. `/goal` resolves to `cmd.chat.goal.start`; `/goal again` resolves to `cmd.chat.goal.update`. User Commands and `override_builtin` cannot override these Goal Mode slash commands.
+gui_related: false
+gui_classification_reason: Slash-command reservation and override policy are command registry behavior, not visual presentation.
+depends_on:
+  - CS-037
+  - CS-039
+  - UCC-096
+unblocks: []
+acceptance_criteria:
+  - "`/goal` and `/goal again` are present in the reserved Assistant Chat slash-command set."
+  - "`/goal` maps to `cmd.chat.goal.start`."
+  - "`/goal again` maps to `cmd.chat.goal.update`."
+  - User Commands cannot override these reserved Goal Mode slash commands.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future command registry validation
+risk_class: goal_slash_override_drift
+reasoning_tier: standard
+context_scope: reserved_slash_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: goal_slash_reservation
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "override_builtin"
+negative_constraints:
+  - Do not allow User Commands to override `/goal` or `/goal again`.
+  - Do not make Commands_System the semantic owner for Goal Runtime lifecycle behavior.
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
 ```

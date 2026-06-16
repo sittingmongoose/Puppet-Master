@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L14866-L14933
+Source lines: L14866-L14938
 
-Source SHA256: `22492b23ca80b4680ff6688b26b9a6496ebc52f8263c778285a125fbb350127b`
+Source SHA256: `42f868f0581425482fe815ec3dc9401c4987a65a5df6ae3deadbf4612265c88c`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  storage-plan owns persistence and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, revision/expected_revision, and retention anchors. Exact storage substrate remains deferred and must not weaken the required Goal Runtime fields.
+  storage-plan owns persistence and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Exact storage substrate and concrete `goal.*` event payload schemas remain deferred until promoted by storage/contract owners and must not weaken the required Goal Runtime fields. Goal_Runtime_System owns behavior semantics.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:
@@ -31,6 +31,7 @@ acceptance_criteria:
   - Goal Runtime durable state and append-only event-log records have a storage owner for persistence/projection and replay.
   - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are not lost when storage substrate is deferred.
   - storage-plan consumes Goal Runtime semantics from Plans/Goal_Runtime_System.md and does not redefine lifecycle policy.
+  - Concrete goal event payload schemas remain deferred until storage/contract owner registration.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime persistence review
@@ -65,11 +66,15 @@ preserved_exact_tokens:
   - "child-goal state"
   - "recovery state"
   - "evidence refs"
-  - "revision/expected_revision"
+  - "goal_revision"
+  - "expected_goal_revision"
   - "retention anchors"
+  - "goal.*"
+  - "payload schemas"
 negative_constraints:
   - Do not let storage substrate deferral remove required Goal Runtime fields.
   - Do not make storage-plan the semantic owner for Goal Runtime lifecycle policy.
+  - Do not invent concrete Goal Runtime event payload schemas in this consumer PlanUnit.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md

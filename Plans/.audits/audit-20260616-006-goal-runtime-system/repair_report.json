@@ -1,0 +1,144 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260616-006-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "status": "pass",
+  "repaired_at_utc": "2026-06-16T20:50:00Z",
+  "source_audit_verdict": "PASS_WITH_WARNINGS",
+  "source_range": {
+    "baseline_ref": "fb7dd9aee5ef21d4244deb74d151d2de15a620ab",
+    "current_ref_at_audit": "1ec068474371044488c5ed265732ed5d9dd55234",
+    "earliest_cycle_commit": "fbb9c48c1e8bb1aff0ab70dae558d21fb68a7050"
+  },
+  "repaired_findings": [
+    {
+      "risk_ids": ["SR-001", "SR-003", "SR-004", "SR-005", "SR-006", "SR-007", "SR-008", "SR-009"],
+      "status": "repaired",
+      "summary": "Restored missing exact Goal Runtime semantic details for whole-goal context, Chain Wizard status examples, scheduler continuation/revision fields, weak-agent risk triggers, ledger-to-Plans completion criteria, progress/blocker fields, child-goal identity, task-template gates, and ambiguity/recovery/blocked-state behavior.",
+      "plan_units": ["GRS-003", "GRS-004", "GRS-006", "GRS-009", "GRS-011", "GRS-012", "GRS-015", "GRS-016", "GRS-018", "GRS-019"]
+    },
+    {
+      "risk_id": "SR-002",
+      "status": "repaired",
+      "summary": "Restored Assistant Chat Goal UI exact details for pre-goal shaping, Ask/Agent/Debug/Plan/Deep Plan combinations, PMConcept cues, stopped_by_user versus cleared_from_thread, sidebar progress examples, and child-goal assignment/result details.",
+      "plan_units": ["ACD-416", "ACD-417", "ACD-418", "ACD-419"]
+    },
+    {
+      "risk_ids": ["SR-010", "SR-011"],
+      "status": "repaired",
+      "summary": "Reconciled ledger registry, current, handoff, compile queue, manifest, events, decisions, design atoms, and ledger health so cross-owner and command-owner PlanUnits are projected and reciprocally linked.",
+      "plan_units": ["CV-286", "MS-108", "MA-060", "PS-114", "SP-214", "UCC-096", "CS-051", "WM-037"]
+    },
+    {
+      "risk_ids": ["SR-012", "SR-013", "SR-014", "SR-015", "SR-019", "SR-021"],
+      "status": "repaired",
+      "summary": "Narrowed cross-owner claims, restored exact field names, fixed gui_related classifications, narrowed Provider_OpenCode routing, added direct atom lineage to GRS-025, added deferred Goal event schema boundary CV-287, and completed 0PI-055 owner hints.",
+      "plan_units": ["0PI-055", "CV-286", "CV-287", "GRS-010", "GRS-025", "MS-108", "MA-060", "PS-114", "SP-214"]
+    },
+    {
+      "risk_id": "SR-018",
+      "status": "repaired",
+      "summary": "Registered /goal and /goal again across UI_Command_Catalog, Commands_System, and Wiring_Matrix.",
+      "plan_units": ["UCC-096", "CS-051", "WM-037"]
+    },
+    {
+      "risk_id": "SR-020",
+      "status": "repaired",
+      "summary": "Regenerated PlanUnit index, migration summaries, configured shards, Spec Lock hashes, and evidence hashes through repository scripts and governance helpers, including transitive evidence bundles required by validate-evidence."
+    },
+    {
+      "risk_id": "SR-022",
+      "status": "operational_note_resolved_for_validation",
+      "summary": "YAML-dependent validators passed with PYTHONPATH=/private/tmp/pm-py-deps. This records the working validation environment; it does not install dependencies into plain /usr/bin/python3."
+    }
+  ],
+  "false_positives_or_expected_boundaries": [
+    {
+      "risk_id": "SR-016",
+      "status": "expected_boundary",
+      "summary": "Node readiness remains blocked_compiler_contract_incomplete by design until the future compiler contract exists; no WorkNodes or NodeSeeds were created."
+    },
+    {
+      "risk_id": "SR-017",
+      "status": "false_positive",
+      "summary": "Manifest status remains compiled while registry/current/health carry sealed governance state; this is validator-compatible and intentionally unchanged."
+    }
+  ],
+  "files_changed_by_repair": {
+    "live_plan_docs": [
+      "Plans/00-plans-index.md",
+      "Plans/Commands_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Models_System.md",
+      "Plans/Multi-Account.md",
+      "Plans/Permissions_System.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/storage-plan.md"
+    ],
+    "ledger_files": [
+      "Plans/ledgers/v2/ledger_registry.json",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/events.jsonl",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/compile_queue.json",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
+      "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/validation/ledger_health.json"
+    ],
+    "generated_outputs": [
+      "Plans/.plan_index/**",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+      "Plans/_shards/**",
+      "Plans/.evidence/**",
+      "Plans/Spec_Lock.json"
+    ],
+    "audit_outputs": [
+      "Plans/.audits/audit-20260616-006-goal-runtime-system/repair_report.json",
+      "Plans/.audits/audit-20260616-006-goal-runtime-system/REPAIR_REPORT.md"
+    ]
+  },
+  "planunit_changes": {
+    "changed_or_expanded": ["0PI-055", "ACD-416", "ACD-417", "ACD-418", "ACD-419", "CV-286", "GRS-003", "GRS-004", "GRS-006", "GRS-009", "GRS-010", "GRS-011", "GRS-012", "GRS-015", "GRS-016", "GRS-018", "GRS-019", "GRS-025", "MA-060", "MS-108", "PS-114", "SP-214"],
+    "added": ["CV-287", "UCC-096", "CS-051", "WM-037"]
+  },
+  "index_and_governance": {
+    "plan_unit_count": 5045,
+    "acceptance_unit_count": 17965,
+    "duplicate_plan_unit_ids": 0,
+    "missing_gui_related": 0,
+    "unresolved_dependency_references": 0,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "shards_checked": 892,
+    "shard_source_docs": 51,
+    "governance_status": "sealed"
+  },
+  "validators": [
+    {"name": "pm-bootstrap-ledger-validate", "status": "pass", "mutation_detected": false},
+    {"name": "pm-plan-index validate", "status": "pass", "plan_unit_count": 5045, "acceptance_unit_count": 17965, "mutation_detected": false},
+    {"name": "pm-plan-migration validate", "status": "pass", "live_plan_unit_count": 5045, "source_preserving_unit_count": 0, "mutation_detected": false},
+    {"name": "pm-plans-verify run-gates", "status": "pass", "mutation_detected": false},
+    {"name": "pm-shard-plans --check", "status": "pass", "shards_checked": 892, "mutation_detected": false},
+    {"name": "validate-auto-decisions", "status": "pass", "mutation_detected": false},
+    {"name": "verify-spec-lock", "status": "pass", "mutation_detected": false},
+    {"name": "validate-evidence", "status": "pass", "mutation_detected": false},
+    {"name": "validate-plan-graph", "status": "pass", "mutation_detected": false},
+    {"name": "git diff --check", "status": "pass", "mutation_detected": false}
+  ],
+  "forbidden_artifacts": {
+    "worknodes_created": false,
+    "nodeseeds_created": false,
+    "nodeseed_candidates_created": false,
+    "executable_queues_created": false,
+    "final_node_manifests_created": false,
+    "implementation_files_created": false,
+    "production_build_tasks_created": false
+  },
+  "remaining_blockers": [],
+  "next_safe_action": "Use the repaired sealed Goal Runtime PlanUnits for implementation planning, or start a separate Plan_To_Node compiler-contract design phase before any WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created."
+}

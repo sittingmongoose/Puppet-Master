@@ -114,10 +114,10 @@
   "sealed_ledgers": [
     {
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "last_updated_at": "2026-06-16T05:36:58Z",
-      "last_updated_at_utc": "2026-06-16T05:36:58Z",
+      "last_updated_at": "2026-06-16T20:45:00Z",
+      "last_updated_at_utc": "2026-06-16T20:45:00Z",
       "ledger_id": "pldg-20260616-001-goal-runtime-system",
-      "notes": "Compiled to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed after final validators passed. Post-compile readiness assessment accepted: no additional product-level blockers remain after policy-default hardening; deferred questions are non-blocking implementation/future-compiler choices. New Goal_Runtime_System owner doc plus Assistant Chat, FinalGUISpec, and index consumer PlanUnits were written. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created. compiled_owner_docs records actual touched docs.",
+      "notes": "Compiled to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed after final validators passed. Post-audit repair aligned exact semantic fidelity, command owner registration, cross-owner consumer PlanUnits, and ledger reciprocal lineage. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created. compiled_owner_docs records actual touched docs including cross-owner and command-owner repair docs.",
       "phase": "compiled_goal_runtime_system_governance_sealed",
       "primary_goal": "Capture and refine native Goal runtime behavior, invisible/internal goals, user-facing assistant-chat Goal Mode UI, weak-model safety, child goals/subagents, attachments, sharded document handling, completion certification, autonomous recovery, and task templates before explicit compile.",
       "resume_file": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
@@ -130,9 +130,17 @@
         "Plans/Goal_Runtime_System.md",
         "Plans/assistant-chat-design.md",
         "Plans/FinalGUISpec.md",
-        "Plans/00-plans-index.md"
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md"
       ]
     }
   ],
-  "updated_at_utc": "2026-06-16T05:36:58Z"
+  "updated_at_utc": "2026-06-16T20:45:00Z"
 }

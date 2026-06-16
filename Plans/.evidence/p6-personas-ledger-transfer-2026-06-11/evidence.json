@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "ca3dcae74486cb1a50c178f4a6d213653718a481cbca28e93123fcb2ca56fbbe"
+      "sha256": "8a8be4eddcf63a3f86ed7111733c46028549bff74437d299aefc517697124567"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "95158470e1601e550333dfccdcf35f05bdad2208673652262add573e058ebbf8"
+      "sha256": "ff643e60a441434b47f58283dcc787be77dbc1d25d21443d00bfdece1d18f188"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "f60aeb941eef1041b623926ca25d6b494fd6d856e7a754b0c44669ba67482955"
+      "sha256": "1da96ed7e66d444089dc5e05e472acde21559c8324fdef2ef3bedf4aaa2446ab"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d4cb98b4ff4e6a097061df13be3ad4d09a18b9aff5fb46ad9fed61c519ad0b28"
+      "sha256": "4e5580245f210a1b82dfbce5fbd7ebcb4e4c239b4f70b2b7f82f8b7cec17bb3d"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "dc356946888e6dd52b22f1d0771d69cada748b2ea45cbd4fbededf09ca9b5166"
+      "sha256": "54de8f4172617c4c82a92427d4e95192827b6d9351729467c2818e3d32714f18"
     }
   ],
   "checks": [
@@ -237,6 +237,11 @@
       "name": "plan-index-validate",
       "result": "PASS",
       "details": "PlanUnit index validation passed with 5036 PlanUnits and 17890 acceptance units; node_readiness_report.status=blocked_compiler_contract_incomplete."
+    },
+    {
+      "name": "audit-20260616-006-repair-transitive-evidence-refresh",
+      "result": "PASS",
+      "details": "Audit audit-20260616-006-goal-runtime-system repair refreshed transitive evidence hashes after regenerated PlanUnit index, migration, shard report, Spec Lock, and ledger registry artifacts changed."
     }
   ],
   "commands_run": [

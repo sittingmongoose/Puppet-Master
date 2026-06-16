@@ -2,8 +2,8 @@
   "schema_id": "pm.plan_compile_queue.v1",
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "status": "compiled_goal_runtime_system_governance_sealed",
-  "updated_at_utc": "2026-06-16T05:36:58Z",
-  "last_event_id": "evt-0023",
+  "updated_at_utc": "2026-06-16T20:30:00Z",
+  "last_event_id": "evt-0024",
   "items": [
     {
       "queue_id": "pcq-0001",
@@ -13,7 +13,15 @@
         "Plans/Goal_Runtime_System.md",
         "Plans/assistant-chat-design.md",
         "Plans/FinalGUISpec.md",
-        "Plans/00-plans-index.md"
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md"
       ],
       "source_atom_ids": [
         "atom-0002",
@@ -162,13 +170,29 @@
         "ACD-418",
         "ACD-419",
         "F3-393",
-        "0PI-055"
+        "0PI-055",
+        "CV-286",
+        "MS-108",
+        "MA-060",
+        "PS-114",
+        "SP-214",
+        "UCC-096",
+        "CS-051",
+        "WM-037"
       ],
       "compiled_outputs": [
         "Plans/Goal_Runtime_System.md",
         "Plans/assistant-chat-design.md",
         "Plans/FinalGUISpec.md",
         "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md",
         "Plans/.plan_index/plan_units.jsonl",
         "Plans/.plan_index/doc_cards.json",
         "Plans/.plan_index/dependencies.json",
@@ -176,12 +200,12 @@
         "Plans/.plan_index/coverage_report.json",
         "Plans/.plan_index/node_readiness_report.json"
       ],
-      "owner_adjudication": "New Plans/Goal_Runtime_System.md owns Goal Runtime behavior; Plans/assistant-chat-design.md owns visible chat controls and child-goal display; Plans/FinalGUISpec.md owns Settings GUI model selectors; Plans/00-plans-index.md records routing only; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation remain consumer/boundary owners for ledger, PlanUnit, index, and readiness-only compiler contracts.",
+      "owner_adjudication": "Plans/Goal_Runtime_System.md owns Goal Runtime behavior; Plans/assistant-chat-design.md owns visible chat controls and child-goal display; Plans/FinalGUISpec.md owns Settings GUI model selectors; Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/Models_System.md, and Plans/Multi-Account.md own adjacent envelope, persistence, approval, model, and account consumer PlanUnits; Plans/UI_Command_Catalog.md, Plans/Commands_System.md, and Plans/Wiring_Matrix.md own repaired /goal command registration and wiring; Plans/00-plans-index.md records routing only; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation remain consumer/boundary owners for ledger, PlanUnit, index, and readiness-only compiler contracts.",
       "compile_disposition_summary": {
         "create_new_owner_doc": [
           "atom-0080"
         ],
-        "create_new_planunit": "108 ready atoms represented across GRS-001..GRS-025, ACD-416..ACD-419, F3-393, and 0PI-055",
+        "create_new_planunit": "108 ready atoms represented across GRS-001..GRS-025, ACD-416..ACD-419, F3-393, 0PI-055, cross-owner consumers CV-286/MS-108/MA-060/PS-114/SP-214, and post-audit command repair PlanUnits UCC-096/CS-051/WM-037.",
         "consumer_reference_only": [
           "atom-0040",
           "atom-0073",
@@ -207,5 +231,5 @@
       ]
     }
   ],
-  "notes": "Goal Runtime ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs. Governance seal is complete; no forbidden governance or executable node artifacts were created."
+  "notes": "Goal Runtime ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs. Post-audit repair aligned cross-owner consumers, Goal command owner registration, and reciprocal ledger lineage. Governance seal remains complete; no forbidden governance or executable node artifacts were created by ledger projection repair."
 }

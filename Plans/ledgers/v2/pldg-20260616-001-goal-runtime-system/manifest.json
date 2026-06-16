@@ -6,10 +6,10 @@
   "status": "compiled",
   "phase": "compiled_goal_runtime_system_governance_sealed",
   "created_at_utc": "2026-06-16T04:00:00Z",
-  "updated_at_utc": "2026-06-16T05:36:58Z",
-  "last_event_id": "evt-0023",
+  "updated_at_utc": "2026-06-16T20:30:00Z",
+  "last_event_id": "evt-0024",
   "source_context": "Retrospective planning ledger created from the Goal Mode design conversation. It captures native Goal runtime behavior, invisible Chain Wizard/internal goals, visible assistant-chat Goal Mode UI, weak-model safety, parallel child goals/subagents, sharded document handling, attachment preservation, completion certification, and compile boundaries. This is a conversational design/spec ledger, not a Goal run and not canonical Plans.",
-  "notes": "Compiled to canonical Plans, allowed Plans/.plan_index outputs, and governance seal artifacts; governance_status=sealed. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+  "notes": "Compiled to canonical Plans, allowed Plans/.plan_index outputs, governance seal artifacts, and post-audit semantic/projection repair records; governance_status=sealed. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
   "files": {
     "events": "events.jsonl",
     "design_atoms": "records/design_atoms.jsonl",
@@ -24,7 +24,7 @@
     "operating_capsule": "state/operating_capsule.json"
   },
   "record_counts": {
-    "events": 23,
+    "events": 24,
     "design_atoms": 110,
     "decisions": 26,
     "questions": 5,
