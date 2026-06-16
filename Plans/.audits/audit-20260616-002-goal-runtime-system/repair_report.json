@@ -1,0 +1,299 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260616-002-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "status": "pass",
+  "summary": "Bounded repair completed for audit-listed Plan fidelity, ledger projection, governance evidence, shard/spec-lock, and validator gaps. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+  "repaired_findings": [
+    {
+      "finding": "stale ledger compile notes",
+      "repair": "Updated 108 compiled_to_plan design atom compile_notes from pending seal to governance seal completed."
+    },
+    {
+      "finding": "stale current/handoff/registry seal wording",
+      "repair": "Replaced pending/refreshing wording with sealed-validator-passed wording in current.json, handoff.json, and ledger_registry.json."
+    },
+    {
+      "finding": "q-0005 overclaimed F3-393 coverage",
+      "repair": "Removed F3-393 from q-0005 compiled_output_plan_unit_ids in records/questions.jsonl and state/open_items.json; canonical coverage remains GRS-010 and GRS-025."
+    },
+    {
+      "finding": "historical ledger_health pending wording",
+      "repair": "Clarified compile-0001, migration-validate-0001, projection-repair-0001, and projection-repair-0002 as pre-seal historical checks superseded by governance-seal-0001 while preserving statuses."
+    },
+    {
+      "finding": "metadata timestamp drift",
+      "repair": "Aligned ledger projection timestamps to 2026-06-16T05:36:58Z, including operating_capsule.json because the audit explicitly named it."
+    },
+    {
+      "finding": "exact-token compression",
+      "repair": "Restored missing exact source tokens in GRS-004, GRS-005, GRS-006, GRS-016, GRS-018, ACD-416, and ACD-417 preserved_exact_tokens; expanded GRS-018 template catalog tokens."
+    },
+    {
+      "finding": "prompt template ellipsis",
+      "repair": "Replaced the ellipsized GRS-016 prompt token with the full source phrase."
+    },
+    {
+      "finding": "owner-routing watch for Chain Wizard UI",
+      "repair": "Added a GRS-003 negative constraint routing concrete Chain Wizard UI flow/layout/copy/screen behavior to Chain Wizard and Assistant Chat owner docs."
+    },
+    {
+      "finding": "stale compile/seal wording in live canon",
+      "repair": "Scoped GRS-021, Goal_Runtime_System section 8, Native Goal Runtime Map, and 0PI-055 wording to pre-seal compile vs explicit governance seal."
+    },
+    {
+      "finding": "goal-runtime evidence node absent from plan_graph",
+      "repair": "Routed Goal Runtime evidence to existing pm.build-governance.final-seal and added validator coverage for evidence node membership/mismatch."
+    },
+    {
+      "finding": "direct validator fallout: historical evidence nodes absent from plan_graph",
+      "repair": "Registered four historical evidence nodes in plan_graph so existing evidence identities remain intact and validate-evidence can enforce membership generally."
+    },
+    {
+      "finding": "stale evidence count text",
+      "repair": "Updated final-build and plan-sharding evidence command/check details to 5036 PlanUnits, 17890 acceptance units, 51 docs, and 888 shards."
+    },
+    {
+      "finding": "governance hash drift",
+      "repair": "Regenerated PlanUnit index, migration proof, configured shards, Spec_Lock, evidence hashes, and shard reports after stable repairs."
+    }
+  ],
+  "false_positives_or_non_edits": [
+    {
+      "finding": "F3-393 missing q-0005 lineage",
+      "disposition": "false_positive_for_canonical_plan_edit",
+      "reason": "F3-393 is valid Settings GUI selector coverage; q-0005 is deferred provider-specific default tier mappings covered by GRS-010 and GRS-025. Repaired only the ledger/open-items projection."
+    },
+    {
+      "finding": "migration-validate-0001 status fail_expected_pending_seal",
+      "disposition": "preserved",
+      "reason": "Historical status is correct for the pre-seal phase; summary now records it was superseded by governance-seal-0001."
+    }
+  ],
+  "plan_units_changed": [
+    "GRS-003",
+    "GRS-004",
+    "GRS-005",
+    "GRS-006",
+    "GRS-016",
+    "GRS-018",
+    "GRS-021",
+    "ACD-416",
+    "ACD-417",
+    "0PI-055"
+  ],
+  "plan_unit_delta": {
+    "added": 0,
+    "deleted": 0,
+    "total_after": 5036,
+    "acceptance_units_after": 17890
+  },
+  "ledger_records_changed": {
+    "design_atoms_compile_notes": 108,
+    "questions_q_0005_projection": [
+      "records/questions.jsonl",
+      "state/open_items.json"
+    ],
+    "state_projection_files": [
+      "current.json",
+      "handoff.json",
+      "open_items.json",
+      "compile_queue.json",
+      "operating_capsule.json"
+    ],
+    "ledger_health_summaries": [
+      "compile-0001",
+      "migration-validate-0001",
+      "projection-repair-0001",
+      "projection-repair-0002"
+    ],
+    "registry_entry": "governance_status=sealed after final validators passed"
+  },
+  "generated_artifacts_refreshed": {
+    "plan_index": true,
+    "plan_migration": true,
+    "shards": {
+      "docs": 51,
+      "shards": 888
+    },
+    "spec_lock": true,
+    "evidence": true,
+    "plan_graph_nodes_after": 8
+  },
+  "governance_status": {
+    "ledger_governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false
+  },
+  "validators": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+      "status": "pass",
+      "summary": "errors=0; warnings=0; atoms=110; plan_units_checked=892"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": "plan_unit_count=5036; acceptance_unit_count=17890; coverage_status=pass; node_readiness_status=blocked_compiler_contract_incomplete"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "summary": "live_plan_unit_count=5036; source_preserving_unit_count=0"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "summary": "failures=0"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": "docs_checked=51; shards_checked=888; failures=0"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass",
+      "summary": "failures=0"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "summary": "failures=0"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass",
+      "summary": "failures=0; evidence node ids now checked against plan_graph"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass",
+      "summary": "failures=0; graph-required evidence node ids match"
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass",
+      "summary": "no whitespace errors"
+    }
+  ],
+  "validator_mutability": {
+    "git_status_before_after_read_only_suite": "unchanged in substance; no additional paths appeared after validators",
+    "mutating_validators_detected": false
+  },
+  "forbidden_artifact_scan": {
+    "status": "pass",
+    "changed_path_scan": "no WorkNode/NodeSeed/executable queue/final node manifest/production build task paths in git diff --name-only",
+    "filesystem_scan": "no matching WorkNode/NodeSeed/executable queue/final node manifest/production build task paths under Plans/"
+  },
+  "subagent_summary": [
+    {
+      "agent": "Sagan",
+      "scope": "ledger drift",
+      "result": "confirmed compile-note/projection/q-0005 repairs and historical health wording; recommended preserving F3-393 canonical coverage."
+    },
+    {
+      "agent": "Planck",
+      "scope": "canonical Plan fidelity",
+      "result": "recommended exact-token restoration, pre-seal wording, and Chain Wizard owner-routing negative constraint."
+    },
+    {
+      "agent": "Gauss",
+      "scope": "governance evidence",
+      "result": "confirmed evidence node defect, stale evidence counts, and helper/validator repair sequence."
+    },
+    {
+      "agent": "Franklin",
+      "scope": "validator mutability/gap",
+      "result": "confirmed reusable evidence-node validator gap and proposed membership/mismatch checks."
+    }
+  ],
+  "changed_file_count": 208,
+  "changed_files_sample": [
+    "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+    "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+    "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+    "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+    "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+    "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+    "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+    "Plans/00-plans-index.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/00-plans-index/00-index.md",
+    "Plans/_shards/00-plans-index/001-preamble.md",
+    "Plans/_shards/00-plans-index/002-change-summary.md",
+    "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+    "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+    "Plans/_shards/00-plans-index/005-plan-map.md",
+    "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+    "Plans/_shards/00-plans-index/007-shard-indexes.md",
+    "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+    "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+    "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+    "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+    "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+    "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+    "Plans/_shards/00-plans-index/014-planunits.md",
+    "Plans/_shards/00-plans-index/015-migration-coverage.md",
+    "Plans/_shards/00-plans-index/manifest.json",
+    "Plans/_shards/agent-rules-context/00-index.md",
+    "Plans/_shards/agent-rules-context/manifest.json",
+    "Plans/_shards/assistant-chat-design/00-index.md",
+    "Plans/_shards/assistant-chat-design/001-preamble.md",
+    "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
+    "Plans/_shards/assistant-chat-design/003-change-summary.md",
+    "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md",
+    "Plans/_shards/assistant-chat-design/005-executive-summary.md",
+    "Plans/_shards/assistant-chat-design/006-table-of-contents.md",
+    "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md",
+    "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
+    "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md",
+    "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md",
+    "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
+    "Plans/_shards/assistant-chat-design/012-6.-teach.md",
+    "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md",
+    "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+    "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md",
+    "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md",
+    "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md",
+    "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md",
+    "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md",
+    "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md",
+    "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md",
+    "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md",
+    "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md",
+    "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md",
+    "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md",
+    "Plans/_shards/assistant-chat-design/026-20.-references.md",
+    "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md",
+    "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md",
+    "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md",
+    "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md",
+    "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md",
+    "Plans/_shards/assistant-chat-design/032-26.-per-pass-validation-model-provider-settings-invariant-sweep.md",
+    "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md",
+    "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md",
+    "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md",
+    "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md",
+    "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md",
+    "Plans/_shards/assistant-chat-design/038-shared-actor-boundary-route-payload-and-blocked_notice-packet.md",
+    "Plans/_shards/assistant-chat-design/039-shared-conversational-actor-runtime-identity.md"
+  ],
+  "remaining_blockers": [
+    "No repair blockers remain. Node readiness remains intentionally blocked_compiler_contract_incomplete until a separate compiler-contract phase defines NodeSeed/WorkNode artifacts."
+  ],
+  "exact_next_safe_action": "Review and commit the bounded repair. Implementation planning may continue from sealed PlanUnits, but do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, or production build tasks unless Jared explicitly requests the separate compiler-contract/build phase."
+}

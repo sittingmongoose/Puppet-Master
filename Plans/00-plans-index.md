@@ -219,7 +219,7 @@ The native Goal Runtime packet uses the following owner split:
 - `Plans/FinalGUISpec.md` owns Settings GUI placement for the separate Goal Mode worker model and verifier/adjudicator model selectors.
 - `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary; Goal Runtime consumes them for ledger-to-Plans goals without creating WorkNodes or NodeSeeds.
 
-The ledger `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/` is source-lineage/planning memory for this compile, not canonical product prose. Generated governance artifacts remain seal-phase only: this compile may update live Plans docs and allowed `Plans/.plan_index/**` outputs, but it does not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`.
+The ledger `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/` is source-lineage/planning memory for this compile, not canonical product prose. Generated governance artifacts remain seal-phase only: the pre-seal compile phase may update live Plans docs and allowed `Plans/.plan_index/**` outputs, but it does not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`. A later explicit governance seal may refresh those artifacts without changing product canon or creating node/build artifacts.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
@@ -3773,7 +3773,7 @@ unblocks: []
 acceptance_criteria:
   - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
   - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
-  - The index preserves the no-WorkNode and no-governance-seal boundary for this compile.
+  - The index preserves the no-WorkNode boundary and separates pre-seal compile output from the later explicit governance seal.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
@@ -3805,7 +3805,7 @@ preserved_exact_tokens:
   - "evidence bundles"
 negative_constraints:
   - Do not treat Plans/00-plans-index.md as the owner for Goal Runtime behavior.
-  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during this compile.
+  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during the pre-seal compile phase.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Goal_Runtime_System.md

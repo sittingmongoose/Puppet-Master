@@ -1,0 +1,133 @@
+{
+  "audit_id": "audit-20260616-004-goal-runtime-system",
+  "compiled_atom_canonical_evidence": {
+    "missing_compiled_atom_evidence": [],
+    "notes": "All compiled_to_plan atoms have mapped live PlanUnits carrying the exact atom-* source_lineage.",
+    "status": "pass"
+  },
+  "compiled_atom_count": 108,
+  "gui_related_checks": {
+    "design_atoms_with_boolean_gui_related": 110,
+    "gui_related_true_count": 24,
+    "missing_gui_related_atoms": [],
+    "status": "pass"
+  },
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "manifest_count_mismatches": {},
+  "projection_warnings": {
+    "related_semantic_risk_ids": [
+      "SR-007",
+      "SR-008"
+    ],
+    "stale_compile_note_count": 108,
+    "stale_compile_notes_sample": [
+      "atom-0002",
+      "atom-0003",
+      "atom-0004",
+      "atom-0005",
+      "atom-0006",
+      "atom-0007",
+      "atom-0008",
+      "atom-0009",
+      "atom-0010",
+      "atom-0011",
+      "atom-0012",
+      "atom-0013",
+      "atom-0014",
+      "atom-0015",
+      "atom-0017",
+      "atom-0018",
+      "atom-0019",
+      "atom-0020",
+      "atom-0021",
+      "atom-0022"
+    ],
+    "weak_output_mappings": [
+      {
+        "plan_unit_id": "F3-393",
+        "record_id": "q-0005",
+        "record_type": "question"
+      },
+      {
+        "plan_unit_id": "GRS-004",
+        "record_id": "dec-0002",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "ACD-416",
+        "record_id": "dec-0003",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "ACD-418",
+        "record_id": "dec-0003",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-012",
+        "record_id": "dec-0006",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-022",
+        "record_id": "dec-0006",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "ACD-417",
+        "record_id": "dec-0008",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "ACD-418",
+        "record_id": "dec-0008",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "ACD-419",
+        "record_id": "dec-0009",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-023",
+        "record_id": "dec-0010",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-024",
+        "record_id": "dec-0011",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-018",
+        "record_id": "dec-0011",
+        "record_type": "decision"
+      },
+      {
+        "plan_unit_id": "GRS-001",
+        "record_id": "dec-0012",
+        "record_type": "decision"
+      }
+    ]
+  },
+  "schema_id": "pm.audit.ledger_consistency.v1",
+  "sealed_ledger_checks": {
+    "active_candidate_or_ready_atoms": [],
+    "deferred_questions_count": 5,
+    "governance_status": "sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "open_questions": [],
+    "pass": true
+  },
+  "status_counts": {
+    "design_atoms": {
+      "compiled_to_plan": 108,
+      "deferred": 1,
+      "not_for_plan": 1
+    },
+    "questions": {
+      "deferred": 5
+    }
+  },
+  "verdict": "pass_with_warnings"
+}

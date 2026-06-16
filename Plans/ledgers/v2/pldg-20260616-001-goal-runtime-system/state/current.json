@@ -49,7 +49,7 @@
       "Updated Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, and Plans/00-plans-index.md with consumer/index PlanUnits.",
       "Regenerated only allowed Plans/.plan_index outputs.",
       "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, production build tasks, or production implementation artifacts were created; governance artifacts were refreshed in the explicit seal phase.",
-      "Strict canonical_plan_targets is empty until governance registration/seal; actual touched docs are recorded in compiled_owner_docs and compiled_plan_outputs."
+      "Governance seal registers Plans/Goal_Runtime_System.md as the strict canonical_plan_target; actual touched docs are recorded in compiled_owner_docs and compiled_plan_outputs."
     ],
     "post_compile_readiness_assessment": "No additional product-level blockers were identified after locking tiered certification, verifier/adjudicator policy requirements, escalation triggers, verifier-unavailable behavior, approval boundaries, evidence retention, and child write-authority defaults. Remaining deferred questions are implementation-owner or future-compiler choices, not blockers to starting implementation planning.",
     "pm_bootstrap_ledger_validate": "pass",

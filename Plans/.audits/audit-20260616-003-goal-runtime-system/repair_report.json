@@ -1,0 +1,421 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260616-003-goal-runtime-system",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "generated_at_utc": "2026-06-16T11:56:29Z",
+  "status": "repaired",
+  "changed_files_count": 210,
+  "changed_files": [
+    "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+    "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+    "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+    "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+    "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+    "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+    "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+    "Plans/00-plans-index.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/00-plans-index/00-index.md",
+    "Plans/_shards/00-plans-index/001-preamble.md",
+    "Plans/_shards/00-plans-index/002-change-summary.md",
+    "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+    "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+    "Plans/_shards/00-plans-index/005-plan-map.md",
+    "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+    "Plans/_shards/00-plans-index/007-shard-indexes.md",
+    "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+    "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+    "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+    "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+    "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+    "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+    "Plans/_shards/00-plans-index/014-planunits.md",
+    "Plans/_shards/00-plans-index/015-migration-coverage.md",
+    "Plans/_shards/00-plans-index/manifest.json",
+    "Plans/_shards/agent-rules-context/00-index.md",
+    "Plans/_shards/agent-rules-context/manifest.json",
+    "Plans/_shards/assistant-chat-design/00-index.md",
+    "Plans/_shards/assistant-chat-design/001-preamble.md",
+    "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
+    "Plans/_shards/assistant-chat-design/003-change-summary.md",
+    "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md",
+    "Plans/_shards/assistant-chat-design/005-executive-summary.md",
+    "Plans/_shards/assistant-chat-design/006-table-of-contents.md",
+    "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md",
+    "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
+    "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md",
+    "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md",
+    "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
+    "Plans/_shards/assistant-chat-design/012-6.-teach.md",
+    "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md",
+    "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+    "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md",
+    "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md",
+    "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md",
+    "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md",
+    "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md",
+    "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md",
+    "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md",
+    "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md",
+    "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md",
+    "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md",
+    "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md",
+    "Plans/_shards/assistant-chat-design/026-20.-references.md",
+    "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md",
+    "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md",
+    "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md",
+    "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md",
+    "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md",
+    "Plans/_shards/assistant-chat-design/032-26.-per-pass-validation-model-provider-settings-invariant-sweep.md",
+    "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md",
+    "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md",
+    "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md",
+    "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md",
+    "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md",
+    "Plans/_shards/assistant-chat-design/038-shared-actor-boundary-route-payload-and-blocked_notice-packet.md",
+    "Plans/_shards/assistant-chat-design/039-shared-conversational-actor-runtime-identity.md",
+    "Plans/_shards/assistant-chat-design/040-chat-route-permission-and-history-behaviors.md",
+    "Plans/_shards/assistant-chat-design/041-owner-consumer-map.md",
+    "Plans/_shards/assistant-chat-design/042-planunits.md",
+    "Plans/_shards/assistant-chat-design/043-migration-coverage.md",
+    "Plans/_shards/assistant-chat-design/044-ledger-compile-addendum-pldg-20260614-001.md",
+    "Plans/_shards/assistant-chat-design/045-ledger-compile-addendum-pldg-20260615-001.md",
+    "Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260616-001.md",
+    "Plans/_shards/assistant-chat-design/manifest.json",
+    "Plans/_shards/assistant-memory-subsystem/00-index.md",
+    "Plans/_shards/assistant-memory-subsystem/manifest.json",
+    "Plans/_shards/bootstrap_planning_migration/00-index.md",
+    "Plans/_shards/bootstrap_planning_migration/manifest.json",
+    "Plans/_shards/chain-wizard-flexibility/00-index.md",
+    "Plans/_shards/chain-wizard-flexibility/manifest.json",
+    "Plans/_shards/cli_bridged_providers/00-index.md",
+    "Plans/_shards/cli_bridged_providers/manifest.json",
+    "Plans/_shards/commands_system/00-index.md",
+    "Plans/_shards/commands_system/manifest.json",
+    "Plans/_shards/contracts_v0/00-index.md",
+    "Plans/_shards/contracts_v0/manifest.json",
+    "Plans/_shards/crosswalk/00-index.md",
+    "Plans/_shards/crosswalk/manifest.json",
+    "Plans/_shards/executor_protocol/00-index.md",
+    "Plans/_shards/executor_protocol/manifest.json",
+    "Plans/_shards/feature-list/00-index.md",
+    "Plans/_shards/feature-list/manifest.json",
+    "Plans/_shards/filemanager/00-index.md",
+    "Plans/_shards/filemanager/manifest.json",
+    "Plans/_shards/filesafe/00-index.md",
+    "Plans/_shards/filesafe/manifest.json",
+    "Plans/_shards/finalguispec/00-index.md",
+    "Plans/_shards/finalguispec/manifest.json",
+    "Plans/_shards/github_integration/00-index.md",
+    "Plans/_shards/github_integration/manifest.json",
+    "Plans/_shards/goal_runtime_system/00-index.md",
+    "Plans/_shards/goal_runtime_system/001-preamble.md",
+    "Plans/_shards/goal_runtime_system/002-0.-scope.md",
+    "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
+    "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md",
+    "Plans/_shards/goal_runtime_system/005-3.-contracts-schemas-events-or-data-shapes.md",
+    "Plans/_shards/goal_runtime_system/006-4.-integration-surfaces.md",
+    "Plans/_shards/goal_runtime_system/007-5.-validation-and-acceptance.md",
+    "Plans/_shards/goal_runtime_system/008-6.-plan-to-node-readiness.md",
+    "Plans/_shards/goal_runtime_system/009-7.-deferred-retired-compatibility-and-non-goals.md",
+    "Plans/_shards/goal_runtime_system/010-8.-source-lineage-and-governance.md",
+    "Plans/_shards/goal_runtime_system/manifest.json",
+    "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+    "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+    "Plans/_shards/human-in-the-loop/00-index.md",
+    "Plans/_shards/human-in-the-loop/manifest.json",
+    "Plans/_shards/interview-subagent-integration/00-index.md",
+    "Plans/_shards/interview-subagent-integration/manifest.json",
+    "Plans/_shards/lspsupport/00-index.md",
+    "Plans/_shards/lspsupport/manifest.json",
+    "Plans/_shards/mcp_integration/00-index.md",
+    "Plans/_shards/mcp_integration/manifest.json",
+    "Plans/_shards/miscplan/00-index.md",
+    "Plans/_shards/miscplan/manifest.json",
+    "Plans/_shards/models_system/00-index.md",
+    "Plans/_shards/models_system/manifest.json",
+    "Plans/_shards/multi-account/00-index.md",
+    "Plans/_shards/multi-account/manifest.json",
+    "Plans/_shards/newfeatures/00-index.md",
+    "Plans/_shards/newfeatures/manifest.json",
+    "Plans/_shards/newtools/00-index.md",
+    "Plans/_shards/newtools/manifest.json",
+    "Plans/_shards/opencode_deep_extraction/00-index.md",
+    "Plans/_shards/opencode_deep_extraction/manifest.json",
+    "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+    "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+    "Plans/_shards/orchestrator_page/00-index.md",
+    "Plans/_shards/orchestrator_page/manifest.json",
+    "Plans/_shards/permissions_system/00-index.md",
+    "Plans/_shards/permissions_system/manifest.json",
+    "Plans/_shards/personas/00-index.md",
+    "Plans/_shards/personas/manifest.json",
+    "Plans/_shards/plan_document_system/00-index.md",
+    "Plans/_shards/plan_document_system/manifest.json",
+    "Plans/_shards/plan_to_node_compilation/00-index.md",
+    "Plans/_shards/plan_to_node_compilation/manifest.json",
+    "Plans/_shards/planning_ledger_system/00-index.md",
+    "Plans/_shards/planning_ledger_system/manifest.json",
+    "Plans/_shards/project_output_artifacts/00-index.md",
+    "Plans/_shards/project_output_artifacts/manifest.json",
+    "Plans/_shards/prompt_pipeline/00-index.md",
+    "Plans/_shards/prompt_pipeline/manifest.json",
+    "Plans/_shards/provider_opencode/00-index.md",
+    "Plans/_shards/provider_opencode/manifest.json",
+    "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+    "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+    "Plans/_shards/run_graph_view/00-index.md",
+    "Plans/_shards/run_graph_view/manifest.json",
+    "Plans/_shards/run_modes/00-index.md",
+    "Plans/_shards/run_modes/manifest.json",
+    "Plans/_shards/runtime_artifacts_panel/00-index.md",
+    "Plans/_shards/runtime_artifacts_panel/manifest.json",
+    "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+    "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+    "Plans/_shards/skills_system/00-index.md",
+    "Plans/_shards/skills_system/manifest.json",
+    "Plans/_shards/storage-plan/00-index.md",
+    "Plans/_shards/storage-plan/manifest.json",
+    "Plans/_shards/tools/00-index.md",
+    "Plans/_shards/tools/manifest.json",
+    "Plans/_shards/ui_command_catalog/00-index.md",
+    "Plans/_shards/ui_command_catalog/manifest.json",
+    "Plans/_shards/usage-feature/00-index.md",
+    "Plans/_shards/usage-feature/manifest.json",
+    "Plans/_shards/widget_system/00-index.md",
+    "Plans/_shards/widget_system/manifest.json",
+    "Plans/_shards/wiring_matrix/00-index.md",
+    "Plans/_shards/wiring_matrix/manifest.json",
+    "Plans/_shards/worktreegitimprovement/00-index.md",
+    "Plans/_shards/worktreegitimprovement/manifest.json",
+    "Plans/assistant-chat-design.md",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/questions.jsonl",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/operating_capsule.json",
+    "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/validation/ledger_health.json",
+    "Plans/plan_graph.json",
+    "scripts/pm-bootstrap-ledger-validate.py",
+    "scripts/pm-governance-seal.py",
+    "scripts/pm-plans-verify.py"
+  ],
+  "findings": [
+    {
+      "risk_id": "SR-001",
+      "status": "repaired",
+      "summary": "Canonical live prose now distinguishes pre-seal compile from later explicit governance seal in 00-plans-index and Goal_Runtime_System."
+    },
+    {
+      "risk_id": "SR-002",
+      "status": "repaired",
+      "summary": "Goal Runtime seal evidence now routes to existing pm.build-governance.final-seal, and validators check evidence node IDs against plan_graph."
+    },
+    {
+      "risk_id": "SR-003",
+      "status": "repaired",
+      "summary": "Goal Runtime evidence records the full final gate suite, including ledger, index, migration, run-gates, shard, auto-decision, Spec Lock, evidence, plan-graph, and diff checks."
+    },
+    {
+      "risk_id": "SR-004",
+      "status": "repaired",
+      "summary": "Stale evidence count text was refreshed to 5036 PlanUnits, 17890 acceptance units, 51 docs, and 888 shards; remaining 5005 search hit is a SHA substring false positive."
+    },
+    {
+      "risk_id": "SR-005",
+      "status": "repaired",
+      "summary": "Sealed ledger projections, registry placement/status, timestamps, atom compile notes, and ledger health wording now align with sealed state while preserving historical pre-seal lineage."
+    },
+    {
+      "risk_id": "SR-006",
+      "status": "repaired",
+      "summary": "q-0005 no longer lists F3-393; weak decision compiled-output mappings now list only PlanUnits whose source_lineage cites the decision."
+    },
+    {
+      "risk_id": "SR-007",
+      "status": "repaired",
+      "summary": "Exact tokens called out by the audit were restored in Goal_Runtime_System and assistant-chat-design PlanUnits."
+    },
+    {
+      "risk_id": "SR-008",
+      "status": "repaired",
+      "summary": "Goal Runtime data-shape section now clarifies these are feature-local constraints and owner-routing inputs until shared contract/storage/permission owner docs receive a separate compile."
+    },
+    {
+      "risk_id": "SR-009",
+      "status": "repaired",
+      "summary": "GRS-021 now lists the full governance validator suite, and section 5 acceptance requires the complete GRS-021 suite before accepting the sealed packet."
+    },
+    {
+      "risk_id": "SR-010",
+      "status": "repaired",
+      "summary": "GRS-003 now routes concrete Chain Wizard UI flow, layout, copy, and screen behavior away from Goal Runtime canon."
+    }
+  ],
+  "false_positives": [
+    {
+      "id": "FP-001",
+      "summary": "F3/q-0005 was a live Plan prose false positive. F3-393 should not cite q-0005; the ledger mapping was repaired instead, with q-0005 covered by GRS-010 and GRS-025."
+    },
+    {
+      "id": "FP-002",
+      "summary": "Remaining pending_seal text in events.jsonl and fail_expected_pending_seal in ledger_health are historical pre-seal lineage, superseded by governance-seal-0001."
+    },
+    {
+      "id": "FP-003",
+      "summary": "Remaining 5005 stale-count regex hit is inside a SHA value in plan-sharding evidence, not a human/count excerpt."
+    }
+  ],
+  "planunits_changed": [
+    "0PI-055",
+    "GRS-003",
+    "GRS-004",
+    "GRS-005",
+    "GRS-006",
+    "GRS-016",
+    "GRS-018",
+    "GRS-021",
+    "ACD-416",
+    "ACD-417"
+  ],
+  "ledger_records_changed": [
+    "ledger_registry.json: moved pldg-20260616-001-goal-runtime-system to sealed_ledgers and status sealed",
+    "manifest.json: aligned updated_at_utc to 2026-06-16T05:36:58Z",
+    "records/design_atoms.jsonl: 108 compiled atom compile_notes now say governance seal completed",
+    "records/questions.jsonl:q-0005: removed F3-393 from compiled_output_plan_unit_ids",
+    "records/decisions.jsonl: narrowed dec-0002, dec-0003, dec-0006, dec-0008, dec-0009, dec-0010, dec-0011, dec-0012 outputs",
+    "state/compile_queue.json: removed atom-0016 from source_atom_ids while keeping it in deferred_atom_ids",
+    "state/current.json and handoff.json: stale pending/refreshing text reconciled to sealed state",
+    "state/open_items.json:q-0005: removed F3-393 output and aligned timestamp",
+    "validation/ledger_health.json: historical pre-seal checks clarified and governance seal remains pass"
+  ],
+  "generated_outputs_refreshed": {
+    "plan_index": {
+      "status": "pass",
+      "plan_unit_count": 5036,
+      "acceptance_unit_count": 17890,
+      "node_readiness_status": "blocked_compiler_contract_incomplete",
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false
+    },
+    "migration": {
+      "status": "pass",
+      "live_plan_unit_count": 5036
+    },
+    "shards": {
+      "status": "pass",
+      "source_count": 51,
+      "shards": 888
+    },
+    "governance": {
+      "status": "pass",
+      "spec_lock": "refreshed",
+      "evidence": "refreshed",
+      "plan_graph": "validated",
+      "auto_decisions": "validated"
+    }
+  },
+  "scripts_changed": [
+    "scripts/pm-bootstrap-ledger-validate.py",
+    "scripts/pm-governance-seal.py",
+    "scripts/pm-plans-verify.py"
+  ],
+  "subagents": [
+    {
+      "agent": "Nash",
+      "scope": "live Plan prose/exact tokens",
+      "result": "confirmed SR-001, SR-007, SR-010 already repaired; proposed SR-008/SR-009 final edits; no product decision blocker"
+    },
+    {
+      "agent": "Meitner",
+      "scope": "ledger consistency/output mappings",
+      "result": "confirmed SR-005/SR-006 repaired after edits; historical pending_seal text is lineage false positive"
+    },
+    {
+      "agent": "Hegel",
+      "scope": "governance/evidence/shards/spec-lock",
+      "result": "confirmed SR-002/SR-004 repairs; identified evidence hash cascade, fixed by final parent evidence refresh"
+    }
+  ],
+  "validators": {
+    "overall_status": "pass",
+    "captured_at_utc": "2026-06-16T11:54:21Z",
+    "commands": [
+      {
+        "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
+        "returncode": 0,
+        "stdout": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260616-001-goal-runtime-system\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 110,\n    \"compile_queue_items\": 1,\n    \"corrections\": 5,\n    \"decisions\": 26,\n    \"events\": 23,\n    \"plan_units_checked\": 892,\n    \"questions\": 5\n  },\n  \"warnings\": []\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-index.py validate",
+        "returncode": 0,
+        "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:53:16Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 17890,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5036\n  }\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "returncode": 0,
+        "stdout": "{\n  \"checks\": {\n    \"anchor_alias_rows\": 3908,\n    \"batch_report_doc_entries\": 212,\n    \"batch_report_rows\": 212,\n    \"coverage_rows\": 3908,\n    \"coverage_status_counts\": {\n      \"already_standardized_existing_planunits\": 29,\n      \"goal_runtime_new_profile_planunit_covered\": 25,\n      \"goal_runtime_new_profile_standardized_section\": 10,\n      \"phase2b_batch_001_atomized_covered\": 25,\n      \"phase2b_batch_002_atomized_covered\": 15,\n      \"phase2b_batch_003_atomized_covered\": 19,\n      \"phase2b_batch_004_atomized_covered\": 6,\n      \"phase2b_batch_005_atomized_covered\": 25,\n      \"phase2b_batch_006_atomized_covered\": 31,\n      \"phase2b_batch_007_atomized_covered\": 26,\n      \"phase2b_batch_008_atomized_covered\": 16,\n      \"phase2b_batch_009_atomized_covered\": 19,\n      \"phase2b_batch_010_dispositioned\": 2,\n      \"phase2b_batch_011_atomized_covered\": 29,\n      \"phase2b_batch_012_atomized_covered\": 13,\n      \"phase2b_batch_012_dispositioned\": 2,\n      \"phase2b_batch_013_atomized_covered\": 39,\n      \"phase2b_batch_014_atomized_covered\": 4,\n      \"phase2b_batch_014_dispositioned\": 2,\n      \"phase2b_batch_015_fine_grained_enough\": 12,\n      \"phase2b_batch_016_atomized_covered\": 19,\n      \"phase2b_batch_017_atomized_covered\": 23,\n      \"phase2b_batch_018_atomized_covered\": 25,\n      \"phase2b_batch_019_atomized_covered\": 20,\n      \"phase2b_batch_020_atomized_covered\": 36,\n      \"phase2b_batch_021_atomized_covered\": 31,\n      \"phase2b_batch_022_dispositioned\": 1,\n      \"phase2b_batch_022_structural_dispositioned\": 3,\n      \"phase2b_batch_023_atomized_covered\": 4,\n      \"phase2b_batch_023_dispositioned\": 1,\n      \"phase2b_batch_023_structural_dispositioned\": 3,\n      \"phase2b_batch_024_atomized_covered\": 10,\n      \"phase2b_batch_024_dispositioned\": 1,\n      \"phase2b_batch_024_structural_dispositioned\": 3,\n      \"phase2b_batch_025_atomized_covered\": 34,\n      \"phase2b_batch_026_atomized_covered\": 19,\n      \"phase2b_batch_027_retired_bridge_covered\": 1,\n      \"phase2b_batch_027_structural_no_unit\": 3,\n      \"phase2b_batch_028_atomized_covered\": 22,\n      \"phase2b_batch_028_structural_no_unit\": 5,\n      \"phase2b_batch_029_atomized_covered\": 27,\n      \"phase2b_batch_029_structural_no_unit\": 8,\n      \"phase2b_batch_030_atomized_covered\": 20,\n      \"phase2b_batch_031_retired_bridge_covered\": 1,\n      \"phase2b_batch_031_structural_no_unit\": 3,\n      \"phase2b_batch_032_atomized_covered\": 8,\n      \"phase2b_batch_032_structural_no_unit\": 15,\n      \"phase2b_batch_033_atomized_covered\": 2,\n      \"phase2b_batch_034_atomized_covered\": 1,\n      \"phase2b_batch_035_atomized_covered\": 9,\n      \"phase2b_batch_036_atomized_covered\": 13,\n      \"phase2b_batch_037_atomized_covered\": 12,\n      \"phase2b_batch_038_atomized_covered\": 29,\n      \"phase2b_batch_039_atomized_covered\": 25,\n      \"phase2b_batch_040_atomized_covered\": 3,\n      \"phase2b_batch_041_atomized_covered\": 28,\n      \"phase2b_batch_042_atomized_covered\": 7,\n      \"phase2b_batch_042_dispositioned\": 1,\n      \"phase2b_batch_042_structural_dispositioned\": 3,\n      \"phase2b_batch_043_atomized_covered\": 20,\n      \"phase2b_batch_043_dispositioned\": 1,\n      \"phase2b_batch_043_structural_dispositioned\": 5,\n      \"phase2b_batch_044_atomized_covered\": 24,\n      \"phase2b_batch_044_structural_dispositioned\": 2,\n      \"phase2b_batch_045_atomized_covered\": 5,\n      \"phase2b_batch_045_structural_dispositioned\": 1,\n      \"phase2b_batch_046_dispositioned\": 1,\n      \"phase2b_batch_046_structural_dispositioned\": 3,\n      \"phase2b_batch_047_atomized_covered\": 21,\n      \"phase2b_batch_047_structural_parent_covered\": 2,\n      \"phase2b_batch_048_dispositioned\": 1,\n      \"phase2b_batch_048_structural_dispositioned\": 4,\n      \"phase2b_batch_049_atomized_covered\": 16,\n      \"phase2b_batch_049_dispositioned\": 1,\n      \"phase2b_batch_049_structural_dispositioned\": 4,\n      \"phase2b_batch_049_structural_parent_covered\": 1,\n      \"phase2b_batch_050_atomized_covered\": 21,\n      \"phase2b_batch_050_structural_parent_covered\": 8,\n      \"phase2b_batch_051_atomized_covered\": 28,\n      \"phase2b_batch_051_structural_dispositioned\": 1,\n      \"phase2b_batch_051_structural_parent_covered\": 7,\n      \"phase2b_batch_052_atomized_covered\": 2,\n      \"phase2b_batch_052_retired_bridge_covered\": 1,\n      \"phase2b_batch_052_structural_dispositioned\": 3,\n      \"phase2b_batch_053_atomized_covered\": 18,\n      \"phase2b_batch_053_retired_bridge_covered\": 1,\n      \"phase2b_batch_053_structural_dispositioned\": 3,\n      \"phase2b_batch_054_atomized_covered\": 31,\n      \"phase2b_batch_054_structural_dispositioned\": 1,\n      \"phase2b_batch_055_atomized_covered\": 22,\n      \"phase2b_batch_055_retired_bridge_covered\": 1,\n      \"phase2b_batch_055_structural_dispositioned\": 3,\n      \"phase2b_batch_056_atomized_covered\": 11,\n      \"phase2b_batch_056_structural_dispositioned\": 3,\n      \"phase2b_batch_057_atomized_covered\": 2,\n      \"phase2b_batch_058_atomized_covered\": 5,\n      \"phase2b_batch_058_structural_dispositioned\": 1,\n      \"phase2b_batch_059_atomized_covered\": 15,\n      \"phase2b_batch_059_structural_dispositioned\": 3,\n      \"phase2b_batch_060_atomized_covered\": 8,\n      \"phase2b_batch_060_structural_dispositioned\": 1,\n      \"phase2b_batch_061_atomized_covered\": 13,\n      \"phase2b_batch_061_structural_dispositioned\": 2,\n      \"phase2b_batch_062_atomized_covered\": 7,\n      \"phase2b_batch_062_structural_dispositioned\": 1,\n      \"phase2b_batch_063_atomized_covered\": 25,\n      \"phase2b_batch_063_structural_dispositioned\": 5,\n      \"phase2b_batch_064_atomized_covered\": 8,\n      \"phase2b_batch_064_retired_bridge_covered\": 1,\n      \"phase2b_batch_064_structural_dispositioned\": 3,\n      \"phase2b_batch_065_atomized_covered\": 26,\n      \"phase2b_batch_065_structural_dispositioned\": 9,\n      \"phase2b_batch_066_atomized_covered\": 25,\n      \"phase2b_batch_066_structural_dispositioned\": 2,\n      \"phase2b_batch_067_atomized_covered\": 14,\n      \"phase2b_batch_067_structural_dispositioned\": 1,\n      \"phase2b_batch_068_atomized_covered\": 29,\n      \"phase2b_batch_069_atomized_covered\": 30,\n      \"phase2b_batch_069_structural_dispositioned\": 5,\n      \"phase2b_batch_070_atomized_covered\": 16,\n      \"phase2b_batch_070_structural_dispositioned\": 2,\n      \"phase2b_batch_071_atomized_covered\": 26,\n      \"phase2b_batch_071_structural_dispositioned\": 5,\n      \"phase2b_batch_072_atomized_covered\": 31,\n      \"phase2b_batch_072_structural_dispositioned\": 8,\n      \"phase2b_batch_073_atomized_covered\": 7,\n      \"phase2b_batch_073_structural_dispositioned\": 3,\n      \"phase2b_batch_074_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_074_structural_dispositioned\": 1,\n      \"phase2b_batch_075_atomized_covered\": 24,\n      \"phase2b_batch_075_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_075_structural_dispositioned\": 3,\n      \"phase2b_batch_076_atomized_covered\": 8,\n      \"phase2b_batch_076_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_076_structural_dispositioned\": 6,\n      \"phase2b_batch_077_atomized_covered\": 8,\n      \"phase2b_batch_077_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_077_structural_dispositioned\": 7,\n      \"phase2b_batch_078_atomized_covered\": 22,\n      \"phase2b_batch_078_structural_dispositioned\": 7,\n      \"phase2b_batch_079_bridge_retired\": 1,\n      \"phase2b_batch_079_structural_dispositioned\": 1,\n      \"phase2b_batch_080_atomized_covered\": 17,\n      \"phase2b_batch_080_bridge_retired\": 1,\n      \"phase2b_batch_080_structural_dispositioned\": 3,\n      \"phase2b_batch_081_atomized_covered\": 37,\n      \"phase2b_batch_081_structural_dispositioned\": 6,\n      \"phase2b_batch_082_atomized_covered\": 1,\n      \"phase2b_batch_082_bridge_retired\": 1,\n      \"phase2b_batch_082_structural_dispositioned\": 3,\n      \"phase2b_batch_083_atomized_covered\": 8,\n      \"phase2b_batch_083_bridge_retired\": 1,\n      \"phase2b_batch_083_structural_dispositioned\": 6,\n      \"phase2b_batch_084_atomized_covered\": 18,\n      \"phase2b_batch_084_structural_dispositioned\": 1,\n      \"phase2b_batch_085_atomized_covered\": 17,\n      \"phase2b_batch_085_reference_section_preserved\": 1,\n      \"phase2b_batch_085_structural_dispositioned\": 2,\n      \"phase2b_batch_086_atomized_covered\": 26,\n      \"phase2b_batch_086_bridge_retired\": 1,\n      \"phase2b_batch_086_structural_dispositioned\": 6,\n      \"phase2b_batch_087_atomized_covered\": 8,\n      \"phase2b_batch_087_bridge_retired\": 1,\n      \"phase2b_batch_087_structural_dispositioned\": 3,\n      \"phase2b_batch_088_atomized_covered\": 17,\n      \"phase2b_batch_088_reference_section_preserved\": 1,\n      \"phase2b_batch_088_structural_dispositioned\": 2,\n      \"phase2b_batch_089_atomized_covered\": 3,\n      \"phase2b_batch_091_atomized_covered_bridge_retired\": 1,\n      \"phase2b_batch_092_atomized_covered\": 28,\n      \"phase2b_batch_092_structural_disposition\": 7,\n      \"phase2b_batch_093_atomized_covered\": 14,\n      \"phase2b_batch_094_atomized_covered\": 38,\n      \"phase2b_batch_094_structural_disposition\": 1,\n      \"phase2b_batch_095_atomized_covered\": 8,\n      \"phase2b_batch_095_retired_bridge_disposition\": 1,\n      \"phase2b_batch_095_retired_history_disposition\": 2,\n      \"phase2b_batch_095_structural_disposition\": 2,\n      \"phase2b_batch_095_structural_owner_map_covered\": 1,\n      \"phase2b_batch_095_structural_references_covered\": 2,\n      \"phase2b_batch_095_structural_summary_covered\": 1,\n      \"phase2b_batch_096_atomized_covered\": 25,\n      \"phase2b_batch_097_atomized_covered\": 25,\n      \"phase2b_batch_098_atomized_covered\": 23,\n      \"phase2b_batch_099_atomized_covered\": 4,\n      \"phase2b_batch_099_retired_bridge_disposition\": 1,\n      \"phase2b_batch_099_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_099_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_099_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_100_atomized_covered\": 17,\n      \"phase2b_batch_100_structural_title_anchor\": 1,\n      \"phase2b_batch_101_atomized_covered\": 16,\n      \"phase2b_batch_102_atomized_covered\": 3,\n      \"phase2b_batch_102_retired_bridge_disposition\": 1,\n      \"phase2b_batch_102_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_102_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_102_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_atomized_covered\": 11,\n      \"phase2b_batch_103_retired_bridge_disposition\": 1,\n      \"phase2b_batch_103_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_103_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_103_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_structural_section_container\": 2,\n      \"phase2b_batch_103_structural_title_anchor\": 1,\n      \"phase2b_batch_104_atomized_covered\": 28,\n      \"phase2b_batch_104_structural_section_container\": 3,\n      \"phase2b_batch_104_structural_title_anchor\": 1,\n      \"phase2b_batch_104_structural_toc_disposition\": 1,\n      \"phase2b_batch_105_atomized_covered\": 16,\n      \"phase2b_batch_105_structural_parent_covered\": 1,\n      \"phase2b_batch_105_structural_section_container\": 1,\n      \"phase2b_batch_106_atomized_covered\": 19,\n      \"phase2b_batch_106_structural_section_container\": 1,\n      \"phase2b_batch_107_atomized_covered\": 4,\n      \"phase2b_batch_107_reference_only_structural\": 1,\n      \"phase2b_batch_107_structural_addendum_heading\": 1,\n      \"phase2b_batch_107_structural_section_container\": 1,\n      \"phase2b_batch_108_atomized_covered\": 19,\n      \"phase2b_batch_108_retired_bridge_disposition\": 1,\n      \"phase2b_batch_108_structural_migration_coverage\": 1,\n      \"phase2b_batch_108_structural_planunits_heading\": 1,\n      \"phase2b_batch_108_structural_section_and_planunit\": 3,\n      \"phase2b_batch_109_atomized_covered\": 28,\n      \"phase2b_batch_109_structural_commands_heading\": 1,\n      \"phase2b_batch_109_structural_expanded_extraction_coverage_heading\": 1,\n      \"phase2b_batch_109_structural_formatters_heading\": 1,\n      \"phase2b_batch_109_structural_migration_coverage\": 1,\n      \"phase2b_batch_109_structural_owner_consumer_map\": 1,\n      \"phase2b_batch_109_structural_permissions_heading\": 1,\n      \"phase2b_batch_109_structural_planunits_heading\": 1,\n      \"phase2b_batch_109_structural_run_modes_heading\": 1,\n      \"phase2b_batch_109_structural_subagents_heading\": 1,\n      \"phase2b_batch_110_atomized_covered\": 32,\n      \"phase2b_batch_110_retired_bridge_disposition\": 1,\n      \"phase2b_batch_110_structural_delta_hooks_heading\": 1,\n      \"phase2b_batch_110_structural_models_heading\": 1,\n      \"phase2b_batch_110_structural_plugins_heading\": 1,\n      \"phase2b_batch_110_structural_skills_heading\": 1,\n      \"phase2b_batch_111_atomized_covered\": 15,\n      \"phase2b_batch_111_structural_plan_map_heading\": 1,\n      \"phase2b_batch_112_atomized_covered\": 8,\n      \"phase2b_batch_112_migration_coverage_metadata\": 1,\n      \"phase2b_batch_112_retired_bridge_disposition\": 1,\n      \"phase2b_batch_112_structural_planunits_heading\": 1,\n      \"phase2b_batch_113_atomized_covered\": 43,\n      \"phase2b_batch_113_structural_planunits_heading\": 1,\n      \"phase2b_batch_114_migration_coverage_metadata\": 1,\n      \"phase2b_batch_114_retired_bridge_disposition\": 1,\n      \"phase2b_batch_115_atomized_covered\": 35,\n      \"phase2b_batch_116_atomized_covered\": 5,\n      \"phase2b_batch_116_migration_coverage_metadata\": 1,\n      \"phase2b_batch_116_planunits_heading_structural\": 1,\n      \"phase2b_batch_116_retired_bridge_disposition\": 1,\n      \"phase2b_batch_118_atomized_covered\": 21,\n      \"phase2b_batch_119_atomized_covered\": 1,\n      \"phase2b_batch_120_atomized_covered\": 18,\n      \"phase2b_batch_121_atomized_covered\": 48,\n      \"phase2b_batch_122_atomized_covered\": 8,\n      \"phase2b_batch_123_atomized_covered\": 1,\n      \"phase2b_batch_124_atomized_covered\": 12,\n      \"phase2b_batch_126_atomized_covered\": 1,\n      \"phase2b_batch_127_atomized_covered\": 8,\n      \"phase2b_batch_128_atomized_covered\": 1,\n      \"phase2b_batch_129_duplicate_aware_atomized_covered\": 6,\n      \"phase2b_batch_130_atomized_covered\": 11,\n      \"phase2b_batch_131_atomized_covered\": 5,\n      \"phase2b_batch_132_atomized_covered\": 1,\n      \"phase2b_batch_133_atomized_covered\": 10,\n      \"phase2b_batch_134_atomized_covered\": 1,\n      \"phase2b_batch_135_atomized_covered\": 1,\n      \"phase2b_batch_136_atomized_covered\": 18,\n      \"phase2b_batch_137_atomized_covered\": 15,\n      \"phase2b_batch_138_atomized_covered\": 36,\n      \"phase2b_batch_139_structural_dispositioned\": 4,\n      \"phase2b_batch_140_structural_dispositioned\": 1,\n      \"phase2b_batch_141_structural_dispositioned\": 4,\n      \"phase2b_batch_142_atomized_covered\": 75,\n      \"phase2b_batch_142_structural_dispositioned\": 1,\n      \"phase2b_batch_143_retired_bridge_disposition\": 1,\n      \"phase2b_batch_143_structural_dispositioned\": 1,\n      \"phase2b_batch_144_atomized_covered\": 38,\n      \"phase2b_batch_145_atomized_covered\": 20,\n      \"phase2b_batch_146_retired_bridge_disposition\": 1,\n      \"phase2b_batch_146_structural_dispositioned\": 3,\n      \"phase2b_batch_147_atomized_covered\": 26,\n      \"phase2b_batch_148_atomized_covered\": 20,\n      \"phase2b_batch_148_structural_covered\": 1,\n      \"phase2b_batch_149_retired_bridge_disposition\": 1,\n      \"phase2b_batch_149_structural_dispositioned\": 3,\n      \"phase2b_batch_150_atomized_covered\": 24,\n      \"phase2b_batch_151_atomized_covered\": 22,\n      \"phase2b_batch_152_atomized_covered\": 3,\n      \"phase2b_batch_152_retired_bridge_disposition\": 1,\n      \"phase2b_batch_152_structural_dispositioned\": 3,\n      \"phase2b_batch_153_atomized_covered\": 20,\n      \"phase2b_batch_154_atomized_covered\": 22,\n      \"phase2b_batch_155_retired_bridge_disposition\": 1,\n      \"phase2b_batch_155_structural_dispositioned\": 3,\n      \"phase2b_batch_156_atomized_covered\": 27,\n      \"phase2b_batch_156_structural_dispositioned\": 4,\n      \"phase2b_batch_157_atomized_covered\": 22,\n      \"phase2b_batch_157_structural_dispositioned\": 1,\n      \"phase2b_batch_158_retired_bridge_disposition\": 1,\n      \"phase2b_batch_158_structural_dispositioned\": 3,\n      \"phase2b_batch_159_atomized_covered\": 42,\n      \"phase2b_batch_160_retired_bridge_disposition\": 1,\n      \"phase2b_batch_160_structural_dispositioned\": 3,\n      \"phase2b_batch_161_atomized_covered\": 35,\n      \"phase2b_batch_161_structural_dispositioned\": 3,\n      \"phase2b_batch_162_retired_bridge_disposition\": 1,\n      \"phase2b_batch_162_structural_dispositioned\": 3,\n      \"phase2b_batch_163_atomized\": 29,\n      \"phase2b_batch_164_atomized\": 30,\n      \"phase2b_batch_165_retired_bridge_disposition\": 1,\n      \"phase2b_batch_165_structural_dispositioned\": 3,\n      \"phase2b_batch_166_atomized\": 31,\n      \"phase2b_batch_167_retired_bridge_disposition\": 1,\n      \"phase2b_batch_167_structural_dispositioned\": 3,\n      \"phase2b_batch_168_atomized\": 20,\n      \"phase2b_batch_169_atomized\": 27,\n      \"phase2b_batch_169_structural_dispositioned\": 1,\n      \"phase2b_batch_170_atomized\": 2,\n      \"phase2b_batch_170_retired_bridge_disposition\": 1,\n      \"phase2b_batch_170_structural_dispositioned\": 3,\n      \"phase2b_batch_171_atomized\": 29,\n      \"phase2b_batch_172_atomized\": 1,\n      \"phase2b_batch_172_retired_bridge_disposition\": 1,\n      \"phase2b_batch_172_structural_dispositioned\": 3,\n      \"phase2b_batch_173_atomized\": 42,\n      \"phase2b_batch_174_atomized\": 33,\n      \"phase2b_batch_175_atomized\": 1,\n      \"phase2b_batch_176_atomized\": 1,\n      \"phase2b_batch_177_atomized\": 9,\n      \"phase2b_batch_178_atomized\": 14,\n      \"phase2b_batch_179_atomized\": 27,\n      \"phase2b_batch_180_generated_bridge_disposition\": 1,\n      \"phase2b_batch_180_structural_dispositioned\": 2,\n      \"phase2b_batch_181_atomized\": 23,\n      \"phase2b_batch_182_atomized\": 10,\n      \"phase2b_batch_183_atomized\": 21,\n      \"phase2b_batch_183_structural_dispositioned\": 1,\n      \"phase2b_batch_184_atomized\": 37,\n      \"phase2b_batch_184_structural_dispositioned\": 2,\n      \"phase2b_batch_185_atomized\": 7,\n      \"phase2b_batch_185_structural_dispositioned\": 1,\n      \"phase2b_batch_186_atomized\": 10,\n      \"phase2b_batch_186_structural_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 68,\n    \"live_plan_unit_count\": 5036,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3908,\n    \"unique_live_plan_unit_count\": 5036\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+        "returncode": 0,
+        "stdout": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:54:09Z\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "returncode": 0,
+        "stdout": "{\n  \"docs_checked\": 51,\n  \"failures\": [],\n  \"shards_checked\": 888,\n  \"source_count\": 51,\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "returncode": 0,
+        "stdout": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:54:12Z\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "returncode": 0,
+        "stdout": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:54:12Z\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "returncode": 0,
+        "stdout": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:54:17Z\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+        "returncode": 0,
+        "stdout": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-16T11:54:21Z\",\n  \"status\": \"pass\"\n}\n"
+      },
+      {
+        "cmd": "git diff --check",
+        "returncode": 0,
+        "stdout": ""
+      }
+    ]
+  },
+  "forbidden_artifacts": {
+    "status": "pass",
+    "dirty_path_count": 212,
+    "forbidden_path_matches": [],
+    "notes": "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, Rust/Slint app scaffolds, or legacy Iced app files were created by the repair."
+  },
+  "remaining_blockers": [],
+  "exact_next_safe_action": "Review and commit the bounded repair. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks until the separate Plan_To_Node_Compilation compiler-contract phase exists."
+}

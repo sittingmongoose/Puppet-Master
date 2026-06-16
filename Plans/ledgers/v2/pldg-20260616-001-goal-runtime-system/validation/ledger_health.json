@@ -25,7 +25,7 @@
     {
       "check_id": "scope-0001",
       "status": "pass",
-      "summary": "No canonical Plans, generated Plan indexes, WorkNodes, NodeSeeds, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created by this package."
+      "summary": "Initial ledger-package scope check before compile/seal: no canonical Plans, generated Plan indexes, WorkNodes, NodeSeeds, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created by the initial ledger package. Later compile and governance-seal phases are recorded separately by compile-0001, plan-index-0001, and governance-seal-0001."
     },
     {
       "check_id": "validate-0001",
@@ -105,7 +105,7 @@
     {
       "check_id": "compile-0001",
       "status": "pass",
-      "summary": "Compiled 108 ready atoms to live Plans PlanUnits and regenerated allowed Plans/.plan_index outputs. atom-0001 is non-applicable source memory; atom-0016 remains deferred through GRS-024. Governance seal remains pending."
+      "summary": "Historical pre-seal compile check: compiled 108 ready atoms to live Plans PlanUnits and regenerated allowed Plans/.plan_index outputs. atom-0001 is non-applicable source memory; atom-0016 remains deferred through GRS-024. Governance artifacts were intentionally deferred to a separate seal phase later completed by governance-seal-0001."
     },
     {
       "check_id": "plan-index-0001",
@@ -115,17 +115,17 @@
     {
       "check_id": "migration-validate-0001",
       "status": "fail_expected_pending_seal",
-      "summary": "Read-only pm-plan-migration validate failed because the old standardization migration proof inventory/hash/final-summary artifacts do not include the new Goal_Runtime_System.md doc or changed live docs. This compile regenerated allowed Plans/.plan_index outputs only and did not refresh Plans/.plan_migration artifacts."
+      "summary": "Historical pre-seal migration validation check: read-only pm-plan-migration validate expectedly failed before the old standardization migration proof inventory/hash/final-summary artifacts were refreshed for Goal_Runtime_System.md and changed live docs. Superseded by governance-seal-0001."
     },
     {
       "check_id": "projection-repair-0001",
       "status": "pass",
-      "summary": "Aligned compile_queue item status to compiled and kept strict canonical_plan_targets empty until governance registration/seal; compiled_owner_docs records actual live owner docs touched."
+      "summary": "Historical pre-seal projection repair: aligned compile_queue item status to compiled while compiled_owner_docs recorded actual live owner docs touched. Superseded by governance-seal-0001, which registered the strict canonical_plan_target."
     },
     {
       "check_id": "projection-repair-0002",
       "status": "pass",
-      "summary": "Cleared strict compile_queue target_doc to match empty canonical_plan_targets in pending-seal state while preserving actual target_docs/compiled_owner_docs evidence."
+      "summary": "Historical pre-seal projection repair: preserved actual target_docs/compiled_owner_docs evidence before governance registration. Superseded by governance-seal-0001, which registered Plans/Goal_Runtime_System.md as the strict canonical_plan_target."
     },
     {
       "check_id": "validate-0007",
