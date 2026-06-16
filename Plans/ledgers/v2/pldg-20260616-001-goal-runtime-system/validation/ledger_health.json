@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "ledger_id": "pldg-20260616-001-goal-runtime-system",
+  "status": "pass_ready_for_plan_compile",
+  "summary": {
+    "events": 12,
+    "design_atoms": 88,
+    "decisions": 12,
+    "open_questions": 0,
+    "deferred_questions": 5,
+    "open_blockers": 0,
+    "compile_queue_items": 0,
+    "candidate_atoms": 0,
+    "governance_seal": "not_requested"
+  },
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Retrospective Goal Mode feature ledger created in v2 format with events, design atoms, decisions, corrections, questions, compact state, and registry entry."
+    },
+    {
+      "check_id": "scope-0001",
+      "status": "pass",
+      "summary": "No canonical Plans, generated Plan indexes, WorkNodes, NodeSeeds, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created by this package."
+    },
+    {
+      "check_id": "validate-0001",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings in the validation repo."
+    },
+    {
+      "check_id": "shards-0001",
+      "status": "pass",
+      "summary": "python3 scripts/pm-shard-plans.py --check passed in the validation repo after overlay; no shard artifacts were modified."
+    }
+  ],
+  "warnings": [
+    "Full pm-plans-verify run-gates is expected to require a later governance seal because registering this active ledger changes Plans/ledgers/v2/ledger_registry.json without updating Spec Lock/evidence/governance artifacts."
+  ],
+  "updated_at_utc": "2026-06-16T04:05:00Z"
+}
