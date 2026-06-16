@@ -16996,7 +16996,7 @@ acceptance_criteria:
   - Runtime/event/action readers can identify canonical blocked payload, event alias, action ID, and enum owners without relying on addendum order.
   - Earlier shorter enum or event tables are compatibility/source-lineage when later named PlanUnits define the canonical family.
   - The wording correction for `later addenda over early tables` is preserved and not misquoted as source text from Contracts_V0.md.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -17005,15 +17005,20 @@ reasoning_tier: high
 context_scope: contracts_runtime_event_action_precedence
 implementation_surfaces:
   - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: contracts_intra_file_runtime_contract_precedence
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0017
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
-  - local:Plans/Contracts_V0.md:494
   - local:Plans/Contracts_V0.md:2280
+  - local:Plans/Contracts_V0.md:2390
   - local:Plans/Contracts_V0.md:2393
 preserved_exact_tokens:
   - "Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)"
@@ -17038,6 +17043,10 @@ negative_constraints:
   - Do not misquote external audit wording as exact Contracts_V0.md source text.
 compatibility_only_notes:
   - "`later addenda over early tables` is preserved as external audit wording, not as a Contracts_V0.md quote."
+  - Run_Modes, Models_System, and chain-wizard-flexibility remain consumer/existing-coverage surfaces for this cleanup; CV-285 owns only Contracts_V0 intra-file runtime/event/action precedence.
 owner_hints:
   - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
 ```

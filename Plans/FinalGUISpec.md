@@ -1731,6 +1731,8 @@ Rules:
 - Position-based operations use `path` + `position`.
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
+
+Compatibility/source-lineage disposition: this extract preserves source tokens for LSP GUI display and compatibility search. Treat operation names, aliases, status values, and approval rules by their typed role through the Core rules and owner LSP contract; do not read the `Fields:` list as a standalone schema.
 ### 10.11 Loading-to-live transitions
 
 
@@ -2848,10 +2850,10 @@ If a project is already active, the wizard should open on the preloaded feature/
 - Accepting the CTA opens the Chain Wizard / Interview flow with visible imported context.
 - Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
 
-## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
+## Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
 
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact GUI tokens and older examples; the canonical GUI summary and referenced owner docs govern overlapping blocked/recovery behavior.
 
 ### 1. Dashboard cards
 
@@ -2924,9 +2926,9 @@ All scheduler/remediation/blocked UI updates must follow the existing `invoke_fr
 - Scheduler/remediation state is inspectable in run surfaces.
 - blocked outcomes are not mislabeled as failures.
 - new runtime widgets obey the event-driven rewrite rule.
-## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+## Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves older parity wording; it is not a peer normative blocked/recovery section.
 
 The GUI must expose the packet's runtime state without relying on hidden behavior.
 
@@ -2945,9 +2947,9 @@ All scheduler, blocked, and remediation widgets MUST update from runtime events/
 
 ### UX safety rule
 If the GUI cannot perform a required action in the current mode, it must state why and point to the canonical recovery path. The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior.
-## Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)
+## Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact `wizard_blocked`, queue, and recovery tokens while the canonical GUI summary governs precedence.
 
 ### `wizard_blocked` CtA card
 Add a first-class `wizard_blocked` card alongside `wizard_attention_required`.
@@ -2973,9 +2975,9 @@ Thread and run status surfaces MUST include distinct presentations for:
 - `blocked`
 - `retrying/backoff`
 - `remediation`
-## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+## Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves GUI-specific recovery tokens that supplement the canonical summary only where they do not conflict with named owner docs.
 
 This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
 
@@ -3038,9 +3040,9 @@ Scheduler surfaces MUST visually distinguish:
 - Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
-## Blocked-State Visual Distinction and Recovery UX Addendum
+## Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior above. Compatibility/source-lineage only.** This section preserves visual-distinction examples and older recovery wording; it is subordinate to the canonical GUI summary and referenced owner docs.
 
 ### Blocked-state visual distinction
 
@@ -3175,6 +3177,8 @@ Rules:
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
+
+Compatibility/source-lineage disposition: this extract preserves terminal card payload fields, display actions, and behavior fragments in their source order. `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain display/action tokens, not payload fields solely because they appeared under `Fields:`.
 ### 15.2 Search result card widget
 
 
@@ -3197,6 +3201,8 @@ Rules:
 - final citations come from the actual read path
 - raw search snippets alone are not enough provenance for the final answer
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
+
+Compatibility/source-lineage disposition: this extract preserves web/search source tokens. `Serper-backed Google-result behavior`, `sources`, and `categories` are interpreted through Tools/storage/contracts ownership and search-then-read rules, not as a complete GUI-owned schema.
 ### 15.3 Web and diff operation card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3321,6 +3327,8 @@ Rules:
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
 - Blocked or unavailable web/provider cards may display exact surfaced reason labels such as `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, and `timeout`; contract payloads still normalize provider failures through owner-owned error codes, and the card carries `status: "unavailable"`, `blocked_reason_code`, `allowed_action_ids[]`, and audit routing fields for recovery.
+
+Compatibility/source-lineage disposition: this extract is a token bank split by typed role through Core rules, ContractRefs, and owner docs. Tool operation names, payload keys, card labels, lifecycle states, permission fragments, and behavior rules remain exact source tokens but are not one untyped schema.
 ### 15.4 Planning panel widget (sticky sidebar)
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3356,6 +3364,8 @@ Labels and values:
 - Plan
 - Deep Plan
 - chat.plan_todo_updated
+
+Compatibility/source-lineage disposition: this extract preserves TODO payload fields, display labels, and status values. `Q&A loop`, `Plan`, `Deep Plan`, and `chat.plan_todo_updated` keep their typed roles through the planning/chat owner contracts rather than becoming ordinary payload fields.
 ### 15.5 Question card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3395,6 +3405,8 @@ Rules:
 - `incomplete → ready_to_submit` = all `required` questions answered
 - `ready_to_submit → submitted` = user confirms submit
 - `submitted → [terminal]` = no further transitions
+
+Compatibility/source-lineage disposition: this extract preserves question-flow payload fields, display labels, aliases, and lifecycle rules. `questionnaire`, `single_question`, `unavailable`, `dismissed`, and `sendPrompt` constraints are typed through the question-flow Core rules rather than merged into one schema list.
 ### 15.6 Mermaid and inline visualizer widgets
 
 
@@ -3430,6 +3442,8 @@ Rules:
 - openLink(url)
 - copyToClipboard(text)
 - requestResize(width?, height?)
+
+Compatibility/source-lineage disposition: this extract preserves visualizer display actions and bridge method tokens. `Copy source`, `Open detached preview`, `sendPrompt(text)`, and sandbox restrictions remain typed display/action/bridge/rule tokens through the visualizer runtime contract, not GUI-owned payload fields.
 ### 15.7 Permission approval card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -24512,7 +24526,7 @@ acceptance_criteria:
   - FinalGUISpec implementers can distinguish canonical data fields from display labels, enum/status values, operation names, compatibility aliases, and behavior fragments.
   - Exact source tokens from affected extract blocks remain preserved as lineage rather than being deleted or smoothed away.
   - FinalGUISpec remains a GUI consumer for tool, chat, storage, contract, provider/model, and runtime owner semantics.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -24523,10 +24537,16 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 node_compile_hint:
   mode: extract_block_semantics_normalization
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0008
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0009
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
@@ -24554,10 +24574,16 @@ negative_constraints:
   - Do not delete exact tokens during cleanup.
   - Do not let FinalGUISpec re-own tool, chat, storage, contract, provider/model, or runtime schemas.
   - Do not leave mixed `Fields:` lists as sufficient typed schema when the list contains non-field tokens.
+compatibility_only_notes:
+  - Remaining source extract lists marked as compatibility/source-lineage token banks preserve exact terms while typed field, label, action, and rule semantics route through Core rules and owner docs.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 ```
 
 ### F3-392 - Blocked Recovery Addenda Consolidation
@@ -24597,10 +24623,17 @@ implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
   - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: final_gui_blocked_recovery_addenda_consolidation
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0016
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/FinalGUISpec.md:2851
@@ -24624,9 +24657,16 @@ negative_constraints:
   - Do not preserve inline superseded blocks as ordinary implementation instructions.
   - Do not drop GUI-specific recovery rules that supplement the canonical summary.
   - Do not let stale addenda re-own blocked/recovery semantics after the canonical GUI summary.
+compatibility_only_notes:
+  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface; F3-392 does not create a duplicate chain-wizard owner.
+  - Earlier addenda headings are compatibility/source-lineage sections and must not be parsed as peer canonical sections.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
   - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+  - Plans/chain-wizard-flexibility.md
 ```

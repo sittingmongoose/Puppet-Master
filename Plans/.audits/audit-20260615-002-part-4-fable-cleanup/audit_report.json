@@ -1,0 +1,238 @@
+{
+  "schema_id": "pm.audit_report.v1",
+  "audit_id": "audit-20260615-002-part-4-fable-cleanup",
+  "outcome": "BLOCKED",
+  "created_at_utc": "2026-06-15T21:29:26Z",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "ledger_slug": "part-4-fable-cleanup",
+  "current_ref": "a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+  "baseline_ref": "085f76661b7b754f09eb4cfd429a25d42b26267e",
+  "range": "085f76661b7b754f09eb4cfd429a25d42b26267e..a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+  "range_inference": {
+    "method": "latest non-background ledger from ledger_registry plus earliest commit touching latest ledger directory",
+    "latest_ledger": "pldg-20260615-001-part-4-fable-cleanup",
+    "earliest_cycle_commit": "a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+    "baseline_is_parent_of_earliest_cycle_commit": "085f76661b7b754f09eb4cfd429a25d42b26267e",
+    "evidence": [
+      "ledger_registry.json latest compiled entry has ledger_id pldg-20260615-001-part-4-fable-cleanup and updated_at_utc 2026-06-15T21:11:00Z",
+      "git log for Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup shows first touch at a9913aec2fd5e6bf9c4c5733c5e25f767e018585",
+      "parent of a9913aec2fd5e6bf9c4c5733c5e25f767e018585 is 085f76661b7b754f09eb4cfd429a25d42b26267e"
+    ]
+  },
+  "changed_files": {
+    "category_counts": {
+      "total_changed_paths": 320,
+      "live_top_level_plan_docs": 6,
+      "plan_index_files": 6,
+      "plan_migration_files": 3,
+      "ledger_files": 16,
+      "spec_lock_files": 1,
+      "evidence_files": 7,
+      "shard_files": 275,
+      "script_files": 1
+    },
+    "changed_live_plan_docs": [
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Tools.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/assistant-chat-design.md"
+    ],
+    "forbidden_or_boundary_relevant_paths": [
+      "scripts/pm-governance-seal.py",
+      "Plans/Spec_Lock.json",
+      "Plans/_shards/**",
+      "Plans/.evidence/**",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/{batch_report.jsonl,final_validation_summary.json,validation_report.json}"
+    ]
+  },
+  "planunit_delta": {
+    "old_count": 4998,
+    "new_count": 5005,
+    "added": [
+      "ACD-415",
+      "CV-285",
+      "EP-097",
+      "F3-391",
+      "F3-392",
+      "T-158",
+      "WM-036"
+    ],
+    "deleted": [],
+    "changed_existing_live_doc_planunits_detected": [],
+    "acceptance_units_for_added_units": {
+      "total": 28,
+      "per_plan_unit": {
+        "ACD-415": 4,
+        "CV-285": 4,
+        "EP-097": 4,
+        "F3-391": 4,
+        "F3-392": 4,
+        "T-158": 4,
+        "WM-036": 4
+      }
+    }
+  },
+  "index_status": {
+    "plan_unit_count": 5005,
+    "acceptance_unit_count": 17798,
+    "coverage_status": "pass",
+    "dependency_edges": 11960,
+    "unresolved_dependency_references": 0,
+    "cycle_blocker_count": 245,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true
+  },
+  "validators": {
+    "ran_at_utc": "2026-06-15T21:20:58Z",
+    "status_before": "",
+    "status_after": "",
+    "mutated_worktree": false,
+    "commands": [
+      {
+        "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "atoms": 19,
+          "compile_queue_items": 1,
+          "decisions": 4,
+          "events": 10,
+          "plan_units_checked": 1383,
+          "questions": 3,
+          "warnings": 0,
+          "errors": 0
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-index.py validate",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "plan_unit_count": 5005,
+          "acceptance_unit_count": 17798,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_compiler_contract_incomplete"
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "live_plan_unit_count": 5005,
+          "unique_live_plan_unit_count": 5005,
+          "failures": []
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "failures": []
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "docs_checked": 50,
+          "shards_checked": 876,
+          "source_count": 50,
+          "failures": []
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "failures": []
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "failures": []
+        }
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "failures": []
+        }
+      },
+      {
+        "cmd": "git diff --check",
+        "returncode": 0,
+        "status": "pass",
+        "summary": {
+          "stdout": "",
+          "stderr": ""
+        }
+      }
+    ],
+    "mutability_notes": [
+      "git status --short was empty before and after the validator sequence.",
+      "The committed governance and migration changes in the audit range predate this audit validator run.",
+      "run-gates creates an unlinked temporary shard report; repository status still detects repository file writes from generation/report paths.",
+      "git diff --check validates whitespace/conflict markers only; it does not detect stale governance state."
+    ]
+  },
+  "forbidden_artifacts_result": {
+    "status": "fail",
+    "worknodes_created": false,
+    "nodeseeds_created": false,
+    "executable_queues_created": false,
+    "final_node_manifests_created": false,
+    "legacy_iced_app_recreated": false,
+    "implementation_files_changed": [
+      "scripts/pm-governance-seal.py"
+    ],
+    "notes": "No node/build artifacts were found, but a Python governance script changed in the audited range."
+  },
+  "semantic_risk_count": 9,
+  "blocking_findings": [
+    "RISK-001",
+    "RISK-002",
+    "RISK-003"
+  ],
+  "subagent_summary": [
+    {
+      "agent": "changed-doc fidelity",
+      "result": "Additive live-doc diff only; added seven PlanUnits; no live doc deletions; flagged governance contradiction, thin owner metadata, CV-285 local lineage, and possible WM-036 gui_related overclassification."
+    },
+    {
+      "agent": "ledger atom evidence mapper",
+      "result": "Found governance contradiction, missing F3-392 atom-0015 lineage, and accepted verification atoms not cited by live PlanUnits."
+    },
+    {
+      "agent": "governance/index/validator mutability",
+      "result": "Index counts and dependencies are internally consistent; readiness remains blocked; validators passed and did not mutate; pending_seal is incoherent with generated governance mutations and migration proof pass state."
+    },
+    {
+      "agent": "semantic drift/exact tokens",
+      "result": "Found extract cleanup softened into interpretation, addenda not actually collapsed, runtime addenda still peer sections, missing verification/correction lineage, and chain-wizard-flexibility owner hint loss."
+    },
+    {
+      "agent": "ledger consistency",
+      "result": "Found false no-governance-update claims and stale operating capsule after compile."
+    },
+    {
+      "agent": "forbidden artifacts",
+      "result": "No WorkNodes/NodeSeeds/executable queues/final node manifests found; compile_queue is metadata only; scripts/pm-governance-seal.py implementation-file edit is forbidden for this cycle."
+    }
+  ],
+  "next_safe_action": "Do not repair in this audit. Open a separate explicit repair cycle to reconcile ledger/governance status, either treating the cycle as sealed/governance-refreshed or reverting/regenerating artifacts to match pending_seal, then fix the semantic/lineage gaps and rerun validators.",
+  "compact_repair_prompt": "Repair audit-20260615-002-part-4-fable-cleanup for pldg-20260615-001-part-4-fable-cleanup. Do not edit audit files except to add a repair report. Reconcile ledger registry/current/handoff/open_items/ledger_health/operating_capsule with actual Spec_Lock/shard/evidence/migration state; account for scripts/pm-governance-seal.py or move it to a separate authorized tooling cycle; fix PlanUnit lineage for atom-0015/F3-392 and accepted verification atoms; decide whether extract/addenda cleanup should actually rewrite/collapse old sections or mark them residual lineage; rerun validators and record before/after git status."
+}

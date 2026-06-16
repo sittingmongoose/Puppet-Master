@@ -1,0 +1,102 @@
+{
+  "ran_at_utc": "2026-06-15T21:20:58Z",
+  "status_before": "",
+  "status_after": "",
+  "mutated_worktree": false,
+  "commands": [
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "atoms": 19,
+        "compile_queue_items": 1,
+        "decisions": 4,
+        "events": 10,
+        "plan_units_checked": 1383,
+        "questions": 3,
+        "warnings": 0,
+        "errors": 0
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "plan_unit_count": 5005,
+        "acceptance_unit_count": 17798,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete"
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "live_plan_unit_count": 5005,
+        "unique_live_plan_unit_count": 5005,
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "docs_checked": 50,
+        "shards_checked": 876,
+        "source_count": 50,
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "git diff --check",
+      "returncode": 0,
+      "status": "pass",
+      "summary": {
+        "stdout": "",
+        "stderr": ""
+      }
+    }
+  ],
+  "mutability_notes": [
+    "git status --short was empty before and after the validator sequence.",
+    "The committed governance and migration changes in the audit range predate this audit validator run.",
+    "run-gates creates an unlinked temporary shard report; repository status still detects repository file writes from generation/report paths.",
+    "git diff --check validates whitespace/conflict markers only; it does not detect stale governance state."
+  ]
+}

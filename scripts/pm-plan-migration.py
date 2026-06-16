@@ -1016,16 +1016,22 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
                 "compiler_contract_status": "blocked_compiler_contract_incomplete",
                 "notes": [
                     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
-                    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+                    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
                     "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract.",
                 ],
             }
         )
+    ledger_id = getattr(args, "ledger_id", None)
+    ledger_command = (
+        f"python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/{ledger_id}"
+        if ledger_id
+        else "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>"
+    )
     summary["validators"] = {
         "required_current_commands": [
-            "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+            f"python3 scripts/pm-plan-migration.py validate --run-dir {args.run_dir}",
             "python3 scripts/pm-plan-index.py validate",
-            "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+            ledger_command,
             "python3 scripts/pm-plans-verify.py run-gates",
             "python3 scripts/pm-shard-plans.py --check",
             "git diff --check",
@@ -1277,6 +1283,7 @@ def main() -> int:
     refresh_summary = sub.add_parser("refresh-final-summary")
     refresh_summary.add_argument("--run-dir", required=True)
     refresh_summary.add_argument("--seal-state", choices=["preseal", "postseal"], default="preseal")
+    refresh_summary.add_argument("--ledger-id")
 
     batch = sub.add_parser("standardize-batch")
     batch.add_argument("--run-dir", required=True)
