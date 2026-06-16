@@ -1,0 +1,1457 @@
+# Goal Runtime System
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns native Goal Mode runtime behavior, not the bootstrap ledger conversation that produced it.
+> **PlanProfile:** New Plan Authoring Profile
+> **Authority:** Canonical owner for native Goal runtime/control-plane behavior, invisible and visible goal execution, durable goal state, scheduler updates, evidence, completion receipts, child goals, weak-model safety, verifier/adjudicator policy, goal authority boundaries, and runtime-facing Goal Mode task templates.
+
+## 0. Scope
+
+The Goal Runtime System is Puppet Master's native autonomous execution mode for long-running, cross-referential, or multi-step work. It is not a prompt-packet workflow, not a D2-style staged handoff, and not a planning-only assistant feature.
+
+Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal product flows such as future Chain Wizard ledger-to-Plans transfer use the same engine invisibly.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+## 1. Ownership And Consumers
+
+Goal Runtime owns runtime state, scheduling, update/replan semantics, authority, evidence, certification, model-role policy, and child-goal coordination.
+
+Assistant Chat owns the visible chat controls and displays that project Goal Runtime state: activation, status chips, task trackers, pause/resume/stop/update controls, activity/evidence cards, completion summaries, and collapsible child-goal detail.
+
+FinalGUISpec owns GUI placement for settings surfaces, including the two Goal Mode model selections for worker and verifier/adjudicator roles.
+
+Planning Ledger, Plan Document, and Plan-To-Node docs remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary. Goal Runtime may consume those contracts for ledger-to-Plans goals, but it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+Permissions_System owns the global approval ladder and rule resolution. Goal Runtime owns the Goal-specific invocation rule: high-risk goal actions request explicit approval and invisible/internal goals block when outside predeclared authority.
+
+Runtime_Artifacts_Panel owns user-visible runtime-artifact browsing and retention UI. Goal Runtime owns completion receipt semantics and evidence identity requirements.
+
+Prompt_Pipeline, Models_System, Multi-Account, Provider docs, and provider-specific integration docs own concrete provider/model/account identity. Goal Runtime owns role-policy usage: worker, planner, evaluator, verifier, and adjudicator roles and certification-tier requirements.
+
+## 2. Canonical PlanUnits
+
+### GRS-001 - Native Goal Mode Scope And Retired Prompt Boundary
+
+```yaml
+plan_unit_id: GRS-001
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Mode is a native autonomous execution mode for finished Puppet Master product behavior. It replaces the failed long prompt-packet/D2 handoff approach for long or cross-referential work. It must support arbitrary assistant goals and must not be narrowed to planning-doc transfer, bootstrapped PM Goal Mode, prompt loops, or staged prompt packets under a different name.
+gui_related: false
+gui_classification_reason: This unit defines runtime/product scope and retired workflow boundaries, not GUI implementation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime docs describe a native autonomous execution system rather than a prompt-packet or D2 slicing workflow.
+  - User-facing Goal Mode remains general-purpose for bugs, features, tests-until-pass, refactors, docs, repo research, migrations, audits/repairs, and planning/doc transfer.
+  - Bootstrap-only implementation work is not presented as the product foundation.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual Goal Runtime owner review
+risk_class: product_scope_drift
+reasoning_tier: standard
+context_scope: goal_runtime_system
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - future Goal Mode service
+node_compile_hint:
+  mode: runtime_scope_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0002
+  - pldg-20260616-001-goal-runtime-system:atom-0003
+  - pldg-20260616-001-goal-runtime-system:atom-0004
+  - pldg-20260616-001-goal-runtime-system:atom-0005
+  - pldg-20260616-001-goal-runtime-system:atom-0081
+  - pldg-20260616-001-goal-runtime-system:dec-0002
+  - pldg-20260616-001-goal-runtime-system:dec-0004
+  - pldg-20260616-001-goal-runtime-system:dec-0005
+  - pldg-20260616-001-goal-runtime-system:corr-0001
+  - pldg-20260616-001-goal-runtime-system:corr-0002
+  - pldg-20260616-001-goal-runtime-system:corr-0004
+preserved_exact_tokens:
+  - "native autonomous execution mode"
+  - "not merely a smarter prompt"
+  - "Do not rebuild long staged prompt handoffs under a different name."
+  - "Do not implement Goal Mode as only a prompt loop."
+  - "Do not limit Goal Mode to planning docs."
+  - "No bootstrapped PM Goal Mode required"
+  - "bugs, features, tests-until-pass"
+negative_constraints:
+  - Do not reintroduce old prompt-packet/D2 workflow as the product foundation.
+  - Do not document a separate bootstrapped Goal Mode implementation as required for Puppet Master.
+  - Do not narrow Assistant Chat Goal Mode to plan-doc tasks.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-002 - One Runtime Engine With Visible And Invisible Presentations
+
+```yaml
+plan_unit_id: GRS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime uses one engine with two presentations: visible user-directed goals in Assistant Chat and invisible internal goals for product flows. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Visible goals expose control through Assistant Chat while sharing the same runtime state and lifecycle model.
+gui_related: false
+gui_classification_reason: This unit defines runtime presentation modes; chat-specific controls are owned by Assistant Chat consumer PlanUnits.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - Visible and invisible goals share one lifecycle/state model.
+  - Invisible goals do not ask row-by-row or ordinary ambiguity questions.
+  - Hard stops remain available for authority, safety, missing preconditions, and true blockers.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Goal Runtime lifecycle tests
+risk_class: runtime_split_brain
+reasoning_tier: high
+context_scope: goal_runtime_system
+implementation_surfaces:
+  - future Goal Mode service
+  - future Chain Wizard
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: shared_goal_runtime
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0006
+  - pldg-20260616-001-goal-runtime-system:atom-0007
+  - pldg-20260616-001-goal-runtime-system:atom-0008
+  - pldg-20260616-001-goal-runtime-system:dec-0003
+preserved_exact_tokens:
+  - "same engine"
+  - "invisible internal goals"
+  - "visible assistant-chat goals"
+  - "COMPLETELY hands off"
+  - "from start to finish"
+  - "hard-stop exceptions"
+negative_constraints:
+  - Do not create a separate invisible-goal lifecycle that diverges from visible Goal Mode.
+  - Do not ask row-by-row or ordinary ambiguity questions during invisible internal goals.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### GRS-003 - Invisible Chain Wizard Goal Boundary
+
+```yaml
+plan_unit_id: GRS-003
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Future Chain Wizard ledger-to-Plans transfer uses native Goal Mode invisibly. The Chain Wizard UI stays minimal while invisible goals run, and current Chain Wizard docs are incomplete legacy context rather than final Goal Runtime canon. Exact Chain Wizard flow redesign remains deferred until Goal Runtime PlanUnits are compiled.
+gui_related: true
+gui_classification_reason: This unit includes user-visible Chain Wizard UI minimalism during invisible goals.
+depends_on:
+  - GRS-002
+unblocks: []
+acceptance_criteria:
+  - Ledger-to-Plans transfer can invoke invisible Goal Runtime without exposing row-by-row decisions.
+  - Chain Wizard does not re-own Goal Runtime execution semantics.
+  - The exact redesigned Chain Wizard flow remains deferred and explicit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Chain Wizard integration review
+risk_class: chain_wizard_runtime_drift
+reasoning_tier: standard
+context_scope: chain_wizard_integration
+implementation_surfaces:
+  - future Chain Wizard
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: invisible_goal_consumer_boundary
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0013
+  - pldg-20260616-001-goal-runtime-system:atom-0014
+  - pldg-20260616-001-goal-runtime-system:atom-0015
+  - pldg-20260616-001-goal-runtime-system:dec-0011
+  - pldg-20260616-001-goal-runtime-system:q-0001
+preserved_exact_tokens:
+  - "Chain Wizard ledger-to-Plans"
+  - "invisible Goal Mode"
+  - "current Chain Wizard docs are incomplete"
+  - "exact redesigned Chain Wizard flow"
+negative_constraints:
+  - Do not treat current Chain Wizard docs as final Goal Runtime design.
+  - Do not turn invisible Chain Wizard execution into a row-by-row user questioning flow.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-004 - Whole-Goal Coherence With Sharded Inputs
+
+```yaml
+plan_unit_id: GRS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime must preserve whole-task coherence while operating over sharded ledgers, sharded Plans, document maps, manifests, compact state, and source/target universes. Sharding is access, recovery, and verification infrastructure; it is not D2-style workflow slicing and must not become the core execution model.
+gui_related: false
+gui_classification_reason: Sharded source/context handling is runtime and document infrastructure, not GUI behavior.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime records the source and target universe for each goal.
+  - Compact state can resume work without losing whole-goal context.
+  - Document maps/manifests expose enough identity to recover exact source shards when needed.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future context/resume tests
+risk_class: context_fragmentation
+reasoning_tier: high
+context_scope: repo_and_goal_context
+implementation_surfaces:
+  - future Goal Mode service
+  - Plans/ledgers/v2
+  - Plans/.plan_index
+node_compile_hint:
+  mode: context_and_shard_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0009
+  - pldg-20260616-001-goal-runtime-system:atom-0010
+  - pldg-20260616-001-goal-runtime-system:atom-0011
+  - pldg-20260616-001-goal-runtime-system:atom-0012
+  - pldg-20260616-001-goal-runtime-system:atom-0066
+  - pldg-20260616-001-goal-runtime-system:atom-0067
+  - pldg-20260616-001-goal-runtime-system:atom-0068
+  - pldg-20260616-001-goal-runtime-system:dec-0007
+  - pldg-20260616-001-goal-runtime-system:corr-0003
+preserved_exact_tokens:
+  - "whole-task coherence"
+  - "sharded ledgers"
+  - "sharded Plans"
+  - "document maps"
+  - "manifests"
+  - "compact-state-first resume"
+  - "source and target universe"
+  - "Sharding is not D2-style workflow slicing"
+negative_constraints:
+  - Do not let sharding fragment the agent's understanding of the whole goal.
+  - Do not recreate D2-style staged workflow slicing through shard boundaries.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+### GRS-005 - Durable Goal State And Event Log
+
+```yaml
+plan_unit_id: GRS-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime owns durable execution state for each goal, including objective, lifecycle status, task list, allowed scope, constraints, budgets, attachment manifest, child goals, evidence references, completion receipt, revision, and append-only goal event log. Goal state survives compaction, restarts, and model switches, and optimistic concurrency prevents stale overwrite.
+gui_related: false
+gui_classification_reason: Durable goal state and event logs are runtime/persistence contracts, not GUI implementation.
+depends_on:
+  - GRS-002
+unblocks: []
+acceptance_criteria:
+  - A resumed goal can reconstruct objective, constraints, tasks, status, child goals, evidence, and receipt state.
+  - Concurrent or stale goal updates are rejected or reconciled through revision checks.
+  - Storage substrate remains selectable later without weakening required state fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future goal-state persistence tests
+risk_class: durable_state_loss
+reasoning_tier: high
+context_scope: goal_runtime_state
+implementation_surfaces:
+  - future Goal Mode service
+  - future storage layer
+node_compile_hint:
+  mode: durable_goal_state_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0031
+  - pldg-20260616-001-goal-runtime-system:atom-0032
+  - pldg-20260616-001-goal-runtime-system:atom-0033
+  - pldg-20260616-001-goal-runtime-system:atom-0034
+  - pldg-20260616-001-goal-runtime-system:q-0004
+preserved_exact_tokens:
+  - "durable execution data"
+  - "append-only goal event log"
+  - "Optimistic concurrency"
+  - "compaction, restarts, model switches"
+  - "database tables, project files, or a hybrid"
+negative_constraints:
+  - Do not let exact persistence substrate deferral remove the durable state contract.
+  - Do not allow stale goal state to silently overwrite newer state.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-006 - Scheduler Continuation And Revisioned Goal Updates
+
+```yaml
+plan_unit_id: GRS-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime, not the worker model alone, drives continuation until completion, blocked, stopped, failed, cancelled, or budget-limited. User preemption, constraints, scope changes, and goal updates are revisioned so the scheduler can pause, re-evaluate impact, cancel or re-scope child goals, and resume from a coherent state.
+gui_related: false
+gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
+depends_on:
+  - GRS-005
+unblocks: []
+acceptance_criteria:
+  - A running goal can be paused by user instruction before new scheduling work begins.
+  - Runtime state records revisions for material goal updates.
+  - Scheduler continuation stops only at explicit lifecycle/budget/authority states.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future scheduler state-machine tests
+risk_class: scheduler_drift
+reasoning_tier: high
+context_scope: goal_runtime_scheduler
+implementation_surfaces:
+  - future Goal Mode scheduler
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: scheduler_revision_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0035
+  - pldg-20260616-001-goal-runtime-system:atom-0036
+  - pldg-20260616-001-goal-runtime-system:atom-0037
+preserved_exact_tokens:
+  - "Runtime-driven continuation"
+  - "User preemption"
+  - "constraint updates"
+  - "Goal updates are revisioned"
+negative_constraints:
+  - Do not rely on the worker model's final answer as the scheduler completion source.
+  - Do not apply material goal updates as silent mutable prompt text.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-007 - Goal Replan Event For Material Changes
+
+```yaml
+plan_unit_id: GRS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope reduction, goal replacement, or clarifying instruction, computes impact, updates the visible task list, re-steers or cancels child goals, and then resumes when valid. Trivial clarifications may apply inline; hard constraints apply immediately; forks are reserved for alternate paths or material conflicts.
+gui_related: true
+gui_classification_reason: The runtime event includes user-visible task-list updates and chat-facing replan feedback.
+depends_on:
+  - GRS-006
+unblocks: []
+acceptance_criteria:
+  - Material scope and constraint changes produce a durable Goal Replan Event.
+  - Hard constraints are applied immediately rather than waiting for a phase boundary.
+  - Active and child work is cancelled, re-scoped, forked, or allowed to finish only after impact analysis.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future goal-update/replan tests
+risk_class: silent_goal_mutation
+reasoning_tier: high
+context_scope: goal_runtime_updates
+implementation_surfaces:
+  - future Goal Mode scheduler
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: goal_replan_event
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0094
+  - pldg-20260616-001-goal-runtime-system:atom-0095
+  - pldg-20260616-001-goal-runtime-system:dec-0014
+preserved_exact_tokens:
+  - "pause / resume"
+  - "stop / cancel"
+  - "constraint update"
+  - "scope expansion"
+  - "scope reduction"
+  - "goal replacement"
+  - "clarifying instruction"
+  - "Goal Replan Event"
+  - "pauses scheduling"
+  - "updates the visible task list"
+  - "hard constraints apply immediately"
+negative_constraints:
+  - Do not silently mutate a running goal for material scope or constraint changes.
+  - Do not queue hard constraints until the current phase finishes.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-008 - Objective Attachments And Phase-Bound Snapshots
+
+```yaml
+plan_unit_id: GRS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime preserves oversized objectives, large pasted blocks, image attachments, and remote-session attachments as runtime-readable objective attachment bundles. Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.
+gui_related: false
+gui_classification_reason: Attachment preservation and snapshot identity are runtime/evidence behavior, not visual presentation.
+depends_on:
+  - GRS-005
+unblocks: []
+acceptance_criteria:
+  - Attachments are materialized to paths or artifact IDs that workers and verifiers can read.
+  - Evidence records identify the source state used for each judgment.
+  - Coding goals do not pretend the entire repo is static, but certification does not rely on unspecified latest state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future attachment preservation tests
+risk_class: evidence_reproducibility
+reasoning_tier: high
+context_scope: goal_inputs_and_evidence
+implementation_surfaces:
+  - future Goal Mode service
+  - future runtime artifact storage
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+node_compile_hint:
+  mode: attachment_snapshot_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0038
+  - pldg-20260616-001-goal-runtime-system:atom-0039
+  - pldg-20260616-001-goal-runtime-system:atom-0040
+  - pldg-20260616-001-goal-runtime-system:atom-0099
+  - pldg-20260616-001-goal-runtime-system:atom-0100
+  - pldg-20260616-001-goal-runtime-system:dec-0010
+  - pldg-20260616-001-goal-runtime-system:dec-0016
+  - pldg-20260616-001-goal-runtime-system:corr-0005
+preserved_exact_tokens:
+  - "oversized text"
+  - "large pasted blocks"
+  - "image attachments"
+  - "remote app-server sessions"
+  - "objective attachment bundle"
+  - "snapshotted at goal phase boundaries"
+  - "Freeze the objective bundle"
+  - "Freeze referenced attachments"
+  - "Freeze read/evaluation inputs"
+  - "VCS commit/diff identity"
+negative_constraints:
+  - Do not lose attachments when a goal runs in a remote session.
+  - Do not base certification on an unspecified latest file state.
+  - Do not let stale snapshots cause the agent to ignore legitimate current changes.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+### GRS-009 - Worker Role Separation And Bounded Authority
+
+```yaml
+plan_unit_id: GRS-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime separates worker, planner, evaluator, verifier, and adjudicator roles. Workers have bounded authority, must make evidence-backed claims, and cannot certify global or parent completion by themselves. Risk-triggered verification escalates when worker capability, confidence, scope, evidence, or validation status is insufficient.
+gui_related: false
+gui_classification_reason: Runtime role separation and safety policy are backend/control-plane behavior.
+depends_on:
+  - GRS-006
+unblocks: []
+acceptance_criteria:
+  - Worker roles cannot unilaterally mark a goal complete.
+  - Runtime policy can route stronger evaluation or adjudication when evidence or risk demands it.
+  - No-op or low-change completion claims require coverage evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future verifier/escalation policy tests
+risk_class: weak_worker_false_completion
+reasoning_tier: high
+context_scope: goal_runtime_safety
+implementation_surfaces:
+  - future Goal Mode service
+  - future model/provider policy layer
+node_compile_hint:
+  mode: role_separation_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0041
+  - pldg-20260616-001-goal-runtime-system:atom-0042
+  - pldg-20260616-001-goal-runtime-system:atom-0043
+  - pldg-20260616-001-goal-runtime-system:atom-0044
+  - pldg-20260616-001-goal-runtime-system:atom-0045
+  - pldg-20260616-001-goal-runtime-system:atom-0046
+  - pldg-20260616-001-goal-runtime-system:dec-0006
+preserved_exact_tokens:
+  - "Low-quality agents cannot certify global completion"
+  - "Model role separation"
+  - "Workers have bounded authority"
+  - "Evidence-backed claims"
+  - "Coverage evidence for no-op results"
+  - "Risk-triggered verification escalation"
+negative_constraints:
+  - Do not let weak agents certify global completion.
+  - Do not rely on worker confidence alone when escalation triggers are present.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-010 - Model Role Policy And Certification-Tier Verifier Requirements
+
+```yaml
+plan_unit_id: GRS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime persists separate model-role policy for worker execution and verifier/adjudicator authority. The verifier/adjudicator model may inherit the worker model only when the inherited model satisfies the required policy for the goal's certification tier. Low-risk goals can inherit by default; standard and strong-certification goals use policy-derived verifier/adjudicator requirements; strong-certification goals block, not merely warn, when the requirement cannot be met. Exact provider-specific default tier mappings remain deferred.
+gui_related: false
+gui_classification_reason: This unit defines runtime/provider model-role policy, not the Settings GUI control.
+depends_on:
+  - GRS-009
+unblocks: []
+acceptance_criteria:
+  - Runtime configuration supports independent worker and verifier/adjudicator role settings.
+  - Strong-certification goals cannot proceed with an underqualified verifier/adjudicator model.
+  - Provider-specific default mappings can be added later without changing the role-policy contract.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future model-role policy tests
+risk_class: model_role_policy_drift
+reasoning_tier: high
+context_scope: goal_runtime_model_policy
+implementation_surfaces:
+  - future Goal Mode service
+  - future Settings model policy storage
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: verifier_adjudicator_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0075
+  - pldg-20260616-001-goal-runtime-system:atom-0076
+  - pldg-20260616-001-goal-runtime-system:atom-0104
+  - pldg-20260616-001-goal-runtime-system:atom-0105
+  - pldg-20260616-001-goal-runtime-system:dec-0018
+  - pldg-20260616-001-goal-runtime-system:dec-0019
+  - pldg-20260616-001-goal-runtime-system:q-0005
+preserved_exact_tokens:
+  - "Runtime-neutral model support"
+  - "worker model"
+  - "verifier/adjudicator model"
+  - "inherit the worker only when"
+  - "goal's certification tier"
+  - "Low-risk goals can inherit by default"
+  - "must block, not merely warn"
+negative_constraints:
+  - Do not hard-code one provider/model as required for correctness.
+  - Do not force verifier/adjudicator work to use the same model setting as ordinary worker execution.
+  - Do not treat inheritance as always valid for verifier/adjudicator roles.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Provider_OpenCode.md
+```
+
+### GRS-011 - Provider-Neutral Escalation Triggers
+
+```yaml
+plan_unit_id: GRS-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime escalates to verifier/adjudicator or stronger policy handling when evidence is incomplete, stale, or non-replayable; child outputs conflict; retries or blockers repeat; strong-certification surfaces are touched; destructive or governance actions are proposed; worker confidence is low; writes are out of scope; validators fail; or completion claims are unsupported.
+gui_related: false
+gui_classification_reason: Escalation policy is runtime safety behavior, not GUI implementation.
+depends_on:
+  - GRS-009
+  - GRS-010
+unblocks: []
+acceptance_criteria:
+  - Escalation triggers are evaluated independently of provider-specific model names.
+  - Unsupported completion claims cannot pass certification merely because the worker says the goal is done.
+  - Validator failures and out-of-scope writes escalate even when worker confidence is high.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future escalation policy tests
+risk_class: unsupported_completion_claim
+reasoning_tier: high
+context_scope: goal_runtime_safety
+implementation_surfaces:
+  - future Goal Mode service
+  - future verifier/adjudicator policy layer
+node_compile_hint:
+  mode: escalation_trigger_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0106
+  - pldg-20260616-001-goal-runtime-system:dec-0020
+preserved_exact_tokens:
+  - "incomplete/stale/non-replayable evidence"
+  - "conflicting child outputs"
+  - "repeated retries/blockers"
+  - "strong-certification surfaces"
+  - "destructive/governance actions"
+  - "low worker confidence"
+  - "out-of-scope writes"
+  - "validator failures"
+  - "unsupported completion claims"
+negative_constraints:
+  - Do not certify completion from unsupported claims.
+  - Do not ignore failed validators or out-of-scope writes.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-012 - Goal Completion Receipt Authority
+
+```yaml
+plan_unit_id: GRS-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Every goal produces a Goal Completion Receipt. Completion is a runtime-certified state, not a worker-model judgment. A worker can propose completion, but the controller/evaluator/certifier decides whether the goal is complete. Receipts separate source evidence, canonical evidence, process evidence, governance evidence, unresolved items, changed artifacts, and validator outcomes.
+gui_related: false
+gui_classification_reason: Completion receipt authority and evidence classes are runtime/governance behavior.
+depends_on:
+  - GRS-009
+  - GRS-011
+unblocks: []
+acceptance_criteria:
+  - Every goal has a receipt or a stopped/blocked/degraded receipt explaining why completion is not certified normally.
+  - Receipts distinguish worker claims from controller/evaluator/certifier decisions.
+  - Evidence classes are recorded without treating ledger/source memory as canonical product truth.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future completion receipt validators
+risk_class: false_completion
+reasoning_tier: high
+context_scope: goal_completion
+implementation_surfaces:
+  - future Goal Mode service
+  - future runtime evidence storage
+node_compile_hint:
+  mode: completion_receipt_authority
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0047
+  - pldg-20260616-001-goal-runtime-system:atom-0048
+  - pldg-20260616-001-goal-runtime-system:atom-0049
+  - pldg-20260616-001-goal-runtime-system:atom-0093
+  - pldg-20260616-001-goal-runtime-system:dec-0013
+preserved_exact_tokens:
+  - "Evidence-based completion certification"
+  - "Goal Completion Receipt"
+  - "source/canonical/process evidence separation"
+  - "worker can propose completion"
+  - "controller/evaluator/certifier decides"
+  - "runtime-certified state"
+  - "not a worker-model judgment"
+negative_constraints:
+  - Do not let done be only a worker-model judgment.
+  - Do not allow a worker or child goal to certify global or parent completion by itself.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+### GRS-013 - Risk-Tiered Completion Certification
+
+```yaml
+plan_unit_id: GRS-013
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Completion certification is tiered by risk and phase. Lightweight read-only or answer-only goals require final answer, addressed objective, known uncertainty, no file mutation, and no hidden blocker. Standard code/doc work requires changed files, task checklist disposition, relevant tests/checks run or skipped with reason, no known unresolved blockers, and respected user constraints. Strong-certification goals require replayable evidence, source-to-target mapping where applicable, independent verifier or verifier role, deterministic validators where available, changed artifact hashes, explicit unresolved/open items, and written completion certificate.
+gui_related: false
+gui_classification_reason: Certification tiers are runtime/validation policy, not GUI implementation.
+depends_on:
+  - GRS-012
+unblocks: []
+acceptance_criteria:
+  - File-writing, Plan-writing, code-editing, test-running, migration, destructive, and governance-sensitive goals use stronger certification than read-only goals.
+  - Strong-certification receipts include replayable evidence and independent/deterministic verification where available.
+  - Standard receipts account for checks, changed files, constraints, and blockers.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future receipt-tier validators
+risk_class: certification_underfit
+reasoning_tier: high
+context_scope: goal_completion
+implementation_surfaces:
+  - future Goal Mode service
+  - future verifier/adjudicator policy layer
+node_compile_hint:
+  mode: tiered_completion_certification
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0089
+  - pldg-20260616-001-goal-runtime-system:atom-0090
+  - pldg-20260616-001-goal-runtime-system:atom-0091
+  - pldg-20260616-001-goal-runtime-system:atom-0092
+  - pldg-20260616-001-goal-runtime-system:dec-0013
+preserved_exact_tokens:
+  - "Every goal requires a Goal Completion Receipt"
+  - "Lightweight certification"
+  - "Standard certification"
+  - "Strong certification"
+  - "changed files listed"
+  - "task checklist completed"
+  - "skipped with reason"
+  - "replayable evidence"
+  - "source-to-target mapping"
+  - "deterministic validators"
+  - "changed artifact hashes"
+  - "completion certificate written"
+negative_constraints:
+  - Do not certify normal code/doc work without accounting for checks and constraints.
+  - Do not mark governance-sensitive or mutation-heavy goals complete without stronger certification.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-014 - Verifier Unavailable And Evidence Retention Policy
+
+```yaml
+plan_unit_id: GRS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Verifier/adjudicator unavailable behavior is tiered: low-risk goals may finish with a degraded receipt; standard goals may degrade only when no mutation or required check is affected; strong-certification goals become blocked, not complete. Receipts retain hashes, summaries, changed files, command identities, validator outputs, child receipts, verifier/adjudicator decisions, and source-to-target mappings where relevant. Raw logs are capped, redacted, separately stored, and referenced by hash/path.
+gui_related: false
+gui_classification_reason: Degraded verification and evidence retention are runtime/evidence policy, not GUI implementation.
+depends_on:
+  - GRS-013
+unblocks: []
+acceptance_criteria:
+  - Strong-certification goals do not complete when verifier/adjudicator requirements cannot be met.
+  - Standard degraded receipts are allowed only when mutation and required checks are unaffected.
+  - Raw logs are never stored uncapped or unredacted inside the receipt.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future evidence retention/redaction validators
+risk_class: evidence_retention_drift
+reasoning_tier: high
+context_scope: goal_completion_evidence
+implementation_surfaces:
+  - future Goal Mode service
+  - future runtime artifact storage
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: verifier_degraded_mode_and_retention
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0107
+  - pldg-20260616-001-goal-runtime-system:atom-0109
+  - pldg-20260616-001-goal-runtime-system:dec-0021
+  - pldg-20260616-001-goal-runtime-system:dec-0023
+preserved_exact_tokens:
+  - "low-risk goals may finish with a degraded receipt"
+  - "standard goals may degrade only when no mutation or required check is affected"
+  - "strong-certification goals become blocked, not complete"
+  - "hashes"
+  - "summaries"
+  - "changed files"
+  - "command identities"
+  - "validator outputs"
+  - "child receipts"
+  - "verifier/adjudicator decisions"
+  - "source-to-target mappings"
+  - "Raw logs"
+  - "capped"
+  - "redacted"
+  - "separately stored"
+  - "referenced by hash/path"
+negative_constraints:
+  - Do not complete strong-certification goals in degraded verifier mode.
+  - Do not retain secrets in logs or receipts.
+  - Do not store uncapped raw logs inline in completion receipts.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Project_Output_Artifacts.md
+```
+
+### GRS-015 - Progress Fingerprints, Budgets, And Validators
+
+```yaml
+plan_unit_id: GRS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime uses progress fingerprints, retry/blocker detection, hard budgets, limit statuses, and deterministic validators as first-class gates. A goal cannot hide repeated non-progress, validator failure, or budget exhaustion behind a normal completion claim.
+gui_related: false
+gui_classification_reason: Progress, budget, and validator gates are runtime control behavior, not GUI implementation.
+depends_on:
+  - GRS-012
+unblocks: []
+acceptance_criteria:
+  - Repeated retries or blockers escalate instead of looping silently.
+  - Budget and limit statuses are represented distinctly from successful completion.
+  - Validators are first-class gates for certification where available.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future progress-fingerprint and validator-gate tests
+risk_class: loop_or_validator_false_completion
+reasoning_tier: high
+context_scope: goal_runtime_progress
+implementation_surfaces:
+  - future Goal Mode service
+  - future validator registry
+node_compile_hint:
+  mode: progress_budget_validator_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0050
+  - pldg-20260616-001-goal-runtime-system:atom-0051
+  - pldg-20260616-001-goal-runtime-system:atom-0052
+preserved_exact_tokens:
+  - "Progress fingerprints"
+  - "loop detection"
+  - "Hard budgets"
+  - "limit statuses"
+  - "Validators are first-class gates"
+negative_constraints:
+  - Do not claim normal completion when validators fail.
+  - Do not hide repeated non-progress behind repeated worker attempts.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+### GRS-016 - Parallel Child Goals And Parent Completion Authority
+
+```yaml
+plan_unit_id: GRS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Parent goals may spawn parallel child goals/subagents with dedicated objectives, allowed scope, write policy, budgets, task lists, recovery state, result artifacts, and local completion receipts. Subagents are preferred by default for bounded parallel work. Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.
+gui_related: false
+gui_classification_reason: Child-goal state and authority are runtime orchestration behavior; chat display is an Assistant Chat consumer surface.
+depends_on:
+  - GRS-006
+  - GRS-012
+unblocks: []
+acceptance_criteria:
+  - Child goals have first-class runtime identity and are not hidden implementation details.
+  - Parent goal synthesis and completion authority cannot be delegated to a child goal.
+  - Parallel execution is bounded by declared scope, budgets, and recovery state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future child-goal orchestration tests
+risk_class: child_goal_authority_drift
+reasoning_tier: high
+context_scope: parent_child_goal_runtime
+implementation_surfaces:
+  - future Goal Mode service
+  - future subagent runtime
+node_compile_hint:
+  mode: parent_child_goal_runtime
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0053
+  - pldg-20260616-001-goal-runtime-system:atom-0054
+  - pldg-20260616-001-goal-runtime-system:atom-0055
+  - pldg-20260616-001-goal-runtime-system:atom-0056
+  - pldg-20260616-001-goal-runtime-system:atom-0057
+  - pldg-20260616-001-goal-runtime-system:atom-0058
+  - pldg-20260616-001-goal-runtime-system:atom-0096
+  - pldg-20260616-001-goal-runtime-system:atom-0098
+  - pldg-20260616-001-goal-runtime-system:dec-0009
+  - pldg-20260616-001-goal-runtime-system:dec-0015
+preserved_exact_tokens:
+  - "parallel child goals"
+  - "Subagents preferred by default"
+  - "Parent/child goal tree"
+  - "Parent-only synthesis and merge authority"
+  - "first-class runtime objects"
+  - "parent_goal_id"
+  - "allowed_scope"
+  - "write_policy"
+  - "completion_receipt"
+  - "Child goals may complete themselves locally"
+  - "cannot complete the parent goal"
+  - "For this task, write yourself a new goal and spawn agents in parallel..."
+negative_constraints:
+  - Do not hide child agents as untracked implementation details.
+  - Do not let a child goal certify, merge, or finish the parent goal independently.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-017 - Child Goal Write Authority And Single-Writer Leases
+
+```yaml
+plan_unit_id: GRS-017
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease. If two child goals need the same file, the parent goal serializes or isolates the work, and conflict detection runs before writes proceed.
+gui_related: false
+gui_classification_reason: Write authority and conflict policy are runtime/file orchestration behavior, not GUI implementation.
+depends_on:
+  - GRS-016
+unblocks: []
+acceptance_criteria:
+  - Parallel child goals do not perform blind concurrent direct writes.
+  - Write scopes are isolated, explicitly partitioned, or leased to a single writer by the parent.
+  - Parent synthesis handles conflicting child outputs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future worktree/write-scope conflict tests
+risk_class: concurrent_write_conflict
+reasoning_tier: high
+context_scope: parent_child_goal_runtime
+implementation_surfaces:
+  - future Goal Mode service
+  - future worktree manager
+node_compile_hint:
+  mode: child_write_authority_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0101
+  - pldg-20260616-001-goal-runtime-system:atom-0102
+  - pldg-20260616-001-goal-runtime-system:atom-0110
+  - pldg-20260616-001-goal-runtime-system:dec-0017
+  - pldg-20260616-001-goal-runtime-system:dec-0024
+preserved_exact_tokens:
+  - "read_only"
+  - "proposal_only"
+  - "isolated_worktree"
+  - "direct_write_single_owner"
+  - "direct_write_partitioned"
+  - "parent goal is the default merger/writer"
+  - "No blind concurrent writes"
+  - "parent-granted single-writer lease"
+negative_constraints:
+  - Do not allow blind concurrent direct writes from multiple child goals.
+  - Do not default parallel child agents to direct file mutation.
+  - Do not allow child direct writes without isolation, partitioning, or a parent-granted lease.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-018 - Task Template Catalog And Goal-Type Completion Criteria
+
+```yaml
+plan_unit_id: GRS-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, audit_and_repair, ledger_to_plan_transfer, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable.
+gui_related: false
+gui_classification_reason: Goal templates and completion criteria are runtime/task policy, not GUI implementation.
+depends_on:
+  - GRS-012
+  - GRS-015
+unblocks: []
+acceptance_criteria:
+  - Bug-fix, feature-build, test-until-pass, doc-update, audit/repair, and ledger-to-plan transfer goals have explicit completion criteria.
+  - Plan graph build remains deferred until the compiler contract defines safe node artifacts.
+  - Template metadata does not create executable queues by itself.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future template catalog tests
+risk_class: goal_template_ambiguity
+reasoning_tier: standard
+context_scope: goal_runtime_templates
+implementation_surfaces:
+  - future Goal Mode service
+  - Plans/Plan_To_Node_Compilation.md
+node_compile_hint:
+  mode: goal_template_catalog
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0059
+  - pldg-20260616-001-goal-runtime-system:atom-0060
+  - pldg-20260616-001-goal-runtime-system:atom-0061
+  - pldg-20260616-001-goal-runtime-system:atom-0062
+  - pldg-20260616-001-goal-runtime-system:atom-0063
+  - pldg-20260616-001-goal-runtime-system:atom-0064
+  - pldg-20260616-001-goal-runtime-system:atom-0065
+  - pldg-20260616-001-goal-runtime-system:dec-0005
+  - pldg-20260616-001-goal-runtime-system:q-0002
+preserved_exact_tokens:
+  - "bug_fix"
+  - "feature_build"
+  - "test_until_pass"
+  - "doc_update"
+  - "audit_and_repair"
+  - "ledger-to-plan transfer"
+  - "Plan graph build goal deferred"
+  - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+negative_constraints:
+  - Do not create NodeSeeds or WorkNodes until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
+  - Do not treat a task template as an executable queue.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
+```
+
+### GRS-019 - Autonomous Recovery And Exact Blockers
+
+```yaml
+plan_unit_id: GRS-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by retrying, inspecting, replanning, escalating, rolling back when appropriate, and recording exact blockers when it cannot proceed. Blocked status must carry the exact blocker rather than a generic failure label.
+gui_related: true
+gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
+depends_on:
+  - GRS-006
+  - GRS-015
+unblocks: []
+acceptance_criteria:
+  - Ordinary large-work ambiguity does not become a manual decision request by default.
+  - Recovery actions are recorded as goal events or receipt evidence.
+  - Blocked states expose exact blocker causes for user and verifier review.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future recovery/blocker-state tests
+risk_class: hidden_blocker
+reasoning_tier: high
+context_scope: goal_runtime_recovery
+implementation_surfaces:
+  - future Goal Mode service
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: autonomous_recovery_and_blockers
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0069
+  - pldg-20260616-001-goal-runtime-system:atom-0070
+  - pldg-20260616-001-goal-runtime-system:atom-0071
+  - pldg-20260616-001-goal-runtime-system:atom-0072
+preserved_exact_tokens:
+  - "Autonomous ambiguity handling"
+  - "Autonomous recovery actions"
+  - "No manual decision for ordinary large work"
+  - "Blocked status carries exact blocker"
+negative_constraints:
+  - Do not ask the user for ordinary invisible-goal ambiguity.
+  - Do not hide an unresolved blocker behind a successful completion receipt.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-020 - Approval Boundaries For High-Risk Goal Actions
+
+```yaml
+plan_unit_id: GRS-020
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime requires explicit user approval for destructive actions, governance seal, broad writes outside declared scope, external paid/network side effects, production-affecting actions, data deletion/migration, dependency/license/security-policy changes, and credential/secrets touching. Invisible internal goals use predeclared authority and block when outside it.
+gui_related: false
+gui_classification_reason: Approval authority boundaries are runtime/permission policy, not GUI layout or presentation.
+depends_on:
+  - GRS-011
+  - GRS-012
+unblocks: []
+acceptance_criteria:
+  - High-risk goal actions request explicit user approval before execution.
+  - Invisible/internal goals cannot exceed predeclared authority.
+  - Approval boundaries are enforced even when a child goal or worker requests the action.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future permission/approval policy tests
+risk_class: authority_boundary_violation
+reasoning_tier: high
+context_scope: goal_runtime_permissions
+implementation_surfaces:
+  - future Goal Mode service
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: goal_approval_boundary_policy
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0108
+  - pldg-20260616-001-goal-runtime-system:dec-0022
+preserved_exact_tokens:
+  - "explicit user approval"
+  - "destructive actions"
+  - "governance seal"
+  - "broad writes outside declared scope"
+  - "external paid/network side effects"
+  - "production-affecting actions"
+  - "data deletion/migration"
+  - "dependency/license/security-policy changes"
+  - "credential/secrets touching"
+  - "Invisible internal goals"
+  - "predeclared authority"
+  - "block when outside it"
+negative_constraints:
+  - Do not proceed with high-risk operations without explicit approval.
+  - Do not let invisible internal goals exceed predeclared authority.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Permissions_System.md
+```
+
+### GRS-021 - Goal Compile Acceptance And Governance Boundary
+
+```yaml
+plan_unit_id: GRS-021
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, PlanUnit indexing, and this compile phase, agents must not update Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate seal phase.
+gui_related: false
+gui_classification_reason: Compile and governance boundaries are planning/governance behavior, not GUI implementation.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - Canonical Goal Runtime behavior is represented in live non-pipeline Plans docs.
+  - Allowed PlanUnit index outputs may be regenerated, but seal-phase governance artifacts are not touched.
+  - Compile reports changed files, PlanUnits, atom dispositions, validators, and pending seal status.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
+  - python3 scripts/pm-plan-index.py validate
+  - git diff --check
+risk_class: governance_boundary
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/00-plans-index.md
+  - Plans/.plan_index
+node_compile_hint:
+  mode: compile_governance_boundary
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0080
+  - pldg-20260616-001-goal-runtime-system:atom-0082
+  - pldg-20260616-001-goal-runtime-system:atom-0083
+  - pldg-20260616-001-goal-runtime-system:atom-0084
+  - pldg-20260616-001-goal-runtime-system:dec-0012
+preserved_exact_tokens:
+  - "Create new Goal Runtime System plan doc"
+  - "Goal Runtime PlanUnit coverage areas"
+  - "Do not create generated governance artifacts during ledger planning"
+  - "Goal Mode compile acceptance"
+  - "WorkNodes"
+  - "NodeSeeds"
+  - "Spec_Lock"
+  - "shards"
+  - "evidence bundles"
+  - "plan_graph"
+  - "auto_decisions"
+negative_constraints:
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks during this compile.
+  - Do not update Spec_Lock, generated shards, evidence, plan_graph, or auto_decisions during this compile phase.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-022 - Goal Runtime Risk Register
+
+```yaml
+plan_unit_id: GRS-022
+unit_type: risk
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  The primary Goal Runtime risks are false completion by weak agents, hidden work without user control, and invisible/internal flows interrupting the user for ordinary blockers. Runtime certification, visible control surfaces, exact blocker states, autonomous recovery, and explicit authority boundaries mitigate these risks.
+gui_related: true
+gui_classification_reason: This risk register includes hidden-work/user-control UX risk and visible control mitigation.
+depends_on:
+  - GRS-009
+  - GRS-012
+  - GRS-019
+  - GRS-020
+unblocks: []
+acceptance_criteria:
+  - False completion risk is mitigated through runtime-certified receipts and verifier/adjudicator policy.
+  - Hidden work risk is mitigated through visible Assistant Chat controls and evidence disclosure.
+  - Internal-flow interruption risk is mitigated through autonomous recovery and exact hard-stop boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual Goal Runtime risk review
+risk_class: goal_runtime_product_risk
+reasoning_tier: high
+context_scope: goal_runtime_system
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: goal_runtime_risk_register
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0085
+  - pldg-20260616-001-goal-runtime-system:atom-0086
+  - pldg-20260616-001-goal-runtime-system:atom-0087
+preserved_exact_tokens:
+  - "Main product risk: false completion by weak agents"
+  - "Main UX risk: hidden work without control"
+  - "Main internal-flow risk: user interruption for ordinary blockers"
+negative_constraints:
+  - Do not make invisible work impossible to inspect or stop when it affects the user.
+  - Do not route ordinary invisible-goal ambiguity to the user by default.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners
+
+```yaml
+plan_unit_id: GRS-023
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Codex implementation patterns, attachment behavior references, and competitor evaluator/judge-loop lessons are source-lineage and implementation research inputs only. They may guide Goal Runtime implementation, but they do not override Puppet Master-owned runtime, evidence, model-role, or completion contracts.
+gui_related: false
+gui_classification_reason: Research/source-lineage disposition is not GUI implementation.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - External or comparative references remain cited as lineage or implementation research.
+  - Puppet Master-owned PlanUnits remain the canonical behavior source.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual source-lineage review
+risk_class: external_reference_overreach
+reasoning_tier: standard
+context_scope: goal_runtime_source_lineage
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: source_lineage_reference_disposition
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0040
+  - pldg-20260616-001-goal-runtime-system:atom-0073
+  - pldg-20260616-001-goal-runtime-system:atom-0074
+preserved_exact_tokens:
+  - "Codex v0.140 attachment behavior reference"
+  - "Codex implementation patterns to inspect"
+  - "Evaluator and judge-loop lessons"
+negative_constraints:
+  - Do not make competitor or external implementation references canonical Puppet Master behavior.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-024 - Deferred Chain Wizard And Plan Graph Decisions
+
+```yaml
+plan_unit_id: GRS-024
+unit_type: deferred_decision
+status: deferred
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  The exact redesigned Chain Wizard flow and exact PlanUnit-to-NodeSeed-to-WorkNode compiler contract remain deferred. Goal Runtime may define invisible ledger-to-Plans execution and a future plan_graph_build template, but it must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
+gui_related: false
+gui_classification_reason: Deferred Chain Wizard/compiler contract design is not a GUI implementation requirement.
+depends_on:
+  - GRS-003
+  - GRS-018
+unblocks: []
+acceptance_criteria:
+  - Chain Wizard redesign is represented as deferred rather than silently invented.
+  - Plan graph build remains blocked on the compiler contract.
+  - No node artifacts are produced by this deferred decision.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Chain Wizard and compiler design reviews
+risk_class: deferred_compiler_boundary
+reasoning_tier: high
+context_scope: chain_wizard_and_compiler
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: blocked_compiler_contract_incomplete
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0015
+  - pldg-20260616-001-goal-runtime-system:atom-0016
+  - pldg-20260616-001-goal-runtime-system:atom-0065
+  - pldg-20260616-001-goal-runtime-system:q-0001
+  - pldg-20260616-001-goal-runtime-system:q-0002
+preserved_exact_tokens:
+  - "Plan graph goals come after compiler contract"
+  - "Plan graph build goal deferred"
+  - "exact redesigned Chain Wizard flow"
+  - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+negative_constraints:
+  - Do not create NodeSeeds or WorkNodes before the Plan_To_Node_Compilation contract is complete.
+  - Do not invent the final Chain Wizard flow in this Goal Runtime compile.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults
+
+```yaml
+plan_unit_id: GRS-025
+unit_type: deferred_decision
+status: deferred
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Final Goal chip/status/task-drawer styling, exact persistence substrate, and provider-specific model-role tier mappings remain deferred implementation decisions. The accepted runtime contract still requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements.
+gui_related: true
+gui_classification_reason: This deferred decision includes final visual styling, iconography, and layout for Goal UI surfaces.
+depends_on:
+  - GRS-005
+  - GRS-007
+  - GRS-010
+unblocks: []
+acceptance_criteria:
+  - Deferred visual styling does not weaken functional Goal UI requirements.
+  - Deferred persistence substrate does not weaken durable state and event-log requirements.
+  - Deferred provider defaults do not weaken separate worker/verifier-adjudicator policy or strong-certification blocking rules.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future UI design, persistence, and provider-policy reviews
+risk_class: deferred_implementation_choice
+reasoning_tier: standard
+context_scope: goal_runtime_deferred_items
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: deferred_goal_runtime_implementation_choices
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:q-0003
+  - pldg-20260616-001-goal-runtime-system:q-0004
+  - pldg-20260616-001-goal-runtime-system:q-0005
+preserved_exact_tokens:
+  - "final visual styling, iconography, and exact layout"
+  - "database tables, project files, or a hybrid"
+  - "default model-role tier mappings"
+  - "worker, planner, evaluator, verifier, and adjudicator"
+negative_constraints:
+  - Do not treat deferred styling as absence of required Goal controls.
+  - Do not hard-code provider-specific model defaults as canonical correctness requirements in this compile.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+## 3. Contracts, Schemas, Events, Or Data Shapes
+
+Goal Runtime requires these data-shape families:
+
+- Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `allowed_scope`, constraints, budget, task list, attachment manifest, child goals, evidence references, completion receipt, revision, and recovery state.
+- Goal event log: append-only events for creation, scheduling, worker progress, tool/check execution, user interruption, Goal Replan Event, child-goal status, evidence capture, verifier/adjudicator decision, completion receipt, degraded receipt, stopped receipt, blocked state, and cancellation.
+- Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
+- Child goal state: `parent_goal_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, and `recovery_state`.
+- Write authority: `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and parent-granted `single-writer lease`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+## 4. Integration Surfaces
+
+- Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, completion reports, and child-goal expansion.
+- Final GUI consumes Goal Runtime for Settings placement of worker and verifier/adjudicator model selectors.
+- Planning Ledger and Plan Document systems provide source-lineage and PlanUnit contracts for ledger-to-Plans goals.
+- Plan_To_Node_Compilation remains the boundary for future plan graph build goals and prevents NodeSeed/WorkNode creation before the compiler contract exists.
+- Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
+- Runtime_Artifacts_Panel and storage owners consume Goal Runtime evidence and receipt identities for browsing, retention, and redaction.
+- Provider/model/account owner docs provide concrete provider capabilities; Goal Runtime uses provider-neutral model-role policy.
+
+## 5. Validation And Acceptance
+
+Goal Runtime implementation is acceptable only when:
+
+- all Goal Runtime PlanUnits include `gui_related: true|false`;
+- visible and invisible goals share one lifecycle/state model;
+- every goal produces a completion, degraded, stopped, or blocked receipt;
+- strong-certification goals block when verifier/adjudicator requirements cannot be met;
+- material mid-goal changes produce Goal Replan Events;
+- child goals are first-class runtime objects but cannot complete the parent;
+- child direct writes require isolation, partitioning, or a parent-granted single-writer lease;
+- evidence is replayable for standard/strong tiers and raw logs are capped/redacted;
+- WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent until the compiler contract allows them.
+
+## 6. Plan-To-Node Readiness
+
+Current readiness is index-only. Goal Runtime PlanUnits expose runtime contracts, risk, validation surfaces, dependencies, and `gui_related` metadata for future compiler analysis. They do not create executable build tasks.
+
+Node-readiness remains blocked by `Plans/Plan_To_Node_Compilation.md` until the compiler contract defines any future NodeSeed candidate and WorkNode artifact contracts.
+
+## 7. Deferred, Retired, Compatibility, And Non-Goals
+
+Deferred:
+
+- exact redesigned Chain Wizard flow after native Goal Mode exists;
+- exact PlanUnit-to-NodeSeed-to-WorkNode compiler contract;
+- final visual styling, iconography, and exact layout for Goal chip/status/task drawer;
+- first persistence substrate for native Goal state;
+- provider-specific default model-role tier mappings.
+
+Retired or non-goal:
+
+- old prompt-packet/D2 workflow as product foundation;
+- a bootstrapped PM Goal Mode implementation for current bootstrap work;
+- treating Goal Mode as only a prompt loop or planning-doc transfer tool;
+- creating WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks in this compile;
+- updating Spec Lock, generated shards, evidence bundles, plan_graph, or auto_decisions in this compile.
+
+Compatibility:
+
+- current Chain Wizard docs are incomplete legacy context for this feature;
+- Codex and competitor references are source-lineage/research inputs only.
+
+## 8. Source Lineage And Governance
+
+Primary source lineage:
+
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl`
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/decisions.jsonl`
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/questions.jsonl`
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/corrections.jsonl`
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json`
+- `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/open_items.json`
+
+Owner adjudication:
+
+- `Plans/Goal_Runtime_System.md` owns runtime/control-plane behavior and evidence/completion policy.
+- `Plans/assistant-chat-design.md` owns chat-facing Goal UI and thread behavior.
+- `Plans/FinalGUISpec.md` owns Settings GUI placement for model selectors.
+- `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger, PlanUnit, and node-readiness mechanics.
+
+Governance status after this compile is `pending_seal` if live Plans or `Plans/.plan_index/**` changed. Seal-phase artifacts are intentionally not updated here.

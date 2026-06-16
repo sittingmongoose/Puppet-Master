@@ -19,7 +19,11 @@
         "chat:chain-wizard-context"
       ],
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "updated_at_utc": "2026-06-16T04:00:00Z"
+      "updated_at_utc": "2026-06-16T04:00:00Z",
+      "compiled_output_plan_unit_ids": [
+        "GRS-003",
+        "GRS-024"
+      ]
     },
     {
       "schema_id": "pm.bootstrap_question.v1",
@@ -37,7 +41,11 @@
         "chat:repo-review-context"
       ],
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "updated_at_utc": "2026-06-16T04:00:00Z"
+      "updated_at_utc": "2026-06-16T04:00:00Z",
+      "compiled_output_plan_unit_ids": [
+        "GRS-018",
+        "GRS-024"
+      ]
     },
     {
       "schema_id": "pm.bootstrap_question.v1",
@@ -58,7 +66,10 @@
         "chat:assistant-chat-ui-requirements"
       ],
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "updated_at_utc": "2026-06-16T04:00:00Z"
+      "updated_at_utc": "2026-06-16T04:00:00Z",
+      "compiled_output_plan_unit_ids": [
+        "GRS-025"
+      ]
     },
     {
       "schema_id": "pm.bootstrap_question.v1",
@@ -77,7 +88,11 @@
         "chat:goal-state-design"
       ],
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "updated_at_utc": "2026-06-16T04:00:00Z"
+      "updated_at_utc": "2026-06-16T04:00:00Z",
+      "compiled_output_plan_unit_ids": [
+        "GRS-005",
+        "GRS-025"
+      ]
     },
     {
       "schema_id": "pm.bootstrap_question.v1",
@@ -85,24 +100,31 @@
       "question_id": "q-0005",
       "status": "deferred",
       "question": "What default model-role tier mappings should PM ship for worker, planner, evaluator, verifier, and adjudicator across providers?",
-      "disposition": "Deferred to provider/model policy implementation. The Plan should define role-policy surfaces and escalation rules without hard-coding one provider/model as required for correctness.",
+      "disposition": "Deferred to provider/model policy implementation. The Plan should define role-policy surfaces and escalation rules without hard-coding one provider/model as required for correctness. Separate Settings GUI selections for worker model and verifier/adjudicator model are accepted in dec-0018, and certification-tier verifier/adjudicator requirement policy is accepted in dec-0019; q-0005 only continues to defer exact provider-specific default tier mappings.",
       "linked_atom_ids": [
         "atom-0042",
         "atom-0075",
-        "atom-0076"
+        "atom-0076",
+        "atom-0104",
+        "atom-0105"
       ],
       "source_refs": [
         "chat:low-quality-agent-concern",
         "chat:competitor-research-summary"
       ],
       "created_at_utc": "2026-06-16T04:00:00Z",
-      "updated_at_utc": "2026-06-16T04:00:00Z"
+      "updated_at_utc": "2026-06-16T05:06:00Z",
+      "compiled_output_plan_unit_ids": [
+        "GRS-010",
+        "GRS-025",
+        "F3-393"
+      ]
     }
   ],
   "open_blockers": [],
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "notes": "No open blockers. Deferred questions are intentional integration/implementation follow-ups: Chain Wizard final flow, PlanUnit-to-Node graph compiler contract, final Goal UI styling/iconography, persistence substrate, and provider/model role defaults. These do not block compiling the Goal Runtime core PlanUnits.",
-  "updated_at_utc": "2026-06-16T04:05:00Z"
+  "notes": "No open blockers or open questions. Deferred questions remain intentional non-blocking implementation/future-compiler follow-ups represented in Goal Runtime deferred PlanUnits. Governance seal validator suite passed.",
+  "updated_at_utc": "2026-06-16T05:36:58Z"
 }

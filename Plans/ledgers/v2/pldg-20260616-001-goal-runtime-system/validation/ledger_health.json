@@ -1,17 +1,20 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
-  "status": "pass_ready_for_plan_compile",
+  "status": "pass_governance_sealed",
   "summary": {
-    "events": 12,
-    "design_atoms": 88,
-    "decisions": 12,
+    "events": 23,
+    "design_atoms": 110,
+    "decisions": 26,
+    "questions": 5,
+    "corrections": 5,
     "open_questions": 0,
-    "deferred_questions": 5,
     "open_blockers": 0,
-    "compile_queue_items": 0,
+    "deferred_questions": 5,
     "candidate_atoms": 0,
-    "governance_seal": "not_requested"
+    "ready_for_plan_compile_atoms": 0,
+    "compile_queue_items": 1,
+    "governance_seal": "passed"
   },
   "checks": [
     {
@@ -33,10 +36,111 @@
       "check_id": "shards-0001",
       "status": "pass",
       "summary": "python3 scripts/pm-shard-plans.py --check passed in the validation repo after overlay; no shard artifacts were modified."
+    },
+    {
+      "check_id": "resume-0001",
+      "status": "pass",
+      "summary": "Conversation resumed for optional pre-compile refinement; no canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, design atoms, decisions, blockers, or recorded open questions were created by the resumption itself."
+    },
+    {
+      "check_id": "hardening-0001",
+      "status": "pass",
+      "summary": "Captured pre-compile hardening decisions for tiered completion receipts, Goal Replan Events, first-class collapsible child goals, phase-bound snapshots, and child write authority. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, or executable queues were created."
+    },
+    {
+      "check_id": "validate-0002",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after hardening records were appended."
+    },
+    {
+      "check_id": "model-settings-0001",
+      "status": "pass",
+      "summary": "Captured separate Goal Mode Settings GUI model selectors for worker and verifier/adjudicator roles, plus backing runtime model-role policy. Provider-specific default tier mappings remain deferred under q-0005."
+    },
+    {
+      "check_id": "validate-0003",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after model-selection setting records were appended."
+    },
+    {
+      "check_id": "readiness-assessment-0001",
+      "status": "pass",
+      "summary": "Implementation-readiness assessment recorded no hard blockers and identified optional final policy defaults for fallback semantics, escalation triggers, approval boundaries, verifier degraded-mode behavior, and evidence retention/redaction."
+    },
+    {
+      "check_id": "final-policy-defaults-0001",
+      "status": "pass",
+      "summary": "Locked final implementation policy defaults for certification-tier verifier/adjudicator inheritance, escalation triggers, tiered verifier-unavailable behavior, approval boundaries, evidence retention/redaction, and child-goal direct-write leases. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, or executable queues were created."
+    },
+    {
+      "check_id": "validate-0004",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after final policy defaults were locked."
+    },
+    {
+      "check_id": "final-readiness-0001",
+      "status": "pass",
+      "summary": "Final implementation-readiness assessment confirmed no additional hard blockers before compile. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, or executable queues were created."
+    },
+    {
+      "check_id": "validate-0005",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after final implementation-readiness confirmation was appended."
+    },
+    {
+      "check_id": "final-readiness-0002",
+      "status": "pass",
+      "summary": "Follow-up implementation-readiness assessment reconfirmed no additional hard blockers before compile. Remaining deferred questions are non-blocking integration/implementation details."
+    },
+    {
+      "check_id": "validate-0006",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after follow-up implementation-readiness reconfirmation."
+    },
+    {
+      "check_id": "lineage-repair-0001",
+      "status": "pass",
+      "summary": "Deferred question q-0005 linked_atom_ids and disposition were aligned with the compact open-items projection after a read-only subagent identified the mismatch. This did not change q-0005 status or add a blocker."
+    },
+    {
+      "check_id": "compile-0001",
+      "status": "pass",
+      "summary": "Compiled 108 ready atoms to live Plans PlanUnits and regenerated allowed Plans/.plan_index outputs. atom-0001 is non-applicable source memory; atom-0016 remains deferred through GRS-024. Governance seal remains pending."
+    },
+    {
+      "check_id": "plan-index-0001",
+      "status": "pass",
+      "summary": "python3 scripts/pm-plan-index.py generate and validate passed after compile; node readiness remains blocked_compiler_contract_incomplete and no WorkNodes or NodeSeeds were created."
+    },
+    {
+      "check_id": "migration-validate-0001",
+      "status": "fail_expected_pending_seal",
+      "summary": "Read-only pm-plan-migration validate failed because the old standardization migration proof inventory/hash/final-summary artifacts do not include the new Goal_Runtime_System.md doc or changed live docs. This compile regenerated allowed Plans/.plan_index outputs only and did not refresh Plans/.plan_migration artifacts."
+    },
+    {
+      "check_id": "projection-repair-0001",
+      "status": "pass",
+      "summary": "Aligned compile_queue item status to compiled and kept strict canonical_plan_targets empty until governance registration/seal; compiled_owner_docs records actual live owner docs touched."
+    },
+    {
+      "check_id": "projection-repair-0002",
+      "status": "pass",
+      "summary": "Cleared strict compile_queue target_doc to match empty canonical_plan_targets in pending-seal state while preserving actual target_docs/compiled_owner_docs evidence."
+    },
+    {
+      "check_id": "validate-0007",
+      "status": "pass",
+      "summary": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system passed with zero errors and zero warnings after compile projection repairs."
+    },
+    {
+      "check_id": "governance-seal-0001",
+      "status": "pass",
+      "summary": "Governance seal refreshed migration proof, PlanUnit index, shards, Spec Lock, evidence, plan graph, auto_decisions, and ledger projections. Final validators passed, including pm-plan-migration validate, pm-plan-index validate, both ledger validators, run-gates, shard check, auto-decisions, Spec Lock, evidence validation, and git diff --check."
     }
   ],
   "warnings": [
-    "Full pm-plans-verify run-gates is expected to require a later governance seal because registering this active ledger changes Plans/ledgers/v2/ledger_registry.json without updating Spec Lock/evidence/governance artifacts."
+    "Node readiness remains blocked_compiler_contract_incomplete because the WorkNode compiler contract is intentionally out of scope for this governance seal.",
+    "Deferred questions q-0001 through q-0005 remain non-blocking implementation or future-compiler choices."
   ],
-  "updated_at_utc": "2026-06-16T04:05:00Z"
+  "updated_at_utc": "2026-06-16T05:36:58Z"
 }

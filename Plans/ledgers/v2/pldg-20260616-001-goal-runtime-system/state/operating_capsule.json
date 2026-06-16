@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "capsule_id": "cap-goal-runtime-system-current",
   "ledger_profile": "bootstrap_planning",
-  "agent_task": "compile_goal_runtime_system_ledger_to_canonical_plans_when_explicitly_requested",
+  "agent_task": "goal_runtime_system_governance_sealed",
   "allowed_reads_default": [
     "Plans/ledgers/v2/ledger_registry.json",
     "state/handoff.json",
@@ -59,5 +59,5 @@
     "preserve_deferred_questions",
     "do_not_write_canonical_plans_until_compile"
   ],
-  "updated_at_utc": "2026-06-16T04:05:00Z"
+  "updated_at_utc": "2026-06-16T05:27:58Z"
 }
