@@ -206,6 +206,8 @@ Route/open compatibility evidence references `Plans/Contracts_V0.md` / `/Contrac
 
 ## Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
 
+Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.
+
 Add the following producer -> consumer paths to the wiring matrix.
 
 ### 1. Scheduler analysis
@@ -240,6 +242,8 @@ Add the following producer -> consumer paths to the wiring matrix.
 - consumers: wizard/interview planning UI, storage projections, audit/debug surfaces
 ## Runtime recovery wiring requirements (2026-03-09)
 
+Compatibility/source-lineage disposition: this historical recovery-wiring section preserves minimum-row and UI-handler tokens. It remains source-lineage for WM-036 and must not be read as a separate peer wiring precedence layer.
+
 The wiring matrix MUST contain explicit producers, handlers, and projection consumers for the runtime packet.
 
 ### Runtime recovery wiring minimum rows
@@ -249,6 +253,8 @@ The wiring matrix MUST contain explicit producers, handlers, and projection cons
 
 The matrix must make it possible to trace every new packet field from producer to UI consumer.
 ## Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical event-wiring alignment preserves canonical event row tokens and handler-rule wording. Follow the named Wiring_Matrix PlanUnits and Contracts_V0 event identities rather than adjacent addendum order.
 
 The wiring matrix MUST use the canonical runtime names and identities from `Plans/Contracts_V0.md`.
 
@@ -274,6 +280,8 @@ The wiring matrix MUST use the canonical runtime names and identities from `Plan
 ### UI command handler rule
 Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.
 ## Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical producer/consumer/action section preserves command and action-binding tokens. It remains source-lineage for runtime wiring consolidation and does not create a new executable queue, WorkNode, or NodeSeed surface.
 
 ### Context Lens minimum rows
 
@@ -2929,8 +2937,8 @@ canonical_text: >-
   targets; wiring implementers must follow the named PlanUnits and referenced
   Contracts_V0 event identities instead of inferring precedence from adjacent
   addendum order.
-gui_related: true
-gui_classification_reason: The unit wires runtime events and allowed actions to user-visible Run Graph, Orchestrator, chat, dashboard, and recovery UI consumers.
+gui_related: false
+gui_classification_reason: This unit defines runtime producer/consumer/action wiring and precedence; GUI consumers are referenced, but the unit does not define visual presentation.
 depends_on:
   - WM-012
   - WM-013
@@ -2943,7 +2951,7 @@ acceptance_criteria:
   - Runtime wiring precedence is explicit through PlanUnits for blocked/unblocked, safe-point, remediation, packet wiring, canonical event rows, and recovery action binding.
   - Legacy aliases and addendum headings/dates remain auditable without becoming competing wiring canon.
   - Wiring_Matrix remains a wiring-row owner and does not replace Contracts_V0 event identity or Executor scheduler ownership.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -2954,14 +2962,23 @@ implementation_surfaces:
   - Plans/Wiring_Matrix.md
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
   - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: runtime_wiring_addenda_consolidation
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Wiring_Matrix.md:207
+  - local:Plans/Wiring_Matrix.md:241
   - local:Plans/Wiring_Matrix.md:251
   - local:Plans/Wiring_Matrix.md:276
 preserved_exact_tokens:
@@ -2986,9 +3003,18 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not rely on adjacent addendum order as wiring precedence.
   - Do not make Wiring_Matrix a general runtime schema owner.
+compatibility_only_notes:
+  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface for wizard.blocked / wizard.unblocked; WM-036 only wires canonical event/action identities.
+  - Cited wiring addenda sections are compatibility/source-lineage sections; named wiring PlanUnits and Contracts_V0 event identities carry precedence.
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
   - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L5743-L5818
+Source lines: L5751-L5832
 
-Source SHA256: `7e1b6b27b69f41dc35c1fe035c393070c913ad9f9ce38171ddd785c95fc8029b`
+Source SHA256: `4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721`
 
 ---
 
@@ -34,7 +34,7 @@ acceptance_criteria:
   - Executor runtime recovery behavior is read through named owner sections and PlanUnits rather than additive addendum order.
   - Scheduler, blocked/recovery, retry, safe-point, remediation, readiness, score, attempt lifecycle, approval, and provider/model terms remain preserved as exact lineage.
   - Executor consumes Contracts_V0, Run_Modes, Models_System, storage-plan, and Wiring_Matrix ownership without replacing them.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -46,11 +46,14 @@ implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Run_Modes.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
   - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: executor_runtime_addenda_consolidation
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Executor_Protocol.md:259
@@ -77,10 +80,13 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not leave overlapping addenda as coequal normative sections when owner PlanUnits carry the merged rule.
   - Do not semantically change scheduler, blocked, retry, safe-point, remediation, readiness, score, attempt lifecycle, or provider/model behavior during consolidation.
+compatibility_only_notes:
+  - Cited runtime addenda sections are compatibility/source-lineage sections; named owner PlanUnits and owner docs carry merged runtime precedence.
 owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Contracts_V0.md
   - Plans/Run_Modes.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
   - Plans/Wiring_Matrix.md
 ```

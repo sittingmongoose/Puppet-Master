@@ -2,13 +2,15 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L574-L656
+Source lines: L578-L662
 
-Source SHA256: `7e1b6b27b69f41dc35c1fe035c393070c913ad9f9ce38171ddd785c95fc8029b`
+Source SHA256: `4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721`
 
 ---
 
 ## Canonical Runtime Scheduler Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical canonical-alignment addendum preserves scheduler, blocked, score, and graph-lock tokens. Executor implementers must follow named owner sections and PlanUnits rather than treating adjacent addenda order as precedence.
 
 This addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.
 

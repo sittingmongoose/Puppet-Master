@@ -1,16 +1,16 @@
-# Shard 029: Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+# Shard 029: Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2927-L2947
+Source lines: L2929-L2949
 
-Source SHA256: `e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e`
+Source SHA256: `311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111`
 
 ---
 
-## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+## Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves older parity wording; it is not a peer normative blocked/recovery section.
 
 The GUI must expose the packet's runtime state without relying on hidden behavior.
 

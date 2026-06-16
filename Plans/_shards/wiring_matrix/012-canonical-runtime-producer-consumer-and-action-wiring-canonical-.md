@@ -2,13 +2,15 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L276-L311
+Source lines: L282-L319
 
-Source SHA256: `b08cf4c54b9292599261ec1ecb9dfe01c02080ca309a46af4066d141b0336783`
+Source SHA256: `39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b`
 
 ---
 
 ## Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical producer/consumer/action section preserves command and action-binding tokens. It remains source-lineage for runtime wiring consolidation and does not create a new executable queue, WorkNode, or NodeSeed surface.
 
 ### Context Lens minimum rows
 

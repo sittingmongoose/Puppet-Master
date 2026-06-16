@@ -2,13 +2,15 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L504-L572
+Source lines: L506-L576
 
-Source SHA256: `7e1b6b27b69f41dc35c1fe035c393070c913ad9f9ce38171ddd785c95fc8029b`
+Source SHA256: `4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721`
 
 ---
 
 ## Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical recovery addendum preserves exact scheduler/recovery terms. It is subordinate to the consolidated runtime/addenda boundary and named owner sections where overlapping rules appear.
 
 This addendum is normative and supersedes any earlier pure-lexicographic dispatch wording where they conflict.
 

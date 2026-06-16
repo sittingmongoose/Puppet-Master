@@ -2,13 +2,15 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L241-L250
+Source lines: L243-L254
 
-Source SHA256: `b08cf4c54b9292599261ec1ecb9dfe01c02080ca309a46af4066d141b0336783`
+Source SHA256: `39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b`
 
 ---
 
 ## Runtime recovery wiring requirements (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical recovery-wiring section preserves minimum-row and UI-handler tokens. It remains source-lineage for WM-036 and must not be read as a separate peer wiring precedence layer.
 
 The wiring matrix MUST contain explicit producers, handlers, and projection consumers for the runtime packet.
 

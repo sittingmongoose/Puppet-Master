@@ -152,7 +152,7 @@ def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
         changed = upsert_check(
             checks,
             "no-node-artifacts-created",
-            "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+            "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created.",
         ) or changed
 
     if changed:

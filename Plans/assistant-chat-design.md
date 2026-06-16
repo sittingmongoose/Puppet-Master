@@ -1502,6 +1502,8 @@ Rules:
 - "For Session" grants all listed domains for that session
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
+
+Compatibility/source-lineage disposition: this extract preserves web/provider payload keys, display labels, permission fragments, and routing rules in source order. Treat each token by typed role through Core rules, ContractRefs, and owner docs; do not read the `Fields:` list as a standalone chat-owned schema.
 ### 13.3 Bash and terminal ownership
 
 This section defines the canonical contract for this surface.
@@ -21806,7 +21808,7 @@ acceptance_criteria:
   - Assistant Chat implementers can classify each preserved token by typed role instead of treating every list entry as a schema field.
   - Question-card, TODO, operation-card, web/provenance, persona, Markdown/Mermaid, and inline visualizer behavior remains implementation-ready through Core rules and PlanUnits.
   - Owner boundaries prevent chat prose from replacing Tools, Contracts_V0, storage, provider/model, permission, or FinalGUISpec contracts.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -21817,10 +21819,16 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 node_compile_hint:
   mode: assistant_chat_extract_block_semantics_normalization
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0008
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0009
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
@@ -21855,8 +21863,14 @@ negative_constraints:
   - Do not delete exact tokens or compatibility aliases during cleanup.
   - Do not leave token-only lists as sufficient typed schema where Core rules and owner contracts are needed.
   - Do not move tool, storage, contract, provider/model, permission, or FinalGUISpec ownership into assistant-chat-design.
+compatibility_only_notes:
+  - Remaining source extract lists marked as compatibility/source-lineage token banks preserve exact terms while typed field, label, action, and rule semantics route through Core rules and owner docs.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 ```

@@ -1,16 +1,16 @@
-# Shard 033: Blocked-State Visual Distinction and Recovery UX Addendum
+# Shard 033: Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3041-L3107
+Source lines: L3043-L3109
 
-Source SHA256: `e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e`
+Source SHA256: `311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111`
 
 ---
 
-## Blocked-State Visual Distinction and Recovery UX Addendum
+## Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior above. Compatibility/source-lineage only.** This section preserves visual-distinction examples and older recovery wording; it is subordinate to the canonical GUI summary and referenced owner docs.
 
 ### Blocked-state visual distinction
 

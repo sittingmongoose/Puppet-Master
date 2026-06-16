@@ -1,0 +1,290 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "evidence.part4-fable-cleanup-post-audit-repair-2026-06-15",
+  "created_at_utc": "2026-06-15T21:54:47Z",
+  "node": {
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-15",
+    "graph_scope": "puppet-master-repo-build",
+    "node_id": "pm.build-governance.part4-fable-cleanup-post-audit-repair"
+  },
+  "summary": "Part 4 Fable Cleanup post-compile fidelity repair and governance seal evidence for live Plan repairs, PlanUnit index artifacts, migration bookkeeping, shards, Spec Lock, auto-decision refresh, ledger projections, and governance-helper tooling. No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260615-001-part-4-fable-cleanup",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "local-python",
+      "count": 4
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "pldg-20260615-001-part-4-fable-cleanup:evt-0011"
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/.plan_index/**",
+      "change_type": "modified",
+      "note": "PlanUnit index and node-readiness outputs refreshed."
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+      "change_type": "modified",
+      "note": "Migration validation hashes, final summary, and live PlanUnit count refreshed for Part 4."
+    },
+    {
+      "path": "Plans/_shards/**",
+      "change_type": "modified",
+      "note": "Configured shard outputs regenerated."
+    },
+    {
+      "path": "Plans/.evidence/**",
+      "change_type": "modified",
+      "note": "Part 4 evidence bundle added and artifact hashes refreshed."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/**",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "scripts/pm-plan-migration.py",
+      "change_type": "modified",
+      "note": "Reusable governance tooling fix for ledger command recording."
+    },
+    {
+      "path": "scripts/pm-governance-seal.py",
+      "change_type": "modified",
+      "note": "Reusable governance tooling wording fix for no-product-implementation check."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "SchemaID:pm.auto_decisions.schema.v1",
+    "SchemaID:pm.evidence.schema.v1",
+    "ContractName:Plans/Plan_Document_System.md",
+    "ContractName:Plans/Planning_Ledger_System.md",
+    "ContractName:Plans/Plan_To_Node_Compilation.md",
+    "ContractName:Plans/Bootstrap_Planning_Migration.md",
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-005",
+    "Gate:GATE-006",
+    "Gate:GATE-009"
+  ],
+  "reproducibility": {
+    "note": "Generated from current workspace state after Part 4 post-compile fidelity repair and governance seal refresh.",
+    "snapshot_ref": "part4-fable-cleanup-post-audit-repair-current-worktree"
+  },
+  "artifacts": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "cd8c4d82013e148bbb9123a0fb1591c69a7044873cee4ec31a1ef6b0b98be694"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "sha256": "ae89c54681d60ab1d9bf0600e1c2fdd441edab90e31124bda46b310dfec3b19e"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "2c70db9aeb75fee2eddb58a18788ccb681d396d51d94cbb7cfe78610b93de7e1"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "sha256": "26fee545785da7d8d66ca90d6e7b12c9baa8fe5974515a356b954dd72058e42e"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "sha256": "a813dcd3c2c7c0e2669ef031102a61abb9d140cd9c3bfe668a8391eff084e4a3"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "sha256": "3fa81542fa0f42107dbe8838523d172d6809fc313a18708e1d88c760548b4f67"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "sha256": "260331cc42944fab2a827d87334f52536c1d9dd29c5ea87dce1aa5bdfea2c8d3"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "sha256": "c4ed7dede06242ab6ba867ed601bcceb7d370d762a3802cdab7d11db69fff956"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "sha256": "9423fff12be129eb1c1db9f332c80638da0e778ea74b431d526a24d61c7851ba"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "sha256": "a4676eb3f81910481251bdf7701db66acaf47155d971eca4808e5a07d425e9ee"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "sha256": "e0345a03ff0c337558e02817c7dd064571ec9513593900513a3cf5faaf4f157d"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+      "sha256": "99857f2316378bd87a1b3dd2a96a9ec0c1e5325620bd78ba9c8a45a182c17b40"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "sha256": "4838741d63aeed53c3e5824133f5dc8ba1aa3e3ba4bb1f4663d19f6c002cf1b8"
+    },
+    {
+      "path": "Plans/sharding_config.json",
+      "sha256": "c7cfa4323611cb67a992500cb2e66cd9f81e423990ffc7f83759f64aff1cc48f"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "a17d8e1a6d77b55fca9fa4a9a29a03077a8f481a85673a6cb97dec0d4406dc7c"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "9d5a15848dd80ee83bd225c9f2b630a61bc967030acfac93fe3ff58d8877e5ae"
+    },
+    {
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "sha256": "49fdecaf93563daa44c39f1d15504045cea6d89e96d12f8d4676ebcc6952ca5e"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json",
+      "sha256": "d4cf7e808ae18a6e2343e2bb75a90535992aeab8d1938aa5fb302f20ece0fc54"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/events.jsonl",
+      "sha256": "20722b00df5ef313bb7cac8d408e9dd514257ae9ca9c75f1d1a76f95ce60643f"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/design_atoms.jsonl",
+      "sha256": "dbfc17cce273e4c6dfa79cb45e98c667be33c0f083f8bd21a40af033f71c9a7c"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl",
+      "sha256": "a6d85a20485a1dd8b3e5898422a68ff2646db5d3eb8ef1aa70e6e473fd81594f"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/corrections.jsonl",
+      "sha256": "360a32d019d9d719f2754eeefe48a4bc7bcc33db7f1824fbe6cec8919c41dc6f"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json",
+      "sha256": "f7131dd5a56eb84b175f18e39f298de9950b86f4147989436f3bbc6a4937c0b3"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json",
+      "sha256": "a00e6524dee6ef50bd6e9934c25fc8b47b135e131fecc838773a128186f4bbe7"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/open_items.json",
+      "sha256": "3f97f474d944cd2a95b362743f9ac374bea931224a0ee4e4511dc0d5db6ef1c9"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/compile_queue.json",
+      "sha256": "a13043b8b54e5474324392a60ff52c0038eb04d79d42169c6762ccb24426a528"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/operating_capsule.json",
+      "sha256": "e788ca0c2a45d20ef634cfdc9ad3f2837024ab9283b260e871c832b74314f32e"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json",
+      "sha256": "8fc8f2bbbc83f34cc53fb77f2929cb5995fcd8b8739ddadcedb0c57be4d92e76"
+    },
+    {
+      "path": "scripts/pm-plan-migration.py",
+      "sha256": "987dc37b20d98a01876640d91cf966d6ead56180c7014de493f78a64e4ff1ba2"
+    },
+    {
+      "path": "scripts/pm-governance-seal.py",
+      "sha256": "1e9b3ae87299fb6c0cb916be1f97ff604b2f3a8569d255ec68359671f6faff55"
+    }
+  ],
+  "checks": [
+    {
+      "name": "plan-index-generate",
+      "result": "PASS",
+      "details": "PlanUnit index generated with 5005 PlanUnits and node_readiness_report.status=blocked_compiler_contract_incomplete."
+    },
+    {
+      "name": "migration-refresh",
+      "result": "PASS",
+      "details": "Migration batch hashes and final summary refreshed for pldg-20260615-001-part-4-fable-cleanup."
+    },
+    {
+      "name": "shard-generate",
+      "result": "PASS",
+      "details": "Configured shard outputs regenerated: docs_generated=50; shards_generated=876; failures=[]."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created."
+    }
+  ]
+}

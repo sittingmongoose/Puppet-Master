@@ -2,13 +2,15 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L259-L503
+Source lines: L259-L505
 
-Source SHA256: `7e1b6b27b69f41dc35c1fe035c393070c913ad9f9ce38171ddd785c95fc8029b`
+Source SHA256: `4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721`
 
 ---
 
 ## Runtime Scheduler Addendum (2026-03-08)
+
+Compatibility/source-lineage disposition: this historical scheduler addendum preserves exact runtime tokens and earlier scheduling examples. Where it overlaps later named PlanUnits, Contracts_V0, Run_Modes, Models_System, storage-plan, or Wiring_Matrix ownership, those owner docs govern; do not infer precedence from this addendum's position.
 
 This addendum supersedes any earlier lexical-dispatch wording wherever they conflict.
 

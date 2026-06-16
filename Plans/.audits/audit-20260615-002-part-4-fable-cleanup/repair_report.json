@@ -1,0 +1,266 @@
+{
+  "schema_id": "pm.post_compile_repair_report.v1",
+  "audit_id": "audit-20260615-002-part-4-fable-cleanup",
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "generated_at_utc": "2026-06-15T22:00:59Z",
+  "status": "PASS",
+  "scope": "bounded repair of audit-listed issues plus direct validator fallout",
+  "false_positives": [],
+  "repaired_findings": [
+    {
+      "risk_id": "RISK-001",
+      "status": "repaired",
+      "repair": "Ledger projections, registry, manifest, compile_queue, open_items, handoff, current state, and health now record governance_status=sealed. Spec Lock, shards, evidence, auto_decisions, migration proof, and allowed .plan_index updates are explicit repair/seal scope."
+    },
+    {
+      "risk_id": "RISK-002",
+      "status": "repaired",
+      "repair": "Governance-helper script changes are explicitly recorded as tooling repair, not product implementation. pm-plan-migration.py now accepts --ledger-id for final-summary validator commands; pm-governance-seal.py now records no-product-implementation wording."
+    },
+    {
+      "risk_id": "RISK-003",
+      "status": "repaired",
+      "repair": "Migration batch hashes and final summary refreshed; migration validation passes with live_plan_unit_count=5005 and failures=[]."
+    },
+    {
+      "risk_id": "RISK-004",
+      "status": "repaired",
+      "repair": "state/operating_capsule.json now reflects post-audit governance seal task, removes stale pre-compile restrictions, and preserves the node/compiler artifact boundary."
+    },
+    {
+      "risk_id": "RISK-005",
+      "status": "repaired",
+      "repair": "Cited extract blocks in FinalGUISpec, assistant-chat-design, and Tools now carry compatibility/source-lineage token-bank dispositions; F3-391, ACD-415, and T-158 include compatibility notes and expanded owner metadata."
+    },
+    {
+      "risk_id": "RISK-006",
+      "status": "repaired",
+      "repair": "Final GUI old blocked/recovery addenda are prefixed compatibility/source-lineage; Executor and Wiring addenda have local disposition notes; F3-392, EP-097, and WM-036 carry compatibility notes."
+    },
+    {
+      "risk_id": "RISK-007",
+      "status": "repaired",
+      "repair": "Accepted verification/source atoms atom-0008, atom-0009, atom-0013, and atom-0014 are source-lineage-only dispositions and are cited by live PlanUnits; F3-392 now includes atom-0015."
+    },
+    {
+      "risk_id": "RISK-008",
+      "status": "repaired",
+      "repair": "Owner_hints and implementation_surfaces expanded across affected PlanUnits; CV-285 removes the weak local:Plans/Contracts_V0.md:494 live evidence ref and preserves it only as ledger verification-lineage context; chain-wizard-flexibility is recorded as consumer/existing-coverage."
+    },
+    {
+      "risk_id": "RISK-009",
+      "status": "repaired",
+      "repair": "WM-036 gui_related changed to false with a wiring/runtime classification reason."
+    }
+  ],
+  "plan_units_changed": {
+    "F3-391": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ],
+    "ACD-415": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ],
+    "T-158": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ],
+    "F3-392": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes"
+    ],
+    "CV-285": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ],
+    "EP-097": [
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ],
+    "WM-036": [
+      "gui_related",
+      "gui_classification_reason",
+      "source_lineage",
+      "implementation_surfaces",
+      "owner_hints",
+      "compatibility_only_notes",
+      "acceptance_criteria"
+    ]
+  },
+  "live_plan_docs_changed": [
+    "Plans/FinalGUISpec.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "ledger_records_changed": {
+    "events_added": [
+      "evt-0011"
+    ],
+    "decisions_added": [
+      "dec-0005"
+    ],
+    "corrections_added": [
+      "corr-0001"
+    ],
+    "source_lineage_only_atoms_updated": [
+      "atom-0008",
+      "atom-0009",
+      "atom-0013",
+      "atom-0014"
+    ],
+    "projections_updated": [
+      "manifest.json",
+      "state/current.json",
+      "state/handoff.json",
+      "state/open_items.json",
+      "state/compile_queue.json",
+      "state/operating_capsule.json",
+      "validation/ledger_health.json",
+      "../ledger_registry.json"
+    ],
+    "governance_status": "sealed"
+  },
+  "generated_artifacts_refreshed": {
+    "plan_index": {
+      "plan_unit_count": 5005,
+      "acceptance_unit_count": 17798,
+      "node_readiness_status": "blocked_compiler_contract_incomplete"
+    },
+    "migration": [
+      "batch_report.jsonl",
+      "final_validation_summary.json"
+    ],
+    "shards": {
+      "docs": 50,
+      "shards": 876
+    },
+    "governance": [
+      "Plans/Spec_Lock.json",
+      "Plans/auto_decisions.jsonl",
+      "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "Plans/.evidence/** artifact hashes"
+    ]
+  },
+  "tooling_changes": {
+    "scripts/pm-plan-migration.py": "Adds --ledger-id for refresh-final-summary and removes the hardcoded Part 3 ledger validation command from generated summaries.",
+    "scripts/pm-governance-seal.py": "Narrows no-node-artifacts evidence wording to product implementation files/Rust-Slint app scaffolds/legacy Iced app files."
+  },
+  "validators": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+      "status": "pass",
+      "summary": {
+        "atoms": 19,
+        "decisions": 5,
+        "corrections": 1,
+        "events": 11,
+        "warnings": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": {
+        "plan_unit_count": 5005,
+        "acceptance_unit_count": 17798,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "summary": {
+        "live_plan_unit_count": 5005,
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": {
+        "docs_checked": 50,
+        "shards_checked": 876,
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass",
+      "summary": {
+        "failures": 0
+      }
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass",
+      "summary": {
+        "whitespace_errors": 0
+      }
+    }
+  ],
+  "forbidden_artifact_scan": {
+    "status": "pass",
+    "changed_path_count": 324,
+    "findings": {
+      "worknodes": [],
+      "nodeseeds": [],
+      "nodeseed_candidates": [],
+      "executable_queues": [],
+      "final_node_manifests": [],
+      "production_build_tasks": [],
+      "legacy_iced_or_rust_slint_product": []
+    },
+    "note": "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues were created. Two governance-helper scripts changed as explicit tooling repair scope."
+  },
+  "subagent_summary": {
+    "governance_ledger_state": "Recommended governance-sealed projection repair rather than rollback; ledger state updated accordingly.",
+    "lineage_metadata": "Recommended concrete PlanUnit field replacements and WM-036 gui_related=false; applied with the additional Wiring local:241 source ref.",
+    "semantic_cleanup": "Confirmed RISK-005/RISK-006; applied local compatibility/source-lineage dispositions rather than broad semantic rewrites.",
+    "forbidden_artifacts_tooling": "Recommended retaining existing governance-helper script change as explicit tooling scope; repair also made tooling wording/ledger-command generation generic."
+  },
+  "remaining_blockers": [],
+  "next_safe_action": "Review and commit the repair set. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues until the WorkNode compiler contract exists and Jared explicitly requests that phase."
+}

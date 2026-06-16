@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L10784-L10857
+Source lines: L10790-L10875
 
-Source SHA256: `333a9db901a27d27ad62cd46eeecdb8e717fc03c0fa19b0d29e4925da528e5c3`
+Source SHA256: `ae89c54681d60ab1d9bf0600e1c2fdd441edab90e31124bda46b310dfec3b19e`
 
 ---
 
@@ -36,7 +36,7 @@ acceptance_criteria:
   - Tools implementers can distinguish tool input fields, provider labels, enum/status values, aliases, and lifecycle/routing rules.
   - "`Serper-backed Google-result behavior`, `sources`, `categories`, Firecrawl routing, LSP operation names, and search-then-read behavior remain exact and auditable."
   - Chat and GUI presentation stay in assistant-chat-design and FinalGUISpec rather than becoming Tools-owned display canon.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -47,10 +47,16 @@ implementation_surfaces:
   - Plans/Tools.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 node_compile_hint:
   mode: tools_extract_block_semantics_normalization
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0008
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0009
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
@@ -77,8 +83,14 @@ negative_constraints:
   - Do not delete exact tokens or compatibility aliases during cleanup.
   - Do not turn Tools.md into a GUI display owner.
   - Do not move assistant-chat operation-card/question/TODO behavior into Tools.md.
+compatibility_only_notes:
+  - Remaining source extract lists marked as compatibility/source-lineage token banks preserve exact terms while typed field, label, action, and rule semantics route through Core rules and owner docs.
 owner_hints:
   - Plans/Tools.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 ```

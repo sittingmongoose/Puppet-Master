@@ -49,24 +49,27 @@
       "check_id": "validate-0005",
       "status": "pass",
       "summary": "Final ledger validation, Plan index validation, and git diff --check passed after compile; migration validation is stale pending seal because .plan_migration proof artifacts were intentionally not regenerated."
+    },
+    {
+      "check_id": "repair-0001",
+      "status": "pass",
+      "summary": "Post-compile fidelity audit repair applied: PlanUnits/source-lineage sections, ledger projections, migration proof, PlanUnit index, shards, governance evidence boundary, and reusable governance tooling were corrected without creating node/build/product implementation artifacts."
     }
   ],
   "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
   "schema_id": "pm.bootstrap_ledger_health.v1",
-  "status": "pass_compiled_pending_seal",
+  "status": "pass_governance_sealed",
   "summary": {
     "candidate_atoms": 0,
     "compile_queue_items": 1,
-    "decisions": 4,
+    "decisions": 5,
     "deferred_questions": 0,
     "design_atoms": 19,
-    "events": 10,
-    "governance_seal": "pending_seal",
+    "events": 11,
+    "governance_seal": "passed",
     "open_blockers": 0,
     "open_questions": 0
   },
-  "updated_at_utc": "2026-06-15T21:11:00Z",
-  "warnings": [
-    "Plans/.plan_migration/pds-20260611-002-atomize-planunits validation reports stale batch_report hashes and final live_plan_unit_count after live Plan edits; leave for explicit governance/seal phase."
-  ]
+  "updated_at_utc": "2026-06-15T21:53:24Z",
+  "warnings": []
 }

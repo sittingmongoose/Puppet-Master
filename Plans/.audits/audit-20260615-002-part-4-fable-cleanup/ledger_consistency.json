@@ -1,0 +1,58 @@
+{
+  "ledger_id": "pldg-20260615-001-part-4-fable-cleanup",
+  "status": "fail",
+  "registry_status": "compiled",
+  "current_phase": "compiled_part_4_fable_cleanup_pending_seal",
+  "record_counts": {
+    "design_atoms": 19,
+    "decisions": 4,
+    "questions": 3,
+    "blockers": 0,
+    "corrections": 0,
+    "events": 10
+  },
+  "compile_queue": {
+    "status": "compiled",
+    "source_atom_ids": [
+      "atom-0010",
+      "atom-0011",
+      "atom-0012",
+      "atom-0015",
+      "atom-0016",
+      "atom-0017",
+      "atom-0018"
+    ],
+    "compiled_plan_unit_ids": [
+      "F3-391",
+      "F3-392",
+      "ACD-415",
+      "T-158",
+      "CV-285",
+      "EP-097",
+      "WM-036"
+    ],
+    "compiled_outputs_count": 12,
+    "notes": "Queue maps seven ready cleanup atoms to seven live PlanUnits and six plan-index outputs."
+  },
+  "open_items": {
+    "open_questions": 0,
+    "open_blockers": 0,
+    "unclassified_candidates": 0,
+    "unresolved_contradictions": 0,
+    "unsealed_governance_count": 1
+  },
+  "sealed_ledger_rule": "not_applicable_registry_status_compiled_not_sealed",
+  "design_atom_enums_gui_related": {
+    "status": "pass",
+    "notes": "All 19 design atoms include gui_related true/false; no candidate/open/ready atoms remain."
+  },
+  "projection_disagreements": [
+    "current/open_items/manifest/registry claim governance_status pending_seal and no Spec Lock/shards/evidence updates, but the range updates Spec_Lock, shards, evidence, and migration proof files.",
+    "current/ledger_health claim migration validation stale/failing, but current migration validation passes with live_plan_unit_count=5005.",
+    "operating_capsule remains pre-compile at 2026-06-15T21:01:00Z while current/handoff/health are compiled at 2026-06-15T21:11:00Z."
+  ],
+  "source_lineage_disagreements": [
+    "atom-0015 is queued for F3-392 but F3-392 source_lineage omits atom-0015.",
+    "accepted verification atoms atom-0008, atom-0009, atom-0013, atom-0014 are not cited by live PlanUnits or explicitly dispositioned as not_for_plan/source_lineage_only."
+  ]
+}

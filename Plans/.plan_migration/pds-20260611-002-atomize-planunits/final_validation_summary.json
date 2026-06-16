@@ -457,7 +457,7 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-06-15T20:51:09Z",
+  "generated_at_utc": "2026-06-15T21:49:53Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 5005,
@@ -470,7 +470,7 @@
   "nodeseed_candidates_created": false,
   "notes": [
     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
-    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created.",
+    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
     "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
@@ -508,7 +508,7 @@
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"

@@ -475,7 +475,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 21862,
+      "line_count": 21876,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 415,
       "plan_unit_ids": [
@@ -1186,7 +1186,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "9495181daf848dc7d1b704840052370c20d7e65b1b2927ba60300e24e9cccaba",
+      "sha256": "cd8c4d82013e148bbb9123a0fb1591c69a7044873cee4ec31a1ef6b0b98be694",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 415
@@ -2478,7 +2478,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17043,
+      "line_count": 17052,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 285,
       "plan_unit_ids": [
@@ -3059,7 +3059,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "6acdb6179bef74636c0a725908c54bbef04643e336e1a6e7a604bfcae9cef2e3",
+      "sha256": "2c70db9aeb75fee2eddb58a18788ccb681d396d51d94cbb7cfe78610b93de7e1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 284,
@@ -3698,9 +3698,10 @@
         "Plans/Executor_Protocol.md",
         "Plans/Models_System.md",
         "Plans/Run_Modes.md",
-        "Plans/Wiring_Matrix.md"
+        "Plans/Wiring_Matrix.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 5818,
+      "line_count": 5832,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 97,
       "plan_unit_ids": [
@@ -3812,7 +3813,7 @@
         "executor_protocol_drift",
         "migration_lineage"
       ],
-      "sha256": "7e1b6b27b69f41dc35c1fe035c393070c913ad9f9ce38171ddd785c95fc8029b",
+      "sha256": "4124771c03e9431100c999a65c0ae033e0c21b51a5dbb6b3d32352df219fa721",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 97
@@ -4257,13 +4258,18 @@
         "Plans/Executor_Protocol.md",
         "Plans/FileManager.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
         "Plans/Personas.md",
         "Plans/Tools.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/assistant-chat-design.md",
-        "Plans/orchestrator-subagent-integration.md"
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 24632,
+      "line_count": 24672,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 392,
       "plan_unit_ids": [
@@ -4680,7 +4686,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e",
+      "sha256": "311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 391,
@@ -9966,12 +9972,16 @@
       },
       "heading_count": 276,
       "implementation_surfaces": [
+        "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
         "Plans/Tools.md",
         "Plans/assistant-chat-design.md",
-        "Plans/orchestrator-subagent-integration.md"
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 10857,
+      "line_count": 10875,
       "path": "Plans/Tools.md",
       "plan_unit_count": 158,
       "plan_unit_ids": [
@@ -10188,7 +10198,7 @@
         "web_provider_routing_contract_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "333a9db901a27d27ad62cd46eeecdb8e717fc03c0fa19b0d29e4925da528e5c3",
+      "sha256": "ae89c54681d60ab1d9bf0600e1c2fdd441edab90e31124bda46b310dfec3b19e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157,
@@ -10580,17 +10590,23 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 12,
-        "True": 24
+        "False": 13,
+        "True": 23
       },
       "heading_count": 83,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/Run_Graph_View.md",
-        "Plans/Wiring_Matrix.md"
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 2994,
+      "line_count": 3020,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -10642,7 +10658,7 @@
         "wiring_addenda_precedence_drift",
         "wiring_matrix_drift"
       ],
-      "sha256": "b08cf4c54b9292599261ec1ecb9dfe01c02080ca309a46af4066d141b0336783",
+      "sha256": "39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -10775,7 +10791,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-15T20:44:21Z",
+  "generated_at_utc": "2026-06-15T21:47:50Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -10783,8 +10799,8 @@
     "docs_with_plan_units": 67,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 2882,
-      "True": 2123
+      "False": 2883,
+      "True": 2122
     },
     "plan_unit_count": 5005,
     "source_preserving_unit_count": 0,

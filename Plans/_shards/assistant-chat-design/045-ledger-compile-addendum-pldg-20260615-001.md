@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L21777-L21862
+Source lines: L21779-L21876
 
-Source SHA256: `9495181daf848dc7d1b704840052370c20d7e65b1b2927ba60300e24e9cccaba`
+Source SHA256: `cd8c4d82013e148bbb9123a0fb1591c69a7044873cee4ec31a1ef6b0b98be694`
 
 ---
 
@@ -40,7 +40,7 @@ acceptance_criteria:
   - Assistant Chat implementers can classify each preserved token by typed role instead of treating every list entry as a schema field.
   - Question-card, TODO, operation-card, web/provenance, persona, Markdown/Mermaid, and inline visualizer behavior remains implementation-ready through Core rules and PlanUnits.
   - Owner boundaries prevent chat prose from replacing Tools, Contracts_V0, storage, provider/model, permission, or FinalGUISpec contracts.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -51,10 +51,16 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 node_compile_hint:
   mode: assistant_chat_extract_block_semantics_normalization
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0008
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0009
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
@@ -89,8 +95,14 @@ negative_constraints:
   - Do not delete exact tokens or compatibility aliases during cleanup.
   - Do not leave token-only lists as sufficient typed schema where Core rules and owner contracts are needed.
   - Do not move tool, storage, contract, provider/model, permission, or FinalGUISpec ownership into assistant-chat-design.
+compatibility_only_notes:
+  - Remaining source extract lists marked as compatibility/source-lineage token banks preserve exact terms while typed field, label, action, and rule semantics route through Core rules and owner docs.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
   - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 ```

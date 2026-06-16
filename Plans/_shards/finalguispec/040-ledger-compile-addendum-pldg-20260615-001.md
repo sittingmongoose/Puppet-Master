@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L24488-L24632
+Source lines: L24502-L24672
 
-Source SHA256: `e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e`
+Source SHA256: `311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111`
 
 ---
 
@@ -35,7 +35,7 @@ acceptance_criteria:
   - FinalGUISpec implementers can distinguish canonical data fields from display labels, enum/status values, operation names, compatibility aliases, and behavior fragments.
   - Exact source tokens from affected extract blocks remain preserved as lineage rather than being deleted or smoothed away.
   - FinalGUISpec remains a GUI consumer for tool, chat, storage, contract, provider/model, and runtime owner semantics.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -46,10 +46,16 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 node_compile_hint:
   mode: extract_block_semantics_normalization
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0008
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0009
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
@@ -77,10 +83,16 @@ negative_constraints:
   - Do not delete exact tokens during cleanup.
   - Do not let FinalGUISpec re-own tool, chat, storage, contract, provider/model, or runtime schemas.
   - Do not leave mixed `Fields:` lists as sufficient typed schema when the list contains non-field tokens.
+compatibility_only_notes:
+  - Remaining source extract lists marked as compatibility/source-lineage token banks preserve exact terms while typed field, label, action, and rule semantics route through Core rules and owner docs.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Tools.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
 ```
 
 ### F3-392 - Blocked Recovery Addenda Consolidation
@@ -120,10 +132,17 @@ implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
   - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: final_gui_blocked_recovery_addenda_consolidation
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0016
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/FinalGUISpec.md:2851
@@ -147,9 +166,16 @@ negative_constraints:
   - Do not preserve inline superseded blocks as ordinary implementation instructions.
   - Do not drop GUI-specific recovery rules that supplement the canonical summary.
   - Do not let stale addenda re-own blocked/recovery semantics after the canonical GUI summary.
+compatibility_only_notes:
+  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface; F3-392 does not create a duplicate chain-wizard owner.
+  - Earlier addenda headings are compatibility/source-lineage sections and must not be parsed as peer canonical sections.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
   - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+  - Plans/chain-wizard-flexibility.md
 ```

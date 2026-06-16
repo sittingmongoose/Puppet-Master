@@ -2,13 +2,15 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L251-L275
+Source lines: L255-L281
 
-Source SHA256: `b08cf4c54b9292599261ec1ecb9dfe01c02080ca309a46af4066d141b0336783`
+Source SHA256: `39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b`
 
 ---
 
 ## Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical event-wiring alignment preserves canonical event row tokens and handler-rule wording. Follow the named Wiring_Matrix PlanUnits and Contracts_V0 event identities rather than adjacent addendum order.
 
 The wiring matrix MUST use the canonical runtime names and identities from `Plans/Contracts_V0.md`.
 

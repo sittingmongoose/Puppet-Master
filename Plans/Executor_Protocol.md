@@ -258,6 +258,8 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans
 
 ## Runtime Scheduler Addendum (2026-03-08)
 
+Compatibility/source-lineage disposition: this historical scheduler addendum preserves exact runtime tokens and earlier scheduling examples. Where it overlaps later named PlanUnits, Contracts_V0, Run_Modes, Models_System, storage-plan, or Wiring_Matrix ownership, those owner docs govern; do not infer precedence from this addendum's position.
+
 This addendum supersedes any earlier lexical-dispatch wording wherever they conflict.
 
 ### 1. Canonical scheduler pass
@@ -503,6 +505,8 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Decisio
 - Canonical graph integrity failures do not silently degrade.
 ## Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)
 
+Compatibility/source-lineage disposition: this historical recovery addendum preserves exact scheduler/recovery terms. It is subordinate to the consolidated runtime/addenda boundary and named owner sections where overlapping rules appear.
+
 This addendum is normative and supersedes any earlier pure-lexicographic dispatch wording where they conflict.
 
 ### Runtime recovery scheduler pass
@@ -572,6 +576,8 @@ Invalid pre-lock draft decomposition may degrade to deterministic flat draft seq
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
 
 ## Canonical Runtime Scheduler Canonical Alignment (2026-03-09)
+
+Compatibility/source-lineage disposition: this historical canonical-alignment addendum preserves scheduler, blocked, score, and graph-lock tokens. Executor implementers must follow named owner sections and PlanUnits rather than treating adjacent addenda order as precedence.
 
 This addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.
 
@@ -656,6 +662,8 @@ Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a n
 After graph lock, execution MUST NOT fall back to a planning-artifact-centric, identity-blind, single-branch execution-model; DAE and orchestration paths preserve runtime identity plus `/corroboration/promotion/runtime` context.
 ## Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)
 
+
+Compatibility/source-lineage disposition: this historical lifecycle addendum preserves attempt, tier-era, blocked-episode, approval, and provider/model carry-through tokens. It remains a source-lineage section subordinate to the consolidated executor/runtime owner boundary.
 
 This addendum deprecates tier-era vocabulary and extends execution_unit_context, blocked-episode continuity, approval scope, and precedence/worktree ownership semantics.
 
@@ -5766,7 +5774,7 @@ acceptance_criteria:
   - Executor runtime recovery behavior is read through named owner sections and PlanUnits rather than additive addendum order.
   - Scheduler, blocked/recovery, retry, safe-point, remediation, readiness, score, attempt lifecycle, approval, and provider/model terms remain preserved as exact lineage.
   - Executor consumes Contracts_V0, Run_Modes, Models_System, storage-plan, and Wiring_Matrix ownership without replacing them.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, Spec Lock, shards, evidence bundles, plan_graph, or auto_decisions are created or updated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
@@ -5778,11 +5786,14 @@ implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Run_Modes.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
   - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: executor_runtime_addenda_consolidation
   create_worknodes: false
 source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
   - pldg-20260615-001-part-4-fable-cleanup:atom-0015
   - pldg-20260615-001-part-4-fable-cleanup:atom-0018
   - local:Plans/Executor_Protocol.md:259
@@ -5809,10 +5820,13 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not leave overlapping addenda as coequal normative sections when owner PlanUnits carry the merged rule.
   - Do not semantically change scheduler, blocked, retry, safe-point, remediation, readiness, score, attempt lifecycle, or provider/model behavior during consolidation.
+compatibility_only_notes:
+  - Cited runtime addenda sections are compatibility/source-lineage sections; named owner PlanUnits and owner docs carry merged runtime precedence.
 owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Contracts_V0.md
   - Plans/Run_Modes.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
   - Plans/Wiring_Matrix.md
 ```

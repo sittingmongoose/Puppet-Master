@@ -2,13 +2,15 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L207-L240
+Source lines: L207-L242
 
-Source SHA256: `b08cf4c54b9292599261ec1ecb9dfe01c02080ca309a46af4066d141b0336783`
+Source SHA256: `39d03fed95eddbf4e7f80457c8086c22bff0bec798035fa76b69edcfe50d129b`
 
 ---
 
 ## Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
+
+Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.
 
 Add the following producer -> consumer paths to the wiring matrix.
 

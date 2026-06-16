@@ -1,16 +1,16 @@
-# Shard 031: Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+# Shard 031: Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2976-L2993
+Source lines: L2978-L2995
 
-Source SHA256: `e757b69c58378f86efe32340625f8e1dcb9687b43bc8ce1739a5ad9712b3435e`
+Source SHA256: `311d07c30d47f3940b91099d0debabbb8eedf7f3e2764692e8541f84a57e3111`
 
 ---
 
-## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+## Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 
-> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves GUI-specific recovery tokens that supplement the canonical summary only where they do not conflict with named owner docs.
 
 This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
 
