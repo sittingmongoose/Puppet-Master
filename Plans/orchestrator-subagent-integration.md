@@ -30941,6 +30941,8 @@ Phase 2B batch 137 supersedes the batch 136 residual sentence for S0173 through 
 Phase 2B batch 138 supersedes the batch 137 residual sentence for S0188 through S0223 and partial S0224: batch 138 atomized `orchestrator-subagent-integration-S0188` through `orchestrator-subagent-integration-S0223` and `orchestrator-subagent-integration-S0224` source lines 6414-6426 into fine-grained PlanUnits `OSI-395` through `OSI-424`, preserving autonomous QA benefits/config evidence, media capability gating change summary, sharded graph consumption, Persona runtime/config boundaries, stale `explore` to `explorer` normalization, scored ready-set scheduling, worktree-native conflict control, wake/cascade semantics, temporal wait rules, runtime projection fields, remediation lineage, retry/backoff matrix, decomposition degradation boundary, event-driven GUI projection alignment, runtime scheduler consumer fields, blocked outcome handling, same-cycle scheduling, and runtime enum/counter alignment as plan evidence only. `orchestrator-subagent-integration-S0224` source line 6427 plus generated owner, PlanUnit, and migration-coverage audit spans remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0224` at source line 6427.
 Phase 2B batch 139 supersedes the batch 138 residual sentence for S0224 through S0227: batch 139 structurally dispositioned the residual `orchestrator-subagent-integration-S0224` blank boundary line 6427, generated `orchestrator-subagent-integration-S0225` Owner / Consumer Map, generated `orchestrator-subagent-integration-S0226` PlanUnits heading, and generated `orchestrator-subagent-integration-S0227` OSI-001 bridge/audit material without adding product PlanUnits. `orchestrator-subagent-integration-S0228` source lines 6817-6827 remain temporary residual source-preserving generated Migration Coverage audit/reporting material under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0228` at source line 6817.
 
+```
+
 ## Ledger Compile Addendum - pldg-20260614-001
 
 ### OSI-425 - Persona-Aware Subagent Configuration Recovery
@@ -31082,23 +31084,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions.
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
-depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109]
+depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
 unblocks: [OP-022, F3-394]
 acceptance_criteria:
   - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
   - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
+  - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
+  - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
   - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
   - Parent synthesis and high-end certification remain required for meaningful completion.
+  - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Orchestrator subagent wave runtime review
 risk_class: subagent_authority_drift
 reasoning_tier: high
 context_scope: orchestrator_subagent_waves
-implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
 node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
@@ -31108,8 +31113,12 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0031
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0032
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0033
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0034
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0064
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
@@ -31121,13 +31130,35 @@ preserved_exact_tokens:
   - "low end agents"
   - "higher end agents"
   - "SubagentWave"
+  - "child_goal"
+  - "subagent_wave"
+  - "bounded_work_unit"
+  - "capability_lane"
+  - "agent_role"
+  - "write_policy"
+  - "parent_synthesis"
+  - "verification_cycle"
+  - "receipt"
+  - "write_mode"
+  - "certification_tier"
   - "one WorkNode execution"
   - "one file/window analysis"
   - "parent completion"
+  - "subagent policy"
+  - "fanout thresholds"
+  - "max parallel subagents"
+  - "max cost per wave"
+  - "bounded input limits"
+  - "retry policy"
+  - "mandatory"
+  - "compatibility/search aliases"
+  - "tier-era wording"
 negative_constraints:
   - Do not convert Orchestrator into one smart agent doing everything.
   - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
   - Do not let low-end subagents certify parent completion.
   - Do not let subagents write overlapping live surfaces concurrently.
-owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md]
+  - Do not implement old tier/config-era code samples literally.
+  - Do not preserve old tier-era wording as the canonical execution model.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
 ```

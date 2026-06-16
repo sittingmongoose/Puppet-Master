@@ -449,7 +449,7 @@
   ],
   "last_event_id": "evt-0016",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-  "notes": "Orchestrator Goal Runtime Flow ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs. Governance seal remains pending; migration proof hashes are expected to be stale until an explicit seal/repair phase refreshes governance artifacts.",
+  "notes": "Orchestrator Goal Runtime Flow ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs, then completed an explicit governance seal that refreshed governance artifacts where allowed. Post-seal continuation remains ledger-only until Jared chooses the next safe planning lane; node/build artifacts remain forbidden until the compiler contract exists.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "updated_at_utc": "2026-06-16T21:31:00Z"

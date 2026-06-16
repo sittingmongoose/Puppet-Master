@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.orchestrator_goal_runtime_doc_impact_matrix.v1",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-  "source_repo_snapshot": "/mnt/data/Puppet-Master-main (379).zip extracted 2026-06-16",
-  "status": "snapshot_audit_complete_rerun_on_live_repo_before_plan_edits",
+  "source_repo_snapshot": "snapshot audit captured 2026-06-16; original local archive path redacted",
+  "status": "snapshot_audit_source_memory_live_repo_rerun_required_before_future_plan_edits",
   "summary": {
     "top_level_plan_docs_scanned": 68,
     "docs_accounted_for": 68,

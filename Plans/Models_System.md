@@ -7338,7 +7338,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, and model profiles, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding.
+  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, and model profiles, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane, agent_role, write_mode, and certification_tier are the canonical execution vocabulary.
 gui_related: false
 gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
 depends_on:
@@ -7349,6 +7349,7 @@ acceptance_criteria:
   - Required lane roles resolve through configured providers, accounts, and model profiles.
   - requested/effective identity and capability evidence are exposed to runtime receipts and GUI projections.
   - Missing required bindings return unconfigured-lane blockers instead of selecting arbitrary defaults.
+  - Legacy tier labels are treated only as compatibility/search aliases and do not replace capability_lane, agent_role, write_mode, or certification_tier semantics.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future capability-lane resolver review
@@ -7389,9 +7390,14 @@ preserved_exact_tokens:
   - "certifier"
   - "requested/effective"
   - "unconfigured-lane"
+  - "compatibility/search aliases"
+  - "tier-era wording"
+  - "write_mode"
+  - "certification_tier"
 negative_constraints:
   - Do not hardcode provider/model defaults.
   - Do not let low-cost lanes certify parent GoalRun completion.
+  - Do not preserve old tier-era wording as the canonical execution model.
 owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md
