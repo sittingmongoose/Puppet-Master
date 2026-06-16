@@ -4,7 +4,7 @@ Verdict: PASS_WITH_WARNINGS
 
 ## Scope
 - Ledger: `pldg-20260616-001-goal-runtime-system`
-- Range: `fb7dd9aee5ef21d4244deb74d151d2de15a620ab..25b5ae3b1b646228aa6c98f4a8969daed379b6ad`
+- Inferred range: `fb7dd9aee5ef21d4244deb74d151d2de15a620ab..25b5ae3b1b646228aa6c98f4a8969daed379b6ad`
 - Earliest cycle commit: `fbb9c48c1e8bb1aff0ab70dae558d21fb68a7050`
 - Audited snapshot: `/tmp/pm-audit-head-004-voDHzx` clean detached `HEAD`
 - Note: main checkout already contained unrelated dirty repair changes; this audit uses committed `HEAD` only.
@@ -20,6 +20,7 @@ Verdict: PASS_WITH_WARNINGS
 - Deleted: 0 PlanUnits
 - Added IDs: `0PI-055, ACD-416, ACD-417, ACD-418, ACD-419, F3-393, GRS-001, GRS-002, GRS-003, GRS-004, GRS-005, GRS-006, GRS-007, GRS-008, GRS-009, GRS-010, GRS-011, GRS-012, GRS-013, GRS-014, GRS-015, GRS-016, GRS-017, GRS-018, GRS-019, GRS-020, GRS-021, GRS-022, GRS-023, GRS-024, GRS-025`
 
+## Possible Losses
 No deletion-based loss was found in the scoped live docs: no changed/deleted PlanUnits, removed headings, removed ContractRefs, or removed prose blocks were detected. The remaining risks are semantic/exact-token and governance-projection warnings.
 
 ## Findings
