@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260616-001-goal-runtime-system",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 23,
+    "events": 24,
     "design_atoms": 110,
     "decisions": 26,
     "questions": 5,
@@ -136,11 +136,17 @@
       "check_id": "governance-seal-0001",
       "status": "pass",
       "summary": "Governance seal refreshed migration proof, PlanUnit index, shards, Spec Lock, evidence, plan graph, auto_decisions, and ledger projections. Final validators passed, including pm-plan-migration validate, pm-plan-index validate, both ledger validators, run-gates, shard check, auto-decisions, Spec Lock, evidence validation, and git diff --check."
+    },
+    {
+      "check_id": "post-audit-repair-0001",
+      "status": "pass",
+      "summary": "Post-audit semantic/projection repair aligned exact PlanUnit fidelity, cross-owner consumer PlanUnits, /goal command owner registration, reciprocal compiled_output_plan_unit_ids, and compact ledger projections. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     }
   ],
   "warnings": [
     "Node readiness remains blocked_compiler_contract_incomplete because the WorkNode compiler contract is intentionally out of scope for this governance seal.",
-    "Deferred questions q-0001 through q-0005 remain non-blocking implementation or future-compiler choices."
+    "Deferred questions q-0001 through q-0005 remain non-blocking implementation or future-compiler choices.",
+    "Post-audit repair requires generated PlanUnit index, migration proof, shard, evidence, Spec Lock, plan graph, and auto_decision validation refresh through repo scripts only."
   ],
-  "updated_at_utc": "2026-06-16T05:36:58Z"
+  "updated_at_utc": "2026-06-16T20:30:00Z"
 }

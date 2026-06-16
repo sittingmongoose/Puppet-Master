@@ -327,6 +327,8 @@ The following rows are required for the promoted Section 15 feature set and the 
 | Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
 | Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
+| Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
 | Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
 | Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
 | Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
@@ -3017,4 +3019,65 @@ owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
   - Plans/chain-wizard-flexibility.md
+```
+
+### WM-037 - Assistant Chat Goal Command Wiring
+
+```yaml
+plan_unit_id: WM-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Wiring_Matrix binds Assistant Chat Goal Mode command producers to stable command IDs and the Goal Runtime controller. Goal button/chip/icon activation and slash `/goal` dispatch `cmd.chat.goal.start`; Goal status update icon, `/goal again`, and natural-language update requests dispatch `cmd.chat.goal.update`. Wiring uses the Goal Runtime event envelope and does not define concrete Goal event payload schemas.
+gui_related: true
+gui_classification_reason: This unit wires user-visible Assistant Chat Goal button, chip, icon, slash command, and status update surfaces to command IDs.
+depends_on:
+  - UCC-096
+  - CS-051
+  - ACD-416
+unblocks: []
+acceptance_criteria:
+  - Goal activation producers route to `cmd.chat.goal.start`.
+  - Goal update producers route to `cmd.chat.goal.update`.
+  - Goal command wiring targets the Goal Runtime controller without re-owning Goal Runtime lifecycle semantics.
+  - Wiring rows avoid inventing concrete Goal event names or payload schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future wiring coverage validation
+risk_class: goal_command_wiring_gap
+reasoning_tier: standard
+context_scope: assistant_chat_goal_commands
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: assistant_chat_goal_command_wiring
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "Goal button/chip/icon"
+  - "Goal status update icon"
+negative_constraints:
+  - Do not make Wiring_Matrix the owner of concrete Goal Runtime event payload schemas.
+  - Do not route Goal command wiring through unregistered local command IDs.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
 ```

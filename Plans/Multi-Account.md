@@ -4512,8 +4512,8 @@ status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
   Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.
-gui_related: true
-gui_classification_reason: Account identity resolution feeds visible provider/account settings and status surfaces, though this unit owns account policy rather than layout.
+gui_related: false
+gui_classification_reason: Requested/effective account identity and role-scoped provider-account policy are backend account-resolution behavior; F3-393 owns visible Settings placement.
 depends_on:
   - MA-009
   - MA-015
@@ -4534,7 +4534,6 @@ implementation_surfaces:
   - Plans/Multi-Account.md
   - Plans/Models_System.md
   - Plans/Goal_Runtime_System.md
-  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: goal_runtime_account_identity_consumer
   create_worknodes: false

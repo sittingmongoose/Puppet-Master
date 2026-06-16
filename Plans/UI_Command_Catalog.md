@@ -1021,6 +1021,8 @@ Labels and values:
 - /web
 - /skill
 - /cancel
+- /goal
+- /goal again
 - reserved built-ins
 
 Rules:
@@ -1052,6 +1054,8 @@ ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash co
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings
 - /cancel resolves internally to cmd.chat.stop
+- /goal dispatches `cmd.chat.goal.start` for Goal button/chip/icon, slash command, and natural-language Goal Mode activation.
+- /goal again dispatches `cmd.chat.goal.update` for active-goal updates, natural-language update requests, and the small update icon beside Goal status.
 - /rewind dispatches `cmd.chat.rewind` and remains conversation-only
 - /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
 - /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
@@ -1060,6 +1064,16 @@ ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash co
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
+
+#### 2.7.1 Goal Mode slash command rows
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.goal.start` | `{ thread_id, goal_prompt?, source: slash|button|chip|icon|natural_language }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal chip, command palette |
+| `cmd.chat.goal.update` | `{ thread_id, update_text?, source: slash|natural_language|status_icon }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal status/menu |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
 
@@ -6602,6 +6616,66 @@ owner_hints:
 split_recommendation_reason: UI_Command_Catalog-S0052 safely splits visible recovery copy and button/menu mapping from backend metadata, resolver, and permission carry-through behavior.
 ```
 
+### UCC-096 - Assistant Chat Goal Slash Commands
+
+```yaml
+plan_unit_id: UCC-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  UI_Command_Catalog registers the Assistant Chat Goal Mode command family. `/goal`, Goal button/chip/icon activation, and natural-language Goal Mode activation dispatch `cmd.chat.goal.start`; `/goal again`, natural-language update requests, and the small update icon beside Goal status dispatch `cmd.chat.goal.update`. These command IDs route to Goal Runtime without defining concrete Goal event payload schemas.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Assistant Chat slash commands, Goal chip/icon activation, and status-update command surfaces.
+depends_on:
+  - ACD-416
+  - GRS-002
+unblocks: []
+acceptance_criteria:
+  - "`/goal` is registered as a reserved Assistant Chat Goal activation slash command."
+  - "`/goal again` is registered as the active-goal update slash command."
+  - "Button/chip/icon and natural-language activation normalize to `cmd.chat.goal.start`."
+  - "Natural-language updates and the Goal status update icon normalize to `cmd.chat.goal.update`."
+  - Command registration does not invent concrete Goal event payload schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future command catalog/wiring review
+risk_class: goal_command_owner_gap
+reasoning_tier: standard
+context_scope: assistant_chat_goal_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: assistant_chat_goal_command_registration
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "button/chip/icon"
+  - "natural-language activation"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "clicking a little icon next to the goal status"
+negative_constraints:
+  - Do not let `/goal` or `/goal again` remain unregistered local Assistant Chat prose.
+  - Do not invent concrete Goal event payload schemas in the command catalog.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/assistant-chat-design.md
+```
+
 ### UCC-001 - UI Command Catalog Generated Artifact Residual
 
 ```yaml
@@ -6609,7 +6683,7 @@ plan_unit_id: UCC-001
 unit_type: compatibility_disposition
 status: retired
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: UCC-001 is retired after Phase 2B batch 191 as active source-preserving product coverage. UI_Command_Catalog-S0001 through S0052 are covered by fine-grained UCC-002 through UCC-095 or explicit structural/reference dispositions; UI_Command_Catalog-S0053 through S0056 are generated owner/consumer map, PlanUnits heading, retired bridge, and Migration Coverage tail material. UCC-001 remains migration lineage only and must not override implementation-facing UI Command Catalog PlanUnits.
+canonical_text: UCC-001 is retired after Phase 2B batch 191 as active source-preserving product coverage. UI_Command_Catalog-S0001 through S0052 are covered by fine-grained UCC-002 through UCC-095 or explicit structural/reference dispositions, and later command repairs such as UCC-096 carry post-migration command canon; UI_Command_Catalog-S0053 through S0056 are generated owner/consumer map, PlanUnits heading, retired bridge, and Migration Coverage tail material. UCC-001 remains migration lineage only and must not override implementation-facing UI Command Catalog PlanUnits.
 gui_related: true
 gui_classification_reason: The retired bridge preserves GUI-bearing UI Command Catalog source history, but no longer provides product implementation coverage.
 split_recommended: false
