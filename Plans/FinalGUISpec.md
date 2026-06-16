@@ -1077,7 +1077,7 @@ The unified Settings surface exposes a stable tab registry so run-touched settin
 | Tab | Final GUI responsibility | Owner detail |
 |---|---|---|
 | General | App-wide theme, appearance, onboarding, and ordinary preference rows | FinalGUISpec plus storage settings keys |
-| Models / Providers | Model, provider, account, runtime, and Default Crew entrypoints | Models_System, Multi-Account, Agent Config |
+| Models / Providers | Model, provider, account, runtime, Default Crew, and Goal Mode worker/verifier-adjudicator selector entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
 | Tiers (retired alias) | Compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces | Orchestrator, Run Graph, Worktree, and node/package/lane owner docs |
 | Branching | Git/worktree policy, branch defaults, merge/push posture, and recovery entrypoints | WorktreeGitImprovement and GitHub integration docs |
 | Verification | Validation pass settings, report visibility, and gate/run quality preferences | chain-wizard, Project Output Artifacts, and Progression Gates docs |

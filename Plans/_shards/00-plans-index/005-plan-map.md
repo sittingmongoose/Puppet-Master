@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L200-L406
+Source lines: L200-L410
 
-Source SHA256: `84843205d7f8baacf5513d85b100dabb1756b515a7c2c2c02e4ecdeee00cd2a8`
+Source SHA256: `95158470e1601e550333dfccdcf35f05bdad2208673652262add573e058ebbf8`
 
 ---
 
@@ -28,11 +28,15 @@ The native Goal Runtime packet uses the following owner split:
 - `Plans/Goal_Runtime_System.md` owns native Goal Mode runtime/control-plane behavior, invisible/internal goals, durable goal state, scheduler updates, attachments, weak-model safety, child goals, write authority, completion receipts, verifier/adjudicator policy, approval-boundary invocation, and runtime evidence requirements.
 - `Plans/assistant-chat-design.md` owns visible Assistant Chat Goal UI and thread-surface behavior, including activation, status, task tracker, controls, evidence/activity display, completion reports, and collapsible child-goal details.
 - `Plans/FinalGUISpec.md` owns Settings GUI placement for the separate Goal Mode worker model and verifier/adjudicator model selectors.
+- `Plans/chain-wizard-flexibility.md` remains the Chain Wizard flow consumer for future invisible Goal Mode ledger-to-Plans transfer; this compile does not redesign Chain Wizard flow.
+- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Permissions_System.md` own shared envelope, persistence, and approval-scope registration needed by Goal Runtime data shapes while `Plans/Goal_Runtime_System.md` keeps behavior semantics.
+- `Plans/Runtime_Artifacts_Panel.md` consumes Goal Runtime evidence and receipt identities for browsing, retention visibility, and redaction surfaces; `Plans/Project_Output_Artifacts.md` remains a project-output package boundary reference, not a Goal Runtime evidence owner.
+- `Plans/Models_System.md`, `Plans/Multi-Account.md`, and provider-specific docs such as `Plans/Provider_OpenCode.md` own concrete requested/effective model, account, and provider capability resolution consumed by Goal Runtime role policy.
 - `Plans/Planning_Ledger_System.md`, `Plans/Plan_Document_System.md`, and `Plans/Plan_To_Node_Compilation.md` remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary; Goal Runtime consumes them for ledger-to-Plans goals without creating WorkNodes or NodeSeeds.
 
-The ledger `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/` is source-lineage/planning memory for this compile, not canonical product prose. Generated governance artifacts remain seal-phase only: the pre-seal compile phase may update live Plans docs and allowed `Plans/.plan_index/**` outputs, but it does not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`. A later explicit governance seal may refresh those artifacts without changing product canon or creating node/build artifacts.
+The ledger `Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/` is source-lineage/planning memory for this compile, not canonical product prose. Generated governance artifacts remain seal-phase only: ordinary ledger planning, plan drafting, and ledger compile do not update `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`. A separate explicit PlanUnit index phase may regenerate allowed `Plans/.plan_index/**` outputs after live Plans docs are stable. A later explicit governance seal may refresh governance artifacts without changing product canon or creating node/build artifacts.
 
-ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
 ### Instant Grep canon reconciliation note (2026-03-30)
 

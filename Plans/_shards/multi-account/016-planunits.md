@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L779-L4504
+Source lines: L779-L4565
 
-Source SHA256: `ef69b571982bda45fb2c7d166d4bc5c319e1cae036edf9cec63593a653cc94e7`
+Source SHA256: `ea345c58fa8f83b13d375aa7b82e7c6ba49ea73a6c8a730635f95da75d026a91`
 
 ---
 
@@ -3733,4 +3733,65 @@ owner_hints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
 split_recommendation_reason: The former source-preserving bridge has been atomized or structurally dispositioned and is now retired.
+```
+
+### MA-060 - Goal Runtime Account Identity Consumer
+
+```yaml
+plan_unit_id: MA-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.
+gui_related: true
+gui_classification_reason: Account identity resolution feeds visible provider/account settings and status surfaces, though this unit owns account policy rather than layout.
+depends_on:
+  - MA-009
+  - MA-015
+  - MA-056
+  - MS-108
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime role execution can carry requested and effective account identity for worker, planner, evaluator, verifier, and adjudicator provider use.
+  - Multi-Account keeps ownership of account stickiness, failover, quota pressure, and provider-account policy.
+  - Goal Runtime consumes role-scoped account identity without redefining provider-account behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Goal Runtime account-identity resolver review
+risk_class: goal_runtime_account_identity_drift
+reasoning_tier: high
+context_scope: goal_runtime_account_policy
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: goal_runtime_account_identity_consumer
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0075
+  - pldg-20260616-001-goal-runtime-system:atom-0076
+  - pldg-20260616-001-goal-runtime-system:atom-0104
+  - pldg-20260616-001-goal-runtime-system:atom-0105
+  - pldg-20260616-001-goal-runtime-system:dec-0018
+  - pldg-20260616-001-goal-runtime-system:dec-0019
+preserved_exact_tokens:
+  - "requested/effective account identity"
+  - "worker"
+  - "planner"
+  - "evaluator"
+  - "verifier"
+  - "adjudicator"
+  - "account stickiness"
+  - "failover"
+  - "quota pressure"
+negative_constraints:
+  - Do not let Goal Runtime redefine account stickiness, failover, quota pressure, or provider-account policy.
+  - Do not infer effective account identity from model role alone.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Goal_Runtime_System.md
 ```

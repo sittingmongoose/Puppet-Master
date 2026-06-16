@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L628-L3812
+Source lines: L632-L3848
 
-Source SHA256: `84843205d7f8baacf5513d85b100dabb1756b515a7c2c2c02e4ecdeee00cd2a8`
+Source SHA256: `95158470e1601e550333dfccdcf35f05bdad2208673652262add573e058ebbf8`
 
 ---
 
@@ -3147,7 +3147,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; chain-wizard-flexibility remains the future Chain Wizard flow consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System, Multi-Account, and provider-specific docs such as Provider_OpenCode own concrete model/account/provider capability resolution; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
 gui_related: false
 gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
 depends_on:
@@ -3156,7 +3156,8 @@ unblocks: []
 acceptance_criteria:
   - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
   - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
-  - The index preserves the no-WorkNode boundary and separates pre-seal compile output from the later explicit governance seal.
+  - Chain Wizard, contract, storage, permission, runtime artifact, project-output boundary, model, account, and provider owner/consumer refs are recorded without moving Goal Runtime behavior out of Goal_Runtime_System.
+  - The index preserves the no-WorkNode boundary and separates ledger compile, explicit PlanUnit indexing, and later explicit governance seal phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
@@ -3168,6 +3169,15 @@ implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
 node_compile_hint:
   mode: goal_runtime_owner_map
   create_worknodes: false
@@ -3175,6 +3185,9 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0080
   - pldg-20260616-001-goal-runtime-system:atom-0082
   - pldg-20260616-001-goal-runtime-system:atom-0083
+  - pldg-20260616-001-goal-runtime-system:atom-0103
+  - pldg-20260616-001-goal-runtime-system:atom-0104
+  - pldg-20260616-001-goal-runtime-system:atom-0105
   - pldg-20260616-001-goal-runtime-system:dec-0012
 preserved_exact_tokens:
   - "Goal_Runtime_System.md"
@@ -3182,6 +3195,15 @@ preserved_exact_tokens:
   - "pldg-20260616-001-goal-runtime-system"
   - "worker model"
   - "verifier/adjudicator model"
+  - "chain-wizard-flexibility.md"
+  - "Contracts_V0.md"
+  - "storage-plan.md"
+  - "Permissions_System.md"
+  - "Runtime_Artifacts_Panel.md"
+  - "Project_Output_Artifacts.md"
+  - "Models_System.md"
+  - "Multi-Account.md"
+  - "Provider_OpenCode.md"
   - "WorkNodes"
   - "NodeSeeds"
   - "Spec_Lock"
@@ -3189,7 +3211,17 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not treat Plans/00-plans-index.md as the owner for Goal Runtime behavior.
   - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during the pre-seal compile phase.
+  - Do not conflate ledger compile, PlanUnit indexing, and governance seal phases.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Goal_Runtime_System.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
 ```

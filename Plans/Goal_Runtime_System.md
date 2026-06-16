@@ -95,7 +95,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime uses one engine with two presentations: visible user-directed goals in Assistant Chat and invisible internal goals for product flows. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Visible goals expose control through Assistant Chat while sharing the same runtime state and lifecycle model.
+  Goal Runtime uses one engine with two presentations: visible user-directed goals in Assistant Chat and invisible internal goals for product flows. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals expose control through Assistant Chat while sharing the same runtime state and lifecycle model.
 gui_related: false
 gui_classification_reason: This unit defines runtime presentation modes; chat-specific controls are owned by Assistant Chat consumer PlanUnits.
 depends_on:
@@ -105,6 +105,7 @@ acceptance_criteria:
   - Visible and invisible goals share one lifecycle/state model.
   - Invisible goals do not ask row-by-row or ordinary ambiguity questions.
   - Hard stops remain available for authority, safety, missing preconditions, and true blockers.
+  - Hard-stop classification preserves explicit user stop, missing source ledger, missing project plans, permissions/file-system failure, unsafe/destructive, and contradictory cases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime lifecycle tests
@@ -130,6 +131,12 @@ preserved_exact_tokens:
   - "COMPLETELY hands off"
   - "from start to finish"
   - "hard-stop exceptions"
+  - "explicit user stop"
+  - "missing source ledger"
+  - "missing project plans"
+  - "permissions/file-system failure"
+  - "unsafe/destructive"
+  - "contradictory"
 negative_constraints:
   - Do not create a separate invisible-goal lifecycle that diverges from visible Goal Mode.
   - Do not ask row-by-row or ordinary ambiguity questions during invisible internal goals.
@@ -431,7 +438,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime preserves oversized objectives, large pasted blocks, image attachments, and remote-session attachments as runtime-readable objective attachment bundles. Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.
+  Goal Runtime preserves oversized objectives, large pasted blocks, image attachments, and remote-session attachments as runtime-readable objective attachment bundles. Objective attachment bundles include goal-objective.md, pasted-text-N.txt, and attachments/manifest.json; local images and remote image URLs must resolve to runtime-readable paths or artifact IDs for local and remote app-server sessions. Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.
 gui_related: false
 gui_classification_reason: Attachment preservation and snapshot identity are runtime/evidence behavior, not visual presentation.
 depends_on:
@@ -439,6 +446,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Attachments are materialized to paths or artifact IDs that workers and verifiers can read.
+  - Attachment bundles preserve goal-objective.md, pasted-text-N.txt, attachments/manifest.json, runtime-readable paths, local images, and remote image URLs where applicable.
   - Evidence records identify the source state used for each judgment.
   - Coding goals do not pretend the entire repo is static, but certification does not rely on unspecified latest state.
 validation_surfaces:
@@ -475,8 +483,16 @@ preserved_exact_tokens:
   - "Freeze referenced attachments"
   - "Freeze read/evaluation inputs"
   - "VCS commit/diff identity"
+  - "goal-objective.md"
+  - "pasted-text-N.txt"
+  - "attachments/manifest.json"
+  - "runtime-readable paths"
+  - "local images"
+  - "remote image URLs"
 negative_constraints:
   - Do not lose attachments when a goal runs in a remote session.
+  - Do not truncate or lose large pasted goal content or image inputs.
+  - Do not preserve only placeholder tokens for images, large pasted text, or oversized objectives.
   - Do not base certification on an unspecified latest file state.
   - Do not let stale snapshots cause the agent to ignore legitimate current changes.
 owner_hints:
@@ -493,7 +509,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime separates worker, planner, evaluator, verifier, and adjudicator roles. Workers have bounded authority, must make evidence-backed claims, and cannot certify global or parent completion by themselves. Risk-triggered verification escalates when worker capability, confidence, scope, evidence, or validation status is insufficient.
+  Goal Runtime separates worker, planner, evaluator, reducer, verifier, adjudicator, and runtime controller roles. Workers have bounded authority, and weak-worker outputs are proposal only until stronger or deterministic layers verify, merge, route, or complete them. Material worker claims carry source_spans, target_spans, and evidence_refs; no-material claims use no_material_items_found with source_span_checked and reason duplicate, nonmaterial, already_covered, or context_only. Unsupported content cannot become canonical plan content or completion evidence. Workers cannot certify global or parent completion by themselves. Risk-triggered verification escalates when worker capability, confidence, scope, evidence, or validation status is insufficient.
 gui_related: false
 gui_classification_reason: Runtime role separation and safety policy are backend/control-plane behavior.
 depends_on:
@@ -503,6 +519,7 @@ acceptance_criteria:
   - Worker roles cannot unilaterally mark a goal complete.
   - Runtime policy can route stronger evaluation or adjudication when evidence or risk demands it.
   - No-op or low-change completion claims require coverage evidence.
+  - Material and no-material worker claims preserve source_spans, target_spans, evidence_refs, no_material_items_found, source_span_checked, and duplicate/nonmaterial/already_covered/context_only reasons.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future verifier/escalation policy tests
@@ -530,9 +547,24 @@ preserved_exact_tokens:
   - "Evidence-backed claims"
   - "Coverage evidence for no-op results"
   - "Risk-triggered verification escalation"
+  - "reducer"
+  - "runtime controller"
+  - "proposal only"
+  - "source_spans"
+  - "target_spans"
+  - "evidence_refs"
+  - "no_material_items_found"
+  - "source_span_checked"
+  - "duplicate"
+  - "nonmaterial"
+  - "already_covered"
+  - "context_only"
+  - "unsupported content"
+  - "canonical plan content"
 negative_constraints:
   - Do not let weak agents certify global completion.
   - Do not rely on worker confidence alone when escalation triggers are present.
+  - Do not accept unsupported invented requirements.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -545,7 +577,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime persists separate model-role policy for worker execution and verifier/adjudicator authority. The verifier/adjudicator model may inherit the worker model only when the inherited model satisfies the required policy for the goal's certification tier. Low-risk goals can inherit by default; standard and strong-certification goals use policy-derived verifier/adjudicator requirements; strong-certification goals block, not merely warn, when the requirement cannot be met. Exact provider-specific default tier mappings remain deferred.
+  Goal Runtime persists separate model-role policy for worker execution and verifier/adjudicator authority. The role-policy record names worker_default, planner, evaluator, adjudicator, and verifier roles, and escalation inputs include risk_class, failure_count, task type, and provider constraints. Goal Mode must provide native goal support for users will be using other models; lower quality agent paths require stronger evidence gates/escalation and must not assume the newest/biggest/highest quality model. The verifier/adjudicator model may inherit the worker model only when the inherited model satisfies the required policy for the goal's certification tier. Low-risk goals can inherit by default; standard and strong-certification goals use policy-derived verifier/adjudicator requirements; strong-certification goals block, not merely warn, when the requirement cannot be met. Exact provider-specific default tier mappings remain deferred.
 gui_related: false
 gui_classification_reason: This unit defines runtime/provider model-role policy, not the Settings GUI control.
 depends_on:
@@ -553,6 +585,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Runtime configuration supports independent worker and verifier/adjudicator role settings.
+  - Role-policy records preserve worker_default, planner, evaluator, adjudicator, verifier, risk_class, failure_count, and provider constraints.
   - Strong-certification goals cannot proceed with an underqualified verifier/adjudicator model.
   - Provider-specific default mappings can be added later without changing the role-policy contract.
 validation_surfaces:
@@ -565,6 +598,9 @@ implementation_surfaces:
   - future Goal Mode service
   - future Settings model policy storage
   - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
 node_compile_hint:
   mode: verifier_adjudicator_policy
   create_worknodes: false
@@ -584,12 +620,27 @@ preserved_exact_tokens:
   - "goal's certification tier"
   - "Low-risk goals can inherit by default"
   - "must block, not merely warn"
+  - "worker_default"
+  - "planner"
+  - "evaluator"
+  - "adjudicator"
+  - "verifier"
+  - "risk_class"
+  - "failure_count"
+  - "provider constraints"
+  - "users will be using other models"
+  - "native goal support"
+  - "lower quality agent"
+  - "newest/biggest/highest quality model"
 negative_constraints:
   - Do not hard-code one provider/model as required for correctness.
+  - Do not hard-code Goal Mode correctness to a single model/provider.
   - Do not force verifier/adjudicator work to use the same model setting as ordinary worker execution.
   - Do not treat inheritance as always valid for verifier/adjudicator roles.
 owner_hints:
   - Plans/Goal_Runtime_System.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
   - Plans/Provider_OpenCode.md
 ```
 
@@ -814,7 +865,9 @@ negative_constraints:
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Runtime_Artifacts_Panel.md
-  - Plans/Project_Output_Artifacts.md
+  - Plans/storage-plan.md
+compatibility_only_notes:
+  - Plans/Project_Output_Artifacts.md remains a boundary/distinction reference only; it does not own Goal Runtime evidence receipts.
 ```
 
 ### GRS-015 - Progress Fingerprints, Budgets, And Validators
@@ -825,7 +878,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime uses progress fingerprints, retry/blocker detection, hard budgets, limit statuses, and deterministic validators as first-class gates. A goal cannot hide repeated non-progress, validator failure, or budget exhaustion behind a normal completion claim.
+  Goal Runtime uses progress fingerprints, retry/blocker detection, hard budgets, limit statuses, and deterministic validators as first-class gates. Budget and limit gates carry exact fields max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents, budget_limited, and usage_limited. A goal cannot hide repeated non-progress, validator failure, or budget exhaustion behind a normal completion claim.
 gui_related: false
 gui_classification_reason: Progress, budget, and validator gates are runtime control behavior, not GUI implementation.
 depends_on:
@@ -834,6 +887,7 @@ unblocks: []
 acceptance_criteria:
   - Repeated retries or blockers escalate instead of looping silently.
   - Budget and limit statuses are represented distinctly from successful completion.
+  - Budget and limit gates expose max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents, budget_limited, and usage_limited.
   - Validators are first-class gates for certification where available.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -857,6 +911,12 @@ preserved_exact_tokens:
   - "Hard budgets"
   - "limit statuses"
   - "Validators are first-class gates"
+  - "max_turns"
+  - "max_tokens"
+  - "max_wall_time_seconds"
+  - "max_parallel_agents"
+  - "budget_limited"
+  - "usage_limited"
 negative_constraints:
   - Do not claim normal completion when validators fail.
   - Do not hide repeated non-progress behind repeated worker attempts.
@@ -874,7 +934,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Parent goals may spawn parallel child goals/subagents with dedicated objectives, allowed scope, write policy, budgets, task lists, recovery state, result artifacts, and local completion receipts. Subagents are preferred by default for bounded parallel work. Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.
+  Parent goals may spawn parallel child goals/subagents with dedicated objectives, allowed scope, write policy, budgets, task lists, recovery state, result artifacts, and local completion receipts. Subagents are preferred by default for bounded parallel work. "As many as needed" parallel child goals are capped by max_parallel_agents and budget, and remain bounded by write_scope_conflict_detection, worktree isolation, and parent synthesis requirements. Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.
 gui_related: false
 gui_classification_reason: Child-goal state and authority are runtime orchestration behavior; chat display is an Assistant Chat consumer surface.
 depends_on:
@@ -885,6 +945,7 @@ acceptance_criteria:
   - Child goals have first-class runtime identity and are not hidden implementation details.
   - Parent goal synthesis and completion authority cannot be delegated to a child goal.
   - Parallel execution is bounded by declared scope, budgets, and recovery state.
+  - Parallel child goal spawning honors max_parallel_agents, write_scope_conflict_detection, worktree isolation, and parent synthesis requirements.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future child-goal orchestration tests
@@ -918,12 +979,19 @@ preserved_exact_tokens:
   - "allowed_scope"
   - "write_policy"
   - "completion_receipt"
+  - "as many as needed"
+  - "max_parallel_agents"
+  - "write_scope_conflict_detection"
+  - "worktree isolation"
+  - "parent synthesis"
   - "Child goals may complete themselves locally"
   - "cannot complete the parent goal"
   - "For this task, write yourself a new goal and spawn agents in parallel - as many as needed to do it better and faster. Split the work into independent pieces, dispatch them concurrently, and synthesize the results as they return. Give each agent its own dedicated /goal."
 negative_constraints:
   - Do not hide child agents as untracked implementation details.
   - Do not let a child goal certify, merge, or finish the parent goal independently.
+  - Do not launch unlimited agents.
+  - Do not allow multiple write agents to edit conflicting scopes without isolation/merge control.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/assistant-chat-design.md
@@ -937,7 +1005,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease. If two child goals need the same file, the parent goal serializes or isolates the work, and conflict detection runs before writes proceed.
+  Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease. If two child goals need the same file, the parent goal serializes or isolates the work, and write_scope_conflict_detection runs before writes proceed.
 gui_related: false
 gui_classification_reason: Write authority and conflict policy are runtime/file orchestration behavior, not GUI implementation.
 depends_on:
@@ -960,6 +1028,7 @@ node_compile_hint:
   mode: child_write_authority_policy
   create_worknodes: false
 source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0055
   - pldg-20260616-001-goal-runtime-system:atom-0101
   - pldg-20260616-001-goal-runtime-system:atom-0102
   - pldg-20260616-001-goal-runtime-system:atom-0110
@@ -974,10 +1043,12 @@ preserved_exact_tokens:
   - "parent goal is the default merger/writer"
   - "No blind concurrent writes"
   - "parent-granted single-writer lease"
+  - "write_scope_conflict_detection"
 negative_constraints:
   - Do not allow blind concurrent direct writes from multiple child goals.
   - Do not default parallel child agents to direct file mutation.
   - Do not allow child direct writes without isolation, partitioning, or a parent-granted lease.
+  - Do not allow multiple write agents to edit conflicting scopes without isolation/merge control.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -1180,7 +1251,7 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, PlanUnit indexing, and the pre-seal compile phase, agents must not update Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate explicit governance seal phase; that seal may refresh governance artifacts without changing product behavior or creating node/build artifacts.
+  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, and ledger compile, agents must not update Plans/.plan_index, Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. A separate explicit PlanUnit index phase may regenerate allowed Plans/.plan_index/** outputs after live Plans docs are stable. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate explicit governance seal phase; that seal may refresh governance artifacts without changing product behavior or creating node/build artifacts.
 gui_related: false
 gui_classification_reason: Compile and governance boundaries are planning/governance behavior, not GUI implementation.
 depends_on:
@@ -1188,7 +1259,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Canonical Goal Runtime behavior is represented in live non-pipeline Plans docs.
-  - Allowed PlanUnit index outputs may be regenerated during the pre-seal compile phase, but seal-phase governance artifacts are not touched until explicit seal.
+  - Ledger planning, plan drafting, and ledger compile do not update Plans/.plan_index, generated indexes, shards, evidence, Spec Lock, graph, or decisions.
+  - Allowed PlanUnit index outputs may be regenerated only in a separate explicit PlanUnit index phase after live Plans docs are stable; seal-phase governance artifacts are not touched until explicit seal.
   - Compile reports changed files, PlanUnits, atom dispositions, validators, and pre-seal pending seal status.
 validation_surfaces:
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
@@ -1292,7 +1364,7 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Codex implementation patterns, attachment behavior references, and competitor evaluator/judge-loop lessons are source-lineage and implementation research inputs only. They may guide Goal Runtime implementation, but they do not override Puppet Master-owned runtime, evidence, model-role, or completion contracts.
+  Codex implementation patterns, attachment behavior references, and competitor evaluator/judge-loop lessons are source-lineage and implementation research inputs only. Exact lineage tokens retained include /goal now preserves oversized text, large pasted blocks, and image attachments, rust-v0.140.0, #27508, #27509, #27510, runtime.rs, tool.rs, spec.rs, steering.rs, continuation.md, thread_goal.rs, goal_menu.rs, goal_status.rs, thread_goal_processor.rs, Codex, Claude Code, Hermes, OpenClaw, OpenCode, PI, separate evaluator, judge loop, and core-owned session goals. These tokens may guide Goal Runtime implementation, but they remain lineage/research and do not override Puppet Master-owned runtime, evidence, model-role, or completion contracts.
 gui_related: false
 gui_classification_reason: Research/source-lineage disposition is not GUI implementation.
 depends_on:
@@ -1301,6 +1373,7 @@ unblocks: []
 acceptance_criteria:
   - External or comparative references remain cited as lineage or implementation research.
   - Puppet Master-owned PlanUnits remain the canonical behavior source.
+  - External file names, PR numbers, and competitor/runtime names remain source-lineage tokens rather than Puppet Master behavior.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual source-lineage review
@@ -1320,8 +1393,31 @@ preserved_exact_tokens:
   - "Codex v0.140 attachment behavior reference"
   - "Codex implementation patterns to inspect"
   - "Evaluator and judge-loop lessons"
+  - "/goal now preserves oversized text, large pasted blocks, and image attachments"
+  - "rust-v0.140.0"
+  - "#27508"
+  - "#27509"
+  - "#27510"
+  - "runtime.rs"
+  - "tool.rs"
+  - "spec.rs"
+  - "steering.rs"
+  - "continuation.md"
+  - "thread_goal.rs"
+  - "goal_menu.rs"
+  - "goal_status.rs"
+  - "thread_goal_processor.rs"
+  - "Claude Code"
+  - "Hermes"
+  - "OpenClaw"
+  - "OpenCode"
+  - "PI"
+  - "separate evaluator"
+  - "judge loop"
+  - "core-owned session goals"
 negative_constraints:
   - Do not make competitor or external implementation references canonical Puppet Master behavior.
+  - Do not rely only on marker-based completion or host-specific stop hooks.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -1441,7 +1537,7 @@ Goal Runtime requires these data-shape families:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
-These data-shape bullets are Goal Runtime feature-local constraints and owner hints until `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Permissions_System.md` receive a separate explicit owner-doc compile. They do not revise those owner docs in this cycle.
+These data-shape bullets are Goal Runtime feature-local constraints; the adjacent owner docs carry only the shared envelope, persistence, and approval-scope registration needed for cross-owner routing. `Plans/Goal_Runtime_System.md` remains the semantic owner for Goal Runtime behavior.
 
 ## 4. Integration Surfaces
 
@@ -1451,7 +1547,7 @@ These data-shape bullets are Goal Runtime feature-local constraints and owner hi
 - Plan_To_Node_Compilation remains the boundary for future plan graph build goals and prevents NodeSeed/WorkNode creation before the compiler contract exists.
 - Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
 - Runtime_Artifacts_Panel and storage owners consume Goal Runtime evidence and receipt identities for browsing, retention, and redaction.
-- Provider/model/account owner docs provide concrete provider capabilities; Goal Runtime uses provider-neutral model-role policy.
+- Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal Runtime roles; provider-specific docs such as Provider_OpenCode consume the role policy without replacing it.
 
 ## 5. Validation And Acceptance
 

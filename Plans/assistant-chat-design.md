@@ -21885,7 +21885,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. A visible active-goal indicator shows goal state, and thread controls support pause, resume, stop, clear, edit, and update. The Goal chip is separate from chat mode so Ask/Plan/Agent mode and a running goal remain distinct concepts.
+  Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. A visible active-goal indicator shows goal state labels including Running, Stopped, Paused, Blocked, and Complete, with Blocked carrying the precise blocker reason when available. Thread controls support pause, resume, stop, clear, edit, and update, and the active Goal chip/status opens a menu or drawer with View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs. Active-goal updates can be initiated with `/goal again`, asking for an update, or clicking a little icon next to the goal status. The Goal chip is separate from chat mode so Ask/Plan/Agent mode and a running goal remain distinct concepts.
 gui_related: true
 gui_classification_reason: This unit defines user-visible chat activation paths, chips, indicators, and thread controls.
 depends_on:
@@ -21895,6 +21895,8 @@ acceptance_criteria:
   - Assistant Chat exposes button/chip/icon, `/goal`, and natural-language activation paths.
   - Running goals have a visible indicator and do not disappear into ordinary chat mode state.
   - Pause/resume/stop/clear/edit/update controls project canonical Goal Runtime state.
+  - Goal status labels include Running, Stopped, Paused, Blocked, and Complete, with Blocked preserving a precise blocker reason when known.
+  - Goal menu or drawer actions include View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Assistant Chat Goal UI review
@@ -21929,6 +21931,24 @@ preserved_exact_tokens:
   - "stopped_by_user"
   - "cleared_from_thread"
   - "Goal update entry points"
+  - "Running"
+  - "Stopped"
+  - "Paused"
+  - "Blocked"
+  - "Complete"
+  - "/goal again"
+  - "asking for an update"
+  - "clicking a little icon next to the goal status"
+  - "View goal"
+  - "Edit goal"
+  - "Pause"
+  - "Resume"
+  - "Stop"
+  - "Clear"
+  - "Show tasks"
+  - "Show subgoals"
+  - "Show evidence"
+  - "logs"
   - "Goal chip is separate from chat mode"
   - "Agent + Goal"
   - "Crew + Goal"
@@ -21983,7 +22003,16 @@ source_lineage:
 preserved_exact_tokens:
   - "Goal task / todo tracker"
   - "Goal task item states"
-  - "pending | running | verifying | completed | blocked | failed | skipped | cancelled | stale | replanned"
+  - "pending"
+  - "running"
+  - "verifying"
+  - "completed"
+  - "blocked"
+  - "failed"
+  - "skipped"
+  - "cancelled"
+  - "stale"
+  - "replanned"
   - "updates the visible task list"
   - "Goal Replan Event"
   - "Blocked status carries exact blocker"
@@ -22007,7 +22036,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat displays goal evidence and activity disclosure through runtime popovers, metadata, activity cards, message blocks, thread-sidebar goal summaries, and final goal completion reports. These displays summarize Goal Runtime receipts and evidence without becoming the canonical evidence store.
+  Assistant Chat displays goal evidence and activity disclosure through runtime popovers, metadata, activity cards, message blocks, thread-sidebar goal summaries, and final goal completion reports. Runtime popovers/metadata preserve labels Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state. Activity cards/message blocks preserve examples such as Automation, Starting login flow verification, Agent took control, and user_paused -> resumed. These displays summarize Goal Runtime receipts and evidence without becoming the canonical evidence store.
 gui_related: true
 gui_classification_reason: This unit defines user-visible evidence, activity, metadata, thread summary, and completion-report displays.
 depends_on:
@@ -22016,6 +22045,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Users can inspect goal activity and evidence summaries from the chat surface.
+  - Runtime metadata labels include Mode, Provider, Model, Effort, Subagents, Tokens, Context, Est. Cost, Worktree, Merge Status, and takeover_state.
+  - Activity cards or message blocks can represent Automation, Starting login flow verification, Agent took control, and user_paused -> resumed examples.
   - Completion reports disclose checks, changed artifacts, blockers, skipped checks, degraded status, and evidence references where relevant.
   - Chat presentation links to runtime evidence instead of duplicating raw uncapped logs.
 validation_surfaces:
@@ -22043,6 +22074,23 @@ preserved_exact_tokens:
   - "Runtime popovers and metadata"
   - "Goal activity cards/message blocks"
   - "Goal completion reports"
+  - "Mode"
+  - "Provider"
+  - "Model"
+  - "Effort"
+  - "Subagents"
+  - "Tokens"
+  - "Context"
+  - "Est. Cost"
+  - "Worktree"
+  - "Merge Status"
+  - "takeover_state"
+  - "Automation"
+  - "Starting login flow verification"
+  - "Agent took control"
+  - "user_paused -> resumed"
+  - "activity card"
+  - "message block"
 negative_constraints:
   - Do not store uncapped raw logs inline in chat completion reports.
   - Do not let chat presentation replace Goal Runtime receipt authority.

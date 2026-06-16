@@ -1,32 +1,33 @@
 # Shard Index: Plans/Contracts_V0.md
 
-Generated: 2026-06-16T11:49:16Z
+Generated: 2026-06-16T19:27:57Z
 
-Source SHA256: `2c70db9aeb75fee2eddb58a18788ccb681d396d51d94cbb7cfe78610b93de7e1`
+Source SHA256: `bd800694f4803d027eaf740d5cd2c17305f43c4857ef622bd9738d48a5b4f18e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L223 `1e5af796bfcdf73fe7f248e16dad6fc19816909a61c414ecffdabc1a56a609ac`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L224-L298 `66cbe01f36d1166e6f1c62aa8b37f50370b787306c794cce9944ecfe2024dd21`
-- [003 - 0. Scope](003-0.-scope.md) L300-L310 `01f7509b958302eefc3497c07793eb0828040a6698b612b02311720f91565f8c`
-- [004 - Cross-surface runtime, concern, and route/open contracts](004-cross-surface-runtime-concern-and-route-open-contracts.md) L312-L814 `3b8f92b2fcc7a039ffda2e168cfc2db3685ae0a2c05a9a780a280e97058379c6`
-- [005 - 1. Events (persisted)](005-1.-events-persisted.md) L816-L919 `986aa706d923980e4de5ae9751cdde0c3ab09bce87a2d58b06fa48854b598f7d`
-- [006 - 2. Provider normalized stream (non-persisted contract)](006-2.-provider-normalized-stream-non-persisted-contract.md) L921-L970 `e8fd135645a776da5d445ccf1b1dac776b8ba15f641130772005ca4e98b4afb0`
-- [007 - 3. Tool events (persisted)](007-3.-tool-events-persisted.md) L972-L1441 `bdc308b93605a7a8a6ead8ecfc15150566c4a4cc148fb040b255ab4bcaf7c8ce`
-- [008 - 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)](008-5.-context-management-instruction-scoping-attempt-journaling-par.md) L1442-L1481 `1db48606c5855ddc8d2813620bc9e31cfecd9e6f3b9d5b57e90a93fd465da01b`
-- [009 - 6. HITLRequest](009-6.-hitlrequest.md) L1482-L1527 `821342a5a9769bfee7043899f31d83ba5dde8cd20a045b0590613087151f28fb`
-- [010 - 7. UICommand](010-7.-uicommand.md) L1528-L1806 `fe303d6b4ac122afbf59a7131d8820f87d3d41131434778bef10f31779915dde`
-- [011 - 8. UI Scaling](011-8.-ui-scaling.md) L1808-L1831 `9e8c511914bbf2ddec76e14b6d7733593a8aace3269a2e15d9222337d8979859`
-- [012 - Usage and Billing Contracts Addendum](012-usage-and-billing-contracts-addendum.md) L1833-L1944 `fd5358a6a330490d8b0095a94dc46e208d4a24852f2f9c94b959edea8688b4a1`
-- [013 - Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)](013-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md) L1946-L2184 `9167d8afc1eb0c357ab6b275aeec120b8801c48cddd6c75bdbcc23671f7c9764`
-- [014 - Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)](014-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md) L2185-L2279 `9461bedb97907794316c68028da2e9cb4177ec5597212fa6e008090948f74ddd`
-- [015 - Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)](015-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md) L2280-L2392 `eb3ea601e62dadd96e06f8bce5eb426b7af77d5b46394c5385a90cbc8cf29124`
-- [016 - Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)](016-canonical-runtime-event-outcome-and-action-contract-canonical-al.md) L2393-L2536 `1cb4feb2a43224e1412d17b81f647fb9efa67483aa49f616286b863521e03b13`
-- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L2538-L2542 `0a701cd017c2aa80023b43783a397330ceed2e08566f09fabfb71188447df8a9`
-- [018 - PlanUnits](018-planunits.md) L2544-L16712 `3966a556d53470aed8bc74b8e4b83dfd9987935848c21b9cc977df5ed5a39dce`
-- [019 - Migration Coverage](019-migration-coverage.md) L16714-L16724 `09c0b9d3d1ec6d6b7809582f5f210869fb7ed0777e0ca8a31f0160693e37db30`
-- [020 - Ledger Compile Addendum - pldg-20260614-001](020-ledger-compile-addendum-pldg-20260614-001.md) L16726-L16805 `711fd1358278b5c4d816cfb429121e2c1997bf97d696205eb9e203f839c7b2ed`
-- [021 - Ledger Compile Addendum - pldg-20260614-002](021-ledger-compile-addendum-pldg-20260614-002.md) L16807-L16969 `eaa0c4fa408ebce9e8e847cf27259471d2457cd1fd2ba8dcbf565fd2e24fac59`
-- [022 - Ledger Compile Addendum - pldg-20260615-001](022-ledger-compile-addendum-pldg-20260615-001.md) L16971-L17052 `67ce1669a86076a1abb584bee478fb546f4a45f7dc69cecabc016b90af806447`
+- [001 - Preamble](001-preamble.md) L1-L223 `2c6cd660bbae027354068e2f2a6386e7883c9c05fe2b36cc61a0db4f956a7b6d`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L224-L298 `c66f45e095cd40feca320fdd14db5f479c02d70aae312bdefab574d4c9e747af`
+- [003 - 0. Scope](003-0.-scope.md) L300-L310 `71912138b0cf0c863630de3a8c5f23cbb87646258b00f826a876646cfecff76c`
+- [004 - Cross-surface runtime, concern, and route/open contracts](004-cross-surface-runtime-concern-and-route-open-contracts.md) L312-L814 `97f87775592d4d549eba126c55d816f73ff2dccd86f23ba60715d4c3f7cc9035`
+- [005 - 1. Events (persisted)](005-1.-events-persisted.md) L816-L919 `8cc69af4f692261cc09026690da2c0d599ba41994a9ed7e48c6bca63b0bf1be5`
+- [006 - 2. Provider normalized stream (non-persisted contract)](006-2.-provider-normalized-stream-non-persisted-contract.md) L921-L970 `dc74346d54c3efbee174402f5d2e813c855ec75571239bf96a4fc65bf424701e`
+- [007 - 3. Tool events (persisted)](007-3.-tool-events-persisted.md) L972-L1441 `48a5b8c5b239897a2fa3c74d93f1047c552c5418c7d966b35a139cac60e0937f`
+- [008 - 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)](008-5.-context-management-instruction-scoping-attempt-journaling-par.md) L1442-L1481 `d8f15cb844e41c84600370c6fb360b184260810303cb3bb29394e984fb89841d`
+- [009 - 6. HITLRequest](009-6.-hitlrequest.md) L1482-L1527 `978c3b0d3137e36d7218f1fe9bc0a389866253394ba9f4f70c24c7d1acf2f45c`
+- [010 - 7. UICommand](010-7.-uicommand.md) L1528-L1806 `99c251529f45799b5d367ae68cb1a29c6a61a1a76c71c3ccd22d9bbb7616b911`
+- [011 - 8. UI Scaling](011-8.-ui-scaling.md) L1808-L1831 `3bc5da8c1be23ab54c5a67319bf70f1866eefc7a7a0235fe0071cf89c284d5b0`
+- [012 - Usage and Billing Contracts Addendum](012-usage-and-billing-contracts-addendum.md) L1833-L1944 `b92386a6280e36198bee3246d80f6a7a4a82eb0fd330bb31ec3e37c12062046f`
+- [013 - Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)](013-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md) L1946-L2184 `e05423102dd45c3332f262ed3e6e4fc8b9472633b79240dfd01390871bdcd6a0`
+- [014 - Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)](014-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md) L2185-L2279 `1823fa9ec29b5a0404145582fd5f4276faf505123d90e75f63b65a9a36c3dcc8`
+- [015 - Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)](015-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md) L2280-L2392 `b21be77bf53914ea1bcf55f32718c545325d389dd0d5a7bdbb7f2ad1a9338284`
+- [016 - Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)](016-canonical-runtime-event-outcome-and-action-contract-canonical-al.md) L2393-L2536 `4dce2984ac307170c1042a4365e839ea3d255338952f9c1e4fa5f1e523542070`
+- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L2538-L2542 `612b6495a45b20437c0daa4713adbd460f8d655e2521a3f1e3218a78f516413d`
+- [018 - PlanUnits](018-planunits.md) L2544-L16712 `df6eab0fa212cf01d435778e26c586eb1293ddc918ca844a303ec752560492da`
+- [019 - Migration Coverage](019-migration-coverage.md) L16714-L16724 `16e4a5030ecdc347bcf2406d1ef5217c280020e00059c4811e33302d9af91325`
+- [020 - Ledger Compile Addendum - pldg-20260614-001](020-ledger-compile-addendum-pldg-20260614-001.md) L16726-L16805 `6f09fe6a9f00273803e4e1b27fd90f0e1094f3ecd3a393a3c377843f4add4210`
+- [021 - Ledger Compile Addendum - pldg-20260614-002](021-ledger-compile-addendum-pldg-20260614-002.md) L16807-L16969 `5559d26bfad7f4ce2891c104f8e0ff99218baf7810dae6d4ad7a6f339ae2ea4e`
+- [022 - Ledger Compile Addendum - pldg-20260615-001](022-ledger-compile-addendum-pldg-20260615-001.md) L16971-L17052 `be12293bc47f852a413bbbc05e078b5b9662706c8c417a5939c18f71ce46142c`
+- [023 - Ledger Compile Addendum - pldg-20260616-001](023-ledger-compile-addendum-pldg-20260616-001.md) L17054-L17126 `d0e39a262cdb817c71dda45ea2cfb67584f70c2df60ad0ec5bc2375faae84de8`
