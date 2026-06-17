@@ -58,39 +58,39 @@
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "7fd343f381106f176d93a32fc350eb77e14d7d22c2dd3be323810da3cbf49a95"
+      "sha256": "958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3673606d05638de2b2b8c81c4729d94cb291019aad1875eaed5fc4e2e9c3a443"
+      "sha256": "3cfd5997c6eb70e2e5dcab05704bb1a09d1590e21caed119962f2c58efceacaf"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "2f95ee28d92721b648ad6ddba4b09d93890bb4e178c4ae49cd16ab60d4a3ca0d"
+      "sha256": "fe0fb62f6037d1457c08591c10867a6785acfc0176590afc732137a9a9d4a749"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "e38458e37860ec7f185d5ab8387eb246a8c67808b9e7cf5afc9a26e852f9a7bb"
+      "sha256": "a0b7ebecb088924d9c4f7939e7b59694ad51ec611161c33a7cf755da93b81433"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "43fdf25982ddacae028b994dad5808493b2b4f7ea466fb5a1f4e655973430742"
+      "sha256": "acc43761ae0a400127f53f8cc80331e93441051f043cbaafa7d88dba961a94b7"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "31755f591ad0a464553124a46844e18e56eea85efcf06e215785c8575d1e1bd9"
+      "sha256": "bf5b0ae18ee6cb189d38fc643aa8edab978b1eb1ab9e4e32451904fbef7370bc"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "5c88877f8cdd25f471af3d0b52069f7525c0cf56b906bf34f45886ffdfb1639f"
+      "sha256": "0bd9b30000250e188941ffe003f87255c21735cc4051e09a8c6e0fe624ae1265"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "50b4084f4e9246ee89d0c3e6beb8f443448888f81aff8f4444740526ebd36306"
+      "sha256": "cf622916fba2e959839ea5608cb141fe6db7500b094487722f9d8d8d823de8c9"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "407315897f775f2b8085cf40a64325cf9dc12a33ff3190fc4acb59443f3904e8"
+      "sha256": "f2188e9ba898a335817a5d9c990e343687067d675558e565442fed7a4866b5d9"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -98,7 +98,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d0b7491b545996cdd91c077586a0afe59397328cf1891ded58df29161ecb2a83"
+      "sha256": "9ae784ea3f1ee6cdd7810a830fa5bd886332e4500d538409dd0091974ebb2512"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6770f3913245e807cd88fd8ceff25ce0b446db2196aea517f81c50dce2156d53"
+      "sha256": "8801d3be4344ef8a1b56772f7fc7655e601340717204ed8ff9176d51bd805fba"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -124,7 +124,7 @@
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created.",
+      "details": "PlanUnit index regenerated after audit-20260617-008 atom-0088 repair; 5068 PlanUnits, 18099 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -172,6 +172,16 @@
       "name": "post-audit-repair-governance-seal",
       "result": "PASS",
       "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+    },
+    {
+      "name": "audit-20260617-008-atom-0088-repair",
+      "result": "PASS",
+      "details": "Bounded repair closed SR-008-001 by adding exact compatibility/search alias body proof and reciprocal lineage to OP-022, OSI-428, and 0PI-056, and by removing PLS-011 as an overbroad atom-0088 compile target."
+    },
+    {
+      "name": "audit-20260617-008-spec-lock-refresh",
+      "result": "PASS",
+      "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
     }
   ],
   "commands_run": [
@@ -257,6 +267,26 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json",
       "exit_code": 0
     }
   ],

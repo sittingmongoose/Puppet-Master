@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6770f3913245e807cd88fd8ceff25ce0b446db2196aea517f81c50dce2156d53"
+      "sha256": "8801d3be4344ef8a1b56772f7fc7655e601340717204ed8ff9176d51bd805fba"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -127,6 +127,11 @@
       "name": "post-audit-repair-governance-seal",
       "result": "PASS",
       "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+    },
+    {
+      "name": "audit-20260617-008-spec-lock-refresh",
+      "result": "PASS",
+      "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
     }
   ],
   "commands_run": [
@@ -204,6 +209,10 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json",
       "exit_code": 0
     }
   ],
