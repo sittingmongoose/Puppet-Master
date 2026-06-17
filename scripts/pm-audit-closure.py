@@ -151,7 +151,10 @@ def evidence_path_from_ref(ref: str) -> Path | None:
     token = ref.split("#", 1)[0]
     if ":" in token:
         before, after = token.rsplit(":", 1)
-        if after.isdigit() or after == "no matching GoalRun/WorkNode cost owner change":
+        before_path = ROOT / before
+        if before.startswith(("Plans/", "scripts/")) and before_path.exists():
+            token = before
+        elif re.match(r"^\d+(?:-\d+)?$", after) or after == "no matching GoalRun/WorkNode cost owner change":
             token = before
     if token.startswith(("Plans/", "scripts/")) or token in {"AGENTS.md"}:
         return ROOT / token
@@ -171,6 +174,33 @@ def validate_evidence_refs(refs: Any, path_label: str, errors: list[str]) -> Non
             errors.append(f"{path_label}: missing evidence ref {ref}")
 
 
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def validate_current_hashes(hash_group: Any, group_name: str, path_label: str, errors: list[str]) -> None:
+    if not isinstance(hash_group, dict):
+        return
+    for ref, stored_hash in sorted(hash_group.items()):
+        if not isinstance(ref, str) or not isinstance(stored_hash, str):
+            errors.append(f"{path_label}: {group_name} entries must map string refs to string sha256 hashes")
+            continue
+        ref_path = evidence_path_from_ref(ref)
+        if ref_path is None:
+            continue
+        if not ref_path.exists():
+            errors.append(f"{path_label}: {group_name} hash ref is missing: {ref}")
+            continue
+        if not ref_path.is_file():
+            continue
+        current_hash = sha256_file(ref_path)
+        if stored_hash != current_hash:
+            errors.append(
+                f"{path_label}: {group_name} for {ref} is stale "
+                f"(stored {stored_hash}, current {current_hash})"
+            )
+
+
 def validate_hashes(hashes: Any, path_label: str, errors: list[str]) -> None:
     if not isinstance(hashes, dict):
         errors.append(f"{path_label}: hashes must be an object")
@@ -183,6 +213,8 @@ def validate_hashes(hashes: Any, path_label: str, errors: list[str]) -> None:
             f"{path_label}: hashes must include source_atom_hashes, plan_unit_hashes, "
             "owner_evidence_hashes, or closure_evidence_hashes"
         )
+    validate_current_hashes(hashes.get("owner_evidence_hashes"), "owner_evidence_hashes", path_label, errors)
+    validate_current_hashes(hashes.get("closure_evidence_hashes"), "closure_evidence_hashes", path_label, errors)
 
 
 def validate_reopened_proof(row: dict[str, Any], prior_closed: list[dict[str, Any]], path_label: str, errors: list[str]) -> None:
@@ -385,7 +417,9 @@ def actionable_json_rows(path: Path, artifact: str, errors: list[str]) -> list[s
                 else:
                     has_warning = bool(parsed.get("warnings"))
                     has_warning = has_warning or any(bool(report.get("warnings")) for report in parsed.get("audit_dirs", []))
-            if result.get("status") != "pass" or has_warning:
+            status = result.get("status")
+            passed = status == "pass" or (status is None and result.get("exit_code") == 0)
+            if not passed or has_warning:
                 rows.append(f"results.{name}")
     return rows
 
