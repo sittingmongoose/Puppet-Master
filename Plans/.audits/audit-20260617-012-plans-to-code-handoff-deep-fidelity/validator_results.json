@@ -1,0 +1,126 @@
+{
+  "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+  "blocking_failures": [
+    "semantic closure registry stale evidence hashes",
+    "plan migration inventory/batch/final summary stale against live Plans"
+  ],
+  "commands": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+      "errors": 157,
+      "exit_code": 1,
+      "name": "pm-audit-closure validate",
+      "status": "fail",
+      "summary": "Global semantic closure registry has stale evidence hashes; this audit dir has no repair_closure_matrix.jsonl because the pass is audit-only.",
+      "warnings": 1
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "name": "pm-plan-index validate",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 18220,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 5105
+      }
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
+      "exit_code": 0,
+      "name": "pm-bootstrap-ledger-validate",
+      "status": "pass",
+      "summary": {
+        "atoms": 64,
+        "compile_queue_items": 0,
+        "corrections": 10,
+        "decisions": 28,
+        "events": 11,
+        "questions": 0
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "name": "pm-plans-verify run-gates",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "name": "pm-shard-plans check",
+      "status": "pass",
+      "summary": {
+        "docs_checked": 51,
+        "shards_checked": 925,
+        "source_count": 51
+      }
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "name": "git diff check",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "name": "verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "name": "validate-evidence",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0,
+      "name": "validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "exit_code": 0,
+      "name": "validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py json-syntax",
+      "exit_code": 0,
+      "name": "json-syntax",
+      "status": "pass"
+    },
+    {
+      "command": "find . -path './.git' -prune -o \\( -type d \\( -name 'WorkNodes' -o -name 'NodeSeeds' -o -name 'node_queues' -o -name 'final_node_queues' \\) -o -type f \\( -name '*.rs' -o -name '*.slint' -o -name 'Cargo.toml' \\) \\) -print",
+      "exit_code": 0,
+      "name": "forbidden artifact scan",
+      "status": "pass",
+      "summary": "No forbidden WorkNodes/NodeSeeds/node queues/Rust/Slint/Cargo artifacts found."
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 1,
+      "name": "pm-plan-migration validate",
+      "status": "fail",
+      "summary": {
+        "failure_types": {
+          "complete_final_summary_live_plan_unit_count_stale": 1,
+          "doc_count_mismatch": 1,
+          "inventory_doc_set_mismatch": 1,
+          "stale_batch_report_sha256_after": 64
+        },
+        "failures": 67,
+        "live_plan_unit_count": 5105,
+        "recorded_final_summary_plan_unit_count": 5068
+      }
+    }
+  ],
+  "current_ref": "3f6fb1fba",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "passing_core_governance": true,
+  "schema_id": "pm.deep_audit_validator_results.v1",
+  "status": "fail_blocked_by_stale_closure_and_migration_evidence"
+}

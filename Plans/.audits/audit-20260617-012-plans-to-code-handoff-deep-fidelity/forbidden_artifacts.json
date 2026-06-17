@@ -1,0 +1,15 @@
+{
+  "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+  "forbidden_name_paths": [],
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "node_readiness_flags": {
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true,
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "status": "blocked_compiler_contract_incomplete"
+  },
+  "plan_compile_runtime_status": "design_only_disabled",
+  "rust_slint_cargo_paths": [],
+  "status": "pass"
+}

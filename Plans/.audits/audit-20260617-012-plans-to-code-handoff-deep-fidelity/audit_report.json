@@ -1,0 +1,107 @@
+{
+  "artifact_status": "final_validator_results_recorded",
+  "atom_fidelity": {
+    "atoms_total": 64,
+    "atoms_with_missing_or_metadata_only_details": 37,
+    "atoms_with_planunit_lineage": 0
+  },
+  "audit_artifacts": [
+    "atom_fidelity_matrix.jsonl",
+    "planunit_source_claims.jsonl",
+    "owner_routing_findings.jsonl",
+    "implementation_readiness_findings.jsonl",
+    "semantic_risks.jsonl",
+    "closure_reuse.jsonl",
+    "ledger_consistency.json",
+    "forbidden_artifacts.json",
+    "closure_registry_audit.json",
+    "validator_results.json",
+    "audit_report.json",
+    "FINAL_REPORT.md"
+  ],
+  "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+  "blockers": [
+    {
+      "id": "closure_registry_stale",
+      "severity": "high",
+      "summary": "pm-audit-closure validate fails with 157 stale-hash errors in the global semantic closure registry."
+    },
+    {
+      "id": "plan_migration_stale",
+      "severity": "high",
+      "summary": "pm-plan-migration validate fails with 67 stale migration evidence failures, including final PlanUnit count 5068 recorded vs 5105 live."
+    },
+    {
+      "id": "semantic_fidelity_open_risks",
+      "severity": "medium",
+      "summary": "40 open semantic risks remain: 37 atom-fidelity risks and 3 implementation-readiness warnings."
+    }
+  ],
+  "closure_registry": {
+    "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "notes": [
+      "No previous closure rows exist for this target ledger; current audit findings are new unless reviewed in a future closure pass.",
+      "Global closure registry validation fails because existing rows contain stale owner/closure evidence hashes after later Plans/index/governance changes.",
+      "Audit-only pass did not refresh or repair the closure registry."
+    ],
+    "open_registry_rows_total": 0,
+    "registry_exists": true,
+    "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "registry_rows_total": 51,
+    "status": "blocked_registry_hashes_stale",
+    "target_ledger_registry_rows": 0,
+    "validator_errors": 157,
+    "validator_status": "fail",
+    "validator_warnings": 1
+  },
+  "compile_readiness": "not_safe_to_compile_or_enable_runtime",
+  "current_ref": "3f6fb1fba",
+  "forbidden_artifacts": {
+    "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+    "forbidden_name_paths": [],
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "node_readiness_flags": {
+      "no_executable_build_tasks_created": true,
+      "no_final_node_queues_created": true,
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false,
+      "status": "blocked_compiler_contract_incomplete"
+    },
+    "plan_compile_runtime_status": "design_only_disabled",
+    "rust_slint_cargo_paths": [],
+    "status": "pass"
+  },
+  "implementation_readiness": {
+    "areas": 8,
+    "warnings": 3
+  },
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "next_safe_action": "Run a bounded repair pass for the 40 semantic risks and stale closure/migration evidence; keep PlanCompile runtime disabled and do not create WorkNodes/NodeSeeds until closure and migration validators pass.",
+  "owner_routing": {
+    "doc_impact_groups": 8,
+    "non_pass_groups": 0
+  },
+  "phase": "post_compile_deep_audit_only",
+  "planunit_source_claims": {
+    "target_planunits": 38
+  },
+  "schema_id": "pm.deep_audit_report.v1",
+  "semantic_risks": {
+    "by_family": {
+      "atom_fidelity": 37,
+      "implementation_readiness": 3
+    },
+    "by_severity": {
+      "low": 27,
+      "medium": 13
+    },
+    "by_status": {
+      "open_new": 40
+    },
+    "new_or_open": 40,
+    "previously_closed": 0
+  },
+  "status": "blocked_with_findings",
+  "validator_results_path": "Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/validator_results.json"
+}

@@ -1,0 +1,18 @@
+{
+  "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "notes": [
+    "No previous closure rows exist for this target ledger; current audit findings are new unless reviewed in a future closure pass.",
+    "Global closure registry validation fails because existing rows contain stale owner/closure evidence hashes after later Plans/index/governance changes.",
+    "Audit-only pass did not refresh or repair the closure registry."
+  ],
+  "open_registry_rows_total": 0,
+  "registry_exists": true,
+  "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+  "registry_rows_total": 51,
+  "status": "blocked_registry_hashes_stale",
+  "target_ledger_registry_rows": 0,
+  "validator_errors": 157,
+  "validator_status": "fail",
+  "validator_warnings": 1
+}
