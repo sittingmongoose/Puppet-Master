@@ -1,0 +1,146 @@
+{
+  "atom_classification_counts": {
+    "equivalent_with_evidence": 27,
+    "exact_present": 55,
+    "missing_or_drift": 17,
+    "not_for_plan": 3,
+    "source_lineage_only": 1,
+    "stale_retired": 1
+  },
+  "audit_id": "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity",
+  "baseline_ref": "a18316c43f0bf986d6f9c11669273225e9958dbf",
+  "changed_file_count_total": 625,
+  "changed_live_plan_docs": [
+    "M\tPlans/00-plans-index.md",
+    "M\tPlans/Contracts_V0.md",
+    "M\tPlans/Executor_Protocol.md",
+    "M\tPlans/FinalGUISpec.md",
+    "M\tPlans/Goal_Runtime_System.md",
+    "M\tPlans/Models_System.md",
+    "M\tPlans/Orchestrator_Page.md",
+    "M\tPlans/Permissions_System.md",
+    "M\tPlans/Plan_Document_System.md",
+    "M\tPlans/Plan_To_Node_Compilation.md",
+    "M\tPlans/Planning_Ledger_System.md",
+    "M\tPlans/Run_Graph_View.md",
+    "M\tPlans/Runtime_Artifacts_Panel.md",
+    "M\tPlans/WorktreeGitImprovement.md",
+    "M\tPlans/assistant-chat-design.md",
+    "M\tPlans/chain-wizard-flexibility.md",
+    "M\tPlans/chain-wizard.md",
+    "M\tPlans/orchestrator-subagent-integration.md",
+    "M\tPlans/storage-plan.md"
+  ],
+  "current_ref": "3f14e8befc1e83d867e98d4b9451bc53e66ee9bf",
+  "cycle_commits": [
+    "91e3457d3962affc7b02898c98620757e7a963db",
+    "0406286cd7732d72c73a6a88c19519136b074536",
+    "506dde29cad8ec557088a875ff56ab8624c3af3f",
+    "3bcc0a3a41cf35ecc1abcf8a3a84882ddc8a04bc",
+    "28a01091b2347f5e69020297cb96ec0e66f1be58",
+    "3f14e8befc1e83d867e98d4b9451bc53e66ee9bf"
+  ],
+  "inference_evidence": {
+    "baseline": "91e3457d3 first commit adding ledger directory; baseline is parent a18316c43",
+    "latest_ledger": "registry sealed ledger last_updated_at_utc=2026-06-17T04:09:59Z and recent commits touch pldg-20260616-002"
+  },
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "next_safe_action": "Repair only listed semantic risks and direct validator fallout; do not touch WorkNodes, NodeSeeds, executable queues, manifests, implementation files, or generated governance artifacts unless an explicit governance seal follows canonical repairs.",
+  "planunit_delta_summary": {
+    "added_or_changed_planunits": [
+      "0PI-056",
+      "CV-288",
+      "EP-098",
+      "F3-394",
+      "F3-395",
+      "GRS-002",
+      "GRS-003",
+      "GRS-026",
+      "GRS-027",
+      "MS-109",
+      "OP-022",
+      "PS-115",
+      "PNC-009",
+      "PDS-006",
+      "PLS-011",
+      "RGV-012",
+      "RAP-027",
+      "W-071",
+      "ACD-420",
+      "CWF-151",
+      "CW-008",
+      "OSI-428",
+      "SP-215"
+    ],
+    "deleted_planunits": []
+  },
+  "schema_id": "pm.audit_report.v1",
+  "semantic_risk_count": 16,
+  "status": "PASS_WITH_WARNINGS",
+  "subagent_summary": {
+    "atom_windows": "completed with semantic warnings",
+    "changed_doc_fidelity": "completed with stale-owner/stale-era warnings",
+    "completed": 7,
+    "ledger_governance": "completed with post-seal-open-question and stale-report warnings",
+    "owner_routing": "pass_no_active_wrong_owner",
+    "reciprocal_lineage": "completed with weak_lineage warnings",
+    "spawned": 7
+  },
+  "validator_commands": [
+    {
+      "name": "bootstrap_ledger_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "pm_plan_index_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "pm_plan_migration_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "run_gates",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "shard_check",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "validate_auto_decisions",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "verify_spec_lock",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "validate_evidence",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    },
+    {
+      "name": "git_diff_check",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass"
+    }
+  ],
+  "validators_overall": "pass"
+}

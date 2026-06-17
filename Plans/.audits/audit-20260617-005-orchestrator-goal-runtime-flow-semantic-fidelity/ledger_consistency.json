@@ -1,0 +1,312 @@
+{
+  "compile_queue_items": 1,
+  "compile_queue_status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+  "current_counts": {
+    "accepted_decisions_count": 29,
+    "candidate_atoms_count": 0,
+    "design_atoms_total": 104,
+    "governance_status": "sealed",
+    "open_blockers_count": 0,
+    "open_questions_count": 3,
+    "ready_for_plan_compile_atoms": 0,
+    "status": "sealed"
+  },
+  "forbidden_artifact_scan_stdout": [
+    "./Plans/gui_automation_manifest.schema.json",
+    "./Plans/acceptance_manifest.schema.json",
+    "./.claude/_state/plugins/marketplaces/claude-plugins-official/plugins/plugin-dev/skills/plugin-structure/references/manifest-reference.md"
+  ],
+  "handoff_open_questions": [
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened after the compiled/governance-sealed ledger was resumed for conversational continuation. This is not a compile blocker for the sealed PlanUnits; it selects the next safe planning lane.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "Should the next post-seal continuation focus on the PlanUnit-to-NodeSeed-to-WorkNode compiler contract, or on implementation planning that remains strictly non-executable until that compiler contract exists?",
+      "question_id": "q-0007",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to prevent premature executable WorkNode semantics from leaking into planning before the compiler contract exists.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "What is the smallest future compiler output that may exist before execution: a non-executable NodeSeed candidate, a hydrated WorkNode template, or only a compiled PlanUnit reference with acceptance metadata?",
+      "question_id": "q-0008",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to clarify the certification boundary before any future implementation planning relies on runtime completion semantics.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0044",
+        "atom-0045",
+        "atom-0053",
+        "atom-0090"
+      ],
+      "question": "Where should completion certification be bound in the future runtime: compiler-authored acceptance claims, executor-collected receipts, verifier/adjudicator judgment, or a layered combination with explicit parent-goal certification gates?",
+      "question_id": "q-0009",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    }
+  ],
+  "ledger_health_summary": {
+    "blockers": 0,
+    "candidate_atoms": 0,
+    "capability_lane_binding_policy": "accepted_compiled_governance_sealed_source_lineage",
+    "compile_queue_items": 1,
+    "compiled_owner_docs": 19,
+    "compiled_plan_units": 23,
+    "compiled_to_plan_atoms": 102,
+    "corrections": 9,
+    "decisions": 29,
+    "deferred_questions": 0,
+    "design_atoms": 104,
+    "doc_builder_goal_conversion_contract": "accepted_compiled_governance_sealed_source_lineage",
+    "doc_impact_matrix_docs_accounted_for": 68,
+    "events": 16,
+    "final_readiness_review": "source_lineage_final_readiness_completed_governance_sealed",
+    "forbidden_artifacts": "not_created",
+    "git_diff_check": "pass",
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "gui_surface_contracts": 18,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "non_applicable_atoms": 2,
+    "open_blockers": 0,
+    "open_item_resolution_workshop": "accepted_by_user_with_clarifications",
+    "open_questions": 3,
+    "plan_index_acceptance_units": 18081,
+    "plan_index_plan_units": 5065,
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2475_planunits_checked",
+    "pm_plan_index_generate": "pass_5065_planunits_18081_acceptance_units",
+    "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
+    "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
+    "post_seal_open_questions": [
+      "q-0007",
+      "q-0008",
+      "q-0009"
+    ],
+    "questions": 9,
+    "ready_for_plan_compile_atoms": 0,
+    "run_gates": "pass_after_governance_seal_refresh",
+    "shard_check": "pass_after_governance_seal_refresh",
+    "strict_canonical_plan_targets": [
+      "Plans/Goal_Runtime_System.md"
+    ],
+    "unclassified_candidates": 0
+  },
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "open_items_open_questions": [
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened after the compiled/governance-sealed ledger was resumed for conversational continuation. This is not a compile blocker for the sealed PlanUnits; it selects the next safe planning lane.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "Should the next post-seal continuation focus on the PlanUnit-to-NodeSeed-to-WorkNode compiler contract, or on implementation planning that remains strictly non-executable until that compiler contract exists?",
+      "question_id": "q-0007",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to prevent premature executable WorkNode semantics from leaking into planning before the compiler contract exists.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0041",
+        "atom-0085",
+        "atom-0086"
+      ],
+      "question": "What is the smallest future compiler output that may exist before execution: a non-executable NodeSeed candidate, a hydrated WorkNode template, or only a compiled PlanUnit reference with acceptance metadata?",
+      "question_id": "q-0008",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    },
+    {
+      "compile_disposition": "post_seal_followup_not_compiled",
+      "created_at_utc": "2026-06-16T21:31:00Z",
+      "disposition": "Opened to clarify the certification boundary before any future implementation planning relies on runtime completion semantics.",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "linked_atom_ids": [
+        "atom-0044",
+        "atom-0045",
+        "atom-0053",
+        "atom-0090"
+      ],
+      "question": "Where should completion certification be bound in the future runtime: compiler-authored acceptance claims, executor-collected receipts, verifier/adjudicator judgment, or a layered combination with explicit parent-goal certification gates?",
+      "question_id": "q-0009",
+      "schema_id": "pm.bootstrap_question.v1",
+      "source_refs": [
+        "chat:user-continue-post-seal-conversation",
+        "assistant:post-seal-question-batch-compiler-contract"
+      ],
+      "status": "open",
+      "updated_at_utc": "2026-06-16T21:31:00Z"
+    }
+  ],
+  "plan_index": {
+    "acceptance_units": 18081,
+    "coverage_status": "pass",
+    "dependencies_summary": {
+      "build_order_available": false,
+      "cycle_blocker_count": 245,
+      "depends_on_edge_count": 10615,
+      "edge_count": 12154,
+      "node_count": 5065,
+      "unblocks_edge_count": 1539,
+      "unresolved_reference_count": 0
+    },
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_units": 5065
+  },
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 9,
+    "decisions": 29,
+    "design_atoms": 104,
+    "events": 16,
+    "questions": 9
+  },
+  "registry_status": {
+    "candidate_compile_owner_docs": [],
+    "canonical_plan_targets": [
+      "Plans/Goal_Runtime_System.md"
+    ],
+    "compiled_owner_docs": [
+      "Plans/00-plans-index.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Models_System.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/Permissions_System.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Plan_Document_System.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/chain-wizard.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/storage-plan.md"
+    ],
+    "compiled_plan_unit_ids": [
+      "GRS-002",
+      "GRS-003",
+      "GRS-026",
+      "GRS-027",
+      "OP-022",
+      "OSI-428",
+      "EP-098",
+      "PNC-009",
+      "PDS-006",
+      "F3-394",
+      "F3-395",
+      "ACD-420",
+      "CW-008",
+      "CWF-151",
+      "RAP-027",
+      "W-071",
+      "RGV-012",
+      "CV-288",
+      "MS-109",
+      "PS-115",
+      "SP-215",
+      "PLS-011",
+      "0PI-056"
+    ],
+    "created_at_utc": "2026-06-16T16:55:18Z",
+    "governance_status": "sealed",
+    "last_event_id": "evt-0016",
+    "last_updated_at": "2026-06-17T04:09:59",
+    "last_updated_at_utc": "2026-06-17T04:09:59Z",
+    "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+    "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. A post-seal conversational continuation is open in ledger-only state with q-0007 through q-0009; this does not unseal or recompile the existing PlanUnits. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+    "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "primary_goal": "Plan the Orchestrator Goal Runtime flow rewrite, including the three Goal Mode functions, GoalRun/WorkGraph/WorkNode architecture, extensive bounded subagents, low-end/high-end agent split, verification repair loop, receipts, GUI/settings impacts, terminology cleanup, and backlink audit scope before canonical Plans edits.",
+    "resume_file": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+    "source_lineage_pre_seal_candidate_compile_owner_docs": [
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/chain-wizard.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Plan_Document_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Models_System.md",
+      "Plans/Permissions_System.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/00-plans-index.md"
+    ],
+    "status": "sealed",
+    "title": "Orchestrator Goal Runtime Flow Rewrite",
+    "updated_at_utc": "2026-06-17T04:09:59Z"
+  },
+  "schema_id": "pm.audit.ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "warnings": [
+    "open post-seal q-0007..q-0009 require accepted alias post_seal_followup_not_compiled",
+    "persisted bootstrap_ledger_validate_report.json stale versus live validator"
+  ]
+}
