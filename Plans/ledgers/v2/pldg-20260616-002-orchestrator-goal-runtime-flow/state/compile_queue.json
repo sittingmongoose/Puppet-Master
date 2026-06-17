@@ -1,6 +1,26 @@
 {
   "candidate_compile_plan": {
-    "candidate_owner_docs": [
+    "active": false,
+    "candidate_owner_docs": [],
+    "capability_lane_binding_policy_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json",
+    "compile_sequence": [
+      "P0 owner/backbone updates",
+      "P1 direct consumer/policy updates",
+      "GUI/settings surface updates from gui_impact_matrix",
+      "P2 reference audits and stale wording cleanup",
+      "PlanUnit extraction/validation only after canonical Plans are updated",
+      "governance seal only in separate explicit phase"
+    ],
+    "deferred_item_acceptance_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/deferred_item_resolution_acceptance_20260616.json",
+    "doc_builder_goal_conversion_contract_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_builder_goal_conversion_contract.json",
+    "doc_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json",
+    "final_readiness_review_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json",
+    "gui_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json",
+    "open_item_resolution_workshop_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json",
+    "post_seal_disposition": "compiled_to_live_planunits_governance_sealed_source_lineage_only; not an active compile plan; q-0007 through q-0009 remain ledger-only follow-up questions.",
+    "ready_atom_ids": [],
+    "reason": "Final readiness review confirms no open product/design questions remain. Delta-intake continuation has not introduced accepted architecture changes; proceed to explicit ledger-to-Plans compile after live repo audit if the user does not reopen design.",
+    "source_lineage_pre_seal_candidate_owner_docs": [
       "Plans/Goal_Runtime_System.md",
       "Plans/Orchestrator_Page.md",
       "Plans/orchestrator-subagent-integration.md",
@@ -18,22 +38,7 @@
       "Plans/Runtime_Artifacts_Panel.md",
       "Plans/00-plans-index.md"
     ],
-    "capability_lane_binding_policy_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json",
-    "compile_sequence": [
-      "P0 owner/backbone updates",
-      "P1 direct consumer/policy updates",
-      "GUI/settings surface updates from gui_impact_matrix",
-      "P2 reference audits and stale wording cleanup",
-      "PlanUnit extraction/validation only after canonical Plans are updated",
-      "governance seal only in separate explicit phase"
-    ],
-    "deferred_item_acceptance_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/deferred_item_resolution_acceptance_20260616.json",
-    "doc_builder_goal_conversion_contract_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_builder_goal_conversion_contract.json",
-    "doc_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json",
-    "final_readiness_review_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json",
-    "gui_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json",
-    "open_item_resolution_workshop_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json",
-    "ready_atom_ids": [
+    "source_lineage_pre_seal_ready_atom_ids": [
       "atom-0002",
       "atom-0003",
       "atom-0004",
@@ -137,8 +142,7 @@
       "atom-0103",
       "atom-0104"
     ],
-    "reason": "Final readiness review confirms no open product/design questions remain. Delta-intake continuation has not introduced accepted architecture changes; proceed to explicit ledger-to-Plans compile after live repo audit if the user does not reopen design.",
-    "status": "plan_compile_ready_final_readiness_review_complete_delta_intake",
+    "status": "source_lineage_compiled_governance_sealed_not_active",
     "target_doc_groups": {
       "P0_owner_backbone_docs": [
         "Plans/00-plans-index.md",

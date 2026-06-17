@@ -1,25 +1,24 @@
 {
-  "schema_id": "pm.orchestrator_goal_runtime_gui_impact_matrix.v1",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-  "status": "surface_contract_ready_user_accepted_exact_layout_deferred_to_gui_implementation",
-  "summary": {
-    "surfaces_total": 18,
-    "settings_surfaces": 5,
-    "orchestrator_page_surfaces": 6,
-    "other_page_surfaces": 7
-  },
   "rules": [
     "GUI impacts are implementation-ready at the surface/data-contract level; user accepted keeping the existing Orchestrator six-tab spine with GoalRun/WorkGraph overlays and side drawers.",
     "All user-visible surfaces must carry gui_related=true when converted to PlanUnits.",
     "Settings must expose capability-lane provider/model profile bindings from configured providers; exact provider/model defaults must not be hardcoded.",
     "Settings must expose subagent, verification, write-policy, Goal Mode, and cost/budget policy panels."
   ],
+  "schema_id": "pm.orchestrator_goal_runtime_gui_impact_matrix.v1",
+  "status": "surface_contract_accepted_governance_sealed_exact_layout_deferred_to_gui_implementation",
+  "summary": {
+    "orchestrator_page_surfaces": 6,
+    "other_page_surfaces": 7,
+    "settings_surfaces": 5,
+    "surfaces_total": 18
+  },
   "surfaces": [
     {
-      "surface_id": "gui-0001",
-      "surface": "Orchestrator Goal header",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/FinalGUISpec.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "goal_id",
         "objective",
@@ -29,13 +28,14 @@
         "budget/cost",
         "certification status"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Orchestrator Goal header",
+      "surface_id": "gui-0001"
     },
     {
-      "surface_id": "gui-0002",
-      "surface": "WorkGraph / WorkNode projection",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Run_Graph_View.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "ready/running/blocked/verifying/repairing/certified/failed",
         "dependencies",
@@ -43,13 +43,14 @@
         "evidence state",
         "receipt state"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "WorkGraph / WorkNode projection",
+      "surface_id": "gui-0002"
     },
     {
-      "surface_id": "gui-0003",
-      "surface": "Subagent waves projection",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/FinalGUISpec.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "active waves",
         "bounded task",
@@ -59,13 +60,14 @@
         "failure/retry",
         "parent GoalRun/WorkNode"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Subagent waves projection",
+      "surface_id": "gui-0003"
     },
     {
-      "surface_id": "gui-0004",
-      "surface": "Verification / repair projection",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "required validators",
         "passed/failed/skipped checks",
@@ -75,13 +77,14 @@
         "verifier/adjudicator notes",
         "receipts"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Verification / repair projection",
+      "surface_id": "gui-0004"
     },
     {
-      "surface_id": "gui-0005",
-      "surface": "Evidence / History / Ledger tabs",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "goal events",
         "replans",
@@ -92,13 +95,14 @@
         "source lineage",
         "certification events"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Evidence / History / Ledger tabs",
+      "surface_id": "gui-0005"
     },
     {
-      "surface_id": "gui-0006",
-      "surface": "Concerns / blockers UX",
-      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/human-in-the-loop.md",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
       "required_visible_fields_or_controls": [
         "true blocker vs ordinary ambiguity",
         "owner",
@@ -108,13 +112,14 @@
         "reversibility",
         "audit trail"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Concerns / blockers UX",
+      "surface_id": "gui-0006"
     },
     {
-      "surface_id": "gui-0007",
-      "surface": "Settings: agent capability profiles",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Models_System.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "low-cost executor",
         "standard reviewer",
@@ -123,13 +128,14 @@
         "adjudicator",
         "certifier/governance model selectors"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Settings: agent capability profiles",
+      "surface_id": "gui-0007"
     },
     {
-      "surface_id": "gui-0008",
-      "surface": "Settings: subagent policy",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/orchestrator-subagent-integration.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "fanout thresholds",
         "max parallel subagents",
@@ -138,13 +144,14 @@
         "retry policy",
         "mandatory subagent conditions"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Settings: subagent policy",
+      "surface_id": "gui-0008"
     },
     {
-      "surface_id": "gui-0009",
-      "surface": "Settings: verification policy",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Progression_Gates.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "strictness floor",
         "validators by WorkNode type",
@@ -153,13 +160,14 @@
         "completion receipt requirement",
         "repair-loop policy"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Settings: verification policy",
+      "surface_id": "gui-0009"
     },
     {
-      "surface_id": "gui-0010",
-      "surface": "Settings: write policy",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Permissions_System.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "parent-only writer default",
         "patch-only subagents",
@@ -167,13 +175,14 @@
         "single-writer lease",
         "protected/governance unlock mode"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Settings: write policy",
+      "surface_id": "gui-0010"
     },
     {
-      "surface_id": "gui-0011",
-      "surface": "Settings: Goal Mode policy",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Goal_Runtime_System.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "auto-resume",
         "checkpoint cadence",
@@ -182,13 +191,14 @@
         "true-blocker escalation",
         "evidence/receipt retention"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Settings: Goal Mode policy",
+      "surface_id": "gui-0011"
     },
     {
-      "surface_id": "gui-0012",
-      "surface": "Dashboard goal summary",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Orchestrator_Page.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "active goals",
         "stuck goals",
@@ -197,13 +207,14 @@
         "certification state",
         "cost/budget warnings"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Dashboard goal summary",
+      "surface_id": "gui-0012"
     },
     {
-      "surface_id": "gui-0013",
-      "surface": "Agents page capability lanes",
-      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Models_System.md",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
       "required_visible_fields_or_controls": [
         "capability lanes",
         "active assignments",
@@ -212,13 +223,14 @@
         "cost metrics",
         "subagent wave participation"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Agents page capability lanes",
+      "surface_id": "gui-0013"
     },
     {
-      "surface_id": "gui-0014",
-      "surface": "Plan / PlanUnit / Node Graph views",
-      "primary_owner_doc": "Plans/Plan_Document_System.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Plan_To_Node_Compilation.md",
+      "primary_owner_doc": "Plans/Plan_Document_System.md",
       "required_visible_fields_or_controls": [
         "PlanUnits to WorkGraph candidates",
         "readiness",
@@ -227,13 +239,14 @@
         "gui_related inheritance",
         "receipt state"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Plan / PlanUnit / Node Graph views",
+      "surface_id": "gui-0014"
     },
     {
-      "surface_id": "gui-0015",
-      "surface": "Source Control / Worktree surfaces",
-      "primary_owner_doc": "Plans/WorktreeGitImprovement.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/FinalGUISpec.md",
+      "primary_owner_doc": "Plans/WorktreeGitImprovement.md",
       "required_visible_fields_or_controls": [
         "worktree leases",
         "isolated writes",
@@ -241,13 +254,14 @@
         "write surface ownership",
         "blocked write reasons"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Source Control / Worktree surfaces",
+      "surface_id": "gui-0015"
     },
     {
-      "surface_id": "gui-0016",
-      "surface": "Usage / cost surfaces",
-      "primary_owner_doc": "Plans/usage-feature.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/Models_System.md",
+      "primary_owner_doc": "Plans/usage-feature.md",
       "required_visible_fields_or_controls": [
         "low-end executor spend",
         "subagent wave cost",
@@ -255,33 +269,37 @@
         "cost per GoalRun/WorkNode",
         "budget guard outcomes"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Usage / cost surfaces",
+      "surface_id": "gui-0016"
     },
     {
-      "surface_id": "gui-0017",
-      "surface": "Assistant Chat visible Goal Mode",
-      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/FinalGUISpec.md",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
       "required_visible_fields_or_controls": [
         "visible goal controls",
         "pause/resume/stop/update",
         "activity/evidence disclosure",
         "completion report"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Assistant Chat visible Goal Mode",
+      "surface_id": "gui-0017"
     },
     {
-      "surface_id": "gui-0018",
-      "surface": "Chain Wizard / Doc Builder invisible Goal activity",
-      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "compile_status": "source_lineage_surface_contract_compiled_governance_sealed_not_active_candidate",
       "consumer_or_secondary_doc": "Plans/chain-wizard.md",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
       "required_visible_fields_or_controls": [
         "internal conversion/audit progress",
         "checkpoint/resume/cancel",
         "review status",
         "no Orchestrator WorkNode by default"
       ],
-      "compile_status": "candidate_update_required"
+      "source_lineage_pre_seal_compile_status": "candidate_update_required",
+      "surface": "Chain Wizard / Doc Builder invisible Goal activity",
+      "surface_id": "gui-0018"
     }
   ],
   "updated_at_utc": "2026-06-16T19:38:35Z"

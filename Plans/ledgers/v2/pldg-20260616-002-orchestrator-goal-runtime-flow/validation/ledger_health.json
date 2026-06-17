@@ -53,7 +53,7 @@
     {
       "check_id": "plan-index-0001",
       "status": "pass",
-      "summary": "pm-plan-index generate and validate passed with 5065 PlanUnits, 18046 acceptance units, and node readiness blocked_compiler_contract_incomplete."
+      "summary": "pm-plan-index generate and validate passed with 5065 PlanUnits, 18074 acceptance units, and node readiness blocked_compiler_contract_incomplete."
     },
     {
       "check_id": "migration-validate-0001",
@@ -92,7 +92,7 @@
   "summary": {
     "blockers": 0,
     "candidate_atoms": 0,
-    "capability_lane_binding_policy": "accepted_ready_for_plan_compile",
+    "capability_lane_binding_policy": "accepted_compiled_governance_sealed_source_lineage",
     "compile_queue_items": 1,
     "compiled_owner_docs": 18,
     "compiled_plan_units": 22,
@@ -101,10 +101,10 @@
     "decisions": 29,
     "deferred_questions": 0,
     "design_atoms": 104,
-    "doc_builder_goal_conversion_contract": "accepted_ready_for_plan_compile",
+    "doc_builder_goal_conversion_contract": "accepted_compiled_governance_sealed_source_lineage",
     "doc_impact_matrix_docs_accounted_for": 68,
     "events": 16,
-    "final_readiness_review": "fully_fleshed_out_for_plan_compile",
+    "final_readiness_review": "source_lineage_final_readiness_completed_governance_sealed",
     "forbidden_artifacts": "not_created",
     "git_diff_check": "pass",
     "governance_seal": "passed",
@@ -115,10 +115,10 @@
     "open_blockers": 0,
     "open_item_resolution_workshop": "accepted_by_user_with_clarifications",
     "open_questions": 3,
-    "plan_index_acceptance_units": 18046,
+    "plan_index_acceptance_units": 18074,
     "plan_index_plan_units": 5065,
     "pm_bootstrap_ledger_validate": "pass",
-    "pm_plan_index_generate": "pass_5065_planunits_18046_acceptance_units",
+    "pm_plan_index_generate": "pass_5065_planunits_18074_acceptance_units",
     "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
     "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
     "post_seal_open_questions": [
