@@ -19,7 +19,7 @@
     "open_item_resolution_workshop_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json",
     "post_seal_disposition": "compiled_to_live_planunits_governance_sealed_source_lineage_only; not an active compile plan; q-0007 through q-0009 remain ledger-only follow-up questions.",
     "ready_atom_ids": [],
-    "reason": "Final readiness review confirms no open product/design questions remain. Delta-intake continuation has not introduced accepted architecture changes; proceed to explicit ledger-to-Plans compile after live repo audit if the user does not reopen design.",
+    "reason": "Final readiness review is pre-seal source-lineage. Accepted atoms have already been compiled and governance-sealed; no active compile plan remains. Continue q-0007 through q-0009 ledger-only unless Jared explicitly opens a new compile or design delta.",
     "source_lineage_pre_seal_candidate_owner_docs": [
       "Plans/Goal_Runtime_System.md",
       "Plans/Orchestrator_Page.md",
@@ -31,6 +31,7 @@
       "Plans/chain-wizard.md",
       "Plans/chain-wizard-flexibility.md",
       "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Plan_Document_System.md",
       "Plans/Contracts_V0.md",
       "Plans/Models_System.md",
       "Plans/Permissions_System.md",
@@ -154,6 +155,7 @@
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
         "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Plan_Document_System.md",
         "Plans/Run_Graph_View.md",
         "Plans/Run_Modes.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -254,6 +256,7 @@
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
         "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Plan_Document_System.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Run_Graph_View.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -280,6 +283,7 @@
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
         "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Plan_Document_System.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Run_Graph_View.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -299,6 +303,7 @@
         "OSI-428",
         "EP-098",
         "PNC-009",
+        "PDS-006",
         "F3-394",
         "F3-395",
         "ACD-420",
@@ -439,6 +444,7 @@
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
         "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Plan_Document_System.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Run_Graph_View.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -456,5 +462,5 @@
   "notes": "Orchestrator Goal Runtime Flow ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs, then completed an explicit governance seal that refreshed governance artifacts where allowed. Post-seal continuation remains ledger-only until Jared chooses the next safe planning lane; node/build artifacts remain forbidden until the compiler contract exists.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
-  "updated_at_utc": "2026-06-16T21:31:00Z"
+  "updated_at_utc": "2026-06-17T04:09:59Z"
 }

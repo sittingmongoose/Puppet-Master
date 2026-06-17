@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-17T02:44:06Z",
+  "generated_at_utc": "2026-06-17T04:13:16Z",
   "index_path": "Plans/_shards/orchestrator_page/00-index.md",
-  "index_sha256": "62f72f685476aa8967d4b37d5af6d48109c038265493f11428b6365ed3385839",
+  "index_sha256": "eebf9fc41a0774c37210e081910b891fde721152eb2c3d450f7492a2e82a709c",
   "manifest_path": "Plans/_shards/orchestrator_page/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/orchestrator_page/001-preamble.md",
-      "sha256": "6258bd9e15958be3c9192e67c4b1a82194068a32fb4dabc21b88142e7886aa05",
+      "sha256": "a9e4bfc4c14b0ae688866f0a5674bc2ede5d14e65bdeac7b54757b56a8712641",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md",
-      "sha256": "3940281828fdc52589028aa605d3dddb701d178682d5c30915ea5668bf78a7b3",
+      "sha256": "2ea3f5fc210d03ff464c6a2c2fd1bfbbe4e7623be4954959077c4620a474970f",
       "shard_id": "002",
       "source_line_end": 52,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Scope and canonical model",
       "path": "Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md",
-      "sha256": "70f20986ec38ba7a710706578aba42950e499afb73ac608dd327bb7ee6d8d4f1",
+      "sha256": "663150a3a04297d429c32c2f2b67f88b94d989ded1178e02d5f3389c7f4013c6",
       "shard_id": "003",
       "source_line_end": 390,
       "source_line_start": 55,
@@ -35,7 +35,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/orchestrator_page/004-owner-consumer-map.md",
-      "sha256": "a0ecf6776d5a8e31a718aaa2fc22f567cf1b4a9300493d670ff4297042669543",
+      "sha256": "e00081b040a3b759be15a03cba045d0f0d4f966381ab08266ba58f5eb33ea3e9",
       "shard_id": "004",
       "source_line_end": 396,
       "source_line_start": 392,
@@ -44,7 +44,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/orchestrator_page/005-planunits.md",
-      "sha256": "1745fc46c732c2817954b3ebf9c3587f9c91f4b08610d6011b49d531ea58268f",
+      "sha256": "c171891cf66cbf3004c0df41387690c2cfe1d30e8c318e8340bc83be323a97fc",
       "shard_id": "005",
       "source_line_end": 1400,
       "source_line_start": 398,
@@ -53,7 +53,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/orchestrator_page/006-migration-coverage.md",
-      "sha256": "eb1c6be4794590c09217d62381b0876e1f789dd65de948a82b320e3882d0e232",
+      "sha256": "2626c6086ba87f90d344a773110280b2fe598556c0cb25220235e8f666799fea",
       "shard_id": "006",
       "source_line_end": 1412,
       "source_line_start": 1402,
@@ -62,7 +62,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "89f2ea1b03a183cdf9e5f40b5d6a761616a275ba5df61500e0893d369f849b1f",
+      "sha256": "5ef1e76a7d3a2528fa76e7b9388fbce26ecf82d7350e955167ab40a36b6ebe95",
       "shard_id": "007",
       "source_line_end": 1494,
       "source_line_start": 1414,
@@ -71,16 +71,16 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/orchestrator_page/008-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "0554ef6624e3cede95f9b95286bcb9429779d197d64ab9b1a161c4575ae83606",
+      "sha256": "b5049592ede7e41e243e45f5d9e080c0c112775b2c0ef4d3dd13c30b0468ad4a",
       "shard_id": "008",
-      "source_line_end": 1584,
+      "source_line_end": 1591,
       "source_line_start": 1496,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1584,
+    "line_count": 1591,
     "path": "Plans/Orchestrator_Page.md",
-    "sha256": "198e69976d1fe3bffb608f6b6d4c15654adcc01c3d0db66769b724a419fe5d48"
+    "sha256": "0bfa1d2574215e7f05e981b3fdcd34d2e5e7c51c04dce6f0a64e9e17cc98109c"
   }
 }

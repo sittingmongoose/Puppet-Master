@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L5837-L5893
+Source lines: L5837-L5897
 
-Source SHA256: `646b01cbf6a1c37e02b7b465448719097c47d7cf6a3134dc043fcd85ea3d9dce`
+Source SHA256: `334885065f8e4264f866eb13a4336ff4589318b9fb5a97d87e70767163be3710`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. WorkNode execution success is provisional until verification and receipt certification complete.
+  Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
 gui_related: false
 gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
@@ -27,6 +27,7 @@ acceptance_criteria:
   - Goal Runtime does not dispatch concrete graph nodes directly.
   - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
   - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
+  - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
   - WorkNode success alone does not certify parent GoalRun or final completion.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -58,6 +59,9 @@ preserved_exact_tokens:
   - "failure-class recovery"
   - "ready WorkNodes"
   - "bounded executable unit"
+  - "decomposes"
+  - "bounded WorkNodes"
+  - "runnable work"
   - "Execution success is not completion"
 negative_constraints:
   - Do not bypass blocked/backoff/capacity semantics.

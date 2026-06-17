@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L807-L874
+Source lines: L807-L890
 
-Source SHA256: `e22b5840770ce86c94c1c955e0ed65f723b7db0f0326a3f989fb6df6eab8219e`
+Source SHA256: `246444caac3e065d83fc41cc14b2a90299f6e29a601eeb2e03465a916ba45009`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
 canonical_text: >-
-  Run Graph must display GoalRun WorkGraph structure, WorkNode status, SubagentWave membership, VerificationCycle overlays, repair/retry markers, blocked/replan-required states, receipt refs, and evidence refs. The view remains a projection over Goal Runtime, Executor, Contracts, and storage records; it must not decide WorkNode readiness, capacity, or completion authority.
+  Run Graph must display GoalRun WorkGraph structure, WorkNode status, SubagentWave membership, VerificationCycle overlays, repair/retry markers, blocked/replan-required states, receipt refs, and evidence refs. For Plan/PlanUnit-originated graph preparation, the Node Graph and Run Graph views may show readiness, blockers, gui_related, receipt status, and compiler contract state only as projections. The view remains a projection over Goal Runtime, Executor, Contracts, storage, Plan_Document_System, and Plan_To_Node_Compilation records; it must not decide WorkNode readiness, capacity, compiler artifact creation, or completion authority.
 gui_related: true
 gui_classification_reason: WorkGraph nodes, verification overlays, repair markers, and evidence refs are visible Run Graph UI.
 depends_on:
@@ -28,11 +28,14 @@ depends_on:
   - GRS-027
   - CV-288
   - SP-215
+  - PDS-006
+  - PNC-009
 unblocks: []
 acceptance_criteria:
   - Run Graph can render GoalRun WorkGraph, WorkNode status, SubagentWave membership, and VerificationCycle overlays.
   - Repair/retry, blocked, and replan-required states are visible in the graph view.
   - Receipt and evidence refs are drillable through owner projections.
+  - Plan/PlanUnit graph-preparation overlays show readiness, blockers, gui_related, receipt status, and compiler contract state without creating executable artifacts.
   - The view does not replace Executor readiness, capacity, dispatch, or Goal Runtime completion authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -47,6 +50,8 @@ implementation_surfaces:
   - Plans/Executor_Protocol.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
+  - Plans/Plan_Document_System.md
+  - Plans/Plan_To_Node_Compilation.md
 node_compile_hint:
   mode: goalrun_workgraph_overlay
   create_worknodes: false
@@ -54,6 +59,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0016
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0056
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0058
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0074
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0077
 preserved_exact_tokens:
@@ -65,6 +71,14 @@ preserved_exact_tokens:
   - "retry"
   - "blocked"
   - "replan-required"
+  - "PlanUnit"
+  - "Node Graph"
+  - "Run Graph"
+  - "readiness"
+  - "blockers"
+  - "gui_related"
+  - "receipt status"
+  - "compiler contract"
 negative_constraints:
   - Do not let Run Graph decide dispatch or completion authority.
   - Do not hide failed verification cycles or repair markers.
@@ -75,4 +89,6 @@ owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
+  - Plans/Plan_Document_System.md
+  - Plans/Plan_To_Node_Compilation.md
 ```

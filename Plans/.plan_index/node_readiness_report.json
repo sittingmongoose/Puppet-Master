@@ -1764,13 +1764,13 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10604,
-    "edge_count": 12143,
+    "depends_on_edge_count": 10610,
+    "edge_count": 12149,
     "node_count": 5065,
     "unblocks_edge_count": 1539,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-17T02:43:40Z",
+  "generated_at_utc": "2026-06-17T04:12:52Z",
   "gui_related_units": {
     "count": 2143,
     "units": [
@@ -16034,9 +16034,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-002",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-002 - Media SSOT Purpose And Naming",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 889,
           "line": 891,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16045,9 +16045,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-003",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-003 - Media Owner Scope And DRY Anchoring",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 942,
           "line": 944,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16056,9 +16056,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-005",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-005 - Capabilities Get Response Shape",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1049,
           "line": 1051,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16067,9 +16067,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-008",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-008 - Media Capability IDs",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1210,
           "line": 1212,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16078,9 +16078,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-014",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-014 - Capability Availability Refresh Visibility",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1534,
           "line": 1536,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16089,9 +16089,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-016",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-016 - Media Generate Request Envelope",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1632,
           "line": 1634,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16100,9 +16100,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-019",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-019 - Cursor Backend Routing",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1816,
           "line": 1818,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16111,9 +16111,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-021",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-021 - Gemini Usage Account Plan Labels",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 1934,
           "line": 1936,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16122,9 +16122,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-026",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-026 - Media Generate Success Response",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 2232,
           "line": 2234,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16133,9 +16133,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-030",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-030 - Failure Response And Cursor Error",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 2463,
           "line": 2465,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16144,9 +16144,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-038",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-038 - Prefix Kind Detection Priority",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 2888,
           "line": 2890,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16155,9 +16155,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-039",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-039 - Keyword Kind Detection",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 2939,
           "line": 2941,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16166,9 +16166,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-040",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-040 - Verb Fallback Ambiguity Gate",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 2988,
           "line": 2990,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16177,9 +16177,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-057",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-057 - Capability Picker Dropdown Items",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 3876,
           "line": 3878,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16188,9 +16188,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-058",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-058 - Disabled Capability Presentation Accessibility",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 3933,
           "line": 3935,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16199,9 +16199,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-059",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-059 - Missing Gemini Access Footer Copy",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 3989,
           "line": 3991,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16210,9 +16210,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-060",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-060 - Shared Missing Configuration Footer Pinning",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4041,
           "line": 4043,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16221,9 +16221,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-062",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-062 - Enabled Capability Click Prompt Insertion",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4146,
           "line": 4148,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16232,9 +16232,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-064",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-064 - Capability Picker Runtime Refresh",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4248,
           "line": 4250,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16243,9 +16243,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-065",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-065 - Capability Click Prompt Copy",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4305,
           "line": 4307,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16254,9 +16254,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-066",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-066 - Disabled Reason Message Copy",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4355,
           "line": 4357,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16265,9 +16265,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-074",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-074 - AC-MED07 Disabled Picker Display Acceptance",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4793,
           "line": 4795,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16276,9 +16276,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-075",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-075 - AC-MED08 Capability Click Prompt Acceptance",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 4845,
           "line": 4847,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16287,9 +16287,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-081",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-081 - AC-MED13A Mode Dependent Gemini Disclosure",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 5154,
           "line": 5156,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -16298,9 +16298,9 @@
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-086",
         "source_location": {
-          "heading": "3.4 `model_override` extraction",
+          "heading": "MGAC-086 - AC-MED18 Picker Accessibility And Refresh Acceptance",
           "heading_level": 3,
-          "heading_line": 444,
+          "heading_line": 5431,
           "line": 5433,
           "path": "Plans/Media_Generation_and_Capabilities.md"
         }
@@ -18124,9 +18124,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-002",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-002 - Document Canonical Owner Scope",
+          "heading_level": 3,
+          "heading_line": 6533,
           "line": 6535,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18135,9 +18135,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-016",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-016 - Crew Message Board Surface",
+          "heading_level": 3,
+          "heading_line": 7270,
           "line": 7272,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18146,9 +18146,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-017",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-017 - Runtime Schema Ownership Boundary",
+          "heading_level": 3,
+          "heading_line": 7328,
           "line": 7330,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18157,9 +18157,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-022",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-022 - Provider And Permission Event Projection",
+          "heading_level": 3,
+          "heading_line": 7618,
           "line": 7620,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18168,9 +18168,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-025",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-025 - Destructive Action Compatibility Vocabulary",
+          "heading_level": 3,
+          "heading_line": 7782,
           "line": 7784,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18179,9 +18179,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-027",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-027 - Command Metadata And GUI Execution Policy",
+          "heading_level": 3,
+          "heading_line": 7890,
           "line": 7892,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18190,9 +18190,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-028",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-028 - Tier View Projection Boundary",
+          "heading_level": 3,
+          "heading_line": 7948,
           "line": 7950,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18201,9 +18201,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-033",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-033 - Config Wiring Option B",
+          "heading_level": 3,
+          "heading_line": 8217,
           "line": 8219,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18212,9 +18212,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-035",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-035 - Rewrite Runtime Ontology",
+          "heading_level": 3,
+          "heading_line": 8323,
           "line": 8325,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18223,9 +18223,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-051",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-051 - Execution Unit UI Inspection Anchor",
+          "heading_level": 3,
+          "heading_line": 9242,
           "line": 9244,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18234,9 +18234,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-054",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-054 - SCM Snapshot UI Consumer Projection",
+          "heading_level": 3,
+          "heading_line": 9410,
           "line": 9412,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18245,9 +18245,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-075",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-075 - GUI Backend Scope Now In Scope",
+          "heading_level": 3,
+          "heading_line": 10558,
           "line": 10560,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18256,9 +18256,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-077",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-077 - Plan Mode Config And Wizard Controls",
+          "heading_level": 3,
+          "heading_line": 10670,
           "line": 10672,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18267,9 +18267,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-082",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-082 - Subagents Config UI And Registry Validation",
+          "heading_level": 3,
+          "heading_line": 10972,
           "line": 10974,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18278,9 +18278,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-083",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-083 - Agent Config Personas UI And Import Seeds",
+          "heading_level": 3,
+          "heading_line": 11034,
           "line": 11036,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18289,9 +18289,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-086",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-086 - Gemini Project Context UX And Copy Boundary",
+          "heading_level": 3,
+          "heading_line": 11207,
           "line": 11209,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18300,9 +18300,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-087",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-087 - Config Message Variants And App Handlers",
+          "heading_level": 3,
+          "heading_line": 11262,
           "line": 11264,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18311,9 +18311,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-088",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-088 - Interview Built But Not Wired Audit",
+          "heading_level": 3,
+          "heading_line": 11318,
           "line": 11320,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18322,9 +18322,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-090",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-090 - Interview Question Limit UI Prompt And Test Wiring",
+          "heading_level": 3,
+          "heading_line": 11432,
           "line": 11434,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18333,9 +18333,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-092",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-092 - GUI Widget Catalog And DRY Tagging",
+          "heading_level": 3,
+          "heading_line": 11549,
           "line": 11551,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18344,9 +18344,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-094",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-094 - Parser Failure Recovery UX",
+          "heading_level": 3,
+          "heading_line": 11672,
           "line": 11674,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18355,9 +18355,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-097",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-097 - Config Dirty State Atomic Persistence",
+          "heading_level": 3,
+          "heading_line": 11830,
           "line": 11832,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18366,9 +18366,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-099",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-099 - Interview Architecture Confirmation Gate",
+          "heading_level": 3,
+          "heading_line": 11945,
           "line": 11947,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18377,9 +18377,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-100",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-100 - Interview Vision Provider Selection",
+          "heading_level": 3,
+          "heading_line": 12002,
           "line": 12004,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18388,9 +18388,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-101",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-101 - Main Run Config Source Alignment",
+          "heading_level": 3,
+          "heading_line": 12057,
           "line": 12059,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18399,9 +18399,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-102",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-102 - Execution Config Wiring Checklist",
+          "heading_level": 3,
+          "heading_line": 12112,
           "line": 12114,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18410,9 +18410,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-103",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-103 - GUI Wiring Matrix Enforcement",
+          "heading_level": 3,
+          "heading_line": 12170,
           "line": 12172,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18421,9 +18421,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-105",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-105 - Config Wiring Validator Entrypoint And Failure Policy",
+          "heading_level": 3,
+          "heading_line": 12286,
           "line": 12288,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18432,9 +18432,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-107",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-107 - Tier Verification Lifecycle And HITL Boundary",
+          "heading_level": 3,
+          "heading_line": 12393,
           "line": 12395,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18443,9 +18443,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-108",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-108 - Tier Start Pre-Spawn Verification Checklist",
+          "heading_level": 3,
+          "heading_line": 12452,
           "line": 12454,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18454,9 +18454,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-109",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-109 - Tier Start Responsibility Phases And Persistence",
+          "heading_level": 3,
+          "heading_line": 12508,
           "line": 12510,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18465,9 +18465,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-111",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-111 - Start Verification Result Types And Categories",
+          "heading_level": 3,
+          "heading_line": 12622,
           "line": 12624,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18476,9 +18476,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-112",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-112 - Verify Tier Start Algorithm",
+          "heading_level": 3,
+          "heading_line": 12684,
           "line": 12686,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18487,9 +18487,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-113",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-113 - Tier Start Helper Function Boundaries",
+          "heading_level": 3,
+          "heading_line": 12742,
           "line": 12744,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18498,9 +18498,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-114",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-114 - Tier Start Error Handling Policy",
+          "heading_level": 3,
+          "heading_line": 12798,
           "line": 12800,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18509,9 +18509,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-115",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-115 - End Tier Wiring And Acceptance Recheck",
+          "heading_level": 3,
+          "heading_line": 12854,
           "line": 12856,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18520,9 +18520,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-120",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-120 - DuringTierEnd Verification Execution",
+          "heading_level": 3,
+          "heading_line": 13137,
           "line": 13139,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18531,9 +18531,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-121",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-121 - AfterTierEnd Persistence Feedback And Failure Handling",
+          "heading_level": 3,
+          "heading_line": 13197,
           "line": 13199,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18542,9 +18542,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-127",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-127 - End Tier Verification Error Handling Policy",
+          "heading_level": 3,
+          "heading_line": 13549,
           "line": 13551,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18553,9 +18553,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-128",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-128 - Start/End Verification Timing Matrix",
+          "heading_level": 3,
+          "heading_line": 13608,
           "line": 13610,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18564,9 +18564,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-129",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-129 - Canonical Validation Table Source Of Truth",
+          "heading_level": 3,
+          "heading_line": 13672,
           "line": 13674,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18575,9 +18575,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-135",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-135 - Interview Phase Lifecycle Mirror",
+          "heading_level": 3,
+          "heading_line": 14049,
           "line": 14051,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18586,9 +18586,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-136",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-136 - Unrelated Failure Escalation Policy",
+          "heading_level": 3,
+          "heading_line": 14111,
           "line": 14113,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18597,9 +18597,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-137",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-137 - Structured Verification Feedback Loop",
+          "heading_level": 3,
+          "heading_line": 14174,
           "line": 14176,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18608,9 +18608,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-222",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-222 - GUI Readiness Verification Criterion",
+          "heading_level": 3,
+          "heading_line": 19693,
           "line": 19695,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18619,9 +18619,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-238",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-238 - Frontend/UI Selection Example Evidence",
+          "heading_level": 3,
+          "heading_line": 20586,
           "line": 20588,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18630,9 +18630,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-283",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-283 - Crew GUI And Assistant Surfaces Are Consumer Projections",
+          "heading_level": 3,
+          "heading_line": 23048,
           "line": 23050,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18641,9 +18641,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-285",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-285 - Future Crew Template Save Surface",
+          "heading_level": 3,
+          "heading_line": 23165,
           "line": 23167,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18652,9 +18652,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-287",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-287 - Crew Performance Metrics",
+          "heading_level": 3,
+          "heading_line": 23267,
           "line": 23269,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18663,9 +18663,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-290",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-290 - User Reorders Queued Crew Execution",
+          "heading_level": 3,
+          "heading_line": 23418,
           "line": 23420,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18674,9 +18674,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-307",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-307 - Communication Pattern GUI Insights",
+          "heading_level": 3,
+          "heading_line": 24334,
           "line": 24336,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18685,9 +18685,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-321",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-321 - Agent Communication GUI Visualization Consumer",
+          "heading_level": 3,
+          "heading_line": 25100,
           "line": 25102,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18696,9 +18696,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-344",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-344 - Coordination GUI Monitoring Consumer",
+          "heading_level": 3,
+          "heading_line": 26363,
           "line": 26365,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18707,9 +18707,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-360",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-360 - Frontend UI Parallelization Example",
+          "heading_level": 3,
+          "heading_line": 27220,
           "line": 27222,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18718,9 +18718,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-361",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-361 - Dependency-Level Execution Flow Example",
+          "heading_level": 3,
+          "heading_line": 27272,
           "line": 27274,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18729,9 +18729,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-381",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-381 - Autonomous QA Visual Status Symbols",
+          "heading_level": 3,
+          "heading_line": 28386,
           "line": 28388,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18740,9 +18740,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-382",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-382 - Progress Tracking Visual Status Model",
+          "heading_level": 3,
+          "heading_line": 28437,
           "line": 28439,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18751,9 +18751,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-388",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-388 - Pause Gate GUI Event Projection",
+          "heading_level": 3,
+          "heading_line": 28781,
           "line": 28783,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18762,9 +18762,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-396",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-396 - Autonomous QA Clear Progress Visibility Evidence",
+          "heading_level": 3,
+          "heading_line": 29215,
           "line": 29217,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18773,9 +18773,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-399",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-399 - Autonomous QA Visual Status Config Knob",
+          "heading_level": 3,
+          "heading_line": 29382,
           "line": 29384,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18784,9 +18784,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-405",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-405 - Persona Runtime State UI Event Availability",
+          "heading_level": 3,
+          "heading_line": 29731,
           "line": 29733,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18795,9 +18795,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-417",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-417 - Event Driven GUI Projection Alignment",
+          "heading_level": 3,
+          "heading_line": 30452,
           "line": 30454,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18806,9 +18806,9 @@
         "owner_doc": "Plans/orchestrator-subagent-integration.md",
         "plan_unit_id": "OSI-425",
         "source_location": {
-          "heading": ".puppet-master/config.yaml (additions)",
-          "heading_level": 1,
-          "heading_line": 6070,
+          "heading": "OSI-425 - Persona-Aware Subagent Configuration Recovery",
+          "heading_level": 3,
+          "heading_line": 30947,
           "line": 30949,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
@@ -18995,8 +18995,8 @@
         "source_location": {
           "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
           "heading_level": 3,
-          "heading_line": 293,
-          "line": 295,
+          "heading_line": 295,
+          "line": 297,
           "path": "Plans/Plan_Document_System.md"
         }
       },

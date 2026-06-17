@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22192-L22256
+Source lines: L22192-L22257
 
-Source SHA256: `d4f3f519b3510e4e5506fe305f8046cd01eeda667f61c933c4126340b8ad11ba`
+Source SHA256: `a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4`
 
 ---
 
@@ -22,9 +22,10 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
 depends_on:
-  - ACD-416
-  - ACD-418
-  - GRS-002
+    - ACD-416
+    - ACD-418
+    - GRS-002
+    - PNC-009
 unblocks: []
 acceptance_criteria:
   - Assistant Chat continues to expose visible Goal mode control actions and completion report status.

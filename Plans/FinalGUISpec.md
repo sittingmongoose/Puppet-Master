@@ -24848,7 +24848,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The GUI must place Orchestrator Goal Runtime information across the Goal header, WorkGraph, Subagents tab, Verification tab, Evidence, Audit, History, Ledger, Dashboard, Agents page, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts surfaces without moving runtime authority into the GUI. The surface matrix shows goal_id, GoalRun state, WorkGraph status, SubagentWave state, VerificationCycle repair progress, receipts, blockers, evidence refs, worktree leases, isolated writes, parent merge/certification, write-surface ownership, blocked write reasons, low-end executor spend, subagent wave cost, high-end governance/verifier/adjudicator cost, budget guard outcomes, and lane/model binding blockers by consuming owner records from Goal_Runtime_System, Orchestrator_Page, Run_Graph_View, Runtime_Artifacts_Panel, WorktreeGitImprovement, Contracts_V0, storage-plan, Models_System, Permissions_System, and usage-feature.
+  The GUI must place Orchestrator Goal Runtime information across the Goal header, WorkGraph, Subagents tab, Verification tab, Evidence, Audit, History, Ledger, Dashboard, Agents page, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts surfaces without moving runtime authority into the GUI. The gui_impact_matrix surface matrix shows goal_id, GoalRun state, WorkGraph status, active waves, bounded task, model/capability lane, input boundaries, output status, failure/retry state, SubagentWave state, VerificationCycle repair progress, receipts, blockers, evidence refs, worktree leases, isolated writes, parent merge/certification, write-surface ownership, blocked write reasons, low-end executor spend, subagent wave cost, high-end governance/verifier/adjudicator cost, budget guard outcomes, and lane/model binding blockers by consuming owner records from Goal_Runtime_System, Orchestrator_Page, Run_Graph_View, Runtime_Artifacts_Panel, WorktreeGitImprovement, Contracts_V0, storage-plan, Models_System, Permissions_System, and usage-feature.
 gui_related: true
 gui_classification_reason: This unit maps user-visible GoalRun, WorkGraph, verification, evidence, and source-control displays across GUI surfaces.
 depends_on:
@@ -24860,11 +24860,14 @@ depends_on:
   - MS-109
   - PS-115
   - W-071
+  - PDS-006
+  - PNC-009
 unblocks: []
 acceptance_criteria:
   - Orchestrator Goal surfaces show GoalRun, WorkGraph, SubagentWave, VerificationCycle, evidence, receipts, blockers, and lane/model configuration status.
   - GUI surfaces consume owner records rather than becoming scheduler, storage, contract, or model-policy authorities.
-  - The matrix names where Goal header, WorkGraph, Subagents, Verification, Evidence, Audit, History, Ledger, Dashboard, Agents, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts information appears.
+  - The matrix names where Goal header, WorkGraph, Subagents, Verification, Evidence, Audit, History, Ledger, Dashboard, Agents, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts information appears.
+  - Subagents tab surfaces show active waves, bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
   - Blocked write reasons and unconfigured-lane states are visible where the user can recover them.
   - Evidence/Audit surfaces show WorkNode receipts, GoalCompletionReceipt, validator evidence, adjudication records, skipped validator reasons, unresolved risks, and certification status.
   - Source Control and Worktree surfaces expose worktree leases, isolated writes, parent merge/certification, write-surface ownership, and blocked write reasons.
@@ -24886,6 +24889,7 @@ implementation_surfaces:
   - Plans/Models_System.md
   - Plans/Permissions_System.md
   - Plans/usage-feature.md
+  - Plans/Plan_Document_System.md
 node_compile_hint:
   mode: orchestrator_goal_surface_matrix
   create_worknodes: false
@@ -24898,6 +24902,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0062
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0068
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0069
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0071
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0072
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0073
@@ -24905,6 +24910,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
 preserved_exact_tokens:
   - "Goal header"
+  - "gui_impact_matrix"
   - "goal_id"
   - "WorkGraph"
   - "Subagents tab"
@@ -24914,10 +24920,18 @@ preserved_exact_tokens:
   - "Ledger"
   - "Dashboard"
   - "Agents page"
+  - "Plan/PlanUnit"
   - "Source Control"
   - "Worktrees"
   - "Usage"
   - "cost"
+  - "Usage/cost"
+  - "active waves"
+  - "bounded task"
+  - "model/capability lane"
+  - "input boundaries"
+  - "output status"
+  - "failure/retry state"
   - "WorkNode receipts"
   - "GoalCompletionReceipt"
   - "validator evidence"

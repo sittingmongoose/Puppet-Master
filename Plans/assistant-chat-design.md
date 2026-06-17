@@ -22203,9 +22203,10 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
 depends_on:
-  - ACD-416
-  - ACD-418
-  - GRS-002
+    - ACD-416
+    - ACD-418
+    - GRS-002
+    - PNC-009
 unblocks: []
 acceptance_criteria:
   - Assistant Chat continues to expose visible Goal mode control actions and completion report status.

@@ -1511,6 +1511,7 @@ unblocks: [RGV-012, F3-394, RAP-027]
 acceptance_criteria:
   - The six canonical tabs remain Progress, Seams, Node Graph, Evidence, History, and Ledger.
   - GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, and GoalCompletionReceipt are visible as projections where relevant.
+  - Subagents projections expose active waves, bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
   - Orchestrator projection preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without becoming scheduler truth.
   - VerificationCycle projection rows can show attempt, status failed | passed | blocked, findings, and defect_signatures from contract/storage records.
   - GoalRun and WorkNode status projections distinguish ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped.
@@ -1574,6 +1575,12 @@ preserved_exact_tokens:
   - "cancelled"
   - "stopped"
   - "GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification"
+  - "active waves"
+  - "bounded task"
+  - "model/capability lane"
+  - "input boundaries"
+  - "output status"
+  - "failure/retry state"
   - "attempt"
   - "failed | passed | blocked"
   - "defect_signatures"

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L633-L3977
+Source lines: L633-L3979
 
-Source SHA256: `2475e14ed86572316567b9a08dc1dea89720a9baf17dfc8e6647c4585fc008ec`
+Source SHA256: `d15083e9294f5215ee9db682016974bcf55a847e9954a4aa6f7ca342b0f705b1`
 
 ---
 
@@ -3245,6 +3245,7 @@ depends_on:
   - OP-022
   - EP-098
   - PNC-009
+  - PDS-006
 unblocks: []
 acceptance_criteria:
   - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
@@ -3289,6 +3290,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0010
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0078
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0080
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0081
