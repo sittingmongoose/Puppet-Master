@@ -18,6 +18,11 @@
     "true": 71
   },
   "migration_validation": "pass",
+  "historical_scope_status": "superseded_by_current_complete_run",
+  "historical_scope_reason": "This run inventoried the 67 top-level Plans docs that existed on 2026-06-11. Plans/Goal_Runtime_System.md was added later and is covered by the current COMPLETE migration run pds-20260611-002-atomize-planunits, so this run remains historical proof for its original doc set rather than current inventory coverage.",
+  "missing_current_docs_intentionally_not_inventoried": [
+    "Plans/Goal_Runtime_System.md"
+  ],
   "nodeseeds_created": false,
   "original_spans": 3618,
   "plan_unit_count": 105,
@@ -41,6 +46,7 @@
   ],
   "standard_run_gates_status": "fail",
   "status": "converted_pending_governance_seal",
+  "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
   "top_level_plan_docs": 67,
   "worknodes_created": false
 }

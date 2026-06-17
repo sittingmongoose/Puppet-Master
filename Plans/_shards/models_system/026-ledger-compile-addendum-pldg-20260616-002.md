@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7331-L7414
+Source lines: L7331-L7416
 
-Source SHA256: `a73d41ad941ac5f6d22209298ac62759443110bbee9987598b57022d87130bd3`
+Source SHA256: `989c1eab760345e24d0cc5e5a668df26d0b29031744fd57498b9d06a0476c03b`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, and model profiles, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
+  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, model profiles, and provider-specific owner docs such as Plans/Provider_OpenCode.md, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
 gui_related: false
 gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
 depends_on:
@@ -40,6 +40,7 @@ implementation_surfaces:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md
   - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
   - Plans/Goal_Runtime_System.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
@@ -87,6 +88,7 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md
   - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
   - Plans/Permissions_System.md

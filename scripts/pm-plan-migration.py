@@ -183,6 +183,45 @@ def top_level_plan_docs() -> list[Path]:
     return sorted(PLANS.glob("*.md"), key=lambda p: p.name.lower())
 
 
+def historical_scope_exemption(run_dir: Path, inventory_docs: set[str], live_docs: set[str]) -> dict[str, Any] | None:
+    """Return a bounded exemption for a superseded historical migration run."""
+    summary_path = run_dir / "final_validation_summary.json"
+    if not summary_path.exists():
+        return None
+    summary = read_json(summary_path)
+    if summary.get("historical_scope_status") != "superseded_by_current_complete_run":
+        return None
+    superseded_by = summary.get("superseded_by_run_id")
+    if not isinstance(superseded_by, str) or not superseded_by:
+        return None
+    successor_dir = MIGRATIONS / superseded_by
+    successor_inventory_path = successor_dir / "inventory.json"
+    successor_summary_path = successor_dir / "final_validation_summary.json"
+    if not successor_inventory_path.exists() or not successor_summary_path.exists():
+        return None
+    successor_summary = read_json(successor_summary_path)
+    if not is_complete_status(successor_summary.get("status")):
+        return None
+    successor_inventory = read_json(successor_inventory_path)
+    successor_docs = {
+        doc.get("path")
+        for doc in successor_inventory.get("docs", [])
+        if isinstance(doc, dict) and isinstance(doc.get("path"), str)
+    }
+    if successor_inventory.get("doc_count") != len(live_docs) or successor_docs != live_docs:
+        return None
+    declared_missing = set(summary.get("missing_current_docs_intentionally_not_inventoried", []))
+    actual_missing = live_docs - inventory_docs
+    if declared_missing != actual_missing:
+        return None
+    return {
+        "path": rel(summary_path),
+        "warning": "historical_scope_superseded_by_current_complete_run",
+        "superseded_by_run_id": superseded_by,
+        "missing_current_docs": sorted(actual_missing),
+    }
+
+
 def load_sharded_sources() -> set[str]:
     path = PLANS / "sharding_config.json"
     if not path.exists():
@@ -1050,6 +1089,7 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
 
 def validate_run_dir(run_dir: Path) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
     required = [
         "inventory.json",
         "original_hashes.json",
@@ -1076,13 +1116,22 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
 
     docs = {doc["path"]: doc for doc in inventory.get("docs", [])}
     hashed = {entry["path"]: entry for entry in hashes.get("files", [])}
+    live_doc_set = {rel(path) for path in top_level_plan_docs()}
+    inventory_doc_set = set(docs)
+    scope_exemption = historical_scope_exemption(run_dir, inventory_doc_set, live_doc_set)
     span_ids = [span["span_id"] for span in spans]
     coverage_ids = [row["span_id"] for row in coverage]
 
-    if inventory.get("doc_count") != len(top_level_plan_docs()):
-        failures.append({"path": rel(run_dir / "inventory.json"), "error": "doc_count_mismatch", "expected": len(top_level_plan_docs()), "actual": inventory.get("doc_count")})
-    if set(docs) != {rel(path) for path in top_level_plan_docs()}:
-        failures.append({"path": rel(run_dir / "inventory.json"), "error": "inventory_doc_set_mismatch"})
+    if inventory.get("doc_count") != len(live_doc_set):
+        if scope_exemption:
+            warnings.append({**scope_exemption, "check": "doc_count_mismatch"})
+        else:
+            failures.append({"path": rel(run_dir / "inventory.json"), "error": "doc_count_mismatch", "expected": len(live_doc_set), "actual": inventory.get("doc_count")})
+    if inventory_doc_set != live_doc_set:
+        if scope_exemption:
+            warnings.append({**scope_exemption, "check": "inventory_doc_set_mismatch"})
+        else:
+            failures.append({"path": rel(run_dir / "inventory.json"), "error": "inventory_doc_set_mismatch"})
     if set(hashed) != set(docs):
         failures.append({"path": rel(run_dir / "original_hashes.json"), "error": "original_hash_doc_set_mismatch"})
     if len(span_ids) != len(set(span_ids)):
@@ -1231,6 +1280,7 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
         "run_id": inventory.get("run_id"),
         "status": "pass" if not failures else "fail",
         "failures": failures,
+        "warnings": warnings,
         "checks": {
             "doc_count": len(docs),
             "span_count": len(spans),
