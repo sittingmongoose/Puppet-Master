@@ -3172,6 +3172,7 @@ status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
   Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, model resolution receipt, and GoalCompletionReceipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, and final certification status without becoming the runtime source of truth.
+  Receipt artifact families preserve canonical evidence as a separate truth layer and include source_artifact, destination_artifact, retry_route, and rollback_route for handoff rows.
 gui_related: false
 gui_classification_reason: Receipt artifact packaging and references are evidence/artifact contracts, not visual presentation.
 depends_on: [POA-046, EP-103, PNC-014]
@@ -3228,6 +3229,7 @@ status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
   GoalCompletionReceipt package entries must prove all_worknodes_terminal, all_tests_passed_or_dispositioned, source_control_receipts_valid, no_active_blockers, rollback and safe-point requirements satisfied, Auditor passed, no stale Plan/WorkGraph/currentness mismatch, final source state clean or intentionally preserved, final summary/evidence written, and final certifier decision. The receipt links to child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, and model resolution receipts.
+  GoalCompletionReceipt packages preserve all WorkNodes terminal, all automated tests passed or dispositioned, canonical evidence, and final certification evidence as explicit fields.
 gui_related: false
 gui_classification_reason: Completion receipt package fields are evidence contracts, not visual presentation.
 depends_on: [POA-047, GRS-030, EP-103]
@@ -3253,6 +3255,7 @@ preserved_exact_tokens:
   - "GoalCompletionReceipt"
   - "all WorkNodes terminal"
   - "all automated tests passed"
+  - "canonical evidence"
   - "no active blockers"
   - "final certification"
 negative_constraints:

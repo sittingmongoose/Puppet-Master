@@ -1,0 +1,203 @@
+{
+  "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+  "changed_files": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/repair_validator_results.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/human-in-the-loop.md"
+  ],
+  "closure_summary": {
+    "closure_status_counts": {
+      "repaired": 42
+    },
+    "finding_family_counts": {
+      "atom_fidelity": 37,
+      "implementation_readiness": 3,
+      "validator_results": 2
+    },
+    "registry_rows_total": 93,
+    "repair_closure_matrix_rows": 42,
+    "source_artifact_counts": {
+      "semantic_risks.jsonl": 40,
+      "validator_results.json": 2
+    },
+    "target_audit_registry_rows": 42
+  },
+  "core_validators": [
+    {
+      "name": "closure validate full audit coverage",
+      "status": "pass"
+    },
+    {
+      "name": "closure validate semantic risks",
+      "status": "pass"
+    },
+    {
+      "name": "semantic exact-token coverage scan",
+      "status": "pass"
+    },
+    {
+      "name": "bootstrap ledger validate",
+      "status": "pass"
+    },
+    {
+      "name": "plan index validate",
+      "status": "pass"
+    },
+    {
+      "name": "plan migration validate pds002",
+      "status": "pass"
+    },
+    {
+      "name": "json syntax",
+      "status": "pass"
+    },
+    {
+      "name": "git diff check",
+      "status": "pass"
+    },
+    {
+      "name": "forbidden implementation/worknode artifacts scan",
+      "status": "pass"
+    }
+  ],
+  "generated_at_utc": "2026-06-17T23:47:29Z",
+  "governance_expected_failures": [
+    "plans verify run-gates",
+    "shard plans check",
+    "verify spec lock",
+    "validate evidence",
+    "validate plan graph"
+  ],
+  "governance_note": "Spec Lock, shards, evidence bundles, and plan graph were not refreshed because this repair did not include an explicit governance seal phase.",
+  "governance_passing_checks": [
+    "validate auto decisions"
+  ],
+  "governance_status": "stale_not_sealed",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "migration_summary": {
+    "anchor_alias_rows": 3916,
+    "batch_report_rows": 212,
+    "coverage_rows": 3916,
+    "live_plan_unit_count": 5105,
+    "status": "pass"
+  },
+  "next_safe_action": "Run an explicit governance seal phase if Jared wants Spec Lock, shards, evidence bundles, and plan graph refreshed after this bounded repair; otherwise commit the bounded repair bundle.",
+  "owner_docs_repaired": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/human-in-the-loop.md"
+  ],
+  "plan_index_summary": {
+    "acceptance_unit_count": 18220,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 5105,
+    "status": "pass"
+  },
+  "plan_units_evidenced": [
+    "0PI-058",
+    "ATS-001",
+    "ATS-002",
+    "ATS-003",
+    "ATS-004",
+    "CV-289",
+    "EP-099",
+    "EP-100",
+    "EP-101",
+    "EP-102",
+    "EP-103",
+    "F2-189",
+    "F3-396",
+    "F3-397",
+    "GI-031",
+    "GRS-028",
+    "GRS-029",
+    "GRS-030",
+    "HITL-036",
+    "MS-110",
+    "MS-111",
+    "OP-023",
+    "OP-024",
+    "PDS-014",
+    "PDS-015",
+    "PLS-012",
+    "PLS-013",
+    "PNC-010",
+    "PNC-012",
+    "PNC-013",
+    "PNC-014",
+    "POA-047",
+    "POA-048",
+    "PS-116",
+    "RAP-029",
+    "RGV-013",
+    "T-159",
+    "W-072"
+  ],
+  "repair_boundary": "bounded repair only; no redesign, no PlanCompile runtime enablement, no WorkNodes, no NodeSeeds, no executable queues, no production implementation files",
+  "schema_id": "pm.deep_audit_repair_report.v1",
+  "semantic_proof": {
+    "exact_token_refs_checked": 133,
+    "missing_exact_tokens": 0
+  },
+  "status": "repaired_core_validators_passed_governance_stale_not_sealed",
+  "validator_results_path": "Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/repair_validator_results.json",
+  "validator_summary": {
+    "core_failures": 0,
+    "governance_expected_failures": 5,
+    "governance_unexpected_failures": 0,
+    "total_checks": 15
+  }
+}

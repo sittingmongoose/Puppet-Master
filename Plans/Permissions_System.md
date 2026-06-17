@@ -7663,6 +7663,7 @@ status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
   Permissions_System owns critical user-escalation and external-effect policy for plans-to-code execution. Default hands-off execution escalates to the user only for missing credentials or secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, unrecoverable environment failure, true product decision with no inferable answer, or security-sensitive approval. Execution policy must define network access policy, secret access policy, filesystem write policy, destructive command policy, database/test-data policy, browser profile isolation, real-account versus sandbox-account policy, credential redaction, and artifact privacy/retention policy before risky WorkNode execution proceeds.
+  Policy field names include network_access_policy, secret_access_policy, and destructive_command_policy, and critical blockers include configured checkpoints only when explicit HITL or approval policy calls for them.
 gui_related: false
 gui_classification_reason: Permission, approval, network, secrets, destructive command, and privacy policy are security/runtime behavior.
 depends_on: [PS-115, GRS-029]

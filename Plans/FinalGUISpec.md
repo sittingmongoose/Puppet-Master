@@ -24980,6 +24980,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Plan Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; audit/repair/audit, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
+  Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
 depends_on: [MS-110]
@@ -25028,6 +25029,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The Orchestrator Plan Compile tab must feel polished, animated, and informative rather than a static JSON or log table. Plans flow into PlanUnits, cards sort into lanes, NodeSeeds assemble, dependency edges draw, GUI/frontend badges appear, test gates light up, WorkNode requests snap into graph clusters, and handoff pulses toward Executor. The tab presents stage timeline, progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness while preserving the scope boundary: Plan Compile shows Plans-to-node creation, and existing execution views show code-generation and WorkNode execution progress.
+  The presentation is an animated node factory and preserves Plan Compile tab scope: Executor execution progress stays in existing execution views rather than this compile tab.
 gui_related: true
 gui_classification_reason: This unit defines visible animation, layout, status, and interaction behavior.
 depends_on: [OP-023, OP-024, PNC-014, ATS-001]

@@ -1,11 +1,11 @@
 {
   "checks": {
-    "anchor_alias_rows": 3908,
+    "anchor_alias_rows": 3916,
     "batch_report_doc_entries": 212,
     "batch_report_rows": 212,
-    "coverage_rows": 3908,
+    "coverage_rows": 3916,
     "coverage_status_counts": {
-      "already_standardized_existing_planunits": 29,
+      "already_standardized_existing_planunits": 37,
       "goal_runtime_new_profile_planunit_covered": 25,
       "goal_runtime_new_profile_standardized_section": 10,
       "phase2b_batch_001_atomized_covered": 25,
@@ -427,16 +427,17 @@
       "standardized_section": 9,
       "structural_disposition": 8
     },
-    "doc_count": 68,
-    "live_plan_unit_count": 5045,
+    "doc_count": 69,
+    "live_plan_unit_count": 5105,
     "source_preserving_unit_count": 0,
     "source_preserving_unit_ids": [],
-    "span_count": 3908,
-    "unique_live_plan_unit_count": 5045
+    "span_count": 3916,
+    "unique_live_plan_unit_count": 5105
   },
   "failures": [],
-  "generated_at_utc": "2026-06-16T20:13:42Z",
+  "generated_at_utc": "2026-06-17T23:42:38Z",
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.validation_report.v1",
-  "status": "pass"
+  "status": "pass",
+  "warnings": []
 }

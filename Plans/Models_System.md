@@ -7426,6 +7426,7 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
   Models_System owns the six user-facing model settings for plans-to-code automation: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. Default Model covers assistant chat, normal Plan Wizard conversation, ordinary research/browser lookup, and fallback behavior. Overseer Model covers Plan Wizard ledger-to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation, seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes; Auditor Model owns audit/repair/audit loops, verification, certification, quality gates, and evidence review. Executor has no user-facing Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer handles execution-level reasoning around it.
+  High-Effort Worker Model covers repo-wide reasoning explicitly, and Executor deterministic runtime behavior stays outside user-facing model settings.
 gui_related: true
 gui_classification_reason: This unit defines user-facing Settings labels and GUI/frontend model routing labels.
 depends_on: [MS-109]
@@ -7496,6 +7497,7 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
   Every dispatched WorkNode and every plans-to-code role resolution records a model resolution receipt with requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. WorkNode requests carry work_type, gui_related, frontend_related, effort class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, and capability lane metadata so native routing can choose Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, Auditor Model, or Overseer Model without exposing Codex-only external GUI-agent CLI bridge settings in built Puppet Master.
+  The receipt is the native provider/model routing proof for built Puppet Master and preserves effort_class and capability_lane in the canonical routing body.
 gui_related: false
 gui_classification_reason: This unit defines backend model-resolution receipts and routing metadata; visible labels are consumed by FinalGUISpec.
 depends_on: [MS-110]
