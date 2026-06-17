@@ -1,0 +1,54 @@
+{
+  "audit_id": "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+  "compile_queue": {
+    "active": false,
+    "compiled_to_plan_atoms": 102,
+    "non_applicable_atom_ids": [
+      "atom-0001",
+      "atom-0101"
+    ],
+    "source_lineage_pre_seal_ready_atom_count": 102,
+    "status": "compiled_orchestrator_goal_runtime_flow_governance_sealed"
+  },
+  "counts": {
+    "accepted_decisions_count": 29,
+    "candidate_atoms_count": 0,
+    "compiled_plan_unit_ids_in_current": 23,
+    "design_atoms_total": 104,
+    "open_blockers_count": 0,
+    "open_questions_count": 3,
+    "ready_for_plan_compile_atoms": 0
+  },
+  "evidence": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json"
+  ],
+  "issues": [],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "registry_status": {
+    "basis": "latest sealed non-background ledger in Plans/ledgers/v2/ledger_registry.json; pldg-20260610-001-ledger-plan-system excluded as older bootstrap/system ledger",
+    "latest_non_background_ledger": "pldg-20260616-002-orchestrator-goal-runtime-flow"
+  },
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "sealed_open_item_policy": {
+    "classification": "explicitly_deferred",
+    "evidence": "q-0007 through q-0009 are post_seal_followup_not_compiled and not compile blockers for sealed PlanUnits.",
+    "open_questions": [
+      "q-0007",
+      "q-0008",
+      "q-0009"
+    ]
+  },
+  "state_files": {
+    "compile_queue": "present",
+    "current": "present",
+    "handoff": "present",
+    "ledger_health": "validation/ledger_health.json present",
+    "open_items": "present",
+    "operating_capsule": "present"
+  },
+  "status": "pass_with_notes"
+}
