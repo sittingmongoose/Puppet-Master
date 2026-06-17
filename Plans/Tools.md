@@ -10885,6 +10885,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   Tools consumes Automated_Testing_System capability discovery for browser automation, GUI automation, device/emulator automation, screenshot capture, logs, app launch, headless/headed modes, project-native test runners, and official testing option research. For web projects, once Puppet Master is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can remain optional, fallback, or project-native. Slint live preview/live reload is a Puppet Master build example only and must not become the default testing assumption for all user projects.
+  For web testing, Playwright optional remains fallback or project-native rather than the native default.
 gui_related: true
 gui_classification_reason: Browser automation, GUI automation, emulator sessions, screenshots, and visual evidence are user-visible tool surfaces.
 depends_on: [ATS-001, ATS-002, ATS-004]

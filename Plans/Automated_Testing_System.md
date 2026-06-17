@@ -28,6 +28,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Puppet Master has a first-class Automated Testing System that is platform-capability-discovery-first. It owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, visual/browser/device evidence policy, fallback policy, and test-gap blocker routing. Testing must not be a thin verificationCommand afterthought and must not be overfit to Slint; Slint is an example for Puppet Master itself while the system works for web, desktop GUI, mobile/device, backend/API, CLI, and library projects.
+  The canonical report families are TestCapabilityReport, TestHarnessProbeReport, TestStrategy, and TestRunReceipt.
 gui_related: false
 gui_classification_reason: This unit defines backend/test policy and artifact contracts; GUI evidence is consumed but not itself the owner behavior.
 depends_on: []
@@ -79,6 +80,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Test Capability Discovery must run before test generation or execution. It detects project_platform, framework/toolkit, local_capabilities, installed tools, app launch ability, browser automation, GUI automation, device/emulator automation, screenshot support, logs, headless/headed support, project-native test runners, and whether current official testing options need online research. Test Harness Probe records runnable verification commands, required adapters, expected artifacts, flake policy, and gaps before Executor treats a WorkNode request as test-ready.
+  TestCapabilityReport and TestHarnessProbeReport fields include online_research, automation_surface, requires_browser, requires_emulator, requires_display, requires_screenshot, verification_command, expected_artifacts, and flake_policy.
 gui_related: false
 gui_classification_reason: Discovery/probe records are backend test capability contracts, even when they discover GUI or browser tools.
 depends_on: [ATS-001]
@@ -122,6 +124,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Test Strategy v2 binds each WorkNode request to required_capability_refs, required harnesses, generated or reused tests, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, expected artifacts, flake policy, and test_gap_policy. The strategy must choose project-type-specific oracles: browser DOM, console, network, screenshot, and visual checks for web; launch, window, screenshot, and accessibility checks for desktop GUI; emulator/device logs and screenshots for mobile; API, contract, and database checks for backend work; exit, output, and filesystem checks for CLI work; and unit, property, and API contracts for libraries.
+  TestStrategy records include test_level, generated_test_ids, browser_session_required, visual_evidence_required, test oracle, console/network, and contract tests where applicable.
 gui_related: true
 gui_classification_reason: WorkNode test bindings can require visible browser, GUI, device, screenshot, and visual evidence surfaces.
 depends_on: [ATS-001, ATS-002]
@@ -172,6 +175,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode, it must create a test capability blocker or a test-harness WorkNode request rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
+  Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims.
 gui_related: true
 gui_classification_reason: Automated screenshots, browser sessions, GUI/device sessions, and visual evidence are user-visible verification surfaces.
 depends_on: [ATS-001, ATS-002, ATS-003]

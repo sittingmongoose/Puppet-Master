@@ -4914,6 +4914,7 @@ status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
   Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated, blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state, owner lane, lease state, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, and restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an optional promotion/output layer when configured.
+  This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
 gui_related: true
 gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
 depends_on: [W-071, EP-100]

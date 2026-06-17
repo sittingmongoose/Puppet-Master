@@ -509,6 +509,7 @@ canonical_text: >-
   PlanUnit, owner, and closure evidence have not changed.
   Chat-sourced semantic closure support is recorded as source-lineage process
   support unless a v2 ledger atom or decision explicitly owns it.
+  This is the semantic closure registry contract for finding_key, previously_closed reuse, and reopen checks across Plan Wizard, PlanCompile, and WorkNode verification findings.
 gui_related: false
 gui_classification_reason: Audit closure durability and reopen policy are process/governance behavior, not GUI implementation work.
 depends_on:
@@ -612,6 +613,7 @@ status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
   A v2 planning ledger may declare implementation_readiness_matrix.json and doc_impact_matrix.json as required compile inputs when a ledger-to-Plans compile must produce implementation-ready PlanUnits and reference coverage. implementation_readiness_matrix maps design areas to required PlanUnits, schemas, fields, acceptance criteria, validators, owner docs, consumer docs, and no-build boundaries. doc_impact_matrix maps primary owner docs, direct consumer docs, reference/index/UI docs, search tokens, required update types, deferred update handling, and per-doc no-update evidence. The ledger remains source/planning memory; canonical truth is established only by live non-pipeline Plans docs and schema drafts after compile.
+  The doc_impact_matrix rule forbids owner-only repairs: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs.
 gui_related: false
 gui_classification_reason: Matrix input handling is ledger/process behavior, not GUI implementation.
 depends_on: [PLS-010, PDS-015]

@@ -1815,6 +1815,7 @@ status: accepted
 owner_doc: Plans/GitHub_Integration.md
 canonical_text: >-
   GitHub integration is an optional promotion/output layer for plans-to-code execution. When configured, it handles auth, remote state, push, pull request creation, PR status, and GitHub Actions checks after local Executor/source-control receipts establish local truth. Local source-control/worktree state remains execution truth and local-only project completion must not require GitHub. GitHub receipts consume repo_id, branch/head state, baseline/head commits, changed files, PR refs, Action/check refs, conflicts, merge/promotion result, and rollback context from Executor and WorktreeGitImprovement.
+  GitHub optional promotion records PR and GitHub Actions evidence only when configured.
 gui_related: true
 gui_classification_reason: PR, status, checks, and promotion results are user-visible GitHub/source-control surfaces.
 depends_on: [GI-030, W-072, EP-100]

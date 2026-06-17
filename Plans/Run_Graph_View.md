@@ -900,6 +900,7 @@ status: accepted
 owner_doc: Plans/Run_Graph_View.md
 canonical_text: >-
   Run Graph consumes plans-to-code execution progress after Executor intake by projecting queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, dependency edges, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, receipt refs, and final certification progress. The Run Graph remains an execution projection and does not own Plan Compile tab progress, PlanCompile state, Executor dispatch authority, or GoalCompletionReceipt certification authority.
+  Run Graph shows Executor execution progress only after intake and does not replace Plan Compile tab scope.
 gui_related: true
 gui_classification_reason: Execution graph nodes, model lanes, worktrees, safe points, tests, repairs, GitHub status, and certification progress are visible graph UI.
 depends_on: [RGV-012, OP-024, EP-103, GRS-030, RAP-029]

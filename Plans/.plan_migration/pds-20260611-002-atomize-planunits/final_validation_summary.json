@@ -24,7 +24,7 @@
     "span_start": "Contracts_V0-S0001"
   },
   "coverage_disposition_type_counts": {
-    "already_standardized_existing_planunits": 29,
+    "already_standardized_existing_planunits": 37,
     "explicit_disposition": 106,
     "planunit": 2,
     "source_lineage_residual": 2,
@@ -32,9 +32,9 @@
     "standardized_section_and_planunit": 3479,
     "structural_disposition": 8
   },
-  "coverage_rows": 3908,
+  "coverage_rows": 3916,
   "coverage_status_counts": {
-    "already_standardized_existing_planunits": 29,
+    "already_standardized_existing_planunits": 37,
     "goal_runtime_new_profile_planunit_covered": 25,
     "goal_runtime_new_profile_standardized_section": 10,
     "phase2b_batch_001_atomized_covered": 25,
@@ -459,10 +459,10 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-06-17T15:02:48Z",
+  "generated_at_utc": "2026-06-17T23:42:21Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
-  "live_plan_unit_count": 5068,
+  "live_plan_unit_count": 5105,
   "next_batch_cursor": null,
   "next_cursor": null,
   "no_executable_build_tasks_created": true,
@@ -505,12 +505,12 @@
   "standard_run_gates_expected_seal_failures": [],
   "standard_run_gates_status": "passed_after_governance_seal",
   "status": "COMPLETE",
-  "unique_live_plan_unit_count": 5068,
+  "unique_live_plan_unit_count": 5105,
   "validators": {
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"

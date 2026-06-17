@@ -669,6 +669,7 @@ status: accepted
 owner_doc: Plans/Plan_Document_System.md
 canonical_text: >-
   Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. Broad Plan Wizard rename remains deferred to the Plan Wizard redesign unless a touched section would otherwise introduce stale wording or contradiction; new content uses Plan Wizard terminology. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
+  Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.
 depends_on: [PDS-014, PLS-013]

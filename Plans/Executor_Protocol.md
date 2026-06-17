@@ -5950,6 +5950,7 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor intake and dispatch must establish a source-control execution context and model-resolution context before mutation-capable work starts. The execution context preserves repo_id, worktree_id, worktree_path, baseline_commit_oid, safe_point_id, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, and restore_command_or_action. Model routing preserves requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. PlanCompile does not own source control; source control, worktrees, safe points, snapshots, rollback, FileSafe, and GitHub promotion apply after Executor accepts WorkNode requests.
+  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth.
 gui_related: false
 gui_classification_reason: Execution preflight and model receipt fields are backend runtime contracts.
 depends_on: [EP-099, MS-111, W-072, F2-189]
@@ -6004,6 +6005,7 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor intake must validate WorkNode test_binding fields before dispatch: required capabilities, required harnesses, generated/reused tests, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, flake policy, expected artifacts, and test_gap_policy. WorkNode completion cannot depend on human eyeballing. If automatic verification is unavailable, Executor blocks the WorkNode or requests test-harness work rather than marking it complete.
+  Executor test intake preserves generated_test_ids, browser_session_required, visual_evidence_required, browser/GUI/device sessions, and manual_only_acceptance_not_allowed before completion is accepted.
 gui_related: true
 gui_classification_reason: Browser/session requirements, emulator requirements, screenshots, and visual evidence are user-visible verification surfaces.
 depends_on: [EP-099, ATS-003, ATS-004]
@@ -6052,6 +6054,7 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor repair loops preserve failure_signature records with kind, normalized_key, attempt_count, last_safe_point_id, last_repair_worknode_id, overseer_reviewed, auditor_reviewed, repeated_failure_policy, escalation_lane, user_escalation_allowed, and last evidence refs. Repeated failures escalate internally through normal repair, Auditor classification, Overseer graph/work/model/source-control/test-harness repair, High-Effort/Auditor deep repair, and only then critical user escalation unless explicit HITL policy requires earlier intervention. If Plans change during execution, PlanChangeDetected pauses affected lanes, a PlanDiffImpactReport classifies nodes as unaffected, needs_recompile, invalidated, or already_safe, and Executor resumes only after graph patching/replan work and currentness gates.
+  Failure signatures expose failure_signature.kind, and external-effect preflights preserve network_access_policy, secret_access_policy, and destructive_command_policy before risky repair or execution continues. Overseer review and High-Effort Worker escalation remain internal repair routes before critical user escalation.
 gui_related: false
 gui_classification_reason: Loop-breaker and PlanChangeDetected policy is runtime orchestration behavior.
 depends_on: [EP-099, EP-100, EP-101, GRS-029, PS-116]
@@ -6107,6 +6110,7 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
+  The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified.
 gui_related: false
 gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.
 depends_on: [EP-099, EP-100, EP-101, EP-102, PNC-014]

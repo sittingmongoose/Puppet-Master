@@ -742,6 +742,7 @@ status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
   Runtime Artifacts projects plans-to-code receipts and automated-test evidence without becoming their owner. It displays PlanCompile receipts, ExecutorIntakeReport, source-control receipts, safe-point receipts, WorkNode change receipts, test run receipts, visual evidence, model resolution receipts, Auditor verification receipts, repair attempt receipts, merge/promotion receipts, WorkNode completion receipts, and GoalCompletionReceipt. Evidence projection distinguishes source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, browser/device screenshots/logs, validator outputs, unresolved risks, skipped validator reasons, and final certification status, with degraded views when owner records are stale or missing.
+  Runtime Artifacts distinguishes canonical evidence from source/process/governance/test/source-control evidence and can project browser/GUI/device sessions while keeping Playwright optional as test-tool context rather than receipt authority. It may display 100% automated completion claims, no human intervention assertions, all WorkNodes terminal status, and all automated tests passed evidence only as projections from owner receipts.
 gui_related: true
 gui_classification_reason: Runtime Artifacts receipt, screenshot, visual evidence, skipped validator, and certification projections are user-visible panel behavior.
 depends_on: [RAP-027, POA-047, POA-048, ATS-004, EP-103, GRS-030]
@@ -777,6 +778,10 @@ preserved_exact_tokens:
   - "process evidence"
   - "governance evidence"
   - "test evidence"
+  - "100% automated"
+  - "no human intervention"
+  - "all WorkNodes terminal"
+  - "all automated tests passed"
 negative_constraints:
   - Do not let Runtime Artifacts replace receipt authority.
   - Do not hide stale owner records behind apparently final evidence.
