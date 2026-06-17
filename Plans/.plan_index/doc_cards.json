@@ -483,6 +483,8 @@
         "Plans/Permissions_System.md",
         "Plans/Personas.md",
         "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md",
         "Plans/Project_Output_Artifacts.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Provider_OpenCode.md",
@@ -508,7 +510,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 22249,
+      "line_count": 22256,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 420,
       "plan_unit_ids": [
@@ -1229,7 +1231,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "130d1d1b68c992876a6fab7d020cf9f24240580e796785bfb91b5557a32b4e1c",
+      "sha256": "d4f3f519b3510e4e5506fe305f8046cd01eeda667f61c933c4126340b8ad11ba",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 420
@@ -2527,6 +2529,7 @@
         "Plans/Skills_System.md",
         "Plans/Tools.md",
         "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/assistant-memory-subsystem.md",
         "Plans/chain-wizard-flexibility.md",
@@ -2541,7 +2544,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17282,
+      "line_count": 17293,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 288,
       "plan_unit_ids": [
@@ -3128,7 +3131,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "14465da156164529197562e6078db29e8be63231c5320aa0bbd180c0d87c4047",
+      "sha256": "f7da12e65182e8ce6557a8730026af8f58fc59c6e82ca5bbd9fbc9f560badde1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 286,
@@ -5074,7 +5077,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 1931,
+      "line_count": 1943,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -5138,7 +5141,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "cca065e2a412d2e507f8eac16ed4a7e1cb0decdb0814db58958dfe58077677f6",
+      "sha256": "f1041262cda79180299e5ab5ce3bb021b30d2a669f0194356c9ae17eaa042e70",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25,
@@ -5971,7 +5974,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 7412,
+      "line_count": 7416,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 109,
       "plan_unit_ids": [
@@ -6200,7 +6203,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "e02698807f4577977c7a80719a12b4bf483bc1b43025d04fdb4b19c3552d096b",
+      "sha256": "303c074078766b9e58d658fedb1a50de96143a5588e199074fc444b0b6b5eccf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 109
@@ -7962,7 +7965,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "c8a8b3e962b465d7dfd066ff0769c6d30f602029ae7d66e6c0b3b4fcfe033c0e",
+      "sha256": "e9b290f9e220801fb7f68a255f7b16010bc01c9ce1e9b4c8d25ce0ccfa7d5c06",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 427,
@@ -8576,6 +8579,7 @@
       "heading_count": 17,
       "implementation_surfaces": [
         "Plans/*.md",
+        "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Spec_Lock.json",
@@ -8605,7 +8609,7 @@
         "future Native Ledger Service",
         "scripts/pm-bootstrap-ledger-validate.py"
       ],
-      "line_count": 501,
+      "line_count": 506,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 11,
       "plan_unit_ids": [
@@ -8638,7 +8642,7 @@
         "owner_drift",
         "source_loss"
       ],
-      "sha256": "9d8312c750aadb2106ac39a9b762e871db0da858d95e070340b7af8ee91fa978",
+      "sha256": "95f160dcb4f1b197112a7671bba3cecb5b1b0c4129505d7d011d7f0a5bd848b1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 11
@@ -10039,7 +10043,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 15044,
+      "line_count": 15053,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 215,
       "plan_unit_ids": [
@@ -10270,7 +10274,7 @@
         "storage_owner_stub_loss",
         "storage_plan_drift"
       ],
-      "sha256": "de2a4e0999fd379170fdaff5b23d616f34a53b265bd5a90e5791fba531ce1985",
+      "sha256": "d6d868e175a7f6c9d539db8dd65b8608f88f50b7b7f4b2095e296228d32ffc41",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 214,
@@ -11132,7 +11136,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-17T01:00:01Z",
+  "generated_at_utc": "2026-06-17T02:43:40Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "node-readiness-status-preserved",

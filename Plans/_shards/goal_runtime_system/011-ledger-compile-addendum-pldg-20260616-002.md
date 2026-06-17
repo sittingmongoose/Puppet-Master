@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L1761-L1931
+Source lines: L1761-L1943
 
-Source SHA256: `cca065e2a412d2e507f8eac16ed4a7e1cb0decdb0814db58958dfe58077677f6`
+Source SHA256: `f1041262cda79180299e5ab5ce3bb021b30d2a669f0194356c9ae17eaa042e70`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. The lifecycle sequence preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without changing Executor dispatch ownership. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
+  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. The lifecycle sequence preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without changing Executor dispatch ownership. Replan records preserve affected WorkNodes, canceled or resteered child work, remaining valid evidence, new revision, and next action without replacing the existing Goal Replan Event owner policy. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
 gui_related: false
 gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
 depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
@@ -68,6 +68,12 @@ preserved_exact_tokens:
   - "Completion requires receipt-backed certification"
   - "isolated_worktree"
   - "GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification"
+  - "affected WorkNodes"
+  - "canceled"
+  - "resteered"
+  - "remaining valid evidence"
+  - "new revision"
+  - "next action"
 negative_constraints:
   - Do not make Goal Runtime replace Orchestrator UI/projections or Executor scheduler truth.
   - Do not dispatch graph nodes directly from Goal Runtime when Executor scheduling truth exists.
@@ -83,7 +89,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Runtime policy consumes the contract-owned VerificationCycle example shape with verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, repeated_signature_count, repair_strategy, and next_required_action without re-owning the schema. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
+  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create typed VerificationFinding records, findings, and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Runtime policy consumes the contract-owned VerificationCycle example shape with verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, finding type, failing check, affected artifact, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action without re-owning the schema. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
 gui_related: false
 gui_classification_reason: Verification, repair, receipts, and certification policy are runtime/governance behavior, not GUI implementation.
 depends_on: [GRS-010, GRS-012, GRS-013, GRS-014, GRS-019]
@@ -152,8 +158,14 @@ preserved_exact_tokens:
   - "validator outcomes"
   - "authority checks"
   - "final certifier decision"
+  - "VerificationFinding"
   - "DefectBundle"
   - "RepairWorkNode"
+  - "finding type"
+  - "failing check"
+  - "affected artifact"
+  - "root_cause_key"
+  - "prior repair strategies"
   - "defect signature"
   - "two consecutive failed verification cycles"
   - "two repeats"

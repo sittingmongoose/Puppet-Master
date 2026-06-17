@@ -6,7 +6,7 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "14465da156164529197562e6078db29e8be63231c5320aa0bbd180c0d87c4047"
+      "sha256": "f7da12e65182e8ce6557a8730026af8f58fc59c6e82ca5bbd9fbc9f560badde1"
     },
     {
       "path": "Plans/FileManager.md",
@@ -58,39 +58,39 @@
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "c8a8b3e962b465d7dfd066ff0769c6d30f602029ae7d66e6c0b3b4fcfe033c0e"
+      "sha256": "e9b290f9e220801fb7f68a255f7b16010bc01c9ce1e9b4c8d25ce0ccfa7d5c06"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "6535556cbe7a46de3b44d7a2782357c435f392938ae2fdc6e5d02507d258bf8b"
+      "sha256": "04b69df6ad1950f928a83fe6bf80e42fa9234d031871268a65285e1b101e2d8b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "af1ada32e6eef1786fb6cc415d68ffd37f077f8408c203c66d0f5487ea4cfcbc"
+      "sha256": "446f6543ceb3142e2c5b3bed3129a2279385f822c565aef495ad730d0e759360"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "45d78e1c0034af617437ce89fc635b39b3870e6de08026b01e76ba1f9adfdb35"
+      "sha256": "6405eaef2933c1e75b428ce1abee9e2cca370629b31a5b3d58f87cd4be874f31"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "af8fe5d1234bb9fe273284f57bffbe5cd6f19c553fe1fe9c6ea285a1da797fbb"
+      "sha256": "b0406136c1504694e2f3caa2f668c186145440192aabcdcf38a8c2dd130bc25f"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "65d5afc72f2dd0d3bbc440c5f517acd13d64cd6a6b267cc84bfe414d9d7906cd"
+      "sha256": "95f8134a08d0a1f01749e4c6c74d2e5e87e0596ae2e5fa7882a278becde518b1"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "4fd6dfce3857603cffc05688c0d6db3effc6a0602858d6063ecb7dffc4f7a842"
+      "sha256": "d784ad80033d02868ada9df2b60dca99f0acf4da3c2132f299d0c787e36b5f7d"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "963b031404538e22850e23218f726b8416557f1606b9987612e47e527edb08df"
+      "sha256": "daa0e56744ec50f06bcef264a02897448e1c618b74354170ad21b36207d19dd2"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "17f025aa51cd06c1c3d8cf860603f4f2ee5e206227c3a14134ef2682e781594e"
+      "sha256": "a51a880128b717c2be64e83648536c597b4c28d4064db8ad9ce9f946941aa333"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -98,7 +98,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d2fb16ce5fbaf345f2fb594d8d3df3001722e7dc9bfedc132aef888b103845a1"
+      "sha256": "707ad7fe39d82b137c74a0b5f1f709d2366d60c5a3dee5c5140c25e95ea70563"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "388ccc1b90c4f2b6ea68f47bba3323ed9e71b36a4b5504972ec3a52c94e65358"
+      "sha256": "2c151d7fe7eac8e0a138b17176a5d0789af84217c906851ce05bb13697ddf37d"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -124,7 +124,7 @@
       "result": "PASS"
     },
     {
-      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete.",
+      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },

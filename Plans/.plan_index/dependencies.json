@@ -24155,6 +24155,11 @@
     {
       "edge_type": "depends_on",
       "from": "PLS-011",
+      "to": "BPM-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-011",
       "to": "PLS-009"
     },
     {
@@ -62438,7 +62443,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-17T01:00:01Z",
+  "generated_at_utc": "2026-06-17T02:43:40Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -102774,8 +102779,8 @@
       "source_location": {
         "heading": "GRS-027 - Verification Repair Loop And Certification Policy",
         "heading_level": 3,
-        "heading_line": 1828,
-        "line": 1830,
+        "heading_line": 1834,
+        "line": 1836,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148551,8 +148556,8 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10603,
-    "edge_count": 12142,
+    "depends_on_edge_count": 10604,
+    "edge_count": 12143,
     "node_count": 5065,
     "unblocks_edge_count": 1539,
     "unresolved_reference_count": 0

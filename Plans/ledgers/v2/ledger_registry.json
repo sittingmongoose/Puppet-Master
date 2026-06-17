@@ -142,24 +142,7 @@
       "title": "Native Goal Runtime and Assistant Chat Goal Mode"
     },
     {
-      "candidate_compile_owner_docs": [
-        "Plans/Goal_Runtime_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/chain-wizard.md",
-        "Plans/chain-wizard-flexibility.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Models_System.md",
-        "Plans/Permissions_System.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/00-plans-index.md"
-      ],
+      "candidate_compile_owner_docs": [],
       "canonical_plan_targets": [
         "Plans/Goal_Runtime_System.md"
       ],
@@ -219,7 +202,25 @@
       "resume_file": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
       "status": "sealed",
       "title": "Orchestrator Goal Runtime Flow Rewrite",
-      "updated_at_utc": "2026-06-16T21:31:00Z"
+      "updated_at_utc": "2026-06-16T21:31:00Z",
+      "source_lineage_pre_seal_candidate_compile_owner_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/00-plans-index.md"
+      ]
     }
   ],
   "updated_at_utc": "2026-06-16T21:31:00Z"

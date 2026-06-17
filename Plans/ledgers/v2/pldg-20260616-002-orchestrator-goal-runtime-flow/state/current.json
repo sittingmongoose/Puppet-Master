@@ -120,7 +120,7 @@
   ],
   "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
-  "updated_at_utc": "2026-06-16T21:31:00Z",
+  "updated_at_utc": "2026-06-17T02:45:52Z",
   "validation_state": {
     "forbidden_artifacts": "not_created",
     "git_diff_check": "pass",
@@ -129,7 +129,7 @@
     "node_readiness_status": "blocked_compiler_contract_incomplete",
     "pm_bootstrap_ledger_validate": "pass",
     "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2462_planunits_checked",
-    "pm_plan_index_generate": "pass_5065_planunits_18074_acceptance_units",
+    "pm_plan_index_generate": "pass_5065_planunits_18075_acceptance_units",
     "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
     "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
     "run_gates": "pass_after_governance_seal_refresh",

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22192-L22249
+Source lines: L22192-L22256
 
-Source SHA256: `130d1d1b68c992876a6fab7d020cf9f24240580e796785bfb91b5557a32b4e1c`
+Source SHA256: `d4f3f519b3510e4e5506fe305f8046cd01eeda667f61c933c4126340b8ad11ba`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat owns visible Goal mode controls and completion presentation for user-directed goals, including pause, resume, stop, status, child-goal summaries, and completion reports. Chat may expose Orchestrator Goal handoff status, but Doc Builder's conversational ledger capture and invisible Requirements Doc Builder conversion remain ledger and Goal Runtime flows, not ordinary chat-owned WorkNodes.
+  Assistant Chat owns visible Goal mode controls and completion presentation for user-directed goals, including pause, resume, stop, status, child-goal summaries, and completion reports. Chat may expose Orchestrator Goal handoff status, but Doc Builder's conversational ledger capture routes to Planning_Ledger_System, invisible Requirements Doc Builder conversion remains a Goal Runtime flow, and work-graph/compiler-boundary readiness routes to Plan_To_Node_Compilation/PNC-009 rather than ordinary chat-owned WorkNodes.
 gui_related: true
 gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
 depends_on:
@@ -41,6 +41,8 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Goal_Runtime_System.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_To_Node_Compilation.md
 node_compile_hint:
   mode: assistant_chat_goal_boundary
   create_worknodes: false
@@ -58,6 +60,9 @@ preserved_exact_tokens:
   - "completion report"
   - "Requirements Doc Builder"
   - "invisible Goal Mode"
+  - "Planning_Ledger_System"
+  - "Plan_To_Node_Compilation"
+  - "PNC-009"
 negative_constraints:
   - Do not let chat presentation replace Goal Runtime receipt authority.
   - Do not treat Doc Builder invisible goals as default Orchestrator WorkNodes.
@@ -65,4 +70,6 @@ owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Goal_Runtime_System.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_To_Node_Compilation.md
 ```
