@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L807-L868
+Source lines: L807-L874
 
-Source SHA256: `7e8480d17882b100663a89e9304236ad4b062c0499185e67359ebfae4840bc36`
+Source SHA256: `e22b5840770ce86c94c1c955e0ed65f723b7db0f0326a3f989fb6df6eab8219e`
 
 ---
 
@@ -26,6 +26,8 @@ depends_on:
   - OP-022
   - GRS-026
   - GRS-027
+  - CV-288
+  - SP-215
 unblocks: []
 acceptance_criteria:
   - Run Graph can render GoalRun WorkGraph, WorkNode status, SubagentWave membership, and VerificationCycle overlays.
@@ -43,6 +45,8 @@ implementation_surfaces:
   - Plans/Orchestrator_Page.md
   - Plans/Goal_Runtime_System.md
   - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
 node_compile_hint:
   mode: goalrun_workgraph_overlay
   create_worknodes: false
@@ -69,4 +73,6 @@ owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/Goal_Runtime_System.md
   - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
 ```

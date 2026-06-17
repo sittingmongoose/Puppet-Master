@@ -95,7 +95,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime uses one engine with three product integrations: invisible internal goals for product flows, visible user-directed Goal mode in Assistant Chat, and Orchestrator Goal runtime flows that project GoalRun and WorkGraph state while delegating WorkNode readiness, backoff, capacity, and dispatch to Executor. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals and Orchestrator goals expose controls and status through their owner surfaces while sharing the same runtime state and lifecycle model.
+  Goal Runtime uses one Goal Runtime engine with three product integrations labeled A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow: invisible internal goals for product flows, visible user-directed Goal mode in Assistant Chat, and Orchestrator Goal runtime flows that project GoalRun and WorkGraph state while delegating WorkNode readiness, backoff, capacity, and dispatch to Executor. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals and Orchestrator goals expose controls and status through their owner surfaces while sharing the same runtime state and lifecycle model.
 gui_related: false
 gui_classification_reason: This unit defines runtime presentation modes; chat-specific controls are owned by Assistant Chat consumer PlanUnits.
 depends_on:
@@ -103,6 +103,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Invisible internal goals, visible Assistant Chat Goal mode, and Orchestrator Goal runtime flows share one lifecycle/state model.
+  - The three integrations preserve the labels A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow.
   - Invisible goals do not ask row-by-row or ordinary ambiguity questions.
   - Hard stops remain available for authority, safety, missing preconditions, and true blockers.
   - Hard-stop classification preserves explicit user stop, missing source ledger, missing project plans, permissions/file-system failure, unsafe/destructive, and contradictory cases.
@@ -134,6 +135,9 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
 preserved_exact_tokens:
   - "same engine"
+  - "A. invisible"
+  - "B. Goal mode exposed to the user in chat assistant"
+  - "C. orchestration flow"
   - "invisible internal goals"
   - "visible assistant-chat goals"
   - "Goal mode exposed to the user in chat assistant"
@@ -1764,13 +1768,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
+  Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. The lifecycle sequence preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without changing Executor dispatch ownership. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
 gui_related: false
 gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
 depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
 unblocks: [OP-022, OSI-428, EP-098, CV-288]
 acceptance_criteria:
   - Orchestrator GoalRuns use Goal Runtime as the control envelope without replacing Orchestrator projections.
+  - The GoalRun lifecycle preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification.
   - Executor/runtime scheduler remains the canonical owner for readiness, blocked overlays, retry/backoff, capacity, wakeups, and dispatch.
   - GoalRun completion requires receipt-backed certification rather than worker, subagent, or WorkNode success alone.
 validation_surfaces:
@@ -1779,7 +1784,7 @@ validation_surfaces:
 risk_class: orchestrator_runtime_authority_drift
 reasoning_tier: high
 context_scope: orchestrator_goal_runtime
-implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
 node_compile_hint: {mode: orchestrator_goal_runtime_envelope, create_worknodes: false}
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0002
@@ -1812,11 +1817,12 @@ preserved_exact_tokens:
   - "GoalCompletionReceipt"
   - "Completion requires receipt-backed certification"
   - "isolated_worktree"
+  - "GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification"
 negative_constraints:
   - Do not make Goal Runtime replace Orchestrator UI/projections or Executor scheduler truth.
   - Do not dispatch graph nodes directly from Goal Runtime when Executor scheduling truth exists.
   - Do not mark tasks or goals complete only because a worker reports success.
-owner_hints: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
 ```
 
 ### GRS-027 - Verification Repair Loop And Certification Policy
@@ -1827,7 +1833,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
+  Orchestrator GoalRuns treat execution success as provisional. VerificationCycle failures create findings and DefectBundles, repair WorkNodes or repair subgoals run under bounded authority, and verification reruns against the affected target plus regression scope until zero findings remain or a true blocker or authority boundary is reached. Runtime policy consumes the contract-owned VerificationCycle example shape with verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, repeated_signature_count, repair_strategy, and next_required_action without re-owning the schema. VerificationReceipt records verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt records executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt records child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Repair strategy values include patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability_lane, assign_specialist_subagents, manual_decision, and authority_blocked. Acceptance checks require acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.
 gui_related: false
 gui_classification_reason: Verification, repair, receipts, and certification policy are runtime/governance behavior, not GUI implementation.
 depends_on: [GRS-010, GRS-012, GRS-013, GRS-014, GRS-019]
@@ -1835,6 +1841,7 @@ unblocks: [OP-022, EP-098, CV-288, RAP-027]
 acceptance_criteria:
   - A failed VerificationCycle cannot become a done-with-issues completion state.
   - Verification reruns after every repair before a WorkNode, child goal, or GoalRun is certified.
+  - Runtime verification policy consumes the contract-owned VerificationCycle example shape, preserving attempt, failed | passed | blocked, and defect_signatures without re-owning schema.
   - Repeated defect signatures trigger strategy adjustment after two consecutive failed verification cycles and high-end adjudication/root_cause replan on the third failed cycle.
   - VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt preserve verifier/executor/certifier identity, changed artifacts, validator outcomes, evidence refs, unresolved risks, authority checks, and repair-cycle refs.
   - Repair strategy and evidence taxonomy values remain explicit rather than compressed into generic retry language.
@@ -1845,7 +1852,7 @@ validation_surfaces:
 risk_class: false_completion
 reasoning_tier: high
 context_scope: orchestrator_verification_repair
-implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md]
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
 node_compile_hint: {mode: verification_repair_loop_policy, create_worknodes: false}
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0019
@@ -1913,9 +1920,12 @@ preserved_exact_tokens:
   - "assign_specialist_subagents"
   - "manual_decision"
   - "authority_blocked"
+  - "attempt"
+  - "failed | passed | blocked"
+  - "defect_signatures"
 negative_constraints:
   - Do not allow a failed verification to become a done-with-issues state.
   - Do not reduce audit/verification strictness to save cost.
   - Do not keep applying the same low-end patch indefinitely.
-owner_hints: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Progression_Gates.md]
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Progression_Gates.md]
 ```

@@ -928,10 +928,10 @@
         "ACD-414",
         "ACD-415",
         "ACD-416",
-        "ACD-420",
         "ACD-417",
         "ACD-418",
-        "ACD-419"
+        "ACD-419",
+        "ACD-420"
       ],
       "reasoning_tiers": [
         "high",
@@ -1229,7 +1229,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "7278e680667f873b62665cc05bff06dc7cf59f60db60f87cb1c65eeda216b594",
+      "sha256": "130d1d1b68c992876a6fab7d020cf9f24240580e796785bfb91b5557a32b4e1c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 420
@@ -2541,7 +2541,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17277,
+      "line_count": 17282,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 288,
       "plan_unit_ids": [
@@ -3128,7 +3128,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "ebc3c68907f77ac66eb2b1deb461089af20bed76a95ece6eaa5a083a39b5a91e",
+      "sha256": "14465da156164529197562e6078db29e8be63231c5320aa0bbd180c0d87c4047",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 286,
@@ -3771,8 +3771,10 @@
         "Plans/Goal_Runtime_System.md",
         "Plans/Models_System.md",
         "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
         "Plans/Run_Modes.md",
         "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
       "line_count": 5893,
@@ -3889,7 +3891,7 @@
         "migration_lineage",
         "scheduler_boundary_drift"
       ],
-      "sha256": "efc9369eb291be2a1f605ea6e6c5697ed2b52c5b81b8893a98a8702060048597",
+      "sha256": "646b01cbf6a1c37e02b7b465448719097c47d7cf6a3134dc043fcd85ea3d9dce",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 98
@@ -5042,6 +5044,7 @@
       "implementation_surfaces": [
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
         "Plans/FinalGUISpec.md",
         "Plans/Goal_Runtime_System.md",
@@ -5053,9 +5056,11 @@
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/chain-wizard-flexibility.md",
         "Plans/ledgers/v2",
+        "Plans/storage-plan.md",
         "future Chain Wizard",
         "future Goal Mode scheduler",
         "future Goal Mode service",
@@ -5069,7 +5074,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 1921,
+      "line_count": 1931,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -5133,7 +5138,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "d940e0646d4ae7fd1e92dc8f5f500632d1e65a02336bf4b6a25ba4a3eb8fb0b9",
+      "sha256": "cca065e2a412d2e507f8eac16ed4a7e1cb0decdb0814db58958dfe58077677f6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25,
@@ -5955,14 +5960,18 @@
       },
       "heading_count": 192,
       "implementation_surfaces": [
+        "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
         "Plans/FinalGUISpec.md",
         "Plans/Goal_Runtime_System.md",
         "Plans/Models_System.md",
         "Plans/Multi-Account.md",
-        "Plans/orchestrator-subagent-integration.md"
+        "Plans/Permissions_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
       ],
-      "line_count": 7405,
+      "line_count": 7412,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 109,
       "plan_unit_ids": [
@@ -6191,7 +6200,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "901a8a7c2ecdf962e12ff1f460916a3f7d020e543c2d5e49256af35704786931",
+      "sha256": "e02698807f4577977c7a80719a12b4bf483bc1b43025d04fdb4b19c3552d096b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 109
@@ -7071,7 +7080,7 @@
         "False": 365,
         "True": 63
       },
-      "heading_count": 55,
+      "heading_count": 48,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -7086,7 +7095,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 31164,
+      "line_count": 31163,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 428,
       "plan_unit_ids": [
@@ -7953,7 +7962,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "f3d48e18324a62c3bb3589925d92cc06651b368d686cea36757e9d9cc56c9084",
+      "sha256": "c8a8b3e962b465d7dfd066ff0769c6d30f602029ae7d66e6c0b3b4fcfe033c0e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 427,
@@ -7991,7 +8000,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 1576,
+      "line_count": 1584,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -8046,7 +8055,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "2eb62ea9a21f1f96fc9fcce699d459dbf55ba8580f6d8fbf06f2cf841e0ff1b2",
+      "sha256": "198e69976d1fe3bffb608f6b6d4c15654adcc01c3d0db66769b724a419fe5d48",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21,
@@ -8603,14 +8612,14 @@
         "PLS-001",
         "PLS-002",
         "PLS-003",
-        "PLS-011",
         "PLS-004",
         "PLS-005",
         "PLS-006",
         "PLS-007",
         "PLS-008",
         "PLS-009",
-        "PLS-010"
+        "PLS-010",
+        "PLS-011"
       ],
       "reasoning_tiers": [
         "high",
@@ -8629,7 +8638,7 @@
         "owner_drift",
         "source_loss"
       ],
-      "sha256": "f4fd0c47b3816fbd615609371d5b3cba424714cb2b7648331d63e613034c3bea",
+      "sha256": "9d8312c750aadb2106ac39a9b762e871db0da858d95e070340b7af8ee91fa978",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 11
@@ -9379,7 +9388,7 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 868,
+      "line_count": 874,
       "path": "Plans/Run_Graph_View.md",
       "plan_unit_count": 12,
       "plan_unit_ids": [
@@ -9414,7 +9423,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "7e8480d17882b100663a89e9304236ad4b062c0499185e67359ebfae4840bc36",
+      "sha256": "e22b5840770ce86c94c1c955e0ed65f723b7db0f0326a3f989fb6df6eab8219e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 12
@@ -10030,7 +10039,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 15035,
+      "line_count": 15044,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 215,
       "plan_unit_ids": [
@@ -10261,7 +10270,7 @@
         "storage_owner_stub_loss",
         "storage_plan_drift"
       ],
-      "sha256": "e7d2e77ccb09b5fd2c5cb96752eaebce9a4a281e7db3a5ee8c5894c69b1f45d7",
+      "sha256": "de2a4e0999fd379170fdaff5b23d616f34a53b265bd5a90e5791fba531ce1985",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 214,
@@ -11123,7 +11132,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-16T22:22:21Z",
+  "generated_at_utc": "2026-06-17T01:00:01Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

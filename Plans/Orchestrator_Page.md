@@ -1503,7 +1503,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  The Orchestrator page projects each GoalRun through the existing six-tab spine with GoalRun and WorkGraph overlays. The Goal header shows goal_id, objective, phase, scope, authority/write surface, budget/cost, and certification status. Progress, Seams, Node Graph, Evidence, History, and Ledger show WorkGraph dependencies, WorkNode state, SubagentWaves, concerns/blockers, VerificationCycles, DefectBundles, RepairWorkNodes, receipts, replans, source-lineage refs, and certification events without becoming scheduler truth. Projected GoalRun and WorkNode statuses include ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, with contract, storage, permission, worktree, and model-owner records remaining authoritative for the underlying fields.
+  The Orchestrator page projects each GoalRun through the existing six-tab spine with GoalRun and WorkGraph overlays. The Goal header shows goal_id, objective, phase, scope, authority/write surface, budget/cost, and certification status. Progress, Seams, Node Graph, Evidence, History, and Ledger show WorkGraph dependencies, WorkNode state, SubagentWaves, concerns/blockers, VerificationCycles, DefectBundles, RepairWorkNodes, receipts, replans, source-lineage refs, and certification events without becoming scheduler truth. The projected flow mirrors GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification as a projection over owner records, not scheduler truth. VerificationCycle projection rows expose attempt, status failed | passed | blocked, findings, and defect_signatures when contract/storage records provide them. Projected GoalRun and WorkNode statuses include ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, with contract, storage, permission, worktree, and model-owner records remaining authoritative for the underlying fields.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page header, tabs, projections, side-drawer content, and status surfaces.
 depends_on: [OP-020, GRS-026, GRS-027, EP-098, OSI-428]
@@ -1511,6 +1511,8 @@ unblocks: [RGV-012, F3-394, RAP-027]
 acceptance_criteria:
   - The six canonical tabs remain Progress, Seams, Node Graph, Evidence, History, and Ledger.
   - GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, and GoalCompletionReceipt are visible as projections where relevant.
+  - Orchestrator projection preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without becoming scheduler truth.
+  - VerificationCycle projection rows can show attempt, status failed | passed | blocked, findings, and defect_signatures from contract/storage records.
   - GoalRun and WorkNode status projections distinguish ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped.
   - Sensitive Orchestrator mutations require current or directly validated projections; stale projections cannot authorize sensitive actions.
   - True blockers distinguish owner, legal next actions, escalation target, projection freshness, reversibility, and audit trail.
@@ -1545,6 +1547,8 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0074
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0077
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0091
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0094
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0095
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0026
 preserved_exact_tokens:
   - "Goal header"
@@ -1569,6 +1573,10 @@ preserved_exact_tokens:
   - "blocked"
   - "cancelled"
   - "stopped"
+  - "GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification"
+  - "attempt"
+  - "failed | passed | blocked"
+  - "defect_signatures"
 negative_constraints:
   - Do not treat the WorkGraph projection as the canonical dispatcher.
   - Do not allow stale projections to authorize sensitive mutations.

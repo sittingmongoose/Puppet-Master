@@ -343,8 +343,12 @@ def main() -> int:
 
     compiled_phase = isinstance(current_phase, str) and current_phase.startswith("compiled")
     if compiled_phase:
-        if manifest.get("status") != "compiled":
-            errors.append(f"manifest status must be compiled for compiled phase, got {manifest.get('status')!r}")
+        expected_manifest_status = "sealed" if current.get("governance_status") == "sealed" else "compiled"
+        if manifest.get("status") != expected_manifest_status:
+            errors.append(
+                f"manifest status must be {expected_manifest_status} for compiled phase, "
+                f"got {manifest.get('status')!r}"
+            )
         if atom_status_counts.get("ready_for_plan_compile", 0):
             errors.append("compiled ledger still has ready_for_plan_compile design atoms")
         for item in compile_queue.get("items", []):

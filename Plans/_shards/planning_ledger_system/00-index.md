@@ -1,16 +1,16 @@
 # Shard Index: Plans/Planning_Ledger_System.md
 
-Generated: 2026-06-16T22:23:45Z
+Generated: 2026-06-17T01:00:36Z
 
-Source SHA256: `f4fd0c47b3816fbd615609371d5b3cba424714cb2b7648331d63e613034c3bea`
+Source SHA256: `9d8312c750aadb2106ac39a9b762e871db0da858d95e070340b7af8ee91fa978`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `c0cc20a823ab17520215638711ad75e3d36252c2891f5c79ef9a8478b2792a03`
-- [002 - 0. Scope](002-0.-scope.md) L5-L11 `44429fc770ff8a312c641b982bacfb3090c8028b800fbfbd73fe51efac863cce`
-- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L24 `8d861c594c7a274a9f7e3e690f194fbeee55c1dbe9cb0ef350f0078a49e93d83`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L139 `a87b59d471638f6621ab7a5954d17edeb9acf57cb3548e913463458d965ed413`
-- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L141-L476 `8c5c9b1a643263460baf606fe5f14a1146357808632bfa72d5d2dac2b82efae0`
-- [006 - 3. Compilation Coverage](006-3.-compilation-coverage.md) L478-L501 `367d83597b27c092227500a5e0e16798ea4eda272a6cbdaa361491af4816119c`
+- [001 - Preamble](001-preamble.md) L1-L3 `084b6eb8c78640ee08e65c675ce5017bf2d3b4dbf589e3e438bd85608c5e41da`
+- [002 - 0. Scope](002-0.-scope.md) L5-L11 `b1d19d382db903339d0d86a3172e2b68097c9be031688d38f9f5baa69e8b3ba6`
+- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L24 `bd944a3a507b72e0abbda71bca78b567f51a1566ffa3714d102ca8c7ae883fa3`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L398 `778b53e3b29ff61af80ea310c28d67721d0fece61e68918d26c90352917747d2`
+- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L400-L476 `3bcc1fd66296d9e03b3b493156f72622a2c1e078003f1306ab4ec02a472fe1dd`
+- [006 - 3. Compilation Coverage](006-3.-compilation-coverage.md) L478-L501 `6f96df892cd21f841de5919f3d9bb13d61a407de7f20fdee6b5ec08b91303580`

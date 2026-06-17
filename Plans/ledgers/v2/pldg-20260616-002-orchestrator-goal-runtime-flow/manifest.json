@@ -1,24 +1,5 @@
 {
-  "candidate_compile_owner_docs": [
-    "Plans/00-plans-index.md",
-    "Plans/Contracts_V0.md",
-    "Plans/Executor_Protocol.md",
-    "Plans/FinalGUISpec.md",
-    "Plans/Goal_Runtime_System.md",
-    "Plans/Models_System.md",
-    "Plans/Orchestrator_Page.md",
-    "Plans/Permissions_System.md",
-    "Plans/Plan_To_Node_Compilation.md",
-    "Plans/Run_Graph_View.md",
-    "Plans/Run_Modes.md",
-    "Plans/Runtime_Artifacts_Panel.md",
-    "Plans/WorktreeGitImprovement.md",
-    "Plans/assistant-chat-design.md",
-    "Plans/chain-wizard-flexibility.md",
-    "Plans/chain-wizard.md",
-    "Plans/orchestrator-subagent-integration.md",
-    "Plans/storage-plan.md"
-  ],
+  "candidate_compile_owner_docs": [],
   "canonical_plan_targets": [
     "Plans/Goal_Runtime_System.md"
   ],
@@ -100,7 +81,27 @@
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "source_context": "Retrospective conversational planning ledger reconstructed from the Orchestrator Goal Runtime flow discussion. It captures the A/B/C Goal Mode split, Orchestrator/Executor/Goal boundaries, extensive bounded subagents, low-end/high-end agent split, verification repair loop, receipt certification, terminology cleanup, GUI/settings impacts, and backlink audit scope. This is source/planning memory, not canonical Plans.",
-  "status": "compiled",
+  "source_lineage_pre_seal_candidate_compile_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/chain-wizard.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
   "updated_at_utc": "2026-06-16T21:31:00Z"
 }

@@ -13494,6 +13494,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-098",
+      "to": "PS-115"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-098",
+      "to": "W-071"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -30805,6 +30815,11 @@
     {
       "edge_type": "depends_on",
       "from": "RGV-012",
+      "to": "CV-288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-012",
       "to": "GRS-026"
     },
     {
@@ -30821,6 +30836,11 @@
       "edge_type": "depends_on",
       "from": "RGV-012",
       "to": "RGV-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-012",
+      "to": "SP-215"
     },
     {
       "edge_type": "depends_on",
@@ -62418,7 +62438,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-16T22:22:21Z",
+  "generated_at_utc": "2026-06-17T01:00:01Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -70454,8 +70474,8 @@
       "source_location": {
         "heading": "ACD-417 - Goal Task Tracker Replan And Blocked State Projection",
         "heading_level": 3,
-        "heading_line": 22049,
-        "line": 22051,
+        "heading_line": 21990,
+        "line": 21992,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -70471,8 +70491,8 @@
       "source_location": {
         "heading": "ACD-418 - Goal Evidence Activity And Completion Reports",
         "heading_level": 3,
-        "heading_line": 22118,
-        "line": 22120,
+        "heading_line": 22059,
+        "line": 22061,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -70488,8 +70508,8 @@
       "source_location": {
         "heading": "ACD-419 - Collapsible Child Goal Display",
         "heading_level": 3,
-        "heading_line": 22192,
-        "line": 22194,
+        "heading_line": 22133,
+        "line": 22135,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -70505,8 +70525,8 @@
       "source_location": {
         "heading": "ACD-420 - Visible Chat Goal Boundary And Doc Builder Exclusion",
         "heading_level": 3,
-        "heading_line": 21992,
-        "line": 21994,
+        "heading_line": 22194,
+        "line": 22196,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -102346,8 +102366,8 @@
       "source_location": {
         "heading": "GRS-003 - Invisible Chain Wizard Goal Boundary",
         "heading_level": 3,
-        "heading_line": 164,
-        "line": 166,
+        "heading_line": 168,
+        "line": 170,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102363,8 +102383,8 @@
       "source_location": {
         "heading": "GRS-004 - Whole-Goal Coherence With Sharded Inputs",
         "heading_level": 3,
-        "heading_line": 236,
-        "line": 238,
+        "heading_line": 240,
+        "line": 242,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102380,8 +102400,8 @@
       "source_location": {
         "heading": "GRS-005 - Durable Goal State And Event Log",
         "heading_level": 3,
-        "heading_line": 324,
-        "line": 326,
+        "heading_line": 328,
+        "line": 330,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102397,8 +102417,8 @@
       "source_location": {
         "heading": "GRS-006 - Scheduler Continuation And Revisioned Goal Updates",
         "heading_level": 3,
-        "heading_line": 383,
-        "line": 385,
+        "heading_line": 387,
+        "line": 389,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102414,8 +102434,8 @@
       "source_location": {
         "heading": "GRS-007 - Goal Replan Event For Material Changes",
         "heading_level": 3,
-        "heading_line": 446,
-        "line": 448,
+        "heading_line": 450,
+        "line": 452,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102431,8 +102451,8 @@
       "source_location": {
         "heading": "GRS-008 - Objective Attachments And Phase-Bound Snapshots",
         "heading_level": 3,
-        "heading_line": 500,
-        "line": 502,
+        "heading_line": 504,
+        "line": 506,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102448,8 +102468,8 @@
       "source_location": {
         "heading": "GRS-009 - Worker Role Separation And Bounded Authority",
         "heading_level": 3,
-        "heading_line": 571,
-        "line": 573,
+        "heading_line": 575,
+        "line": 577,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102465,8 +102485,8 @@
       "source_location": {
         "heading": "GRS-010 - Model Role Policy And Certification-Tier Verifier Requirements",
         "heading_level": 3,
-        "heading_line": 645,
-        "line": 647,
+        "heading_line": 649,
+        "line": 651,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102482,8 +102502,8 @@
       "source_location": {
         "heading": "GRS-011 - Provider-Neutral Escalation Triggers",
         "heading_level": 3,
-        "heading_line": 718,
-        "line": 720,
+        "heading_line": 722,
+        "line": 724,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102499,8 +102519,8 @@
       "source_location": {
         "heading": "GRS-012 - Goal Completion Receipt Authority",
         "heading_level": 3,
-        "heading_line": 778,
-        "line": 780,
+        "heading_line": 782,
+        "line": 784,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102516,8 +102536,8 @@
       "source_location": {
         "heading": "GRS-013 - Risk-Tiered Completion Certification",
         "heading_level": 3,
-        "heading_line": 848,
-        "line": 850,
+        "heading_line": 852,
+        "line": 854,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102533,8 +102553,8 @@
       "source_location": {
         "heading": "GRS-014 - Verifier Unavailable And Evidence Retention Policy",
         "heading_level": 3,
-        "heading_line": 904,
-        "line": 906,
+        "heading_line": 908,
+        "line": 910,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102550,8 +102570,8 @@
       "source_location": {
         "heading": "GRS-015 - Progress Fingerprints, Budgets, And Validators",
         "heading_level": 3,
-        "heading_line": 969,
-        "line": 971,
+        "heading_line": 973,
+        "line": 975,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102567,8 +102587,8 @@
       "source_location": {
         "heading": "GRS-016 - Parallel Child Goals And Parent Completion Authority",
         "heading_level": 3,
-        "heading_line": 1032,
-        "line": 1034,
+        "heading_line": 1036,
+        "line": 1038,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102584,8 +102604,8 @@
       "source_location": {
         "heading": "GRS-017 - Child Goal Write Authority And Single-Writer Leases",
         "heading_level": 3,
-        "heading_line": 1107,
-        "line": 1109,
+        "heading_line": 1111,
+        "line": 1113,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102601,8 +102621,8 @@
       "source_location": {
         "heading": "GRS-018 - Task Template Catalog And Goal-Type Completion Criteria",
         "heading_level": 3,
-        "heading_line": 1163,
-        "line": 1165,
+        "heading_line": 1167,
+        "line": 1169,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102618,8 +102638,8 @@
       "source_location": {
         "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
         "heading_level": 3,
-        "heading_line": 1254,
-        "line": 1256,
+        "heading_line": 1258,
+        "line": 1260,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102635,8 +102655,8 @@
       "source_location": {
         "heading": "GRS-020 - Approval Boundaries For High-Risk Goal Actions",
         "heading_level": 3,
-        "heading_line": 1326,
-        "line": 1328,
+        "heading_line": 1330,
+        "line": 1332,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102652,8 +102672,8 @@
       "source_location": {
         "heading": "GRS-021 - Goal Compile Acceptance And Governance Boundary",
         "heading_level": 3,
-        "heading_line": 1381,
-        "line": 1383,
+        "heading_line": 1385,
+        "line": 1387,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102669,8 +102689,8 @@
       "source_location": {
         "heading": "GRS-022 - Goal Runtime Risk Register",
         "heading_level": 3,
-        "heading_line": 1445,
-        "line": 1447,
+        "heading_line": 1449,
+        "line": 1451,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102686,8 +102706,8 @@
       "source_location": {
         "heading": "GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners",
         "heading_level": 3,
-        "heading_line": 1494,
-        "line": 1496,
+        "heading_line": 1498,
+        "line": 1500,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102703,8 +102723,8 @@
       "source_location": {
         "heading": "GRS-024 - Deferred Chain Wizard And Plan Graph Decisions",
         "heading_level": 3,
-        "heading_line": 1560,
-        "line": 1562,
+        "heading_line": 1564,
+        "line": 1566,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "deferred",
@@ -102720,8 +102740,8 @@
       "source_location": {
         "heading": "GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults",
         "heading_level": 3,
-        "heading_line": 1612,
-        "line": 1614,
+        "heading_line": 1616,
+        "line": 1618,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "deferred",
@@ -102737,8 +102757,8 @@
       "source_location": {
         "heading": "GRS-026 - Orchestrator GoalRun Runtime Envelope",
         "heading_level": 3,
-        "heading_line": 1759,
-        "line": 1761,
+        "heading_line": 1763,
+        "line": 1765,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -102754,8 +102774,8 @@
       "source_location": {
         "heading": "GRS-027 - Verification Repair Loop And Certification Policy",
         "heading_level": 3,
-        "heading_line": 1822,
-        "line": 1824,
+        "heading_line": 1828,
+        "line": 1830,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -123883,10 +123903,10 @@
       "reasoning_tier": "standard",
       "risk_class": "subagent_config_loss",
       "source_location": {
-        "heading": "OSI-425 - Persona-Aware Subagent Configuration Recovery",
-        "heading_level": 3,
-        "heading_line": 30948,
-        "line": 30950,
+        "heading": ".puppet-master/config.yaml (additions)",
+        "heading_level": 1,
+        "heading_line": 6070,
+        "line": 30949,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -123900,10 +123920,10 @@
       "reasoning_tier": "standard",
       "risk_class": "registry_identity_drift",
       "source_location": {
-        "heading": "OSI-426 - Canonical Subagent Registry Name Recovery",
-        "heading_level": 3,
-        "heading_line": 30994,
-        "line": 30996,
+        "heading": ".puppet-master/config.yaml (additions)",
+        "heading_level": 1,
+        "heading_line": 6070,
+        "line": 30995,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -123917,10 +123937,10 @@
       "reasoning_tier": "high",
       "risk_class": "cross_run_continuity_gap",
       "source_location": {
-        "heading": "OSI-427 - Cross Run Knowledge Continuity Contract",
-        "heading_level": 3,
-        "heading_line": 31037,
-        "line": 31039,
+        "heading": ".puppet-master/config.yaml (additions)",
+        "heading_level": 1,
+        "heading_line": 6070,
+        "line": 31038,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -123934,10 +123954,10 @@
       "reasoning_tier": "high",
       "risk_class": "subagent_authority_drift",
       "source_location": {
-        "heading": "OSI-428 - Bounded Extensive Subagent Waves",
-        "heading_level": 3,
-        "heading_line": 31079,
-        "line": 31081,
+        "heading": ".puppet-master/config.yaml (additions)",
+        "heading_level": 1,
+        "heading_line": 6070,
+        "line": 31080,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -126112,8 +126132,8 @@
       "source_location": {
         "heading": "PLS-004 - Compact Operating Surface",
         "heading_level": 3,
-        "heading_line": 219,
-        "line": 221,
+        "heading_line": 141,
+        "line": 143,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126129,8 +126149,8 @@
       "source_location": {
         "heading": "PLS-005 - Design Atom Lifecycle And Exact Preservation",
         "heading_level": 3,
-        "heading_line": 254,
-        "line": 256,
+        "heading_line": 176,
+        "line": 178,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126146,8 +126166,8 @@
       "source_location": {
         "heading": "PLS-006 - Per-Turn Update Protocol",
         "heading_level": 3,
-        "heading_line": 294,
-        "line": 296,
+        "heading_line": 216,
+        "line": 218,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126163,8 +126183,8 @@
       "source_location": {
         "heading": "PLS-007 - Owner Ambiguity And Evidence Classes",
         "heading_level": 3,
-        "heading_line": 329,
-        "line": 331,
+        "heading_line": 251,
+        "line": 253,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126180,8 +126200,8 @@
       "source_location": {
         "heading": "PLS-008 - Chain Wizard And Goal Integration",
         "heading_level": 3,
-        "heading_line": 365,
-        "line": 367,
+        "heading_line": 287,
+        "line": 289,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126197,8 +126217,8 @@
       "source_location": {
         "heading": "PLS-009 - Bootstrap Ledger Directory And Record Contract",
         "heading_level": 3,
-        "heading_line": 399,
-        "line": 401,
+        "heading_line": 321,
+        "line": 323,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126214,8 +126234,8 @@
       "source_location": {
         "heading": "PLS-010 - Bootstrap Ledger Validator And Projection Contract",
         "heading_level": 3,
-        "heading_line": 442,
-        "line": 444,
+        "heading_line": 364,
+        "line": 366,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -126231,8 +126251,8 @@
       "source_location": {
         "heading": "PLS-011 - Compile Queue Fidelity And Governance-Seal Boundary",
         "heading_level": 3,
-        "heading_line": 143,
-        "line": 145,
+        "heading_line": 402,
+        "line": 404,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -148531,8 +148551,8 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10599,
-    "edge_count": 12138,
+    "depends_on_edge_count": 10603,
+    "edge_count": 12142,
     "node_count": 5065,
     "unblocks_edge_count": 1539,
     "unresolved_reference_count": 0

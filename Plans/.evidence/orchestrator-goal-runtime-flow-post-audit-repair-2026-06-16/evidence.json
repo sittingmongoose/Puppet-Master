@@ -35,7 +35,7 @@
       "stdout_excerpt": "changed true; artifact_count 1064"
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     }
   ],
@@ -181,11 +181,11 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "ebc3c68907f77ac66eb2b1deb461089af20bed76a95ece6eaa5a083a39b5a91e"
+      "sha256": "14465da156164529197562e6078db29e8be63231c5320aa0bbd180c0d87c4047"
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "sha256": "efc9369eb291be2a1f605ea6e6c5697ed2b52c5b81b8893a98a8702060048597"
+      "sha256": "646b01cbf6a1c37e02b7b465448719097c47d7cf6a3134dc043fcd85ea3d9dce"
     },
     {
       "path": "Plans/FinalGUISpec.md",
@@ -193,15 +193,15 @@
     },
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "d940e0646d4ae7fd1e92dc8f5f500632d1e65a02336bf4b6a25ba4a3eb8fb0b9"
+      "sha256": "cca065e2a412d2e507f8eac16ed4a7e1cb0decdb0814db58958dfe58077677f6"
     },
     {
       "path": "Plans/Models_System.md",
-      "sha256": "901a8a7c2ecdf962e12ff1f460916a3f7d020e543c2d5e49256af35704786931"
+      "sha256": "e02698807f4577977c7a80719a12b4bf483bc1b43025d04fdb4b19c3552d096b"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
-      "sha256": "2eb62ea9a21f1f96fc9fcce699d459dbf55ba8580f6d8fbf06f2cf841e0ff1b2"
+      "sha256": "198e69976d1fe3bffb608f6b6d4c15654adcc01c3d0db66769b724a419fe5d48"
     },
     {
       "path": "Plans/Permissions_System.md",
@@ -213,7 +213,7 @@
     },
     {
       "path": "Plans/Planning_Ledger_System.md",
-      "sha256": "f4fd0c47b3816fbd615609371d5b3cba424714cb2b7648331d63e613034c3bea"
+      "sha256": "9d8312c750aadb2106ac39a9b762e871db0da858d95e070340b7af8ee91fa978"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -233,43 +233,43 @@
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "f3d48e18324a62c3bb3589925d92cc06651b368d686cea36757e9d9cc56c9084"
+      "sha256": "c8a8b3e962b465d7dfd066ff0769c6d30f602029ae7d66e6c0b3b4fcfe033c0e"
     },
     {
       "path": "Plans/storage-plan.md",
-      "sha256": "e7d2e77ccb09b5fd2c5cb96752eaebce9a4a281e7db3a5ee8c5894c69b1f45d7"
+      "sha256": "de2a4e0999fd379170fdaff5b23d616f34a53b265bd5a90e5791fba531ce1985"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "cf8b43533bbc7ecdf196d236585874f8bbe54defcc3df9d57543816aa581a079"
+      "sha256": "6535556cbe7a46de3b44d7a2782357c435f392938ae2fdc6e5d02507d258bf8b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "c3d416473abb27b27d3e1ce97f001241530e15715e073a39b9ce960380a10616"
+      "sha256": "af1ada32e6eef1786fb6cc415d68ffd37f077f8408c203c66d0f5487ea4cfcbc"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "3a144c45cc1f1b098ee7ee7b2250ed2a29f24b39a992281b91e12a2641760536"
+      "sha256": "45d78e1c0034af617437ce89fc635b39b3870e6de08026b01e76ba1f9adfdb35"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "47b7c0a813bd95f21242fd387652aaab855b8eb075d16a13d374d9c916670a3d"
+      "sha256": "af8fe5d1234bb9fe273284f57bffbe5cd6f19c553fe1fe9c6ea285a1da797fbb"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "721fde9e2bdd30872c1a5217c183f523df7d4a47b05b7f9a7f034f2e0483384a"
+      "sha256": "65d5afc72f2dd0d3bbc440c5f517acd13d64cd6a6b267cc84bfe414d9d7906cd"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "5a2aab214ddd18111f33eabd3b9aa32793bde27a825003de847a35d275e0f88d"
+      "sha256": "4fd6dfce3857603cffc05688c0d6db3effc6a0602858d6063ecb7dffc4f7a842"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "0b1c3166384fd30efddef29081b7bda357daa4ffc7d6b9adab04659b308095e0"
+      "sha256": "963b031404538e22850e23218f726b8416557f1606b9987612e47e527edb08df"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "50bf6b84fcb1c2a53db146e962dfd550f9a00eac5b56a061ad1374c3c5908a5e"
+      "sha256": "17f025aa51cd06c1c3d8cf860603f4f2ee5e206227c3a14134ef2682e781594e"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -277,35 +277,35 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "ac30031510d5c981df24b063d139f18bfa87bae5db985646a26194eba07cfcd0"
+      "sha256": "d2fb16ce5fbaf345f2fb594d8d3df3001722e7dc9bfedc132aef888b103845a1"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "49187935050b70a82a9f020febd7b240f63f282a2cd312371d1c91238e6cd972"
+      "sha256": "65d2cfa6919aff9f01790aa22014a0e80fce6a58bf8379a1ad5e684564bcd948"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "3269a1d454166917374accb1ff657411c41be65c0aa3c1d8377ea2db0059e8f8"
+      "sha256": "388ccc1b90c4f2b6ea68f47bba3323ed9e71b36a4b5504972ec3a52c94e65358"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "277bcb9d6f9cbbfffdd6b7af56b780dbabbe9d47b18fd563500e857502ff6345"
+      "sha256": "02df224d649225ec6e3f8b1516f3089f6230afe5f533d810c143e8f2f3ed64fe"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json",
-      "sha256": "4747833999ce0055de153c8a06d576f617310d91e57b24fa1b79e3cf5206c387"
+      "sha256": "eda9209900576bdface95ad38fc2c6b6986c9418d951a38643c09fea289b5f92"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json",
-      "sha256": "cf107a66c4328c61c645c9809d1b66663a4c7155d127ccb176d8718904b06932"
+      "sha256": "9d22697f14bdd83d76de5539717a6d4f311bbcd72072ef3ad3e136e21c533104"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json",
-      "sha256": "d88d038fc4a5998d514c54e719f7ffc42814094dc760b58ad69ea21c93f73eff"
+      "sha256": "0b22f449c5821c38e643784bb7973da7e8278b3c15b5782d3c59a3688d3738d4"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
-      "sha256": "a002f1ba180a7a0abc2cf2454090c90e541ebafa3d38ffba69f9dd8aaa938994"
+      "sha256": "fd52d7c6da930a730fc46059de5ef1b4d4cf259b2040c45b412b0606dcc75cfa"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/bootstrap_ledger_validate_report.json",
@@ -313,7 +313,7 @@
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/ledger_health.json",
-      "sha256": "c5cc03cf6e8e12227fbf5c89e00e7135627e7a30791bc6c4b8bb3bea07e3943f"
+      "sha256": "47849b21faca17e5a0771f949dfd51422c90bbb909b0d56189ef8d2456b777a7"
     }
   ],
   "checks": [

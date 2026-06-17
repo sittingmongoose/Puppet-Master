@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L14940-L15035
+Source lines: L14940-L15044
 
-Source SHA256: `e7d2e77ccb09b5fd2c5cb96752eaebce9a4a281e7db3a5ee8c5894c69b1f45d7`
+Source SHA256: `de2a4e0999fd379170fdaff5b23d616f34a53b265bd5a90e5791fba531ce1985`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  storage-plan owns persistence and projection boundaries for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt records. Stored records preserve goal_id, workgraph/worknode refs, verification cycle status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, defect signature, repair cycle, requested/effective provider/model/account refs, capability_lane, agent_role, write_mode, certification_tier, worktree lease refs, evidence refs, artifact refs, restart/model-switch lineage, and retention anchors. Stored VerificationReceipt fields include verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. Stored WorkNodeReceipt fields include executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. Stored GoalCompletionReceipt fields include child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Evidence refs distinguish acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Concrete persisted event names and payload schemas remain deferred until contract/storage registration.
+  storage-plan owns persistence and projection boundaries for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt records. Stored VerificationCycle fields preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, repeated_signature_count, repair_strategy, and next_required_action alongside the broader GoalRun status projection. Stored records preserve goal_id, workgraph/worknode refs, verification cycle status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, defect signature, repair cycle, requested/effective provider/model/account refs, capability_lane, agent_role, write_mode, certification_tier, worktree lease refs, evidence refs, artifact refs, restart/model-switch lineage, and retention anchors. Stored VerificationReceipt fields include verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. Stored WorkNodeReceipt fields include executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. Stored GoalCompletionReceipt fields include child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Evidence refs distinguish acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Concrete persisted event names and payload schemas remain deferred until contract/storage registration.
 gui_related: false
 gui_classification_reason: Receipt and evidence persistence is backend storage behavior; GUI panels consume projections.
 depends_on:
@@ -27,6 +27,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Storage records preserve GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt identity.
+  - Stored VerificationCycle records preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked, findings, defect_signatures, repeated_signature_count, repair_strategy, and next_required_action.
   - Evidence, artifact, worktree lease, requested/effective runtime, capability lane, write mode, certification tier, restart, model-switch, verifier/executor/certifier identity, validator outcome, authority check, and unresolved-risk refs are not lost.
   - Evidence refs retain acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence classifications.
   - Runtime Artifacts and GUI surfaces consume projections instead of becoming durable truth.
@@ -61,6 +62,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0071
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0072
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0091
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0094
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
 preserved_exact_tokens:
   - "GoalRun"
@@ -83,6 +85,13 @@ preserved_exact_tokens:
   - "blocked"
   - "cancelled"
   - "stopped"
+  - "attempt"
+  - "status failed | passed | blocked"
+  - "findings"
+  - "defect_signatures"
+  - "repeated_signature_count"
+  - "repair_strategy"
+  - "next_required_action"
   - "capability_lane"
   - "write_mode"
   - "certification_tier"

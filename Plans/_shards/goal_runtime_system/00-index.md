@@ -1,21 +1,21 @@
 # Shard Index: Plans/Goal_Runtime_System.md
 
-Generated: 2026-06-16T22:23:45Z
+Generated: 2026-06-17T01:00:36Z
 
-Source SHA256: `d940e0646d4ae7fd1e92dc8f5f500632d1e65a02336bf4b6a25ba4a3eb8fb0b9`
+Source SHA256: `cca065e2a412d2e507f8eac16ed4a7e1cb0decdb0814db58958dfe58077677f6`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `b1c61337c9a712f3e426758951ad125d9ce84f4d374219af1af3444be83b5009`
-- [002 - 0. Scope](002-0.-scope.md) L7-L13 `faff4aa946997a918beb245cd3b2e129a0821ffcebd9ed2bbf4ca07150e9b7ab`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L15-L29 `2de95caaaa0e743995d65bbb9eaf89cb0b16ee344459c28664111845a7ebebc6`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L31-L1665 `4cd6cf717ad5bbb95c8bff34def6165abe14c1463d2f99c28fe4fa942e3294fa`
-- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L1667-L1681 `6ea91978b4b8e5169b62f92500721ecabd18cb41dca9bb41c3d9b1aeff44abb5`
-- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L1683-L1691 `ff5762fad297e43338e396bb5b2ae019cc4a29eca3565fc9fce413d037061d2e`
-- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L1693-L1706 `736e74c4a5e412e33ba98a5805cd68f2b6367e77498c3b859d3b56ab331c58fe`
-- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L1708-L1712 `3d60ec927c5c412daa228adbaff58ac0a8067c867c8a59b4d949928255a8c949`
-- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L1714-L1735 `170bd70fe27d5e60a011ed8fdc44ce2be5f54a8df3ee951b0497cc54004d2025`
-- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L1737-L1755 `e55063fceec13aa0f5636b963a9bb9cecba38f23ac94595fc41032531ab9ff6d`
-- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L1757-L1921 `6caeba49e21805f0c45066515d310b7ae6349fea46454d3bce16d75fce29a544`
+- [001 - Preamble](001-preamble.md) L1-L5 `e8be207798b60dc2782e184f1d7eb7a692a6f0dc81d2aab0a8643e9a5efdb656`
+- [002 - 0. Scope](002-0.-scope.md) L7-L13 `773ab673bfb68edd668dacfcd9eeed3e33cf94f53d9f28eef7401ecac0cd8f90`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L15-L29 `9bc361097dfcdcd7f7c65cd034e1302e9d603fa93734a0f542c12d046b14c29b`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L31-L1669 `a8b024bb818731636aafed29f6a28fc31fcc685a9ec0631403bfee90bd51c821`
+- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L1671-L1685 `1f065b551eec76f8da49096c0962aa6cd8c5a78998271508a4df52222896ac93`
+- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L1687-L1695 `8d14e1ac599252df21100d3f08246bc42a72886845c4fa60fc8941f8ca831d3e`
+- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L1697-L1710 `e6c2beb06565465220798022aac2ff21efa133a4e0b1c4a8d5b39dfa9bec8fa6`
+- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L1712-L1716 `317d8f99d063bda011370b1d4019148b2e1911af70692c8abe6871d2a5ee6d62`
+- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L1718-L1739 `10c5aa5ff2b61c6fb0491f14555e4717758039f152d3c5e08db4cefd0af66146`
+- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L1741-L1759 `cba83202305f377b8602d480753d1f92865e37224e1620405861ff917ac99158`
+- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L1761-L1931 `669bf13bf3851d80b371ad614ba59eb82b2f125eae830b456a460068070bcb41`

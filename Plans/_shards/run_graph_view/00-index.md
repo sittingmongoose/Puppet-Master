@@ -1,21 +1,21 @@
 # Shard Index: Plans/Run_Graph_View.md
 
-Generated: 2026-06-16T22:23:45Z
+Generated: 2026-06-17T01:00:36Z
 
-Source SHA256: `7e8480d17882b100663a89e9304236ad4b062c0499185e67359ebfae4840bc36`
+Source SHA256: `e22b5840770ce86c94c1c955e0ed65f723b7db0f0326a3f989fb6df6eab8219e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `f5682379ec6d6d7ebb7b4e26121f6c919699e212f4d8d185c29b47583dd3ade8`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `d3ed82d6fa2c98753f4a04785186bf244d2db137a31bf4165f7dc7acb71ef612`
-- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `05886796222053debcb77c962d2c0b41899a24b979285632bedec93c5f39bef6`
-- [004 - 2. Layout](004-2.-layout.md) L97-L110 `7b33b946b40cab0bccaf564219fedb791c337dd3b6167fd17c19cb27f904e80d`
-- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `b2a9270ff82687db6e8278276f86aec3fe17af9e5ab2a672ca4268a20450e498`
-- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `f43a89e08cdeda4770d0668fc69a4bca153a56f66b8a2d16e5e5605323570cf1`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `afd67f195d1057fa87a3dea43b50df05208ae800c1b928ecafd1f5de6eafe6c2`
-- [008 - PlanUnits](008-planunits.md) L141-L746 `465e40562b3e6a35de5e6af8180ece5a2ab5e06ce7d1f05a807eefbaec97b298`
-- [009 - Migration Coverage](009-migration-coverage.md) L748-L761 `58dcb36f19d7f2d979c703982dd3ac6a4a7d1af3484c61ec060e00501b8184ac`
-- [010 - Ledger Compile Addendum - pldg-20260614-002](010-ledger-compile-addendum-pldg-20260614-002.md) L763-L805 `e1a60ae30da07d8d794c3d440a0c9f08e513e08c1ea82cd66ff0986a886b8a56`
-- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L807-L868 `953dfac7d02523a0b56d42063c52ab3242c805e803789f3b7b47451c5103c515`
+- [001 - Preamble](001-preamble.md) L1-L1 `aa1e50f3b781cc270d27d86f32c8cdba42e30559ebe1b555628db6e8aca86945`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `08a0ea136e089ecba5974333cd26748a1295010c2b22ac28139b5ad354b5ae77`
+- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `2bd17545cf942261e2ae404194200bf1349011fd6f5d5846e087003189207fbf`
+- [004 - 2. Layout](004-2.-layout.md) L97-L110 `cc460c8aa47774970c181a20528297440138c59b0dbfb57ca935495dd9333e45`
+- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `6d1587ba5baecce282b8034e7ef019a1c4367cb16ff356840d131f6972607392`
+- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `3acc8caddb8c00beca945d12838b64ff0fcf7ab3beff2e1db48d6cbbe0072263`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `086ef23dae9da767832736b25c11816a4f7e3928838831dd5590e41b30f7711c`
+- [008 - PlanUnits](008-planunits.md) L141-L746 `95e22766ff5a51ff765d103a88a46fc02a601092a539433fa59f4d12ef33a4f7`
+- [009 - Migration Coverage](009-migration-coverage.md) L748-L761 `27c4439f958422031a187f68bdf745703a6a7643e0533d61e824a5f6fd8877a2`
+- [010 - Ledger Compile Addendum - pldg-20260614-002](010-ledger-compile-addendum-pldg-20260614-002.md) L763-L805 `6db17713a491a4e455576ea324641caf47cf11cb7311a9b18cefafb1b2e779a0`
+- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L807-L874 `d91de9672c490a175d38890bfdd3b4255e9203f95b62189fc83806b4c6c721a8`

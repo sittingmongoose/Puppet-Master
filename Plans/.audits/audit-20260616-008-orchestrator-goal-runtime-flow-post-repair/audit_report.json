@@ -1,0 +1,2341 @@
+{
+  "audit_id": "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair",
+  "status": "BLOCKED",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "created_at_utc": "2026-06-17T00:45:09Z",
+  "range": {
+    "baseline_ref": "a18316c43f0bf986d6f9c11669273225e9958dbf",
+    "first_cycle_commit": "91e3457d3962affc7b02898c98620757e7a963db",
+    "current_ref": "HEAD",
+    "current_hash": "0406286cd7732d72c73a6a88c19519136b074536",
+    "commits": [
+      "0406286cd work",
+      "91e3457d3 work"
+    ]
+  },
+  "inference_evidence": {
+    "latest_non_background_ledger": "registry and recent commits identify pldg-20260616-002-orchestrator-goal-runtime-flow as latest sealed non-background ledger",
+    "earliest_cycle_commit": "91e3457d3 first adds the target ledger directory and pldg-002 PlanUnits/governance artifacts",
+    "head_commit": "0406286cd adds the post-audit repair/governance-seal refresh and current audit-007 repair report"
+  },
+  "changed_files": {
+    "total": 549,
+    "categories": {
+      "audit": 11,
+      "evidence": 11,
+      "plan_index": 6,
+      "plan_migration": 2,
+      "live_plan_docs": 18,
+      "spec_lock": 1,
+      "shards": 464,
+      "auto_decisions": 1,
+      "ledger_registry": 1,
+      "target_ledger": 33,
+      "scripts": 1
+    },
+    "live_plan_docs": [
+      "Plans/00-plans-index.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Models_System.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/Permissions_System.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/chain-wizard.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/storage-plan.md"
+    ],
+    "all": [
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/FINAL_REPORT.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/REPAIR_REPORT.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/atom_fidelity_matrix.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/audit_report.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/changed_plan_fidelity.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/ledger_consistency.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/owner_routing_findings.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/planunit_source_claims.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/repair_report.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/semantic_risks.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/validator_results.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/acceptance_units.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/coverage_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/dependencies.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/doc_cards.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/node_readiness_report.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_index/plan_units.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/00-plans-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Contracts_V0.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Models_System.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Permissions_System.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Run_Graph_View.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/Spec_Lock.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/WorktreeGitImprovement.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/002-change-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/005-plan-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/007-shard-indexes.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/013-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/014-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/015-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/00-plans-index/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/agent-rules-context/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/agent-rules-context/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/003-change-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/005-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/006-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/012-6.-teach.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/026-20.-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/032-26.-per-pass-validation-model-provider-settings-invariant-sweep.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/038-shared-actor-boundary-route-payload-and-blocked_notice-packet.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/039-shared-conversational-actor-runtime-identity.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/040-chat-route-permission-and-history-behaviors.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/041-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/042-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/043-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/044-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/045-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-chat-design/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-memory-subsystem/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/assistant-memory-subsystem/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/bootstrap_planning_migration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/bootstrap_planning_migration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/002-change-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/003-plan-document-status.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/004-rewrite-alignment-2026-02-21.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/005-ssot-references-dry.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/006-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/007-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/008-1.-intent-based-workflows.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/009-2.-how-intent-affects-the-flow.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/010-3.-gui-updates.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/011-4.-requirements-multiple-uploads-and-storage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/012-5.-requirements-doc-builder-assistant-interview-handoff.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/013-6.-adaptive-interview-phases.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/014-7.-project-setup-and-github-create-repo-fork-pr.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/015-8.-relationship-to-other-plans.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/016-9.-gaps-and-potential-problems.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/017-10.-implementation-readiness-checklist.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/018-11.-user-project-output-artifacts-sharded-only.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/019-13.-no-wizard-project-management-flows.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/020-14.-requirements-completion-contract.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/021-15.-requirements-quality-escalation-semantics.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/022-requirements-builder-persona-strategy-addendum-2026-03-06.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/023-17.-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/024-clarification-escalation-and-draft-decomposition-addendum-2026-0.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/025-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/026-canonical-wizard-blocked-state-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/027-wizard-escalation-degradation-and-blocked-state-consolidation-ad.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/028-canonical-wizard-blocked-lifecycle.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/029-wizard-status-enum-correction-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/030-runtime-identity-route-and-audit-refinement-rules.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/031-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/032-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/033-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/034-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/035-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/chain-wizard-flexibility/036-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/chain-wizard-flexibility/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/cli_bridged_providers/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/cli_bridged_providers/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/commands_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/commands_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/003-0.-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/004-cross-surface-runtime-concern-and-route-open-contracts.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/005-1.-events-persisted.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/006-2.-provider-normalized-stream-non-persisted-contract.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/007-3.-tool-events-persisted.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/008-5.-context-management-instruction-scoping-attempt-journaling-par.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/009-6.-hitlrequest.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/010-7.-uicommand.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/011-8.-ui-scaling.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/012-usage-and-billing-contracts-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/013-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/014-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/015-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/016-canonical-runtime-event-outcome-and-action-contract-canonical-al.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/017-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/018-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/019-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/020-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/021-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/022-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/023-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/contracts_v0/024-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/contracts_v0/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/crosswalk/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/crosswalk/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/004-1.-role-definitions.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/006-3.-canonical-status-lifecycle.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/013-counter-relationships-and-event-ordering-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/015-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/016-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/017-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/018-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/executor_protocol/020-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/executor_protocol/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/feature-list/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/feature-list/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filemanager/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filemanager/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filesafe/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/filesafe/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/003-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/004-1.-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/006-3.-master-layout.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/007-4.-navigation-architecture.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/008-5.-panel-system.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/009-6.-theme-system.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/010-7.-views-specification.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/011-8.-widget-catalog.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/012-9.-state-management.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/013-10.-ux-patterns.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/014-11.-anti-flickering-and-scroll-preservation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/015-12.-responsive-design.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/016-13.-accessibility.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/017-14.-slint-file-organization.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/018-15.-persistence.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/019-16.-migration-mapping.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/020-17.-risks-and-mitigations.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/021-18.-promoted-features-formerly-future-considerations.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/022-appendix-a-cross-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/023-appendix-b-locked-decisions-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/024-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/025-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/026-rendering-surface-addendum-2026-03-07.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/027-assistant-planning-ux-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/028-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/029-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/030-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/031-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/032-canonical-blocked-recovery-behavior.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/033-compatibility-source-lineage-blocked-state-visual-distinction-an.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/034-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/035-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/036-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/037-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/038-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/039-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/040-ledger-compile-addendum-pldg-20260615-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/041-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/finalguispec/042-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/finalguispec/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/github_integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/github_integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/002-0.-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/005-3.-contracts-schemas-events-or-data-shapes.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/006-4.-integration-surfaces.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/007-5.-validation-and-acceptance.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/008-6.-plan-to-node-readiness.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/009-7.-deferred-retired-compatibility-and-non-goals.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/010-8.-source-lineage-and-governance.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/goal_runtime_system/011-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/goal_runtime_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/human-in-the-loop/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/human-in-the-loop/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/interview-subagent-integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/interview-subagent-integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/lspsupport/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/lspsupport/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/mcp_integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/mcp_integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/miscplan/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/miscplan/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/003-0.-scope-and-ssot-status.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/005-1.-canonical-model-identifier.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/007-3.-model-options-configuration.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/008-4.-model-availability-and-error-handling.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/009-5.-per-persona-runtime-preferences.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/010-6.-variants-system.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/011-7.-gui-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/012-8.-opencode-baseline-and-puppet-master-deltas.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/013-9.-acceptance-criteria.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/014-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/015-provider-failure-class-alignment-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/016-runtime-retry-fallback-ownership-addendum-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/017-requested-effective-model-and-retry-ownership-canonical-alignmen.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/018-model-selection-versus-runtime-retry-ownership-consolidation-add.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/019-requested-effective-model-snapshot-alignment.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/020-provider-model-selection-policy-and-audit-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/021-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/022-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/023-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/024-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/models_system/026-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/models_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/multi-account/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/multi-account/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newfeatures/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newfeatures/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newtools/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/newtools/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/opencode_deep_extraction/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/opencode_deep_extraction/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/008-tier-level-subagent-strategy.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/011-integration-with-orchestrator.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/orchestrator-subagent-integration/012-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/orchestrator-subagent-integration/013-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/orchestrator-subagent-integration/014-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/004-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/005-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/006-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/orchestrator_page/008-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/orchestrator_page/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/005-1.-definitions-and-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/006-2.-permission-actions.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/007-3.-granular-rules.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/008-4.-special-guards.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/009-5.-tool-permission-keys.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/010-6.-ask-flow-semantics.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/011-7.-deterministic-defaults.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/012-8.-resolution-algorithm.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/013-9.-persistence-and-storage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/014-10.-gui-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/015-10a.-security-model.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/016-11.-opencode-baseline-and-puppet-master-deltas.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/017-12.-acceptance-criteria.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/018-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/019-runtime-blocked-outcome-integration-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/020-source-control-github-actions-and-docker-manager-permission-adde.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/021-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/022-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/023-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/024-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/permissions_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/personas/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/personas/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_document_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_document_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/002-0.-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/003-1.-boundary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/004-2.-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/005-4.-deferred-compiler-algorithm.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/006-5.-compilation-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/plan_to_node_compilation/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/002-0.-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/004-2.-planunits.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "R084",
+        "path": "Plans/_shards/planning_ledger_system/006-3.-compilation-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/planning_ledger_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/project_output_artifacts/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/project_output_artifacts/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/prompt_pipeline/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/prompt_pipeline/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/provider_opencode/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/provider_opencode/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/rewrite-tie-in-memo/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/003-1.-scope-and-canonical-role.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/004-2.-layout.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/005-3.-node-detail-inspector.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/006-4.-data-model-and-identity.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/007-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/008-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/009-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/010-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/run_graph_view/011-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_graph_view/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_modes/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/run_modes/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/003-1.-purpose-and-scope.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/004-3.-mechanism-one-event-type-per-artifact-type.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/005-4.-redb-key-and-projector.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/006-5a.-debug-investigation-grouping-manifests-and-exports.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/007-6.-reasoning_tokens-and-cost_usage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/008-7.-json-schemas-all-required.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/009-8.-browser-recordings.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/010-9.-all-differentiators-mvp.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/011-10.-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/013-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/014-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/015-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/016-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/017-ledger-compile-addendum-pldg-20260614-002.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/runtime_artifacts_panel/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/skills_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/skills_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/003-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/004-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/007-3.-implementation-checklist.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/011-7.-enhancements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/013-version-history.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/021-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/022-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/023-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/storage-plan/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/tools/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/tools/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/ui_command_catalog/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/ui_command_catalog/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/usage-feature/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/usage-feature/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/widget_system/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/widget_system/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/wiring_matrix/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/00-index.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/001-preamble.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/002-canonical-owner-section-requirements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/003-plan-document-status.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/004-rewrite-alignment-2026-02-21.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/005-ssot-references-dry.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/006-table-of-contents.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/007-1.-executive-summary.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/008-2.-worktree-improvements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/009-3.-git-improvements.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/010-4.-gui-for-git-worktrees.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/011-5.-config-wiring-prerequisite.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/012-6.-implementation-checklist.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/013-7.-gaps-risks-and-implementation-notes.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/014-dry-method-compliance.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/017-8.-references.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/018-safe-point-and-retry-integration-addendum-2026-03-08.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/021-worktree-lane-allocation-and-source-control-reconciliation.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/022-owner-consumer-map.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/023-planunits.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/024-migration-coverage.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/025-ledger-compile-addendum-pldg-20260614-001.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/_shards/worktreegitimprovement/026-ledger-compile-addendum-pldg-20260616-002.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/_shards/worktreegitimprovement/manifest.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "status": "M",
+        "path": "Plans/chain-wizard-flexibility.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/chain-wizard.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/ledgers/v2/ledger_registry.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/README.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/events.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/indexes/README.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/blockers.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/questions.jsonl"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/registry_entry.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/README.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/conversation_reconstruction.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/deferred_item_resolution_acceptance_20260616.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/deferred_item_resolution_workshop_20260616.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/final_readiness_review_20260616.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/live_orchestrator_backlink_audit_20260616.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/source_shards/orchestrator_backlink_audit_preliminary.md"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/deferred_item_resolution_acceptance_20260616.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_builder_goal_conversion_contract.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/operating_capsule.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/verification_repair_loop_contract.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/bootstrap_ledger_validate_report.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/implementation_readiness_audit.json"
+      },
+      {
+        "status": "A",
+        "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/ledger_health.json"
+      },
+      {
+        "status": "M",
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "status": "M",
+        "path": "Plans/storage-plan.md"
+      },
+      {
+        "status": "M",
+        "path": "scripts/pm-governance-seal.py"
+      }
+    ]
+  },
+  "planunit_deltas": {
+    "added": [
+      "GRS-026",
+      "GRS-027",
+      "OP-022",
+      "OSI-428",
+      "EP-098",
+      "PNC-009",
+      "F3-394",
+      "F3-395",
+      "ACD-420",
+      "CW-008",
+      "CWF-151",
+      "RAP-027",
+      "W-071",
+      "RGV-012",
+      "CV-288",
+      "MS-109",
+      "PS-115",
+      "SP-215",
+      "PLS-011",
+      "0PI-056"
+    ],
+    "changed": [
+      "GRS-002",
+      "GRS-003"
+    ],
+    "deleted": [],
+    "compiled_plan_unit_ids": [
+      "GRS-002",
+      "GRS-003",
+      "GRS-026",
+      "GRS-027",
+      "OP-022",
+      "OSI-428",
+      "EP-098",
+      "PNC-009",
+      "F3-394",
+      "F3-395",
+      "ACD-420",
+      "CW-008",
+      "CWF-151",
+      "RAP-027",
+      "W-071",
+      "RGV-012",
+      "CV-288",
+      "MS-109",
+      "PS-115",
+      "SP-215",
+      "PLS-011",
+      "0PI-056"
+    ]
+  },
+  "summary_findings": {
+    "exact_detail_losses_or_drift": [
+      "atom-0094 VerificationCycle example exact keys/enums drift",
+      "atom-0095 exact lifecycle example not preserved",
+      "atom-0003 exact A/B/C labels compressed to equivalent prose"
+    ],
+    "reciprocal_lineage": "blocked; nonreciprocal ledger record/PlanUnit source_lineage mappings remain",
+    "owner_routing": "blocked/warnings in MS-109, GRS-026/027 metadata, RGV-012 metadata, EP-098 metadata",
+    "ledger_governance": "validators pass, but ledger projections/counts/status vocabulary drift",
+    "forbidden_artifacts": "no executable WorkNode/NodeSeed/app/build artifacts found; prior audit bundle retains local/archive path",
+    "validators": "pass"
+  },
+  "subagents": {
+    "atom_exact_fidelity": "BLOCKED: atom-0094 exact field/enum drift; warnings on atom-0095 and atom-0003.",
+    "planunit_reciprocal_lineage": "BLOCKED: systemic reciprocal-lineage failure; examples GRS-002, CV-288, SP-215, PLS-011.",
+    "owner_routing": "BLOCKED/WARN: MS-109 owner overreach plus metadata routing gaps.",
+    "changed_doc_fidelity": "BLOCKED: OSI fence drift, PLS and ACD grouping drift.",
+    "ledger_consistency": "BLOCKED: stale status/projection/candidate language despite sealed governance.",
+    "index_governance": "WARN: plan index structurally clean; projection count drift; dependency cycles unchanged.",
+    "forbidden_artifacts": "PASS_WITH_WARNING: no executable artifacts; prior audit bundle local path remains.",
+    "validator_mutability": "PASS: all required validators returned 0 and git status did not change before/after each."
+  },
+  "artifacts_written": [
+    "audit_report.json",
+    "atom_fidelity_matrix.jsonl",
+    "planunit_source_claims.jsonl",
+    "owner_routing_findings.jsonl",
+    "changed_plan_fidelity.jsonl",
+    "ledger_consistency.json",
+    "validator_results.json",
+    "semantic_risks.jsonl",
+    "FINAL_REPORT.md"
+  ]
+}
