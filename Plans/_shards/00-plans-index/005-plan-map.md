@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L202-L422
+Source lines: L203-L441
 
-Source SHA256: `513de8437d141d9329eb0a32c328ec497f10a0a964fa935b8b580697fac9b0a0`
+Source SHA256: `61e3368cb4d1348c093d1fbdaa58e29f65292cf4188ce6c7a3a35bbd5d3be338`
 
 ---
 
@@ -31,6 +31,24 @@ Semantic audit closure support uses this owner split:
 - `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### Plans-To-Code Handoff Map (2026-06-17)
+
+The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-handoff` uses this owner split:
+- `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter.
+- `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers.
+- `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
+- `Plans/Goal_Runtime_System.md` owns future Plan Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
+- `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
+- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
+- `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
+- `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth.
+- `Plans/Contracts_V0.md` owns shared contract envelopes and points to `Plans/plans_to_code_handoff.schema.json` as the design-only schema draft.
+- `Plans/Planning_Ledger_System.md` and `Plans/Plan_Document_System.md` own implementation-readiness/doc-impact matrix handling and the owner/consumer/reference scan gate for this compile class.
+
+The ledger is source-lineage/planning memory only. This compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, generated PlanUnit indexes, Spec Lock updates, shards, evidence bundles, plan graph refreshes, auto_decisions, or governance seal artifacts.
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
 ### Native Goal Runtime Map (2026-06-16)
 

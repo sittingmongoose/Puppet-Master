@@ -71,6 +71,14 @@
     {
       "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json",
       "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -211,51 +219,51 @@
   "artifacts": [
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "513de8437d141d9329eb0a32c328ec497f10a0a964fa935b8b580697fac9b0a0"
+      "sha256": "61e3368cb4d1348c093d1fbdaa58e29f65292cf4188ce6c7a3a35bbd5d3be338"
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "a87d34cbde30d3cb3b0180eeb7519f1af71470dadd04ecba1f98882133f9792c"
+      "sha256": "02e13eb5c18f733f4867f05782ce6c2de7be900c4e54517c1430814d13c5a6ae"
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "sha256": "334885065f8e4264f866eb13a4336ff4589318b9fb5a97d87e70767163be3710"
+      "sha256": "997c5e0d4a1bf5a5cbc9bc4ad5d00ef9a1ad457c5769155ca4c723ac035d2c6c"
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "0e2c986176f31ee781e94b74053bc2caec23d1670cb045190bd4659aab856dec"
+      "sha256": "067824ec979ee578b2e9e14be6f6a23cc00428fd655400d3ce428188e481270b"
     },
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "2eb45506d8f90c35133b5da0e66dc07caad49df641a18f745dbfdbaa5e968993"
+      "sha256": "60723b4ab6b0b95ab11b5f8a5e102525996c2f46b8bf3841fb1a8519c1ab24bb"
     },
     {
       "path": "Plans/Models_System.md",
-      "sha256": "989c1eab760345e24d0cc5e5a668df26d0b29031744fd57498b9d06a0476c03b"
+      "sha256": "7d8a57686329d7fd91182766db4de04470c499966e4b3aaab10d89d67fcc5469"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
-      "sha256": "247378238ed99c5a7e8cdb0833cfa842217fb0c098fcc1dc7f8d15519f448398"
+      "sha256": "fe20e7e4360a4af4d24e57e0dc29864a1b8e070217ac213ea5a477aa192385c6"
     },
     {
       "path": "Plans/Permissions_System.md",
-      "sha256": "e66bebdfa5826d23380dccc47339d0e7f11d6f12a312055a5a6cde06dacf4423"
+      "sha256": "994fb691f26917eff7df50588900948d0ccdc805037bd8d3e4ad7cca213fa70d"
     },
     {
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "sha256": "99459e0ec0aa4cb897773bff9f1af8a294625c9fed491a42b2c1f7684c7cf8ff"
+      "sha256": "3616da7511af7c64b3c6b0b3c553e00af5d9b9d48be94f763c01584453ae5e33"
     },
     {
       "path": "Plans/Planning_Ledger_System.md",
-      "sha256": "8a6abe8d5502a6b8d6b0fc5ef2689ba5017c2b493baa0675ce0c13b23c83ec3c"
+      "sha256": "8b3e8d42f971f24e72c60274e4f378bca37052f50ff2893906d3f0da6a8fafac"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "sha256": "096e03b0a1cc7d7eeeb96da5200ad8cbd9a8bb50bae0234198cc0240c7903439"
+      "sha256": "1d525c908c8f5794eed561c5759e80d8b56479798f0f377eb3173db97a6f633c"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
-      "sha256": "e8da544ef76cde2c99723125784ce324f966a8d17f1c1a542f9268190782bf76"
+      "sha256": "455a3e8969b4f5bc9ac04ef4cffd8538657670c5d59a3453ec86fe62efd6bca4"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
@@ -275,27 +283,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3cfd5997c6eb70e2e5dcab05704bb1a09d1590e21caed119962f2c58efceacaf"
+      "sha256": "e88a3705eacd01b97b2d20961e08f6b4a9f912dd0dcd5153e0aee500903800af"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "fe0fb62f6037d1457c08591c10867a6785acfc0176590afc732137a9a9d4a749"
+      "sha256": "634dab37b027353effcf62079eb8510b109105e4d34a31d1344ee6897cbf88c6"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "a0b7ebecb088924d9c4f7939e7b59694ad51ec611161c33a7cf755da93b81433"
+      "sha256": "0949df0d571363c529892b4658d8b9a19e65c2fe447bf61f37eaafbcdf829450"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "acc43761ae0a400127f53f8cc80331e93441051f043cbaafa7d88dba961a94b7"
+      "sha256": "21808e1ca03283ebbc4f42a11c131fb0b2f6c12c4097263628235d5c15320273"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "bf5b0ae18ee6cb189d38fc643aa8edab978b1eb1ab9e4e32451904fbef7370bc"
+      "sha256": "9d8f3f2d807c4a31da7cc5c9c0666680f4223c815c86213875ff04c772c5defc"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "0bd9b30000250e188941ffe003f87255c21735cc4051e09a8c6e0fe624ae1265"
+      "sha256": "9c5a3ef945517c3bb5d8054570ff2bc2b9a30b0d39ac433d2a3a51f200593b48"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
@@ -311,15 +319,15 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "9ae784ea3f1ee6cdd7810a830fa5bd886332e4500d538409dd0091974ebb2512"
+      "sha256": "303dffe6d845c6899667b72d9c36cd62c58d7834a53c13b0643ebd1a19145f68"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "42e8c0d4ba53ae9c736622c4ed2b145bef80a5c226f4921427cfb21a7e65f076"
+      "sha256": "8103c8ef778d15055d12f33c4eaec9bc946fcef8dfb679d03c3829f5b73b0b4f"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "8801d3be4344ef8a1b56772f7fc7655e601340717204ed8ff9176d51bd805fba"
+      "sha256": "4dc6c756bc7325bf2078660a185d6268bf4ac34024540370e63cc109f65d0561"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -364,12 +372,12 @@
     {
       "name": "shard-generate",
       "result": "PASS",
-      "details": "51 configured docs and 906 shards generated."
+      "details": "51 configured docs and 925 shards generated from live Plans."
     },
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated after audit-20260617-008 atom-0088 repair; 5068 PlanUnits, 18099 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates with 5105 PlanUnits, 18220 acceptance units, coverage pass; node readiness remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
     },
     {
       "name": "post-audit-repair-governance-seal",
@@ -390,6 +398,16 @@
       "name": "audit-20260617-008-spec-lock-refresh",
       "result": "PASS",
       "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
+    },
+    {
+      "name": "plans-to-code-handoff-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase."
+    },
+    {
+      "name": "node-readiness-status-preserved",
+      "result": "PASS",
+      "details": "Plans/.plan_index/node_readiness_report.json status remains blocked_compiler_contract_incomplete."
     }
   ]
 }

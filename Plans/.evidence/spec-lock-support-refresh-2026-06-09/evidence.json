@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "8801d3be4344ef8a1b56772f7fc7655e601340717204ed8ff9176d51bd805fba"
+      "sha256": "4dc6c756bc7325bf2078660a185d6268bf4ac34024540370e63cc109f65d0561"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
+      "details": "PlanUnit index validates with 5105 PlanUnits, 18220 acceptance units, coverage pass; node readiness remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -132,6 +132,16 @@
       "name": "audit-20260617-008-spec-lock-refresh",
       "result": "PASS",
       "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
+    },
+    {
+      "name": "plans-to-code-handoff-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase."
+    },
+    {
+      "name": "shard-generate",
+      "result": "PASS",
+      "details": "51 configured docs and 925 shards generated from live Plans."
     }
   ],
   "commands_run": [
@@ -213,6 +223,14 @@
     },
     {
       "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
       "exit_code": 0
     }
   ],

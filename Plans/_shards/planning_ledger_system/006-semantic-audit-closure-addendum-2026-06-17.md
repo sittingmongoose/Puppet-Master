@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L485-L571
+Source lines: L485-L576
 
-Source SHA256: `8a6abe8d5502a6b8d6b0fc5ef2689ba5017c2b493baa0675ce0c13b23c83ec3c`
+Source SHA256: `8b3e8d42f971f24e72c60274e4f378bca37052f50ff2893906d3f0da6a8fafac`
 
 ---
 
@@ -30,6 +30,9 @@ canonical_text: >-
   than a new warning. A finding reopens only when the source atom hash,
   PlanUnit hash, owner evidence hash, or closure evidence hash changes, or when
   the current closure_status is blocked_requires_user_decision or reopened.
+  Plans-to-code audits reuse this registry for repeated Plan Wizard,
+  PlanCompile, and WorkNode verification findings when source, canonical
+  PlanUnit, owner, and closure evidence have not changed.
   Chat-sourced semantic closure support is recorded as source-lineage process
   support unless a v2 ledger atom or decision explicitly owns it.
 gui_related: false
@@ -42,6 +45,7 @@ unblocks:
 acceptance_criteria:
   - The global closure registry exists at Plans/.audits/_semantic_closure_registry.jsonl.
   - Deep audits treat unchanged closed findings as previously_closed, not new semantic_risks.
+  - Plan Wizard, PlanCompile, and WorkNode audit findings reuse closed registry rows when evidence has not changed.
   - Reopen decisions are based on changed source atom, PlanUnit, owner evidence, or closure evidence hashes, or on blocked/reopened closure status.
   - Closure rows preserve the allowed statuses repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, blocked_requires_user_decision, and reopened.
   - Chat-sourced closure-support PlanUnits are not represented as outputs of a target ledger compile unless their source_lineage names that ledger atom or decision.
@@ -60,6 +64,7 @@ node_compile_hint:
   mode: audit_registry_process
   create_worknodes: false
 source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0054
   - source_ref:chat:2026-06-17-semantic-closure-registry-support
 preserved_exact_tokens:
   - "Plans/.audits/_semantic_closure_registry.jsonl"

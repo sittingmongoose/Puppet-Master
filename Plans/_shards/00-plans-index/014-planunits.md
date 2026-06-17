@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L644-L4065
+Source lines: L663-L4182
 
-Source SHA256: `513de8437d141d9329eb0a32c328ec497f10a0a964fa935b8b580697fac9b0a0`
+Source SHA256: `61e3368cb4d1348c093d1fbdaa58e29f65292cf4188ce6c7a3a35bbd5d3be338`
 
 ---
 
@@ -3430,3 +3430,101 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### 0PI-058 - Plans-To-Code Handoff Owner Map
+
+```yaml
+plan_unit_id: 0PI-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Plan Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own visible Plan Compile tab and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
+gui_related: false
+gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
+depends_on:
+  - PNC-010
+  - PNC-014
+  - ATS-001
+  - EP-099
+  - EP-103
+  - GRS-028
+  - GRS-030
+  - MS-110
+  - OP-023
+  - F3-397
+  - W-072
+  - F2-189
+  - GI-031
+  - POA-048
+  - RAP-029
+  - CV-289
+  - PLS-013
+  - PDS-015
+unblocks: []
+acceptance_criteria:
+  - The index names the primary owners and consumer boundaries for the Plans-to-code handoff compile.
+  - The index records Automated_Testing_System and plans_to_code_handoff.schema.json as canonical docs/schema drafts.
+  - The index explicitly preserves the no-build boundary: PlanCompile disabled, no WorkNodes, no NodeSeeds, no executable queues, no implementation files, no dispatched GoalRuns, and no governance seal.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+risk_class: owner_routing
+reasoning_tier: high
+context_scope: plans_to_code_handoff_index
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Models_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/FinalGUISpec.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/FileSafe.md
+  - Plans/GitHub_Integration.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Contracts_V0.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/plans_to_code_handoff.schema.json
+node_compile_hint:
+  mode: owner_routing_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0058
+  - pldg-20260617-001-plans-to-code-handoff:atom-0061
+  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+  - pldg-20260617-001-plans-to-code-handoff:atom-0063
+  - pldg-20260617-001-plans-to-code-handoff:atom-0064
+  - pldg-20260617-001-plans-to-code-handoff:dec-0024
+  - pldg-20260617-001-plans-to-code-handoff:dec-0026
+  - pldg-20260617-001-plans-to-code-handoff:dec-0027
+  - pldg-20260617-001-plans-to-code-handoff:dec-0028
+preserved_exact_tokens:
+  - "Plan_To_Node_Compilation"
+  - "Goal_Runtime_System"
+  - "Orchestrator_Page"
+  - "Executor_Protocol"
+  - "Automated_Testing_System"
+  - "implementation_readiness_matrix"
+  - "doc_impact_matrix"
+  - "owner docs"
+  - "consumer docs"
+  - "reference docs"
+  - "no-update evidence"
+negative_constraints:
+  - Do not run PlanCompile or build WorkNodes from this index entry.
+  - Do not update generated governance artifacts during ordinary ledger compile.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+```
+
+ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md

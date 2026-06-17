@@ -2411,3 +2411,50 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 081 atomized `human-in-the-loop-S0001` through `human-in-the-loop-S0043` into `HITL-002` through `HITL-033`, with dense shared-runtime, recovery-label, run-loop, tier-retirement, and recovery-action spans split where safe. Phase 2B batch 082 atomized `human-in-the-loop-S0044` into `HITL-034` and `HITL-035`, structurally dispositioned `human-in-the-loop-S0045`, `human-in-the-loop-S0046`, and `human-in-the-loop-S0048`, and retired `HITL-001` as migration-lineage compatibility coverage for `human-in-the-loop-S0047`. `Plans/human-in-the-loop.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### HITL-036 - Explicit HITL Checkpoints For Plans-To-Code
+
+```yaml
+plan_unit_id: HITL-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: >-
+  HITL remains an explicit mode for plans-to-code execution. When enabled, it may add configured package, seam, promotion, destructive-operation, or critical certification checkpoints, but these checkpoints are not required for correctness in default hands-off mode. HITL consumes Permissions_System critical-escalation policy and Goal_Runtime_System autonomy policy; it does not replace internal Auditor, Overseer, test, source-control, or high-effort repair loops.
+gui_related: true
+gui_classification_reason: HITL checkpoints, approvals, and continuation prompts are user-visible interaction surfaces.
+depends_on: [PS-116, GRS-029]
+unblocks: [OP-024]
+acceptance_criteria:
+  - HITL checkpoints are opt-in mode behavior.
+  - Default mode stays hands-off and critical-only for user escalation.
+  - HITL does not short-circuit internal repair, audit, test, source-control, or high-effort routes unless configured checkpoint policy requires a pause.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future HITL checkpoint review
+risk_class: hitl_required_for_correctness_drift
+reasoning_tier: standard
+context_scope: plans_to_code_hitl
+implementation_surfaces: [Plans/human-in-the-loop.md, Plans/Permissions_System.md, Plans/Goal_Runtime_System.md]
+node_compile_hint: {mode: explicit_hitl_checkpoints, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0044
+  - pldg-20260617-001-plans-to-code-handoff:atom-0045
+  - pldg-20260617-001-plans-to-code-handoff:dec-0019
+  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+preserved_exact_tokens:
+  - "HITL"
+  - "hands-off"
+  - "configured checkpoints"
+  - "critical authority blockers"
+negative_constraints:
+  - Do not make HITL required for default correctness.
+owner_hints:
+  - Plans/human-in-the-loop.md
+  - Plans/Permissions_System.md
+  - Plans/Goal_Runtime_System.md
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Goal_Runtime_System.md

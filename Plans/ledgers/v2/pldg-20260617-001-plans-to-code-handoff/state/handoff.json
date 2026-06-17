@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.bootstrap_planning_handoff.v1",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "current_phase": "ready_for_plan_compile",
+  "status": "ready_for_explicit_goal_compile",
+  "cursor": {
+    "last_event_id": "evt-0011",
+    "ready_atom_count": 64,
+    "next_stage": "ledger_to_plans_compile_with_doc_impact_and_reference_scan"
+  },
+  "summary": "This ledger records the agreed Plans-to-code handoff architecture and has been strengthened with implementation-ready contract details plus doc impact/reference coverage. Codex must compile owner PlanUnits and then account for direct consumer/reference docs.",
+  "next_action": "Use the included compile prompt to convert this ledger to Plans. The compile must read implementation_readiness_matrix and doc_impact_matrix, update owner and direct reference docs, and record reference scan/no-update/deferred evidence. Do not run PlanCompile or create WorkNodes.",
+  "allowed_next_writes": [
+    "Plans/*.md process/product docs named by owner adjudication",
+    "Plans/Automated_Testing_System.md if selected as SSOT",
+    "schema drafts under Plans/*.schema.json if needed by docs",
+    "safe validator/script updates if needed by docs"
+  ],
+  "forbidden_next_writes": [
+    "WorkNodes",
+    "NodeSeeds",
+    "NodeSeed candidates as runtime artifacts",
+    "executable queues",
+    "final node manifests",
+    "product implementation files",
+    "production build tasks",
+    "dispatched GoalRuns"
+  ],
+  "validation_state": {
+    "ledger_health": "pass_ready_for_plan_compile",
+    "doc_impact_matrix": "required_for_compile",
+    "implementation_readiness_matrix": "required_for_compile"
+  },
+  "open_blockers": [],
+  "open_questions": []
+}

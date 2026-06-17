@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-17T15:03:16Z",
+  "generated_at_utc": "2026-06-17T22:50:55Z",
   "index_path": "Plans/_shards/github_integration/00-index.md",
-  "index_sha256": "499a0ba98b9e19d8d60ec128539bc90d73c768407343abd63e9908d58d409d48",
+  "index_sha256": "fdf22fb0605eb2bf14851e07fd884789d0c4fa83286b6a60f8eff438b6d947e2",
   "manifest_path": "Plans/_shards/github_integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/github_integration/001-preamble.md",
-      "sha256": "8e4e96ced784d6562af8c892398a7cea489add61af7ecdeab619d3f5858c08b3",
+      "sha256": "33cff5a425f29221342296b858445e4210386532f15c1288f2ab5ee18586bf93",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
-      "sha256": "ea7edaa443c9f7ae855a83472194218eebd6ba4657811474795675db4d85a59d",
+      "sha256": "9d2533059687cc2c8a1ccee9f15a9fbc2ff1b9cb20f3b47fda107d93abe1831e",
       "shard_id": "002",
       "source_line_end": 30,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/github_integration/003-change-summary.md",
-      "sha256": "f3241885271d4dde0ae0fb375be1515bbd465d1260a603592200aca86397615c",
+      "sha256": "5eda2baf10c4f12ef67fadd48ca70b50a67fdc5c8d2fc542e4f735b14bab3cca",
       "shard_id": "003",
       "source_line_end": 41,
       "source_line_start": 32,
@@ -35,7 +35,7 @@
     {
       "heading": "SSOT References (DRY)",
       "path": "Plans/_shards/github_integration/004-ssot-references-dry.md",
-      "sha256": "938f23caccf5e4ed145681030af371e2694b69736b30c2e7ee7c69e92cd4403d",
+      "sha256": "96c484594c480c4266ce657f821c0fb412e58322e374afbb1391a65704ba35d7",
       "shard_id": "004",
       "source_line_end": 78,
       "source_line_start": 43,
@@ -44,7 +44,7 @@
     {
       "heading": "Canonical owner and consumer reconciliation",
       "path": "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
-      "sha256": "04acd4db09c208c857b9f591f58f1604d9e982027d763ce5d88b52bbb247dfbc",
+      "sha256": "9add9956c6d8001b616775568150fe2749240417a3fd551ed59d203975e7888b",
       "shard_id": "005",
       "source_line_end": 227,
       "source_line_start": 80,
@@ -53,7 +53,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/github_integration/006-owner-consumer-map.md",
-      "sha256": "2efa3d5cd7f3bca5151a52e5ab4bc4190c2c5c9220f222353c72d1776714cedd",
+      "sha256": "2a4d9b39c80b691ab367775e0622ab38e5c53b535841b1ea454a5a20f6ba7307",
       "shard_id": "006",
       "source_line_end": 233,
       "source_line_start": 229,
@@ -62,7 +62,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/github_integration/007-planunits.md",
-      "sha256": "9ecd4c820b23f4900a302c9c768c215fcc0463fb25024f5b63432fe35f3bc0d5",
+      "sha256": "41d996dda9f27822b9ea4ab1e819808c1522fc37d13c54fa3ae88ba226f0bcb7",
       "shard_id": "007",
       "source_line_end": 1793,
       "source_line_start": 235,
@@ -71,16 +71,25 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/github_integration/008-migration-coverage.md",
-      "sha256": "6e9a1708fa9adcf1c901279d7524289ac9396ac8a1859fe9762f173f7d07dc90",
+      "sha256": "140f81504b2e1986a4eac607ce939094fbc40951a5b16041532538e00bd49c39",
       "shard_id": "008",
       "source_line_end": 1805,
       "source_line_start": 1795,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/_shards/github_integration/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "sha256": "76597de753348eef6844b96d534cba76741a0cf86fcd64156c4c74b90d3dad4e",
+      "shard_id": "009",
+      "source_line_end": 1852,
+      "source_line_start": 1807,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1805,
+    "line_count": 1852,
     "path": "Plans/GitHub_Integration.md",
-    "sha256": "828862ab660d6c9c5430c0426a0b518ba1f3ebeeb98c8584ba0a54bed8abea5e"
+    "sha256": "3b319aa01360585e9110a29cb2b64fc841051854e59d84bf38efce7532f267e3"
   }
 }

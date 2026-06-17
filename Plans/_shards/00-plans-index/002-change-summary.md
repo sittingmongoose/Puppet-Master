@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L19
+Source lines: L7-L20
 
-Source SHA256: `513de8437d141d9329eb0a32c328ec497f10a0a964fa935b8b580697fac9b0a0`
+Source SHA256: `61e3368cb4d1348c093d1fbdaa58e29f65292cf4188ce6c7a3a35bbd5d3be338`
 
 ---
 
@@ -18,6 +18,7 @@ Source SHA256: `513de8437d141d9329eb0a32c328ec497f10a0a964fa935b8b580697fac9b0a0
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
+- 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, production build tasks, or governance seal artifacts are authorized.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

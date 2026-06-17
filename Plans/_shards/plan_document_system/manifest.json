@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-17T15:03:16Z",
+  "generated_at_utc": "2026-06-17T22:50:55Z",
   "index_path": "Plans/_shards/plan_document_system/00-index.md",
-  "index_sha256": "fbdd3ed9301f5ffc74e09b3fcc7af8c37b55ded8f603b871896f4db1daeaaa1a",
+  "index_sha256": "1f98a63aacaa4ac533bdf6a3ceca1ee6983820974a754aa56f20fcf0c9721948",
   "manifest_path": "Plans/_shards/plan_document_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/plan_document_system/001-preamble.md",
-      "sha256": "5c9b466b7bf7540915668c5405a44ad646d002b5746d16efa068c70c5fbed34c",
+      "sha256": "5b3505e0919b7bdfd6950855df664a3c5d2a9f25a6a570be212dc5ec84c92557",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/plan_document_system/002-0.-scope.md",
-      "sha256": "ff1e0e0d7e017c0174461cf2227321bf584daef983d42f2d2934f48d7ce2cd9f",
+      "sha256": "906ae878c53918a7275bb41fddfadd2c9394ae393b87478a5f9f6a56f8751251",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Profiles And Standard Document Shape",
       "path": "Plans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
-      "sha256": "355d12efe635b37252d9d79f04f99b9c08103707bb6b2292a97c6efabef69bf8",
+      "sha256": "aedac6930d4f13b1becaa946a1daa20d2ff52524951a0686c5d14e7462fd8acc",
       "shard_id": "003",
       "source_line_end": 66,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/plan_document_system/004-2.-planunits.md",
-      "sha256": "a5092f26e1f128142068aa0ddbf4a3f7c28040150b5341e4bbce8914102de4f4",
+      "sha256": "0e8d78b8313dccaea86194fce90de4e52aba404bd5beb9b7b206d0a5c5922735",
       "shard_id": "004",
       "source_line_end": 640,
       "source_line_start": 68,
@@ -44,16 +44,25 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/plan_document_system/005-3.-compilation-coverage.md",
-      "sha256": "a608b5b8c9583e3eab97ba036972a422c7a5e79ed18f4838632d1d1049eff1b3",
+      "sha256": "863e7fea0c7d6b25668ad711eb5989411cca083d67bbb45ad3770b2b83951960",
       "shard_id": "005",
       "source_line_end": 659,
       "source_line_start": 642,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/_shards/plan_document_system/006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "sha256": "57a6c89aaa76bfe0df3904785ff8ee2abe6a53cce457ea13083b47dd9cace4c4",
+      "shard_id": "006",
+      "source_line_end": 728,
+      "source_line_start": 661,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 659,
+    "line_count": 728,
     "path": "Plans/Plan_Document_System.md",
-    "sha256": "1388a5fea226070e32fbec37ddde96e9c1ce65d4299064344f356bdb5c900614"
+    "sha256": "2e04b6def5996ebd4d0fae3d66b3ad332dadc84a3228bda4a8cf909bf48a4b62"
   }
 }

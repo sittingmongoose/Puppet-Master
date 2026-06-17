@@ -504,6 +504,9 @@ canonical_text: >-
   than a new warning. A finding reopens only when the source atom hash,
   PlanUnit hash, owner evidence hash, or closure evidence hash changes, or when
   the current closure_status is blocked_requires_user_decision or reopened.
+  Plans-to-code audits reuse this registry for repeated Plan Wizard,
+  PlanCompile, and WorkNode verification findings when source, canonical
+  PlanUnit, owner, and closure evidence have not changed.
   Chat-sourced semantic closure support is recorded as source-lineage process
   support unless a v2 ledger atom or decision explicitly owns it.
 gui_related: false
@@ -516,6 +519,7 @@ unblocks:
 acceptance_criteria:
   - The global closure registry exists at Plans/.audits/_semantic_closure_registry.jsonl.
   - Deep audits treat unchanged closed findings as previously_closed, not new semantic_risks.
+  - Plan Wizard, PlanCompile, and WorkNode audit findings reuse closed registry rows when evidence has not changed.
   - Reopen decisions are based on changed source atom, PlanUnit, owner evidence, or closure evidence hashes, or on blocked/reopened closure status.
   - Closure rows preserve the allowed statuses repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, blocked_requires_user_decision, and reopened.
   - Chat-sourced closure-support PlanUnits are not represented as outputs of a target ledger compile unless their source_lineage names that ledger atom or decision.
@@ -534,6 +538,7 @@ node_compile_hint:
   mode: audit_registry_process
   create_worknodes: false
 source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0054
   - source_ref:chat:2026-06-17-semantic-closure-registry-support
 preserved_exact_tokens:
   - "Plans/.audits/_semantic_closure_registry.jsonl"
@@ -595,3 +600,61 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 | source_ref:chat:2026-06-17-semantic-closure-registry-support | PLS-012; PDS-014 owns deterministic finding_key and validator-facing closure matrix checks. |
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### PLS-013 - Implementation Readiness And Doc Impact Matrix Compile Inputs
+
+```yaml
+plan_unit_id: PLS-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  A v2 planning ledger may declare implementation_readiness_matrix.json and doc_impact_matrix.json as required compile inputs when a ledger-to-Plans compile must produce implementation-ready PlanUnits and reference coverage. implementation_readiness_matrix maps design areas to required PlanUnits, schemas, fields, acceptance criteria, validators, owner docs, consumer docs, and no-build boundaries. doc_impact_matrix maps primary owner docs, direct consumer docs, reference/index/UI docs, search tokens, required update types, deferred update handling, and per-doc no-update evidence. The ledger remains source/planning memory; canonical truth is established only by live non-pipeline Plans docs and schema drafts after compile.
+gui_related: false
+gui_classification_reason: Matrix input handling is ledger/process behavior, not GUI implementation.
+depends_on: [PLS-010, PDS-015]
+unblocks: []
+acceptance_criteria:
+  - Matrix refs in compact state are treated as required compile inputs when present.
+  - Implementation readiness covers PlanUnits, schemas, fields, acceptance, validators, owner/consumer docs, and no-build boundaries.
+  - Doc impact covers owner, consumer, reference/index/UI docs, search terms, required updates, no-update evidence, and deferred updates.
+  - The ledger remains source memory rather than canonical product prose.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future bootstrap ledger validate matrix checks
+risk_class: vague_compile_output
+reasoning_tier: high
+context_scope: bootstrap_ledger_compile_inputs
+implementation_surfaces: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+node_compile_hint: {mode: compile_input_matrix_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0061
+  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+  - pldg-20260617-001-plans-to-code-handoff:dec-0026
+  - pldg-20260617-001-plans-to-code-handoff:corr-0010
+preserved_exact_tokens:
+  - "implementation_readiness_matrix"
+  - "required PlanUnits"
+  - "schemas"
+  - "fields"
+  - "acceptance criteria"
+  - "validators"
+  - "owner docs"
+  - "consumer docs"
+  - "no-build boundaries"
+  - "doc_impact_matrix"
+  - "reference docs"
+  - "search tokens"
+  - "no-update evidence"
+  - "deferred rename"
+negative_constraints:
+  - Do not compile vague roadmap prose that leaves future agents to infer the contracts.
+  - Do not update only obvious owner docs while leaving direct stale references unaccounted for.
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md

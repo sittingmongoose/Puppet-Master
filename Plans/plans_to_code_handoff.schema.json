@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+  "title": "Plans To Code Handoff Draft Schemas",
+  "description": "Design-only schema draft for pldg-20260617-001-plans-to-code-handoff. These definitions document PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts without enabling PlanCompile or creating executable artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_id": {
+      "const": "pm.plans_to_code_handoff.v1"
+    },
+    "artifact_kind": {
+      "$ref": "#/$defs/artifact_kind"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_id",
+    "artifact_kind",
+    "payload"
+  ],
+  "$defs": {
+    "artifact_kind": {
+      "type": "string",
+      "enum": [
+        "plan_compile_run",
+        "stage_card",
+        "compile_worklist",
+        "node_seed_candidate",
+        "node_seed_review",
+        "workgraph_draft",
+        "worknode_request",
+        "compiler_model_routing",
+        "codex_work_package",
+        "codex_external_gui_agent_request",
+        "plan_compile_receipt",
+        "test_capability_report",
+        "test_harness_probe_report",
+        "test_strategy",
+        "test_case",
+        "test_run_receipt",
+        "visual_evidence",
+        "source_control_preflight_receipt",
+        "safe_point_receipt",
+        "worknode_change_receipt",
+        "merge_or_promotion_receipt",
+        "source_control_finalization_receipt",
+        "model_resolution_receipt",
+        "executor_intake_report",
+        "goal_completion_receipt"
+      ]
+    },
+    "ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ref_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "plan_compile_run": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "runtime_adapter",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "resume_command_or_action"
+      ],
+      "properties": {
+        "compile_id": {"type": "string"},
+        "source_plan_set_id": {"type": "string"},
+        "source_plan_index_hash": {"type": "string"},
+        "launch_source": {"enum": ["codex_bootstrap", "native_plan_wizard"]},
+        "runtime_adapter": {"enum": ["codex_bootstrap_adapter", "native_puppet_master_adapter"]},
+        "status": {"enum": ["design_only_disabled", "preflight", "running", "blocked", "ready_for_executor_intake", "cancelled", "complete"]},
+        "current_stage": {"type": "string"},
+        "cursor": {"type": "object"},
+        "last_green_stage": {"type": ["string", "null"]},
+        "last_green_hashes": {"type": "object"},
+        "blockers": {"type": "array", "items": {"type": "object"}},
+        "next_required_stage": {"type": ["string", "null"]},
+        "resume_command_or_action": {"type": ["string", "null"]}
+      }
+    },
+    "stage_card": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "purpose",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "entry_gate",
+        "item_boundaries",
+        "exit_gate",
+        "success_route",
+        "blocked_route"
+      ],
+      "properties": {
+        "purpose": {"type": "string"},
+        "read_files": {"$ref": "#/$defs/ref_list"},
+        "write_files": {"$ref": "#/$defs/ref_list"},
+        "forbidden_writes": {"$ref": "#/$defs/ref_list"},
+        "entry_gate": {"type": "string"},
+        "item_boundaries": {"type": "object"},
+        "exit_gate": {"type": "string"},
+        "success_route": {"type": "string"},
+        "blocked_route": {"type": "string"}
+      }
+    },
+    "node_seed_candidate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
+        "objective",
+        "owner_area",
+        "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
+        "acceptance_criteria",
+        "validator_candidates",
+        "dependency_refs",
+        "risk_class",
+        "reasoning_tier",
+        "work_type",
+        "effort",
+        "capability_lane",
+        "authority",
+        "sizing",
+        "status",
+        "blockers"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {"$ref": "#/$defs/ref_list"},
+        "source_acceptance_unit_ids": {"$ref": "#/$defs/ref_list"},
+        "objective": {"type": "string"},
+        "owner_area": {"type": "string"},
+        "implementation_surfaces": {"$ref": "#/$defs/ref_list"},
+        "read_set": {"$ref": "#/$defs/ref_list"},
+        "write_set_candidates": {"$ref": "#/$defs/ref_list"},
+        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+        "validator_candidates": {"type": "array", "items": {"type": "string"}},
+        "dependency_refs": {"$ref": "#/$defs/ref_list"},
+        "risk_class": {"type": "string"},
+        "reasoning_tier": {"type": "string"},
+        "work_type": {"type": "string"},
+        "gui_related": {"type": "boolean"},
+        "frontend_related": {"type": "boolean"},
+        "effort": {"type": "string"},
+        "capability_lane": {"type": "string"},
+        "authority": {"type": "string"},
+        "sizing": {"type": "object"},
+        "status": {"enum": ["candidate", "review_ready", "approved_for_workgraph_draft", "blocked", "excluded"]},
+        "blockers": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "workgraph_draft": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "nodes",
+        "entrypoints",
+        "dependency_edges",
+        "scheduler_policy",
+        "graph_integrity",
+        "authority",
+        "evidence",
+        "validation_state"
+      ]
+    },
+    "worknode_request": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "source_plan_unit_ids",
+        "objective",
+        "implementation_surfaces",
+        "acceptance_criteria",
+        "test_binding",
+        "model_routing",
+        "ordering",
+        "authority",
+        "status"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {"$ref": "#/$defs/ref_list"},
+        "objective": {"type": "string"},
+        "implementation_surfaces": {"$ref": "#/$defs/ref_list"},
+        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+        "test_binding": {"$ref": "#/$defs/test_binding"},
+        "model_routing": {"$ref": "#/$defs/model_resolution_receipt"},
+        "ordering": {"$ref": "#/$defs/ordering"},
+        "authority": {"type": "string"},
+        "status": {"enum": ["request_draft", "intake_pending", "accepted_by_executor", "rejected", "blocked"]}
+      }
+    },
+    "ordering": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "build_phase",
+        "dependency_type",
+        "depends_on",
+        "unblocks",
+        "parallel_group_id",
+        "scheduler_lane",
+        "ordering_reason"
+      ]
+    },
+    "model_resolution_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "fallback_reason",
+        "capability_checks"
+      ],
+      "properties": {
+        "requested_lane": {"type": "string"},
+        "requested_model_profile": {"type": "string"},
+        "effective_model_profile": {"type": "string"},
+        "fallback_used": {"type": "boolean"},
+        "fallback_reason": {"type": ["string", "null"]},
+        "capability_checks": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "test_binding": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "required_capability_refs",
+        "required_harnesses",
+        "generated_test_ids",
+        "completion_commands",
+        "browser_session_required",
+        "emulator_required",
+        "visual_evidence_required",
+        "test_gap_policy"
+      ]
+    },
+    "test_capability_report": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "project_platform",
+        "framework_toolkit",
+        "local_capabilities",
+        "online_research",
+        "probes"
+      ]
+    },
+    "test_run_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "test_level",
+        "automation_surface",
+        "verification_command",
+        "expected_artifacts",
+        "result",
+        "evidence_refs",
+        "flake_policy",
+        "test_gap_policy"
+      ]
+    },
+    "source_control_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "repo_id",
+        "worktree_id",
+        "worktree_path",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action"
+      ]
+    },
+    "goal_completion_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "all_worknodes_terminal",
+        "all_tests_passed_or_dispositioned",
+        "source_control_receipts_valid",
+        "no_active_blockers",
+        "auditor_passed",
+        "final_certifier_decision",
+        "evidence_refs"
+      ]
+    }
+  }
+}

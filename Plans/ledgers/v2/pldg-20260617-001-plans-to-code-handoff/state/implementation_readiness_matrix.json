@@ -1,0 +1,345 @@
+{
+  "schema_id": "pm.implementation_readiness_matrix.v1",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "updated_at_utc": "2026-06-17T22:20:00Z",
+  "status": "ready_for_plan_compile",
+  "purpose": "Make the ledger implementation-ready once converted to Plans by mapping each design area to concrete PlanUnits, fields, schemas, acceptance criteria, validators, and boundaries.",
+  "global_acceptance": [
+    "Every design area below becomes one or more PlanUnits or explicit disposition rows.",
+    "Each PlanUnit includes owner_doc, source_lineage, validation_surfaces, implementation_surfaces, acceptance_criteria, risk_class, reasoning_tier, context_scope, gui_related, and node_compile_hint where applicable.",
+    "No executable WorkNodes, NodeSeeds, runtime queues, implementation files, or dispatched GoalRuns are created by this compile.",
+    "Every touched owner doc has consumer/reference impact checked through doc_impact_matrix."
+  ],
+  "areas": [
+    {
+      "area_id": "impl-001",
+      "name": "PlanCompile state machine",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "required_plan_units": [
+        "PlanCompileRun design-only state machine",
+        "low-context stage card contract",
+        "currentness/hash/resume/exact NEXT routing",
+        "shared compiler core plus Codex/native adapters"
+      ],
+      "required_fields": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "runtime_adapter",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "resume_command_or_action"
+      ],
+      "acceptance": [
+        "PlanCompile remains design_only_disabled until explicit enablement",
+        "each stage has read/write/forbidden/entry/exit/next contract",
+        "new low-context agent can resume from state only"
+      ]
+    },
+    {
+      "area_id": "impl-002",
+      "name": "NodeSeed and WorkNode request contracts",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "required_plan_units": [
+        "NodeSeed candidate contract",
+        "NodeSeed review gate",
+        "WorkGraph draft contract",
+        "WorkNode request emission contract",
+        "Executor intake boundary"
+      ],
+      "required_fields": [
+        "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
+        "objective",
+        "owner_area",
+        "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
+        "acceptance_criteria",
+        "validator_candidates",
+        "dependency_refs",
+        "risk_class",
+        "reasoning_tier",
+        "work_type",
+        "effort",
+        "capability_lane",
+        "authority",
+        "sizing",
+        "status",
+        "blockers"
+      ],
+      "acceptance": [
+        "NodeSeeds are non-executable",
+        "WorkNode requests are not runnable until Executor intake",
+        "coverage/exclusion/acceptance/validator/dependency/write-surface/model-lane metadata is present"
+      ]
+    },
+    {
+      "area_id": "impl-003",
+      "name": "Condensed model settings and routing",
+      "owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "consumer_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "required_plan_units": [
+        "six user-facing model settings",
+        "Overseer internal role mapping",
+        "Auditor audit/repair loop",
+        "no Executor Model setting",
+        "model resolution receipt"
+      ],
+      "required_fields": [
+        "Default Model",
+        "Overseer Model",
+        "Worker Model",
+        "GUI / Frontend Worker Model",
+        "High-Effort Worker Model",
+        "Auditor Model",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "fallback_reason",
+        "capability_checks"
+      ],
+      "acceptance": [
+        "Plan Compiler maps to Overseer Model",
+        "Plan Wizard ledger-to-Plans and PRD Builder conversion map to Overseer Model",
+        "old validation pass model settings retired in favor of Auditor loop",
+        "Executor remains deterministic machinery"
+      ]
+    },
+    {
+      "area_id": "impl-004",
+      "name": "Orchestrator Plan Compile tab",
+      "owner_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "consumer_docs": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "required_plan_units": [
+        "Plan Compile tab canonical tab addition",
+        "animated node factory UX",
+        "progress/speed/ETA/status panels",
+        "scope boundary to node creation only",
+        "execution progress remains existing tabs"
+      ],
+      "required_fields": [
+        "compile_id",
+        "current_stage",
+        "stage_timeline",
+        "PlanUnits processed",
+        "NodeSeeds drafted",
+        "WorkNode requests drafted",
+        "throughput",
+        "speed",
+        "ETA confidence",
+        "blockers",
+        "warnings",
+        "model lane status",
+        "test capability status",
+        "handoff readiness"
+      ],
+      "acceptance": [
+        "tab is polished/animated, not a static log table",
+        "shows what system is doing, how much is done, how fast it moves, blockers, next action",
+        "does not duplicate Executor code-generation dashboard"
+      ]
+    },
+    {
+      "area_id": "impl-005",
+      "name": "Automated testing system",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "consumer_docs": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "required_plan_units": [
+        "Test Capability Discovery",
+        "Test Harness Probe",
+        "Test Strategy v2",
+        "WorkNode test binding",
+        "Test Run Receipt",
+        "test oracle policy",
+        "platform adapter policy"
+      ],
+      "required_fields": [
+        "project_platform",
+        "framework/toolkit",
+        "local_capabilities",
+        "online_research",
+        "probes",
+        "test_level",
+        "automation_surface",
+        "requires_browser",
+        "requires_emulator",
+        "requires_display",
+        "requires_screenshot",
+        "verification_command",
+        "expected_artifacts",
+        "flake_policy",
+        "test_gap_policy"
+      ],
+      "acceptance": [
+        "testing is platform-capability-discovery-first",
+        "Slint is example only",
+        "web projects use Puppet Master built-in browser primary once available",
+        "no human eyeballing as required completion",
+        "unverifiable work creates blocker or harness WorkNode"
+      ]
+    },
+    {
+      "area_id": "impl-006",
+      "name": "Source control execution and rollback",
+      "owner_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md"
+      ],
+      "consumer_docs": [
+        "Plans/GitHub_Integration.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md"
+      ],
+      "required_plan_units": [
+        "source-control execution context",
+        "worktree allocation policy",
+        "safe point/snapshot/rollback policy",
+        "GitHub optional promotion layer",
+        "source-control receipts",
+        "finalization contract"
+      ],
+      "required_fields": [
+        "repo_id",
+        "worktree_id",
+        "worktree_path",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action"
+      ],
+      "acceptance": [
+        "PlanCompile does not own source control",
+        "mutation-capable WorkNodes get safe point before risky execution",
+        "parallel writes use isolated/leased worktrees",
+        "GitHub is optional promotion/output, not required for local completion"
+      ]
+    },
+    {
+      "area_id": "impl-007",
+      "name": "Autonomy, HITL, loop breakers, plan changes, security",
+      "owner_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "consumer_docs": [
+        "Plans/Decision_Policy.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "required_plan_units": [
+        "autonomous default policy",
+        "HITL explicit mode policy",
+        "failure signature loop breaker",
+        "PlanChangeDetected impact policy",
+        "security/external-effects policy"
+      ],
+      "required_fields": [
+        "failure_signature.kind",
+        "normalized_key",
+        "attempt_count",
+        "last_safe_point_id",
+        "overseer_reviewed",
+        "auditor_reviewed",
+        "user_escalation_allowed",
+        "PlanDiffImpactReport",
+        "network_access_policy",
+        "secret_access_policy",
+        "destructive_command_policy"
+      ],
+      "acceptance": [
+        "user escalation is last resort by default",
+        "HITL can add checkpoints when enabled",
+        "repeated failures route internally before user decision",
+        "Plan changes pause affected lanes and patch/recompile as needed"
+      ]
+    },
+    {
+      "area_id": "impl-008",
+      "name": "Plans-to-code handoff and completion certification",
+      "owner_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "consumer_docs": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "required_plan_units": [
+        "Plans-to-Code Handoff Matrix",
+        "ExecutorIntakeReport",
+        "WorkNode dispatch/change/test/auditor/repair/promotion/completion receipts",
+        "GoalCompletionReceipt"
+      ],
+      "required_fields": [
+        "source_artifact",
+        "destination_artifact",
+        "owner",
+        "validator",
+        "receipt",
+        "retry_route",
+        "rollback_route",
+        "user_escalation_condition",
+        "all_worknodes_terminal",
+        "all_tests_passed_or_dispositioned",
+        "source_control_receipts_valid",
+        "no_active_blockers"
+      ],
+      "acceptance": [
+        "code complete has objective receipt criteria",
+        "worker says done is insufficient",
+        "every handoff has owner, artifact, validator, receipt, retry/rollback route"
+      ]
+    }
+  ]
+}

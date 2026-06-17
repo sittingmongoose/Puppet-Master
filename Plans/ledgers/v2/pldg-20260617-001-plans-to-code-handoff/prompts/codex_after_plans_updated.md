@@ -1,0 +1,1 @@
+/goal Audit/index the Plans update for pldg-20260617-001-plans-to-code-handoff. Check atom fidelity, doc-impact refs, PlanUnit lineage, and forbidden artifacts. Regenerate allowed .plan_index only after Plans are stable. No WorkNodes, NodeSeeds, queues, runtime, or seal. Run safe validators and report next safe Plan Wizard step.
