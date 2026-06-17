@@ -111,6 +111,37 @@ node_readiness_report.json
 
 The node-readiness report may classify future readiness and blockers, including `gui_related` routing inheritance. It must not create WorkNodes or executable build tasks.
 
+## Semantic audit closure registry
+
+Deep semantic audits and bounded repairs use:
+
+```text
+Plans/.audits/_semantic_closure_registry.jsonl
+```
+
+Each row is keyed by a deterministic `finding_key` derived from `finding_family`, `ledger_id`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `detail_keys`, and `exact_tokens`. The registry row preserves `closure_id`, `audit_ids`, `consumer_docs`, `closure_status`, `closure_evidence`, `closure_reason`, hash snapshots, timestamps, `closed_by_audit_id`, and `reopen_conditions`.
+
+Allowed closure statuses are:
+
+```text
+repaired
+false_positive
+explicitly_deferred
+source_lineage_only
+not_for_plan
+stale_retired
+blocked_requires_user_decision
+reopened
+```
+
+Deep audits read the registry before writing new risks. If a finding is already closed and the source atom, PlanUnit, owner evidence, and closure evidence hashes are unchanged, the audit records `previously_closed` and does not emit the item as a new semantic warning. A closed finding reopens only when one of those hashes changes, or when the current closure status is `blocked_requires_user_decision` or `reopened`.
+
+Bounded repairs must write `repair_closure_matrix.jsonl`; every audit finding/detail in scope is repaired, false-positive adjudicated, explicitly deferred, source-lineage-only, not-for-plan, stale-retired, or blocked for a user decision. Repairs append or update the global registry and run:
+
+```text
+python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
+```
+
 ## Governance seal
 
 Run only after docs and generated indexes are stable. Then regenerate governance artifacts, refresh Spec Lock, run plan/shard validators, and certify changed files/blockers/risks.
