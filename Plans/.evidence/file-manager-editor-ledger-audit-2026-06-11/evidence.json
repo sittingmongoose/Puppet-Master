@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "6770f3913245e807cd88fd8ceff25ce0b446db2196aea517f81c50dce2156d53"
+      "sha256": "8801d3be4344ef8a1b56772f7fc7655e601340717204ed8ff9176d51bd805fba"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d0b7491b545996cdd91c077586a0afe59397328cf1891ded58df29161ecb2a83"
+      "sha256": "9ae784ea3f1ee6cdd7810a830fa5bd886332e4500d538409dd0091974ebb2512"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
+      "details": "PlanUnit index regenerated after audit-20260617-008 atom-0088 repair; 5068 PlanUnits, 18099 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -105,6 +105,16 @@
       "name": "post-audit-repair-governance-seal",
       "result": "PASS",
       "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+    },
+    {
+      "name": "audit-20260617-008-atom-0088-repair",
+      "result": "PASS",
+      "details": "Bounded repair closed SR-008-001 by adding exact compatibility/search alias body proof and reciprocal lineage to OP-022, OSI-428, and 0PI-056, and by removing PLS-011 as an overbroad atom-0088 compile target."
+    },
+    {
+      "name": "audit-20260617-008-spec-lock-refresh",
+      "result": "PASS",
+      "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
     }
   ],
   "commands_run": [
@@ -249,6 +259,26 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json",
       "exit_code": 0
     }
   ],

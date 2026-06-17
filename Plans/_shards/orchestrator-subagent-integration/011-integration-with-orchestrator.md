@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L266-L31173
+Source lines: L266-L31180
 
-Source SHA256: `7fd343f381106f176d93a32fc350eb77e14d7d22c2dd3be323810da3cbf49a95`
+Source SHA256: `958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f`
 
 ---
 
@@ -30828,7 +30828,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
@@ -30840,6 +30840,7 @@ acceptance_criteria:
   - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
   - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
   - Parent synthesis and high-end certification remain required for meaningful completion.
+  - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
   - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -30866,6 +30867,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0064
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
 preserved_exact_tokens:
@@ -30907,6 +30909,10 @@ preserved_exact_tokens:
   - "mandatory"
   - "compatibility/search aliases"
   - "tier-era wording"
+  - "GoalRun"
+  - "WorkGraph"
+  - "VerificationCycle"
+  - "Receipt"
 negative_constraints:
   - Do not convert Orchestrator into one smart agent doing everything.
   - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
@@ -30914,5 +30920,6 @@ negative_constraints:
   - Do not let subagents write overlapping live surfaces concurrently.
   - Do not implement old tier/config-era code samples literally.
   - Do not preserve old tier-era wording as the canonical execution model.
+  - Do not keep stale tier labels as active canonical runtime semantics.
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
 ```
