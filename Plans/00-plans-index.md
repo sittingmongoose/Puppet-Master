@@ -13,6 +13,7 @@
 - 2026-06-11: Registered the PM Bootstrap Planning Ledger, Plan Document System, Plan-to-node compilation boundary, and bootstrap migration owner docs compiled from ledger `pldg-20260610-001-ledger-plan-system`.
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
+- 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -212,6 +213,16 @@ The ledger `Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/` is source-li
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Bootstrap_Planning_Migration.md
 
+### PM Semantic Audit Closure Map (2026-06-17)
+
+Semantic audit closure support uses this owner split:
+- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, and reopen policy.
+- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_closure_matrix.jsonl`, and validator-facing matrix coverage.
+- `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics.
+- `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
 ### Native Goal Runtime Map (2026-06-16)
 
 The native Goal Runtime packet uses the following owner split:
@@ -358,8 +369,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Canonical persistence and restore model for project identity, workspace tabs, windows, browser/preview state, terminal sessions, dev sessions, plan/TODO/question/activity state, usage projections, and analytics scan rollups. |
 | `chain-wizard-flexibility.md` | Wizard intents + requirements canonicalization + GitHub flows | Canonical for intent-based flows and requirements merge/canonical artifact |
 | `Document_Packaging_Policy.md` | Deterministic packaging for large Markdown/text artifacts | Canonical Document Set contract: sharded set + `00-index.md` + `manifest.json` + full audits with non-bypassable run failure on verification breach. |
-| `Planning_Ledger_System.md` | Bootstrap planning ledger and future native ledger service | Canonical for the Bootstrap Ledger, Native Ledger Service import/export boundary, compact operating capsules, per-turn ledger protocol, design_atom lifecycle, exact source-lineage preservation, owner ambiguity handling, and ledger-to-Plan compilation boundary. |
-| `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, and node-readiness metadata. |
+| `Planning_Ledger_System.md` | Bootstrap planning ledger and future native ledger service | Canonical for the Bootstrap Ledger, Native Ledger Service import/export boundary, compact operating capsules, per-turn ledger protocol, design_atom lifecycle, exact source-lineage preservation, owner ambiguity handling, ledger-to-Plan compilation boundary, semantic closure registry row shape, and reopen policy. |
+| `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, node-readiness metadata, deterministic semantic finding keys, and repair closure matrix validation. |
 | `Plan_To_Node_Compilation.md` | PlanUnit index and node-readiness boundary | Canonical for future PlanUnit-to-NodeSeed-to-WorkNode compiler inputs and the current readiness-only boundary. It does not create WorkNodes, executable build tasks, or NodeSeed candidates before the compiler contract is complete. |
 | `Bootstrap_Planning_Migration.md` | Bootstrap ledger migration and governance seal workflow | Canonical for AGENTS trigger use, Codex Goal-phase migration, less-than-4,000-character goal prompt posture, controlled Plan conversion batches, Spec Lock seal timing, and retired prompt-packet/tranche experiment exclusions. |
 | `Goal_Runtime_System.md` | Native Goal Mode runtime/control-plane system | Canonical owner for native Goal Runtime state, scheduler/replan behavior, invisible and visible goal execution semantics, child goals, write authority, completion receipts, evidence/certification, weak-model safety, verifier/adjudicator policy, approval-boundary invocation, and goal task templates. |
@@ -3977,6 +3988,74 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Glossary.md
 ```
+
+### 0PI-057 - Semantic Audit Closure Owner Map
+
+```yaml
+plan_unit_id: 0PI-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md records the semantic audit closure owner split
+  without re-owning closure semantics. Planning_Ledger_System/PLS-012 owns the
+  durable Plans/.audits/_semantic_closure_registry.jsonl row shape,
+  previously_closed reuse, and reopen policy. Plan_Document_System/PDS-014 owns
+  deterministic finding_key construction, repair_closure_matrix.jsonl, and
+  validator-facing closure matrix coverage. Bootstrap_Planning_Workflow and
+  Codex_Prompts consume those owner PlanUnits for workflow and reusable prompt
+  text. scripts/pm-audit-closure.py, the global closure registry, and
+  audit-scoped repair_closure_matrix.jsonl are support/governance surfaces, not
+  product implementation files, WorkNodes, NodeSeeds, executable queues, final
+  node manifests, or build tasks.
+gui_related: false
+gui_classification_reason: This unit records canonical owner routing for audit governance support; it does not implement user-visible GUI behavior.
+depends_on:
+  - PLS-012
+  - PDS-014
+unblocks: []
+acceptance_criteria:
+  - The index routes closure registry row shape and reopen policy to PLS-012.
+  - The index routes deterministic finding_key and repair_closure_matrix validation to PDS-014.
+  - Bootstrap workflow and prompt docs are recorded as consumers rather than schema owners.
+  - Closure support artifacts and scripts are not product implementation, WorkNode, NodeSeed, executable queue, final node manifest, or build-task artifacts.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-audit-closure.py validate
+risk_class: owner_routing
+reasoning_tier: high
+context_scope: bootstrap_audit_repair
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+  - Plans/bootstrap/Codex_Prompts.md
+  - scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_routing_only
+  create_worknodes: false
+source_lineage:
+  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+preserved_exact_tokens:
+  - "Plans/.audits/_semantic_closure_registry.jsonl"
+  - "repair_closure_matrix.jsonl"
+  - "finding_key"
+  - "previously_closed"
+  - "scripts/pm-audit-closure.py"
+  - "PLS-012"
+  - "PDS-014"
+negative_constraints:
+  - Do not make Plans/00-plans-index.md the owner of closure registry schema or closure matrix validation.
+  - Do not treat audit closure support scripts or audit JSONL artifacts as product implementation files.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or build tasks from closure registry state.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
 
 ## Migration Coverage

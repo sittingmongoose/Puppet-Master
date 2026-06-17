@@ -480,6 +480,10 @@ owner_hints:
   - Plans/Bootstrap_Planning_Migration.md
 ```
 
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## Semantic Audit Closure Addendum - 2026-06-17
+
 ### PLS-012 - Semantic Closure Registry And Reopen Contract
 
 ```yaml
@@ -500,6 +504,8 @@ canonical_text: >-
   than a new warning. A finding reopens only when the source atom hash,
   PlanUnit hash, owner evidence hash, or closure evidence hash changes, or when
   the current closure_status is blocked_requires_user_decision or reopened.
+  Chat-sourced semantic closure support is recorded as source-lineage process
+  support unless a v2 ledger atom or decision explicitly owns it.
 gui_related: false
 gui_classification_reason: Audit closure durability and reopen policy are process/governance behavior, not GUI implementation work.
 depends_on:
@@ -512,6 +518,7 @@ acceptance_criteria:
   - Deep audits treat unchanged closed findings as previously_closed, not new semantic_risks.
   - Reopen decisions are based on changed source atom, PlanUnit, owner evidence, or closure evidence hashes, or on blocked/reopened closure status.
   - Closure rows preserve the allowed statuses repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, blocked_requires_user_decision, and reopened.
+  - Chat-sourced closure-support PlanUnits are not represented as outputs of a target ledger compile unless their source_lineage names that ledger atom or decision.
 validation_surfaces:
   - python3 scripts/pm-audit-closure.py validate
   - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
@@ -550,14 +557,18 @@ preserved_exact_tokens:
   - "closed_by_audit_id"
   - "reopen_conditions"
   - "previously_closed"
+  - "source-lineage process support"
 negative_constraints:
   - Do not re-emit unchanged closed findings as new warnings.
   - Do not hide a finding when source/canonical/owner/closure evidence hashes changed.
   - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from audit closure state.
+  - Do not place chat-sourced closure-support PlanUnits under a target-ledger compile addendum as though they were compiled from that ledger.
 owner_hints:
   - Plans/Planning_Ledger_System.md
   - Plans/Plan_Document_System.md
 ```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
 ## 3. Compilation Coverage
 

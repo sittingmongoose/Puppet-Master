@@ -184,11 +184,13 @@ Input: ledger_id=infer_latest. Audit-only. Do not repair/edit Plans, ledgers, .p
 
 Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, Plans/.audits/_semantic_closure_registry.jsonl, compact state for the inferred ledger, compile_queue, changed live Plans docs, .plan_index, and latest related audit FINAL_REPORT.
 
+Owner refs: PLS-012 owns the semantic closure registry and reopen policy; PDS-014 owns deterministic finding_key and repair_closure_matrix validation.
+
 Infer current_ref=HEAD, latest non-background ledger from registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the earliest contiguous cycle commit touching the ledger/live Plans/index/governance surfaces.
 
 For every finding, compute finding_key from finding_family + ledger_id + source_atom_ids + plan_unit_ids + owner_docs + detail_keys + exact_tokens. Read the closure registry before emitting risks. If a finding is closed and source atom, PlanUnit, owner evidence, and closure evidence hashes are unchanged, classify previously_closed and do not emit it as a new semantic_risk. Reopen only when one of those hashes changed, or closure_status is blocked_requires_user_decision or reopened.
 
-Build atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, semantic_risks.jsonl, audit_report.json, and FINAL_REPORT.md. Prove canonical live Plans evidence for every exact token/detail; metadata/source_lineage alone is insufficient.
+Build atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, closure_reuse.jsonl, ledger_consistency.json, validator_results.json, semantic_risks.jsonl, audit_report.json, and FINAL_REPORT.md. Prove canonical live Plans evidence for every exact token/detail; metadata/source_lineage alone is insufficient.
 
 Run pm-audit-closure validate, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record validator git status and side effects. FINAL_REPORT must include status, ids/range, changed files, PlanUnit deltas, previously_closed count, new/reopened risks, validators, forbidden artifacts, and next safe action.
 ```
@@ -201,9 +203,11 @@ Repair latest PM Bootstrap deep semantic audit with closure registry support.
 
 Input: audit_id=infer_latest. Infer ledger_id from audit artifacts. Bounded repair only; do not redo the audit or broaden scope. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or product build tasks.
 
-Read AGENTS.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, Plans/.audits/_semantic_closure_registry.jsonl, the audit FINAL_REPORT, semantic_risks.jsonl, atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, and compact ledger state.
+Read AGENTS.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, Plans/.audits/_semantic_closure_registry.jsonl, the audit FINAL_REPORT, closure_reuse.jsonl if present, semantic_risks.jsonl, atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, and compact ledger state.
 
-For every audit finding/detail in scope, write Plans/.audits/<audit_id>/repair_closure_matrix.jsonl. Each row must close the item as repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision. Use reopened only when a previously closed finding changed because source atom, PlanUnit, owner evidence, or closure evidence hashes changed. Green validators are insufficient without a closure row for every finding/detail.
+Owner refs: PLS-012 owns the semantic closure registry and reopen policy; PDS-014 owns deterministic finding_key and repair_closure_matrix validation.
+
+For every audit finding/detail in scope, write Plans/.audits/<audit_id>/repair_closure_matrix.jsonl. Each row must include source_artifact, source_row, finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, finding_key, closure_status, closure_evidence, closure_reason, and registry_closure_id, then close the item as repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision. Use reopened only in the global registry when a previously closed finding changed and the prior closed row plus source atom, PlanUnit, owner evidence, or closure evidence hash delta is proven. Green validators are insufficient without a closure row for every finding/detail.
 
 Append/update Plans/.audits/_semantic_closure_registry.jsonl with closure_id, finding_key, finding_family, ledger_id, audit_ids, source_atom_ids, plan_unit_ids, owner_docs, consumer_docs, detail_keys, exact_tokens, closure_status, closure_evidence, closure_reason, hashes, created_at, updated_at, closed_by_audit_id, and reopen_conditions. finding_key is deterministic from finding_family + ledger_id + source_atom_ids + plan_unit_ids + owner_docs + detail_keys + exact_tokens.
 

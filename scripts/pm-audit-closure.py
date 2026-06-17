@@ -69,7 +69,25 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "atom_fidelity_matrix.jsonl",
     "planunit_source_claims.jsonl",
     "owner_routing_findings.jsonl",
+    "ledger_consistency.json",
+    "validator_results.json",
 ]
+MATRIX_REQUIRED_FIELDS = {
+    "source_artifact",
+    "source_row",
+    "finding_family",
+    "ledger_id",
+    "source_atom_ids",
+    "plan_unit_ids",
+    "owner_docs",
+    "detail_keys",
+    "exact_tokens",
+    "finding_key",
+    "closure_status",
+    "closure_evidence",
+    "closure_reason",
+    "registry_closure_id",
+}
 ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 
 
@@ -167,12 +185,39 @@ def validate_hashes(hashes: Any, path_label: str, errors: list[str]) -> None:
         )
 
 
+def validate_reopened_proof(row: dict[str, Any], prior_closed: list[dict[str, Any]], path_label: str, errors: list[str]) -> None:
+    if not prior_closed:
+        errors.append(f"{path_label}: reopened row requires a prior closed row with the same finding_key")
+    hashes = row.get("hashes")
+    if not isinstance(hashes, dict):
+        errors.append(f"{path_label}: reopened row hashes must be an object")
+        return
+    reopen_changes = hashes.get("reopen_hash_changes")
+    if isinstance(reopen_changes, dict) and reopen_changes:
+        return
+    paired_fields = (
+        ("previous_source_atom_hashes", "source_atom_hashes"),
+        ("previous_plan_unit_hashes", "plan_unit_hashes"),
+        ("previous_owner_evidence_hashes", "owner_evidence_hashes"),
+        ("previous_closure_evidence_hashes", "closure_evidence_hashes"),
+    )
+    if not any(
+        hashes.get(previous) and hashes.get(current) and hashes.get(previous) != hashes.get(current)
+        for previous, current in paired_fields
+    ):
+        errors.append(
+            f"{path_label}: reopened row must prove changed source/PlanUnit/owner/closure hashes "
+            "with reopen_hash_changes or previous/current hash pairs"
+        )
+
+
 def validate_registry(registry_path: Path) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     rows = read_jsonl(registry_path, errors, required=True)
     closure_ids: set[str] = set()
     open_by_key: dict[str, list[str]] = {}
+    closed_by_key: dict[str, list[dict[str, Any]]] = {}
     status_counts: dict[str, int] = {}
 
     for row in rows:
@@ -230,7 +275,10 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
         if status in OPEN_STATUSES:
             open_by_key.setdefault(finding_key, []).append(closure_id)
             if status == "reopened":
+                validate_reopened_proof(row, closed_by_key.get(finding_key, []), label, errors)
                 warnings.append(f"{label}: reopened finding remains open until a later closure row resolves it")
+        elif status in ALLOWED_STATUSES:
+            closed_by_key.setdefault(finding_key, []).append(row)
 
     for finding_key, ids in sorted(open_by_key.items()):
         if len(ids) > 1:
@@ -262,6 +310,94 @@ def artifact_row_count(path: Path, errors: list[str]) -> int:
     return count
 
 
+def actionable_jsonl_rows(path: Path, artifact: str, errors: list[str]) -> list[str]:
+    rows: list[str] = []
+    if not path.exists():
+        errors.append(f"missing source artifact {rel(path)}")
+        return rows
+    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            errors.append(f"{rel(path)}:{line_no}: invalid JSONL: {exc}")
+            continue
+        if artifact == "semantic_risks.jsonl":
+            rows.append(str(line_no))
+            continue
+        classification = str(row.get("classification", ""))
+        status = str(row.get("status", ""))
+        issues = row.get("issues")
+        needs_closure = classification in {
+            "missing_or_drift",
+            "source_lineage_only",
+            "explicitly_deferred",
+            "not_for_plan",
+            "stale_retired",
+            "previously_closed",
+        }
+        needs_closure = needs_closure or status in {"warning", "fail", "blocked"}
+        needs_closure = needs_closure or (isinstance(issues, list) and bool(issues))
+        if needs_closure:
+            rows.append(str(line_no))
+    return rows
+
+
+def actionable_json_rows(path: Path, artifact: str, errors: list[str]) -> list[str]:
+    if not path.exists():
+        errors.append(f"missing source artifact {rel(path)}")
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        errors.append(f"{rel(path)}: invalid JSON: {exc}")
+        return []
+    rows: list[str] = []
+    if artifact == "ledger_consistency.json":
+        new_units = (
+            data.get("compile_queue", {})
+            .get("range_new_plan_units_not_in_compile_queue", [])
+        )
+        if new_units:
+            rows.append("compile_queue.range_new_plan_units_not_in_compile_queue")
+        questions = (
+            data.get("sealed_ledger_open_item_policy", {})
+            .get("open_questions", [])
+        )
+        if questions:
+            rows.append("sealed_ledger_open_item_policy.open_questions")
+    elif artifact == "validator_results.json":
+        if data.get("non_audit_side_effects"):
+            rows.append("non_audit_side_effects")
+        for result in data.get("results", []):
+            name = str(result.get("name", "unnamed"))
+            stdout = result.get("stdout")
+            stderr = result.get("stderr")
+            has_warning = False
+            for stream in (stdout, stderr):
+                if not isinstance(stream, str) or '"warnings"' not in stream:
+                    continue
+                try:
+                    parsed = json.loads(stream)
+                except json.JSONDecodeError:
+                    has_warning = "warning" in stream.lower()
+                else:
+                    has_warning = bool(parsed.get("warnings"))
+                    has_warning = has_warning or any(bool(report.get("warnings")) for report in parsed.get("audit_dirs", []))
+            if result.get("status") != "pass" or has_warning:
+                rows.append(f"results.{name}")
+    return rows
+
+
+def actionable_artifact_rows(path: Path, artifact: str, errors: list[str]) -> list[str]:
+    if artifact.endswith(".jsonl"):
+        return actionable_jsonl_rows(path, artifact, errors)
+    if artifact.endswith(".json"):
+        return actionable_json_rows(path, artifact, errors)
+    return [str(line_no) for line_no in range(1, artifact_row_count(path, errors) + 1)]
+
+
 def source_row_key(artifact: str, source_row: Any) -> tuple[str, str] | None:
     if source_row is None:
         return None
@@ -272,7 +408,23 @@ def source_row_key(artifact: str, source_row: Any) -> tuple[str, str] | None:
     return None
 
 
-def validate_audit_dir(audit_dir: Path, *, require_matrix: bool, source_artifacts: list[str] | None) -> dict[str, Any]:
+def registry_lookup(registry_path: Path, errors: list[str]) -> dict[str, dict[str, Any]]:
+    rows = read_jsonl(registry_path, errors, required=True)
+    lookup: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        closure_id = row.get("closure_id")
+        if isinstance(closure_id, str) and closure_id:
+            lookup[closure_id] = row
+    return lookup
+
+
+def validate_audit_dir(
+    audit_dir: Path,
+    *,
+    require_matrix: bool,
+    source_artifacts: list[str] | None,
+    registry_path: Path,
+) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     audit_dir = audit_dir if audit_dir.is_absolute() else ROOT / audit_dir
@@ -287,15 +439,47 @@ def validate_audit_dir(audit_dir: Path, *, require_matrix: bool, source_artifact
         return {"path": rel(audit_dir), "errors": errors, "warnings": warnings, "matrix_rows": 0}
 
     rows = read_jsonl(matrix_path, errors, required=True)
+    registry_by_id = registry_lookup(registry_path, errors)
     covered: set[tuple[str, str]] = set()
     status_counts: dict[str, int] = {}
 
     for row in rows:
         label = f"{rel(matrix_path)}:{row.get('_line_no')}"
+        missing = sorted(MATRIX_REQUIRED_FIELDS - set(row))
+        if missing:
+            errors.append(f"{label}: missing required fields {missing}")
         status = str(row.get("closure_status", ""))
         status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:
             errors.append(f"{label}: invalid closure_status {status}")
+        if status == "reopened":
+            errors.append(f"{label}: repair_closure_matrix rows must close the item, not use reopened")
+        finding_key = row.get("finding_key")
+        if not isinstance(finding_key, str) or not finding_key.strip():
+            errors.append(f"{label}: finding_key must be non-empty")
+        elif finding_key != compute_finding_key(row):
+            errors.append(f"{label}: finding_key {finding_key} does not match deterministic {compute_finding_key(row)}")
+        for field in ("source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"):
+            if not isinstance(row.get(field), list):
+                errors.append(f"{label}: {field} must be a list")
+        closure_reason = row.get("closure_reason")
+        if not isinstance(closure_reason, str) or not closure_reason.strip():
+            errors.append(f"{label}: closure_reason must be non-empty")
+        registry_closure_id = row.get("registry_closure_id")
+        if not isinstance(registry_closure_id, str) or not registry_closure_id.strip():
+            errors.append(f"{label}: registry_closure_id must be non-empty")
+        elif registry_closure_id not in registry_by_id:
+            errors.append(f"{label}: registry_closure_id {registry_closure_id} is not present in registry")
+        else:
+            registry_row = registry_by_id[registry_closure_id]
+            if registry_row.get("finding_key") != finding_key:
+                errors.append(f"{label}: registry row finding_key does not match matrix finding_key")
+            if registry_row.get("closure_status") != status:
+                errors.append(f"{label}: registry row closure_status does not match matrix closure_status")
+            if audit_dir.name not in registry_row.get("audit_ids", []):
+                errors.append(f"{label}: registry row audit_ids does not include {audit_dir.name}")
+            if registry_row.get("closed_by_audit_id") != audit_dir.name:
+                errors.append(f"{label}: registry row closed_by_audit_id does not match {audit_dir.name}")
         artifact = row.get("source_artifact")
         if artifact is not None and not isinstance(artifact, str):
             errors.append(f"{label}: source_artifact must be a string")
@@ -307,27 +491,21 @@ def validate_audit_dir(audit_dir: Path, *, require_matrix: bool, source_artifact
             key = source_row_key(artifact, row.get("source_row"))
             if key:
                 covered.add(key)
+            else:
+                errors.append(f"{label}: source_row must be a non-empty string or integer")
 
         evidence = row.get("closure_evidence", row.get("evidence"))
-        if isinstance(evidence, list):
-            for ref in evidence:
-                if isinstance(ref, str):
-                    ref_path = evidence_path_from_ref(ref)
-                    if ref_path is not None and not ref_path.exists():
-                        warnings.append(f"{label}: missing evidence ref {ref}")
+        validate_evidence_refs(evidence, label, errors)
 
     requested_artifacts = source_artifacts
     if requested_artifacts is None:
         requested_artifacts = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (audit_dir / name).exists()]
-        if "semantic_risks.jsonl" in requested_artifacts:
-            requested_artifacts = ["semantic_risks.jsonl"]
 
     missing_coverage: list[dict[str, Any]] = []
     for artifact in requested_artifacts:
-        row_total = artifact_row_count(audit_dir / artifact, errors)
-        for line_no in range(1, row_total + 1):
-            if (artifact, str(line_no)) not in covered:
-                missing_coverage.append({"source_artifact": artifact, "source_row": line_no})
+        for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors):
+            if (artifact, str(source_row)) not in covered:
+                missing_coverage.append({"source_artifact": artifact, "source_row": source_row})
 
     if missing_coverage:
         errors.append(f"{rel(matrix_path)}: missing closure rows for {len(missing_coverage)} source rows")
@@ -345,9 +523,15 @@ def validate_audit_dir(audit_dir: Path, *, require_matrix: bool, source_artifact
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
-    registry = validate_registry(repo_path(args.registry))
+    registry_path = repo_path(args.registry)
+    registry = validate_registry(registry_path)
     audit_reports = [
-        validate_audit_dir(repo_path(audit_dir), require_matrix=args.require_closure_matrix, source_artifacts=args.source_artifact)
+        validate_audit_dir(
+            repo_path(audit_dir),
+            require_matrix=args.require_closure_matrix,
+            source_artifacts=args.source_artifact,
+            registry_path=registry_path,
+        )
         for audit_dir in args.audit_dir
     ]
     errors = list(registry["errors"])
