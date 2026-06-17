@@ -1,0 +1,288 @@
+{
+  "audit_id": "audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity",
+  "commands": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "duration_ms": 6586,
+      "env": {
+        "PYTHONPATH": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "bootstrap_ledger_validate",
+      "label": "bootstrap ledger validate",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:44:25.876520+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260616-002-orchestrator-goal-runtime-flow\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 104,\n    \"compile_queue_items\": 1,\n    \"corrections\": 9,\n    \"decisions\": 29,\n    \"events\": 16,\n    \"plan_units_checked\": 2475,\n    \"questions\": 9\n  },\n  \"warnings\": []\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "duration_ms": 18970,
+      "env": {
+        "PYTHONPATH": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "pm_plan_index_validate",
+      "label": "pm-plan-index validate",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:44:32.504302+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:44:51Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 18081,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5065\n  }\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+      "duration_ms": 13470,
+      "env": {
+        "PYTHONPATH": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "pm_plan_migration_validate_pds_20260611_001",
+      "label": "pm-plan-migration validate pds-20260611-001-standardize-plans",
+      "non_audit_status_delta": [],
+      "returncode": 1,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:44:51.520840+00:00",
+      "status": "fail",
+      "stderr": "",
+      "stdout": "{\n  \"checks\": {\n    \"anchor_alias_rows\": 3618,\n    \"batch_report_doc_entries\": 62,\n    \"batch_report_rows\": 3,\n    \"coverage_rows\": 3618,\n    \"coverage_status_counts\": {\n      \"already_standardized_existing_planunits\": 55,\n      \"batch-001-unlocked-unsharded_converted_covered\": 303,\n      \"batch-002-sharded-unlocked_converted_covered\": 2288,\n      \"batch-003-spec-locked_converted_covered\": 955,\n      \"pilot_converted_covered\": 17\n    },\n    \"doc_count\": 67,\n    \"live_plan_unit_count\": 5065,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3618,\n    \"unique_live_plan_unit_count\": 5065\n  },\n  \"failures\": [\n    {\n      \"actual\": 67,\n      \"error\": \"doc_count_mismatch\",\n      \"expected\": 68,\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/inventory.json\"\n    },\n    {\n      \"error\": \"inventory_doc_set_mismatch\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/inventory.json\"\n    },\n    {\n      \"actual\": \"34854d3fbb62b71b4fd828dbe38ad67c6c81f8a5e67edfb883c9675597d043c7\",\n      \"doc_index\": 1,\n      \"doc_path\": \"Plans/BinaryLocator_Spec.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"9e90b4a292cb73d93e93c5c757580dac9061a74d4ae8c28138323e90231d487f\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"8b580f15d2ce07b4639dae61ad607a7c30eaa6432475e2498ed3d03c2fb4d92b\",\n      \"doc_index\": 2,\n      \"doc_path\": \"Plans/Containers_Registry_and_Unraid.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"7eaaf28c06afa24aaae0b48b830712bdaad0ea3dcbe051697f138a0a0bfba442\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"49b5c5923e0c43afe9115e0e2b692a245f6832115204fa1e13f09e87827f8925\",\n      \"doc_index\": 3,\n      \"doc_path\": \"Plans/Decision_Log.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"6cd8b149fdba75a886c760e08326fe023794577c1f4a7061263c105bdb12ebdf\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"841153deb0b40a91ed918a8627949361b605326365dffbe4a2a5b2eb5e09c592\",\n      \"doc_index\": 4,\n      \"doc_path\": \"Plans/Formatters_System.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"3d28212da48c59912d2d76b83215cf96ddad1aa544a65138fda23f7e0474ba5c\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"c7890ec1d1237f09c00b1490da11be56051fdd0e936f09e9b6a0d4e87f57fa4b\",\n      \"doc_index\": 5,\n      \"doc_path\": \"Plans/OpenCode_Coverage_Matrix.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"31241a089c3c4ff809bb964b215fa0e656aa99f5d9d849500bc20f1572d1bcaa\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"c92bac9d3c0a647e37fbb5d6b8c0e6f9450cafc71aa0ac83e5f04cf71d92dfbe\",\n      \"doc_index\": 6,\n      \"doc_path\": \"Plans/Plugins_System.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"3b03489dce3dda6fa4ef2b84bdc80b2ee90d747fe66a0822fe78350ae08d741f\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"a5e55c0f85da0401a83bf41fe766ea72b6003166c137fa0d3a001388f8c55e9c\",\n      \"doc_index\": 7,\n      \"doc_path\": \"Plans/Provider_Stream_Mapping_External_Reference_A2A.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"6853f0c4a470eae0c81437bba8224eb38c3ca330d52f43db4ff623c24729b35d\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"7e0a148008f20aeb3b9c8946502b107ff8c0b63ff720da6bd60b7aa0eaaebe55\",\n      \"doc_index\": 8,\n      \"doc_path\": \"Plans/chain-wizard.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"b554fbcb19022cba01f2b7c13943850a60fa2838cf97fdd1fb65e079a47cf2a1\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 1\n    },\n    {\n      \"actual\": \"7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de\",\n      \"doc_index\": 1,\n      \"doc_path\": \"Plans/agent-rules-context.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f\",\n      \"doc_index\": 2,\n      \"doc_path\": \"Plans/assistant-chat-design.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38\",\n      \"doc_index\": 3,\n      \"doc_path\": \"Plans/assistant-memory-subsystem.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"3499a421184fcdcfbb419516be60af5c0f33ef8a082be8dfa388f90fa62c5729\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"e14f83cf3e0a04701bacf7c329142f6b7c915c8447274f81e326a5789ca88d36\",\n      \"doc_index\": 4,\n      \"doc_path\": \"Plans/CLI_Bridged_Providers.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"b5de2955ec7af4adeb576436220d240d13e0d93596dc9236fc6e2d2124d58540\",\n      \"doc_index\": 5,\n      \"doc_path\": \"Plans/Commands_System.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"7399da87c57e281a4cb1fdb6ae938f9d6ce22eea2296abc5b7012a139078e0ae\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c\",\n      \"doc_index\": 6,\n      \"doc_path\": \"Plans/feature-list.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"ebfdd61a127ee23dc6ad76cc1ee3e1045b8b95c220b5428e2caf3406b521da2a\",\n      \"doc_index\": 7,\n      \"doc_path\": \"Plans/FileManager.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"9e12573817ea0ea4146565204c731afe1909798fc897ef967610d6a493e76a97\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"e1b21792c65a208210c56da93c97e04b6ff4f353643da088ea73c038f1eb5214\",\n      \"doc_index\": 8,\n      \"doc_path\": \"Plans/FileSafe.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"ec76f77daaf39ca82a3eb75d35cf7148ae46f8b95426d237bf9c6c2368dba74a\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"e7d74c518f43fb85d1bcb78c9f41c6ecf73d29086b5c1f37693b3c4ed79ecdd2\",\n      \"doc_index\": 9,\n      \"doc_path\": \"Plans/FinalGUISpec.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"fe982ae4a1f51adc6c189ebeb7fedce3965972c00355ed9d7a2f5852df787715\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3\",\n      \"doc_index\": 10,\n      \"doc_path\": \"Plans/GitHub_Integration.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"828862ab660d6c9c5430c0426a0b518ba1f3ebeeb98c8584ba0a54bed8abea5e\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a\",\n      \"doc_index\": 11,\n      \"doc_path\": \"Plans/GUI_Rebuild_Requirements_Checklist.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"4be41b52dec769c8cdc1233561c3c776834e370b2c6eba1da17786ced3168e54\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b\",\n      \"doc_index\": 12,\n      \"doc_path\": \"Plans/human-in-the-loop.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"a7137d8aa24f7ee49f0f74e2beed7171b16c047b814fbdf25e6ae6c4389e4766\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"df1a9dcf0546d489cf8823a1592b6896ca423ee12a1274894bb0bd899a297278\",\n      \"doc_index\": 13,\n      \"doc_path\": \"Plans/LSPSupport.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"25d77e1ce97ddd3de440ac0f0b083cb77b496e8fbd281ab73a19d1c9727534ff\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"c7001ef3bf4b93c4763c60ee1373ba49a09ee331c8407410614db6c8f2498606\",\n      \"doc_index\": 14,\n      \"doc_path\": \"Plans/MCP_Integration.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"20a0ff81e309c185f9c741064d9daaa379b9534633dcf46a00248fe5144b843f\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4\",\n      \"doc_index\": 15,\n      \"doc_path\": \"Plans/MiscPlan.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"a73dd314c5af43c8c41a8d6ea1c08fc6bcd8dbb280e72ba72772c2ed0b733605\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c\",\n      \"doc_index\": 16,\n      \"doc_path\": \"Plans/Models_System.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"a73d41ad941ac5f6d22209298ac62759443110bbee9987598b57022d87130bd3\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75\",\n      \"doc_index\": 17,\n      \"doc_path\": \"Plans/Multi-Account.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"794a169fba760e2a47cefd4669cf64e4cfba113aab1c7bc8322322565344cdca\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63\",\n      \"doc_index\": 18,\n      \"doc_path\": \"Plans/newfeatures.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988\",\n      \"path\": \"Plans/.plan_migration/pds-20260611-001-standardize-plans/batch_report.jsonl\",\n      \"row\": 2\n    },\n    {\n      \"actual\": \"6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9\",\n      \"doc_index\": 19,\n      \"doc_path\": \"Plans/newtools.md\",\n      \"error\": \"stale_batch_report_sha256_after\",\n      \"expected\": \"f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2\",\n      \"path\": \"Pla\n...[truncated 14672 chars]"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "duration_ms": 13332,
+      "env": {
+        "PYTHONPATH": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "pm_plan_migration_validate_pds_20260611_002",
+      "label": "pm-plan-migration validate pds-20260611-002-atomize-planunits",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:05.031285+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"checks\": {\n    \"anchor_alias_rows\": 3908,\n    \"batch_report_doc_entries\": 212,\n    \"batch_report_rows\": 212,\n    \"coverage_rows\": 3908,\n    \"coverage_status_counts\": {\n      \"already_standardized_existing_planunits\": 29,\n      \"goal_runtime_new_profile_planunit_covered\": 25,\n      \"goal_runtime_new_profile_standardized_section\": 10,\n      \"phase2b_batch_001_atomized_covered\": 25,\n      \"phase2b_batch_002_atomized_covered\": 15,\n      \"phase2b_batch_003_atomized_covered\": 19,\n      \"phase2b_batch_004_atomized_covered\": 6,\n      \"phase2b_batch_005_atomized_covered\": 25,\n      \"phase2b_batch_006_atomized_covered\": 31,\n      \"phase2b_batch_007_atomized_covered\": 26,\n      \"phase2b_batch_008_atomized_covered\": 16,\n      \"phase2b_batch_009_atomized_covered\": 19,\n      \"phase2b_batch_010_dispositioned\": 2,\n      \"phase2b_batch_011_atomized_covered\": 29,\n      \"phase2b_batch_012_atomized_covered\": 13,\n      \"phase2b_batch_012_dispositioned\": 2,\n      \"phase2b_batch_013_atomized_covered\": 39,\n      \"phase2b_batch_014_atomized_covered\": 4,\n      \"phase2b_batch_014_dispositioned\": 2,\n      \"phase2b_batch_015_fine_grained_enough\": 12,\n      \"phase2b_batch_016_atomized_covered\": 19,\n      \"phase2b_batch_017_atomized_covered\": 23,\n      \"phase2b_batch_018_atomized_covered\": 25,\n      \"phase2b_batch_019_atomized_covered\": 20,\n      \"phase2b_batch_020_atomized_covered\": 36,\n      \"phase2b_batch_021_atomized_covered\": 31,\n      \"phase2b_batch_022_dispositioned\": 1,\n      \"phase2b_batch_022_structural_dispositioned\": 3,\n      \"phase2b_batch_023_atomized_covered\": 4,\n      \"phase2b_batch_023_dispositioned\": 1,\n      \"phase2b_batch_023_structural_dispositioned\": 3,\n      \"phase2b_batch_024_atomized_covered\": 10,\n      \"phase2b_batch_024_dispositioned\": 1,\n      \"phase2b_batch_024_structural_dispositioned\": 3,\n      \"phase2b_batch_025_atomized_covered\": 34,\n      \"phase2b_batch_026_atomized_covered\": 19,\n      \"phase2b_batch_027_retired_bridge_covered\": 1,\n      \"phase2b_batch_027_structural_no_unit\": 3,\n      \"phase2b_batch_028_atomized_covered\": 22,\n      \"phase2b_batch_028_structural_no_unit\": 5,\n      \"phase2b_batch_029_atomized_covered\": 27,\n      \"phase2b_batch_029_structural_no_unit\": 8,\n      \"phase2b_batch_030_atomized_covered\": 20,\n      \"phase2b_batch_031_retired_bridge_covered\": 1,\n      \"phase2b_batch_031_structural_no_unit\": 3,\n      \"phase2b_batch_032_atomized_covered\": 8,\n      \"phase2b_batch_032_structural_no_unit\": 15,\n      \"phase2b_batch_033_atomized_covered\": 2,\n      \"phase2b_batch_034_atomized_covered\": 1,\n      \"phase2b_batch_035_atomized_covered\": 9,\n      \"phase2b_batch_036_atomized_covered\": 13,\n      \"phase2b_batch_037_atomized_covered\": 12,\n      \"phase2b_batch_038_atomized_covered\": 29,\n      \"phase2b_batch_039_atomized_covered\": 25,\n      \"phase2b_batch_040_atomized_covered\": 3,\n      \"phase2b_batch_041_atomized_covered\": 28,\n      \"phase2b_batch_042_atomized_covered\": 7,\n      \"phase2b_batch_042_dispositioned\": 1,\n      \"phase2b_batch_042_structural_dispositioned\": 3,\n      \"phase2b_batch_043_atomized_covered\": 20,\n      \"phase2b_batch_043_dispositioned\": 1,\n      \"phase2b_batch_043_structural_dispositioned\": 5,\n      \"phase2b_batch_044_atomized_covered\": 24,\n      \"phase2b_batch_044_structural_dispositioned\": 2,\n      \"phase2b_batch_045_atomized_covered\": 5,\n      \"phase2b_batch_045_structural_dispositioned\": 1,\n      \"phase2b_batch_046_dispositioned\": 1,\n      \"phase2b_batch_046_structural_dispositioned\": 3,\n      \"phase2b_batch_047_atomized_covered\": 21,\n      \"phase2b_batch_047_structural_parent_covered\": 2,\n      \"phase2b_batch_048_dispositioned\": 1,\n      \"phase2b_batch_048_structural_dispositioned\": 4,\n      \"phase2b_batch_049_atomized_covered\": 16,\n      \"phase2b_batch_049_dispositioned\": 1,\n      \"phase2b_batch_049_structural_dispositioned\": 4,\n      \"phase2b_batch_049_structural_parent_covered\": 1,\n      \"phase2b_batch_050_atomized_covered\": 21,\n      \"phase2b_batch_050_structural_parent_covered\": 8,\n      \"phase2b_batch_051_atomized_covered\": 28,\n      \"phase2b_batch_051_structural_dispositioned\": 1,\n      \"phase2b_batch_051_structural_parent_covered\": 7,\n      \"phase2b_batch_052_atomized_covered\": 2,\n      \"phase2b_batch_052_retired_bridge_covered\": 1,\n      \"phase2b_batch_052_structural_dispositioned\": 3,\n      \"phase2b_batch_053_atomized_covered\": 18,\n      \"phase2b_batch_053_retired_bridge_covered\": 1,\n      \"phase2b_batch_053_structural_dispositioned\": 3,\n      \"phase2b_batch_054_atomized_covered\": 31,\n      \"phase2b_batch_054_structural_dispositioned\": 1,\n      \"phase2b_batch_055_atomized_covered\": 22,\n      \"phase2b_batch_055_retired_bridge_covered\": 1,\n      \"phase2b_batch_055_structural_dispositioned\": 3,\n      \"phase2b_batch_056_atomized_covered\": 11,\n      \"phase2b_batch_056_structural_dispositioned\": 3,\n      \"phase2b_batch_057_atomized_covered\": 2,\n      \"phase2b_batch_058_atomized_covered\": 5,\n      \"phase2b_batch_058_structural_dispositioned\": 1,\n      \"phase2b_batch_059_atomized_covered\": 15,\n      \"phase2b_batch_059_structural_dispositioned\": 3,\n      \"phase2b_batch_060_atomized_covered\": 8,\n      \"phase2b_batch_060_structural_dispositioned\": 1,\n      \"phase2b_batch_061_atomized_covered\": 13,\n      \"phase2b_batch_061_structural_dispositioned\": 2,\n      \"phase2b_batch_062_atomized_covered\": 7,\n      \"phase2b_batch_062_structural_dispositioned\": 1,\n      \"phase2b_batch_063_atomized_covered\": 25,\n      \"phase2b_batch_063_structural_dispositioned\": 5,\n      \"phase2b_batch_064_atomized_covered\": 8,\n      \"phase2b_batch_064_retired_bridge_covered\": 1,\n      \"phase2b_batch_064_structural_dispositioned\": 3,\n      \"phase2b_batch_065_atomized_covered\": 26,\n      \"phase2b_batch_065_structural_dispositioned\": 9,\n      \"phase2b_batch_066_atomized_covered\": 25,\n      \"phase2b_batch_066_structural_dispositioned\": 2,\n      \"phase2b_batch_067_atomized_covered\": 14,\n      \"phase2b_batch_067_structural_dispositioned\": 1,\n      \"phase2b_batch_068_atomized_covered\": 29,\n      \"phase2b_batch_069_atomized_covered\": 30,\n      \"phase2b_batch_069_structural_dispositioned\": 5,\n      \"phase2b_batch_070_atomized_covered\": 16,\n      \"phase2b_batch_070_structural_dispositioned\": 2,\n      \"phase2b_batch_071_atomized_covered\": 26,\n      \"phase2b_batch_071_structural_dispositioned\": 5,\n      \"phase2b_batch_072_atomized_covered\": 31,\n      \"phase2b_batch_072_structural_dispositioned\": 8,\n      \"phase2b_batch_073_atomized_covered\": 7,\n      \"phase2b_batch_073_structural_dispositioned\": 3,\n      \"phase2b_batch_074_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_074_structural_dispositioned\": 1,\n      \"phase2b_batch_075_atomized_covered\": 24,\n      \"phase2b_batch_075_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_075_structural_dispositioned\": 3,\n      \"phase2b_batch_076_atomized_covered\": 8,\n      \"phase2b_batch_076_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_076_structural_dispositioned\": 6,\n      \"phase2b_batch_077_atomized_covered\": 8,\n      \"phase2b_batch_077_retired_bridge_dispositioned\": 1,\n      \"phase2b_batch_077_structural_dispositioned\": 7,\n      \"phase2b_batch_078_atomized_covered\": 22,\n      \"phase2b_batch_078_structural_dispositioned\": 7,\n      \"phase2b_batch_079_bridge_retired\": 1,\n      \"phase2b_batch_079_structural_dispositioned\": 1,\n      \"phase2b_batch_080_atomized_covered\": 17,\n      \"phase2b_batch_080_bridge_retired\": 1,\n      \"phase2b_batch_080_structural_dispositioned\": 3,\n      \"phase2b_batch_081_atomized_covered\": 37,\n      \"phase2b_batch_081_structural_dispositioned\": 6,\n      \"phase2b_batch_082_atomized_covered\": 1,\n      \"phase2b_batch_082_bridge_retired\": 1,\n      \"phase2b_batch_082_structural_dispositioned\": 3,\n      \"phase2b_batch_083_atomized_covered\": 8,\n      \"phase2b_batch_083_bridge_retired\": 1,\n      \"phase2b_batch_083_structural_dispositioned\": 6,\n      \"phase2b_batch_084_atomized_covered\": 18,\n      \"phase2b_batch_084_structural_dispositioned\": 1,\n      \"phase2b_batch_085_atomized_covered\": 17,\n      \"phase2b_batch_085_reference_section_preserved\": 1,\n      \"phase2b_batch_085_structural_dispositioned\": 2,\n      \"phase2b_batch_086_atomized_covered\": 26,\n      \"phase2b_batch_086_bridge_retired\": 1,\n      \"phase2b_batch_086_structural_dispositioned\": 6,\n      \"phase2b_batch_087_atomized_covered\": 8,\n      \"phase2b_batch_087_bridge_retired\": 1,\n      \"phase2b_batch_087_structural_dispositioned\": 3,\n      \"phase2b_batch_088_atomized_covered\": 17,\n      \"phase2b_batch_088_reference_section_preserved\": 1,\n      \"phase2b_batch_088_structural_dispositioned\": 2,\n      \"phase2b_batch_089_atomized_covered\": 3,\n      \"phase2b_batch_091_atomized_covered_bridge_retired\": 1,\n      \"phase2b_batch_092_atomized_covered\": 28,\n      \"phase2b_batch_092_structural_disposition\": 7,\n      \"phase2b_batch_093_atomized_covered\": 14,\n      \"phase2b_batch_094_atomized_covered\": 38,\n      \"phase2b_batch_094_structural_disposition\": 1,\n      \"phase2b_batch_095_atomized_covered\": 8,\n      \"phase2b_batch_095_retired_bridge_disposition\": 1,\n      \"phase2b_batch_095_retired_history_disposition\": 2,\n      \"phase2b_batch_095_structural_disposition\": 2,\n      \"phase2b_batch_095_structural_owner_map_covered\": 1,\n      \"phase2b_batch_095_structural_references_covered\": 2,\n      \"phase2b_batch_095_structural_summary_covered\": 1,\n      \"phase2b_batch_096_atomized_covered\": 25,\n      \"phase2b_batch_097_atomized_covered\": 25,\n      \"phase2b_batch_098_atomized_covered\": 23,\n      \"phase2b_batch_099_atomized_covered\": 4,\n      \"phase2b_batch_099_retired_bridge_disposition\": 1,\n      \"phase2b_batch_099_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_099_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_099_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_100_atomized_covered\": 17,\n      \"phase2b_batch_100_structural_title_anchor\": 1,\n      \"phase2b_batch_101_atomized_covered\": 16,\n      \"phase2b_batch_102_atomized_covered\": 3,\n      \"phase2b_batch_102_retired_bridge_disposition\": 1,\n      \"phase2b_batch_102_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_102_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_102_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_atomized_covered\": 11,\n      \"phase2b_batch_103_retired_bridge_disposition\": 1,\n      \"phase2b_batch_103_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_103_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_103_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_structural_section_container\": 2,\n      \"phase2b_batch_103_structural_title_anchor\": 1,\n      \"phase2b_batch_104_atomized_covered\": 28,\n      \"phase2b_batch_104_structural_section_container\": 3,\n      \"phase2b_batch_104_structural_title_anchor\": 1,\n      \"phase2b_batch_104_structural_toc_disposition\": 1,\n      \"phase2b_batch_105_atomized_covered\": 16,\n      \"phase2b_batch_105_structural_parent_covered\": 1,\n      \"phase2b_batch_105_structural_section_container\": 1,\n      \"phase2b_batch_106_atomized_covered\": 19,\n      \"phase2b_batch_106_structural_section_container\": 1,\n      \"phase2b_batch_107_atomized_covered\": 4,\n      \"phase2b_batch_107_reference_only_structural\": 1,\n      \"phase2b_batch_107_structural_addendum_heading\": 1,\n      \"phase2b_batch_107_structural_section_container\": 1,\n      \"phase2b_batch_108_atomized_covered\": 19,\n      \"phase2b_batch_108_retired_bridge_disposition\": 1,\n      \"phase2b_batch_108_structural_migration_coverage\": 1,\n      \"phase2b_batch_108_structural_planunits_heading\": 1,\n      \"phase2b_batch_108_structural_section_and_planunit\": 3,\n      \"phase2b_batch_109_atomized_covered\": 28,\n      \"phase2b_batch_109_structural_commands_heading\": 1,\n      \"phase2b_batch_109_structural_expanded_extraction_coverage_heading\": 1,\n      \"phase2b_batch_109_structural_formatters_heading\": 1,\n      \"phase2b_batch_109_structural_migration_coverage\": 1,\n      \"p\n...[truncated 10060 chars]"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "duration_ms": 4854,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "run_gates",
+      "label": "run-gates",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:18.404278+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:45:23Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "duration_ms": 383,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "shard_check_script",
+      "label": "pm-shard-plans --check",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:23.298758+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"docs_checked\": 51,\n  \"failures\": [],\n  \"shards_checked\": 906,\n  \"source_count\": 51,\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py check-shards",
+      "duration_ms": 425,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "check_shards_gate",
+      "label": "pm-plans-verify check-shards",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:23.720022+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"check-shards\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:45:24Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "duration_ms": 52,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "validate_auto_decisions",
+      "label": "validate-auto-decisions",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:24.183098+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:45:24Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "duration_ms": 55,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "verify_spec_lock",
+      "label": "verify-spec-lock",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:24.272206+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:45:24Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "duration_ms": 487,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "validate_evidence",
+      "label": "validate-evidence",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:24.363876+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T04:45:24Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": "git diff --check",
+      "duration_ms": 12,
+      "env": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_after_revert": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+      ],
+      "id": "git_diff_check",
+      "label": "git diff --check",
+      "non_audit_status_delta": [],
+      "returncode": 0,
+      "reverted_side_effects": [],
+      "started_utc": "2026-06-17T04:45:24.888962+00:00",
+      "status": "pass",
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "final_git_status": [
+    "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+  ],
+  "generated_utc": "2026-06-17T04:45:24.937972+00:00",
+  "initial_git_status": [
+    "?? Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/"
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "mutation_summary": {
+    "non_audit_mutations_observed": false,
+    "reverts_attempted": []
+  },
+  "pyyaml_dependency": {
+    "relative_path": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps",
+    "used_for": [
+      "pm-bootstrap-ledger-validate",
+      "pm-plan-index",
+      "pm-plan-migration"
+    ]
+  },
+  "schema": "pm.audit.validator_results.v1",
+  "status": "fail"
+}
