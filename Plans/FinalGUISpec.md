@@ -24852,6 +24852,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit maps user-visible GoalRun, WorkGraph, verification, evidence, and source-control displays across GUI surfaces.
 depends_on:
+  - GRS-026
+  - GRS-027
   - OP-022
   - RGV-012
   - RAP-027
@@ -24862,6 +24864,8 @@ depends_on:
   - W-071
   - PDS-006
   - PNC-009
+  - UF-064
+  - UF-069
 unblocks: []
 acceptance_criteria:
   - Orchestrator Goal surfaces show GoalRun, WorkGraph, SubagentWave, VerificationCycle, evidence, receipts, blockers, and lane/model configuration status.
@@ -24880,6 +24884,7 @@ reasoning_tier: high
 context_scope: orchestrator_goal_gui_surfaces
 implementation_surfaces:
   - Plans/FinalGUISpec.md
+  - Plans/Goal_Runtime_System.md
   - Plans/Orchestrator_Page.md
   - Plans/Run_Graph_View.md
   - Plans/Runtime_Artifacts_Panel.md
@@ -24952,6 +24957,7 @@ negative_constraints:
   - Do not hide blocked write reasons or unconfigured-lane recovery actions.
 owner_hints:
   - Plans/FinalGUISpec.md
+  - Plans/Goal_Runtime_System.md
   - Plans/Orchestrator_Page.md
   - Plans/Run_Graph_View.md
   - Plans/Runtime_Artifacts_Panel.md
