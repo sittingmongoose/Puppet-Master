@@ -8400,12 +8400,14 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 12,
+        "False": 13,
         "True": 1
       },
-      "heading_count": 22,
+      "heading_count": 23,
       "implementation_surfaces": [
         "Plans/*.md",
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
         "Plans/.plan_index",
         "Plans/.plan_index/acceptance_units.jsonl",
         "Plans/.plan_index/coverage_report.json",
@@ -8420,11 +8422,12 @@
         "Plans/ledgers/v2/schemas/plan_unit.schema.json",
         "future Settings UI",
         "future migration inventory",
+        "scripts/pm-audit-closure.py",
         "scripts/pm-plan-index.py"
       ],
-      "line_count": 575,
+      "line_count": 644,
       "path": "Plans/Plan_Document_System.md",
-      "plan_unit_count": 13,
+      "plan_unit_count": 14,
       "plan_unit_ids": [
         "PDS-001",
         "PDS-002",
@@ -8438,7 +8441,8 @@
         "PDS-010",
         "PDS-011",
         "PDS-012",
-        "PDS-013"
+        "PDS-013",
+        "PDS-014"
       ],
       "reasoning_tiers": [
         "high",
@@ -8449,6 +8453,7 @@
         "content_loss",
         "execution_boundary",
         "false_layout_failure",
+        "false_repair_completion",
         "governance_standard",
         "indexability",
         "layout_drift",
@@ -8456,15 +8461,15 @@
         "owner_drift",
         "user_visible_settings"
       ],
-      "sha256": "674a2c7887c37a32105f1ff52f2fea6041147dd5ed3d73e00a5d16c5545d32ac",
+      "sha256": "7c32e703fc5a502fc45566345a947b6c4441815b0d97c34d93da37ffdd4d7640",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 13
+        "accepted": 14
       },
       "title": "Plan Document System",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 12
+        "requirement": 13
       },
       "validation_surfaces": [
         "Coverage map.",
@@ -8488,6 +8493,8 @@
         "Post-conversion plan validators.",
         "Post-conversion validators.",
         "Pre-hash inventory.",
+        "python3 scripts/pm-audit-closure.py validate",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -8579,16 +8586,19 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 11
+        "False": 12
       },
-      "heading_count": 17,
+      "heading_count": 18,
       "implementation_surfaces": [
         "Plans/*.md",
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Ledger_System.md",
         "Plans/Spec_Lock.json",
         "Plans/bootstrap",
+        "Plans/bootstrap/Codex_Prompts.md",
         "Plans/ledgers/v2",
         "Plans/ledgers/v2/*/events.jsonl",
         "Plans/ledgers/v2/*/manifest.json",
@@ -8612,11 +8622,12 @@
         "future Chain Wizard",
         "future Goal Mode service",
         "future Native Ledger Service",
+        "scripts/pm-audit-closure.py",
         "scripts/pm-bootstrap-ledger-validate.py"
       ],
-      "line_count": 506,
+      "line_count": 586,
       "path": "Plans/Planning_Ledger_System.md",
-      "plan_unit_count": 11,
+      "plan_unit_count": 12,
       "plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -8628,7 +8639,8 @@
         "PLS-008",
         "PLS-009",
         "PLS-010",
-        "PLS-011"
+        "PLS-011",
+        "PLS-012"
       ],
       "reasoning_tiers": [
         "high",
@@ -8645,18 +8657,19 @@
         "governance_boundary",
         "migration_compatibility",
         "owner_drift",
+        "repeated_audit_loop",
         "source_loss"
       ],
-      "sha256": "95f160dcb4f1b197112a7671bba3cecb5b1b0c4129505d7d011d7f0a5bd848b1",
+      "sha256": "b13638e887ac0fb19d4bf7f56be42ded1670e91de9c2bf3ca941a40a356b5427",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 11
+        "accepted": 12
       },
       "title": "Planning Ledger System",
       "unit_type_counts": {
         "constraint": 1,
         "decision": 1,
-        "requirement": 9
+        "requirement": 10
       },
       "validation_surfaces": [
         "Compile queue owner_adjudication_status.",
@@ -8673,6 +8686,8 @@
         "PlanUnit coverage review.",
         "PlanUnit source_lineage and owner_hints.",
         "Plan_To_Node_Compilation boundary checks.",
+        "python3 scripts/pm-audit-closure.py validate",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -11144,7 +11159,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-17T04:57:43Z",
+  "generated_at_utc": "2026-06-17T12:51:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -11152,13 +11167,13 @@
     "docs_with_plan_units": 68,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 2922,
+      "False": 2924,
       "True": 2143
     },
-    "plan_unit_count": 5065,
+    "plan_unit_count": 5067,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5040,
+      "accepted": 5042,
       "deferred": 8,
       "retired": 17
     },
@@ -11198,7 +11213,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4184,
+      "requirement": 4186,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

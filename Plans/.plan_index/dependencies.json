@@ -23444,6 +23444,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PDS-014",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-014",
+      "to": "PLS-012"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PG-001",
       "to": "PG-002"
     },
@@ -24205,6 +24215,16 @@
     {
       "edge_type": "depends_on",
       "from": "PLS-011",
+      "to": "PLS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-012",
+      "to": "PLS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-012",
       "to": "PLS-010"
     },
     {
@@ -62114,6 +62134,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PLS-012",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PNC-001",
       "to": "BPM-005"
     },
@@ -62498,7 +62523,7 @@
       "to": "UIW-007"
     }
   ],
-  "generated_at_utc": "2026-06-17T04:57:43Z",
+  "generated_at_utc": "2026-06-17T12:51:19Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -125146,6 +125171,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "bootstrap_audit_repair",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-014",
+      "reasoning_tier": "high",
+      "risk_class": "false_repair_completion",
+      "source_location": {
+        "heading": "PDS-014 - Semantic Finding Key And Closure Matrix Validator",
+        "heading_level": 3,
+        "heading_line": 559,
+        "line": 561,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "progression_gates_residual_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Progression_Gates.md",
@@ -126313,6 +126355,23 @@
         "heading_level": 3,
         "heading_line": 402,
         "line": 404,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "bootstrap_audit_repair",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-012",
+      "reasoning_tier": "high",
+      "risk_class": "repeated_audit_loop",
+      "source_location": {
+        "heading": "PLS-012 - Semantic Closure Registry And Reopen Contract",
+        "heading_level": 3,
+        "heading_line": 483,
+        "line": 485,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -148611,10 +148670,10 @@
   "summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10615,
-    "edge_count": 12154,
-    "node_count": 5065,
-    "unblocks_edge_count": 1539,
+    "depends_on_edge_count": 10619,
+    "edge_count": 12159,
+    "node_count": 5067,
+    "unblocks_edge_count": 1540,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

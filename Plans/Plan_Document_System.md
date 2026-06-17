@@ -556,6 +556,74 @@ owner_hints: [Plans/Plan_Document_System.md]
 
 ContractRef: ContractName:Plans/Plan_Document_System.md
 
+### PDS-014 - Semantic Finding Key And Closure Matrix Validator
+
+```yaml
+plan_unit_id: PDS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Semantic audit findings use a stable deterministic finding_key derived from
+  finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs,
+  detail_keys, and exact_tokens. Repair cycles must write
+  repair_closure_matrix.jsonl and close every audit finding/detail as repaired,
+  false_positive, explicitly_deferred, source_lineage_only, not_for_plan,
+  stale_retired, or blocked_requires_user_decision; reopened is reserved for a
+  previously closed finding whose source atom, PlanUnit, owner evidence, or
+  closure evidence changed. scripts/pm-audit-closure.py validates the global
+  registry JSONL, required fields, duplicate open finding_keys, invalid
+  closure_status values, missing evidence refs, reopened rows, and per-audit
+  closure matrix completeness.
+gui_related: false
+gui_classification_reason: Finding identity, closure matrices, and validators are docs/governance behavior, not GUI implementation work.
+depends_on:
+  - PDS-003
+  - PLS-012
+unblocks: []
+acceptance_criteria:
+  - The finding_key algorithm is deterministic and excludes volatile audit prose.
+  - repair_closure_matrix.jsonl is mandatory for repair completion and covers every audit finding/detail selected for repair.
+  - Registry rows fail validation when required fields, evidence refs, allowed statuses, or hash-backed reopen rules are missing.
+  - Duplicate open finding_keys fail validation while historical closed rows can remain durable evidence.
+validation_surfaces:
+  - python3 scripts/pm-audit-closure.py validate
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
+risk_class: false_repair_completion
+reasoning_tier: high
+context_scope: bootstrap_audit_repair
+implementation_surfaces:
+  - scripts/pm-audit-closure.py
+  - Plans/.audits/_semantic_closure_registry.jsonl
+  - Plans/.audits/audit-*/repair_closure_matrix.jsonl
+  - Plans/bootstrap/Codex_Prompts.md
+node_compile_hint:
+  mode: audit_closure_validator
+  create_worknodes: false
+source_lineage:
+  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+preserved_exact_tokens:
+  - "finding_key"
+  - "finding_family"
+  - "source_atom_ids"
+  - "plan_unit_ids"
+  - "owner_docs"
+  - "detail_keys"
+  - "exact_tokens"
+  - "repair_closure_matrix.jsonl"
+  - "duplicate open finding_keys"
+  - "closure_status"
+  - "reopened"
+  - "previously_closed"
+negative_constraints:
+  - Do not use audit_id, row number, or prose order as the finding identity.
+  - Do not claim repair completion with green validators alone when closure rows are missing.
+  - Do not reopen a finding without changed source/canonical/evidence hashes or a blocked/reopened status.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/Planning_Ledger_System.md
+```
+
 ## 3. Compilation Coverage
 
 | Ledger atom | Disposition |
@@ -571,5 +639,6 @@ ContractRef: ContractName:Plans/Plan_Document_System.md
 | atom-0033 | PDS-007; PNC-005 owns runtime inheritance. |
 | q-0002 | Captured in PDS-004/BPM-004 as a non-blocking future migration choice: "Which representative pilot Plan doc should be converted first?" Disposition remains "Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum." |
 | source_ref:chat:2026-06-13-new-plan-authoring-profile-goal | PDS-011, PDS-012, PDS-013 |
+| source_ref:chat:2026-06-17-semantic-closure-registry-support | PDS-014; PLS-012 owns the durable registry/reopen policy. |
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md

@@ -1764,13 +1764,13 @@
   "dependency_graph_summary": {
     "build_order_available": false,
     "cycle_blocker_count": 245,
-    "depends_on_edge_count": 10615,
-    "edge_count": 12154,
-    "node_count": 5065,
-    "unblocks_edge_count": 1539,
+    "depends_on_edge_count": 10619,
+    "edge_count": 12159,
+    "node_count": 5067,
+    "unblocks_edge_count": 1540,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-17T04:57:43Z",
+  "generated_at_utc": "2026-06-17T12:51:19Z",
   "gui_related_units": {
     "count": 2143,
     "units": [
@@ -25355,10 +25355,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5065,
+  "plan_unit_count": 5067,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 882,
+      "high": 884,
       "low": 5,
       "standard": 4178
     },
@@ -26244,6 +26244,7 @@
       "false_completion": 4,
       "false_layout_failure": 1,
       "false_node_generation": 2,
+      "false_repair_completion": 1,
       "false_wiring_completion": 1,
       "family_pooling_guardrails": 1,
       "fanout_cardinality": 1,
@@ -27221,6 +27222,7 @@
       "reopen_revocation_policy_gap": 1,
       "reopen_state_loss": 1,
       "repack_config_source": 1,
+      "repeated_audit_loop": 1,
       "repo_identity_drift": 1,
       "repo_validation_bypass": 1,
       "request_contract_drift": 1,
@@ -27997,7 +27999,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5040,
+      "accepted": 5042,
       "deferred": 8,
       "retired": 17
     },
@@ -28037,7 +28039,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4184,
+      "requirement": 4186,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
