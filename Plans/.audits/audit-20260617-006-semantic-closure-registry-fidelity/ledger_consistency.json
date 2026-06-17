@@ -1,0 +1,185 @@
+{
+  "compile_queue": {
+    "compiled_plan_unit_ids": [
+      "GRS-002",
+      "GRS-003",
+      "GRS-026",
+      "GRS-027",
+      "OP-022",
+      "OSI-428",
+      "EP-098",
+      "PNC-009",
+      "PDS-006",
+      "F3-394",
+      "F3-395",
+      "ACD-420",
+      "CW-008",
+      "CWF-151",
+      "RAP-027",
+      "W-071",
+      "RGV-012",
+      "CV-288",
+      "MS-109",
+      "PS-115",
+      "SP-215",
+      "PLS-011",
+      "0PI-056"
+    ],
+    "compiled_source_atoms_count": 102,
+    "items_count": 1,
+    "non_applicable_atom_ids": [
+      "atom-0001",
+      "atom-0101"
+    ],
+    "queue_id": "pcq-0001",
+    "range_new_plan_units_not_in_compile_queue": [
+      "PDS-014",
+      "PLS-012"
+    ],
+    "status": "compiled"
+  },
+  "forbidden_artifacts": {
+    "executable_queues": "not_found",
+    "final_node_manifests": "not_found",
+    "implementation_files": "only scripts/pm-audit-closure.py support validator added in audited committed range; no product implementation or Rust/Slint/Iced scaffolding",
+    "legacy_iced_app": "not_found",
+    "nodeseeds": "not_found",
+    "worknodes": "not_found"
+  },
+  "ledger_health": {
+    "checks_count": 17,
+    "status": "pass_governance_sealed"
+  },
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "plan_index": {
+    "added_plan_units": [
+      "PDS-014",
+      "PLS-012"
+    ],
+    "content_changed_plan_units": [],
+    "coverage_summary": {
+      "cycle_blocker_count": 245,
+      "doc_count": 68,
+      "docs_with_plan_units": 68,
+      "docs_without_plan_units": 0,
+      "duplicate_plan_unit_id_count": 0,
+      "missing_gui_related_boolean_count": 0,
+      "missing_required_metadata_count": 0,
+      "parse_error_count": 0,
+      "plan_unit_count": 5067,
+      "unique_plan_unit_count": 5067,
+      "unresolved_dependency_reference_count": 0
+    },
+    "deleted_plan_units": [],
+    "dependencies_summary": {
+      "build_order_available": false,
+      "cycle_blocker_count": 245,
+      "depends_on_edge_count": 10619,
+      "edge_count": 12159,
+      "node_count": 5067,
+      "unblocks_edge_count": 1540,
+      "unresolved_reference_count": 0
+    },
+    "hash_only_changed_plan_units_count": 24,
+    "node_readiness_no_executable_build_tasks_created": true,
+    "node_readiness_no_worknodes_created": true,
+    "node_readiness_nodeseed_candidates_created": false,
+    "node_readiness_status": "blocked_compiler_contract_incomplete"
+  },
+  "projection_agreement": {
+    "accepted_decisions_count": 29,
+    "candidate_atoms_count": 0,
+    "current_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "current_status": "sealed",
+    "deferred_questions_count": 0,
+    "design_atoms_total": 104,
+    "governance_status": "sealed",
+    "handoff_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "last_event_ids": {
+      "current": "evt-0016",
+      "manifest": "evt-0016"
+    },
+    "manifest_status": "sealed",
+    "open_blockers_count": 0,
+    "open_questions_count": 3,
+    "ready_for_plan_compile_atoms": 0,
+    "registry_entry_status": "sealed"
+  },
+  "registry_inference": {
+    "basis": "sealed_ledgers latest last_updated_at_utc after excluding pldg-20260610-001 unless only relevant",
+    "latest_non_background_ledger": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+    "registry_governance_status": "sealed",
+    "registry_status": "sealed"
+  },
+  "schema_id": "pm.semantic_fidelity.ledger_consistency.v1",
+  "sealed_ledger_open_item_policy": {
+    "classification": "explicitly_deferred",
+    "finding": "q-0007 through q-0009 are open but explicitly post_seal_followup_not_compiled, so they do not unseal the compiled PlanUnits.",
+    "open_questions": [
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened after the compiled/governance-sealed ledger was resumed for conversational continuation. This is not a compile blocker for the sealed PlanUnits; it selects the next safe planning lane.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0017",
+          "atom-0041",
+          "atom-0085",
+          "atom-0086"
+        ],
+        "question": "Should the next post-seal continuation focus on the PlanUnit-to-NodeSeed-to-WorkNode compiler contract, or on implementation planning that remains strictly non-executable until that compiler contract exists?",
+        "question_id": "q-0007",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      },
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened to prevent premature executable WorkNode semantics from leaking into planning before the compiler contract exists.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0017",
+          "atom-0041",
+          "atom-0085",
+          "atom-0086"
+        ],
+        "question": "What is the smallest future compiler output that may exist before execution: a non-executable NodeSeed candidate, a hydrated WorkNode template, or only a compiled PlanUnit reference with acceptance metadata?",
+        "question_id": "q-0008",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      },
+      {
+        "compile_disposition": "post_seal_followup_not_compiled",
+        "created_at_utc": "2026-06-16T21:31:00Z",
+        "disposition": "Opened to clarify the certification boundary before any future implementation planning relies on runtime completion semantics.",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "linked_atom_ids": [
+          "atom-0044",
+          "atom-0045",
+          "atom-0053",
+          "atom-0090"
+        ],
+        "question": "Where should completion certification be bound in the future runtime: compiler-authored acceptance claims, executor-collected receipts, verifier/adjudicator judgment, or a layered combination with explicit parent-goal certification gates?",
+        "question_id": "q-0009",
+        "schema_id": "pm.bootstrap_question.v1",
+        "source_refs": [
+          "chat:user-continue-post-seal-conversation",
+          "assistant:post-seal-question-batch-compiler-contract"
+        ],
+        "status": "open",
+        "updated_at_utc": "2026-06-16T21:31:00Z"
+      }
+    ]
+  },
+  "status": "pass_with_warnings"
+}
