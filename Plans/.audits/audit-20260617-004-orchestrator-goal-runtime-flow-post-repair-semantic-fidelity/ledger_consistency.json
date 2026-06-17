@@ -1,0 +1,81 @@
+{
+  "acceptable_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "candidate_compile_plan_active": false,
+  "candidate_ready_atom_ids": [],
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/chain-wizard.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_unit_ids": [
+    "GRS-002",
+    "GRS-003",
+    "GRS-026",
+    "GRS-027",
+    "OP-022",
+    "OSI-428",
+    "EP-098",
+    "PNC-009",
+    "PDS-006",
+    "F3-394",
+    "F3-395",
+    "ACD-420",
+    "CW-008",
+    "CWF-151",
+    "RAP-027",
+    "W-071",
+    "RGV-012",
+    "CV-288",
+    "MS-109",
+    "PS-115",
+    "SP-215",
+    "PLS-011",
+    "0PI-056"
+  ],
+  "errors": [],
+  "handoff_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "open_blockers": [],
+  "registry_bucket": "sealed_ledgers",
+  "schema_id": "pm.audit.ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "statuses": {
+    "compile_queue": "source_lineage_compiled_governance_sealed_not_active",
+    "current": "sealed",
+    "current_governance_status": "sealed",
+    "ledger_health": "pass_governance_sealed",
+    "ledger_registry": "sealed",
+    "ledger_registry_governance_status": "sealed",
+    "manifest": "sealed",
+    "manifest_governance_status": "sealed",
+    "registry_entry": "sealed",
+    "registry_entry_governance_status": "sealed"
+  },
+  "warnings": [
+    "q-0007..q-0009 remain open but are explicitly post_seal_followup_not_compiled ledger-only follow-ups, not active compile blockers."
+  ]
+}
