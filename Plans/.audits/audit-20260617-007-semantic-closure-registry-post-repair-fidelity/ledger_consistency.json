@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "audit_id": "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "status": "pass_with_notes",
+  "registry_status": {
+    "latest_non_background_ledger": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+    "basis": "latest sealed ledger in Plans/ledgers/v2/ledger_registry.json; pldg-20260610-001-ledger-plan-system excluded as older bootstrap/system ledger",
+    "registry_updated_at_utc": "2026-06-16T21:31:00Z"
+  },
+  "state_files": {
+    "handoff": "present",
+    "current": "present",
+    "open_items": "present",
+    "operating_capsule": "present",
+    "compile_queue": "present",
+    "ledger_health": "not_present_as_state_file; validation_state embedded in handoff/current",
+    "governance_status": "not_present_as_state_file; governance_status embedded in registry/current/handoff"
+  },
+  "counts": {
+    "design_atoms_total": 104,
+    "accepted_decisions_count": 29,
+    "compiled_plan_unit_ids_in_current": 23,
+    "compile_queue_items": 1,
+    "ready_for_plan_compile_atoms": 0,
+    "candidate_atoms_count": 0,
+    "open_blockers_count": 0,
+    "open_questions_count": 3
+  },
+  "sealed_open_item_policy": {
+    "open_questions": [
+      "q-0007",
+      "q-0008",
+      "q-0009"
+    ],
+    "classification": "explicitly_deferred",
+    "evidence": "All three open questions are post_seal_followup_not_compiled and not compile blockers for sealed PlanUnits."
+  },
+  "compile_queue": {
+    "active": false,
+    "ready_atom_ids": [],
+    "status": "source_lineage_compiled_governance_sealed_not_active",
+    "source_lineage_pre_seal_ready_atom_count": 102,
+    "non_applicable_atom_ids": [
+      "atom-0001",
+      "atom-0101"
+    ]
+  },
+  "issues": [],
+  "evidence": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json"
+  ]
+}
