@@ -1,0 +1,82 @@
+{
+  "active_candidate_compile_plan": false,
+  "compile_queue_items": 1,
+  "compiled_plan_unit_ids": [
+    "GRS-002",
+    "GRS-003",
+    "GRS-026",
+    "GRS-027",
+    "OP-022",
+    "OSI-428",
+    "EP-098",
+    "PNC-009",
+    "F3-394",
+    "F3-395",
+    "ACD-420",
+    "CW-008",
+    "CWF-151",
+    "RAP-027",
+    "W-071",
+    "RGV-012",
+    "CV-288",
+    "MS-109",
+    "PS-115",
+    "SP-215",
+    "PLS-011",
+    "0PI-056"
+  ],
+  "compiled_to_plan_atoms": 102,
+  "evidence_count_drift": {
+    "current_acceptance_units": 18074,
+    "current_plan_units": 5065,
+    "current_shards_checked": 906,
+    "stale_evidence_excerpt_acceptance_units": 18068,
+    "status": "warn"
+  },
+  "handoff_last_known_good_state": "Accepted Orchestrator Goal Runtime Flow atoms are compiled to live canonical Plans PlanUnits and governance-sealed; post-seal conversational continuation is open with questions q-0007 through q-0009. Node readiness remains blocked_compiler_contract_incomplete.",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "open_blockers": [],
+  "post_seal_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "problematic_open_questions": [],
+  "ready_for_plan_compile_atoms": 0,
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 9,
+    "decisions": 29,
+    "design_atoms": 104,
+    "events": 16,
+    "questions": 9
+  },
+  "registry_candidate_field_mismatch": {
+    "compile_queue_active": false,
+    "current_candidate_doc_count": 0,
+    "ledger_registry_candidate_doc_count": 16,
+    "manifest_candidate_doc_count": 0,
+    "registry_entry_candidate_doc_count": 16,
+    "status": "warn"
+  },
+  "status": "pass_with_warnings",
+  "statuses": {
+    "compile_queue_governance_status": "sealed",
+    "compile_queue_status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "current_governance_status": "sealed",
+    "current_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "current_status": "sealed",
+    "health_status": "pass_governance_sealed",
+    "ledger_registry_governance_status": "sealed",
+    "ledger_registry_status": "sealed",
+    "manifest_governance_status": "sealed",
+    "manifest_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "manifest_status": "sealed",
+    "registry_entry_governance_status": "sealed",
+    "registry_entry_status": "sealed"
+  },
+  "warnings": [
+    "registry_entry.json and ledger_registry.json expose candidate_compile_owner_docs despite sealed status; current/manifest/compile_queue correctly mark no active candidates.",
+    "evidence narration includes stale count excerpts despite passing current validators."
+  ]
+}
