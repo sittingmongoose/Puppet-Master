@@ -3867,6 +3867,7 @@ depends_on:
   - OP-022
   - EP-098
   - PNC-009
+  - PDS-006
 unblocks: []
 acceptance_criteria:
   - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
@@ -3911,6 +3912,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0010
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0078
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0080
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0081

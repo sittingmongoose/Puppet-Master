@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -52,11 +52,11 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -77,6 +77,14 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0
     }
   ],

@@ -7338,7 +7338,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, and model profiles, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics. Subagent-policy atoms atom-0031 and atom-0032 are carried by OSI-428, EP-098, GRS-026, and GRS-027; this PlanUnit retains only the Models-owned capability-lane/model-binding implications through dec-0004, corr-0002, and direct model-policy atoms.
+  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, and model profiles, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
 gui_related: false
 gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
 depends_on:
@@ -7398,8 +7398,6 @@ preserved_exact_tokens:
   - "tier-era wording"
   - "write_mode"
   - "certification_tier"
-moved_owner_lineage:
-  - "atom-0031 and atom-0032 are subagent-policy lineage carried by OSI-428, EP-098, GRS-026, and GRS-027; MS-109 retains only the Models-owned capability-lane/model-binding implication through dec-0004, corr-0002, and direct model-policy atoms."
 negative_constraints:
   - Do not hardcode provider/model defaults.
   - Do not resolve low_cost_executor lanes as verifier, adjudicator, or certifier roles.

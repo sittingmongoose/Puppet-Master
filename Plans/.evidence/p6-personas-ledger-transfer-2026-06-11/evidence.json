@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "d4f3f519b3510e4e5506fe305f8046cd01eeda667f61c933c4126340b8ad11ba"
+      "sha256": "a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -23,12 +23,12 @@
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "e9b290f9e220801fb7f68a255f7b16010bc01c9ce1e9b4c8d25ce0ccfa7d5c06"
+      "sha256": "7fd343f381106f176d93a32fc350eb77e14d7d22c2dd3be323810da3cbf49a95"
     },
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "2475e14ed86572316567b9a08dc1dea89720a9baf17dfc8e6647c4585fc008ec"
+      "sha256": "d15083e9294f5215ee9db682016974bcf55a847e9954a4aa6f7ca342b0f705b1"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "2c151d7fe7eac8e0a138b17176a5d0789af84217c906851ce05bb13697ddf37d"
+      "sha256": "29ca07971471d1c67ede31b9eef246c8102b38aaa6ca2ffc19eb921b44183972"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "707ad7fe39d82b137c74a0b5f1f709d2366d60c5a3dee5c5140c25e95ea70563"
+      "sha256": "d0b7491b545996cdd91c077586a0afe59397328cf1891ded58df29161ecb2a83"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "23821cfeccf63ac55076ff2b2a12f0cb96307344a2204c30b397d478de5bd68f"
+      "sha256": "2efaf172ec82a3877a101bad7b36a27d6b3147e19d5cd7c1c8ab9775c55aa96c"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -411,7 +411,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -423,7 +423,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -443,7 +443,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -452,6 +452,14 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0
     }
   ],

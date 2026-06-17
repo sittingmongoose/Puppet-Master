@@ -256,13 +256,14 @@ plan_unit_id: PDS-006
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plan_Document_System.md
-canonical_text: Standardized Plans may generate plan_units.jsonl, doc_cards.json, dependencies.json, acceptance_units.jsonl, coverage_report.json, and node_readiness_report.json under Plans/.plan_index/. This indexing phase catalogs PlanUnits and assesses readiness only; it does not create WorkNodes or executable build tasks.
+canonical_text: Standardized Plans may generate plan_units.jsonl, doc_cards.json, dependencies.json, acceptance_units.jsonl, coverage_report.json, and node_readiness_report.json under Plans/.plan_index/. This indexing phase catalogs PlanUnits, gui_related metadata, dependencies, validation status, blockers, readiness, receipt/ref availability, and compiler contract state for Plan/PlanUnit consumers such as Node Graph and Run Graph; it assesses readiness only and does not create WorkNodes or executable build tasks.
 gui_related: false
 gui_classification_reason: Index generation and readiness reporting are backend/governance behavior.
 depends_on: [PDS-003, PDS-004]
 unblocks: [PNC-004]
 acceptance_criteria:
   - Generated indexes include gui_related true/false for every indexed PlanUnit.
+  - Plan/PlanUnit readiness projections preserve blockers, validation status, gui_related inheritance, receipt status or receipt/ref availability, and compiler contract state for consumer surfaces.
   - node_readiness_report analyzes future conversion readiness only.
   - No WorkNodes or executable build queues are produced by the index phase.
 validation_surfaces:
@@ -278,9 +279,10 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0031
   - pldg-20260610-001-ledger-plan-system:dec-0010
   - pldg-20260610-001-ledger-plan-system:corr-0002
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
   - source_ref:chat:design-discussion
   - source_ref:chat:user-node-readiness-correction
-preserved_exact_tokens: ["Plans/.plan_index/plan_units.jsonl", "doc_cards.json", "dependencies.json", "node_readiness_report.json", "PlanUnit index", "node-readiness report", "Do not create WorkNodes"]
+preserved_exact_tokens: ["Plans/.plan_index/plan_units.jsonl", "doc_cards.json", "dependencies.json", "node_readiness_report.json", "PlanUnit index", "node-readiness report", "PlanUnit", "Node Graph", "Run Graph", "readiness", "blockers", "gui_related", "receipt status", "compiler contract", "Do not create WorkNodes"]
 negative_constraints:
   - Do not create WorkNodes from the PlanUnit index phase.
   - Do not create WorkNodes or executable build tasks during PlanUnit indexing.

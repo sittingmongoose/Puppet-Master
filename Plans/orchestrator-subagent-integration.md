@@ -31083,7 +31083,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
@@ -31106,6 +31106,7 @@ implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal
 node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0014
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
@@ -31140,6 +31141,15 @@ preserved_exact_tokens:
   - "receipt"
   - "write_mode"
   - "certification_tier"
+  - "controller"
+  - "planner"
+  - "executor"
+  - "reviewer"
+  - "verifier"
+  - "adjudicator"
+  - "certifier"
+  - "root_cause"
+  - "replan"
   - "one WorkNode execution"
   - "one file/window analysis"
   - "parent completion"

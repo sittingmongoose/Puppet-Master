@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "2c151d7fe7eac8e0a138b17176a5d0789af84217c906851ce05bb13697ddf37d"
+      "sha256": "29ca07971471d1c67ede31b9eef246c8102b38aaa6ca2ffc19eb921b44183972"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "3151255d37a31125a7c87b3d5db448020d8e5c73da178b6317b23795597deb1b"
+      "sha256": "49a2dddca8109f2d074f058f108b358304a42726443494e6c3cecc7e156d0250"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "221cc7e21a51576f1fe40a22189dda28d133be3e9f4e1281e0e5485628414833"
+      "sha256": "04389e8276eb962c639113a8f5364d8a55b981ad5238400910a89cc882191750"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "b5154bd2a8db7288fbc7a5a8f37e36cee8c0299c497630e81fc256399bcdd998"
+      "sha256": "d4f4326fd7df28ccda55f8bb89308ca9650e5e330f498fad28ed38bb544a6046"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "04b69df6ad1950f928a83fe6bf80e42fa9234d031871268a65285e1b101e2d8b"
+      "sha256": "bebdc977c73392cd17dd4ef1b36c340cbbe1a82a7bd33918b701e60831fc4177"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "446f6543ceb3142e2c5b3bed3129a2279385f822c565aef495ad730d0e759360"
+      "sha256": "6f043c3674a0f1fafe817f301bab4eb4388b5e93e3686b1eda78efe25147d64e"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "6405eaef2933c1e75b428ce1abee9e2cca370629b31a5b3d58f87cd4be874f31"
+      "sha256": "4ab148b4b7cbfcf00d67202b8322b4629124928fef6869b9642a841cffce611b"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "b0406136c1504694e2f3caa2f668c186145440192aabcdcf38a8c2dd130bc25f"
+      "sha256": "ea7e81c831488b8868c83d81c7db61cb12294d9780317000aa99f399cba75335"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "95f8134a08d0a1f01749e4c6c74d2e5e87e0596ae2e5fa7882a278becde518b1"
+      "sha256": "a6449437b3f0f97e34696d3b508b5b667bde1c25e993d19247e5721f2e73f11d"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "d784ad80033d02868ada9df2b60dca99f0acf4da3c2132f299d0c787e36b5f7d"
+      "sha256": "930ce34a7d84083973a9a35b7e723677f44a4503d7c3811ed4aad70a8a279547"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete.",
+      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -152,7 +152,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -191,7 +191,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -211,7 +211,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
       "exit_code": 0
     },
     {
@@ -220,6 +220,14 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/.pydeps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0
     }
   ],

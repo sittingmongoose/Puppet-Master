@@ -244,6 +244,24 @@ def heading_for_line(headings: list[dict[str, Any]], line_no: int) -> dict[str, 
     return current
 
 
+def adjacent_heading_before_line(text: str, line_no: int, max_blank_gap: int = 3) -> dict[str, Any] | None:
+    """Return a markdown heading immediately above a PlanUnit fence, even in legacy docs with stale fences."""
+    blank_gap = 0
+    lines = text.splitlines()
+    for index in range(line_no - 2, -1, -1):
+        line = lines[index]
+        if not line.strip():
+            blank_gap += 1
+            if blank_gap > max_blank_gap:
+                return None
+            continue
+        match = HEADING_PATTERN.match(line)
+        if match:
+            return {"line": index + 1, "level": len(match.group(1)), "title": match.group(2).strip()}
+        return None
+    return None
+
+
 def as_list(value: Any) -> list[Any]:
     if value is None:
         return []
@@ -252,8 +270,16 @@ def as_list(value: Any) -> list[Any]:
     return [value]
 
 
-def normalize_unit(raw_unit: dict[str, Any], path: Path, line_no: int, headings: list[dict[str, Any]]) -> dict[str, Any]:
+def normalize_unit(
+    raw_unit: dict[str, Any],
+    path: Path,
+    line_no: int,
+    headings: list[dict[str, Any]],
+    adjacent_heading: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     heading = heading_for_line(headings, line_no)
+    if adjacent_heading and (heading is None or adjacent_heading["line"] > heading["line"]):
+        heading = adjacent_heading
     row = dict(raw_unit)
     source_location = {
         "path": rel(path),
@@ -294,7 +320,7 @@ def extract_plan_units() -> tuple[list[dict[str, Any]], list[dict[str, Any]], li
             if not isinstance(data, dict) or not data.get("plan_unit_id"):
                 errors.append({"path": rel(path), "line": line_no, "error": "plan_unit_block_not_mapping"})
                 continue
-            unit = normalize_unit(data, path, line_no, headings)
+            unit = normalize_unit(data, path, line_no, headings, adjacent_heading_before_line(text, line_no))
             doc_units.append(unit)
             units.append(unit)
 
