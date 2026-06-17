@@ -1,0 +1,1646 @@
+{
+  "schema_id": "pm.semantic_repair_report.v1",
+  "status": "PASS",
+  "generated_at_utc": "2026-06-17T13:44:57Z",
+  "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "audit_dir": "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity",
+  "scope": {
+    "mode": "bounded_repair",
+    "repair_target": "latest PM Bootstrap deep semantic audit closure registry fidelity findings",
+    "forbidden_scope_respected": true,
+    "no_worknodes_nodeseeds_queues_manifests_or_implementation_created": true
+  },
+  "closure_matrix": {
+    "path": "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+    "row_count": 23,
+    "status_counts": {
+      "source_lineage_only": 8,
+      "repaired": 12,
+      "not_for_plan": 2,
+      "explicitly_deferred": 1
+    },
+    "source_artifact_counts": {
+      "semantic_risks.jsonl": 8,
+      "atom_fidelity_matrix.jsonl": 4,
+      "planunit_source_claims.jsonl": 4,
+      "owner_routing_findings.jsonl": 3,
+      "ledger_consistency.json": 2,
+      "validator_results.json": 2
+    },
+    "finding_family_counts": {
+      "range_lineage": 1,
+      "owner_routing": 5,
+      "validator_contract": 2,
+      "consumer_exactness": 2,
+      "closure_registry": 1,
+      "atom_fidelity": 4,
+      "planunit_lineage": 4,
+      "ledger_consistency": 2,
+      "validator_results": 2
+    },
+    "rows": [
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/semantic_risks.jsonl:1",
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "closure_reason": "The audited HEAD range is accepted as closure-support/source-lineage process support, not a new target-ledger compile.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "range_basis",
+          "source_lineage"
+        ],
+        "exact_tokens": [
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "range_lineage",
+        "finding_key": "sfk-a9517ae3108233f030381c76",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012",
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-001",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "1",
+        "title": "Audited HEAD range is closure-support, not a target-ledger compile"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/semantic_risks.jsonl:2"
+        ],
+        "closure_reason": "PLS-012 now sits under a neutral semantic audit closure addendum and states chat-sourced closure support is not a target-ledger compile output.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "section_heading",
+          "source_lineage"
+        ],
+        "exact_tokens": [
+          "Ledger Compile Addendum - pldg-20260616-002",
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "owner_routing",
+        "finding_key": "sfk-302b8883e6ab48d1500c2412",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-002",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "2",
+        "title": "PLS-012 is framed under the target ledger compile addendum"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "scripts/pm-audit-closure.py",
+          "Plans/Plan_Document_System.md",
+          "Plans/bootstrap/Codex_Prompts.md"
+        ],
+        "closure_reason": "pm-audit-closure now validates actionable matrix coverage beyond semantic_risks and requires matrix identity, evidence, reason, and registry linkage.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "repair_closure_matrix",
+          "coverage_artifacts"
+        ],
+        "exact_tokens": [
+          "repair_closure_matrix.jsonl",
+          "every audit finding/detail",
+          "--source-artifact"
+        ],
+        "finding_family": "validator_contract",
+        "finding_key": "sfk-0ad1b3ffa8b94893b345529d",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-003",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "3",
+        "title": "Closure matrix validator default under-enforces every finding/detail"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "scripts/pm-audit-closure.py",
+          "Plans/Plan_Document_System.md"
+        ],
+        "closure_reason": "pm-audit-closure now requires reopened registry rows to prove prior closed finding_key and actual hash deltas.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "reopened",
+          "hashes",
+          "reopen_conditions"
+        ],
+        "exact_tokens": [
+          "reopened",
+          "source atom hash",
+          "PlanUnit hash",
+          "owner evidence hash",
+          "closure evidence hash"
+        ],
+        "finding_family": "validator_contract",
+        "finding_key": "sfk-b892fda8ced2c44633d49bed",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md",
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014",
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-004",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "4",
+        "title": "Reopened and hash-backed reopen proof is declarative"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/bootstrap/Bootstrap_Planning_Workflow.md"
+        ],
+        "closure_reason": "Bootstrap workflow now points to PLS-012/PDS-014 and uses exact registry keys including hashes, created_at, and updated_at.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "registry_row_fields"
+        ],
+        "exact_tokens": [
+          "hashes",
+          "created_at",
+          "updated_at"
+        ],
+        "finding_family": "consumer_exactness",
+        "finding_key": "sfk-d6e6b1a15bc5d2e178be1913",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-005",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "5",
+        "title": "Bootstrap workflow compresses registry row shape"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/bootstrap/Bootstrap_Planning_Workflow.md"
+        ],
+        "closure_reason": "Bootstrap workflow now uses exact closure_status tokens instead of hyphenated aliases.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "closure_status_aliases"
+        ],
+        "exact_tokens": [
+          "false_positive",
+          "source_lineage_only",
+          "not_for_plan",
+          "stale_retired"
+        ],
+        "finding_family": "consumer_exactness",
+        "finding_key": "sfk-be2f340e98bf4ff7d0b369fd",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md",
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014",
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-006",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "6",
+        "title": "Bootstrap workflow prose uses alias enum wording after exact enum block"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/00-plans-index.md",
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "closure_reason": "00-plans-index now registers semantic closure routing and the owner docs now carry adjacent ContractRefs.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "owner_map",
+          "ContractRef"
+        ],
+        "exact_tokens": [
+          "Plans/.audits/_semantic_closure_registry.jsonl",
+          "scripts/pm-audit-closure.py",
+          "ContractRef"
+        ],
+        "finding_family": "owner_routing",
+        "finding_key": "sfk-17c9b16480d003d638a53d8d",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/00-plans-index.md",
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012",
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-007",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "7",
+        "title": "Owner map and local refs are under-specified for closure support"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/_semantic_closure_registry.jsonl",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/closure_reuse.jsonl"
+        ],
+        "closure_reason": "The empty prior registry is a truthful source-lineage state; this repair writes first closure rows rather than claiming prior reuse.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "registry_row_count",
+          "previously_closed"
+        ],
+        "exact_tokens": [
+          "previously_closed",
+          "Plans/.audits/_semantic_closure_registry.jsonl"
+        ],
+        "finding_family": "closure_registry",
+        "finding_key": "sfk-90a82ca731333d07999b0a4b",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-008",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_atom_ids": [],
+        "source_row": "8",
+        "title": "Empty registry proves no previously closed findings"
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/atom_fidelity_matrix.jsonl:1"
+        ],
+        "closure_reason": "Retrospective ledger creation is ledger setup/status source memory and not canonical Plans product prose.",
+        "closure_status": "not_for_plan",
+        "consumer_docs": [],
+        "detail_keys": [
+          "non_applicable_ledger_setup"
+        ],
+        "exact_tokens": [
+          "pldg-20260616-002-orchestrator-goal-runtime-flow"
+        ],
+        "finding_family": "atom_fidelity",
+        "finding_key": "sfk-aac5160115eeb24158b512c8",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/"
+        ],
+        "plan_unit_ids": [],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-009",
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_atom_ids": [
+          "atom-0001"
+        ],
+        "source_row": "1",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/atom_fidelity_matrix.jsonl:101"
+        ],
+        "closure_reason": "Plan-compile-ready status note is non-applicable status memory rather than a live Plan detail.",
+        "closure_status": "not_for_plan",
+        "consumer_docs": [],
+        "detail_keys": [
+          "non_applicable_status_note"
+        ],
+        "exact_tokens": [
+          "Plan-compile-ready"
+        ],
+        "finding_family": "atom_fidelity",
+        "finding_key": "sfk-cce3fba14ec0225db6581141",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/"
+        ],
+        "plan_unit_ids": [],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-010",
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_atom_ids": [
+          "atom-0101"
+        ],
+        "source_row": "101",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/atom_fidelity_matrix.jsonl:105"
+        ],
+        "closure_reason": "PLS-012 remains explicitly chat-sourced semantic closure support, not target-ledger atom lineage.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "chat_source_not_v2_atom"
+        ],
+        "exact_tokens": [
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "atom_fidelity",
+        "finding_key": "sfk-669f67c14c7dc71d0ad03590",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-011",
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_atom_ids": [],
+        "source_row": "105",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Plan_Document_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/atom_fidelity_matrix.jsonl:106"
+        ],
+        "closure_reason": "PDS-014 remains explicitly chat-sourced semantic closure support, not target-ledger atom lineage.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "chat_source_not_v2_atom"
+        ],
+        "exact_tokens": [
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "atom_fidelity",
+        "finding_key": "sfk-abd849e26c07e7ab35f9393e",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-012",
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_atom_ids": [],
+        "source_row": "106",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/planunit_source_claims.jsonl:1"
+        ],
+        "closure_reason": "PLS-012 is accepted as chat-sourced support and not a target-ledger atom output.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "target_ledger_lineage"
+        ],
+        "exact_tokens": [
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "planunit_lineage",
+        "finding_key": "sfk-e3584b9e80c453dbf879ccce",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-013",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_atom_ids": [],
+        "source_row": "1",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/planunit_source_claims.jsonl:1"
+        ],
+        "closure_reason": "PLS-012 placement is repaired by moving it under the neutral Semantic Audit Closure Addendum.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "addendum_placement"
+        ],
+        "exact_tokens": [
+          "Semantic Audit Closure Addendum - 2026-06-17"
+        ],
+        "finding_family": "planunit_lineage",
+        "finding_key": "sfk-c1487e4a7306b5992805965e",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-014",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_atom_ids": [],
+        "source_row": "1",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Plan_Document_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/planunit_source_claims.jsonl:2"
+        ],
+        "closure_reason": "PDS-014 is accepted as chat-sourced support and not a target-ledger atom output.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "target_ledger_lineage"
+        ],
+        "exact_tokens": [
+          "source_ref:chat:2026-06-17-semantic-closure-registry-support"
+        ],
+        "finding_family": "planunit_lineage",
+        "finding_key": "sfk-47c950c38260adb24692be34",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-015",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_atom_ids": [],
+        "source_row": "2",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Plan_Document_System.md",
+          "scripts/pm-audit-closure.py",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/planunit_source_claims.jsonl:2"
+        ],
+        "closure_reason": "PDS-014 validator-contract drift is repaired in the script and canonical validator PlanUnit text.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "validator_contract"
+        ],
+        "exact_tokens": [
+          "source_artifact",
+          "source_row",
+          "registry_closure_id",
+          "reopen_hash_changes"
+        ],
+        "finding_family": "planunit_lineage",
+        "finding_key": "sfk-4d0680f171c9a9b23456c04d",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-016",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_atom_ids": [],
+        "source_row": "2",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/00-plans-index.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/owner_routing_findings.jsonl:1"
+        ],
+        "closure_reason": "00-plans-index now registers PLS-012/PDS-014 closure ownership split and adds 0PI-057.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "owner_map"
+        ],
+        "exact_tokens": [
+          "Plans/.audits/_semantic_closure_registry.jsonl",
+          "repair_closure_matrix.jsonl",
+          "scripts/pm-audit-closure.py"
+        ],
+        "finding_family": "owner_routing",
+        "finding_key": "sfk-697f08f011f5b1abcfe26150",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/00-plans-index.md",
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "0PI-057",
+          "PLS-012",
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-017",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_atom_ids": [],
+        "source_row": "1",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+          "Plans/bootstrap/Codex_Prompts.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/owner_routing_findings.jsonl:2"
+        ],
+        "closure_reason": "Bootstrap workflow and prompt docs now explicitly consume PLS-012/PDS-014 instead of silently mirroring owner schema.",
+        "closure_status": "repaired",
+        "consumer_docs": [
+          "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+          "Plans/bootstrap/Codex_Prompts.md"
+        ],
+        "detail_keys": [
+          "bootstrap_consumer_refs"
+        ],
+        "exact_tokens": [
+          "PLS-012",
+          "PDS-014"
+        ],
+        "finding_family": "owner_routing",
+        "finding_key": "sfk-9b0b2b1113be4ec671591130",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012",
+          "PDS-014"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-018",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_atom_ids": [],
+        "source_row": "2",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/owner_routing_findings.jsonl:3"
+        ],
+        "closure_reason": "PLS-012 is now under a neutral semantic closure addendum, not the target-ledger compile addendum.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "addendum_placement"
+        ],
+        "exact_tokens": [
+          "Semantic Audit Closure Addendum - 2026-06-17"
+        ],
+        "finding_family": "owner_routing",
+        "finding_key": "sfk-d361b58ef4df5e6e6f3973c9",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "plan_unit_ids": [
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-019",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_atom_ids": [],
+        "source_row": "3",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/ledger_consistency.json",
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "closure_reason": "PDS-014 and PLS-012 remain accepted source-lineage support outside the sealed target ledger compile queue.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "range_new_plan_units_not_in_compile_queue"
+        ],
+        "exact_tokens": [
+          "PDS-014",
+          "PLS-012"
+        ],
+        "finding_family": "ledger_consistency",
+        "finding_key": "sfk-050d16d1186242b5bf530289",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md"
+        ],
+        "plan_unit_ids": [
+          "PDS-014",
+          "PLS-012"
+        ],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-020",
+        "source_artifact": "ledger_consistency.json",
+        "source_atom_ids": [],
+        "source_row": "compile_queue.range_new_plan_units_not_in_compile_queue",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/ledger_consistency.json",
+          "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_items.json"
+        ],
+        "closure_reason": "q-0007 through q-0009 are post-seal follow-up questions explicitly not compiled, so they remain deferred rather than repair blockers.",
+        "closure_status": "explicitly_deferred",
+        "consumer_docs": [],
+        "detail_keys": [
+          "post_seal_followup_not_compiled"
+        ],
+        "exact_tokens": [
+          "post_seal_followup_not_compiled"
+        ],
+        "finding_family": "ledger_consistency",
+        "finding_key": "sfk-7c493fc26b9a50eb0884cd48",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/"
+        ],
+        "plan_unit_ids": [],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-021",
+        "source_artifact": "ledger_consistency.json",
+        "source_atom_ids": [
+          "q-0007",
+          "q-0008",
+          "q-0009"
+        ],
+        "source_row": "sealed_ledger_open_item_policy.open_questions",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+          "scripts/pm-audit-closure.py",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/validator_results.json"
+        ],
+        "closure_reason": "repair_closure_matrix.jsonl is now present and pm-audit-closure is hardened to require matrix coverage when requested.",
+        "closure_status": "repaired",
+        "consumer_docs": [],
+        "detail_keys": [
+          "missing_repair_closure_matrix"
+        ],
+        "exact_tokens": [
+          "repair_closure_matrix.jsonl"
+        ],
+        "finding_family": "validator_results",
+        "finding_key": "sfk-8e82e431df11de56f61cbea0",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "scripts/pm-audit-closure.py"
+        ],
+        "plan_unit_ids": [],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-022",
+        "source_artifact": "validator_results.json",
+        "source_atom_ids": [],
+        "source_row": "results.pm-audit-closure validate audit-dir warning-only",
+        "title": null
+      },
+      {
+        "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+        "closure_evidence": [
+          "Plans/.audits/_semantic_closure_registry.jsonl",
+          "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/validator_results.json"
+        ],
+        "closure_reason": "The previous empty registry was a true pre-repair state; this repair writes first closure rows.",
+        "closure_status": "source_lineage_only",
+        "consumer_docs": [],
+        "detail_keys": [
+          "registry_row_count"
+        ],
+        "exact_tokens": [
+          "row_count=0"
+        ],
+        "finding_family": "validator_results",
+        "finding_key": "sfk-0ffa1faea828f2ca3d91480d",
+        "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "owner_docs": [
+          "Plans/.audits/_semantic_closure_registry.jsonl"
+        ],
+        "plan_unit_ids": [],
+        "registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-023",
+        "source_artifact": "validator_results.json",
+        "source_atom_ids": [],
+        "source_row": "results.pm-audit-closure validate registry",
+        "title": null
+      }
+    ]
+  },
+  "registry": {
+    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "row_count": 23,
+    "status_counts": {
+      "source_lineage_only": 8,
+      "repaired": 12,
+      "not_for_plan": 2,
+      "explicitly_deferred": 1
+    }
+  },
+  "repair_actions": [
+    {
+      "area": "owner routing",
+      "summary": "Moved closure-support ownership out of the target-ledger compile addendum by adding a neutral semantic audit closure addendum and PLS-012 owner language.",
+      "files": [
+        "Plans/Planning_Ledger_System.md",
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "area": "validator contract",
+      "summary": "Strengthened PDS-014 and scripts/pm-audit-closure.py so repair completion requires matrix rows for all actionable audit artifacts, deterministic finding keys, evidence refs, registry links, and hash-backed reopened proofs.",
+      "files": [
+        "Plans/Plan_Document_System.md",
+        "scripts/pm-audit-closure.py"
+      ]
+    },
+    {
+      "area": "consumer prompts and workflow",
+      "summary": "Updated Bootstrap workflow and Codex prompts to preserve exact registry fields, exact closure_status enum tokens, owner refs, closure_reuse reading, and matrix schema requirements.",
+      "files": [
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+        "Plans/bootstrap/Codex_Prompts.md"
+      ]
+    },
+    {
+      "area": "governance artifacts",
+      "summary": "Regenerated plan index, shards, sharding evidence, Spec_Lock hashes, evidence bundle hashes, and migration summary hashes after canonical doc and script repair.",
+      "files": [
+        "Plans/.plan_index/**",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/Spec_Lock.json",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**"
+      ]
+    }
+  ],
+  "planunit_deltas": {
+    "added_or_changed": [
+      "PLS-012",
+      "PDS-014",
+      "0PI-057"
+    ],
+    "plan_index_plan_unit_count": 5068,
+    "acceptance_unit_count": 18096,
+    "node_readiness_status": "blocked_compiler_contract_incomplete"
+  },
+  "subagents": [
+    {
+      "name": "Volta",
+      "role": "scope guard",
+      "result": "Confirmed allowed repair surfaces and forbidden artifact boundaries."
+    },
+    {
+      "name": "Copernicus",
+      "role": "owner adjudicator",
+      "result": "Recommended neutral PLS addendum, 00-index owner map, consumer owner refs, exact registry fields, exact enum tokens, and adjacent ContractRefs."
+    },
+    {
+      "name": "Sagan",
+      "role": "fidelity auditor",
+      "result": "Enumerated every unclosed audit row/detail requiring closure matrix disposition."
+    },
+    {
+      "name": "Erdos",
+      "role": "governance auditor",
+      "result": "Specified validator hardening for full artifact coverage, finding identity fields, registry linkage, evidence refs, and reopened proof checks."
+    }
+  ],
+  "validators": {
+    "all_passed": true,
+    "results": [
+      {
+        "name": "audit_closure_explicit",
+        "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl --source-artifact atom_fidelity_matrix.jsonl --source-artifact planunit_source_claims.jsonl --source-artifact owner_routing_findings.jsonl --source-artifact ledger_consistency.json --source-artifact validator_results.json",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:42:35Z",
+        "ended_at_utc": "2026-06-17T13:42:35Z",
+        "errors": []
+      },
+      {
+        "name": "bootstrap_ledger_validate",
+        "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:42:35Z",
+        "ended_at_utc": "2026-06-17T13:42:42Z",
+        "summary": {
+          "atoms": 104,
+          "compile_queue_items": 1,
+          "corrections": 9,
+          "decisions": 29,
+          "events": 16,
+          "plan_units_checked": 2478,
+          "questions": 9
+        },
+        "errors": []
+      },
+      {
+        "name": "plan_index_validate",
+        "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:42:42Z",
+        "ended_at_utc": "2026-06-17T13:43:00Z",
+        "summary": {
+          "acceptance_unit_count": 18096,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_compiler_contract_incomplete",
+          "plan_unit_count": 5068
+        },
+        "failures": []
+      },
+      {
+        "name": "plan_migration_validate",
+        "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:01Z",
+        "ended_at_utc": "2026-06-17T13:43:14Z",
+        "failures": []
+      },
+      {
+        "name": "run_gates",
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:14Z",
+        "ended_at_utc": "2026-06-17T13:43:19Z",
+        "failures": []
+      },
+      {
+        "name": "shard_check",
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:19Z",
+        "ended_at_utc": "2026-06-17T13:43:19Z",
+        "failures": []
+      },
+      {
+        "name": "validate_auto_decisions",
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:19Z",
+        "ended_at_utc": "2026-06-17T13:43:19Z",
+        "failures": []
+      },
+      {
+        "name": "verify_spec_lock",
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:19Z",
+        "ended_at_utc": "2026-06-17T13:43:19Z",
+        "failures": []
+      },
+      {
+        "name": "validate_evidence",
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:19Z",
+        "ended_at_utc": "2026-06-17T13:43:20Z",
+        "failures": []
+      },
+      {
+        "name": "git_diff_check",
+        "cmd": "git diff --check",
+        "exit_code": 0,
+        "status": "pass",
+        "mutated_status": false,
+        "started_at_utc": "2026-06-17T13:43:20Z",
+        "ended_at_utc": "2026-06-17T13:43:20Z"
+      }
+    ],
+    "non_audit_mutations_during_final_validator_run": [],
+    "pre_final_note": "An initial read-only migration validation failed on stale generated batch/final-summary hashes after 0PI-057 raised live PlanUnit count from 5067 to 5068; fixed with pm-plan-migration refresh-batch-hashes and refresh-final-summary, then reran the full suite cleanly.",
+    "post_report_git_diff_check": {
+      "cmd": "git diff --check",
+      "exit_code": 0,
+      "status": "pass",
+      "mutated_status": false
+    }
+  },
+  "forbidden_artifacts": {
+    "new_forbidden_paths": [],
+    "all_forbidden_path_matches": [],
+    "note": "Path-level changed-file scan found no WorkNodes, NodeSeeds, queues, final node manifests, implementation files, Cargo.toml, src, or .slint paths created or modified."
+  },
+  "git": {
+    "status_short_after_reports_before_final_diff_check": [
+      " M Plans/.audits/_semantic_closure_registry.jsonl",
+      " M Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      " M Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      " M Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      " M Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      " M Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      " M Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      " M Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      " M Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      " M Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      " M Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      " M Plans/.plan_index/acceptance_units.jsonl",
+      " M Plans/.plan_index/coverage_report.json",
+      " M Plans/.plan_index/dependencies.json",
+      " M Plans/.plan_index/doc_cards.json",
+      " M Plans/.plan_index/node_readiness_report.json",
+      " M Plans/.plan_index/plan_units.jsonl",
+      " M Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      " M Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      " M Plans/00-plans-index.md",
+      " M Plans/Plan_Document_System.md",
+      " M Plans/Planning_Ledger_System.md",
+      " M Plans/Spec_Lock.json",
+      " M Plans/_shards/00-plans-index/00-index.md",
+      " M Plans/_shards/00-plans-index/001-preamble.md",
+      " M Plans/_shards/00-plans-index/002-change-summary.md",
+      " M Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      " M Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      " M Plans/_shards/00-plans-index/005-plan-map.md",
+      " M Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      " M Plans/_shards/00-plans-index/007-shard-indexes.md",
+      " M Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      " M Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      " M Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      " M Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      " M Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      " M Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+      " M Plans/_shards/00-plans-index/014-planunits.md",
+      " M Plans/_shards/00-plans-index/015-migration-coverage.md",
+      " M Plans/_shards/00-plans-index/manifest.json",
+      " M Plans/_shards/agent-rules-context/00-index.md",
+      " M Plans/_shards/agent-rules-context/manifest.json",
+      " M Plans/_shards/assistant-chat-design/00-index.md",
+      " M Plans/_shards/assistant-chat-design/manifest.json",
+      " M Plans/_shards/assistant-memory-subsystem/00-index.md",
+      " M Plans/_shards/assistant-memory-subsystem/manifest.json",
+      " M Plans/_shards/bootstrap_planning_migration/00-index.md",
+      " M Plans/_shards/bootstrap_planning_migration/manifest.json",
+      " M Plans/_shards/chain-wizard-flexibility/00-index.md",
+      " M Plans/_shards/chain-wizard-flexibility/manifest.json",
+      " M Plans/_shards/cli_bridged_providers/00-index.md",
+      " M Plans/_shards/cli_bridged_providers/manifest.json",
+      " M Plans/_shards/commands_system/00-index.md",
+      " M Plans/_shards/commands_system/manifest.json",
+      " M Plans/_shards/contracts_v0/00-index.md",
+      " M Plans/_shards/contracts_v0/manifest.json",
+      " M Plans/_shards/crosswalk/00-index.md",
+      " M Plans/_shards/crosswalk/manifest.json",
+      " M Plans/_shards/executor_protocol/00-index.md",
+      " M Plans/_shards/executor_protocol/manifest.json",
+      " M Plans/_shards/feature-list/00-index.md",
+      " M Plans/_shards/feature-list/manifest.json",
+      " M Plans/_shards/filemanager/00-index.md",
+      " M Plans/_shards/filemanager/manifest.json",
+      " M Plans/_shards/filesafe/00-index.md",
+      " M Plans/_shards/filesafe/manifest.json",
+      " M Plans/_shards/finalguispec/00-index.md",
+      " M Plans/_shards/finalguispec/manifest.json",
+      " M Plans/_shards/github_integration/00-index.md",
+      " M Plans/_shards/github_integration/manifest.json",
+      " M Plans/_shards/goal_runtime_system/00-index.md",
+      " M Plans/_shards/goal_runtime_system/manifest.json",
+      " M Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      " M Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      " M Plans/_shards/human-in-the-loop/00-index.md",
+      " M Plans/_shards/human-in-the-loop/manifest.json",
+      " M Plans/_shards/interview-subagent-integration/00-index.md",
+      " M Plans/_shards/interview-subagent-integration/manifest.json",
+      " M Plans/_shards/lspsupport/00-index.md",
+      " M Plans/_shards/lspsupport/manifest.json",
+      " M Plans/_shards/mcp_integration/00-index.md",
+      " M Plans/_shards/mcp_integration/manifest.json",
+      " M Plans/_shards/miscplan/00-index.md",
+      " M Plans/_shards/miscplan/manifest.json",
+      " M Plans/_shards/models_system/00-index.md",
+      " M Plans/_shards/models_system/manifest.json",
+      " M Plans/_shards/multi-account/00-index.md",
+      " M Plans/_shards/multi-account/manifest.json",
+      " M Plans/_shards/newfeatures/00-index.md",
+      " M Plans/_shards/newfeatures/manifest.json",
+      " M Plans/_shards/newtools/00-index.md",
+      " M Plans/_shards/newtools/manifest.json",
+      " M Plans/_shards/opencode_deep_extraction/00-index.md",
+      " M Plans/_shards/opencode_deep_extraction/manifest.json",
+      " M Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      " M Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      " M Plans/_shards/orchestrator_page/00-index.md",
+      " M Plans/_shards/orchestrator_page/manifest.json",
+      " M Plans/_shards/permissions_system/00-index.md",
+      " M Plans/_shards/permissions_system/manifest.json",
+      " M Plans/_shards/personas/00-index.md",
+      " M Plans/_shards/personas/manifest.json",
+      " M Plans/_shards/plan_document_system/00-index.md",
+      " M Plans/_shards/plan_document_system/001-preamble.md",
+      " M Plans/_shards/plan_document_system/002-0.-scope.md",
+      " M Plans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
+      " M Plans/_shards/plan_document_system/004-2.-planunits.md",
+      " M Plans/_shards/plan_document_system/005-3.-compilation-coverage.md",
+      " M Plans/_shards/plan_document_system/manifest.json",
+      " M Plans/_shards/plan_to_node_compilation/00-index.md",
+      " M Plans/_shards/plan_to_node_compilation/manifest.json",
+      " M Plans/_shards/planning_ledger_system/00-index.md",
+      " M Plans/_shards/planning_ledger_system/001-preamble.md",
+      " M Plans/_shards/planning_ledger_system/002-0.-scope.md",
+      " M Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      " M Plans/_shards/planning_ledger_system/004-2.-planunits.md",
+      " M Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      " D Plans/_shards/planning_ledger_system/006-3.-compilation-coverage.md",
+      " M Plans/_shards/planning_ledger_system/manifest.json",
+      " M Plans/_shards/project_output_artifacts/00-index.md",
+      " M Plans/_shards/project_output_artifacts/manifest.json",
+      " M Plans/_shards/prompt_pipeline/00-index.md",
+      " M Plans/_shards/prompt_pipeline/manifest.json",
+      " M Plans/_shards/provider_opencode/00-index.md",
+      " M Plans/_shards/provider_opencode/manifest.json",
+      " M Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      " M Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      " M Plans/_shards/run_graph_view/00-index.md",
+      " M Plans/_shards/run_graph_view/manifest.json",
+      " M Plans/_shards/run_modes/00-index.md",
+      " M Plans/_shards/run_modes/manifest.json",
+      " M Plans/_shards/runtime_artifacts_panel/00-index.md",
+      " M Plans/_shards/runtime_artifacts_panel/manifest.json",
+      " M Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      " M Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      " M Plans/_shards/skills_system/00-index.md",
+      " M Plans/_shards/skills_system/manifest.json",
+      " M Plans/_shards/storage-plan/00-index.md",
+      " M Plans/_shards/storage-plan/manifest.json",
+      " M Plans/_shards/tools/00-index.md",
+      " M Plans/_shards/tools/manifest.json",
+      " M Plans/_shards/ui_command_catalog/00-index.md",
+      " M Plans/_shards/ui_command_catalog/manifest.json",
+      " M Plans/_shards/usage-feature/00-index.md",
+      " M Plans/_shards/usage-feature/manifest.json",
+      " M Plans/_shards/widget_system/00-index.md",
+      " M Plans/_shards/widget_system/manifest.json",
+      " M Plans/_shards/wiring_matrix/00-index.md",
+      " M Plans/_shards/wiring_matrix/manifest.json",
+      " M Plans/_shards/worktreegitimprovement/00-index.md",
+      " M Plans/_shards/worktreegitimprovement/manifest.json",
+      " M Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      " M Plans/bootstrap/Codex_Prompts.md",
+      " M scripts/pm-audit-closure.py",
+      "?? Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/.validator_run.tmp.json",
+      "?? Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+      "?? Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "?? Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md"
+    ],
+    "diff_name_status_before_reports": [
+      "M\tPlans/.audits/_semantic_closure_registry.jsonl",
+      "M\tPlans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "M\tPlans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "M\tPlans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "M\tPlans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "M\tPlans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "M\tPlans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "M\tPlans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "M\tPlans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "M\tPlans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "M\tPlans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "M\tPlans/.plan_index/acceptance_units.jsonl",
+      "M\tPlans/.plan_index/coverage_report.json",
+      "M\tPlans/.plan_index/dependencies.json",
+      "M\tPlans/.plan_index/doc_cards.json",
+      "M\tPlans/.plan_index/node_readiness_report.json",
+      "M\tPlans/.plan_index/plan_units.jsonl",
+      "M\tPlans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "M\tPlans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "M\tPlans/00-plans-index.md",
+      "M\tPlans/Plan_Document_System.md",
+      "M\tPlans/Planning_Ledger_System.md",
+      "M\tPlans/Spec_Lock.json",
+      "M\tPlans/_shards/00-plans-index/00-index.md",
+      "M\tPlans/_shards/00-plans-index/001-preamble.md",
+      "M\tPlans/_shards/00-plans-index/002-change-summary.md",
+      "M\tPlans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      "M\tPlans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      "M\tPlans/_shards/00-plans-index/005-plan-map.md",
+      "M\tPlans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      "M\tPlans/_shards/00-plans-index/007-shard-indexes.md",
+      "M\tPlans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      "M\tPlans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      "M\tPlans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      "M\tPlans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      "M\tPlans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      "M\tPlans/_shards/00-plans-index/013-owner-consumer-map.md",
+      "M\tPlans/_shards/00-plans-index/014-planunits.md",
+      "M\tPlans/_shards/00-plans-index/015-migration-coverage.md",
+      "M\tPlans/_shards/00-plans-index/manifest.json",
+      "M\tPlans/_shards/agent-rules-context/00-index.md",
+      "M\tPlans/_shards/agent-rules-context/manifest.json",
+      "M\tPlans/_shards/assistant-chat-design/00-index.md",
+      "M\tPlans/_shards/assistant-chat-design/manifest.json",
+      "M\tPlans/_shards/assistant-memory-subsystem/00-index.md",
+      "M\tPlans/_shards/assistant-memory-subsystem/manifest.json",
+      "M\tPlans/_shards/bootstrap_planning_migration/00-index.md",
+      "M\tPlans/_shards/bootstrap_planning_migration/manifest.json",
+      "M\tPlans/_shards/chain-wizard-flexibility/00-index.md",
+      "M\tPlans/_shards/chain-wizard-flexibility/manifest.json",
+      "M\tPlans/_shards/cli_bridged_providers/00-index.md",
+      "M\tPlans/_shards/cli_bridged_providers/manifest.json",
+      "M\tPlans/_shards/commands_system/00-index.md",
+      "M\tPlans/_shards/commands_system/manifest.json",
+      "M\tPlans/_shards/contracts_v0/00-index.md",
+      "M\tPlans/_shards/contracts_v0/manifest.json",
+      "M\tPlans/_shards/crosswalk/00-index.md",
+      "M\tPlans/_shards/crosswalk/manifest.json",
+      "M\tPlans/_shards/executor_protocol/00-index.md",
+      "M\tPlans/_shards/executor_protocol/manifest.json",
+      "M\tPlans/_shards/feature-list/00-index.md",
+      "M\tPlans/_shards/feature-list/manifest.json",
+      "M\tPlans/_shards/filemanager/00-index.md",
+      "M\tPlans/_shards/filemanager/manifest.json",
+      "M\tPlans/_shards/filesafe/00-index.md",
+      "M\tPlans/_shards/filesafe/manifest.json",
+      "M\tPlans/_shards/finalguispec/00-index.md",
+      "M\tPlans/_shards/finalguispec/manifest.json",
+      "M\tPlans/_shards/github_integration/00-index.md",
+      "M\tPlans/_shards/github_integration/manifest.json",
+      "M\tPlans/_shards/goal_runtime_system/00-index.md",
+      "M\tPlans/_shards/goal_runtime_system/manifest.json",
+      "M\tPlans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "M\tPlans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "M\tPlans/_shards/human-in-the-loop/00-index.md",
+      "M\tPlans/_shards/human-in-the-loop/manifest.json",
+      "M\tPlans/_shards/interview-subagent-integration/00-index.md",
+      "M\tPlans/_shards/interview-subagent-integration/manifest.json",
+      "M\tPlans/_shards/lspsupport/00-index.md",
+      "M\tPlans/_shards/lspsupport/manifest.json",
+      "M\tPlans/_shards/mcp_integration/00-index.md",
+      "M\tPlans/_shards/mcp_integration/manifest.json",
+      "M\tPlans/_shards/miscplan/00-index.md",
+      "M\tPlans/_shards/miscplan/manifest.json",
+      "M\tPlans/_shards/models_system/00-index.md",
+      "M\tPlans/_shards/models_system/manifest.json",
+      "M\tPlans/_shards/multi-account/00-index.md",
+      "M\tPlans/_shards/multi-account/manifest.json",
+      "M\tPlans/_shards/newfeatures/00-index.md",
+      "M\tPlans/_shards/newfeatures/manifest.json",
+      "M\tPlans/_shards/newtools/00-index.md",
+      "M\tPlans/_shards/newtools/manifest.json",
+      "M\tPlans/_shards/opencode_deep_extraction/00-index.md",
+      "M\tPlans/_shards/opencode_deep_extraction/manifest.json",
+      "M\tPlans/_shards/orchestrator-subagent-integration/00-index.md",
+      "M\tPlans/_shards/orchestrator-subagent-integration/manifest.json",
+      "M\tPlans/_shards/orchestrator_page/00-index.md",
+      "M\tPlans/_shards/orchestrator_page/manifest.json",
+      "M\tPlans/_shards/permissions_system/00-index.md",
+      "M\tPlans/_shards/permissions_system/manifest.json",
+      "M\tPlans/_shards/personas/00-index.md",
+      "M\tPlans/_shards/personas/manifest.json",
+      "M\tPlans/_shards/plan_document_system/00-index.md",
+      "M\tPlans/_shards/plan_document_system/001-preamble.md",
+      "M\tPlans/_shards/plan_document_system/002-0.-scope.md",
+      "M\tPlans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
+      "M\tPlans/_shards/plan_document_system/004-2.-planunits.md",
+      "M\tPlans/_shards/plan_document_system/005-3.-compilation-coverage.md",
+      "M\tPlans/_shards/plan_document_system/manifest.json",
+      "M\tPlans/_shards/plan_to_node_compilation/00-index.md",
+      "M\tPlans/_shards/plan_to_node_compilation/manifest.json",
+      "M\tPlans/_shards/planning_ledger_system/00-index.md",
+      "M\tPlans/_shards/planning_ledger_system/001-preamble.md",
+      "M\tPlans/_shards/planning_ledger_system/002-0.-scope.md",
+      "M\tPlans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      "M\tPlans/_shards/planning_ledger_system/004-2.-planunits.md",
+      "M\tPlans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      "D\tPlans/_shards/planning_ledger_system/006-3.-compilation-coverage.md",
+      "M\tPlans/_shards/planning_ledger_system/manifest.json",
+      "M\tPlans/_shards/project_output_artifacts/00-index.md",
+      "M\tPlans/_shards/project_output_artifacts/manifest.json",
+      "M\tPlans/_shards/prompt_pipeline/00-index.md",
+      "M\tPlans/_shards/prompt_pipeline/manifest.json",
+      "M\tPlans/_shards/provider_opencode/00-index.md",
+      "M\tPlans/_shards/provider_opencode/manifest.json",
+      "M\tPlans/_shards/rewrite-tie-in-memo/00-index.md",
+      "M\tPlans/_shards/rewrite-tie-in-memo/manifest.json",
+      "M\tPlans/_shards/run_graph_view/00-index.md",
+      "M\tPlans/_shards/run_graph_view/manifest.json",
+      "M\tPlans/_shards/run_modes/00-index.md",
+      "M\tPlans/_shards/run_modes/manifest.json",
+      "M\tPlans/_shards/runtime_artifacts_panel/00-index.md",
+      "M\tPlans/_shards/runtime_artifacts_panel/manifest.json",
+      "M\tPlans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "M\tPlans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "M\tPlans/_shards/skills_system/00-index.md",
+      "M\tPlans/_shards/skills_system/manifest.json",
+      "M\tPlans/_shards/storage-plan/00-index.md",
+      "M\tPlans/_shards/storage-plan/manifest.json",
+      "M\tPlans/_shards/tools/00-index.md",
+      "M\tPlans/_shards/tools/manifest.json",
+      "M\tPlans/_shards/ui_command_catalog/00-index.md",
+      "M\tPlans/_shards/ui_command_catalog/manifest.json",
+      "M\tPlans/_shards/usage-feature/00-index.md",
+      "M\tPlans/_shards/usage-feature/manifest.json",
+      "M\tPlans/_shards/widget_system/00-index.md",
+      "M\tPlans/_shards/widget_system/manifest.json",
+      "M\tPlans/_shards/wiring_matrix/00-index.md",
+      "M\tPlans/_shards/wiring_matrix/manifest.json",
+      "M\tPlans/_shards/worktreegitimprovement/00-index.md",
+      "M\tPlans/_shards/worktreegitimprovement/manifest.json",
+      "M\tPlans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "M\tPlans/bootstrap/Codex_Prompts.md",
+      "M\tscripts/pm-audit-closure.py"
+    ],
+    "untracked_before_reports": [
+      "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/.validator_run.tmp.json",
+      "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+      "Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md"
+    ],
+    "status_short_final": [
+      " M Plans/.audits/_semantic_closure_registry.jsonl",
+      " M Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      " M Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      " M Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      " M Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      " M Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      " M Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      " M Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      " M Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      " M Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      " M Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      " M Plans/.plan_index/acceptance_units.jsonl",
+      " M Plans/.plan_index/coverage_report.json",
+      " M Plans/.plan_index/dependencies.json",
+      " M Plans/.plan_index/doc_cards.json",
+      " M Plans/.plan_index/node_readiness_report.json",
+      " M Plans/.plan_index/plan_units.jsonl",
+      " M Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      " M Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      " M Plans/00-plans-index.md",
+      " M Plans/Plan_Document_System.md",
+      " M Plans/Planning_Ledger_System.md",
+      " M Plans/Spec_Lock.json",
+      " M Plans/_shards/00-plans-index/00-index.md",
+      " M Plans/_shards/00-plans-index/001-preamble.md",
+      " M Plans/_shards/00-plans-index/002-change-summary.md",
+      " M Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      " M Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      " M Plans/_shards/00-plans-index/005-plan-map.md",
+      " M Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      " M Plans/_shards/00-plans-index/007-shard-indexes.md",
+      " M Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      " M Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      " M Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      " M Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      " M Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      " M Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+      " M Plans/_shards/00-plans-index/014-planunits.md",
+      " M Plans/_shards/00-plans-index/015-migration-coverage.md",
+      " M Plans/_shards/00-plans-index/manifest.json",
+      " M Plans/_shards/agent-rules-context/00-index.md",
+      " M Plans/_shards/agent-rules-context/manifest.json",
+      " M Plans/_shards/assistant-chat-design/00-index.md",
+      " M Plans/_shards/assistant-chat-design/manifest.json",
+      " M Plans/_shards/assistant-memory-subsystem/00-index.md",
+      " M Plans/_shards/assistant-memory-subsystem/manifest.json",
+      " M Plans/_shards/bootstrap_planning_migration/00-index.md",
+      " M Plans/_shards/bootstrap_planning_migration/manifest.json",
+      " M Plans/_shards/chain-wizard-flexibility/00-index.md",
+      " M Plans/_shards/chain-wizard-flexibility/manifest.json",
+      " M Plans/_shards/cli_bridged_providers/00-index.md",
+      " M Plans/_shards/cli_bridged_providers/manifest.json",
+      " M Plans/_shards/commands_system/00-index.md",
+      " M Plans/_shards/commands_system/manifest.json",
+      " M Plans/_shards/contracts_v0/00-index.md",
+      " M Plans/_shards/contracts_v0/manifest.json",
+      " M Plans/_shards/crosswalk/00-index.md",
+      " M Plans/_shards/crosswalk/manifest.json",
+      " M Plans/_shards/executor_protocol/00-index.md",
+      " M Plans/_shards/executor_protocol/manifest.json",
+      " M Plans/_shards/feature-list/00-index.md",
+      " M Plans/_shards/feature-list/manifest.json",
+      " M Plans/_shards/filemanager/00-index.md",
+      " M Plans/_shards/filemanager/manifest.json",
+      " M Plans/_shards/filesafe/00-index.md",
+      " M Plans/_shards/filesafe/manifest.json",
+      " M Plans/_shards/finalguispec/00-index.md",
+      " M Plans/_shards/finalguispec/manifest.json",
+      " M Plans/_shards/github_integration/00-index.md",
+      " M Plans/_shards/github_integration/manifest.json",
+      " M Plans/_shards/goal_runtime_system/00-index.md",
+      " M Plans/_shards/goal_runtime_system/manifest.json",
+      " M Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      " M Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      " M Plans/_shards/human-in-the-loop/00-index.md",
+      " M Plans/_shards/human-in-the-loop/manifest.json",
+      " M Plans/_shards/interview-subagent-integration/00-index.md",
+      " M Plans/_shards/interview-subagent-integration/manifest.json",
+      " M Plans/_shards/lspsupport/00-index.md",
+      " M Plans/_shards/lspsupport/manifest.json",
+      " M Plans/_shards/mcp_integration/00-index.md",
+      " M Plans/_shards/mcp_integration/manifest.json",
+      " M Plans/_shards/miscplan/00-index.md",
+      " M Plans/_shards/miscplan/manifest.json",
+      " M Plans/_shards/models_system/00-index.md",
+      " M Plans/_shards/models_system/manifest.json",
+      " M Plans/_shards/multi-account/00-index.md",
+      " M Plans/_shards/multi-account/manifest.json",
+      " M Plans/_shards/newfeatures/00-index.md",
+      " M Plans/_shards/newfeatures/manifest.json",
+      " M Plans/_shards/newtools/00-index.md",
+      " M Plans/_shards/newtools/manifest.json",
+      " M Plans/_shards/opencode_deep_extraction/00-index.md",
+      " M Plans/_shards/opencode_deep_extraction/manifest.json",
+      " M Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      " M Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      " M Plans/_shards/orchestrator_page/00-index.md",
+      " M Plans/_shards/orchestrator_page/manifest.json",
+      " M Plans/_shards/permissions_system/00-index.md",
+      " M Plans/_shards/permissions_system/manifest.json",
+      " M Plans/_shards/personas/00-index.md",
+      " M Plans/_shards/personas/manifest.json",
+      " M Plans/_shards/plan_document_system/00-index.md",
+      " M Plans/_shards/plan_document_system/001-preamble.md",
+      " M Plans/_shards/plan_document_system/002-0.-scope.md",
+      " M Plans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
+      " M Plans/_shards/plan_document_system/004-2.-planunits.md",
+      " M Plans/_shards/plan_document_system/005-3.-compilation-coverage.md",
+      " M Plans/_shards/plan_document_system/manifest.json",
+      " M Plans/_shards/plan_to_node_compilation/00-index.md",
+      " M Plans/_shards/plan_to_node_compilation/manifest.json",
+      " M Plans/_shards/planning_ledger_system/00-index.md",
+      " M Plans/_shards/planning_ledger_system/001-preamble.md",
+      " M Plans/_shards/planning_ledger_system/002-0.-scope.md",
+      " M Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      " M Plans/_shards/planning_ledger_system/004-2.-planunits.md",
+      " M Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      " D Plans/_shards/planning_ledger_system/006-3.-compilation-coverage.md",
+      " M Plans/_shards/planning_ledger_system/manifest.json",
+      " M Plans/_shards/project_output_artifacts/00-index.md",
+      " M Plans/_shards/project_output_artifacts/manifest.json",
+      " M Plans/_shards/prompt_pipeline/00-index.md",
+      " M Plans/_shards/prompt_pipeline/manifest.json",
+      " M Plans/_shards/provider_opencode/00-index.md",
+      " M Plans/_shards/provider_opencode/manifest.json",
+      " M Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      " M Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      " M Plans/_shards/run_graph_view/00-index.md",
+      " M Plans/_shards/run_graph_view/manifest.json",
+      " M Plans/_shards/run_modes/00-index.md",
+      " M Plans/_shards/run_modes/manifest.json",
+      " M Plans/_shards/runtime_artifacts_panel/00-index.md",
+      " M Plans/_shards/runtime_artifacts_panel/manifest.json",
+      " M Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      " M Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      " M Plans/_shards/skills_system/00-index.md",
+      " M Plans/_shards/skills_system/manifest.json",
+      " M Plans/_shards/storage-plan/00-index.md",
+      " M Plans/_shards/storage-plan/manifest.json",
+      " M Plans/_shards/tools/00-index.md",
+      " M Plans/_shards/tools/manifest.json",
+      " M Plans/_shards/ui_command_catalog/00-index.md",
+      " M Plans/_shards/ui_command_catalog/manifest.json",
+      " M Plans/_shards/usage-feature/00-index.md",
+      " M Plans/_shards/usage-feature/manifest.json",
+      " M Plans/_shards/widget_system/00-index.md",
+      " M Plans/_shards/widget_system/manifest.json",
+      " M Plans/_shards/wiring_matrix/00-index.md",
+      " M Plans/_shards/wiring_matrix/manifest.json",
+      " M Plans/_shards/worktreegitimprovement/00-index.md",
+      " M Plans/_shards/worktreegitimprovement/manifest.json",
+      " M Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      " M Plans/bootstrap/Codex_Prompts.md",
+      " M scripts/pm-audit-closure.py",
+      "?? Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/REPAIR_REPORT.md",
+      "?? Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+      "?? Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_report.json",
+      "?? Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "?? Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md"
+    ],
+    "diff_name_status_final": [
+      "M\tPlans/.audits/_semantic_closure_registry.jsonl",
+      "M\tPlans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "M\tPlans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "M\tPlans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "M\tPlans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "M\tPlans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "M\tPlans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "M\tPlans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "M\tPlans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "M\tPlans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "M\tPlans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "M\tPlans/.plan_index/acceptance_units.jsonl",
+      "M\tPlans/.plan_index/coverage_report.json",
+      "M\tPlans/.plan_index/dependencies.json",
+      "M\tPlans/.plan_index/doc_cards.json",
+      "M\tPlans/.plan_index/node_readiness_report.json",
+      "M\tPlans/.plan_index/plan_units.jsonl",
+      "M\tPlans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "M\tPlans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "M\tPlans/00-plans-index.md",
+      "M\tPlans/Plan_Document_System.md",
+      "M\tPlans/Planning_Ledger_System.md",
+      "M\tPlans/Spec_Lock.json",
+      "M\tPlans/_shards/00-plans-index/00-index.md",
+      "M\tPlans/_shards/00-plans-index/001-preamble.md",
+      "M\tPlans/_shards/00-plans-index/002-change-summary.md",
+      "M\tPlans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      "M\tPlans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      "M\tPlans/_shards/00-plans-index/005-plan-map.md",
+      "M\tPlans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      "M\tPlans/_shards/00-plans-index/007-shard-indexes.md",
+      "M\tPlans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      "M\tPlans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      "M\tPlans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      "M\tPlans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      "M\tPlans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      "M\tPlans/_shards/00-plans-index/013-owner-consumer-map.md",
+      "M\tPlans/_shards/00-plans-index/014-planunits.md",
+      "M\tPlans/_shards/00-plans-index/015-migration-coverage.md",
+      "M\tPlans/_shards/00-plans-index/manifest.json",
+      "M\tPlans/_shards/agent-rules-context/00-index.md",
+      "M\tPlans/_shards/agent-rules-context/manifest.json",
+      "M\tPlans/_shards/assistant-chat-design/00-index.md",
+      "M\tPlans/_shards/assistant-chat-design/manifest.json",
+      "M\tPlans/_shards/assistant-memory-subsystem/00-index.md",
+      "M\tPlans/_shards/assistant-memory-subsystem/manifest.json",
+      "M\tPlans/_shards/bootstrap_planning_migration/00-index.md",
+      "M\tPlans/_shards/bootstrap_planning_migration/manifest.json",
+      "M\tPlans/_shards/chain-wizard-flexibility/00-index.md",
+      "M\tPlans/_shards/chain-wizard-flexibility/manifest.json",
+      "M\tPlans/_shards/cli_bridged_providers/00-index.md",
+      "M\tPlans/_shards/cli_bridged_providers/manifest.json",
+      "M\tPlans/_shards/commands_system/00-index.md",
+      "M\tPlans/_shards/commands_system/manifest.json",
+      "M\tPlans/_shards/contracts_v0/00-index.md",
+      "M\tPlans/_shards/contracts_v0/manifest.json",
+      "M\tPlans/_shards/crosswalk/00-index.md",
+      "M\tPlans/_shards/crosswalk/manifest.json",
+      "M\tPlans/_shards/executor_protocol/00-index.md",
+      "M\tPlans/_shards/executor_protocol/manifest.json",
+      "M\tPlans/_shards/feature-list/00-index.md",
+      "M\tPlans/_shards/feature-list/manifest.json",
+      "M\tPlans/_shards/filemanager/00-index.md",
+      "M\tPlans/_shards/filemanager/manifest.json",
+      "M\tPlans/_shards/filesafe/00-index.md",
+      "M\tPlans/_shards/filesafe/manifest.json",
+      "M\tPlans/_shards/finalguispec/00-index.md",
+      "M\tPlans/_shards/finalguispec/manifest.json",
+      "M\tPlans/_shards/github_integration/00-index.md",
+      "M\tPlans/_shards/github_integration/manifest.json",
+      "M\tPlans/_shards/goal_runtime_system/00-index.md",
+      "M\tPlans/_shards/goal_runtime_system/manifest.json",
+      "M\tPlans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "M\tPlans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "M\tPlans/_shards/human-in-the-loop/00-index.md",
+      "M\tPlans/_shards/human-in-the-loop/manifest.json",
+      "M\tPlans/_shards/interview-subagent-integration/00-index.md",
+      "M\tPlans/_shards/interview-subagent-integration/manifest.json",
+      "M\tPlans/_shards/lspsupport/00-index.md",
+      "M\tPlans/_shards/lspsupport/manifest.json",
+      "M\tPlans/_shards/mcp_integration/00-index.md",
+      "M\tPlans/_shards/mcp_integration/manifest.json",
+      "M\tPlans/_shards/miscplan/00-index.md",
+      "M\tPlans/_shards/miscplan/manifest.json",
+      "M\tPlans/_shards/models_system/00-index.md",
+      "M\tPlans/_shards/models_system/manifest.json",
+      "M\tPlans/_shards/multi-account/00-index.md",
+      "M\tPlans/_shards/multi-account/manifest.json",
+      "M\tPlans/_shards/newfeatures/00-index.md",
+      "M\tPlans/_shards/newfeatures/manifest.json",
+      "M\tPlans/_shards/newtools/00-index.md",
+      "M\tPlans/_shards/newtools/manifest.json",
+      "M\tPlans/_shards/opencode_deep_extraction/00-index.md",
+      "M\tPlans/_shards/opencode_deep_extraction/manifest.json",
+      "M\tPlans/_shards/orchestrator-subagent-integration/00-index.md",
+      "M\tPlans/_shards/orchestrator-subagent-integration/manifest.json",
+      "M\tPlans/_shards/orchestrator_page/00-index.md",
+      "M\tPlans/_shards/orchestrator_page/manifest.json",
+      "M\tPlans/_shards/permissions_system/00-index.md",
+      "M\tPlans/_shards/permissions_system/manifest.json",
+      "M\tPlans/_shards/personas/00-index.md",
+      "M\tPlans/_shards/personas/manifest.json",
+      "M\tPlans/_shards/plan_document_system/00-index.md",
+      "M\tPlans/_shards/plan_document_system/001-preamble.md",
+      "M\tPlans/_shards/plan_document_system/002-0.-scope.md",
+      "M\tPlans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
+      "M\tPlans/_shards/plan_document_system/004-2.-planunits.md",
+      "M\tPlans/_shards/plan_document_system/005-3.-compilation-coverage.md",
+      "M\tPlans/_shards/plan_document_system/manifest.json",
+      "M\tPlans/_shards/plan_to_node_compilation/00-index.md",
+      "M\tPlans/_shards/plan_to_node_compilation/manifest.json",
+      "M\tPlans/_shards/planning_ledger_system/00-index.md",
+      "M\tPlans/_shards/planning_ledger_system/001-preamble.md",
+      "M\tPlans/_shards/planning_ledger_system/002-0.-scope.md",
+      "M\tPlans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      "M\tPlans/_shards/planning_ledger_system/004-2.-planunits.md",
+      "M\tPlans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      "D\tPlans/_shards/planning_ledger_system/006-3.-compilation-coverage.md",
+      "M\tPlans/_shards/planning_ledger_system/manifest.json",
+      "M\tPlans/_shards/project_output_artifacts/00-index.md",
+      "M\tPlans/_shards/project_output_artifacts/manifest.json",
+      "M\tPlans/_shards/prompt_pipeline/00-index.md",
+      "M\tPlans/_shards/prompt_pipeline/manifest.json",
+      "M\tPlans/_shards/provider_opencode/00-index.md",
+      "M\tPlans/_shards/provider_opencode/manifest.json",
+      "M\tPlans/_shards/rewrite-tie-in-memo/00-index.md",
+      "M\tPlans/_shards/rewrite-tie-in-memo/manifest.json",
+      "M\tPlans/_shards/run_graph_view/00-index.md",
+      "M\tPlans/_shards/run_graph_view/manifest.json",
+      "M\tPlans/_shards/run_modes/00-index.md",
+      "M\tPlans/_shards/run_modes/manifest.json",
+      "M\tPlans/_shards/runtime_artifacts_panel/00-index.md",
+      "M\tPlans/_shards/runtime_artifacts_panel/manifest.json",
+      "M\tPlans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "M\tPlans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "M\tPlans/_shards/skills_system/00-index.md",
+      "M\tPlans/_shards/skills_system/manifest.json",
+      "M\tPlans/_shards/storage-plan/00-index.md",
+      "M\tPlans/_shards/storage-plan/manifest.json",
+      "M\tPlans/_shards/tools/00-index.md",
+      "M\tPlans/_shards/tools/manifest.json",
+      "M\tPlans/_shards/ui_command_catalog/00-index.md",
+      "M\tPlans/_shards/ui_command_catalog/manifest.json",
+      "M\tPlans/_shards/usage-feature/00-index.md",
+      "M\tPlans/_shards/usage-feature/manifest.json",
+      "M\tPlans/_shards/widget_system/00-index.md",
+      "M\tPlans/_shards/widget_system/manifest.json",
+      "M\tPlans/_shards/wiring_matrix/00-index.md",
+      "M\tPlans/_shards/wiring_matrix/manifest.json",
+      "M\tPlans/_shards/worktreegitimprovement/00-index.md",
+      "M\tPlans/_shards/worktreegitimprovement/manifest.json",
+      "M\tPlans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "M\tPlans/bootstrap/Codex_Prompts.md",
+      "M\tscripts/pm-audit-closure.py"
+    ],
+    "untracked_final": [
+      "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/REPAIR_REPORT.md",
+      "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl",
+      "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_report.json",
+      "Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md"
+    ]
+  },
+  "next_safe_action": "Review and commit the bounded repair set; no product implementation action is unblocked by this repair.",
+  "updated_at_utc": "2026-06-17T13:45:21Z"
+}

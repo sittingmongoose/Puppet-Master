@@ -3,10 +3,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 22,
+        "False": 23,
         "True": 34
       },
-      "heading_count": 83,
+      "heading_count": 85,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Contracts_V0.md",
@@ -29,15 +29,18 @@
         "Plans/Wiring_Matrix.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+        "Plans/bootstrap/Codex_Prompts.md",
         "Plans/chain-wizard-flexibility.md",
         "Plans/chain-wizard.md",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
+        "Plans/usage-feature.md",
+        "scripts/pm-audit-closure.py"
       ],
-      "line_count": 3992,
+      "line_count": 4071,
       "path": "Plans/00-plans-index.md",
-      "plan_unit_count": 56,
+      "plan_unit_count": 57,
       "plan_unit_ids": [
         "0PI-001",
         "0PI-002",
@@ -94,7 +97,8 @@
         "0PI-053",
         "0PI-054",
         "0PI-055",
-        "0PI-056"
+        "0PI-056",
+        "0PI-057"
       ],
       "reasoning_tiers": [
         "high",
@@ -135,6 +139,7 @@
         "owner_map_gui_widget_usage_final_pass_seams",
         "owner_map_routing_and_stale_consumer_seams",
         "owner_map_runtime_file_storage_seams",
+        "owner_routing",
         "plan_map_table_core_ux_owners",
         "plan_map_table_planning_runtime_artifacts",
         "plan_map_table_widgets_config_media_wiring",
@@ -158,17 +163,18 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "d15083e9294f5215ee9db682016974bcf55a847e9954a4aa6f7ca342b0f705b1",
+      "sha256": "33fc5c0d5efcec5268efce30d35ff9ca409acde1eacb4032f1dfa5c0b2a9cf07",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 56
+        "accepted": 57
       },
       "title": "Plans Index (authoritative map)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 55
+        "requirement": 56
       },
       "validation_surfaces": [
+        "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
         "python3 scripts/pm-plan-index.py validate",
@@ -8425,7 +8431,7 @@
         "scripts/pm-audit-closure.py",
         "scripts/pm-plan-index.py"
       ],
-      "line_count": 644,
+      "line_count": 659,
       "path": "Plans/Plan_Document_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -8461,7 +8467,7 @@
         "owner_drift",
         "user_visible_settings"
       ],
-      "sha256": "7c32e703fc5a502fc45566345a947b6c4441815b0d97c34d93da37ffdd4d7640",
+      "sha256": "1388a5fea226070e32fbec37ddde96e9c1ce65d4299064344f356bdb5c900614",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -8588,7 +8594,7 @@
       "gui_related_counts": {
         "False": 12
       },
-      "heading_count": 18,
+      "heading_count": 19,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -8625,7 +8631,7 @@
         "scripts/pm-audit-closure.py",
         "scripts/pm-bootstrap-ledger-validate.py"
       ],
-      "line_count": 586,
+      "line_count": 597,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 12,
       "plan_unit_ids": [
@@ -8660,7 +8666,7 @@
         "repeated_audit_loop",
         "source_loss"
       ],
-      "sha256": "b13638e887ac0fb19d4bf7f56be42ded1670e91de9c2bf3ca941a40a356b5427",
+      "sha256": "8a6abe8d5502a6b8d6b0fc5ef2689ba5017c2b493baa0675ce0c13b23c83ec3c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 12
@@ -11159,7 +11165,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-17T12:51:19Z",
+  "generated_at_utc": "2026-06-17T13:38:33Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -11167,13 +11173,13 @@
     "docs_with_plan_units": 68,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 2924,
+      "False": 2925,
       "True": 2143
     },
-    "plan_unit_count": 5067,
+    "plan_unit_count": 5068,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5042,
+      "accepted": 5043,
       "deferred": 8,
       "retired": 17
     },
@@ -11213,7 +11219,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4186,
+      "requirement": 4187,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

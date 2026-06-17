@@ -113,13 +113,15 @@ The node-readiness report may classify future readiness and blockers, including 
 
 ## Semantic audit closure registry
 
+This workflow section consumes `PLS-012` and `PDS-014`; those owner PlanUnits define the durable registry, deterministic finding keys, repair closure matrix, and validator behavior.
+
 Deep semantic audits and bounded repairs use:
 
 ```text
 Plans/.audits/_semantic_closure_registry.jsonl
 ```
 
-Each row is keyed by a deterministic `finding_key` derived from `finding_family`, `ledger_id`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `detail_keys`, and `exact_tokens`. The registry row preserves `closure_id`, `audit_ids`, `consumer_docs`, `closure_status`, `closure_evidence`, `closure_reason`, hash snapshots, timestamps, `closed_by_audit_id`, and `reopen_conditions`.
+Each row is keyed by a deterministic `finding_key` derived from `finding_family`, `ledger_id`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `detail_keys`, and `exact_tokens`. The registry row preserves `closure_id`, `finding_key`, `finding_family`, `ledger_id`, `audit_ids`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `consumer_docs`, `detail_keys`, `exact_tokens`, `closure_status`, `closure_evidence`, `closure_reason`, `hashes`, `created_at`, `updated_at`, `closed_by_audit_id`, and `reopen_conditions`.
 
 Allowed closure statuses are:
 
@@ -136,11 +138,13 @@ reopened
 
 Deep audits read the registry before writing new risks. If a finding is already closed and the source atom, PlanUnit, owner evidence, and closure evidence hashes are unchanged, the audit records `previously_closed` and does not emit the item as a new semantic warning. A closed finding reopens only when one of those hashes changes, or when the current closure status is `blocked_requires_user_decision` or `reopened`.
 
-Bounded repairs must write `repair_closure_matrix.jsonl`; every audit finding/detail in scope is repaired, false-positive adjudicated, explicitly deferred, source-lineage-only, not-for-plan, stale-retired, or blocked for a user decision. Repairs append or update the global registry and run:
+Bounded repairs must write `repair_closure_matrix.jsonl`; every audit finding/detail in scope is closed as `repaired`, `false_positive`, `explicitly_deferred`, `source_lineage_only`, `not_for_plan`, `stale_retired`, or `blocked_requires_user_decision`. Repairs append or update the global registry and run:
 
 ```text
 python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
 ```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
 ## Governance seal
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L633-L3979
+Source lines: L644-L4058
 
-Source SHA256: `d15083e9294f5215ee9db682016974bcf55a847e9954a4aa6f7ca342b0f705b1`
+Source SHA256: `33fc5c0d5efcec5268efce30d35ff9ca409acde1eacb4032f1dfa5c0b2a9cf07`
 
 ---
 
@@ -3355,3 +3355,71 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Glossary.md
 ```
+
+### 0PI-057 - Semantic Audit Closure Owner Map
+
+```yaml
+plan_unit_id: 0PI-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md records the semantic audit closure owner split
+  without re-owning closure semantics. Planning_Ledger_System/PLS-012 owns the
+  durable Plans/.audits/_semantic_closure_registry.jsonl row shape,
+  previously_closed reuse, and reopen policy. Plan_Document_System/PDS-014 owns
+  deterministic finding_key construction, repair_closure_matrix.jsonl, and
+  validator-facing closure matrix coverage. Bootstrap_Planning_Workflow and
+  Codex_Prompts consume those owner PlanUnits for workflow and reusable prompt
+  text. scripts/pm-audit-closure.py, the global closure registry, and
+  audit-scoped repair_closure_matrix.jsonl are support/governance surfaces, not
+  product implementation files, WorkNodes, NodeSeeds, executable queues, final
+  node manifests, or build tasks.
+gui_related: false
+gui_classification_reason: This unit records canonical owner routing for audit governance support; it does not implement user-visible GUI behavior.
+depends_on:
+  - PLS-012
+  - PDS-014
+unblocks: []
+acceptance_criteria:
+  - The index routes closure registry row shape and reopen policy to PLS-012.
+  - The index routes deterministic finding_key and repair_closure_matrix validation to PDS-014.
+  - Bootstrap workflow and prompt docs are recorded as consumers rather than schema owners.
+  - Closure support artifacts and scripts are not product implementation, WorkNode, NodeSeed, executable queue, final node manifest, or build-task artifacts.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-audit-closure.py validate
+risk_class: owner_routing
+reasoning_tier: high
+context_scope: bootstrap_audit_repair
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+  - Plans/bootstrap/Codex_Prompts.md
+  - scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_routing_only
+  create_worknodes: false
+source_lineage:
+  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+preserved_exact_tokens:
+  - "Plans/.audits/_semantic_closure_registry.jsonl"
+  - "repair_closure_matrix.jsonl"
+  - "finding_key"
+  - "previously_closed"
+  - "scripts/pm-audit-closure.py"
+  - "PLS-012"
+  - "PDS-014"
+negative_constraints:
+  - Do not make Plans/00-plans-index.md the owner of closure registry schema or closure matrix validation.
+  - Do not treat audit closure support scripts or audit JSONL artifacts as product implementation files.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or build tasks from closure registry state.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
