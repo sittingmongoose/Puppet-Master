@@ -1,0 +1,86 @@
+{
+  "acceptable_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "candidate_compile_plan_active": false,
+  "candidate_ready_atom_ids": [],
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Models_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/chain-wizard.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_unit_ids": [
+    "GRS-002",
+    "GRS-003",
+    "GRS-026",
+    "GRS-027",
+    "OP-022",
+    "OSI-428",
+    "EP-098",
+    "PNC-009",
+    "F3-394",
+    "F3-395",
+    "ACD-420",
+    "CW-008",
+    "CWF-151",
+    "RAP-027",
+    "W-071",
+    "RGV-012",
+    "CV-288",
+    "MS-109",
+    "PS-115",
+    "SP-215",
+    "PLS-011",
+    "0PI-056"
+  ],
+  "errors": [],
+  "handoff_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "open_blockers": [],
+  "problematic_open_questions": [],
+  "registry_bucket": "sealed_ledgers",
+  "source_lineage_pre_seal_ready_atom_count": 102,
+  "status": "pass_with_warnings",
+  "statuses": {
+    "compile_queue": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
+    "compile_queue_governance_status": "sealed",
+    "current": "sealed",
+    "current_governance_status": "sealed",
+    "ledger_health": "pass_governance_sealed",
+    "ledger_registry": "sealed",
+    "ledger_registry_governance_status": "sealed",
+    "manifest": "sealed",
+    "manifest_governance_status": "sealed",
+    "registry_entry": "sealed",
+    "registry_entry_governance_status": "sealed"
+  },
+  "strict_policy_mismatch_open_questions": [
+    "q-0007",
+    "q-0008",
+    "q-0009"
+  ],
+  "warnings": [
+    "q-0007..q-0009 use post_seal_followup_not_compiled; coherent as ledger-only continuation, but outside the audit prompt's literal deferred/not_for_plan/source_lineage_only exception labels"
+  ]
+}
