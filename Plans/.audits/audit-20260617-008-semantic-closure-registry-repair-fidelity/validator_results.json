@@ -1,0 +1,227 @@
+{
+  "audit_id": "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+  "environment_notes": [
+    "Initial no-PYTHONPATH attempts for pm-bootstrap-ledger-validate.py, pm-plan-index.py, and pm-plan-migration.py failed with ModuleNotFoundError: No module named yaml; definitive runs used PYTHONPATH=/tmp/pm_pyyaml and passed."
+  ],
+  "generated_at_utc": "2026-06-17T14:41:20Z",
+  "git_status_after_suite": [
+    "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+  ],
+  "git_status_before_suite": [
+    "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+  ],
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "results": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "duration_seconds": 0.134,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "pm_audit_closure_validate_registry",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 37,\n    \"status_counts\": {\n      \"explicitly_deferred\": 2,\n      \"not_for_plan\": 4,\n      \"repaired\": 17,\n      \"source_lineage_only\": 14\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity --require-closure-matrix",
+      "duration_seconds": 0.119,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "pm_audit_closure_validate_prior_repair_matrix",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [\n    {\n      \"coverage_artifacts\": [\n        \"semantic_risks.jsonl\",\n        \"atom_fidelity_matrix.jsonl\",\n        \"planunit_source_claims.jsonl\",\n        \"owner_routing_findings.jsonl\",\n        \"ledger_consistency.json\",\n        \"validator_results.json\"\n      ],\n      \"errors\": [],\n      \"matrix\": \"Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_closure_matrix.jsonl\",\n      \"matrix_rows\": 14,\n      \"missing_coverage\": [],\n      \"path\": \"Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity\",\n      \"status_counts\": {\n        \"explicitly_deferred\": 1,\n        \"not_for_plan\": 2,\n        \"repaired\": 5,\n        \"source_lineage_only\": 6\n      },\n      \"warnings\": []\n    }\n  ],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 37,\n    \"status_counts\": {\n      \"explicitly_deferred\": 2,\n      \"not_for_plan\": 4,\n      \"repaired\": 17,\n      \"source_lineage_only\": 14\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "duration_seconds": 6.553,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "bootstrap_ledger_validate",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260616-002-orchestrator-goal-runtime-flow\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 104,\n    \"compile_queue_items\": 1,\n    \"corrections\": 9,\n    \"decisions\": 29,\n    \"events\": 16,\n    \"plan_units_checked\": 2478,\n    \"questions\": 9\n  },\n  \"warnings\": []\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "duration_seconds": 18.771,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "pm_plan_index_validate",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T14:41:46Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 18096,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5068\n  }\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "duration_seconds": 13.569,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "pm_plan_migration_validate",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 68,\n    \"live_plan_unit_count\": 5068,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3908,\n    \"unique_live_plan_unit_count\": 5068\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "duration_seconds": 4.988,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "run_gates",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T14:42:05Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "duration_seconds": 0.421,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "shard_check",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 51,\n  \"failures\": [],\n  \"shards_checked\": 907,\n  \"source_count\": 51,\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "duration_seconds": 0.088,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "validate_auto_decisions",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T14:42:05Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "duration_seconds": 0.093,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "verify_spec_lock",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T14:42:05Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "duration_seconds": 0.538,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "validate_evidence",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-17T14:42:06Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    },
+    {
+      "command": "git diff --check",
+      "duration_seconds": 0.045,
+      "exit_code": 0,
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/"
+      ],
+      "name": "git_diff_check",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "timed_out": false,
+      "tracked_diff_after": [],
+      "tracked_diff_before": [],
+      "tracked_side_effects": []
+    }
+  ],
+  "schema_id": "pm.validator_results.v1",
+  "suite_status": "pass"
+}

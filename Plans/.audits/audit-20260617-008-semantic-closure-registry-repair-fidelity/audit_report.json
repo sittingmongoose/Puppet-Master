@@ -1,0 +1,119 @@
+{
+  "atom_fidelity": {
+    "active_missing_or_drift": 1,
+    "finding_key": "sfk-aa922281d6b28fe19734767f",
+    "rows": 107
+  },
+  "audit_id": "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+  "baseline_ref": "683af326677451434948f4807b8175d2d99ee1ee",
+  "changed_files": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_report.json",
+    "scripts/pm-audit-closure.py"
+  ],
+  "changed_files_count": 5,
+  "changed_live_plans_docs": [],
+  "closure_reuse": {
+    "previously_closed_count": 14,
+    "reopened_count": 0,
+    "row_count": 14
+  },
+  "current_ref": "41a2914f686d1df5ec8ae41f6da94a208044fc4f",
+  "final_status": "BLOCKED",
+  "forbidden_artifacts": {
+    "hits": [
+      {
+        "match": "WorkNodes",
+        "path": "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/REPAIR_REPORT.md"
+      }
+    ],
+    "range_files_scanned": [
+      "Plans/.audits/_semantic_closure_registry.jsonl",
+      "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/REPAIR_REPORT.md",
+      "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_closure_matrix.jsonl",
+      "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/repair_report.json",
+      "scripts/pm-audit-closure.py"
+    ],
+    "status": "fail",
+    "worktree_exception": "Only untracked audit output under Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/ is present."
+  },
+  "generated_at_utc": "2026-06-17T14:41:20Z",
+  "index": {
+    "acceptance_unit_count": 18096,
+    "coverage_status": "pass",
+    "dependency_edges": 12161,
+    "dependency_nodes": 5068,
+    "duplicate_plan_unit_ids": 0,
+    "missing_gui_related_boolean": 0,
+    "missing_required_metadata": 0,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_unit_count": 5068,
+    "unresolved_references": 0
+  },
+  "latest_ledger_basis": "pldg-20260616-002-orchestrator-goal-runtime-flow is the latest sealed non-background ledger in registry; pldg-20260610-001-ledger-plan-system is older bootstrap/system work.",
+  "ledger_consistency_status": "pass_with_notes",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "next_safe_action": "Run bounded repair for SR-008-001 only: reconcile atom-0088 reciprocal lineage/body proof or ledger compile target disposition, then regenerate .plan_index and seal governance only if live Plans change.",
+  "owner_routing_findings": {
+    "active_findings": 0,
+    "passes": 3,
+    "warnings": 0
+  },
+  "planunit_deltas": {
+    "added": [],
+    "body_changed": [],
+    "changed": [],
+    "deleted": [],
+    "hash_only": []
+  },
+  "planunit_source_claims": {
+    "active_missing_lineage_findings": 1,
+    "rows": 5
+  },
+  "previous_repair_status": "repaired_validators_passed",
+  "range": "683af326677451434948f4807b8175d2d99ee1ee..41a2914f686d1df5ec8ae41f6da94a208044fc4f",
+  "range_basis": "HEAD is committed audit-007 repair; HEAD~1 is parent. The contiguous HEAD-ending group touching the target registry/support surface is HEAD only; target ledger dir did not change.",
+  "schema_id": "pm.semantic_audit_report.v1",
+  "semantic_risk_count": 1,
+  "semantic_risks": [
+    "SR-008-001"
+  ],
+  "status": "BLOCKED",
+  "subagents": {
+    "local_compensation": "Main agent performed local ledger/index/governance/forbidden-artifact and validator-mutability checks.",
+    "not_spawned_due_limit": [
+      "pm_governance_auditor",
+      "pm_evidence_mapper"
+    ],
+    "status": "completed",
+    "summaries": [
+      {
+        "agent": "Hilbert",
+        "result": "No active owner-routing warnings remain; PLS-012/PDS-014 owner split and bootstrap consumer refs are repaired and closure-eligible.",
+        "role": "pm_owner_adjudicator"
+      },
+      {
+        "agent": "Locke",
+        "result": "Found active atom-0088 reciprocal lineage gap and possible compatibility/search-alias body-detail loss; this audit records SR-008-001.",
+        "role": "pm_fidelity_auditor"
+      }
+    ],
+    "used": 2
+  },
+  "unclosed_findings": [
+    "sfk-aa922281d6b28fe19734767f"
+  ],
+  "validator_summary": "pass",
+  "validators": {
+    "environment_notes": [
+      "Initial no-PYTHONPATH attempts for pm-bootstrap-ledger-validate.py, pm-plan-index.py, and pm-plan-migration.py failed with ModuleNotFoundError: No module named yaml; definitive runs used PYTHONPATH=/tmp/pm_pyyaml and passed."
+    ],
+    "failed": 0,
+    "mutated_tracked_files": [],
+    "passed": 11,
+    "status": "pass"
+  }
+}
