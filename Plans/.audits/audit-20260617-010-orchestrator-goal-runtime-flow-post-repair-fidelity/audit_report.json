@@ -1,0 +1,900 @@
+{
+  "atom_fidelity": {
+    "active_missing_or_drift": 0,
+    "classification_counts": {
+      "equivalent_with_evidence": 96,
+      "exact_present": 6,
+      "not_for_plan": 2
+    },
+    "rows": 104,
+    "source_window_summary": "Subagents covered atom-0001..0070; main agent covered atom-0071..0104 and changed PlanUnits.",
+    "unclosed_findings": []
+  },
+  "audit_id": "audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity",
+  "audited_range": "8d467b39ea5ce8c1bed768fdd69e8b5909c3535d..2e11604c9d268aaaafbc4210fbf85be69cd2f394",
+  "baseline_ref": "8d467b39ea5ce8c1bed768fdd69e8b5909c3535d",
+  "changed_files": [
+    {
+      "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/REPAIR_REPORT.md",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/repair_closure_matrix.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/repair_report.json",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/atom_fidelity_matrix.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/audit_report.json",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/closure_reuse.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/ledger_consistency.json",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/owner_routing_findings.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/planunit_source_claims.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/semantic_risks.jsonl",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/validator_results.json",
+      "status": "A"
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/002-change-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/005-plan-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/007-shard-indexes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/014-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/015-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/agent-rules-context/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/agent-rules-context/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/cli_bridged_providers/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/commands_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/commands_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/crosswalk/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/crosswalk/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/feature-list/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/feature-list/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filemanager/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filemanager/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/human-in-the-loop/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/human-in-the-loop/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/lspsupport/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/lspsupport/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/miscplan/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/miscplan/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newtools/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newtools/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_deep_extraction/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/008-tier-level-subagent-strategy.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/011-integration-with-orchestrator.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/004-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/005-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/006-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/008-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/personas/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/personas/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_document_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_document_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_to_node_compilation/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_to_node_compilation/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/project_output_artifacts/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/project_output_artifacts/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_graph_view/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_graph_view/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_modes/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_modes/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/runtime_artifacts_panel/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/skills_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/skills_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_command_catalog/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_command_catalog/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/widget_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/widget_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/wiring_matrix/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/wiring_matrix/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/worktreegitimprovement/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "status": "M"
+    }
+  ],
+  "changed_live_plan_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "changed_planunit_deltas": [
+    {
+      "delta": "changed",
+      "doc": "Plans/00-plans-index.md",
+      "line": 3864,
+      "notes": [
+        "Added atom-0088 compatibility/search-alias proof to canonical_text or owner-map prose.",
+        "Added acceptance proof that stale fixed-hierarchy/tier labels are not active runtime semantics.",
+        "Added atom-0088 source_lineage and exact-token preservation where owner/consumer scope requires it.",
+        "Added negative constraint rejecting stale tier labels as active canonical runtime semantics."
+      ],
+      "plan_unit_id": "0PI-056",
+      "semantic_assessment": "intentional_repair_no_loss"
+    },
+    {
+      "delta": "changed",
+      "doc": "Plans/Orchestrator_Page.md",
+      "line": 1498,
+      "notes": [
+        "Added atom-0088 compatibility/search-alias proof to canonical_text or owner-map prose.",
+        "Added acceptance proof that stale fixed-hierarchy/tier labels are not active runtime semantics.",
+        "Added atom-0088 source_lineage and exact-token preservation where owner/consumer scope requires it.",
+        "Added negative constraint rejecting stale tier labels as active canonical runtime semantics."
+      ],
+      "plan_unit_id": "OP-022",
+      "semantic_assessment": "intentional_repair_no_loss"
+    },
+    {
+      "delta": "changed",
+      "doc": "Plans/orchestrator-subagent-integration.md",
+      "line": 31078,
+      "notes": [
+        "Added atom-0088 compatibility/search-alias proof to canonical_text or owner-map prose.",
+        "Added acceptance proof that stale fixed-hierarchy/tier labels are not active runtime semantics.",
+        "Added atom-0088 source_lineage and exact-token preservation where owner/consumer scope requires it.",
+        "Added negative constraint rejecting stale tier labels as active canonical runtime semantics."
+      ],
+      "plan_unit_id": "OSI-428",
+      "semantic_assessment": "intentional_repair_no_loss"
+    }
+  ],
+  "closure_registry": {
+    "closure_reuse_status_counts": {
+      "explicitly_deferred": 1,
+      "not_for_plan": 2,
+      "repaired": 5,
+      "source_lineage_only": 6
+    },
+    "previously_closed_reused": 14,
+    "registry_rows": 51,
+    "registry_status_counts": {
+      "explicitly_deferred": 3,
+      "not_for_plan": 6,
+      "repaired": 22,
+      "source_lineage_only": 20
+    },
+    "reopened_count": 0
+  },
+  "current_ref": "2e11604c9d268aaaafbc4210fbf85be69cd2f394",
+  "forbidden_artifacts": {
+    "forbidden_artifacts_created": false,
+    "node_readiness_flags": {
+      "no_executable_build_tasks_created": true,
+      "no_final_node_queues_created": true,
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false,
+      "status": "blocked_compiler_contract_incomplete"
+    },
+    "path_name_match_evidence": "Repo path-name scan for WorkNodes, NodeSeeds/NodeSeed candidates, executable queues, final node manifests, final build tasks, production build tasks, and final node queues returned zero matches outside prose references.",
+    "path_name_matches": 0,
+    "status": "pass"
+  },
+  "inferred_ids_and_range": {
+    "audit_id": "audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity",
+    "baseline_ref": "8d467b39ea5ce8c1bed768fdd69e8b5909c3535d",
+    "current_ref": "2e11604c9d268aaaafbc4210fbf85be69cd2f394",
+    "evidence": [
+      "git rev-parse HEAD -> 2e11604c9d268aaaafbc4210fbf85be69cd2f394",
+      "git rev-parse HEAD^ -> 8d467b39ea5ce8c1bed768fdd69e8b5909c3535d",
+      "Plans/ledgers/v2/ledger_registry.json latest sealed non-background ledger is pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "Recent HEAD commit touches that ledger records, live Plans docs, .plan_index, generated governance, closure registry, and audit artifacts",
+      "audit-20260617-009 exists, so next audit id is audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity"
+    ],
+    "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow"
+  },
+  "ledger_consistency": {
+    "issues": [],
+    "status": "pass_with_notes"
+  },
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "next_safe_action": "No repair required. Next safe action is ledger-only continuation for q-0007..q-0009 or a future explicit compiler-contract design goal; do not create NodeSeeds/WorkNodes/executable queues until the compiler contract exists.",
+  "owner_routing": {
+    "issues": [],
+    "rows": 2,
+    "status": "pass"
+  },
+  "plan_index_governance": {
+    "compiler_contract_status": "blocked_compiler_contract_incomplete",
+    "dependencies_summary": {
+      "build_order_available": false,
+      "cycle_blocker_count": 245,
+      "depends_on_edge_count": 10621,
+      "edge_count": 12161,
+      "node_count": 5068,
+      "unblocks_edge_count": 1540,
+      "unresolved_reference_count": 0
+    },
+    "field_coverage": {
+      "acceptance_criteria": 5068,
+      "canonical_text": 5068,
+      "context_scope": 5068,
+      "depends_on": 5068,
+      "gui_related": 5068,
+      "implementation_surfaces": 5068,
+      "node_compile_hint": 5068,
+      "owner_doc": 5068,
+      "plan_unit_id": 5068,
+      "reasoning_tier": 5068,
+      "risk_class": 5068,
+      "source_lineage": 5068,
+      "status": 5068,
+      "unblocks": 5068,
+      "unit_type": 5068,
+      "validation_surfaces": 5068
+    },
+    "issues": {
+      "docs_without_plan_units": [],
+      "duplicate_plan_unit_ids": [],
+      "missing_gui_related_boolean": [],
+      "missing_required_metadata": [],
+      "owner_doc_mismatches": [],
+      "parse_errors": []
+    },
+    "migration_available": true,
+    "migration_compiler_contract_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_unit_count": 5068,
+    "plan_unit_rows": 5068,
+    "status": "pass"
+  },
+  "post_artifact_git_diff_check": {
+    "command": "git diff --check",
+    "git_status_after_artifact_write": [
+      "?? Plans/.audits/audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity/"
+    ],
+    "output": "",
+    "returncode": 0,
+    "status": "pass"
+  },
+  "reciprocal_planunit_lineage": {
+    "issues": [],
+    "rows": 4,
+    "status": "pass"
+  },
+  "schema_id": "pm.semantic_audit.audit_report.v2",
+  "semantic_risk_count": 0,
+  "status": "PASS",
+  "subagents": [
+    {
+      "agent": "019ed636-8c9c-7c70-8ee8-9ecf2587395b",
+      "nickname": "Maxwell",
+      "scope": "atom-0001..atom-0035",
+      "status": "pass",
+      "summary": "Read-only atom fidelity window found no unclosed semantic issues; atom-0001 remains not_for_plan and atom-0002..0035 are equivalent_with_evidence."
+    },
+    {
+      "agent": "019ed636-8d5a-75e2-89f5-6999b6fde311",
+      "nickname": "Rawls",
+      "scope": "atom-0036..atom-0070",
+      "status": "pass",
+      "summary": "Read-only atom fidelity window found no unclosed missing_or_drift; noted stale audit-009 metadata that audit-010 corrects."
+    },
+    {
+      "agent": "main",
+      "scope": "atom-0071..atom-0104 plus reciprocal lineage, owner routing, changed-doc diff, ledger/governance, index/forbidden artifacts, validators",
+      "status": "pass",
+      "summary": "No unclosed semantic risks found; atom-0088 exact in OP-022, OSI-428, and 0PI-056; PLS-011 remains compile-fidelity only."
+    }
+  ],
+  "validators": {
+    "failed": 0,
+    "mutations_detected": 0,
+    "passed": 10,
+    "post_artifact_git_diff_check": "pass"
+  }
+}
