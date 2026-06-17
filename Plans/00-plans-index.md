@@ -14,6 +14,7 @@
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
+- 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, production build tasks, or governance seal artifacts are authorized.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -222,6 +223,24 @@ Semantic audit closure support uses this owner split:
 - `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### Plans-To-Code Handoff Map (2026-06-17)
+
+The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-handoff` uses this owner split:
+- `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter.
+- `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers.
+- `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
+- `Plans/Goal_Runtime_System.md` owns future Plan Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
+- `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
+- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
+- `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
+- `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth.
+- `Plans/Contracts_V0.md` owns shared contract envelopes and points to `Plans/plans_to_code_handoff.schema.json` as the design-only schema draft.
+- `Plans/Planning_Ledger_System.md` and `Plans/Plan_Document_System.md` own implementation-readiness/doc-impact matrix handling and the owner/consumer/reference scan gate for this compile class.
+
+The ledger is source-lineage/planning memory only. This compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, generated PlanUnit indexes, Spec Lock updates, shards, evidence bundles, plan graph refreshes, auto_decisions, or governance seal artifacts.
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
 ### Native Goal Runtime Map (2026-06-16)
 
@@ -4063,6 +4082,104 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### 0PI-058 - Plans-To-Code Handoff Owner Map
+
+```yaml
+plan_unit_id: 0PI-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Plan Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own visible Plan Compile tab and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
+gui_related: false
+gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
+depends_on:
+  - PNC-010
+  - PNC-014
+  - ATS-001
+  - EP-099
+  - EP-103
+  - GRS-028
+  - GRS-030
+  - MS-110
+  - OP-023
+  - F3-397
+  - W-072
+  - F2-189
+  - GI-031
+  - POA-048
+  - RAP-029
+  - CV-289
+  - PLS-013
+  - PDS-015
+unblocks: []
+acceptance_criteria:
+  - The index names the primary owners and consumer boundaries for the Plans-to-code handoff compile.
+  - The index records Automated_Testing_System and plans_to_code_handoff.schema.json as canonical docs/schema drafts.
+  - The index explicitly preserves the no-build boundary: PlanCompile disabled, no WorkNodes, no NodeSeeds, no executable queues, no implementation files, no dispatched GoalRuns, and no governance seal.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+risk_class: owner_routing
+reasoning_tier: high
+context_scope: plans_to_code_handoff_index
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Models_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/FinalGUISpec.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/FileSafe.md
+  - Plans/GitHub_Integration.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Contracts_V0.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+  - Plans/plans_to_code_handoff.schema.json
+node_compile_hint:
+  mode: owner_routing_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0058
+  - pldg-20260617-001-plans-to-code-handoff:atom-0061
+  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+  - pldg-20260617-001-plans-to-code-handoff:atom-0063
+  - pldg-20260617-001-plans-to-code-handoff:atom-0064
+  - pldg-20260617-001-plans-to-code-handoff:dec-0024
+  - pldg-20260617-001-plans-to-code-handoff:dec-0026
+  - pldg-20260617-001-plans-to-code-handoff:dec-0027
+  - pldg-20260617-001-plans-to-code-handoff:dec-0028
+preserved_exact_tokens:
+  - "Plan_To_Node_Compilation"
+  - "Goal_Runtime_System"
+  - "Orchestrator_Page"
+  - "Executor_Protocol"
+  - "Automated_Testing_System"
+  - "implementation_readiness_matrix"
+  - "doc_impact_matrix"
+  - "owner docs"
+  - "consumer docs"
+  - "reference docs"
+  - "no-update evidence"
+negative_constraints:
+  - Do not run PlanCompile or build WorkNodes from this index entry.
+  - Do not update generated governance artifacts during ordinary ledger compile.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+```
+
+ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md
 
 
 ## Migration Coverage

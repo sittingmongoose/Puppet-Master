@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.bootstrap_operating_capsule.v1",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "profile": "bootstrap_planning",
+  "mode": "ledger_ready_for_plan_compile",
+  "core_rules": [
+    "Ledger is source/planning memory, not canonical Plans.",
+    "Use Plan Wizard terminology only in new content.",
+    "Owner ambiguity is adjudicated by the agent using evidence; do not ask row-by-row.",
+    "Do not run PlanCompile or build WorkNodes from this ledger.",
+    "Preserve exact tokens, examples, negative constraints, stale/compat notes, owner hints, and user corrections.",
+    "Compile accepted atoms into PlanUnits and owner docs, then audit before governance seal.",
+    "Use state/implementation_readiness_matrix.json to ensure PlanUnits are implementation-ready, with exact fields, schemas, acceptance criteria, validators, and boundaries.",
+    "Use state/doc_impact_matrix.json to update direct owner/consumer/reference docs or record no-update/deferred evidence after reference scans."
+  ],
+  "model_setting_decision": [
+    "Default Model",
+    "Overseer Model",
+    "Worker Model",
+    "GUI / Frontend Worker Model",
+    "High-Effort Worker Model",
+    "Auditor Model"
+  ],
+  "forbidden_terms_for_new_content": [
+    "Chain Wizard"
+  ],
+  "preferred_terms": [
+    "Plan Wizard",
+    "Overseer Model",
+    "Auditor Model",
+    "Plan Compile",
+    "WorkNode request"
+  ]
+}

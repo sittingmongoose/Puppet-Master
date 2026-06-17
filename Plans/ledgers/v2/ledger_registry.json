@@ -1,5 +1,88 @@
 {
-  "active_ledgers": [],
+  "active_ledgers": [
+    {
+      "ledger_id": "pldg-20260617-001-plans-to-code-automation",
+      "title": "Plans to Code Automation Contracts",
+      "status": "active",
+      "phase": "ready_for_plan_compile",
+      "primary_goal": "Design and record the complete automated path from approved Plans to WorkNode requests and code completion contracts, while not building WorkNodes yet.",
+      "created_at_utc": "2026-06-17T20:55:00Z",
+      "last_updated_at": "2026-06-17T20:55:00",
+      "last_updated_at_utc": "2026-06-17T20:55:00Z",
+      "updated_at_utc": "2026-06-17T20:55:00Z",
+      "resume_file": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-automation/state/handoff.json",
+      "canonical_plan_targets": [],
+      "candidate_compile_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Human-In-The-Loop.md",
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/bootstrap/Codex_Prompts.md"
+      ],
+      "compiled_owner_docs": [],
+      "compiled_plan_unit_ids": [],
+      "governance_status": "not_sealed",
+      "notes": "Ready for ledger-to-Plans compile. PlanCompile execution remains disabled. This ledger must not create WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks."
+    },
+    {
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "title": "Plans-to-Code Handoff, Plan Compile, Execution, Testing, and Completion Contracts",
+      "status": "active",
+      "phase": "ready_for_plan_compile",
+      "created_at_utc": "2026-06-17T21:45:00Z",
+      "last_updated_at_utc": "2026-06-17T22:20:00Z",
+      "primary_goal": "Record and compile the Plans-to-code handoff architecture: PlanCompile design-only contracts, WorkNode request handoffs, automated testing, source-control rollback, Orchestrator Plan Compile UX, model settings, autonomy/HITL, loop breakers, and final certification.",
+      "canonical_plan_targets": [],
+      "candidate_compile_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Commands_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/chain-wizard.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/prompts/codex_after_plans_updated.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/handoff.json",
+      "notes": "Ready for explicit ledger-to-Plans compile. Includes implementation_readiness_matrix and doc_impact_matrix for implementation-ready PlanUnits and direct reference-doc coverage. PlanCompile runtime remains disabled/design-only. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks are authorized."
+    }
+  ],
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
@@ -226,5 +309,5 @@
       ]
     }
   ],
-  "updated_at_utc": "2026-06-16T21:31:00Z"
+  "updated_at_utc": "2026-06-17T22:20:00Z"
 }

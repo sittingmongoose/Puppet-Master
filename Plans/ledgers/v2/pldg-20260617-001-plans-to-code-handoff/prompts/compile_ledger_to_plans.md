@@ -1,0 +1,1 @@
+/goal Compile PM Bootstrap Ledger pldg-20260617-001-plans-to-code-handoff to canonical Plans. Read compact state plus implementation_readiness_matrix and doc_impact_matrix. Docs/schemas only. No PlanCompile runtime, WorkNodes, NodeSeeds, queues, or governance seal. Run safe validators and report changed files, PlanUnits, blockers.

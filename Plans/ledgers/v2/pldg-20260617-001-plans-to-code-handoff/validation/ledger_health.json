@@ -1,0 +1,51 @@
+{
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass_ready_for_plan_compile",
+  "summary": {
+    "events": 11,
+    "design_atoms": 64,
+    "decisions": 28,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "corrections": 10,
+    "compile_queue_items": 0,
+    "ready_for_plan_compile_atoms": 64,
+    "candidate_owner_docs": 30,
+    "plan_compile_runtime_status": "design_only_disabled",
+    "doc_impact_matrix": "present",
+    "implementation_readiness_matrix": "present"
+  },
+  "checks": [
+    {
+      "check": "record_counts_match",
+      "status": "pass"
+    },
+    {
+      "check": "open_questions_none",
+      "status": "pass"
+    },
+    {
+      "check": "open_blockers_none",
+      "status": "pass"
+    },
+    {
+      "check": "plan_compile_disabled",
+      "status": "pass"
+    },
+    {
+      "check": "worknode_generation_forbidden",
+      "status": "pass"
+    },
+    {
+      "check": "doc_impact_matrix_present",
+      "status": "pass"
+    },
+    {
+      "check": "implementation_readiness_matrix_present",
+      "status": "pass"
+    }
+  ],
+  "updated_at_utc": "2026-06-17T22:20:00Z"
+}

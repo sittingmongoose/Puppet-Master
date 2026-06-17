@@ -1,0 +1,76 @@
+{
+  "audit_id": "audit-20260617-011-plans-to-code-handoff-post-compile",
+  "blockers": [
+    {
+      "blocker_id": "governance_seal_not_requested",
+      "description": "Spec Lock, evidence, plan graph, and shards are stale after canonical Plan and .plan_index edits; not refreshed because governance seal was not requested.",
+      "status": "open_expected"
+    },
+    {
+      "blocker_id": "compiler_contract_incomplete",
+      "description": "PlanUnit index reports node_readiness_status=blocked_compiler_contract_incomplete; this is the readiness-only boundary, not a failed compile.",
+      "status": "open_expected"
+    }
+  ],
+  "commands": [
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py generate",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 18220,
+        "coverage_status": "pass",
+        "no_worknodes_created": true,
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "nodeseed_candidates_created": false,
+        "plan_unit_count": 5105
+      }
+    },
+    {
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 18220,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 5105
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "failure_classes": [
+        "stale Spec_Lock hashes",
+        "stale plan_graph/evidence hashes",
+        "stale shard manifests/bodies"
+      ],
+      "status": "fail_expected_until_governance_seal"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "failure_classes": [
+        "stale shard source hashes",
+        "stale line counts",
+        "shard body mismatches"
+      ],
+      "status": "fail_expected_until_governance_seal"
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "command": "python3 -m json.tool Plans/plans_to_code_handoff.schema.json",
+      "status": "pass"
+    },
+    {
+      "command": "find Plans -maxdepth 3 -name WorkNodes/NodeSeeds variants",
+      "status": "pass_no_forbidden_paths"
+    },
+    {
+      "command": "git diff -- Plans/_shards Plans/.evidence Plans/Spec_Lock.json Plans/plan_graph.json Plans/auto_decisions.jsonl",
+      "status": "pass_no_forbidden_governance_diff"
+    }
+  ],
+  "governance_status": "not_sealed_pending_explicit_seal",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass_with_governance_blockers"
+}

@@ -1,0 +1,395 @@
+{
+  "schema_id": "pm.doc_impact_matrix.v1",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "updated_at_utc": "2026-06-17T22:20:00Z",
+  "status": "candidate_reference_coverage_required",
+  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans.",
+  "global_compile_rules": [
+    "Before edits, Codex must adjudicate owner docs from this matrix and current repo evidence.",
+    "After edits, Codex must run reference scans for touched terms and update direct references or record no-update/deferred evidence.",
+    "Broad Plan Wizard rename is deferred to Plan Wizard redesign unless a touched section would otherwise introduce stale wording or contradiction.",
+    "Do not update Spec_Lock, shards, evidence bundles, or plan_graph until explicit governance seal after docs/indexes stabilize."
+  ],
+  "reference_scan_terms": [
+    "PlanCompile",
+    "Plan Compile",
+    "PlanUnit",
+    "NodeSeed",
+    "NodeSeed candidate",
+    "WorkNode request",
+    "WorkNodeRequest",
+    "WorkGraph draft",
+    "Plan Wizard",
+    "Chain Wizard",
+    "validation pass",
+    "Overseer Model",
+    "Auditor Model",
+    "Executor Model",
+    "GUI / Frontend Worker Model",
+    "High-Effort Worker Model",
+    "model resolution receipt",
+    "test capability discovery",
+    "test_strategy",
+    "browser automation",
+    "emulator",
+    "Slint",
+    "Playwright",
+    "safe point",
+    "snapshot",
+    "rollback",
+    "worktree",
+    "GitHub",
+    "HITL",
+    "manual decision",
+    "GoalCompletionReceipt",
+    "source-control receipt"
+  ],
+  "doc_groups": [
+    {
+      "group_id": "impact-001",
+      "topic": "PlanCompile and Plans-to-work contracts",
+      "primary_owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "direct_consumers": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Plan_Document_System.md"
+      ],
+      "required_updates": [
+        "shared compiler core/two adapters",
+        "design-only runtime boundary",
+        "stage cards/resume/currentness",
+        "NodeSeed/WorkGraph/WorkNode request contracts",
+        "Executor intake boundary"
+      ],
+      "scan_terms": [
+        "PlanCompile",
+        "Plan Compile",
+        "PlanUnit",
+        "NodeSeed",
+        "WorkNode request",
+        "WorkGraph draft"
+      ]
+    },
+    {
+      "group_id": "impact-002",
+      "topic": "Plan Wizard, PRD Builder, and Auditor loop",
+      "primary_owner_docs": [
+        "Plans/Plan_Document_System.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "direct_consumers": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "required_updates": [
+        "Plan Wizard terminology in new content",
+        "ledger-to-Plans conversion through Overseer",
+        "Auditor audit/repair loop",
+        "retire fixed validation pass model where touched"
+      ],
+      "deferred_updates": [
+        "Broad repo-wide rename from old wizard name to Plan Wizard remains for Plan Wizard redesign unless directly touched."
+      ],
+      "scan_terms": [
+        "Plan Wizard",
+        "Chain Wizard",
+        "validation pass",
+        "Auditor",
+        "PRD Builder"
+      ]
+    },
+    {
+      "group_id": "impact-003",
+      "topic": "Model settings and capability lanes",
+      "primary_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "direct_consumers": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md"
+      ],
+      "reference_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Commands_System.md",
+        "Plans/00-plans-index.md"
+      ],
+      "required_updates": [
+        "six user-facing model settings",
+        "Overseer internal role mapping",
+        "Auditor role",
+        "GUI/frontend and high-effort lane settings",
+        "requested/effective model resolution receipt",
+        "no Executor Model setting"
+      ],
+      "scan_terms": [
+        "Default Model",
+        "Overseer Model",
+        "Worker Model",
+        "GUI / Frontend Worker Model",
+        "High-Effort Worker Model",
+        "Auditor Model",
+        "Executor Model",
+        "requested model",
+        "effective model"
+      ]
+    },
+    {
+      "group_id": "impact-004",
+      "topic": "Orchestrator Plan Compile tab UX",
+      "primary_owner_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "direct_consumers": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "reference_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/00-plans-index.md"
+      ],
+      "required_updates": [
+        "canonical Plan Compile tab",
+        "animated node-factory visualization",
+        "progress/speed/ETA/blocker/status panels",
+        "scope boundary from execution tabs"
+      ],
+      "scan_terms": [
+        "Plan Compile tab",
+        "Orchestrator",
+        "Progress",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger",
+        "stage timeline",
+        "throughput",
+        "ETA"
+      ]
+    },
+    {
+      "group_id": "impact-005",
+      "topic": "Automated testing and browser/device/GUI evidence",
+      "primary_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "direct_consumers": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "required_updates": [
+        "test capability discovery",
+        "harness probe",
+        "test strategy v2",
+        "test run receipts",
+        "visual/browser/device evidence",
+        "platform adapter policy",
+        "Puppet Master browser primary for web",
+        "Slint as example only"
+      ],
+      "scan_terms": [
+        "test_strategy",
+        "test capability",
+        "browser automation",
+        "browser session",
+        "screenshot",
+        "emulator",
+        "Slint",
+        "Playwright",
+        "visual evidence",
+        "test receipt"
+      ]
+    },
+    {
+      "group_id": "impact-006",
+      "topic": "Source control, worktrees, snapshots, rollback, GitHub",
+      "primary_owner_docs": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "direct_consumers": [
+        "Plans/GitHub_Integration.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Tools.md"
+      ],
+      "required_updates": [
+        "source-control execution context",
+        "worktree allocation/reuse/cleanup policy",
+        "safe point/snapshot/rollback receipts",
+        "GitHub optional promotion/output",
+        "FileSafe mutation/restore integration"
+      ],
+      "scan_terms": [
+        "worktree",
+        "safe point",
+        "snapshot",
+        "rollback",
+        "GitHub",
+        "PR",
+        "merge",
+        "branch",
+        "FileSafe",
+        "source control"
+      ]
+    },
+    {
+      "group_id": "impact-007",
+      "topic": "Autonomy, HITL, loop breakers, security/external effects",
+      "primary_owner_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "direct_consumers": [
+        "Plans/Decision_Policy.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "required_updates": [
+        "autonomous default",
+        "HITL explicit mode",
+        "critical-only default user escalation",
+        "failure signatures",
+        "loop breaker sequence",
+        "PlanChangeDetected impact",
+        "security/secrets/network/destructive command policy"
+      ],
+      "scan_terms": [
+        "HITL",
+        "human in the loop",
+        "manual decision",
+        "failure_signature",
+        "loop breaker",
+        "PlanChangeDetected",
+        "secret",
+        "network access",
+        "destructive command"
+      ]
+    },
+    {
+      "group_id": "impact-008",
+      "topic": "Receipts, runtime artifacts, and completion certification",
+      "primary_owner_docs": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "direct_consumers": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "reference_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "required_updates": [
+        "dispatch/change/test/auditor/repair/promotion/completion receipts",
+        "GoalCompletionReceipt",
+        "code-complete definition",
+        "evidence truth separation",
+        "source-control/test/model receipts"
+      ],
+      "scan_terms": [
+        "receipt",
+        "GoalCompletionReceipt",
+        "completion certification",
+        "test_run_receipt",
+        "source-control receipt",
+        "model resolution receipt",
+        "evidence"
+      ]
+    }
+  ],
+  "high_signal_reference_docs_from_repo_scan": {
+    "plan_wizard_terms": [
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/chain-wizard.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/00-plans-index.md"
+    ],
+    "model_terms": [
+      "Plans/Models_System.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Orchestrator_Page.md"
+    ],
+    "testing_terms": [
+      "Plans/FinalGUISpec.md",
+      "Plans/Tools.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Executor_Protocol.md"
+    ],
+    "source_control_terms": [
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/FileSafe.md",
+      "Plans/GitHub_Integration.md",
+      "Plans/GitHub_API_Auth_and_Flows.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Runtime_Artifacts_Panel.md"
+    ],
+    "hitl_terms": [
+      "Plans/human-in-the-loop.md",
+      "Plans/Permissions_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Orchestrator_Page.md"
+    ]
+  },
+  "closure_requirement": "The post-plan-update audit must produce owner_routing_findings.jsonl and changed-doc fidelity evidence; every direct reference update/no-update/deferred decision must be represented in the repair closure matrix or final audit report."
+}

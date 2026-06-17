@@ -1,0 +1,31 @@
+{
+  "atom_fidelity": {
+    "atoms_covered": 64,
+    "atoms_missing": 0,
+    "atoms_total": 64,
+    "target_ledger_planunits": 38
+  },
+  "audit_id": "audit-20260617-011-plans-to-code-handoff-post-compile",
+  "doc_impact": {
+    "changed_plan_fidelity": "changed_plan_fidelity.jsonl",
+    "groups_total": 8,
+    "owner_routing_findings": "owner_routing_findings.jsonl",
+    "status": "closed_with_dispositions"
+  },
+  "forbidden_artifacts": {
+    "governance_artifacts_modified": false,
+    "nodeseed_candidates_created": false,
+    "worknodes_created": false
+  },
+  "governance_status": "not_sealed_pending_explicit_seal",
+  "index": {
+    "acceptance_unit_count": 18220,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_unit_count": 5105,
+    "status": "pass"
+  },
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "next_safe_action": "If Jared asks to seal, refresh governance artifacts with the repo scripts; otherwise stop here with refreshed .plan_index and audit dispositions.",
+  "schema_id": "pm.audit_report.v1",
+  "status": "pass_with_governance_blockers"
+}

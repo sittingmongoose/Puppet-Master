@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated and validates with node readiness blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
+      "details": "PlanUnit index validates with 5105 PlanUnits, 18220 acceptance units, coverage pass; node readiness remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -40,6 +40,16 @@
       "name": "post-audit-repair-governance-seal",
       "result": "PASS",
       "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+    },
+    {
+      "name": "plans-to-code-handoff-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase."
+    },
+    {
+      "name": "shard-generate",
+      "result": "PASS",
+      "details": "51 configured docs and 925 shards generated from live Plans."
     }
   ],
   "commands_run": [
@@ -85,6 +95,18 @@
     },
     {
       "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
       "exit_code": 0
     }
   ],
