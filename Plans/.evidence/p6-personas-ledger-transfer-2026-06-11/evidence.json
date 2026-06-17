@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "130d1d1b68c992876a6fab7d020cf9f24240580e796785bfb91b5557a32b4e1c"
+      "sha256": "d4f3f519b3510e4e5506fe305f8046cd01eeda667f61c933c4126340b8ad11ba"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -23,7 +23,7 @@
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "c8a8b3e962b465d7dfd066ff0769c6d30f602029ae7d66e6c0b3b4fcfe033c0e"
+      "sha256": "e9b290f9e220801fb7f68a255f7b16010bc01c9ce1e9b4c8d25ce0ccfa7d5c06"
     },
     {
       "note": "Index protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "388ccc1b90c4f2b6ea68f47bba3323ed9e71b36a4b5504972ec3a52c94e65358"
+      "sha256": "2c151d7fe7eac8e0a138b17176a5d0789af84217c906851ce05bb13697ddf37d"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d2fb16ce5fbaf345f2fb594d8d3df3001722e7dc9bfedc132aef888b103845a1"
+      "sha256": "707ad7fe39d82b137c74a0b5f1f709d2366d60c5a3dee5c5140c25e95ea70563"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "7d1d72ef3ff8acf38208306231232cfeceb64412beb4ccb90a1f3fe2baad314b"
+      "sha256": "23821cfeccf63ac55076ff2b2a12f0cb96307344a2204c30b397d478de5bd68f"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",

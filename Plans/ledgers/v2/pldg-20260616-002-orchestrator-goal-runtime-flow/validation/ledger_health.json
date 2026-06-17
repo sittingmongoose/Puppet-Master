@@ -53,7 +53,7 @@
     {
       "check_id": "plan-index-0001",
       "status": "pass",
-      "summary": "pm-plan-index generate and validate passed with 5065 PlanUnits, 18074 acceptance units, and node readiness blocked_compiler_contract_incomplete."
+      "summary": "pm-plan-index generate and validate passed with 5065 PlanUnits, 18075 acceptance units, and node readiness blocked_compiler_contract_incomplete."
     },
     {
       "check_id": "migration-validate-0001",
@@ -115,10 +115,10 @@
     "open_blockers": 0,
     "open_item_resolution_workshop": "accepted_by_user_with_clarifications",
     "open_questions": 3,
-    "plan_index_acceptance_units": 18074,
+    "plan_index_acceptance_units": 18075,
     "plan_index_plan_units": 5065,
     "pm_bootstrap_ledger_validate": "pass",
-    "pm_plan_index_generate": "pass_5065_planunits_18074_acceptance_units",
+    "pm_plan_index_generate": "pass_5065_planunits_18075_acceptance_units",
     "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
     "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
     "post_seal_open_questions": [
@@ -135,7 +135,7 @@
     ],
     "unclassified_candidates": 0
   },
-  "updated_at_utc": "2026-06-16T21:31:00Z",
+  "updated_at_utc": "2026-06-17T02:45:52Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and scheduler/permission/readiness gates."
   ]

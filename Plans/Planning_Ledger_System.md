@@ -407,12 +407,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  A v2 ledger compile queue must preserve accepted atom dispositions, target owner docs, compile_queue.items, candidate_compile_plan, compiled_plan_unit_ids, duplicate/deferred/non-applicable rationale, validation commands, and governance status without writing Spec_Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during ordinary ledger-to-Plans compile. After canonical docs and allowed plan indexes change, the ledger status is compiled pending governance seal until an explicit seal phase refreshes governance artifacts. Compile-readiness projections may record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements, but they must not treat plan-compile readiness as direct code implementation readiness.
+  A v2 ledger compile queue must preserve accepted atom dispositions, target owner docs, compile_queue.items, candidate_compile_plan, compiled_plan_unit_ids, duplicate/deferred/non-applicable rationale, validation commands, and governance status without writing Spec_Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during ordinary ledger-to-Plans compile. After canonical docs and allowed plan indexes change, the ledger status is compiled pending governance seal until an explicit seal phase refreshes governance artifacts; Bootstrap_Planning_Migration/BPM-005 owns governance seal timing while this PlanUnit owns compile-queue fidelity and ledger status projection. Compile-readiness projections may record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements, but they must not treat plan-compile readiness as direct code implementation readiness.
 gui_related: false
 gui_classification_reason: Compile queue fidelity and governance seal state are planning/governance metadata, not GUI behavior.
 depends_on:
   - PLS-009
   - PLS-010
+  - BPM-005
 unblocks: []
 acceptance_criteria:
   - Compile queue state records per-atom dispositions, compile_queue.items, candidate_compile_plan, compiled PlanUnit ids, and compiled_plan_unit_ids.
@@ -431,6 +432,7 @@ implementation_surfaces:
   - Plans/ledgers/v2/*/state/compile_queue.json
   - Plans/ledgers/v2/*/records/design_atoms.jsonl
   - Plans/ledgers/v2/*/manifest.json
+  - Plans/Bootstrap_Planning_Migration.md
 node_compile_hint:
   mode: compile_queue_fidelity
   create_worknodes: false
@@ -454,6 +456,8 @@ preserved_exact_tokens:
   - "no remaining open design questions"
   - "live repo backlink audit"
   - "pending governance seal"
+  - "Bootstrap_Planning_Migration"
+  - "BPM-005"
   - "Spec_Lock"
   - "generated shards"
   - "evidence bundles"
@@ -473,6 +477,7 @@ negative_constraints:
 owner_hints:
   - Plans/Planning_Ledger_System.md
   - Plans/Plan_Document_System.md
+  - Plans/Bootstrap_Planning_Migration.md
 ```
 
 ## 3. Compilation Coverage

@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "388ccc1b90c4f2b6ea68f47bba3323ed9e71b36a4b5504972ec3a52c94e65358"
+      "sha256": "2c151d7fe7eac8e0a138b17176a5d0789af84217c906851ce05bb13697ddf37d"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index generate/validate after pldg-002 audit repair: 5065 PlanUnits, 18068 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
+      "details": "pm-plan-index generate/validate after pldg-002 semantic warning repair: 5065 PlanUnits, 18075 acceptance units, node_readiness_report.status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
