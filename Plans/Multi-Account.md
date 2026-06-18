@@ -4587,7 +4587,7 @@ plan_unit_id: MA-061
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: 'atom-0089: Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
+canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

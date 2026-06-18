@@ -5,12 +5,14 @@
     "Created 168 compile-ready design atoms, 30 accepted decisions, and 15 accepted corrections.",
     "Resumed in conversational Collaborator mode after the compile-ready cursor; no compile authorization was inferred and no canonical/generated/runtime artifacts were touched.",
     "Compiled 168 accepted atoms into 61 live PlanUnits across canonical Plans owner docs.",
-    "Regenerated allowed Plans/.plan_index outputs only; no WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or refreshed."
+    "Regenerated allowed Plans/.plan_index outputs during compile, then governance seal refreshed migration proof, shards, evidence, Spec Lock, plan graph, and auto_decisions after Plans and PlanUnit index stabilized; no WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
+    "Started bounded post-audit repair for audit-20260618-007 and recorded ledger projection/disposition cleanup in source-lineage state only.",
+    "Closed audit-20260618-007 with a 94-row repair_closure_matrix, PASS_CERTIFIED repair report, semantic closure registry rows, refreshed evidence hashes, and passing closure/governance validators."
   ],
   "current_phase": "compiled_prd_planning_wizard_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0022",
-    "next_action": "Use sealed Plans/index/governance artifacts as current truth. Future work should start from audit/repair or explicit compiler/runtime enablement, not from redoing this compile."
+    "last_event_id": "evt-0023",
+    "next_action": "Finish repair closure artifacts, registry rows, generated-index/governance refresh, and validators for audit-20260618-007 before claiming completion."
   },
   "do_not_redo": [
     "Do not rediscover whether the feature is called Requirements Doc Builder, PRD Builder, Chain Wizard, Plan Wizard, or Planning Wizard; naming is settled.",
@@ -18,18 +20,30 @@
     "Do not use superseded experimental planning-pipeline artifacts as authority.",
     "Do not create runtime WorkNodes or launch builds during ledger-to-Plans compilation."
   ],
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "next_actions": [
-    "Run bounded audit/repair only if a new finding is raised.",
-    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, or production build tasks until a later explicit compiler/runtime enablement phase."
+    "Finish bounded repair closure for audit-20260618-007.",
+    "Regenerate allowed PlanUnit indexes only after live Plans are stable, then refresh governance artifacts in the explicit seal phase.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks."
   ],
+  "next_recommended_action": "Proceed only if Jared asks for a new conversational design turn, a new audit, or an explicit compile/build phase; do not create WorkNodes/NodeSeeds until the compiler contract exists.",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "summary": "PRD Builder and Planning Wizard ledger compilation and governance seal are complete against live Plans, PlanUnit index, migration proof, shards, evidence, and Spec Lock. Node readiness remains blocked_compiler_contract_incomplete by design.",
-  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "summary": "PRD Builder and Planning Wizard ledger compilation, governance seal, and bounded post-audit repair are complete against live Plans, PlanUnit index, migration proof, shards, evidence, Spec Lock, and audit closure registry. Node readiness remains blocked_compiler_contract_incomplete by design.",
+  "updated_at_utc": "2026-06-18T21:42:37Z",
   "validation_state": {
     "git_diff_check": "pass",
     "ledger_health": "pass_governance_sealed",

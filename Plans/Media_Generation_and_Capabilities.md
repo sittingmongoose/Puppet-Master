@@ -5963,7 +5963,7 @@ plan_unit_id: MGAC-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: 'atom-0065: Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status.'
+canonical_text: 'Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

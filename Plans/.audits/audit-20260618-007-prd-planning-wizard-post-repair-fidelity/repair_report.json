@@ -1,0 +1,279 @@
+{
+  "audit_id": "audit-20260618-007-prd-planning-wizard-post-repair-fidelity",
+  "bounded_repair_notes": [
+    "No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime dispatch, or implementation files were created.",
+    "Canonical Plan prose was edited only on owner surfaces named by audit findings and the audited atom-label normalization set.",
+    "Generated governance was refreshed only after canonical docs and plan index stabilized."
+  ],
+  "changed_owner_doc_count": 45,
+  "changed_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Bootstrap_Planning_Migration.md",
+    "Plans/Commands_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_API_Auth_and_Flows.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/chain-wizard.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/corrections.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/plans_to_code_handoff.schema.json",
+    "Plans/storage-plan.md"
+  ],
+  "changed_plan_unit_count": 65,
+  "changed_plan_units": [
+    "0PI-058",
+    "0PI-059",
+    "ACD-421",
+    "ATS-005",
+    "ATS-006",
+    "ATS-007",
+    "ATS-008",
+    "ATS-009",
+    "ATS-010",
+    "BPM-008",
+    "C-050",
+    "CS-052",
+    "CV-290",
+    "CW-009",
+    "CWF-152",
+    "EP-104",
+    "EP-105",
+    "F2-190",
+    "F3-398",
+    "GAAAF-013",
+    "GI-032",
+    "GRS-028",
+    "GRS-031",
+    "HITL-037",
+    "MA-061",
+    "MGAC-093",
+    "MS-112",
+    "OP-025",
+    "P-054",
+    "PDS-015",
+    "PDS-016",
+    "PG-059",
+    "PLS-008",
+    "PLS-014",
+    "PNC-015",
+    "PNC-016",
+    "PNC-017",
+    "POA-049",
+    "PRDB-001",
+    "PRDB-002",
+    "PRDB-003",
+    "PRDB-004",
+    "PRDB-005",
+    "PRDB-006",
+    "PRDB-007",
+    "PS-117",
+    "PWIZ-001",
+    "PWIZ-002",
+    "PWIZ-003",
+    "PWIZ-004",
+    "PWIZ-005",
+    "PWIZ-006",
+    "PWIZ-007",
+    "PWIZ-008",
+    "PWIZ-009",
+    "PWIZ-010",
+    "PWIZ-011",
+    "PWIZ-012",
+    "PWIZ-013",
+    "RAP-030",
+    "RGV-014",
+    "SP-216",
+    "UCC-097",
+    "W-073",
+    "WM-038"
+  ],
+  "closure_matrix": "repair_closure_matrix.jsonl",
+  "closure_row_count": 94,
+  "closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "final_validator_results": [
+    {
+      "details": "94 repair closure rows, no missing coverage, registry valid",
+      "name": "pm_audit_closure_validate_with_matrix",
+      "status": "pass"
+    },
+    {
+      "details": "168 atoms, 61 compile queue items, 30 decisions, 15 corrections, 23 events, 0 questions",
+      "name": "pm_bootstrap_ledger_validate",
+      "status": "pass"
+    },
+    {
+      "details": "5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete",
+      "name": "pm_plan_index_validate",
+      "status": "pass"
+    },
+    {
+      "details": "pds-20260611-002-atomize-planunits",
+      "name": "pm_plan_migration_validate",
+      "status": "pass"
+    },
+    {
+      "details": "run-gates after evidence refresh",
+      "name": "pm_plans_verify_run_gates",
+      "status": "pass"
+    },
+    {
+      "details": "52 docs, 965 shards",
+      "name": "pm_shard_plans_check",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_verify_spec_lock",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_evidence",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_plan_graph",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_audit_governance",
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_plans_to_code_handoff_schema",
+      "status": "pass"
+    },
+    {
+      "details": "dry_run_already_sealed_noop",
+      "name": "pm_install_prd_planning_wizard_ledger_dry_run",
+      "status": "pass"
+    },
+    {
+      "details": "no whitespace errors",
+      "name": "git_diff_check",
+      "status": "pass"
+    },
+    {
+      "details": "61 audited PlanUnits checked; no atom labels in canonical_text",
+      "name": "focused_canonical_text_atom_label_check",
+      "status": "pass"
+    },
+    {
+      "details": "contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, runtime_policy_snapshot_ref required/properties present; launch gates const false",
+      "name": "focused_runtime_schema_field_check",
+      "status": "pass"
+    },
+    {
+      "details": "30 decisions and 15 corrections source_lineage_only",
+      "name": "focused_nonatom_disposition_check",
+      "status": "pass"
+    }
+  ],
+  "generated_at_utc": "2026-06-18T21:50:15Z",
+  "governance_status": "sealed_after_evidence_refresh",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "no_runtime_or_node_artifacts_created": true,
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "schema_id": "pm.audit_repair_report.v1",
+  "semantic_finding_dispositions": [
+    {
+      "audit_source_finding_key": "sfk-0c6c690a8aa90f9841b357ee",
+      "closure_status": "stale_retired",
+      "finding_family": "legacy_owner_routing_and_semantic_migration",
+      "semantic_risk_id": "SR-0C6C690A8AA9",
+      "source_row": 1
+    },
+    {
+      "audit_source_finding_key": "sfk-10539228e648dbecc63eed9c",
+      "closure_status": "stale_retired",
+      "finding_family": "stale_active_terminology",
+      "semantic_risk_id": "SR-10539228E648",
+      "source_row": 2
+    },
+    {
+      "audit_source_finding_key": "sfk-3781db578801f6f4bba7b049",
+      "closure_status": "repaired",
+      "finding_family": "schema_owner_routing_and_field_fidelity",
+      "semantic_risk_id": "SR-3781DB578801",
+      "source_row": 3
+    },
+    {
+      "audit_source_finding_key": "sfk-c07297837b8bc0a5207f943b",
+      "closure_status": "repaired",
+      "finding_family": "ledger_projection_consistency",
+      "semantic_risk_id": "SR-C07297837B8B",
+      "source_row": 4
+    },
+    {
+      "audit_source_finding_key": "sfk-af18a2ef342dc891c5db276a",
+      "closure_status": "source_lineage_only",
+      "finding_family": "ledger_projection_consistency",
+      "semantic_risk_id": "SR-AF18A2EF342D",
+      "source_row": 5
+    },
+    {
+      "audit_source_finding_key": "sfk-b2e2e06b9a035e3f5189f2bd",
+      "closure_status": "repaired",
+      "finding_family": "canonical_text_source_lineage_boundary",
+      "semantic_risk_id": "SR-B2E2E06B9A03",
+      "source_row": 6
+    }
+  ],
+  "source_artifact_row_counts": {
+    "atom_fidelity_matrix.jsonl": 7,
+    "ledger_consistency.json": 2,
+    "owner_routing_findings.jsonl": 4,
+    "planunit_source_claims.jsonl": 61,
+    "semantic_risks.jsonl": 6,
+    "validator_results.json": 14
+  },
+  "status": "PASS_CERTIFIED",
+  "validated_at_utc": "2026-06-18T21:53:21Z"
+}

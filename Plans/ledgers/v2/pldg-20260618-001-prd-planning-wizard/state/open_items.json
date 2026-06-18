@@ -6,9 +6,21 @@
     "Optional pre-compile fit-check conversation does not reopen the ready-for-plan-compile state unless Jared adds or changes product intent."
   ],
   "deferred_questions": [],
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_ledger_open_items.v1",
-  "updated_at_utc": "2026-06-18T20:04:18Z"
+  "updated_at_utc": "2026-06-18T21:42:37Z"
 }

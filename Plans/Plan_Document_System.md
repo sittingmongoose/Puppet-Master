@@ -668,7 +668,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_Document_System.md
 canonical_text: >-
-  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. Broad Plan Wizard rename remains deferred to the Plan Wizard redesign unless a touched section would otherwise introduce stale wording or contradiction; new content uses Plan Wizard terminology. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
+  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. The former broad Plan Wizard rename deferral is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map; new active content uses Planning Wizard terminology, while retained Plan Wizard and Chain Wizard tokens require explicit historical/source-lineage or compatibility disposition. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
   Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.
@@ -677,7 +677,7 @@ unblocks: []
 acceptance_criteria:
   - Owner, consumer, reference/index/UI, and wiring docs are accounted for after owner contract edits.
   - Direct references are updated, intentionally unchanged with evidence, or explicitly deferred.
-  - Broad Plan Wizard rename is not done during unrelated compiles, but new touched content uses Plan Wizard wording.
+  - Active owner and consumer prose uses Planning Wizard after the 2026-06-18 owner map; retained Plan Wizard or Chain Wizard tokens are historical/source-lineage or compatibility-only.
   - Post-compile closure validates Plans first, repairs exact-detail drift before index generation, regenerates only Plans/.plan_index, and does not seal governance without an explicit request.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -711,6 +711,7 @@ preserved_exact_tokens:
   - "reference/index/UI docs"
   - "directly reference"
   - "broad Plan Wizard rename remains deferred"
+  - "Planning Wizard"
   - "post-compile audit/index"
   - "repairs exact-detail drift"
   - "Plans/.plan_index"
@@ -720,6 +721,10 @@ negative_constraints:
   - Do not do an uncontrolled whole-repo rename as part of this compile.
   - Do not leave direct contradictions in touched sections.
   - Do not run governance seal unless explicitly asked.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard and Chain Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - The old Plan Wizard redesign deferred framing is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map.
 owner_hints:
   - Plans/Plan_Document_System.md
   - Plans/Planning_Ledger_System.md
@@ -740,9 +745,9 @@ plan_unit_id: PDS-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_Document_System.md
-canonical_text: 'atom-0024: The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. atom-0058: At topic closure, a separate Overseer conversion agent transforms accepted topic ledger records into a versioned Topic Plan Draft or PlanUnit candidates with exact source lineage, assumptions, open non-blocking items, and cross-topic impacts. atom-0063: After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. atom-0066: Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the
-  planning ledger and canonical Plan text. atom-0132: Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. atom-0141: Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. atom-0142: Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact, explicit system policy, or recorded assumption; unsupported invented claims are audit defects. atom-0158: Create Plans/PRD_Builder.md and
-  Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. atom-0160: Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
+canonical_text: 'The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. At topic closure, a separate Overseer conversion agent transforms accepted topic ledger records into a versioned Topic Plan Draft or PlanUnit candidates with exact source lineage, assumptions, open non-blocking items, and cross-topic impacts. After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the
+  planning ledger and canonical Plan text. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact, explicit system policy, or recorded assumption; unsupported invented claims are audit defects. Create Plans/PRD_Builder.md and
+  Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

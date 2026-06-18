@@ -284,34 +284,39 @@ owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
-### PLS-008 - Chain Wizard And Goal Integration
+### PLS-008 - Planning Wizard And Goal Integration
 
 ```yaml
 plan_unit_id: PLS-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
-canonical_text: Future Chain Wizard planning uses native Goal Mode invisibly to transfer ledgers to Plans, convert Plans to future work-node artifacts after the compiler contract exists, and audit. Assistant chat may invoke Goal Mode visibly for arbitrary execution tasks.
+canonical_text: Future Planning Wizard planning uses native Goal Mode invisibly to transfer ledgers to Plans, convert Plans to future work-node artifacts after the compiler contract exists, and audit. Assistant chat may invoke Goal Mode visibly for arbitrary execution tasks. Chain Wizard remains a retired compatibility/source-lineage name, not current product terminology.
 gui_related: false
 gui_classification_reason: Goal orchestration policy is not itself GUI implementation work.
 depends_on: [PLS-001, PLS-002, PNC-001]
 unblocks: [BPM-002, PNC-006]
 acceptance_criteria:
-  - Chain Wizard/native Goal integration respects the ledger-to-Plan and Plan-to-node boundaries.
+  - Planning Wizard/native Goal integration respects the ledger-to-Plan and Plan-to-node boundaries.
   - Visible Assistant Goal Mode remains available for user-directed long-running execution tasks.
 validation_surfaces:
-  - Future Chain Wizard integration tests.
+  - Future Planning Wizard integration tests.
   - Plan_To_Node_Compilation boundary checks.
 risk_class: execution_boundary
 reasoning_tier: standard
 context_scope: native_future
-implementation_surfaces: [future Chain Wizard, future Goal Mode service, Plans/Plan_To_Node_Compilation.md]
+implementation_surfaces: [future Planning Wizard, future Goal Mode service, Plans/Plan_To_Node_Compilation.md]
 node_compile_hint: {mode: future_native_integration, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0029
   - source_ref:chat:design-discussion
-preserved_exact_tokens: ["Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
-negative_constraints: []
+preserved_exact_tokens: ["Planning Wizard", "Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
+negative_constraints:
+  - Do not use Chain Wizard as current product terminology.
+compatibility_only_notes:
+  - Chain Wizard is retained only for historical migration, source-lineage, and compatibility search.
+stale_retired_dispositions:
+  - Chain Wizard is retired as current product/workflow terminology; current prose uses Planning Wizard.
 owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md]
 ```
 
@@ -673,9 +678,9 @@ plan_unit_id: PLS-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
-canonical_text: 'atom-0010: Every substantive PRD Builder exchange must append an event and update affected PRD atoms, decisions, assumptions, constraints, questions, conflicts, annotations, projections, and handoff state before the turn is complete. atom-0011: Every substantive Planning Wizard exchange must append an event and update topic-scoped planning atoms plus any affected global decisions, constraints, dependencies, invalidations, amendments, questions, and handoff state before the turn is complete. atom-0012: If the required end-of-turn ledger write fails, mark the active thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until durable synchronization is repaired. atom-0023: The durable PRD ledger is working memory and source lineage; the visible PRD is a versioned human-readable projection of accepted ledger atoms and must not become the only source of truth. atom-0025: Material functional requirements and acceptance criteria receive
-  stable identifiers such as FR-001 and AC-001, with stable internal atom IDs and source lineage. atom-0032: Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once. atom-0034: Each intake subagent emits bounded candidate requirement atoms, source spans, confidence, ambiguity, conflicts, duplicates, and extraction warnings; only the controller or assigned owner may reduce and write the canonical PRD ledger and draft. atom-0035: Conflicting inputs create durable conflict records and are resolved using explicit current user instruction, accepted PRD Builder decisions, source recency/authority, and recorded assumptions; overridden claims remain traceable. atom-0054: Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree.
-  atom-0103: The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. atom-0161: After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. atom-0166: The deep-audit Goal uses many bounded read-only subagents in parallel for atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance, forbidden artifacts, and validator mutability, with the main agent writing audit artifacts. atom-0167: The repair Goal builds a complete closure matrix, repairs or adjudicates every finding/detail, updates the semantic closure registry, uses bounded read-only specialist subagents, and does not treat passing validators alone as completion. atom-0168: Ledger-to-Plans compilation writes
+canonical_text: 'Every substantive PRD Builder exchange must append an event and update affected PRD atoms, decisions, assumptions, constraints, questions, conflicts, annotations, projections, and handoff state before the turn is complete. Every substantive Planning Wizard exchange must append an event and update topic-scoped planning atoms plus any affected global decisions, constraints, dependencies, invalidations, amendments, questions, and handoff state before the turn is complete. If the required end-of-turn ledger write fails, mark the active thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until durable synchronization is repaired. The durable PRD ledger is working memory and source lineage; the visible PRD is a versioned human-readable projection of accepted ledger atoms and must not become the only source of truth. Material functional requirements and acceptance criteria receive
+  stable identifiers such as FR-001 and AC-001, with stable internal atom IDs and source lineage. Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once. Each intake subagent emits bounded candidate requirement atoms, source spans, confidence, ambiguity, conflicts, duplicates, and extraction warnings; only the controller or assigned owner may reduce and write the canonical PRD ledger and draft. Conflicting inputs create durable conflict records and are resolved using explicit current user instruction, accepted PRD Builder decisions, source recency/authority, and recorded assumptions; overridden claims remain traceable. Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree.
+  The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. The deep-audit Goal uses many bounded read-only subagents in parallel for atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance, forbidden artifacts, and validator mutability, with the main agent writing audit artifacts. The repair Goal builds a complete closure matrix, repairs or adjudicates every finding/detail, updates the semantic closure registry, uses bounded read-only specialist subagents, and does not treat passing validators alone as completion. Ledger-to-Plans compilation writes
   or updates canonical Plans and allowed PlanUnit indexes only in their proper phases; it does not start Plan Compile, create WorkNodes, launch GoalRuns, modify implementation code, or start an Orchestrator build.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.

@@ -578,7 +578,11 @@
         "source_plan_set_id",
         "source_plan_index_hash",
         "launch_source",
+        "contract_mode",
+        "launch_policy",
         "runtime_adapter",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref",
         "status",
         "current_stage",
         "cursor",
@@ -610,10 +614,42 @@
             "native_plan_wizard"
           ]
         },
+        "contract_mode": {
+          "enum": [
+            "design_only",
+            "native_runtime"
+          ]
+        },
+        "launch_policy": {
+          "enum": [
+            "disabled",
+            "automatic_after_approval"
+          ]
+        },
         "runtime_adapter": {
           "enum": [
             "codex_bootstrap_adapter",
             "native_puppet_master_adapter"
+          ]
+        },
+        "runtime_enablement_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runtime_policy_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "status": {

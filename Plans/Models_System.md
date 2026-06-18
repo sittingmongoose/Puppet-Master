@@ -7557,7 +7557,7 @@ plan_unit_id: MS-112
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: 'atom-0015: Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+canonical_text: 'Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []

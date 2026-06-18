@@ -8,7 +8,7 @@
 
 The Goal Runtime System is Puppet Master's native autonomous execution mode for long-running, cross-referential, or multi-step work. It is not a prompt-packet workflow, not a D2-style staged handoff, and not a planning-only assistant feature.
 
-Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal product flows such as future Chain Wizard ledger-to-Plans transfer use the same engine invisibly.
+Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal product flows such as future Planning Wizard ledger-to-Plans transfer use the same engine invisibly; legacy Chain Wizard transfer references are compatibility/source-lineage aliases only.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
@@ -165,7 +165,7 @@ owner_hints:
   - Plans/Orchestrator_Page.md
 ```
 
-### GRS-003 - Invisible Chain Wizard Goal Boundary
+### GRS-003 - Invisible Planning Wizard Goal Boundary
 
 ```yaml
 plan_unit_id: GRS-003
@@ -173,28 +173,28 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future Chain Wizard and Requirements Doc Builder flows use the v2 ledger system conversationally first, preserving exact user intent before any invisible Goal conversion runs. After readiness, invisible Goal Mode may convert the accepted ledger to requirements docs, Plans, or graph-preparation artifacts while the Chain Wizard UI stays minimal with statuses such as Updating plan docs, Building project plan graph, and Reconciling feature requirements. Conversational Doc Builder work is not a default Orchestrator WorkNode; any later Orchestrator handoff is explicit and carries ledger lineage, readiness evidence, and Goal Runtime receipts.
+  Future Planning Wizard and PRD Builder flows use the v2 ledger system conversationally first, preserving exact user intent before any invisible Goal conversion runs. After readiness, invisible Goal Mode may convert the accepted ledger to requirements docs, Plans, or graph-preparation artifacts while the Planning Wizard UI stays minimal with statuses such as Updating plan docs, Building project plan graph, and Reconciling feature requirements. Conversational PRD Builder work is not a default Orchestrator WorkNode; any later Orchestrator handoff is explicit and carries ledger lineage, readiness evidence, and Goal Runtime receipts. Legacy Chain Wizard and Requirements Doc Builder references remain compatibility/source-lineage aliases only.
 gui_related: true
-gui_classification_reason: This unit includes user-visible Chain Wizard UI minimalism during invisible goals.
+gui_classification_reason: This unit includes user-visible Planning Wizard UI minimalism during invisible goals.
 depends_on:
   - GRS-002
 unblocks: []
 acceptance_criteria:
   - Ledger-to-Plans transfer can invoke invisible Goal Runtime without exposing row-by-row decisions.
-  - Chain Wizard maintains structured ledger source state before invoking invisible Goal Mode to convert the ledger to the plan docs.
-  - Requirements Doc Builder uses the ledger system conversationally before invisible Goal conversion.
-  - Invisible Doc Builder conversion goals are not default Orchestrator WorkNodes.
-  - Minimal Chain Wizard status examples include Updating plan docs, Building project plan graph, and Reconciling feature requirements.
-  - Chain Wizard does not re-own Goal Runtime execution semantics.
-  - Any Orchestrator handoff from Doc Builder is explicit and preserves ledger lineage, readiness evidence, and receipts.
+  - Planning Wizard maintains structured ledger source state before invoking invisible Goal Mode to convert the ledger to the plan docs.
+  - PRD Builder uses the ledger system conversationally before invisible Goal conversion.
+  - Invisible PRD Builder conversion goals are not default Orchestrator WorkNodes.
+  - Minimal Planning Wizard status examples include Updating plan docs, Building project plan graph, and Reconciling feature requirements.
+  - Planning Wizard does not re-own Goal Runtime execution semantics.
+  - Any Orchestrator handoff from PRD Builder is explicit and preserves ledger lineage, readiness evidence, and receipts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Chain Wizard integration review
-risk_class: chain_wizard_runtime_drift
+  - future Planning Wizard integration review
+risk_class: planning_wizard_runtime_drift
 reasoning_tier: standard
-context_scope: chain_wizard_integration
+context_scope: planning_wizard_integration
 implementation_surfaces:
-  - future Chain Wizard
+  - future Planning Wizard
   - Plans/chain-wizard-flexibility.md
   - Plans/Planning_Ledger_System.md
 node_compile_hint:
@@ -227,12 +227,19 @@ preserved_exact_tokens:
   - "completely redo all that after goal mode is finalized"
 negative_constraints:
   - Do not treat current Chain Wizard docs as final Goal Runtime design.
-  - Do not turn invisible Chain Wizard execution into a row-by-row user questioning flow.
+  - Do not turn invisible Planning Wizard execution into a row-by-row user questioning flow.
   - Do not treat conversational ledger capture as a Goal run by default.
-  - Do not treat invisible Doc Builder conversion goals as Orchestrator WorkNodes by default.
-  - Do not define concrete Chain Wizard UI flow, layout, copy, or screen behavior in Goal Runtime canon; route those details to Chain Wizard and Assistant Chat owner docs.
+  - Do not treat invisible PRD Builder conversion goals as Orchestrator WorkNodes by default.
+  - Do not define concrete Planning Wizard UI flow, layout, copy, or screen behavior in Goal Runtime canon; route those details to Planning Wizard and Assistant Chat owner docs.
+compatibility_only_notes:
+  - Chain Wizard and Requirements Doc Builder are retained in preserved_exact_tokens and source_lineage as historical aliases for Planning Wizard and PRD Builder.
+stale_retired_dispositions:
+  - Chain Wizard is retired as current product/workflow terminology; current prose uses Planning Wizard.
+  - Requirements Doc Builder is retired as current product terminology; current prose uses PRD Builder.
 owner_hints:
   - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/PRD_Builder.md
   - Plans/chain-wizard-flexibility.md
   - Plans/assistant-chat-design.md
 ```
@@ -1561,7 +1568,7 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
 
-### GRS-024 - Deferred Chain Wizard And Plan Graph Decisions
+### GRS-024 - Deferred Legacy Chain Wizard Compatibility And Plan Graph Decisions
 
 ```yaml
 plan_unit_id: GRS-024
@@ -1569,20 +1576,21 @@ unit_type: deferred_decision
 status: deferred
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  The exact redesigned Chain Wizard flow and exact PlanUnit-to-NodeSeed-to-WorkNode compiler runtime remain disabled. Goal Runtime may define invisible ledger-to-Plans execution and a future plan_graph_build template, but it must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks until Plans/Plan_To_Node_Compilation.md and a later explicit enablement allow runtime PlanCompile launch and node-artifact generation.
+  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md. Any exact legacy Chain Wizard compatibility flow and exact PlanUnit-to-NodeSeed-to-WorkNode compiler runtime remain disabled. Goal Runtime may define invisible ledger-to-Plans execution and a future plan_graph_build template, but it must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks until Plans/Plan_To_Node_Compilation.md and a later explicit enablement allow runtime PlanCompile launch and node-artifact generation.
 gui_related: false
-gui_classification_reason: Deferred Chain Wizard/compiler contract design is not a GUI implementation requirement.
+gui_classification_reason: Deferred legacy compatibility/compiler contract design is not a GUI implementation requirement.
 depends_on:
   - GRS-003
   - GRS-018
 unblocks: []
 acceptance_criteria:
-  - Chain Wizard redesign is represented as deferred rather than silently invented.
+  - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
+  - Any legacy Chain Wizard compatibility flow is represented as deferred rather than silently invented.
   - Plan graph build remains runtime_disabled until explicit PlanCompile/node-artifact enablement.
   - No node artifacts are produced by this deferred decision.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Chain Wizard and compiler design reviews
+  - future Planning Wizard compatibility and compiler design reviews
 risk_class: deferred_compiler_boundary
 reasoning_tier: high
 context_scope: chain_wizard_and_compiler
@@ -1719,7 +1727,7 @@ Node-readiness remains blocked by `Plans/Plan_To_Node_Compilation.md` until the 
 
 Deferred:
 
-- exact redesigned Chain Wizard flow after native Goal Mode exists;
+- exact legacy Chain Wizard compatibility flow after native Goal Mode exists;
 - exact PlanUnit-to-NodeSeed-to-WorkNode compiler contract;
 - final visual styling, iconography, and exact layout for Goal chip/status/task drawer;
 - first persistence substrate for native Goal state;
@@ -1735,7 +1743,7 @@ Retired or non-goal:
 
 Compatibility:
 
-- current Chain Wizard docs are incomplete legacy context for this feature;
+- current Chain Wizard docs are incomplete legacy/source-lineage context for this feature;
 - Codex and competitor references are source-lineage/research inputs only.
 
 ## 8. Source Lineage And Governance
@@ -1954,7 +1962,7 @@ owner_hints: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Ru
 
 ## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
 
-### GRS-028 - Plan Wizard Approval To PlanCompile Boundary
+### GRS-028 - Planning Wizard Approval To PlanCompile Boundary
 
 ```yaml
 plan_unit_id: GRS-028
@@ -1962,24 +1970,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future native Plan Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Plan Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
-  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Plan Wizard terminology. Do not introduce new references or meta-comments using the old Chain Wizard name.
+  Future native Planning Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Planning Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
+  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Planning Wizard terminology. Do not introduce new references or meta-comments using retired Chain Wizard or Plan Wizard names as active terminology.
 gui_related: false
 gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
 depends_on: [GRS-002, PNC-010, MS-110]
 unblocks: [OP-023, F3-396]
 acceptance_criteria:
   - Native PlanCompile launch remains disabled until explicit enablement.
-  - Plan Wizard approval is the future trigger source, not this compile's runtime action.
+  - Planning Wizard approval is the future trigger source, not this compile's runtime action.
   - Overseer and Auditor model roles are consumed from Models_System.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future Goal Runtime PlanApproved integration review
 risk_class: premature_runtime_launch
 reasoning_tier: high
-context_scope: plan_wizard_plancompile_trigger
+context_scope: planning_wizard_plancompile_trigger
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Models_System.md, Plans/Orchestrator_Page.md]
-node_compile_hint: {mode: future_plan_wizard_plancompile_trigger, create_worknodes: false}
+node_compile_hint: {mode: future_planning_wizard_plancompile_trigger, create_worknodes: false}
 source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:atom-0008
   - pldg-20260617-001-plans-to-code-handoff:atom-0009
@@ -1989,6 +1997,7 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0008
   - pldg-20260617-001-plans-to-code-handoff:dec-0028
 preserved_exact_tokens:
+  - "Planning Wizard"
   - "Plan Wizard"
   - "PlanApproved event"
   - "PlanCompileRun"
@@ -1999,7 +2008,11 @@ preserved_exact_tokens:
   - "critical block"
 negative_constraints:
   - Do not enable this automatic launch yet.
-  - Do not introduce new references using the old wizard name.
+  - Do not introduce new references using retired Chain Wizard or Plan Wizard names as active terminology.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - Plan Wizard is retired as active product/runtime/compile terminology; current prose, PlanUnits, commands, events, prompts, and index rows use Planning Wizard.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
@@ -2130,9 +2143,9 @@ plan_unit_id: GRS-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: 'atom-0104: Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. atom-0105: PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. atom-0106: Ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. atom-0114: For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. atom-0115: A required broad stage may reduce scope or block with a typed runtime-capability
-  error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. atom-0120: Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. atom-0125: After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. atom-0126: Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. atom-0127: Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
-  states; retries resume idempotently, duplicate commands return the existing GoalRun, and cancellation routes according to whether mutation began. atom-0130: Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. atom-0133: The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. atom-0135: Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. atom-0143: Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
+canonical_text: 'Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. Ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. A required broad stage may reduce scope or block with a typed runtime-capability
+  error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
+  states; retries resume idempotently, duplicate commands return the existing GoalRun, and cancellation routes according to whether mutation began. Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
   requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
