@@ -1,0 +1,177 @@
+{
+  "audit_id": "audit-20260618-008-prd-planning-wizard-semantic-fidelity",
+  "changed_files": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/REPAIR_REPORT.md"
+  ],
+  "changed_product_or_governance_surfaces": false,
+  "closed_warning_count": 3,
+  "closure_matrix": "repair_closure_matrix.jsonl",
+  "closure_status_counts": {
+    "false_positive": 2,
+    "source_lineage_only": 1
+  },
+  "closures": [
+    {
+      "closure_reason": "The active plan-sharding evidence artifact row already points to reports/shard_report.json and validates against that hash; older evidence-local shard reports are historical generated provenance, not validator-authoritative current artifacts. The repo sync script would be a no-op against the current report, so no generated evidence repair is required.",
+      "closure_status": "false_positive",
+      "finding_key": "sfk-fa7b7a30afc54de7816cec2a",
+      "registry_closure_id": "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-001",
+      "repair_actions": [
+        "Classified the warning as provenance-only after checking active evidence artifact rows and validator behavior.",
+        "Made no generated-shard or evidence edits because sync-plan-sharding-evidence would not change the current bundle."
+      ],
+      "residual_risk": "Historical report copies remain visually confusing, but current validators bind the active artifact path and hash.",
+      "source_artifact": "audit_report.json",
+      "source_row": "governance_warnings.GW-008-001",
+      "warning_id": "GW-008-001"
+    },
+    {
+      "closure_reason": "Current governance treats Spec_Lock.json as a hash lock for the explicit canonical_ssot_hashes.files list, not as an exhaustive list of every indexed owner doc. PRD_Builder.md and Planning_Wizard.md are canonical owner docs through Plans/00-plans-index.md and .plan_index, while verify-spec-lock correctly checks only the locked file list.",
+      "closure_status": "false_positive",
+      "finding_key": "sfk-352ee12218235cc99b450fea",
+      "registry_closure_id": "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-002",
+      "repair_actions": [
+        "Classified the warning as a false-positive exhaustiveness assumption under the current Spec Lock verifier contract.",
+        "Made no Spec_Lock.json edit because adding owner docs would be a governance-policy change, not a bounded repair."
+      ],
+      "residual_risk": "If policy later changes to require every owner doc to be directly locked, that requires a separate governance-policy/script lane.",
+      "source_artifact": "audit_report.json",
+      "source_row": "governance_warnings.GW-008-002",
+      "warning_id": "GW-008-002"
+    },
+    {
+      "closure_reason": "The package manifest, validation reports, shard report, and installer are historical drop-in/source-lineage support surfaces. They do not create WorkNodes, NodeSeeds, executable queues, GoalRuns, runtime dispatch, implementation files, Rust/Slint scaffolds, legacy Iced app files, or production build tasks.",
+      "closure_status": "source_lineage_only",
+      "finding_key": "sfk-ca69e85a469c3c615ca526dd",
+      "registry_closure_id": "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-003",
+      "repair_actions": [
+        "Classified package artifacts as source-lineage support rather than runtime/build artifacts.",
+        "Made no product, ledger, plan-index, governance, implementation, WorkNode, NodeSeed, queue, or manifest edits."
+      ],
+      "residual_risk": "The historical package files should remain noncanonical support unless a later cleanup/governance lane retires or relocates them.",
+      "source_artifact": "audit_report.json",
+      "source_row": "governance_warnings.GW-008-003",
+      "warning_id": "GW-008-003"
+    }
+  ],
+  "generated_at_utc": "2026-06-18T22:35:03Z",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_safe_action": "No repair is pending. Only a separate explicit governance-policy cleanup lane should revisit path normalization or Spec Lock exhaustiveness policy.",
+  "no_runtime_or_node_artifacts_created": true,
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "repair_scope": "audit_closure_only",
+  "schema_id": "pm.audit_repair_report.v1",
+  "semantic_repair_needed": false,
+  "status": "PASS",
+  "subagent_checks": [
+    {
+      "result": "false_positive provenance warning; active evidence artifact path validates current reports/shard_report.json",
+      "warning_id": "GW-008-001"
+    },
+    {
+      "result": "false_positive Spec Lock exhaustiveness assumption; verifier checks explicit locked file list",
+      "warning_id": "GW-008-002"
+    },
+    {
+      "result": "source_lineage_only package/support classification; no runtime or node artifacts",
+      "warning_id": "GW-008-003"
+    }
+  ],
+  "unclosed_exact_detail_losses_or_drift": 0,
+  "validator_results": [
+    {
+      "details": "3 repair closure rows, audit_report governance warning coverage, registry valid, no warnings",
+      "name": "pm_audit_closure_validate_with_matrix",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "202 registry rows, no errors, no warnings",
+      "name": "pm_audit_closure_validate_registry",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "168 atoms, 61 compile queue items, 30 decisions, 15 corrections, 23 events, 0 questions",
+      "name": "pm_bootstrap_ledger_validate",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete",
+      "name": "pm_plan_index_validate",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "pds-20260611-002-atomize-planunits",
+      "name": "pm_plan_migration_validate",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_run_gates",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "52 docs, 965 shards",
+      "name": "pm_shard_plans_check",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_verify_spec_lock",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_evidence",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_plan_graph",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_audit_governance",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no failures",
+      "name": "pm_plans_verify_validate_plans_to_code_handoff_schema",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "dry_run_already_sealed_noop; refused to downgrade sealed ledger",
+      "name": "pm_install_prd_planning_wizard_ledger_dry_run",
+      "side_effects": false,
+      "status": "pass"
+    },
+    {
+      "details": "no whitespace errors",
+      "name": "git_diff_check",
+      "side_effects": false,
+      "status": "pass"
+    }
+  ],
+  "validator_side_effects": []
+}
