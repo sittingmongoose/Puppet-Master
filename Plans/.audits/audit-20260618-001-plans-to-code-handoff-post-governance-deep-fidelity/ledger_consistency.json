@@ -1,0 +1,22 @@
+{
+  "atom_count": 64,
+  "audit_id": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+  "compact_phase": "ready_for_plan_compile",
+  "compact_ready_atoms": 64,
+  "compact_status": "active",
+  "compiled_planunit_count_with_ledger_lineage": 38,
+  "correction_count": 10,
+  "current_ref": "2bab262beaab2e21be24c01d5251afce75f9c312",
+  "decision_count": 28,
+  "governance_status_from_compact_state": "not_sealed",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "notes": [
+    "Compact ledger state still describes ready_for_plan_compile source state while live Plans/.plan_index and governance artifacts prove a post-compile/post-governance audit surface.",
+    "Audit-only pass did not rewrite compact ledger state."
+  ],
+  "open_blockers": [],
+  "open_questions": [],
+  "origin_main_ref": "2bab262beaab2e21be24c01d5251afce75f9c312",
+  "schema_id": "pm.deep_audit_ledger_consistency.v1",
+  "status": "pass_with_stale_compact_state_notes"
+}
