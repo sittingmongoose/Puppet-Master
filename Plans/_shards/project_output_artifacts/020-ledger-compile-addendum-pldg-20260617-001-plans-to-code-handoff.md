@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L3171-L3285
+Source lines: L3175-L3289
 
-Source SHA256: `dcbd2bcf0848658512dfdb1a1c888c1c536c764ebc7528593d59ef4cd21c5db9`
+Source SHA256: `74e54277c196587ce36191cfd5a93d1aae3bb203ec0f08242ef1e391a6064e3e`
 
 ---
 
@@ -27,7 +27,7 @@ unblocks: [POA-048, RAP-029, CV-289]
 acceptance_criteria:
   - Receipt artifact families are named and discoverable in project output packages.
   - Artifacts preserve handoff, evidence, test, source-control, model, and final certification refs.
-  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
+  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, carry compatibility_only true and cycle_report_ref, and are not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
   - Project output artifacts package receipt references without replacing runtime, storage, or contract authority.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

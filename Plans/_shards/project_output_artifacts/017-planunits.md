@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L796-L3107
+Source lines: L800-L3111
 
-Source SHA256: `dcbd2bcf0848658512dfdb1a1c888c1c536c764ebc7528593d59ef4cd21c5db9`
+Source SHA256: `74e54277c196587ce36191cfd5a93d1aae3bb203ec0f08242ef1e391a6064e3e`
 
 ---
 
@@ -115,7 +115,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Project artifact events and validation pass reports must align to EventRecord-level identity, register missing artifact and event families, and resolve pass/report lineage across project, run, thread, wizard, account, provider, model, and later launched run identity.
+  Project artifact events, Auditor cycle reports, and legacy pass-report compatibility mirrors must align to EventRecord-level identity, register missing artifact and event families, and resolve report lineage across project, run, thread, wizard, account, provider, model, and later launched run identity.
 gui_related: false
 gui_classification_reason: This unit defines artifact/event identity and lineage requirements rather than visual presentation.
 split_recommended: false
@@ -1311,7 +1311,7 @@ canonical_text: >-
   Validation sweeps must produce Auditor cycle reports tied by workflow_run_id,
   preserve provider/model provenance, remain deterministic/headless, and
   validate post-loop corrected artifacts until certified or critically blocked;
-  exactly three pass reports remain compatibility mirrors only.
+  zero or more legacy pass-shaped report rows may exist only as import/export/search compatibility mirrors.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and covers user-visible validation sweep provenance and corrected output finality.
 split_recommended: false
@@ -1405,7 +1405,7 @@ owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```
 
-### POA-029 - Validation Pass Report Lineage Bridge
+### POA-029 - Auditor Cycle Report Lineage Bridge
 
 ```yaml
 plan_unit_id: POA-029
@@ -1413,16 +1413,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
+  Auditor cycle reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is a compatibility mirror, not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
 gui_related: true
-gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for validation pass reports.
+gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for Auditor cycle reports and legacy compatibility mirrors.
 split_recommended: false
 depends_on:
   - "POA-027"
 unblocks: []
 acceptance_criteria:
-  - "Validation Pass Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
-  - "validation_pass_report remains an artifact-family lineage name, not a user-facing validation-pass model selector."
+  - "Auditor Cycle Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "validation_pass_report remains a compatibility mirror artifact-family lineage name with compatibility_only true and cycle_report_ref, not a user-facing validation-pass model selector."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -1454,7 +1454,7 @@ preserved_exact_tokens:
   - "pass_verdict"
   - "skipped"
 negative_constraints:
-  - "Validation pass reports do not become runtime attempts."
+  - "Auditor cycle reports and legacy validation_pass_report mirrors do not become runtime attempts."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
@@ -2184,7 +2184,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation artifact lineage requires validation_pass_report, workflow_run_id, pass_verdict, phase_plan_ref, and requirements_quality_report_ref; validation lineage stays concrete and inspectable, and pass reports remain upstream artifacts rather than local replacement identifiers.
+  Validation artifact lineage requires auditor_cycle_report, workflow_run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref, and any legacy validation_pass_report mirror to carry compatibility_only true plus cycle_report_ref; validation lineage stays concrete and inspectable, and report records remain upstream artifacts rather than local replacement identifiers.
 gui_related: false
 gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
 split_recommended: false

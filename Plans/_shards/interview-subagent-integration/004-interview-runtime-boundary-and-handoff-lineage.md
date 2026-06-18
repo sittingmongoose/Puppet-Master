@@ -4,7 +4,7 @@ Source: `Plans/interview-subagent-integration.md`
 
 Source lines: L20-L54
 
-Source SHA256: `ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc`
+Source SHA256: `0f4d8ad69a46d21900b069b855a37858524aa9c18732ec65547cf3cd2899a886`
 
 ---
 
@@ -37,8 +37,8 @@ Interview-phase launches share the runtime identity packet with Orchestrator whi
 - Provider-native delegation syntax, provider-native exports/imports, and `/imports` remain interoperability-only; the same direct-provider and child-run canon applies, and the canonical `/handoff` is the Puppet Master child-run packet.
 - Interview reviewer-cap limits consume the Orchestrator concurrency SSOT; the requirements-quality-reviewer autofill cap is reviewer-only and MUST NOT redefine global spawn, nesting, shell-isolation, or child timeout ceilings.
 
-### validation_pass_report bridge
-- Extend `validation_pass_report` with planning/governance lineage and an explicit bridge into the launched run.
+### auditor_cycle_report bridge
+- Extend `auditor_cycle_report` with planning/governance lineage and an explicit bridge into the launched run. Legacy `validation_pass_report` mirrors may expose the same bridge only with `compatibility_only: true` and `cycle_report_ref`.
 - Validation/governance lineage preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
 - Preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces.
 

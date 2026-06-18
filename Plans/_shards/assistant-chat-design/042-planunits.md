@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3322-L21665
+Source lines: L3322-L21671
 
-Source SHA256: `172f93204eff70bb72b05568b2fa5ea9a426608c27b69ba5bff09f539c2df951`
+Source SHA256: `e6516b6b89193ee6763f69adca64e35af901fac0c03d0b3d61547c5361592362`
 
 ---
 
@@ -11733,15 +11733,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Each validation pass report mirrors the resolved Auditor validation loop
-  provider/model into `validation_pass_report` payload fields and uses normative
-  `model_roles.auditor.{provider,model}` storage keys.
+  Each Auditor cycle report records the resolved Auditor validation loop
+  provider/model in `auditor_cycle_report` payload fields and uses normative
+  `model_roles.auditor.{provider,model}` storage keys. Legacy
+  `validation_pass_report` mirrors may copy those values only with
+  compatibility_only true and cycle_report_ref.
 gui_related: false
 gui_classification_reason: Validation storage keys and audit payload fields are persistence behavior.
 depends_on: [ACD-259]
 unblocks: []
 acceptance_criteria:
-  - validation_pass_report mirrors resolved Auditor loop provider and model.
+  - auditor_cycle_report records resolved Auditor loop provider and model.
+  - validation_pass_report mirrors resolved Auditor loop provider and model only as a compatibility mirror with compatibility_only true and cycle_report_ref.
   - Normative model_roles.auditor provider/model keys are used.
   - Settings keys themselves are not stored as project artifacts.
 validation_surfaces:
@@ -11759,7 +11762,10 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
 preserved_exact_tokens:
+  - "auditor_cycle_report"
   - "validation_pass_report"
+  - "cycle_report_ref"
+  - "compatibility_only"
   - "provider"
   - "model"
   - "model_roles.auditor.provider"
@@ -12074,7 +12080,7 @@ unblocks: []
 acceptance_criteria:
   - Auditor validation dropdowns use the same `platform_specs` source as chat controls.
   - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
-  - Legacy validation pass report provider/model values mirror the Auditor cycle report values for compatibility.
+  - Legacy validation pass report provider/model values mirror the Auditor cycle report values only with compatibility_only true and cycle_report_ref.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

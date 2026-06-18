@@ -968,6 +968,65 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
                 }
             )
 
+    def expect_nullable_prop_ref(def_name: str, key: str, expected_ref: str, error: str) -> None:
+        prop = def_props(def_name).get(key, {})
+        any_of = prop.get("anyOf")
+        refs = {item.get("$ref") for item in any_of if isinstance(item, dict)} if isinstance(any_of, list) else set()
+        has_null = any(isinstance(item, dict) and item.get("type") == "null" for item in any_of) if isinstance(any_of, list) else False
+        if expected_ref not in refs or not has_null:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "key": key,
+                    "expected_ref": expected_ref,
+                    "actual": prop,
+                }
+            )
+
+    def expect_enum_def(def_name: str, values: set[str], error: str) -> None:
+        payload_def = defs.get(def_name, {})
+        actual = payload_def.get("enum", [])
+        if payload_def.get("type") != "string" or set(actual) != values:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "expected": sorted(values),
+                    "actual": actual,
+                }
+            )
+
+    def expect_enum_accepts(def_name: str, value: str, error: str) -> None:
+        payload_def = defs.get(def_name, {})
+        actual = payload_def.get("enum", [])
+        if value not in actual:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "value": value,
+                    "actual": actual,
+                }
+            )
+
+    def expect_enum_rejects(def_name: str, value: str, error: str) -> None:
+        payload_def = defs.get(def_name, {})
+        actual = payload_def.get("enum", [])
+        if value in actual:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "value": value,
+                    "actual": actual,
+                }
+            )
+
     def expect_required_def(def_name: str) -> None:
         payload_def = defs.get(def_name)
         if not isinstance(payload_def, dict):
@@ -1009,8 +1068,55 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     require_schema_keys("stage_card", ["assignment_contract", "parent_writeback_policy"], "stage_card_missing_assignment_contract")
     expect_prop_ref("stage_card", "item_boundaries", "#/$defs/item_boundaries", "stage_card_item_boundaries_not_strict")
     expect_prop_ref("stage_card", "assignment_contract", "#/$defs/compile_wave_contract", "stage_card_assignment_contract_not_strict")
-    require_schema_keys("compile_worklist", ["wave_assignments"], "compile_worklist_missing_wave_assignments")
+    expect_prop_ref("stage_card", "success_route", "#/$defs/stage_success_route", "stage_card_success_route_not_strict")
+    expect_prop_ref("stage_card", "blocked_route", "#/$defs/stage_blocked_route", "stage_card_blocked_route_not_strict")
+    require_schema_keys("compile_worklist", ["wave_assignments", "blocked_route"], "compile_worklist_missing_route_or_wave_assignments")
     expect_array_items_ref("compile_worklist", "items", "#/$defs/compile_worklist_item", "compile_worklist_items_not_strict")
+    expect_prop_ref("compile_worklist", "blocked_route", "#/$defs/compile_worklist_blocked_route", "compile_worklist_blocked_route_not_strict")
+    expect_prop_ref("compile_wave_contract", "retry_route", "#/$defs/compile_wave_retry_route", "compile_wave_retry_route_not_strict")
+    require_schema_keys("node_seed_review", ["reviewer_role"], "node_seed_review_missing_reviewer_role")
+    expect_prop_ref("node_seed_review", "decision", "#/$defs/node_seed_review_decision", "node_seed_review_decision_not_enum")
+    expect_prop_ref("node_seed_review", "reviewer_role", "#/$defs/node_seed_reviewer_role", "node_seed_reviewer_role_not_enum")
+    expect_enum_def(
+        "stage_success_route",
+        {"next_stage", "certify_stage", "handoff_ready", "parent_writeback"},
+        "stage_success_route_enum_drift",
+    )
+    expect_enum_def(
+        "stage_blocked_route",
+        {"record_blocker", "request_parent_adjudication", "escalate_authority_boundary", "pause_for_repair", "critical_block"},
+        "stage_blocked_route_enum_drift",
+    )
+    expect_enum_def(
+        "compile_wave_retry_route",
+        {"retry_same_assignment", "split_assignment", "resume_from_checkpoint", "return_to_parent", "critical_block"},
+        "compile_wave_retry_route_enum_drift",
+    )
+    expect_enum_def(
+        "compile_worklist_blocked_route",
+        {"record_blocker", "regenerate_worklist", "request_parent_adjudication", "pause_for_repair", "critical_block"},
+        "compile_worklist_blocked_route_enum_drift",
+    )
+    expect_enum_def(
+        "node_seed_review_decision",
+        {"approve_candidate", "changes_required", "reject_candidate", "split_candidate", "merge_candidate", "block_on_authority"},
+        "node_seed_review_decision_enum_drift",
+    )
+    expect_enum_def(
+        "node_seed_reviewer_role",
+        {"parent_compiler", "auditor", "owner_adjudicator", "capability_reviewer"},
+        "node_seed_reviewer_role_enum_drift",
+    )
+    for def_name, accepted, rejected in [
+        ("stage_success_route", "next_stage", "freeform_next_step"),
+        ("stage_blocked_route", "critical_block", "blocked_because_unspecified"),
+        ("compile_wave_retry_route", "resume_from_checkpoint", "try_again_later"),
+        ("compile_worklist_blocked_route", "request_parent_adjudication", "ask_someone"),
+        ("node_seed_review_decision", "changes_required", "maybe"),
+        ("node_seed_reviewer_role", "owner_adjudicator", "reviewer"),
+    ]:
+        expect_enum_accepts(def_name, accepted, "strict_route_fixture_positive_failed")
+        expect_enum_rejects(def_name, rejected, "strict_route_fixture_negative_failed")
 
     classification_refs = {
         "work_type": "#/$defs/work_type",

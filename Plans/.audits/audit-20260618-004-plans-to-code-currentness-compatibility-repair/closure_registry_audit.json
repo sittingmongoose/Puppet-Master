@@ -1,0 +1,14 @@
+{
+  "audit_id": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "notes": [
+    "Closure registry owner/closure evidence hashes were refreshed after plans-to-code currentness/compatibility repair and generated artifact refresh."
+  ],
+  "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+  "registry_rows_total": 94,
+  "rows_touched": 29,
+  "schema_id": "pm.deep_audit_closure_registry_audit.v1",
+  "status": "pass",
+  "updated_at_utc": "2026-06-18T10:16:52Z",
+  "validated_at_utc": "2026-06-18T12:49:45Z"
+}

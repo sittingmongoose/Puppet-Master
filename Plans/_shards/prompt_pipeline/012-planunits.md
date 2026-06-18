@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L663-L3464
+Source lines: L663-L3467
 
-Source SHA256: `8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754`
+Source SHA256: `7bfa007e42a3655109494efe28a188da8e3778734e1c39b4dc6eed5f2d8de2fd`
 
 ---
 
@@ -2605,7 +2605,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  validation_pass_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata.
+  auditor_cycle_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
 gui_related: false
 gui_classification_reason: This unit defines wizard/interview lineage fields rather than visual presentation.
 split_recommended: false
@@ -2630,7 +2630,10 @@ node_compile_hint:
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0041"
 preserved_exact_tokens:
+  - "auditor_cycle_report"
   - "validation_pass_report"
+  - "cycle_report_ref"
+  - "compatibility_only"
   - "phase_plan_ref"
   - "requirements_quality_report_ref"
   - "workflow_run_id"

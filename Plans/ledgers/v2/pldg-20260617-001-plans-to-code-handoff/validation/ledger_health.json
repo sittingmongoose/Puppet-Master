@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 16,
+    "events": 17,
     "design_atoms": 64,
     "decisions": 28,
     "open_questions": 0,
@@ -22,8 +22,8 @@
     "plan_compile_runtime_status": "design_only_disabled",
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
-    "doc_impact_matrix": "doc_impact_fidelity_repair_certified",
-    "implementation_readiness_matrix": "implementation_readiness_fidelity_repair_certified",
+    "doc_impact_matrix": "doc_impact_currentness_compatibility_certified",
+    "implementation_readiness_matrix": "implementation_readiness_currentness_compatibility_certified",
     "forbidden_artifacts": "not_created",
     "plan_units_checked": 2519
   },
@@ -31,7 +31,7 @@
     {
       "check_id": "record-counts-0001",
       "status": "pass",
-      "summary": "Record counts match manifest, compile queue, and compact state through evt-0016."
+      "summary": "Record counts match manifest, compile queue, and compact state through evt-0017."
     },
     {
       "check_id": "compile-0001",
@@ -49,11 +49,11 @@
       "summary": "Node readiness intentionally remains runtime_disabled; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
-  "updated_at_utc": "2026-06-18T08:43:57Z",
+  "updated_at_utc": "2026-06-18T12:49:21Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and later explicit enablement."
   ],
-  "last_event_id": "evt-0016",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "last_event_id": "evt-0017",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

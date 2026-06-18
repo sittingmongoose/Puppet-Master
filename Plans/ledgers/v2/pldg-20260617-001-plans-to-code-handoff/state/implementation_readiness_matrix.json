@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.implementation_readiness_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T08:43:57Z",
-  "status": "implementation_readiness_fidelity_repair_certified",
+  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "status": "implementation_readiness_currentness_compatibility_certified",
   "purpose": "Preserve the implementation-readiness mapping after conversion to Plans with field-level fidelity repairs for all 64 design atoms, strict schema payloads, and current audit evidence.",
   "global_acceptance": [
     "Every design area below becomes one or more PlanUnits or explicit disposition rows.",
@@ -53,8 +53,8 @@
         "each stage has read/write/forbidden/entry/exit/next contract",
         "new low-context agent can resume from state only"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -102,8 +102,8 @@
         "WorkNode requests are not runnable until Executor intake",
         "coverage/exclusion/acceptance/validator/dependency/write-surface/model-lane metadata is present"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -147,8 +147,8 @@
         "old validation pass model settings and active fixed pass stages retired in favor of Auditor loop; Pass 1 / Pass 2 / Pass 3 names are compatibility aliases only",
         "Executor remains deterministic machinery"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -193,8 +193,8 @@
         "shows what system is doing, how much is done, how fast it moves, blockers, next action",
         "does not duplicate Executor code-generation dashboard"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -248,8 +248,8 @@
         "no human eyeballing as required completion",
         "unverifiable work creates blocker or harness WorkNode"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -303,8 +303,8 @@
         "parallel writes use isolated/leased worktrees",
         "GitHub is optional promotion/output, not required for local completion"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -348,8 +348,8 @@
         "repeated failures route internally before user decision",
         "Plan changes pause affected lanes and patch/recompile as needed"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -395,8 +395,8 @@
         "worker says done is insufficient",
         "every handoff has owner, artifact, validator, receipt, retry/rollback route"
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     },
@@ -443,12 +443,12 @@
         "Old six-tab/Tiers language is compatibility/source-lineage only.",
         "No runtime PlanCompile, WorkNodes, NodeSeeds, executable queues, or implementation files are created."
       ],
-      "fidelity_status": "certified",
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl",
+      "fidelity_status": "certified_current",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/atom_fidelity_matrix.jsonl",
       "latest_audit_status": "pass_certified",
       "validator_status": "pass"
     }
   ],
-  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

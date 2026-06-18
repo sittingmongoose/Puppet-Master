@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2297-L9896
+Source lines: L2307-L9907
 
-Source SHA256: `79a7a3c908831a47e8493da2851d702929625b754b02a321b5bd5b76cb721df8`
+Source SHA256: `60b6e07279d170ab6fcaf8817873523922c64d666151f3c17cf4ff4b45618b7d`
 
 ---
 
@@ -219,7 +219,7 @@ preserved_exact_tokens:
 - 2.2 Canonical wizard runtime state
 - 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md'
 - 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore'
-- 'ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record'
+- 'ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record'
 - 2.3 Wizard Cancellation Cleanup
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md'
@@ -278,7 +278,7 @@ owner_boundary_notes:
 - '- Canonical terms: `Plans/Glossary.md`'
 - '- **§4:** Requirements: multiple uploads, merge/canonical input, storage.'
 - '- **§11:** User-project output artifacts (sharded-only canonical graph).'
-- 12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
+- 12. [Auditor Invariant Loop (Mandatory Invariant Sweep)](#12-auditor-invariant-loop-mandatory-invariant-sweep) (legacy three-pass anchor is a compatibility alias only)
 - '- **Entry:** User selects "Fork & evolve." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub HTTPS API; see `Plans/GitHub_API_Auth_and_Flows.md`), or the user can create the fork themselves and point us at the fork path or URL.'
 - '- **Entry:** User selects "Contribute (PR)." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user, or they can create it themselves and point us at their fork.'
 - Thread lifecycle references in this wizard/Interview plan use the canonical thread states `active`, `attention_required`, `blocked`, `completed`, and `failed`; permanent thread removal is a `delete` action with confirmation, and `archive` is not a thread lifecycle state.
@@ -4619,26 +4619,27 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-### CWF-087 - Validation Pass Report Lineage and Runtime Identity Carry-Through
+### CWF-087 - Auditor Cycle Report Lineage and Runtime Identity Carry-Through
 
 ```yaml
 plan_unit_id: CWF-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: Validation pass reports carry lineage fields and skipped-verdict support, and effective runtime identity survives validation into launch handoff.
+canonical_text: Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime identity survives validation into launch handoff.
 gui_related: false
 gui_classification_reason: Validation report lineage and runtime identity handoff are backend/report semantics.
 split_recommended: false
 depends_on: [CWF-016, CWF-085]
 unblocks: []
 acceptance_criteria:
-  - Validation pass reports include workflow_run_id.
-  - Validation pass reports include phase_plan_ref.
-  - Validation pass reports include staged_bundle_ref.
-  - Validation pass reports include requirements_quality_report_ref.
-  - Validation pass reports include run_id.
-  - Validation passes emit lineage-rich pass reports explaining what was evaluated and what execution was seeded.
+  - Auditor cycle reports include workflow_run_id.
+  - Auditor cycle reports include phase_plan_ref.
+  - Auditor cycle reports include staged_bundle_ref.
+  - Auditor cycle reports include requirements_quality_report_ref.
+  - Auditor cycle reports include run_id.
+  - Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution was seeded.
+  - Legacy validation_pass_report mirrors carry compatibility_only true and cycle_report_ref.
   - pass_verdict supports skipped.
   - Effective runtime identity survives validation into launch handoff.
 validation_surfaces:

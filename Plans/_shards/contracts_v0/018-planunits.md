@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2546-L16714
+Source lines: L2546-L16721
 
-Source SHA256: `6f57e3510084af406a9134a9f349ca087215eaf71ebc2212b055f8cdf631aa8b`
+Source SHA256: `e0d2b0c4a3a0991e44741c1602e54681bb6faef0eececa78b3f149405c9eb09b`
 
 ---
 
@@ -4751,7 +4751,7 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-099 - Validation Pass Report Event Payload
+### CV-099 - Auditor Cycle Report Event Payload
 
 ```yaml
 plan_unit_id: CV-099
@@ -4760,15 +4760,18 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Requirements-quality workflow state persists as stable event payload fields
-  anchored to validation_pass_report and launch handoff lineage, with
-  pass_verdict supporting skipped where the flow requires it.
+  anchored to auditor_cycle_report and launch handoff lineage. Legacy
+  validation_pass_report records are compatibility mirrors only with
+  compatibility_only true and cycle_report_ref, and pass_verdict supports
+  skipped where the compatibility flow requires it.
 gui_related: false
 gui_classification_reason: This unit defines persisted validation workflow event payloads.
 split_recommended: true
 depends_on: [CV-039, CV-060]
 unblocks: []
 acceptance_criteria:
-  - validation_pass_report, workflow_run_id, pass_number, pass_name, pass_verdict, and verdict_reason fields are preserved.
+  - auditor_cycle_report, workflow_run_id, pass_verdict, and verdict_reason fields are canonical.
+  - Legacy validation_pass_report mirrors preserve pass_number and pass_name only with compatibility_only true and cycle_report_ref.
   - Phase plan, staged bundle, requirements quality report, runtime identity, and run lineage fields are preserved.
   - pass_verdict supports skipped where the flow requires it.
   - Accepted or final pass output bridges into launched execution.
@@ -4777,7 +4780,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: validation_pass_event_lineage_loss
 reasoning_tier: high
-context_scope: validation_pass_report_event_payload
+context_scope: auditor_cycle_report_event_payload
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
@@ -4788,16 +4791,20 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
 preserved_exact_tokens:
+  - "`auditor_cycle_report`"
   - "`validation_pass_report`"
+  - "`cycle_report_ref`"
+  - "`compatibility_only`"
   - "`workflow_run_id`"
   - "`pass_number`"
   - "`pass_verdict`"
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
+  - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."
 owner_hints:
   - Plans/Contracts_V0.md
 ```

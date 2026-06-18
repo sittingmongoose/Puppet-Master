@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L62-L980
+Source lines: L62-L983
 
-Source SHA256: `ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc`
+Source SHA256: `0f4d8ad69a46d21900b069b855a37858524aa9c18732ec65547cf3cd2899a886`
 
 ---
 
@@ -816,14 +816,14 @@ owner_hints:
 split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
 ```
 
-### ISI-018 - validation_pass_report Bridge
+### ISI-018 - Auditor Cycle Report Bridge
 
 ```yaml
 plan_unit_id: ISI-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/interview-subagent-integration.md
-canonical_text: validation_pass_report includes planning/governance lineage and an explicit launched-run bridge with phase_plan_ref, requirements_quality_report_ref, workflow_run_id, pass_verdict, wizard_snapshot_ref, launched_run_id, and launched_run_ref, and preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces.
+canonical_text: auditor_cycle_report includes planning/governance lineage and an explicit launched-run bridge with phase_plan_ref, requirements_quality_report_ref, workflow_run_id, pass_verdict, wizard_snapshot_ref, launched_run_id, and launched_run_ref, and preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
 gui_related: false
 gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
 split_recommended: false
@@ -843,12 +843,15 @@ context_scope: interview_subagent_integration_standardization
 implementation_surfaces:
 - Plans/interview-subagent-integration.md
 node_compile_hint:
-  mode: validation_pass_report_bridge
+  mode: auditor_cycle_report_bridge
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0011
 preserved_exact_tokens:
+- auditor_cycle_report
 - validation_pass_report
+- cycle_report_ref
+- compatibility_only
 - phase_plan_ref
 - requirements_quality_report_ref
 - workflow_run_id

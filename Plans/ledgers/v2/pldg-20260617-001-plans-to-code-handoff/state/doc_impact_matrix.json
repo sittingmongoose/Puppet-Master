@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.doc_impact_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T08:43:57Z",
-  "status": "doc_impact_fidelity_repair_certified",
+  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "status": "doc_impact_currentness_compatibility_certified",
   "purpose": "Account for owner docs, consumers, references, and ledger/audit currentness after final implementation-readiness fidelity repair.",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified",
   "global_compile_rules": [
     "Before edits, Codex must adjudicate owner docs from this matrix and current repo evidence.",
@@ -101,7 +101,7 @@
         "WorkNode request",
         "WorkGraph draft"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -151,7 +151,7 @@
         "auditor_cycle_report",
         "PRD Builder"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -194,7 +194,7 @@
         "requested model",
         "effective model"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -234,7 +234,7 @@
         "throughput",
         "ETA"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -283,7 +283,7 @@
         "visual evidence",
         "test receipt"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -329,7 +329,7 @@
         "FileSafe",
         "source control"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -374,7 +374,7 @@
         "network access",
         "destructive command"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -413,7 +413,7 @@
         "model resolution receipt",
         "evidence"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
@@ -459,7 +459,7 @@
         "Ledger",
         "Tiers"
       ],
-      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/doc_impact_reference_findings.jsonl",
       "fidelity_status": "certified",
       "latest_audit_status": "pass_certified",
       "currentness_status": "current"
