@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L7-L25
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 
@@ -12,8 +12,8 @@ Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840
 
 - 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.
 - 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with "Run Chain Wizard later" affordance; full spec in Plans/GitHub_Integration.md §D.
-- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings. The invariant sweep still emits Pass 1, Pass 2, and Pass 3 reports, but all reports mirror the single Auditor validation loop provider/model resolved through `Plans/assistant-chat-design.md §26` and `Plans/Models_System.md`.
-- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. The original fixed pass-specific model setting was superseded by the 2026-06-18 Auditor validation loop repair. Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.
+- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings and active process stages. The mandatory invariant sweep is now an Auditor audit-to-repair loop that repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary. Legacy pass names and `validation_pass_report` fields remain compatibility aliases only.
+- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. This historical fixed-pass model was superseded by the 2026-06-18 Auditor validation loop repair; pass reports are compatibility lineage, and active behavior is the Auditor loop.
 - 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.
 - 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.
 - 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.

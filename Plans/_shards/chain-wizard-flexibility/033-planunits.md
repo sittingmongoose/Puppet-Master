@@ -1,10 +1,10 @@
-# Shard 032: PlanUnits
+# Shard 033: PlanUnits
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2295-L9883
+Source lines: L2297-L9896
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 
@@ -4292,23 +4292,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  The always-on invariant sweep runs immediately after Contract Unification on
-  the provisional project pack, is separate from optional §5.6 Multi-Pass
-  Review, cannot be disabled, and runs Pass 1 -> Pass 2 -> Pass 3 without human
-  intervention or GUI.
+  The always-on Auditor invariant loop runs immediately after Contract
+  Unification on the provisional project pack, is separate from optional §5.6
+  Multi-Pass Review, cannot be disabled, and repeats audit, bounded repair,
+  and re-audit until certification or critical block without human intervention
+  or GUI.
 gui_related: false
 gui_classification_reason: The invariant sweep is a headless validation pipeline; the GUI is mentioned only as absent.
 split_recommended: true
-split_recommendation_reason: Source spans S0075-S0076 introduce the sweep and pass ordering; this unit covers the boundary and sequencing.
+split_recommendation_reason: Source spans S0075-S0076 introduce the sweep and legacy pass ordering; this unit covers the boundary and current Auditor loop sequencing.
 depends_on: [CWF-057, CWF-060]
 unblocks: [CWF-082, CWF-083, CWF-084, CWF-085]
 acceptance_criteria:
-  - Invariant sweep runs immediately after Contract Unification Pass produces provisional canonical project artifact pack.
-  - Invariant sweep is separate from optional user-facing §5.6 Multi-Pass Review.
-  - Invariant sweep cannot be disabled.
-  - Invariant sweep runs even when other review features are present or enabled.
-  - Passes run serially as Pass 1 -> Pass 2 -> Pass 3.
-  - Sweep requires no human intervention and no running GUI.
+  - Auditor invariant loop runs immediately after Contract Unification Pass produces provisional canonical project artifact pack.
+  - Auditor invariant loop is separate from optional user-facing §5.6 Multi-Pass Review.
+  - Auditor invariant loop cannot be disabled.
+  - Auditor invariant loop runs even when other review features are present or enabled.
+  - Loop cycles repeat audit, bounded repair, and re-audit until certified or critically blocked.
+  - Loop requires no human intervention and no running GUI.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4330,14 +4331,16 @@ preserved_exact_tokens:
   - "cannot be disabled"
   - "without requiring human intervention or a running GUI"
   - "Pass 1 → Pass 2 → Pass 3"
+  - "Auditor audit-to-repair loop"
 negative_constraints:
   - "The invariant sweep cannot be disabled."
+  - "Do not treat Pass 1 / Pass 2 / Pass 3 as active process stages; they are compatibility aliases only."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-082 - Pass 1 Document Creation and Requirements Quality Report
+### CWF-082 - Legacy Pass 1 Alias And Initial Auditor Quality Report
 
 ```yaml
 plan_unit_id: CWF-082
@@ -4345,33 +4348,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 1 validates and completes the provisional artifact pack, emits
-  validation_pass_report for document_creation, and writes a read-only
+  The initial Auditor audit cycle validates and completes the provisional
+  artifact pack, may mirror legacy Pass 1 / validation_pass_report fields for
+  document_creation compatibility, and writes a read-only
   requirements_quality_report without authoring requirements or contract
   fragments.
 gui_related: false
-gui_classification_reason: Pass 1 report generation and artifact validation are backend validation behavior.
+gui_classification_reason: Initial Auditor report generation and artifact validation are backend validation behavior.
 split_recommended: false
 depends_on: [CWF-081]
 unblocks: [CWF-083, CWF-085]
 acceptance_criteria:
-  - Pass 1 validates and completes the provisional artifact pack produced by Contract Unification.
-  - Pass 1 may materialize missing derived artifacts or deterministic projections.
-  - Pass 1 is not the first author of requirements or contract fragments.
-  - Pass 1 emits validation_pass_report with pass_number 1 and pass_name document_creation.
-  - Pass 1 writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
-  - Pass 1 requirements_quality_report is read-only and classifies auto_fixable true/false without editing requirements.
+  - Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
+  - Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
+  - Initial Auditor audit is not the first author of requirements or contract fragments.
+  - Legacy Pass 1 validation_pass_report fields may be mirrored with pass_number 1 and pass_name document_creation for compatibility only.
+  - Initial Auditor audit writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
+  - requirements_quality_report is read-only for requirements intent and classifies auto_fixable true/false without editing requirements.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: pass1_document_creation_drift
+risk_class: auditor_initial_quality_report_drift
 reasoning_tier: high
 context_scope: validation_sweep
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 node_compile_hint:
-  mode: chain_wizard_pass1_document_creation_quality_report
+  mode: chain_wizard_auditor_initial_quality_report
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0077
@@ -4382,14 +4386,15 @@ preserved_exact_tokens:
   - "pm.requirements_quality_report.schema.v1"
   - "auto_fixable"
 negative_constraints:
-  - "Pass 1 does not edit requirements."
-  - "Pass 1 is not the first author of requirements or contract fragments."
+  - "Pass 1 is a compatibility alias only."
+  - "Initial Auditor audit does not edit requirements."
+  - "Initial Auditor audit is not the first author of requirements or contract fragments."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-083 - Pass 2 Canonical Alignment and Requirements Auto-Fixes
+### CWF-083 - Legacy Pass 2 Alias And Bounded Auditor Repair
 
 ```yaml
 plan_unit_id: CWF-083
@@ -4397,22 +4402,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 2 compares project artifacts against contracts and canon, applies
-  resolvable fixes, applies auto_fixable requirement-quality fixes, updates
-  reports, and records unresolved findings without direct escalation.
+  Bounded Auditor repair compares project artifacts against contracts and canon,
+  applies resolvable fixes, applies auto_fixable requirement-quality fixes,
+  updates reports, and records unresolved findings without treating legacy Pass
+  2 as an active process stage.
 gui_related: false
-gui_classification_reason: Pass 2 correction and report behavior are backend validation pipeline behavior.
+gui_classification_reason: Bounded Auditor correction and report behavior are backend validation pipeline behavior.
 split_recommended: false
 depends_on: [CWF-081, CWF-082]
 unblocks: [CWF-084, CWF-085, CWF-086]
 acceptance_criteria:
-  - Pass 2 compares requirements, contract pack, plan_graph nodes, and acceptance_manifest against canonical references.
-  - For each gap or contradiction, Pass 2 records findings and applies fixes where possible.
-  - Pass 2 records diff_pointer information for applied fixes.
-  - Pass 2 records unresolved_findings when no fix is possible.
-  - Pass 2 applies auto-fixes from requirements_quality_report where auto_fixable == true.
-  - Pass 2 updates requirements_quality_report in place with final post-fix state.
-  - Pass 2 does not escalate directly; it updates the quality report artifact for later semantics.
+  - Bounded Auditor repair compares requirements, contract pack, plan_graph nodes, and acceptance_manifest against canonical references.
+  - For each gap or contradiction, bounded Auditor repair records findings and applies fixes where possible.
+  - Bounded Auditor repair records diff_pointer information for applied fixes.
+  - Bounded Auditor repair records unresolved_findings when no fix is possible.
+  - Bounded Auditor repair applies auto-fixes from requirements_quality_report where auto_fixable == true.
+  - Bounded Auditor repair updates requirements_quality_report in place with final post-fix state.
+  - Bounded Auditor repair does not escalate directly; it updates the quality report artifact for certification/block semantics.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4426,7 +4432,7 @@ implementation_surfaces:
   - Plans/DRY_Rules.md
   - Plans/Decision_Policy.md
 node_compile_hint:
-  mode: chain_wizard_pass2_canonical_alignment_auto_fixes
+  mode: chain_wizard_auditor_bounded_repair_auto_fixes
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0078
@@ -4438,13 +4444,14 @@ preserved_exact_tokens:
   - "auto_fixes_applied[]"
   - "auto_fixable == true"
 negative_constraints:
-  - "Pass 2 does not escalate directly."
+  - "Pass 2 is a compatibility alias only."
+  - "Bounded Auditor repair does not escalate directly."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-084 - Pass 3 Canonical Systems-Only Sweep
+### CWF-084 - Legacy Pass 3 Alias And Auditor Certification Gate
 
 ```yaml
 plan_unit_id: CWF-084
@@ -4452,22 +4459,23 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 3 enforces DRY/SSOT, plan graph, wiring, evidence, and deterministic
-  decision invariants while never modifying requirements.md, plan.md, or
-  user-intent-derived content.
+  The Auditor certification gate enforces DRY/SSOT, plan graph, wiring,
+  evidence, and deterministic decision invariants while never modifying
+  requirements.md, plan.md, or user-intent-derived content; legacy Pass 3 fields
+  are compatibility aliases only.
 gui_related: false
-gui_classification_reason: Pass 3 validates artifacts, including GUI wiring when present, but does not implement GUI presentation.
+gui_classification_reason: Auditor certification validates artifacts, including GUI wiring when present, but does not implement GUI presentation.
 split_recommended: false
 depends_on: [CWF-081, CWF-083]
 unblocks: [CWF-085, CWF-086]
 acceptance_criteria:
-  - Pass 3 focuses exclusively on canonical system integrity.
-  - Pass 3 enforces DRY/SSOT compliance.
-  - Pass 3 enforces plan graph integrity.
-  - Pass 3 enforces wiring matrix consistency when the user project has a GUI.
-  - Pass 3 enforces evidence/invariants alignment.
-  - Pass 3 enforces deterministic decisions/autonomy compliance.
-  - Pass 3 never modifies requirements.md, plan.md, or user-intent-derived artifacts.
+  - Auditor certification focuses on canonical system integrity before certifying or blocking.
+  - Auditor certification enforces DRY/SSOT compliance.
+  - Auditor certification enforces plan graph integrity.
+  - Auditor certification enforces wiring matrix consistency when the user project has a GUI.
+  - Auditor certification enforces evidence/invariants alignment.
+  - Auditor certification enforces deterministic decisions/autonomy compliance.
+  - Auditor certification never modifies requirements.md, plan.md, or user-intent-derived artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4480,7 +4488,7 @@ implementation_surfaces:
   - Plans/DRY_Rules.md
   - Plans/Wiring_Matrix.schema.json
 node_compile_hint:
-  mode: chain_wizard_pass3_canonical_systems_only
+  mode: chain_wizard_auditor_certification_gate
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0079
@@ -4491,7 +4499,8 @@ preserved_exact_tokens:
   - "pass_3_violation:"
   - "MUST NOT modify"
 negative_constraints:
-  - "Pass 3 MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user intent or product scope."
+  - "Pass 3 is a compatibility alias only."
+  - "Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user intent or product scope."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
@@ -4506,8 +4515,9 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The sweep runs deterministically and headlessly, uses one Auditor validation
-  loop provider/model setting for all pass reports, emits exactly three pass
-  reports, and uses pass_verdict skipped for blocked later passes.
+  loop provider/model setting for all Auditor cycle reports, emits enough
+  reports to prove audit/repair/re-audit/certification or block, and treats
+  legacy pass reports as compatibility rows only.
 gui_related: false
 gui_classification_reason: Sweep execution settings and report emission are backend validation behavior.
 split_recommended: true
@@ -4515,13 +4525,13 @@ split_recommendation_reason: Source spans S0080 and S0081 mix execution settings
 depends_on: [CWF-081, CWF-082, CWF-083, CWF-084]
 unblocks: [CWF-086, CWF-087]
 acceptance_criteria:
-  - All three passes run deterministically without human intervention.
-  - Each pass runs headless with no GUI and no approval gate between passes.
+  - Auditor loop cycles run deterministically without human intervention.
+  - Each cycle runs headless with no GUI and no approval gate inside the loop.
   - Auditor validation loop provider and model are configurable through app settings.
   - Defaults are deterministic and safe when not explicitly configured.
-  - Each validation_pass_report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
-  - Exactly three pass reports are emitted per sweep.
-  - Later passes blocked by an earlier failure emit pass_verdict skipped with explanatory verdict_reason.
+  - Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
+  - The loop emits enough reports to prove audit, bounded repair, re-audit, and certified or critical-block terminal state.
+  - Legacy validation_pass_report rows and pass_verdict skipped values may be emitted only as compatibility mirrors.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4544,6 +4554,7 @@ preserved_exact_tokens:
   - "Auditor validation loop"
   - "Exactly three pass reports"
   - "pass_verdict: \"skipped\""
+  - "certified or critical-block terminal state"
 negative_constraints:
   - "No GUI is required and no user approval gate exists between passes."
   - "Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings."
@@ -4561,9 +4572,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass failures route to user-visible clarification or resolution surfaces using
-  distinct needs_user_clarification and unresolved_findings artifacts while
-  preserving corrected-but-blocked artifacts for resume.
+  Auditor loop blocks route to user-visible clarification or resolution
+  surfaces using distinct needs_user_clarification and unresolved_findings
+  artifacts while preserving corrected-but-blocked artifacts for resume.
 gui_related: true
 gui_classification_reason: Failure routing drives user-visible Interview clarification and review/resolution UI surfaces.
 split_recommended: true
@@ -4571,9 +4582,9 @@ split_recommendation_reason: Source spans S0080 and S0081 mix backend report sem
 depends_on: [CWF-083, CWF-084, CWF-085]
 unblocks: []
 acceptance_criteria:
-  - Pass 1 failure halts and surfaces failure to the user.
-  - If Pass 2 produces non-empty needs_user_clarification, wizard transitions to clarification/resume path.
-  - Pass 3 is skipped when Pass 2 clarification blocks progress.
+  - Initial Auditor audit failure without allowed deterministic repair halts and surfaces failure to the user.
+  - If bounded Auditor repair produces non-empty needs_user_clarification, wizard transitions to clarification/resume path.
+  - Auditor certification is blocked when clarification or authority boundaries block progress.
   - Corrected-but-blocked artifact set is preserved for resume.
   - unresolved_findings is distinct from needs_user_clarification.
   - needs_user_clarification drives interview UI.
@@ -4962,9 +4973,9 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Every requirement must satisfy C-1 through C-5 before leaving the Chain
-  Wizard/Interview phase, with the Three-Pass Canonical Validation Workflow
-  identifying, fixing, and escalating blocking issues under the requirements
-  quality report schema and Decision Policy section 6.
+  Wizard/Interview phase, with the Auditor invariant loop identifying, fixing,
+  and escalating blocking issues under the requirements quality report schema
+  and Decision Policy section 6.
 gui_related: false
 gui_classification_reason: Requirements completion and schema enforcement are backend validation semantics.
 split_recommended: false
@@ -4972,9 +4983,9 @@ depends_on: [CWF-081]
 unblocks: [CWF-095, CWF-096, CWF-097, CWF-098, CWF-099, CWF-100]
 acceptance_criteria:
   - Requirements cannot leave Chain Wizard/Interview until all C-1 through C-5 criteria are met.
-  - Pass 1 identifies issues.
-  - Pass 2 auto-fixes where possible.
-  - Pass 3 escalates remaining blocking issues.
+  - Initial Auditor audit identifies issues.
+  - Bounded Auditor repair auto-fixes where possible.
+  - Auditor certification blocks or escalates remaining blocking issues.
   - SchemaID pm.requirements_quality_report.schema.v1 and ContractName Plans/requirements_quality_report.schema.json are preserved.
   - Unknown resolution follows Decision_Policy.md section 6.
 validation_surfaces:
@@ -5238,7 +5249,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 1 produces and Pass 2 updates a requirements_quality_report artifact
+  Initial Auditor audit produces and bounded Auditor repair updates a requirements_quality_report artifact
   that evaluates requirements against C-1 through C-5 using the canonical schema
   and required top-level arrays.
 gui_related: false
@@ -5249,7 +5260,7 @@ unblocks: [CWF-101, CWF-102]
 acceptance_criteria:
   - The artifact is named requirements_quality_report.
   - The artifact captures per-requirement evaluation against C-1 through C-5.
-  - Pass 2 updates the report in place after autofixes.
+  - Bounded Auditor repair updates the report in place after autofixes.
   - Required fields include verdict, requirements_touched[], issues[], auto_fixes_applied[], and needs_user_clarification[].
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5335,7 +5346,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 3 reads the post-Pass-2 requirements_quality_report and triggers user
+  Auditor certification reads the post-repair requirements_quality_report and triggers user
   escalation only when needs_user_clarification is non-empty, while never
   editing product requirements.
 gui_related: false
@@ -5344,10 +5355,10 @@ split_recommended: false
 depends_on: [CWF-083, CWF-100, CWF-101]
 unblocks: [CWF-103, CWF-104, CWF-105, CWF-106]
 acceptance_criteria:
-  - Pass 3 reads the quality report and triggers only the escalation path defined here.
-  - Pass 3 never edits product requirements.
-  - Escalation fires when final post-Pass-2 needs_user_clarification[] is non-empty.
-  - No escalation fires when Pass 2 autofixes resolve all blocking issues.
+  - Auditor certification reads the quality report and triggers only the escalation path defined here.
+  - Auditor certification never edits product requirements.
+  - Escalation fires when final post-repair needs_user_clarification[] is non-empty.
+  - No escalation fires when bounded Auditor repair autofixes resolve all blocking issues.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5394,7 +5405,7 @@ acceptance_criteria:
   - Proceed and Start Run are disabled while attention is required.
   - A lock icon or warning badge appears on the triggering wizard step.
   - Normal state resumes only after all clarification entries are answered.
-  - Pass 1 and Pass 2 rerun with injected answers.
+  - Auditor audit/repair cycles rerun with injected answers.
   - The resumed report has verdict PASS and empty needs_user_clarification[].
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5539,7 +5550,7 @@ unblocks: [CWF-107, CWF-108]
 acceptance_criteria:
   - The report is stored at .puppet-master/project/traceability/requirements_quality_report.json.
   - The wizard record gains attention_required_report_path.
-  - Answer submission reruns Pass 1 and Pass 2 with answers injected.
+  - Answer submission reruns Auditor audit/repair cycles with answers injected.
   - The canonical quality report file is regenerated at the same path and the pointer is updated.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5572,8 +5583,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  A clarification cycle is report, answer submission, and automatic Pass 1 plus
-  Pass 2 rerun; each wizard instance is capped at three cycles and becomes
+  A clarification cycle is report, answer submission, and automatic Auditor
+  audit/repair rerun; each wizard instance is capped at three cycles and becomes
   blocked if questions remain after the third cycle.
 gui_related: false
 gui_classification_reason: Cycle counting and blocked transition are backend wizard-state rules.
@@ -5584,7 +5595,7 @@ unblocks: [CWF-108]
 acceptance_criteria:
   - A cycle includes a report with non-empty needs_user_clarification[].
   - A cycle includes user answer submission.
-  - A cycle includes automatic Pass 1 and Pass 2 rerun.
+  - A cycle includes automatic Auditor audit/repair rerun.
   - Maximum clarification cycles for one wizard instance is 3.
   - Cycles 1 and 2 remain in active clarification when follow-up questions remain.
   - After cycle 3 still produces non-empty needs_user_clarification[], wizard state becomes blocked.

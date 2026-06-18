@@ -24979,7 +24979,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Plan Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; audit/repair/audit, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
+  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Plan Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
+  Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls.
   Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
@@ -24989,6 +24990,7 @@ acceptance_criteria:
   - Settings displays exactly the six named controls for this flow.
   - No Executor Model control is shown.
   - GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
+  - Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future Settings model selector review
@@ -25011,6 +25013,8 @@ preserved_exact_tokens:
   - "GUI / Frontend Worker Model"
   - "High-Effort Worker Model"
   - "Auditor Model"
+  - "Auditor audit-to-repair loop"
+  - "critical block"
   - "No Executor Model"
 negative_constraints:
   - Do not expose a long list of internal subrole settings.

@@ -468,7 +468,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
 - `ui_command_catalog` → `.puppet-master/project/ui/ui_command_catalog.json` (optional GUI)
-- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; see §10 for lineage, History/Ledger, and export requirements)
+- `auditor_cycle_report` / legacy `validation_pass_report` → `.puppet-master/project/validation/auditor_cycle_<N>_report.json` (legacy imports/exports may also expose `.puppet-master/project/validation/pass_<N>_report.json`; Pass 1 / Pass 2 / Pass 3 are compatibility aliases only; see §10 for lineage, History/Ledger, and export requirements)
 - `requirements_quality_report` → `.puppet-master/project/traceability/requirements_quality_report.json` (derived verification output; see §11)
 - `requirements_coverage_json` → `.puppet-master/project/traceability/requirements_coverage.json` (derived verification output; see §11)
 - `requirements_coverage_md` → `.puppet-master/project/traceability/requirements_coverage.md` (derived verification output; see §11)
@@ -506,16 +506,17 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
    - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` validates (`pm.project-plan-graph.v1`)
    - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)
 
-8) **Validation sweep artifact completeness (see §10)**
-   - Exactly three `validation_pass_report` events in seglog for each validation sweep run (pass_number 1, 2, 3 sharing the same `workflow_run_id`)
-   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated
-   - All pass report `content_hash` values match the SHA-256 of their `content_bytes`
-   - For each pass report, `provider` and `model` match the resolved Auditor validation loop provider/model from sweep start (`Plans/assistant-chat-design.md §26`, `Plans/Models_System.md`)
-   - Reports come from a deterministic, headless sweep with no human approval gates between Pass 1, Pass 2, and Pass 3 (`Plans/chain-wizard-flexibility.md §12`)
+8) **Auditor validation loop artifact completeness (see §10)**
+   - One or more Auditor cycle report events exist in seglog for each validation sweep run, sharing the same `workflow_run_id` and recording audit, bounded repair, re-audit, and certified or critical-block terminal state
+   - Legacy `validation_pass_report`, `pass_number`, and Pass 1 / Pass 2 / Pass 3 names may be mirrored only as compatibility aliases for import/export/search
+   - Certification-cycle `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated
+   - All Auditor cycle report `content_hash` values match the SHA-256 of their `content_bytes`
+   - For each Auditor cycle report, `provider` and `model` match the resolved Auditor validation loop provider/model from sweep start (`Plans/assistant-chat-design.md §26`, `Plans/Models_System.md`)
+   - Reports come from a deterministic, headless Auditor loop with no human approval gates inside the audit/repair/re-audit loop (`Plans/chain-wizard-flexibility.md §12`)
 
-9) **Post-pass artifact finality**
-   - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set (after Pass 2 and Pass 3 corrections for the associated `workflow_run_id`)
-   - Validator hash checks apply to post-pass corrected bytes, not pre-sweep intermediates
+9) **Post-loop artifact finality**
+   - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set after bounded Auditor repair and certification/block disposition for the associated `workflow_run_id`
+   - Validator hash checks apply to post-loop corrected bytes, not pre-sweep intermediates
 ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 10) **Traceability output integrity (see §11)**
@@ -560,7 +561,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
+ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
 
 Required fields:
 - pass_number
@@ -759,10 +760,10 @@ ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Proje
 ## Change Summary
 
 - 2026-02-27: Updated §2.3 to declare `.docset/` canonical packaging convention and pointer stub behavior for large Markdown/text artifacts; re-asserted plan graph sharded JSON contract unchanged. Cross-ref: `Plans/Document_Packaging_Policy.md §7`.
-- 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified Pass 3 write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
+- 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified certification-cycle write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
 - 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 model settings for validation reports; provider/model parity now points to the single Auditor validation loop setting resolved at sweep start.
-- 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage later superseded by the single Auditor validation loop, deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
+- 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage later superseded by the single Auditor validation loop, deterministic/headless sweep provenance requirement, post-loop artifact finality requirement, and fixed `unresolved_findings[]` naming in the certification-cycle write-protection invariant.
 - 2026-02-25: Added `validation_pass_report` artifact typing in §8.2 and §10 Validation Pass Report Artifacts, including execution-bridge lineage and validation-sweep acceptance requirements. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
 - 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).
@@ -2092,7 +2093,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation sweeps must produce exactly three pass reports tied by workflow_run_id, preserve provider/model provenance, remain deterministic/headless, and validate post-pass corrected artifacts.
+  Validation sweeps must produce Auditor cycle reports tied by workflow_run_id,
+  preserve provider/model provenance, remain deterministic/headless, and
+  validate post-loop corrected artifacts until certified or critically blocked;
+  exactly three pass reports remain compatibility mirrors only.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and covers user-visible validation sweep provenance and corrected output finality.
 split_recommended: false
@@ -2129,8 +2133,8 @@ preserved_exact_tokens:
   - "model_roles.auditor.provider"
   - "model_roles.auditor.model"
 negative_constraints:
-  - "Pass 3 summary contains no write-protected requirements.md or plan.md."
-  - "No human approval gates occur between Pass 1, Pass 2, and Pass 3."
+  - "Certification-cycle summary contains no write-protected requirements.md or plan.md."
+  - "No human approval gates occur inside the Auditor audit/repair/re-audit loop."
 preserved_contractrefs:
   - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
 owner_hints:
@@ -2239,7 +2243,7 @@ negative_constraints:
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
-  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```

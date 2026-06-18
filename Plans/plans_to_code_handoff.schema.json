@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
   "title": "Plans-to-Code Handoff Design-Only Schema Draft",
-  "description": "Single design-only schema draft for pldg-20260617-001-plans-to-code-handoff. The $defs document PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts without enabling PlanCompile or creating executable artifacts.",
+  "description": "Single design-only JSON Schema Draft 2020-12 schema draft for pldg-20260617-001-plans-to-code-handoff. The $defs document strict payload shapes for PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts without enabling PlanCompile or creating executable artifacts.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -64,7 +64,7 @@
     },
     "plan_compile_run": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "compile_id",
         "source_plan_set_id",
@@ -150,7 +150,7 @@
     },
     "stage_card": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "purpose",
         "read_files",
@@ -194,7 +194,7 @@
     },
     "node_seed_candidate": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "source_plan_unit_ids",
         "source_acceptance_unit_ids",
@@ -299,7 +299,7 @@
     },
     "workgraph_draft": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "nodes",
         "entrypoints",
@@ -309,11 +309,43 @@
         "authority",
         "evidence",
         "validation_state"
-      ]
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "entrypoints": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "dependency_edges": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "scheduler_policy": {
+          "type": "object"
+        },
+        "graph_integrity": {
+          "type": "object"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "validation_state": {
+          "type": "object"
+        }
+      }
     },
     "worknode_request": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "source_plan_unit_ids",
         "objective",
@@ -366,7 +398,7 @@
     },
     "ordering": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "build_phase",
         "dependency_type",
@@ -375,11 +407,37 @@
         "parallel_group_id",
         "scheduler_lane",
         "ordering_reason"
-      ]
+      ],
+      "properties": {
+        "build_phase": {
+          "type": "string"
+        },
+        "dependency_type": {
+          "type": "string"
+        },
+        "depends_on": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unblocks": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "parallel_group_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheduler_lane": {
+          "type": "string"
+        },
+        "ordering_reason": {
+          "type": "string"
+        }
+      }
     },
     "model_resolution_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "requested_lane",
         "requested_model_profile",
@@ -417,7 +475,7 @@
     },
     "test_binding": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "required_capability_refs",
         "required_harnesses",
@@ -427,22 +485,74 @@
         "emulator_required",
         "visual_evidence_required",
         "test_gap_policy"
-      ]
+      ],
+      "properties": {
+        "required_capability_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_harnesses": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "completion_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "browser_session_required": {
+          "type": "boolean"
+        },
+        "emulator_required": {
+          "type": "boolean"
+        },
+        "visual_evidence_required": {
+          "type": "boolean"
+        },
+        "test_gap_policy": {
+          "type": "string"
+        }
+      }
     },
     "test_capability_report": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "project_platform",
         "framework_toolkit",
         "local_capabilities",
         "online_research",
         "probes"
-      ]
+      ],
+      "properties": {
+        "project_platform": {
+          "type": "string"
+        },
+        "framework_toolkit": {
+          "type": "string"
+        },
+        "local_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "online_research": {
+          "type": "object"
+        },
+        "probes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
     },
     "test_run_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "test_level",
         "automation_surface",
@@ -452,11 +562,42 @@
         "evidence_refs",
         "flake_policy",
         "test_gap_policy"
-      ]
+      ],
+      "properties": {
+        "test_level": {
+          "type": "string"
+        },
+        "automation_surface": {
+          "type": "string"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "type": "string"
+        },
+        "test_gap_policy": {
+          "type": "string"
+        }
+      }
     },
     "source_control_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "repo_id",
         "worktree_id",
@@ -469,11 +610,46 @@
         "github_policy",
         "rollback_available",
         "restore_command_or_action"
-      ]
+      ],
+      "properties": {
+        "repo_id": {
+          "type": "string"
+        },
+        "worktree_id": {
+          "type": "string"
+        },
+        "worktree_path": {
+          "type": "string"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "type": "string"
+        },
+        "conflict_policy": {
+          "type": "string"
+        },
+        "merge_policy": {
+          "type": "string"
+        },
+        "github_policy": {
+          "type": "string"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        }
+      }
     },
     "goal_completion_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "all_worknodes_terminal",
         "all_tests_passed_or_dispositioned",
@@ -482,11 +658,39 @@
         "auditor_passed",
         "final_certifier_decision",
         "evidence_refs"
-      ]
+      ],
+      "properties": {
+        "all_worknodes_terminal": {
+          "type": "boolean"
+        },
+        "all_tests_passed_or_dispositioned": {
+          "type": "boolean"
+        },
+        "source_control_receipts_valid": {
+          "type": "boolean"
+        },
+        "no_active_blockers": {
+          "type": "boolean"
+        },
+        "auditor_passed": {
+          "type": "boolean"
+        },
+        "final_certifier_decision": {
+          "enum": [
+            "certified",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
     },
     "compile_worklist": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "compile_id",
         "stage",
@@ -536,7 +740,7 @@
     },
     "node_seed_review": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "candidate_ref",
         "review_status",
@@ -578,7 +782,7 @@
     },
     "compiler_model_routing": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "source_plan_unit_ids",
         "requested_lane",
@@ -619,7 +823,7 @@
     },
     "codex_work_package": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "package_id",
         "stage",
@@ -669,7 +873,7 @@
     },
     "codex_external_gui_agent_request": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "request_id",
         "gui_related",
@@ -718,7 +922,7 @@
     },
     "plan_compile_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "compile_id",
@@ -750,7 +954,7 @@
     },
     "test_harness_probe_report": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "probe_id",
         "target_surface",
@@ -782,7 +986,7 @@
     },
     "test_strategy": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "strategy_id",
         "source_plan_unit_ids",
@@ -816,7 +1020,7 @@
     },
     "test_case": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "test_case_id",
         "source_plan_unit_ids",
@@ -848,7 +1052,7 @@
     },
     "visual_evidence": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "evidence_id",
         "source_ref",
@@ -876,7 +1080,7 @@
     },
     "source_control_preflight_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "repo_ref",
@@ -908,12 +1112,11 @@
         "status": {
           "type": "string"
         }
-      },
-      "allOf": []
+      }
     },
     "safe_point_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "safe_point_ref",
@@ -941,12 +1144,11 @@
         "status": {
           "type": "string"
         }
-      },
-      "allOf": []
+      }
     },
     "worknode_change_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "worknode_ref",
@@ -974,12 +1176,11 @@
         "status": {
           "type": "string"
         }
-      },
-      "allOf": []
+      }
     },
     "merge_or_promotion_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "source_ref",
@@ -1007,12 +1208,11 @@
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         }
-      },
-      "allOf": []
+      }
     },
     "source_control_finalization_receipt": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "receipt_id",
         "repo_ref",
@@ -1040,12 +1240,11 @@
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         }
-      },
-      "allOf": []
+      }
     },
     "executor_intake_report": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "intake_id",
         "workgraph_ref",

@@ -1,10 +1,10 @@
-# Shard 030: Runtime Identity, Route, and Audit Refinement Rules
+# Shard 031: Runtime Identity, Route, and Audit Refinement Rules
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2257-L2287
+Source lines: L2259-L2289
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

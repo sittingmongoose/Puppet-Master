@@ -1,10 +1,10 @@
-# Shard 031: Owner / Consumer Map
+# Shard 032: Owner / Consumer Map
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2289-L2293
+Source lines: L2291-L2295
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

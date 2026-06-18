@@ -1,10 +1,10 @@
-# Shard 022: Requirements Builder Persona Strategy Addendum (2026-03-06)
+# Shard 023: Requirements Builder Persona Strategy Addendum (2026-03-06)
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L1787-L1928
+Source lines: L1789-L1930
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

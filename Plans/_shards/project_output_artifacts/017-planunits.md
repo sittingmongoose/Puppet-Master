@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L795-L3103
+Source lines: L796-L3107
 
-Source SHA256: `58cd2470e2b080b5821950c64f8ba0b2d600dfaf3c68c848f69d416f01278f7d`
+Source SHA256: `1538972357c908265e4c134ea879d3a5f91bd1436100a5bb208e3d15071dc54e`
 
 ---
 
@@ -1308,7 +1308,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation sweeps must produce exactly three pass reports tied by workflow_run_id, preserve provider/model provenance, remain deterministic/headless, and validate post-pass corrected artifacts.
+  Validation sweeps must produce Auditor cycle reports tied by workflow_run_id,
+  preserve provider/model provenance, remain deterministic/headless, and
+  validate post-loop corrected artifacts until certified or critically blocked;
+  exactly three pass reports remain compatibility mirrors only.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and covers user-visible validation sweep provenance and corrected output finality.
 split_recommended: false
@@ -1345,8 +1348,8 @@ preserved_exact_tokens:
   - "model_roles.auditor.provider"
   - "model_roles.auditor.model"
 negative_constraints:
-  - "Pass 3 summary contains no write-protected requirements.md or plan.md."
-  - "No human approval gates occur between Pass 1, Pass 2, and Pass 3."
+  - "Certification-cycle summary contains no write-protected requirements.md or plan.md."
+  - "No human approval gates occur inside the Auditor audit/repair/re-audit loop."
 preserved_contractrefs:
   - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
 owner_hints:
@@ -1455,7 +1458,7 @@ negative_constraints:
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
-  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```

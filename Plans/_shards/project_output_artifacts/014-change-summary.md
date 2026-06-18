@@ -2,19 +2,19 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L759-L772
+Source lines: L760-L773
 
-Source SHA256: `58cd2470e2b080b5821950c64f8ba0b2d600dfaf3c68c848f69d416f01278f7d`
+Source SHA256: `1538972357c908265e4c134ea879d3a5f91bd1436100a5bb208e3d15071dc54e`
 
 ---
 
 ## Change Summary
 
 - 2026-02-27: Updated §2.3 to declare `.docset/` canonical packaging convention and pointer stub behavior for large Markdown/text artifacts; re-asserted plan graph sharded JSON contract unchanged. Cross-ref: `Plans/Document_Packaging_Policy.md §7`.
-- 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified Pass 3 write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
+- 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified certification-cycle write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
 - 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 model settings for validation reports; provider/model parity now points to the single Auditor validation loop setting resolved at sweep start.
-- 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage later superseded by the single Auditor validation loop, deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
+- 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage later superseded by the single Auditor validation loop, deterministic/headless sweep provenance requirement, post-loop artifact finality requirement, and fixed `unresolved_findings[]` naming in the certification-cycle write-protection invariant.
 - 2026-02-25: Added `validation_pass_report` artifact typing in §8.2 and §10 Validation Pass Report Artifacts, including execution-bridge lineage and validation-sweep acceptance requirements. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
 - 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).

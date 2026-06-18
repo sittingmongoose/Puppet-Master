@@ -1,10 +1,10 @@
-# Shard 027: Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
+# Shard 028: Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2184-L2217
+Source lines: L2186-L2219
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

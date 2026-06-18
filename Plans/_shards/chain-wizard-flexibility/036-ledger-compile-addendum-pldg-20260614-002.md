@@ -1,10 +1,10 @@
-# Shard 035: Ledger Compile Addendum - pldg-20260614-002
+# Shard 036: Ledger Compile Addendum - pldg-20260614-002
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L9935-L10016
+Source lines: L9948-L10029
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

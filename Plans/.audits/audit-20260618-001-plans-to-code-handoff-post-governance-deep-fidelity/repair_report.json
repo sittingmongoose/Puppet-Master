@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.deep_audit_post_repair_report.v1",
+  "audit_id": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass",
+  "repair_scope": "bounded_post_audit_reconciliation",
+  "original_audit_status": "pass",
+  "original_stale_note_disposition": "resolved_in_live_ledger_projection_by_evt-0012_without_rewriting_original_audit_results",
+  "reconciled_items": [
+    "Auditor audit-to-repair loop until certified or critical block/authority boundary",
+    "Pass 1 / Pass 2 / Pass 3 retained only as compatibility/search aliases across Chain Wizard, Project Output Artifacts, assistant validation settings, and Contracts owner surfaces",
+    "active Orchestrator title and references aligned to seven-tab shell",
+    "handoff schema passes JSON Schema Draft 2020-12 and uses strict object payload definitions",
+    "ledger README/doc-impact/implementation-readiness/current/handoff/registry/manifest surfaces reconciled to compiled_governance_sealed state and evt-0013 expanded owner-doc repair",
+    "generated PlanUnit index, shards, Spec Lock, and evidence hashes refreshed through repo scripts"
+  ],
+  "forbidden_artifacts_created": [],
+  "plancompile_runtime_status": "design_only_disabled",
+  "node_readiness_status": "runtime_disabled",
+  "validators": [
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-shard-plans.py --check",
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plans-verify.py audit-governance",
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_jsonschema python3 -c 'import json, jsonschema; data=json.load(open(\"Plans/plans_to_code_handoff.schema.json\")); jsonschema.Draft202012Validator.check_schema(data); print(\"draft202012_schema_check=pass\")'",
+      "status": "pass"
+    },
+    {
+      "cmd": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "cmd": "find . -prune-scope actual forbidden node/work artifact scan",
+      "status": "pass"
+    }
+  ]
+}

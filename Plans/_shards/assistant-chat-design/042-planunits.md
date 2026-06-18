@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3322-L21660
+Source lines: L3322-L21665
 
-Source SHA256: `53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02`
+Source SHA256: `18d83140885795522460af266e2e1478ff3227d9a1d610a5e20ee9250aa52324`
 
 ---
 
@@ -11443,13 +11443,13 @@ plan_unit_id: ACD-253
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Per-pass validation settings expose provider/model choices for the Three-Pass Canonical Validation Workflow after interview/wizard project-plan generation.
+canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
 gui_related: true
-gui_classification_reason: Per-pass provider/model settings are visible Settings UI.
+gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
 depends_on: []
 unblocks: [ACD-254]
 acceptance_criteria:
-  - Three-pass canonical validation workflow is exposed through provider/model settings.
+  - Auditor invariant loop is exposed through one provider/model settings row.
   - Settings apply after interview/wizard project-plan generation cycles.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11469,7 +11469,8 @@ source_lineage:
 preserved_exact_tokens:
   - "Three-Pass Canonical Validation Workflow"
   - "provider + model selection"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose per-pass provider/model settings."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
@@ -11983,14 +11984,15 @@ plan_unit_id: ACD-266
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are not independently configurable model settings.
+canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are compatibility aliases only, not independently configurable model settings or active stages.
 gui_related: false
 gui_classification_reason: Restart persistence and one-loop Auditor validation settings are configuration behavior.
 depends_on: [ACD-253, ACD-260]
 unblocks: []
 acceptance_criteria:
   - Auditor validation settings are preserved across app restarts.
-  - Pass 1, Pass 2, and Pass 3 use the same resolved Auditor validation loop provider/model.
+  - Auditor cycle reports use the same resolved Auditor validation loop provider/model.
+  - Legacy Pass 1, Pass 2, and Pass 3 report mirrors are compatibility aliases only.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12061,15 +12063,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Auditor validation provider/model dropdowns draw from `platform_specs`, and
-  each pass report emits `validation_pass_report.provider` and `.model` values
-  matching the resolved Auditor validation loop provider/model.
+  each Auditor cycle report emits provider and model values matching the
+  resolved Auditor validation loop provider/model; legacy
+  `validation_pass_report.provider` and `.model` values mirror them for
+  compatibility.
 gui_related: false
 gui_classification_reason: Dropdown data-source and emitted report parity are contract/config behavior.
 depends_on: [ACD-260, ACD-262, ACD-263]
 unblocks: []
 acceptance_criteria:
   - Auditor validation dropdowns use the same `platform_specs` source as chat controls.
-  - Each emitted validation pass report provider/model matches the resolved Auditor validation loop settings.
+  - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
+  - Legacy validation pass report provider/model values mirror the Auditor cycle report values for compatibility.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

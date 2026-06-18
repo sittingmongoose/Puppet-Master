@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L80-L99
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 
@@ -21,7 +21,7 @@ Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840
 9. [Gaps and Potential Problems](#9-gaps-and-potential-problems)
 10. [Implementation Readiness Checklist](#10-implementation-readiness-checklist)
 11. [User-Project Output Artifacts (Sharded-Only)](#11-user-project-output-artifacts-sharded-only)
-12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
+12. [Auditor Invariant Loop (Mandatory Invariant Sweep)](#12-auditor-invariant-loop-mandatory-invariant-sweep)
 13. [No-Wizard Project Management Flows](#13-no-wizard-project-management-flows)
 14. [Requirements Completion Contract](#14-requirements-completion-contract)
 15. [Requirements Quality Escalation Semantics](#15-requirements-quality-escalation-semantics)

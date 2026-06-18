@@ -4,12 +4,12 @@
   "current_phase": "compiled_plans_to_code_handoff_governance_sealed",
   "status": "compiled_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0011",
+    "last_event_id": "evt-0013",
     "ready_atom_count": 0,
     "next_stage": "post_governance_audit_or_bounded_repair_only",
     "compiled_atom_count": 64
   },
-  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. PlanCompile runtime remains design-only/disabled, node readiness is runtime_disabled, and no WorkNodes or NodeSeeds were created.",
+  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. Bounded reconciliation aligned Auditor audit-to-repair loop semantics, seven-tab title wording, strict handoff schema payload definitions, doc-impact status, README status, latest clean audit references, and Chain Wizard/Project Output/assistant settings/Contracts pass-loop owner surfaces. PlanCompile runtime remains design-only/disabled, node readiness is runtime_disabled, and no WorkNodes or NodeSeeds were created.",
   "next_action": "No compile action remains for this ledger. Use audit-only or bounded repair if new findings appear; do not run PlanCompile or create WorkNodes/NodeSeeds until later explicit runtime enablement exists.",
   "allowed_next_writes": [
     "audit artifacts or bounded repair docs/projections explicitly requested by Jared"
@@ -31,7 +31,11 @@
     "plan_compile_runtime": "disabled_design_only",
     "forbidden_artifacts": "not_created",
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
-    "shard_registration": "Automated_Testing_System_registered"
+    "shard_registration": "Automated_Testing_System_registered",
+    "doc_impact_matrix": "compiled_governance_sealed_reference_coverage_passed",
+    "latest_audit": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+        "bounded_reconciliation": "evt-0013",
+        "active_fixed_pass_replacement": "auditor_audit_to_repair_loop_until_certified_or_critical_block"
   },
   "open_blockers": [],
   "open_questions": []

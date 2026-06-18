@@ -1,10 +1,10 @@
-# Shard 025: Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)
+# Shard 026: Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2137-L2162
+Source lines: L2139-L2164
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 

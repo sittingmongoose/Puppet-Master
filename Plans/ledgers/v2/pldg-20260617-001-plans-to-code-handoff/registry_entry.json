@@ -4,9 +4,9 @@
   "status": "sealed",
   "phase": "compiled_plans_to_code_handoff_governance_sealed",
   "created_at_utc": "2026-06-17T21:45:00Z",
-  "last_updated_at": "2026-06-18T01:30:32",
-  "last_updated_at_utc": "2026-06-18T01:30:32Z",
-  "updated_at_utc": "2026-06-18T01:30:32Z",
+  "last_updated_at": "2026-06-18T03:26:09",
+  "last_updated_at_utc": "2026-06-18T03:26:09Z",
+  "updated_at_utc": "2026-06-18T03:26:09Z",
   "primary_goal": "Record and compile Plans-to-code handoff contracts, PlanCompile design-only state machine, automated testing, source-control rollback, Orchestrator Plan Compile UX, condensed model settings, autonomy/HITL, loop breakers, and final certification. Source/planning memory only.",
   "resume_file": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/handoff.json",
   "canonical_plan_targets": [
@@ -76,7 +76,7 @@
   ],
   "candidate_compile_owner_docs": [],
   "governance_status": "sealed",
-  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness remains runtime_disabled. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
+  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Bounded reconciliations at evt-0012 and evt-0013 aligned Auditor audit-to-repair loop semantics, seven-tab title wording, strict handoff schema payload definitions, doc-impact status, README status, latest clean audit reference, and active Chain Wizard/Project Output/assistant settings/Contracts pass-loop owner surfaces. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness remains runtime_disabled. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
   "source_lineage_pre_seal_candidate_compile_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",

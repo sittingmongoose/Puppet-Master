@@ -8,8 +8,8 @@
 
 - 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.
 - 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with "Run Chain Wizard later" affordance; full spec in Plans/GitHub_Integration.md §D.
-- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings. The invariant sweep still emits Pass 1, Pass 2, and Pass 3 reports, but all reports mirror the single Auditor validation loop provider/model resolved through `Plans/assistant-chat-design.md §26` and `Plans/Models_System.md`.
-- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. The original fixed pass-specific model setting was superseded by the 2026-06-18 Auditor validation loop repair. Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.
+- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings and active process stages. The mandatory invariant sweep is now an Auditor audit-to-repair loop that repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary. Legacy pass names and `validation_pass_report` fields remain compatibility aliases only.
+- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. This historical fixed-pass model was superseded by the 2026-06-18 Auditor validation loop repair; pass reports are compatibility lineage, and active behavior is the Auditor loop.
 - 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.
 - 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.
 - 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.
@@ -90,7 +90,7 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 9. [Gaps and Potential Problems](#9-gaps-and-potential-problems)
 10. [Implementation Readiness Checklist](#10-implementation-readiness-checklist)
 11. [User-Project Output Artifacts (Sharded-Only)](#11-user-project-output-artifacts-sharded-only)
-12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
+12. [Auditor Invariant Loop (Mandatory Invariant Sweep)](#12-auditor-invariant-loop-mandatory-invariant-sweep)
 13. [No-Wizard Project Management Flows](#13-no-wizard-project-management-flows)
 14. [Requirements Completion Contract](#14-requirements-completion-contract)
 15. [Requirements Quality Escalation Semantics](#15-requirements-quality-escalation-semantics)
@@ -1270,13 +1270,13 @@ Before implementation, an implementation agent must complete or have clear specs
 46. **Findings summary surfaces:** Show Multi-Pass findings summary in chat and in the wizard preview section before final approval.
 47. **Single final approval gate:** Capture one final decision (`accept | reject | edit`) per Multi-Pass run with `findings_summary_shown=true` precondition.
 48. **Document pane recovery:** Persist `document_pane_state.v1` and restorable `document_checkpoint.v1` so recovery restores selected document/view and approval stage.
-49. **Three-Pass Canonical Validation Workflow (§12):** Implement as a post-Contract-Unification-Pass pipeline that runs Pass 1 → Pass 2 → Pass 3 serially.
-50. **Pass 1 (Document Creation):** Verify all required `.puppet-master/project/` artifacts are generated and emit `validation_pass_report` (Pass 1) to seglog.
-51. **Pass 2 (Docs + Canonical Alignment):** Compare artifacts against Project Contract Pack and platform canonicals; apply fixes; emit `validation_pass_report` (Pass 2) with findings, changes, diff_pointers.
-52. **Pass 3 (Canonical Systems Only):** Enforce DRY/SSOT, plan graph integrity, wiring matrix, evidence/invariants, deterministic decisions; emit `validation_pass_report` (Pass 3); MUST NOT modify requirements.md or plan.md.
+49. **Auditor invariant loop (§12):** Implement as a post-Contract-Unification Auditor loop that audits the provisional project pack, applies bounded deterministic repairs where allowed, re-audits, and repeats until certified or stopped by a critical block/authority boundary.
+50. **Initial audit cycle:** Verify all required `.puppet-master/project/` artifacts are generated, validate requirements-quality and canonical contract coverage, and emit an Auditor cycle report. Legacy `validation_pass_report` / Pass 1 fields may be mirrored only for compatibility.
+51. **Bounded repair cycle:** Compare artifacts against Project Contract Pack and platform canonicals, apply allowed deterministic fixes, record findings, changes, diff_pointers, and unresolved findings, then re-audit. Legacy Pass 2 fields are compatibility aliases only.
+52. **Certification/block cycle:** Enforce DRY/SSOT, plan graph integrity, wiring matrix, evidence/invariants, and deterministic decisions without modifying requirements.md, plan.md, or other user-intent-derived content. Legacy Pass 3 fields are compatibility aliases only.
 53. **Auditor loop provider/model:** Read the single Auditor validation loop provider+model from app settings (see assistant-chat-design.md §26 and Models_System.md); apply deterministic defaults when not configured.
-54. **Headless execution:** All three passes MUST run headless (no GUI, no user approval gates between passes).
-55. **Failure surfacing:** If Pass 1 fails, halt and surface failure; if Pass 2 or 3 fails, surface unresolved findings while still writing the corrected artifact set.
+54. **Headless execution:** Auditor audit, bounded repair, and re-audit cycles MUST run headless with no GUI requirement and no user approval gates inside the loop.
+55. **Failure surfacing:** Critical blocks, unresolved user-clarification needs, authority boundaries, or exhausted repair budgets stop the loop and surface unresolved findings while preserving the corrected-but-blocked artifact set.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/assistant-chat-design.md
 
@@ -1321,34 +1321,36 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 
+## 12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+
 ### 12.1 Context
 
-This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the **provisional** canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
+This section defines an **always-on mandatory Auditor invariant loop** that runs immediately after the Contract Unification Pass (§6.6) produces the **provisional** canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant loop **cannot be disabled** and always runs even when other review features are present or enabled.
 
-The three-pass pipeline enforces canonical system integrity, DRY/SSOT compliance, plan graph structural correctness, and deterministic decision logging — without requiring human intervention or a running GUI.
+The Auditor loop enforces canonical system integrity, DRY/SSOT compliance, plan graph structural correctness, requirements-quality coverage, and deterministic decision logging without requiring human intervention or a running GUI. It repeats audit, bounded repair, and re-audit until the project pack is certified or a critical block, repair-budget limit, unresolved user-clarification need, or authority boundary stops the loop. Legacy Pass 1 / Pass 2 / Pass 3 names are compatibility aliases for older report fields only; they are not active process stages.
 
-### 12.2 Passes
+### 12.2 Auditor Audit-To-Repair Loop
 
-All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pass receives the artifact set as corrected by the previous pass.
+Each Auditor cycle receives the artifact set as corrected by earlier cycles. The loop records findings, allowed repairs, unresolved findings, and certification/block status in Auditor cycle reports. `validation_pass_report`, `pass_number`, and legacy Pass 1 / Pass 2 / Pass 3 labels may be mirrored for import/export/search compatibility, but active scheduling and settings use Auditor loop cycle semantics.
 
 ---
 
-#### Pass 1: Document Creation
+#### Initial Audit Cycle
 
-**Purpose:** Validate and complete the provisional artifact pack produced by Contract Unification. Pass 1 may materialize missing derived artifacts or deterministic projections, but it is not the first author of requirements or contract fragments.
+**Purpose:** Validate and complete the provisional artifact pack produced by Contract Unification. The initial audit cycle may materialize missing deterministic projections, but it is not the first author of requirements or contract fragments.
 
 **Scope:** All required project artifacts under `.puppet-master/project/` per `Plans/Project_Output_Artifacts.md §2`.
 
 **Produces:**
 - The first validation snapshot of the provisional `.puppet-master/project/` pack, plus any missing deterministic projections required for the full package.
-- A `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`) containing (schema per `Plans/Project_Output_Artifacts.md §10.2`):
+- An Auditor cycle report stored in seglog. Legacy exports may mirror `artifact_type: validation_pass_report` with:
   - `pass_number: 1`
   - `pass_name: "document_creation"`
   - `pass_verdict`: `"pass"` or `"fail"`
   - `verdict_reason`: human-readable reason
   - `changes_applied_summary`: list of artifact paths written
-  - `diff_pointers`: empty for Pass 1 (this is generation, not correction)
-- A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The Pass 1 report is **read-only** — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements are made in Pass 1.
+  - `diff_pointers`: empty for the initial audit cycle when it records generation rather than correction
+- A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The initial audit cycle report is **read-only** for requirements intent — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements intent are made in the initial audit cycle.
 
 **Verdict rules:**
 - `pass_verdict: "pass"` — all required artifacts were present or deterministically completed.
@@ -1356,7 +1358,7 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 ---
 
-#### Pass 2: Documents + Canonical Alignment
+#### Bounded Repair And Canonical Alignment Cycle
 
 **Purpose:** Checks requirements and plan artifacts against the Project Contract Pack and Puppet Master's internal canonical system references. Finds gaps and contradictions, proposes fixes, and applies those fixes to the artifact set.
 
@@ -1375,11 +1377,11 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 2. Apply fix to the relevant artifact.
 3. Record fix in `changes_applied_summary` with a `diff_pointer` (artifact path + before/after summary).
 4. When no fix is possible (e.g., an inherent conflict requiring product-level decision), record an entry in `unresolved_findings[]`.
-5. Apply auto-fixes from the requirements quality report: for each issue in the `requirements_quality_report` where `auto_fixable == true`, apply the fix and record in `auto_fixes_applied[]`. Re-validate each fixed requirement after applying its autofix. Update the `requirements_quality_report` artifact in-place with the final post-fix state. If unresolved blocking issues remain after all autofixes, they are escalated via the semantics defined in §15 — Pass 2 does **not** escalate directly; it only updates the quality report artifact.
+5. Apply auto-fixes from the requirements quality report: for each issue in the `requirements_quality_report` where `auto_fixable == true`, apply the fix and record in `auto_fixes_applied[]`. Re-validate each fixed requirement after applying its autofix. Update the `requirements_quality_report` artifact in-place with the final post-fix state. If unresolved blocking issues remain after all autofixes, they are escalated via the semantics defined in §15; the bounded repair cycle does not escalate directly, it only updates the quality report artifact for certification/block handling.
 
 **Produces:**
 - Updated artifact set with all resolvable fixes applied.
-- `validation_pass_report` (Pass 2) stored in seglog containing:
+- Auditor repair-cycle report stored in seglog. Legacy exports may mirror `validation_pass_report` fields:
   - `pass_number: 2`
   - `pass_name: "canonical_alignment"`
   - `findings[]`: list of all gaps and contradictions detected
@@ -1391,9 +1393,9 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 ---
 
-#### Pass 3: Canonical Systems Only (Strictest)
+#### Certification Or Critical-Block Cycle
 
-**Purpose:** Focuses exclusively on canonical system integrity. **Never edits product requirements** (`requirements.md`, `plan.md`, or any user-intent-derived content). Only enforces structural and canonical invariants.
+**Purpose:** Focuses on final canonical system integrity before certification. **Never edits product requirements** (`requirements.md`, `plan.md`, or any user-intent-derived content). Only enforces structural and canonical invariants or blocks certification.
 
 **Scope (normative — strictly limited to):**
 
@@ -1405,13 +1407,13 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 **Actions:**
 
-- Flag pass-3 canonical violations as `findings[]` entries (for example, `finding_id` values prefixed with `pass_3_violation:`).
+- Flag canonical violations as `findings[]` entries. Legacy exports may preserve `pass_3_violation:` finding prefixes for compatibility.
 - For structural violations that can be corrected **without touching product requirements** (e.g., a missing sha256 in `index.json`, a missing `UICommandID` entry in the catalog): apply the correction and record in `changes_applied_summary` with `diff_pointer`.
 - For violations that require human input or product-level decisions: record an entry in `unresolved_findings[]` and set `pass_verdict` to `"fail"`.
 
 **Produces:**
 - Final artifact set with all structural corrections applied.
-- `validation_pass_report` (Pass 3) stored in seglog containing:
+- Auditor certification-cycle report stored in seglog. Legacy exports may mirror `validation_pass_report` fields:
   - `pass_number: 3`
   - `pass_name: "canonical_systems"`
   - `findings[]`: list of all pass-3 canonical violations detected
@@ -1420,7 +1422,7 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
   - `pass_verdict`: `"pass"` or `"fail"`
   - `verdict_reason`: human-readable reason
 
-> **Invariant (normative):** Pass 3 MUST NOT modify `requirements.md`, `plan.md`, or any artifact whose content is driven by user intent or product scope. It enforces structural and canonical invariants only.
+> **Invariant (normative):** The Auditor certification cycle MUST NOT modify `requirements.md`, `plan.md`, or any artifact whose content is driven by user intent or product scope. It enforces structural/canonical invariants, certifies the pack, or stops on a critical block.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md
 
@@ -1428,17 +1430,17 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ### 12.3 Execution Model
 
-- All three passes run **deterministically without human intervention**.
-- Each pass runs **headless** — no GUI is required; no user approval gate exists between passes.
-- Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
+- Auditor loop cycles run **deterministically without human intervention** until certification or critical block.
+- Each cycle runs **headless** — no GUI is required; no user approval gate exists inside the loop.
+- Audit, bounded repair, and re-audit cycles run serially over the corrected artifact set until certified or blocked.
 - The Auditor validation loop provider and model are configurable once for the whole sweep (see `Plans/assistant-chat-design.md §26` and `Plans/Models_System.md`); defaults are deterministic and safe when not explicitly configured.
-- Each `validation_pass_report` MUST include `provider` and `model` values matching the resolved Auditor validation loop provider/model from sweep start (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+- Each Auditor cycle report MUST include `provider` and `model` values matching the resolved Auditor validation loop provider/model from loop start (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`). Legacy `validation_pass_report` exports mirror the same values.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md
-- Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
-- The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
-- **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
-- **If Pass 2 ends with non-empty `needs_user_clarification[]`:** transition the wizard to the clarification/resume path, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
-- **If Pass 2 or Pass 3 fails** for other unresolved findings: The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+- One or more Auditor cycle reports are emitted per sweep. Legacy three-pass report rows may be produced only for compatibility/search/import and must not drive active scheduling.
+- The **final project artifacts** reflect all corrections applied by bounded repair cycles before certification or block.
+- **If the initial audit fails without an allowed deterministic repair:** the loop stops and surfaces the failure.
+- **If a repair cycle ends with non-empty `needs_user_clarification[]`:** transition the wizard to the clarification/resume path and preserve the corrected-but-blocked artifact set for resume.
+- **If certification fails** for unresolved findings, authority boundaries, or critical blocks: surface the blocker and preserve all resolvable fixes already applied.
 
 Artifact distinction (normative):
 
@@ -1453,13 +1455,13 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Pro
 
 The following criteria are required for a conformant implementation of this workflow:
 
-- [ ] Passes run deterministically without human intervention.
-- [ ] Each pass can be executed headless (no GUI required; no approval gates between passes).
-- [ ] Pass 3 never edits `requirements.md`, `plan.md`, or user-intent-derived content; it only enforces canonical system integrity and flags failures.
-- [ ] Each pass emits a `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`).
-- [ ] Exactly three pass reports exist per sweep run, using `pass_verdict: skipped` when later passes are blocked by earlier failures.
-- [ ] The final project artifacts reflect all corrections applied by Passes 2 and 3.
-- [ ] Per-pass provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
+- [ ] Auditor loop cycles run deterministically without human intervention until certified or critically blocked.
+- [ ] Each cycle can be executed headless (no GUI required; no approval gates inside the loop).
+- [ ] Certification cycles never edit `requirements.md`, `plan.md`, or user-intent-derived content; they only enforce canonical system integrity, certify, or block.
+- [ ] Each cycle emits an Auditor cycle report stored in seglog; legacy `validation_pass_report` / Pass 1 / Pass 2 / Pass 3 rows are compatibility aliases only.
+- [ ] The loop emits enough reports to prove audit, repair, re-audit, and terminal certification/block status; it does not require exactly three active process stages.
+- [ ] The final project artifacts reflect all corrections applied by bounded repair cycles.
+- [ ] A single Auditor loop provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
 
 ### 12.5 SSOT References (DRY)
 
@@ -1470,7 +1472,7 @@ The following criteria are required for a conformant implementation of this work
 | Architecture invariants | `Plans/Architecture_Invariants.md` |
 | DRY rules | `Plans/DRY_Rules.md` |
 | Decision policy | `Plans/Decision_Policy.md` |
-| Per-pass provider/model settings GUI | `Plans/assistant-chat-design.md §26` |
+| Auditor loop provider/model settings GUI | `Plans/assistant-chat-design.md §26` |
 | Auto-decisions schema | `Plans/auto_decisions.schema.json` |
 | UI wiring rules and schema | `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json` |
 
@@ -1496,7 +1498,7 @@ Labels:
 - validation pass report
 
 Behavioral rules:
-- Validation passes must emit lineage-rich pass reports that can explain what was evaluated and what execution was seeded.
+- Auditor cycle reports must emit lineage-rich report records that can explain what was evaluated and what execution was seeded; legacy validation pass reports may mirror this lineage for compatibility only.
 - `pass_verdict` must support `skipped`.
 
 Permission carry-through:
@@ -1586,7 +1588,7 @@ ContractRef: Plans/chain-wizard-flexibility.md §1 (intent-based workflows), Pla
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json, PolicyRule:Decision_Policy.md§6
 
-This section defines the minimum criteria every requirement MUST satisfy before it can leave the Chain Wizard/Interview phase. The Three-Pass Canonical Validation Workflow (§12) enforces these criteria automatically: Pass 1 identifies issues, Pass 2 auto-fixes where possible, and Pass 3 escalates any remaining blocking issues per §15.
+This section defines the minimum criteria every requirement MUST satisfy before it can leave the Chain Wizard/Interview phase. The Auditor invariant loop (§12) enforces these criteria automatically: the initial audit identifies issues, bounded repair cycles apply deterministic fixes where possible, and certification blocks or escalates remaining blocking issues per §15.
 
 Each requirement MUST satisfy ALL of the following coverage criteria:
 
@@ -1647,7 +1649,7 @@ Blocking issue type: `missing_research` (for unresolved unknowns)
 
 ### 14.1 Quality Report Artifact
 
-The `requirements_quality_report` artifact produced during Pass 1 (§12) captures the per-requirement evaluation against C-1 through C-5. After Pass 2 autofixes, the report is updated in-place. Schema: `pm.requirements_quality_report.schema.v1` (`ContractName:Plans/requirements_quality_report.schema.json`).
+The `requirements_quality_report` artifact produced during the initial Auditor audit cycle (§12) captures the per-requirement evaluation against C-1 through C-5. After bounded repair autofixes, the report is updated in-place. Schema: `pm.requirements_quality_report.schema.v1` (`ContractName:Plans/requirements_quality_report.schema.json`).
 
 Key fields:
 
@@ -1656,7 +1658,7 @@ Key fields:
 | `verdict` | Overall report verdict: `PASS` \| `FAIL` |
 | `requirements_touched[]` | Requirement IDs inspected in this quality analysis pass |
 | `issues[]` | Detected issues (`issue_id`, `category`, `requirement_id`, `severity`, `auto_fixable`, etc.) |
-| `auto_fixes_applied[]` | Deterministic fixes applied in Pass 2 (each references `issue_id` and `requirement_id`) |
+| `auto_fixes_applied[]` | Deterministic fixes applied in bounded Auditor repair cycles (each references `issue_id` and `requirement_id`) |
 | `needs_user_clarification[]` | Clarification questions that require user input (each references `issue_id` and `requirement_id`) |
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json
@@ -1671,7 +1673,7 @@ Deterministic shaping rules:
 - `issue_id` values MUST be emitted as zero-padded ordinals in report order: `ISS-0001`, `ISS-0002`, ...
 - `auto_fixes_applied[]` MUST be ordered by referenced `issue_id`; `fix_id` values MUST be emitted as `FIX-0001`, `FIX-0002`, ...
 - `needs_user_clarification[]` MUST be ordered by referenced `issue_id`; `question_id` values MUST be emitted as `Q-0001`, `Q-0002`, ...
-- Re-running Pass 1 + Pass 2 with unchanged requirement content and unchanged user answers MUST preserve byte-stable ordering for these arrays.
+- Re-running the Auditor audit and bounded repair loop with unchanged requirement content and unchanged user answers MUST preserve byte-stable ordering for these arrays.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Invariant:INV-005, PolicyRule:Decision_Policy.md§2
 
@@ -1679,11 +1681,11 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Invariant:INV-00
 
 ## 15. Requirements Quality Escalation Semantics
 
-> **Compliance:** Follows §14 (Requirements Completion Contract) and §12 (Three-Pass Canonical Validation Workflow). Naming: "Puppet Master" only. All decisions deterministic.
+> **Compliance:** Follows §14 (Requirements Completion Contract) and §12 (Auditor Invariant Loop). Naming: "Puppet Master" only. All decisions deterministic.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
 
-This section defines how blocking issues in the `requirements_quality_report` that are not resolved by Pass 2 autofixes are surfaced to the user. Pass 3 (§12) never edits product requirements; instead it reads the quality report and triggers the escalation path defined here.
+This section defines how blocking issues in the `requirements_quality_report` that are not resolved by bounded Auditor repair autofixes are surfaced to the user. The Auditor certification cycle (§12) never edits product requirements; instead it reads the quality report and triggers the escalation path defined here.
 
 ---
 
@@ -1693,7 +1695,7 @@ Escalation fires when:
 
 - `needs_user_clarification[]` in the final (post-Pass-2) `requirements_quality_report` is **non-empty**
 
-No escalation fires if all blocking issues were resolved by Pass 2 autofixes.
+No escalation fires if all blocking issues were resolved by bounded Auditor repair autofixes.
 
 ---
 
@@ -1705,7 +1707,7 @@ When escalation fires:
 - The "Proceed" / "Start Run" button is disabled
 - A lock icon or warning badge appears on the wizard step that triggered the issue
 
-The wizard returns to its normal state only when all `needs_user_clarification[]` entries are answered and Pass 1 + Pass 2 re-run with the user's answers injected produce a quality report with `verdict: "PASS"` and `needs_user_clarification[]` empty.
+The wizard returns to its normal state only when all `needs_user_clarification[]` entries are answered and the Auditor audit/repair loop re-runs with the user's answers injected to produce a quality report with `verdict: "PASS"` and `needs_user_clarification[]` empty.
 
 ---
 
@@ -1750,7 +1752,7 @@ The Dashboard card is dismissed automatically when all questions are answered an
 - The `requirements_quality_report` artifact is stored at:
   `.puppet-master/project/traceability/requirements_quality_report.json`
 - The wizard record (in the app database) gains a field `attention_required_report_path` pointing to the latest quality report file
-- When the user answers all clarification questions, the wizard is re-run through Pass 1 and Pass 2 with the answers injected; the canonical quality report file is regenerated at the same path and `attention_required_report_path` is updated to that canonical path
+- When the user answers all clarification questions, the wizard is re-run through the Auditor audit/repair loop with the answers injected; the canonical quality report file is regenerated at the same path and `attention_required_report_path` is updated to that canonical path
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md, Plans/Project_Output_Artifacts.md
 
@@ -1759,7 +1761,7 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Pla
 A clarification cycle is one complete sequence of:
 1. a report with non-empty `needs_user_clarification[]`,
 2. user answer submission,
-3. automatic re-run of Pass 1 + Pass 2.
+3. automatic re-run of the Auditor audit/repair loop.
 
 The maximum clarification cycles for one wizard instance is **3**.
 
@@ -6576,23 +6578,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  The always-on invariant sweep runs immediately after Contract Unification on
-  the provisional project pack, is separate from optional §5.6 Multi-Pass
-  Review, cannot be disabled, and runs Pass 1 -> Pass 2 -> Pass 3 without human
-  intervention or GUI.
+  The always-on Auditor invariant loop runs immediately after Contract
+  Unification on the provisional project pack, is separate from optional §5.6
+  Multi-Pass Review, cannot be disabled, and repeats audit, bounded repair,
+  and re-audit until certification or critical block without human intervention
+  or GUI.
 gui_related: false
 gui_classification_reason: The invariant sweep is a headless validation pipeline; the GUI is mentioned only as absent.
 split_recommended: true
-split_recommendation_reason: Source spans S0075-S0076 introduce the sweep and pass ordering; this unit covers the boundary and sequencing.
+split_recommendation_reason: Source spans S0075-S0076 introduce the sweep and legacy pass ordering; this unit covers the boundary and current Auditor loop sequencing.
 depends_on: [CWF-057, CWF-060]
 unblocks: [CWF-082, CWF-083, CWF-084, CWF-085]
 acceptance_criteria:
-  - Invariant sweep runs immediately after Contract Unification Pass produces provisional canonical project artifact pack.
-  - Invariant sweep is separate from optional user-facing §5.6 Multi-Pass Review.
-  - Invariant sweep cannot be disabled.
-  - Invariant sweep runs even when other review features are present or enabled.
-  - Passes run serially as Pass 1 -> Pass 2 -> Pass 3.
-  - Sweep requires no human intervention and no running GUI.
+  - Auditor invariant loop runs immediately after Contract Unification Pass produces provisional canonical project artifact pack.
+  - Auditor invariant loop is separate from optional user-facing §5.6 Multi-Pass Review.
+  - Auditor invariant loop cannot be disabled.
+  - Auditor invariant loop runs even when other review features are present or enabled.
+  - Loop cycles repeat audit, bounded repair, and re-audit until certified or critically blocked.
+  - Loop requires no human intervention and no running GUI.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6614,14 +6617,16 @@ preserved_exact_tokens:
   - "cannot be disabled"
   - "without requiring human intervention or a running GUI"
   - "Pass 1 → Pass 2 → Pass 3"
+  - "Auditor audit-to-repair loop"
 negative_constraints:
   - "The invariant sweep cannot be disabled."
+  - "Do not treat Pass 1 / Pass 2 / Pass 3 as active process stages; they are compatibility aliases only."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-082 - Pass 1 Document Creation and Requirements Quality Report
+### CWF-082 - Legacy Pass 1 Alias And Initial Auditor Quality Report
 
 ```yaml
 plan_unit_id: CWF-082
@@ -6629,33 +6634,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 1 validates and completes the provisional artifact pack, emits
-  validation_pass_report for document_creation, and writes a read-only
+  The initial Auditor audit cycle validates and completes the provisional
+  artifact pack, may mirror legacy Pass 1 / validation_pass_report fields for
+  document_creation compatibility, and writes a read-only
   requirements_quality_report without authoring requirements or contract
   fragments.
 gui_related: false
-gui_classification_reason: Pass 1 report generation and artifact validation are backend validation behavior.
+gui_classification_reason: Initial Auditor report generation and artifact validation are backend validation behavior.
 split_recommended: false
 depends_on: [CWF-081]
 unblocks: [CWF-083, CWF-085]
 acceptance_criteria:
-  - Pass 1 validates and completes the provisional artifact pack produced by Contract Unification.
-  - Pass 1 may materialize missing derived artifacts or deterministic projections.
-  - Pass 1 is not the first author of requirements or contract fragments.
-  - Pass 1 emits validation_pass_report with pass_number 1 and pass_name document_creation.
-  - Pass 1 writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
-  - Pass 1 requirements_quality_report is read-only and classifies auto_fixable true/false without editing requirements.
+  - Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
+  - Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
+  - Initial Auditor audit is not the first author of requirements or contract fragments.
+  - Legacy Pass 1 validation_pass_report fields may be mirrored with pass_number 1 and pass_name document_creation for compatibility only.
+  - Initial Auditor audit writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
+  - requirements_quality_report is read-only for requirements intent and classifies auto_fixable true/false without editing requirements.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: pass1_document_creation_drift
+risk_class: auditor_initial_quality_report_drift
 reasoning_tier: high
 context_scope: validation_sweep
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 node_compile_hint:
-  mode: chain_wizard_pass1_document_creation_quality_report
+  mode: chain_wizard_auditor_initial_quality_report
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0077
@@ -6666,14 +6672,15 @@ preserved_exact_tokens:
   - "pm.requirements_quality_report.schema.v1"
   - "auto_fixable"
 negative_constraints:
-  - "Pass 1 does not edit requirements."
-  - "Pass 1 is not the first author of requirements or contract fragments."
+  - "Pass 1 is a compatibility alias only."
+  - "Initial Auditor audit does not edit requirements."
+  - "Initial Auditor audit is not the first author of requirements or contract fragments."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-083 - Pass 2 Canonical Alignment and Requirements Auto-Fixes
+### CWF-083 - Legacy Pass 2 Alias And Bounded Auditor Repair
 
 ```yaml
 plan_unit_id: CWF-083
@@ -6681,22 +6688,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 2 compares project artifacts against contracts and canon, applies
-  resolvable fixes, applies auto_fixable requirement-quality fixes, updates
-  reports, and records unresolved findings without direct escalation.
+  Bounded Auditor repair compares project artifacts against contracts and canon,
+  applies resolvable fixes, applies auto_fixable requirement-quality fixes,
+  updates reports, and records unresolved findings without treating legacy Pass
+  2 as an active process stage.
 gui_related: false
-gui_classification_reason: Pass 2 correction and report behavior are backend validation pipeline behavior.
+gui_classification_reason: Bounded Auditor correction and report behavior are backend validation pipeline behavior.
 split_recommended: false
 depends_on: [CWF-081, CWF-082]
 unblocks: [CWF-084, CWF-085, CWF-086]
 acceptance_criteria:
-  - Pass 2 compares requirements, contract pack, plan_graph nodes, and acceptance_manifest against canonical references.
-  - For each gap or contradiction, Pass 2 records findings and applies fixes where possible.
-  - Pass 2 records diff_pointer information for applied fixes.
-  - Pass 2 records unresolved_findings when no fix is possible.
-  - Pass 2 applies auto-fixes from requirements_quality_report where auto_fixable == true.
-  - Pass 2 updates requirements_quality_report in place with final post-fix state.
-  - Pass 2 does not escalate directly; it updates the quality report artifact for later semantics.
+  - Bounded Auditor repair compares requirements, contract pack, plan_graph nodes, and acceptance_manifest against canonical references.
+  - For each gap or contradiction, bounded Auditor repair records findings and applies fixes where possible.
+  - Bounded Auditor repair records diff_pointer information for applied fixes.
+  - Bounded Auditor repair records unresolved_findings when no fix is possible.
+  - Bounded Auditor repair applies auto-fixes from requirements_quality_report where auto_fixable == true.
+  - Bounded Auditor repair updates requirements_quality_report in place with final post-fix state.
+  - Bounded Auditor repair does not escalate directly; it updates the quality report artifact for certification/block semantics.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6710,7 +6718,7 @@ implementation_surfaces:
   - Plans/DRY_Rules.md
   - Plans/Decision_Policy.md
 node_compile_hint:
-  mode: chain_wizard_pass2_canonical_alignment_auto_fixes
+  mode: chain_wizard_auditor_bounded_repair_auto_fixes
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0078
@@ -6722,13 +6730,14 @@ preserved_exact_tokens:
   - "auto_fixes_applied[]"
   - "auto_fixable == true"
 negative_constraints:
-  - "Pass 2 does not escalate directly."
+  - "Pass 2 is a compatibility alias only."
+  - "Bounded Auditor repair does not escalate directly."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
 ```
 
-### CWF-084 - Pass 3 Canonical Systems-Only Sweep
+### CWF-084 - Legacy Pass 3 Alias And Auditor Certification Gate
 
 ```yaml
 plan_unit_id: CWF-084
@@ -6736,22 +6745,23 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 3 enforces DRY/SSOT, plan graph, wiring, evidence, and deterministic
-  decision invariants while never modifying requirements.md, plan.md, or
-  user-intent-derived content.
+  The Auditor certification gate enforces DRY/SSOT, plan graph, wiring,
+  evidence, and deterministic decision invariants while never modifying
+  requirements.md, plan.md, or user-intent-derived content; legacy Pass 3 fields
+  are compatibility aliases only.
 gui_related: false
-gui_classification_reason: Pass 3 validates artifacts, including GUI wiring when present, but does not implement GUI presentation.
+gui_classification_reason: Auditor certification validates artifacts, including GUI wiring when present, but does not implement GUI presentation.
 split_recommended: false
 depends_on: [CWF-081, CWF-083]
 unblocks: [CWF-085, CWF-086]
 acceptance_criteria:
-  - Pass 3 focuses exclusively on canonical system integrity.
-  - Pass 3 enforces DRY/SSOT compliance.
-  - Pass 3 enforces plan graph integrity.
-  - Pass 3 enforces wiring matrix consistency when the user project has a GUI.
-  - Pass 3 enforces evidence/invariants alignment.
-  - Pass 3 enforces deterministic decisions/autonomy compliance.
-  - Pass 3 never modifies requirements.md, plan.md, or user-intent-derived artifacts.
+  - Auditor certification focuses on canonical system integrity before certifying or blocking.
+  - Auditor certification enforces DRY/SSOT compliance.
+  - Auditor certification enforces plan graph integrity.
+  - Auditor certification enforces wiring matrix consistency when the user project has a GUI.
+  - Auditor certification enforces evidence/invariants alignment.
+  - Auditor certification enforces deterministic decisions/autonomy compliance.
+  - Auditor certification never modifies requirements.md, plan.md, or user-intent-derived artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6764,7 +6774,7 @@ implementation_surfaces:
   - Plans/DRY_Rules.md
   - Plans/Wiring_Matrix.schema.json
 node_compile_hint:
-  mode: chain_wizard_pass3_canonical_systems_only
+  mode: chain_wizard_auditor_certification_gate
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0079
@@ -6775,7 +6785,8 @@ preserved_exact_tokens:
   - "pass_3_violation:"
   - "MUST NOT modify"
 negative_constraints:
-  - "Pass 3 MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user intent or product scope."
+  - "Pass 3 is a compatibility alias only."
+  - "Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user intent or product scope."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md
@@ -6790,8 +6801,9 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The sweep runs deterministically and headlessly, uses one Auditor validation
-  loop provider/model setting for all pass reports, emits exactly three pass
-  reports, and uses pass_verdict skipped for blocked later passes.
+  loop provider/model setting for all Auditor cycle reports, emits enough
+  reports to prove audit/repair/re-audit/certification or block, and treats
+  legacy pass reports as compatibility rows only.
 gui_related: false
 gui_classification_reason: Sweep execution settings and report emission are backend validation behavior.
 split_recommended: true
@@ -6799,13 +6811,13 @@ split_recommendation_reason: Source spans S0080 and S0081 mix execution settings
 depends_on: [CWF-081, CWF-082, CWF-083, CWF-084]
 unblocks: [CWF-086, CWF-087]
 acceptance_criteria:
-  - All three passes run deterministically without human intervention.
-  - Each pass runs headless with no GUI and no approval gate between passes.
+  - Auditor loop cycles run deterministically without human intervention.
+  - Each cycle runs headless with no GUI and no approval gate inside the loop.
   - Auditor validation loop provider and model are configurable through app settings.
   - Defaults are deterministic and safe when not explicitly configured.
-  - Each validation_pass_report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
-  - Exactly three pass reports are emitted per sweep.
-  - Later passes blocked by an earlier failure emit pass_verdict skipped with explanatory verdict_reason.
+  - Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
+  - The loop emits enough reports to prove audit, bounded repair, re-audit, and certified or critical-block terminal state.
+  - Legacy validation_pass_report rows and pass_verdict skipped values may be emitted only as compatibility mirrors.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6828,6 +6840,7 @@ preserved_exact_tokens:
   - "Auditor validation loop"
   - "Exactly three pass reports"
   - "pass_verdict: \"skipped\""
+  - "certified or critical-block terminal state"
 negative_constraints:
   - "No GUI is required and no user approval gate exists between passes."
   - "Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings."
@@ -6845,9 +6858,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass failures route to user-visible clarification or resolution surfaces using
-  distinct needs_user_clarification and unresolved_findings artifacts while
-  preserving corrected-but-blocked artifacts for resume.
+  Auditor loop blocks route to user-visible clarification or resolution
+  surfaces using distinct needs_user_clarification and unresolved_findings
+  artifacts while preserving corrected-but-blocked artifacts for resume.
 gui_related: true
 gui_classification_reason: Failure routing drives user-visible Interview clarification and review/resolution UI surfaces.
 split_recommended: true
@@ -6855,9 +6868,9 @@ split_recommendation_reason: Source spans S0080 and S0081 mix backend report sem
 depends_on: [CWF-083, CWF-084, CWF-085]
 unblocks: []
 acceptance_criteria:
-  - Pass 1 failure halts and surfaces failure to the user.
-  - If Pass 2 produces non-empty needs_user_clarification, wizard transitions to clarification/resume path.
-  - Pass 3 is skipped when Pass 2 clarification blocks progress.
+  - Initial Auditor audit failure without allowed deterministic repair halts and surfaces failure to the user.
+  - If bounded Auditor repair produces non-empty needs_user_clarification, wizard transitions to clarification/resume path.
+  - Auditor certification is blocked when clarification or authority boundaries block progress.
   - Corrected-but-blocked artifact set is preserved for resume.
   - unresolved_findings is distinct from needs_user_clarification.
   - needs_user_clarification drives interview UI.
@@ -7246,9 +7259,9 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Every requirement must satisfy C-1 through C-5 before leaving the Chain
-  Wizard/Interview phase, with the Three-Pass Canonical Validation Workflow
-  identifying, fixing, and escalating blocking issues under the requirements
-  quality report schema and Decision Policy section 6.
+  Wizard/Interview phase, with the Auditor invariant loop identifying, fixing,
+  and escalating blocking issues under the requirements quality report schema
+  and Decision Policy section 6.
 gui_related: false
 gui_classification_reason: Requirements completion and schema enforcement are backend validation semantics.
 split_recommended: false
@@ -7256,9 +7269,9 @@ depends_on: [CWF-081]
 unblocks: [CWF-095, CWF-096, CWF-097, CWF-098, CWF-099, CWF-100]
 acceptance_criteria:
   - Requirements cannot leave Chain Wizard/Interview until all C-1 through C-5 criteria are met.
-  - Pass 1 identifies issues.
-  - Pass 2 auto-fixes where possible.
-  - Pass 3 escalates remaining blocking issues.
+  - Initial Auditor audit identifies issues.
+  - Bounded Auditor repair auto-fixes where possible.
+  - Auditor certification blocks or escalates remaining blocking issues.
   - SchemaID pm.requirements_quality_report.schema.v1 and ContractName Plans/requirements_quality_report.schema.json are preserved.
   - Unknown resolution follows Decision_Policy.md section 6.
 validation_surfaces:
@@ -7522,7 +7535,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 1 produces and Pass 2 updates a requirements_quality_report artifact
+  Initial Auditor audit produces and bounded Auditor repair updates a requirements_quality_report artifact
   that evaluates requirements against C-1 through C-5 using the canonical schema
   and required top-level arrays.
 gui_related: false
@@ -7533,7 +7546,7 @@ unblocks: [CWF-101, CWF-102]
 acceptance_criteria:
   - The artifact is named requirements_quality_report.
   - The artifact captures per-requirement evaluation against C-1 through C-5.
-  - Pass 2 updates the report in place after autofixes.
+  - Bounded Auditor repair updates the report in place after autofixes.
   - Required fields include verdict, requirements_touched[], issues[], auto_fixes_applied[], and needs_user_clarification[].
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7619,7 +7632,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Pass 3 reads the post-Pass-2 requirements_quality_report and triggers user
+  Auditor certification reads the post-repair requirements_quality_report and triggers user
   escalation only when needs_user_clarification is non-empty, while never
   editing product requirements.
 gui_related: false
@@ -7628,10 +7641,10 @@ split_recommended: false
 depends_on: [CWF-083, CWF-100, CWF-101]
 unblocks: [CWF-103, CWF-104, CWF-105, CWF-106]
 acceptance_criteria:
-  - Pass 3 reads the quality report and triggers only the escalation path defined here.
-  - Pass 3 never edits product requirements.
-  - Escalation fires when final post-Pass-2 needs_user_clarification[] is non-empty.
-  - No escalation fires when Pass 2 autofixes resolve all blocking issues.
+  - Auditor certification reads the quality report and triggers only the escalation path defined here.
+  - Auditor certification never edits product requirements.
+  - Escalation fires when final post-repair needs_user_clarification[] is non-empty.
+  - No escalation fires when bounded Auditor repair autofixes resolve all blocking issues.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -7678,7 +7691,7 @@ acceptance_criteria:
   - Proceed and Start Run are disabled while attention is required.
   - A lock icon or warning badge appears on the triggering wizard step.
   - Normal state resumes only after all clarification entries are answered.
-  - Pass 1 and Pass 2 rerun with injected answers.
+  - Auditor audit/repair cycles rerun with injected answers.
   - The resumed report has verdict PASS and empty needs_user_clarification[].
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7823,7 +7836,7 @@ unblocks: [CWF-107, CWF-108]
 acceptance_criteria:
   - The report is stored at .puppet-master/project/traceability/requirements_quality_report.json.
   - The wizard record gains attention_required_report_path.
-  - Answer submission reruns Pass 1 and Pass 2 with answers injected.
+  - Answer submission reruns Auditor audit/repair cycles with answers injected.
   - The canonical quality report file is regenerated at the same path and the pointer is updated.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7856,8 +7869,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  A clarification cycle is report, answer submission, and automatic Pass 1 plus
-  Pass 2 rerun; each wizard instance is capped at three cycles and becomes
+  A clarification cycle is report, answer submission, and automatic Auditor
+  audit/repair rerun; each wizard instance is capped at three cycles and becomes
   blocked if questions remain after the third cycle.
 gui_related: false
 gui_classification_reason: Cycle counting and blocked transition are backend wizard-state rules.
@@ -7868,7 +7881,7 @@ unblocks: [CWF-108]
 acceptance_criteria:
   - A cycle includes a report with non-empty needs_user_clarification[].
   - A cycle includes user answer submission.
-  - A cycle includes automatic Pass 1 and Pass 2 rerun.
+  - A cycle includes automatic Auditor audit/repair rerun.
   - Maximum clarification cycles for one wizard instance is 3.
   - Cycles 1 and 2 remain in active clarification when follow-up questions remain.
   - After cycle 3 still produces non-empty needs_user_clarification[], wizard state becomes blocked.

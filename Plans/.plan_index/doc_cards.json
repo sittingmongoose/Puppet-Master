@@ -523,7 +523,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 22254,
+      "line_count": 22259,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 420,
       "plan_unit_ids": [
@@ -1244,7 +1244,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02",
+      "sha256": "18d83140885795522460af266e2e1478ff3227d9a1d610a5e20ee9250aa52324",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 420
@@ -1631,7 +1631,7 @@
         "False": 78,
         "True": 73
       },
-      "heading_count": 311,
+      "heading_count": 312,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -1676,7 +1676,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 10080,
+      "line_count": 10093,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 151,
       "plan_unit_ids": [
@@ -1851,6 +1851,7 @@
         "attention_required_state_drift",
         "attention_summary_severity_drift",
         "audit_lineage_value_loss",
+        "auditor_initial_quality_report_drift",
         "auth_scope_drift",
         "blocked_clear_counter_drift",
         "blocked_copy_rewrite_drift",
@@ -1921,7 +1922,6 @@
         "override_ui_drift",
         "owner_boundary_drift",
         "owner_map_drift",
-        "pass1_document_creation_drift",
         "pause_cancel_resume_drift",
         "persona_mode_boundary_drift",
         "phase_enforcement_drift",
@@ -1989,7 +1989,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840",
+      "sha256": "c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -2613,7 +2613,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17363,
+      "line_count": 17365,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 289,
       "plan_unit_ids": [
@@ -3202,7 +3202,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4",
+      "sha256": "e93a5ae670cc2f4545ae3c7bdb377ced223d99f0af6bba79fb6055652ad1c0bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 287,
@@ -4462,7 +4462,7 @@
         "Plans/usage-feature.md",
         "future Settings UI"
       ],
-      "line_count": 25077,
+      "line_count": 25081,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 397,
       "plan_unit_ids": [
@@ -4888,7 +4888,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "63c890c69c30302d218467bdd01f4db739951dad5c5eb0ace96327bb0f6215a7",
+      "sha256": "aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 396,
@@ -5198,7 +5198,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 2118,
+      "line_count": 2119,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -5267,7 +5267,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "de908bd571a6d6a6bea6135bdfd039844852cfc9261a60527fc968f2829b3088",
+      "sha256": "fe3333892f661a9aa79c4873f0076afe204c15a2263944c57ab5db2db3fcc4c7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28,
@@ -6112,7 +6112,7 @@
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md"
       ],
-      "line_count": 7541,
+      "line_count": 7542,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 111,
       "plan_unit_ids": [
@@ -6345,7 +6345,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "bd3d52b044fc2c43a2659733d11a49cbfef3e4d8d11230288c1492533dce4187",
+      "sha256": "410b71b44fed676a4dfa161c9560c82c14d686eaa7bbdcc0fa53849107bb4f11",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 111
@@ -8208,13 +8208,13 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "49256f932a10394b1ecd9f39ba7ed83cb4ddc4a650902eaeb66d6be7d2cf9325",
+      "sha256": "7a0326edb49c5e3edc748c7b0f63ee4ca248f15779b73a12280bb86166589040",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
         "retired": 1
       },
-      "title": "Orchestrator Page -- Single-Page 6-Tab Specification",
+      "title": "Orchestrator Page -- Single-Page Seven-Tab Specification",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 6,
@@ -9101,7 +9101,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 3272,
+      "line_count": 3276,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 48,
       "plan_unit_ids": [
@@ -9208,7 +9208,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "58cd2470e2b080b5821950c64f8ba0b2d600dfaf3c68c848f69d416f01278f7d",
+      "sha256": "1538972357c908265e4c134ea879d3a5f91bd1436100a5bb208e3d15071dc54e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47,
@@ -11377,7 +11377,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-18T02:28:06Z",
+  "generated_at_utc": "2026-06-18T03:28:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2544-L16712
+Source lines: L2546-L16714
 
-Source SHA256: `9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4`
+Source SHA256: `e93a5ae670cc2f4545ae3c7bdb377ced223d99f0af6bba79fb6055652ad1c0bc`
 
 ---
 
@@ -4795,7 +4795,7 @@ preserved_exact_tokens:
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
 owner_hints:

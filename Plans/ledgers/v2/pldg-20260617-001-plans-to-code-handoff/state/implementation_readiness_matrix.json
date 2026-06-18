@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.implementation_readiness_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T01:39:30Z",
+  "updated_at_utc": "2026-06-18T03:26:09Z",
   "status": "compiled_to_plans_governance_sealed",
   "purpose": "Preserve the pre-compile implementation-readiness mapping after conversion to Plans by recording each design area against concrete PlanUnits, fields, schemas, acceptance criteria, validators, and boundaries.",
   "global_acceptance": [
@@ -103,7 +103,7 @@
       "required_plan_units": [
         "six user-facing model settings",
         "Overseer internal role mapping",
-        "Auditor audit/repair loop",
+        "Auditor audit-to-repair loop until certified or critical block",
         "no Executor Model setting",
         "model resolution receipt"
       ],
@@ -124,7 +124,7 @@
       "acceptance": [
         "Plan Compiler maps to Overseer Model",
         "Plan Wizard ledger-to-Plans and PRD Builder conversion map to Overseer Model",
-        "old validation pass model settings retired in favor of Auditor loop",
+        "old validation pass model settings and active fixed pass stages retired in favor of Auditor loop; Pass 1 / Pass 2 / Pass 3 names are compatibility aliases only",
         "Executor remains deterministic machinery"
       ]
     },

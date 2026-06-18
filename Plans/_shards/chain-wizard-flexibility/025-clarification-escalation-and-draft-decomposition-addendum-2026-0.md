@@ -1,10 +1,10 @@
-# Shard 024: Clarification Escalation and Draft Decomposition Addendum (2026-03-08)
+# Shard 025: Clarification Escalation and Draft Decomposition Addendum (2026-03-08)
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2088-L2136
+Source lines: L2090-L2138
 
-Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
+Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
 
 ---
 
