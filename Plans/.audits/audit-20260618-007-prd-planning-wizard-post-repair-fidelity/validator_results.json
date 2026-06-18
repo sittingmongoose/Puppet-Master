@@ -1,0 +1,244 @@
+{
+  "generated_at_utc": "2026-06-18T21:24:02Z",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "results": [
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate"
+      ],
+      "duration_seconds": 0.247,
+      "extra_env": {},
+      "name": "pm_audit_closure_validate_registry",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 105,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"not_for_plan\": 6,\n      \"repaired\": 75,\n      \"source_lineage_only\": 20,\n      \"stale_retired\": 1\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-bootstrap-ledger-validate.py",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard"
+      ],
+      "duration_seconds": 8.036,
+      "extra_env": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps"
+      },
+      "name": "pm_bootstrap_ledger_validate",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260618-001-prd-planning-wizard\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 168,\n    \"compile_queue_items\": 61,\n    \"corrections\": 15,\n    \"decisions\": 30,\n    \"events\": 22,\n    \"plan_units_checked\": 2961,\n    \"questions\": 0\n  },\n  \"warnings\": []\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "duration_seconds": 20.518,
+      "extra_env": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps"
+      },
+      "name": "pm_plan_index_validate",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:35Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 18420,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5166\n  }\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plan-migration.py",
+        "validate",
+        "--run-dir",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+      ],
+      "duration_seconds": 14.542,
+      "extra_env": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps"
+      },
+      "name": "pm_plan_migration_validate",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 71,\n    \"live_plan_unit_count\": 5166,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3916,\n    \"unique_live_plan_unit_count\": 5166\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "duration_seconds": 5.682,
+      "extra_env": {},
+      "name": "pm_plans_verify_run_gates",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:55Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "duration_seconds": 0.474,
+      "extra_env": {},
+      "name": "pm_shard_plans_check",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 52,\n  \"failures\": [],\n  \"shards_checked\": 965,\n  \"source_count\": 52,\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-auto-decisions"
+      ],
+      "duration_seconds": 0.085,
+      "extra_env": {},
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:56Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "verify-spec-lock"
+      ],
+      "duration_seconds": 0.087,
+      "extra_env": {},
+      "name": "pm_plans_verify_verify_spec_lock",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:56Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-evidence"
+      ],
+      "duration_seconds": 0.616,
+      "extra_env": {},
+      "name": "pm_plans_verify_validate_evidence",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:57Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-plan-graph"
+      ],
+      "duration_seconds": 0.57,
+      "extra_env": {},
+      "name": "pm_plans_verify_validate_plan_graph",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:23:57Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "audit-governance"
+      ],
+      "duration_seconds": 5.024,
+      "extra_env": {},
+      "name": "pm_plans_verify_audit_governance",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"audit-governance\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-18T21:24:02Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": [
+        "python3",
+        "scripts/pm-install-prd-planning-wizard-ledger.py",
+        "--repo",
+        "/Users/jaredsmacbookair/Documents/PuppetMaster",
+        "--dry-run"
+      ],
+      "duration_seconds": 0.062,
+      "extra_env": {},
+      "name": "pm_install_prd_planning_wizard_ledger_dry_run",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"status\": \"dry_run_already_sealed_noop\",\n  \"repo\": \"/Users/jaredsmacbookair/Documents/PuppetMaster\",\n  \"ledger_id\": \"pldg-20260618-001-prd-planning-wizard\",\n  \"existing_entries\": 1,\n  \"target_bucket\": \"sealed_ledgers\",\n  \"registry\": \"/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/ledgers/v2/ledger_registry.json\",\n  \"note\": \"Refusing to downgrade a sealed ledger to the active precompile bucket.\"\n}\n"
+    },
+    {
+      "cmd": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "duration_seconds": 0.037,
+      "extra_env": {},
+      "name": "git_diff_check",
+      "result": "pass",
+      "returncode": 0,
+      "side_effect": false,
+      "status_after": [],
+      "status_before": [],
+      "stderr_tail": "",
+      "stdout_tail": ""
+    }
+  ],
+  "schema_id": "pm.audit_validator_results.v1",
+  "summary": {
+    "fail": 0,
+    "pass": 13,
+    "side_effects": 0,
+    "total": 13
+  }
+}

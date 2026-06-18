@@ -1,0 +1,124 @@
+{
+  "audit_id": "audit-20260618-007-prd-planning-wizard-post-repair-fidelity",
+  "candidate_atoms_count": 0,
+  "governance_status": "sealed",
+  "inconsistencies": [
+    {
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:8",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:31",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:195-200"
+      ],
+      "id": "handoff_governance_projection_contradiction",
+      "severity": "medium"
+    },
+    {
+      "count": 45,
+      "evidence": [
+        "records/decisions.jsonl:1-30",
+        "records/corrections.jsonl:1-15"
+      ],
+      "id": "sealed_nonatom_ready_for_plan_compile",
+      "severity": "medium"
+    }
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "manifest_status": "sealed",
+  "nonatom_ready_for_plan_compile_count": 45,
+  "nonatom_ready_for_plan_compile_examples": [
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 1,
+      "record_id": "dec-0001",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 2,
+      "record_id": "dec-0002",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 3,
+      "record_id": "dec-0003",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 4,
+      "record_id": "dec-0004",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 5,
+      "record_id": "dec-0005",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 6,
+      "record_id": "dec-0006",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 7,
+      "record_id": "dec-0007",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 8,
+      "record_id": "dec-0008",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 9,
+      "record_id": "dec-0009",
+      "record_type": "decision",
+      "status": "accepted"
+    },
+    {
+      "compile_disposition": "ready_for_plan_compile",
+      "line": 10,
+      "record_id": "dec-0010",
+      "record_type": "decision",
+      "status": "accepted"
+    }
+  ],
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_prd_planning_wizard_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 22,
+    "questions": 0
+  },
+  "records_actual_counts": {
+    "blockers": 0,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 22,
+    "questions": 0
+  },
+  "registry_status": "sealed",
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "fail",
+  "validator_note": "pm-bootstrap-ledger-validate passes, but it does not flag prose-level handoff contradictions or non-atom ready compile dispositions."
+}
