@@ -56,7 +56,7 @@ These requirements are canonical live specification text for this owner document
 
 Orchestrator is the core scheduling, concern tracking, blocked-state handling, and runtime-identity management system. It is not the UI, CLI, or external provider.
 
-The /page-shell is a six-tab single-page surface with canonical tabs `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`. Node Graph Display remains a native Orchestrator view over `Plans/Orchestrator_Page.md`, `Plans/orchestrator-subagent-integration.md`, `/Orchestrator_Page.md`, and `/orchestrator-subagent-integration.md`; `Tiers` and tier-era tab labels survive only as compatibility/search aliases while the canonical runtime model is node/package/seam/lane aware.
+The /page-shell is a seven-tab single-page surface with canonical tabs `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`. Node Graph Display remains a native Orchestrator view over `Plans/Orchestrator_Page.md`, `Plans/orchestrator-subagent-integration.md`, `/Orchestrator_Page.md`, and `/orchestrator-subagent-integration.md`; `Plan Compile` is a dedicated compile projection tab, and `Tiers` plus tier-era tab labels survive only as compatibility/search aliases while the canonical runtime model is node/package/seam/lane aware.
 
 Blocked and HITL routing records preserve `/blocking/HITL`, `/model/effort/persona/account`, `/target`, `/display`, `/snapshot`, field-shape, resolution_thread, `/severity/blocking`, `/review/corroboration`, `/chat`, `/result`, `/package`, `/fallback`, safe-point, lane, review, attempt, and promotion fields so blocked decisions remain reconstructable from the displayed page state.
 
@@ -248,7 +248,7 @@ Reconciliation readiness is classified instead of treated as one undifferentiate
 - External side-effect receipts distinguish local-vs-remote and vs-remote outcomes. `indeterminate_remote_outcome` records `requested`, `transport_lost`, and later `reconciled` state plus a `Refresh remote state` CTA. Capability-level degradation and the local-vs-remote degraded-mode split keep local work available where safe: local Git can continue during hosted-degraded GitHub state, Docker local runtime can continue during registry outage, and manifest editing can continue while cluster access is offline.
 - Mutable targets owned by an active run carry `owned_by_run`; manual mutation of owned worktrees, preview containers, or rollout-associated workloads blocks, requires explicit override, or forks control explicitly. Receipts record the override source and resulting ownership.
 - Terminal-state precedence rules for cancel/complete races are explicit; examples: cancel requested after a remote run already completed, container stop requested after the container already exited or restarted, and rollout cancel requested after a new revision already became ready. The receipt reconciles to an informational terminal state such as `completed_before_cancel`, `already_stopped`, or `already_replaced` instead of overwriting the completed outcome as failed.
-- The six-tab Orchestrator page remains central but is not the owner for every remediation surface. SCM/Actions/Docker/Kubernetes lineage receipts, blocked-state recovery pivots, and exact deep-link contracts route to Source Control, GitHub Actions, Docker Manager, and Kubernetes owner surfaces rather than duplicating panel-local remediation.
+- The seven-tab Orchestrator page remains central but is not the owner for every remediation surface. SCM/Actions/Docker/Kubernetes lineage receipts, blocked-state recovery pivots, and exact deep-link contracts route to Source Control, GitHub Actions, Docker Manager, and Kubernetes owner surfaces rather than duplicating panel-local remediation.
 - Feature-complete blocked-state wiring uses domain payload schemas. SCM blocked payloads include `dirty_worktree` and `worktree_conflict`; Actions payloads include auth expired, missing scope, no GitHub remote, rate-limited, and environment waiting for review; Docker/Kubernetes payloads include runtime unavailable, repo missing, Buildx/Bake unavailable, compose invalid, cluster unreachable, and namespace/workload missing. Actions health/failures/readiness blockers have a Dashboard/Orchestrator widget contract that carries workflow/job/step correlation, code pivots, `/job/step`, `/failures/readiness`, and `Replay from last known good` context into GitHub Actions rather than leaving Orchestrator with panel-local summaries. Orchestrator must not dispatch an Actions-dependent step from a stale readiness snapshot; it revalidates or routes to GitHub Actions before the mutation.
 
 #### Owner-surface command routing
@@ -405,7 +405,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
+  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
 split_recommended: true
@@ -415,8 +415,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Orchestrator remains distinct from the UI, CLI, and external providers.
-  - The page shell remains a six-tab single-page surface over node/package/seam/lane-aware runtime state.
-  - The live tab set is Progress, Seams, Node Graph, Evidence, History, and Ledger.
+  - The page shell is a seven-tab single-page surface over node/package/seam/lane-aware runtime state.
+  - The live tab set is Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
   - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -440,9 +440,12 @@ preserved_exact_tokens:
   - "Orchestrator Page -- Single-Page 6-Tab Specification"
   - "/page-shell"
   - "six-tab single-page surface"
+  - "seven-tab single-page surface"
   - "Tiers"
   - "Progress/Seams/Node Graph/Evidence/History/Ledger"
+  - "Progress/Plan Compile/Seams/Node Graph/Evidence/History/Ledger"
   - "Progress"
+  - "Plan Compile"
   - "Seams"
   - "Node Graph"
   - "History"
@@ -1422,7 +1425,7 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Orchestrator_Page owns page layout, controls, view-model projections, routing presentation, focused run and historical routing,
-  six-tab behavior, notification display, concern inspectors, and user-visible action affordances. It consumes Contracts_V0 for durable
+  seven-tab behavior, notification display, concern inspectors, and user-visible action affordances. It consumes Contracts_V0 for durable
   concern ids, route/open primitives, blocked episode identity, approval scope, and approver identity. Its top owner-section headings must
   be hydrated from OP PlanUnits and local sections instead of remaining hollow headers.
 gui_related: true
@@ -1430,7 +1433,7 @@ gui_classification_reason: Orchestrator_Page governs user-visible pages, tabs, c
 depends_on: [OP-002, OP-003, OP-004, OP-005, OP-006, OP-007, OP-008, CV-279]
 unblocks: []
 acceptance_criteria:
-  - The six canonical tabs remain Progress, Seams, Node Graph, Evidence, History, and Ledger.
+  - The seven canonical tabs remain Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
   - Tiers remains compatibility/search vocabulary only, not the live Orchestrator tab model.
   - Contract primitives are consumed from Contracts_V0 instead of redefined locally.
 validation_surfaces:
@@ -1448,7 +1451,7 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0057
   - source_ref:Plans/Orchestrator_Page.md:4
   - source_ref:Plans/Orchestrator_Page.md:55
-preserved_exact_tokens: ["Progress", "Seams", "Node Graph", "Evidence", "History", "Ledger", "Tiers", "Progress-only widget hostability", "focused_run_id", "focus_mode = live | historical"]
+preserved_exact_tokens: ["Progress", "Plan Compile", "Seams", "Node Graph", "Evidence", "History", "Ledger", "Tiers", "six-tab behavior", "Progress-only widget hostability", "focused_run_id", "focus_mode = live | historical"]
 negative_constraints:
   - Do not let Orchestrator_Page redefine durable contract primitives owned by Contracts_V0.
   - Do not make the dense Scope section the only readable owner body.
@@ -1503,13 +1506,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  The Orchestrator page projects each GoalRun through the existing six-tab spine with GoalRun and WorkGraph overlays. The Goal header shows goal_id, objective, phase, scope, authority/write surface, budget/cost, and certification status. Progress, Seams, Node Graph, Evidence, History, and Ledger show WorkGraph dependencies, WorkNode state, SubagentWaves, concerns/blockers, VerificationCycles, DefectBundles, RepairWorkNodes, receipts, replans, source-lineage refs, and certification events without becoming scheduler truth. The projected flow mirrors GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification as a projection over owner records, not scheduler truth. VerificationCycle projection rows expose attempt, status failed | passed | blocked, findings, and defect_signatures when contract/storage records provide them. Projected GoalRun and WorkNode statuses include ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, with contract, storage, permission, worktree, and model-owner records remaining authoritative for the underlying fields. Old fixed-hierarchy and tier-era Orchestrator labels may survive only as compatibility/search aliases for search or import; active projection prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics.
+  The Orchestrator page projects each GoalRun through the existing seven-tab shell with GoalRun and WorkGraph overlays; the Plan Compile tab is used for plan-to-code compile projection and remains separate from Executor execution progress. The Goal header shows goal_id, objective, phase, scope, authority/write surface, budget/cost, and certification status. Progress, Seams, Node Graph, Evidence, History, and Ledger show WorkGraph dependencies, WorkNode state, SubagentWaves, concerns/blockers, VerificationCycles, DefectBundles, RepairWorkNodes, receipts, replans, source-lineage refs, and certification events without becoming scheduler truth. The projected flow mirrors GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification as a projection over owner records, not scheduler truth. VerificationCycle projection rows expose attempt, status failed | passed | blocked, findings, and defect_signatures when contract/storage records provide them. Projected GoalRun and WorkNode statuses include ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, with contract, storage, permission, worktree, and model-owner records remaining authoritative for the underlying fields. Old fixed-hierarchy, six-tab, and tier-era Orchestrator labels may survive only as compatibility/search aliases for search or import; active projection prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page header, tabs, projections, side-drawer content, and status surfaces.
 depends_on: [OP-020, GRS-026, GRS-027, EP-098, OSI-428]
 unblocks: [RGV-012, F3-394, RAP-027]
 acceptance_criteria:
-  - The six canonical tabs remain Progress, Seams, Node Graph, Evidence, History, and Ledger.
+  - The seven canonical tabs remain Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
+  - Plan Compile is a canonical Orchestrator tab for plan-to-code compile projection, not an Executor execution dashboard.
   - GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, and GoalCompletionReceipt are visible as projections where relevant.
   - Subagents projections expose active waves, bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
   - Orchestrator projection preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without becoming scheduler truth.

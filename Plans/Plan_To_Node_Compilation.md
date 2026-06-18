@@ -651,7 +651,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Plan Wizard approval through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name source_artifact, destination_artifact, owner, validator, receipt, retry_route, rollback_route, and user_escalation_condition. The schema draft in Plans/plans_to_code_handoff.schema.json records PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
-  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary names plan_compile_run.schema.json, node_seed_candidate.schema.json, worknode_request.schema.json, test_capability_report.schema.json, source_control_preflight_receipt, and goal_completion_receipt while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_preflight_receipt`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013]
@@ -691,10 +691,11 @@ preserved_exact_tokens:
   - "receipt"
   - "retry route"
   - "rollback route"
-  - "plan_compile_run.schema.json"
-  - "node_seed_candidate.schema.json"
-  - "worknode_request.schema.json"
-  - "test_capability_report.schema.json"
+  - "Plans/plans_to_code_handoff.schema.json"
+  - "plan_compile_run"
+  - "node_seed_candidate"
+  - "worknode_request"
+  - "test_capability_report"
   - "source_control_preflight_receipt"
   - "goal_completion_receipt"
   - "external GUI-agent CLI"

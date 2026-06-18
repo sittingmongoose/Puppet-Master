@@ -85,7 +85,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchest
 - This makes the concern gap more concrete: - concerns need exact identity, lineage, source linking, status, and interaction rules - they should not just be badges, notes, or review leftovers
 - Run graph and Orchestrator page docs remain structurally tier-bound: - `Run_Graph_View.md` has near-zero awareness of concern/corroboration/promotion/graph-patch/lane/package object families - `Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure
 - `effective_provider_identity` / `provider_identity` / `effective_project_id` are already treated as optional non-secret disclosure fields. That makes them the wrong place to encode actor role or side-effect target identity.
-- `page_tab` - examples: Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger
+- `page_tab` - examples: Orchestrator tabs like Progress, Plan Compile, Seams/Tiers, Node Graph, Evidence, History, Ledger
 - **Tiers-first UI is now misleading.** The Tiers tab, `widget.tier_tree`, phase-grouped graph layouts, and single-current-task widgets all assume execution authority still lives in the tier hierarchy instead of the node/package/seam graph.
 - **Tiers are still productized even where node graph is supposed to be canonical.** GPT-5.4 repeatedly found `Tiers` as a primary tab, navigation target, widget namespace, and telemetry dimension.
 - Distinguish: - `historical run` - `related run` - `derived run` - `retry/recovery run` or continuation lineage if such a concept exists later
@@ -478,14 +478,14 @@ plan_unit_id: RGV-007
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
+canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
 gui_related: true
 gui_classification_reason: This disposition retires or constrains user-visible Tiers tab/page assumptions and graph layout vocabulary.
 depends_on: [RGV-001, RGV-006]
 unblocks: [RGV-010]
 acceptance_criteria:
 - GUI navigation demotes Tiers from primary Orchestrator tab/page authority.
-- Node Graph, Seams, Evidence, History, and Ledger use the rewrite tab model.
+- Plan Compile, Node Graph, Seams, Evidence, History, and Ledger use the rewrite tab model; Run Graph does not own Plan Compile scope.
 - hitl_request_id and request_id remain compatibility lineage only where they appear.
 - Graph command payloads use blocked/runtime approval identity and allowed_action_ids-backed runtime command targets.
 validation_surfaces:

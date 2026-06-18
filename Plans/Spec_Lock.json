@@ -3,71 +3,27 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb"
-      },
-      {
-        "path": "Plans/Architecture_Invariants.md",
-        "sha256": "fab349fb07405fa12bb0ee2bf0c49308e8b0bb9581290de3ba5db02abe5c0b1e"
-      },
-      {
-        "path": "Plans/Contracts_V0.md",
-        "sha256": "6e9f95616b4f31cd33b9c70ead2938c7836099aac0b0e02a7f154087f38e373c"
-      },
-      {
-        "path": "Plans/Crosswalk.md",
-        "sha256": "87e9726d43ebe99698b62e6a35b362674b4207f4d8d2aaa904ec79b9a1f77429"
-      },
-      {
-        "path": "Plans/DRY_Rules.md",
-        "sha256": "280da36b985a61149480bb0e28fe28a9bfa9e6b0c3a32d7ff493f0d2246c62ab"
-      },
-      {
-        "path": "Plans/Decision_Policy.md",
-        "sha256": "5d8e78fe62b22840f988b91b7373b2d371432ffb9ee01ba408873957899dc7a6"
-      },
-      {
-        "path": "Plans/Document_Packaging_Policy.md",
-        "sha256": "33ea7426d807c8576f5441b56d21f6419f7c79215dc98f23f396ae5d54835476"
-      },
-      {
-        "path": "Plans/Executor_Protocol.md",
-        "sha256": "1a22031388d1486374772b08fe0dc51ad7ece913791d0194057b78c62f3a1a2b"
-      },
-      {
-        "path": "Plans/GitHub_API_Auth_and_Flows.md",
-        "sha256": "3110cbc90fc1f0312aac6833ee700e2b395eb107cb0578e65f5966c102d7b59e"
-      },
-      {
-        "path": "Plans/Glossary.md",
-        "sha256": "8fc040e311a2881753efff00e0297eaa44a817a84c90d29958f2d4990691baad"
-      },
-      {
-        "path": "Plans/Media_Generation_and_Capabilities.md",
-        "sha256": "304f1062227bacb43da163b8ecc2e765ef4050720b2645994ab987447d6bc621"
-      },
-      {
-        "path": "Plans/Progression_Gates.md",
-        "sha256": "45216e8d2e6ba9cf1fdc70560b8d0b8932fb9c98243761ffa59ab967d4e17070"
-      },
-      {
-        "path": "Plans/Project_Output_Artifacts.md",
-        "sha256": "0079643cb0802dac2e9e9bddfb3ce1026492350017ec502379c8e4884c158ba0"
-      },
-      {
-        "path": "Plans/UI_Command_Catalog.md",
-        "sha256": "9d514cc2727b93beda47b41ca02095edbfee2f07e6473d086e5af1ba74eda4e3"
-      },
-      {
-        "path": "Plans/Wiring_Matrix.schema.json",
-        "sha256": "097a71cb92ffabed3a09c36289d50dc17285a81702ce7a88a31bcd3f77077ff7"
+        "sha256": "031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
         "sha256": "864a49f575c56fb18f860db0fab330281bf7a8084d3e4120987768cd6fa0b0a5"
       },
       {
+        "path": "Plans/Architecture_Invariants.md",
+        "sha256": "fab349fb07405fa12bb0ee2bf0c49308e8b0bb9581290de3ba5db02abe5c0b1e"
+      },
+      {
         "path": "Plans/auto_decisions.schema.json",
         "sha256": "9f4f78462e5124ae145642f87b90631b2d2c0aa0797fc34a5390947b1ea6284e"
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "sha256": "2b7cd6eb5b407d0f475efb40bcaaca0207987da2a0b159614e638876181f2093"
+      },
+      {
+        "path": "Plans/Bootstrap_Planning_Migration.md",
+        "sha256": "075240cac02382fcc35f41e087b5e055becdd62946bfc023ce7e1d31ee7185e2"
       },
       {
         "path": "Plans/chain-wizard-flexibility.md",
@@ -82,8 +38,44 @@
         "sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
       },
       {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4"
+      },
+      {
+        "path": "Plans/Crosswalk.md",
+        "sha256": "4fbd9a0ca8b6f031cb6cabb9abef630d5a42e9f0f388d0ec1d3b176062019c49"
+      },
+      {
+        "path": "Plans/Decision_Policy.md",
+        "sha256": "5d8e78fe62b22840f988b91b7373b2d371432ffb9ee01ba408873957899dc7a6"
+      },
+      {
+        "path": "Plans/Document_Packaging_Policy.md",
+        "sha256": "33ea7426d807c8576f5441b56d21f6419f7c79215dc98f23f396ae5d54835476"
+      },
+      {
+        "path": "Plans/DRY_Rules.md",
+        "sha256": "280da36b985a61149480bb0e28fe28a9bfa9e6b0c3a32d7ff493f0d2246c62ab"
+      },
+      {
         "path": "Plans/evidence.schema.json",
         "sha256": "12302339745460c6810efebb7bdf762aa8b52621245a70dca825dfc9aed21138"
+      },
+      {
+        "path": "Plans/Executor_Protocol.md",
+        "sha256": "1a22031388d1486374772b08fe0dc51ad7ece913791d0194057b78c62f3a1a2b"
+      },
+      {
+        "path": "Plans/GitHub_API_Auth_and_Flows.md",
+        "sha256": "3110cbc90fc1f0312aac6833ee700e2b395eb107cb0578e65f5966c102d7b59e"
+      },
+      {
+        "path": "Plans/Glossary.md",
+        "sha256": "cf86d78ef62a90bd3af41b039b33c4b3731756f6d0471f67b78d0b6c385a4faf"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "065797682dea1110eb194b51d396f8a9a6974a47f94968e964ecead5f65535e7"
       },
       {
         "path": "Plans/gui_automation_manifest.schema.json",
@@ -94,16 +86,44 @@
         "sha256": "ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc"
       },
       {
+        "path": "Plans/Media_Generation_and_Capabilities.md",
+        "sha256": "304f1062227bacb43da163b8ecc2e765ef4050720b2645994ab987447d6bc621"
+      },
+      {
         "path": "Plans/orchestrator-subagent-integration.md",
         "sha256": "958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f"
       },
       {
+        "path": "Plans/Plan_Document_System.md",
+        "sha256": "a8fad71859c4de8a9f51f7b01c4ed2b5ea4c152fc504774518ec0c4bf0676937"
+      },
+      {
         "path": "Plans/plan_graph.json",
-        "sha256": "7d9fa20ffb5dcbdbee7da1636d9c18553952d73368c77d5094bbc283928ab07c"
+        "sha256": "123e65e55e4960846e6d57ec5ea5101d389b863bc994a3c4b71c3e6cbc2adf09"
       },
       {
         "path": "Plans/plan_graph.schema.json",
         "sha256": "d4d58cd8a506e00bf16e6de493ec2d20f2dd6d0fa7a47605634dc38f44101c7a"
+      },
+      {
+        "path": "Plans/Plan_To_Node_Compilation.md",
+        "sha256": "e07b77a5d56c8012b7b1cfdee8d57aa3e4855c75375dacd3703b75307692d5d2"
+      },
+      {
+        "path": "Plans/Planning_Ledger_System.md",
+        "sha256": "66b6b78b63f2e00644cb1df299e39507371b2d36523169344a94534a8f126b71"
+      },
+      {
+        "path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "0bc0a1133511181a3ae92d2332950f9a3733c17cbd643c50bc44de7427a8d878"
+      },
+      {
+        "path": "Plans/Progression_Gates.md",
+        "sha256": "45216e8d2e6ba9cf1fdc70560b8d0b8932fb9c98243761ffa59ab967d4e17070"
+      },
+      {
+        "path": "Plans/Project_Output_Artifacts.md",
+        "sha256": "3b9f23c2da8153a70b6467b165d40ec77ed57df5a94905da9170804c2586d5ba"
       },
       {
         "path": "Plans/project_plan_graph_index.schema.json",
@@ -123,11 +143,19 @@
       },
       {
         "path": "Plans/sharding_config.json",
-        "sha256": "54fd9e8d8a965cd7111b9615506de0419e73ab182efbd3e3d390241a94bfa88f"
+        "sha256": "f353f839b224257651ddb62d9dcc8d24e86a7c4b41a69612b5bf9cd9f5fd466b"
       },
       {
         "path": "Plans/test_strategy.schema.json",
         "sha256": "fceeb8b7277b50b1e8ccbdd5731118d44f2201faeed3dcc230071ab94b0fb47e"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "9d514cc2727b93beda47b41ca02095edbfee2f07e6473d086e5af1ba74eda4e3"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.schema.json",
+        "sha256": "097a71cb92ffabed3a09c36289d50dc17285a81702ce7a88a31bcd3f77077ff7"
       },
       {
         "path": "scripts/pm-plans-verify.py",
@@ -136,26 +164,6 @@
       {
         "path": "scripts/pm-shard-plans.py",
         "sha256": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e"
-      },
-      {
-        "path": "Plans/Planning_Ledger_System.md",
-        "sha256": "66b6b78b63f2e00644cb1df299e39507371b2d36523169344a94534a8f126b71"
-      },
-      {
-        "path": "Plans/Plan_Document_System.md",
-        "sha256": "a8fad71859c4de8a9f51f7b01c4ed2b5ea4c152fc504774518ec0c4bf0676937"
-      },
-      {
-        "path": "Plans/Plan_To_Node_Compilation.md",
-        "sha256": "3a3366d7881a5180e243b9593ac162bf8b89d872ed16ff2f8df2d0a31915bb68"
-      },
-      {
-        "path": "Plans/Bootstrap_Planning_Migration.md",
-        "sha256": "075240cac02382fcc35f41e087b5e055becdd62946bfc023ce7e1d31ee7185e2"
-      },
-      {
-        "path": "Plans/Goal_Runtime_System.md",
-        "sha256": "065797682dea1110eb194b51d396f8a9a6974a47f94968e964ecead5f65535e7"
       }
     ],
     "hash_alg": "sha256"

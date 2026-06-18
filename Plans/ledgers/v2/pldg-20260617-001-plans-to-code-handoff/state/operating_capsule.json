@@ -2,16 +2,14 @@
   "schema_id": "pm.bootstrap_operating_capsule.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "profile": "bootstrap_planning",
-  "mode": "ledger_ready_for_plan_compile",
+  "mode": "compiled_governance_sealed",
   "core_rules": [
     "Ledger is source/planning memory, not canonical Plans.",
-    "Use Plan Wizard terminology only in new content.",
-    "Owner ambiguity is adjudicated by the agent using evidence; do not ask row-by-row.",
-    "Do not run PlanCompile or build WorkNodes from this ledger.",
-    "Preserve exact tokens, examples, negative constraints, stale/compat notes, owner hints, and user corrections.",
-    "Compile accepted atoms into PlanUnits and owner docs, then audit before governance seal.",
-    "Use state/implementation_readiness_matrix.json to ensure PlanUnits are implementation-ready, with exact fields, schemas, acceptance criteria, validators, and boundaries.",
-    "Use state/doc_impact_matrix.json to update direct owner/consumer/reference docs or record no-update/deferred evidence after reference scans."
+    "Live non-pipeline Plans docs and schema drafts are canonical after compile.",
+    "PlanCompile runtime remains design-only/disabled until later explicit enablement.",
+    "Do not run PlanCompile or build WorkNodes/NodeSeeds from this ledger.",
+    "Node readiness remains blocked_compiler_contract_incomplete until the compiler contract exists.",
+    "Governance/shard registration is metadata-only and must not create runtime or build artifacts."
   ],
   "model_setting_decision": [
     "Default Model",

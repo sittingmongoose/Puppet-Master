@@ -1,20 +1,18 @@
 {
   "schema_id": "pm.bootstrap_planning_handoff.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "current_phase": "ready_for_plan_compile",
-  "status": "ready_for_explicit_goal_compile",
+  "current_phase": "compiled_plans_to_code_handoff_governance_sealed",
+  "status": "compiled_governance_sealed",
   "cursor": {
     "last_event_id": "evt-0011",
-    "ready_atom_count": 64,
-    "next_stage": "ledger_to_plans_compile_with_doc_impact_and_reference_scan"
+    "ready_atom_count": 0,
+    "next_stage": "post_governance_audit_or_bounded_repair_only",
+    "compiled_atom_count": 64
   },
-  "summary": "This ledger records the agreed Plans-to-code handoff architecture and has been strengthened with implementation-ready contract details plus doc impact/reference coverage. Codex must compile owner PlanUnits and then account for direct consumer/reference docs.",
-  "next_action": "Use the included compile prompt to convert this ledger to Plans. The compile must read implementation_readiness_matrix and doc_impact_matrix, update owner and direct reference docs, and record reference scan/no-update/deferred evidence. Do not run PlanCompile or create WorkNodes.",
+  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. PlanCompile runtime remains design-only/disabled, node readiness remains blocked_compiler_contract_incomplete, and no WorkNodes or NodeSeeds were created.",
+  "next_action": "No compile action remains for this ledger. Use audit-only or bounded repair if new findings appear; do not run PlanCompile or create WorkNodes/NodeSeeds until a later explicit compiler-contract enablement exists.",
   "allowed_next_writes": [
-    "Plans/*.md process/product docs named by owner adjudication",
-    "Plans/Automated_Testing_System.md if selected as SSOT",
-    "schema drafts under Plans/*.schema.json if needed by docs",
-    "safe validator/script updates if needed by docs"
+    "audit artifacts or bounded repair docs/projections explicitly requested by Jared"
   ],
   "forbidden_next_writes": [
     "WorkNodes",
@@ -27,9 +25,13 @@
     "dispatched GoalRuns"
   ],
   "validation_state": {
-    "ledger_health": "pass_ready_for_plan_compile",
-    "doc_impact_matrix": "required_for_compile",
-    "implementation_readiness_matrix": "required_for_compile"
+    "ledger_health": "pass_governance_sealed",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_compile_runtime": "disabled_design_only",
+    "forbidden_artifacts": "not_created",
+    "pm_plan_index_validate": "pass_node_readiness_blocked_compiler_contract_incomplete",
+    "shard_registration": "Automated_Testing_System_registered"
   },
   "open_blockers": [],
   "open_questions": []
