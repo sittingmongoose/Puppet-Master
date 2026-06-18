@@ -368,12 +368,37 @@ def main() -> int:
 
     last_event_id = current.get("last_event_id")
     handoff_last_event_id = handoff.get("cursor", {}).get("last_event_id")
+    queue_last_event_id = compile_queue.get("last_event_id")
+    queue_terminal_event_id = compile_queue.get("terminal_ledger_event_id")
     if last_event_id != handoff_last_event_id:
         errors.append("current last_event_id disagrees with handoff cursor.last_event_id")
+    if last_event_id != queue_last_event_id:
+        errors.append("current last_event_id disagrees with compile_queue last_event_id")
+    if compiled_phase and queue_terminal_event_id != last_event_id:
+        errors.append("compiled compile_queue terminal_ledger_event_id disagrees with current last_event_id")
     if last_event_id and last_event_id not in ids["event"]:
         errors.append(f"last_event_id not found in events: {last_event_id}")
     if events and last_event_id != events[-1].get("event_id"):
         errors.append(f"last_event_id {last_event_id!r} is not the final event row {events[-1].get('event_id')!r}")
+
+    current_audit_ref = current.get("latest_audit_ref")
+    handoff_audit_ref = handoff.get("latest_audit_ref")
+    queue_audit_ref = compile_queue.get("latest_audit_ref")
+    current_audit_status = current.get("latest_audit_status")
+    handoff_audit_status = handoff.get("latest_audit_status")
+    queue_audit_status = compile_queue.get("latest_audit_status")
+    if current_audit_ref != handoff_audit_ref:
+        errors.append("current latest_audit_ref disagrees with handoff latest_audit_ref")
+    if current_audit_ref != queue_audit_ref:
+        errors.append("current latest_audit_ref disagrees with compile_queue latest_audit_ref")
+    if current_audit_status != handoff_audit_status:
+        errors.append("current latest_audit_status disagrees with handoff latest_audit_status")
+    if current_audit_status != queue_audit_status:
+        errors.append("current latest_audit_status disagrees with compile_queue latest_audit_status")
+    if current_audit_ref:
+        audit_path, audit_path_error = exact_path(str(current_audit_ref))
+        if audit_path_error or audit_path is None or not audit_path.is_file():
+            errors.append(f"latest_audit_ref does not resolve exactly: {current_audit_ref}")
 
     gui_re = re.compile(r"\b(gui|ui|screen|page|panel|form|layout|styling|icon|svg|image|screenshot|visual|button|modal)\b", re.I)
     atom_by_id = {str(atom.get("atom_id")): atom for atom in atoms}

@@ -2,14 +2,14 @@
   "schema_id": "pm.plan_compile_queue.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "compiled_plans_to_code_handoff_governance_sealed",
-  "updated_at_utc": "2026-06-18T12:49:21Z",
-  "last_event_id": "evt-0017",
+  "updated_at_utc": "2026-06-18T13:39:57Z",
+  "last_event_id": "evt-0018",
   "governance_status": "sealed",
   "candidate_compile_plan": {
     "active": false,
     "status": "source_lineage_compiled_governance_sealed_not_active",
     "ready_atom_ids": [],
-    "reason": "Accepted atoms were compiled and sealed at evt-0014; evt-0017 is only terminal currentness/compatibility certification. No active compile queue remains.",
+    "reason": "Accepted atoms were compiled and sealed at evt-0014; evt-0018 is the final corrective certification. No active compile queue remains. PlanCompile stays design-only disabled.",
     "source_lineage_pre_seal_ready_atom_ids": [
       "atom-0001",
       "atom-0002",
@@ -340,7 +340,7 @@
   ],
   "notes": "Plans-to-code handoff ledger compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, final reference repair docs, and metadata-only governance registration. PlanCompile runtime remains disabled; WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, production build tasks, and runtime dispatch were not created.",
   "last_compile_event_id": "evt-0014",
-  "terminal_ledger_event_id": "evt-0017",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+  "terminal_ledger_event_id": "evt-0018",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }
