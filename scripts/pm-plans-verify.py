@@ -926,6 +926,262 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     if validation_alias.get("properties", {}).get("compatibility_only", {}).get("const") is not True:
         failures.append({"path": rel(schema_path), "error": "validation_pass_report_not_compatibility_only"})
 
+    def def_props(def_name: str) -> dict[str, Any]:
+        payload_def = defs.get(def_name, {})
+        properties = payload_def.get("properties", {})
+        return properties if isinstance(properties, dict) else {}
+
+    def require_schema_keys(def_name: str, keys: list[str], error: str) -> None:
+        required = defs.get(def_name, {}).get("required", [])
+        properties = def_props(def_name)
+        for key in keys:
+            if key not in required:
+                failures.append({"path": rel(schema_path), "error": error, "def": def_name, "key": key})
+            if key not in properties:
+                failures.append({"path": rel(schema_path), "error": "required_strict_field_missing_property", "def": def_name, "key": key})
+
+    def expect_prop_ref(def_name: str, key: str, expected_ref: str, error: str) -> None:
+        actual = def_props(def_name).get(key, {}).get("$ref")
+        if actual != expected_ref:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "key": key,
+                    "expected_ref": expected_ref,
+                    "actual_ref": actual,
+                }
+            )
+
+    def expect_array_items_ref(def_name: str, key: str, expected_ref: str, error: str) -> None:
+        actual = def_props(def_name).get(key, {}).get("items", {}).get("$ref")
+        if actual != expected_ref:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "key": key,
+                    "expected_ref": expected_ref,
+                    "actual_ref": actual,
+                }
+            )
+
+    def expect_required_def(def_name: str) -> None:
+        payload_def = defs.get(def_name)
+        if not isinstance(payload_def, dict):
+            failures.append({"path": rel(schema_path), "error": "missing_strict_helper_def", "def": def_name})
+            return
+        if payload_def.get("type") != "object" or payload_def.get("additionalProperties") is not False:
+            failures.append({"path": rel(schema_path), "error": "strict_helper_def_not_strict_object", "def": def_name})
+        if not payload_def.get("required"):
+            failures.append({"path": rel(schema_path), "error": "strict_helper_def_missing_required", "def": def_name})
+
+    strict_helper_defs = [
+        "cursor",
+        "hash_snapshot",
+        "blocker",
+        "capability_requirement",
+        "capability_check",
+        "authority",
+        "sizing",
+        "item_boundaries",
+        "compile_wave_contract",
+        "compile_worklist_item",
+        "test_oracle",
+        "source_control_context",
+        "auditor_finding",
+        "repair_record",
+        "repair_strategy",
+        "validator_outcome",
+        "risk_record",
+    ]
+    for helper_def in strict_helper_defs:
+        expect_required_def(helper_def)
+
+    require_schema_keys("plan_compile_run", ["current_state", "receipts", "compile_wave_contracts"], "plan_compile_run_missing_wave_or_receipt_field")
+    expect_prop_ref("plan_compile_run", "cursor", "#/$defs/cursor", "plan_compile_run_cursor_not_strict")
+    expect_prop_ref("plan_compile_run", "last_green_hashes", "#/$defs/hash_snapshot", "plan_compile_run_hashes_not_strict")
+    expect_array_items_ref("plan_compile_run", "blockers", "#/$defs/blocker", "plan_compile_run_blockers_not_strict")
+    expect_array_items_ref("plan_compile_run", "compile_wave_contracts", "#/$defs/compile_wave_contract", "plan_compile_run_waves_not_strict")
+
+    require_schema_keys("stage_card", ["assignment_contract", "parent_writeback_policy"], "stage_card_missing_assignment_contract")
+    expect_prop_ref("stage_card", "item_boundaries", "#/$defs/item_boundaries", "stage_card_item_boundaries_not_strict")
+    expect_prop_ref("stage_card", "assignment_contract", "#/$defs/compile_wave_contract", "stage_card_assignment_contract_not_strict")
+    require_schema_keys("compile_worklist", ["wave_assignments"], "compile_worklist_missing_wave_assignments")
+    expect_array_items_ref("compile_worklist", "items", "#/$defs/compile_worklist_item", "compile_worklist_items_not_strict")
+
+    classification_refs = {
+        "work_type": "#/$defs/work_type",
+        "effort_class": "#/$defs/effort_class",
+        "reasoning_tier": "#/$defs/reasoning_tier",
+        "risk_class": "#/$defs/risk_class",
+        "capability_lane": "#/$defs/capability_lane",
+        "authority": "#/$defs/authority",
+    }
+    for def_name in ["node_seed_candidate", "worknode_request"]:
+        require_schema_keys(def_name, ["capability_requirements"], "candidate_or_request_missing_capability_requirements")
+        expect_array_items_ref(def_name, "capability_requirements", "#/$defs/capability_requirement", "capability_requirements_not_strict")
+        for key, expected_ref in classification_refs.items():
+            expect_prop_ref(def_name, key, expected_ref, "classification_field_not_enum_or_strict_shape")
+    expect_prop_ref("node_seed_candidate", "sizing", "#/$defs/sizing", "node_seed_sizing_not_strict")
+    expect_array_items_ref("node_seed_candidate", "blockers", "#/$defs/blocker", "node_seed_blockers_not_strict")
+    for key, expected_ref in {
+        "context_size": "#/$defs/context_size",
+        "validation_cost": "#/$defs/validation_cost",
+        "authority_risk": "#/$defs/authority_risk",
+        "user_visible_risk": "#/$defs/user_visible_risk",
+    }.items():
+        expect_prop_ref("worknode_request", key, expected_ref, "worknode_request_routing_field_not_enum")
+
+    require_schema_keys(
+        "ordering",
+        ["manual_priority", "required_before_start", "required_after_start", "required_before_completion", "required_after_completion"],
+        "ordering_missing_manual_priority_or_relationships",
+    )
+    for key, expected_ref in {
+        "build_phase": "#/$defs/build_phase",
+        "dependency_type": "#/$defs/dependency_type",
+        "scheduler_lane": "#/$defs/scheduler_lane",
+    }.items():
+        expect_prop_ref("ordering", key, expected_ref, "ordering_field_not_enum")
+
+    for def_name in ["compiler_model_routing", "model_resolution_receipt"]:
+        expect_array_items_ref(def_name, "capability_checks", "#/$defs/capability_check", "capability_checks_not_strict")
+        expect_prop_ref(def_name, "requested_lane", "#/$defs/capability_lane", "model_requested_lane_not_enum")
+        expect_prop_ref(def_name, "requested_model_profile", "#/$defs/model_profile", "requested_model_profile_not_enum")
+        expect_prop_ref(def_name, "effective_model_profile", "#/$defs/model_profile", "effective_model_profile_not_enum")
+
+    require_schema_keys("codex_external_gui_agent_request", ["provider_kind", "provider_id"], "external_gui_agent_missing_provider_fields")
+
+    require_schema_keys("test_binding", ["reused_test_ids"], "test_binding_missing_reused_test_ids")
+    expect_prop_ref("test_binding", "flake_policy", "#/$defs/flake_policy", "test_binding_flake_policy_not_enum")
+    expect_prop_ref("test_binding", "test_gap_policy", "#/$defs/test_gap_policy", "test_binding_gap_policy_not_enum")
+    require_schema_keys(
+        "test_capability_report",
+        [
+            "automation_surface",
+            "requires_browser",
+            "requires_emulator",
+            "requires_display",
+            "requires_screenshot",
+            "verification_command",
+            "expected_artifacts",
+            "flake_policy",
+        ],
+        "test_capability_report_missing_capability_boolean",
+    )
+    expect_array_items_ref("test_capability_report", "local_capabilities", "#/$defs/capability_requirement", "test_capability_local_capabilities_not_strict")
+    expect_prop_ref("test_capability_report", "online_research", "#/$defs/online_research", "test_capability_online_research_not_strict")
+    expect_array_items_ref("test_capability_report", "probes", "#/$defs/test_probe", "test_capability_probes_not_strict")
+    require_schema_keys("test_strategy", ["reused_test_ids"], "test_strategy_missing_reused_test_ids")
+    expect_array_items_ref("test_strategy", "required_capabilities", "#/$defs/capability_requirement", "test_strategy_required_capabilities_not_strict")
+    expect_array_items_ref("test_strategy", "gap_blockers", "#/$defs/blocker", "test_strategy_gap_blockers_not_strict")
+    expect_prop_ref("test_strategy", "test_level", "#/$defs/test_level", "test_strategy_level_not_enum")
+    expect_array_items_ref("test_strategy", "oracles", "#/$defs/test_oracle", "test_strategy_oracles_not_strict")
+    expect_prop_ref("test_case", "oracle", "#/$defs/test_oracle", "test_case_oracle_not_strict")
+    require_schema_keys(
+        "test_run_receipt",
+        ["receipt_id", "test_strategy_ref", "test_case_refs", "generated_test_ids", "reused_test_ids"],
+        "test_run_receipt_missing_test_provenance",
+    )
+    expect_prop_ref("test_run_receipt", "test_level", "#/$defs/test_level", "test_run_level_not_enum")
+    expect_prop_ref("test_run_receipt", "automation_surface", "#/$defs/automation_surface", "test_run_surface_not_enum")
+
+    source_control_chain_defs = [
+        "source_control_receipt",
+        "source_control_preflight_receipt",
+        "safe_point_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "merge_or_promotion_receipt",
+        "source_control_finalization_receipt",
+    ]
+    for def_name in source_control_chain_defs:
+        require_schema_keys(def_name, ["source_control_context"], "source_control_chain_missing_context")
+        expect_prop_ref(def_name, "source_control_context", "#/$defs/source_control_context", "source_control_context_not_strict")
+    require_schema_keys(
+        "source_control_receipt",
+        ["branch_head_state", "owner_lane", "lease_state", "head_commit_oid", "changed_files", "conflict_refs", "rollback_ref"],
+        "source_control_receipt_missing_lineage_field",
+    )
+    require_schema_keys(
+        "source_control_preflight_receipt",
+        ["branch_head_state", "owner_lane", "lease_state", "head_commit_oid", "changed_files", "conflict_refs", "rollback_ref"],
+        "source_control_preflight_missing_lineage_field",
+    )
+    require_schema_keys("safe_point_receipt", ["rollback_available", "restore_command_or_action"], "safe_point_receipt_missing_rollback_fields")
+
+    for def_name, key in [
+        ("node_seed_review", "findings"),
+        ("auditor_cycle_report", "findings"),
+        ("auditor_cycle_report", "unresolved_findings"),
+        ("worknode_completion_receipt", "unresolved_findings"),
+    ]:
+        expect_array_items_ref(def_name, key, "#/$defs/auditor_finding", "auditor_finding_array_not_strict")
+    expect_array_items_ref("auditor_cycle_report", "repairs_applied", "#/$defs/repair_record", "auditor_repairs_not_strict")
+    expect_prop_ref("repair_attempt_receipt", "repair_strategy", "#/$defs/repair_strategy", "repair_strategy_not_strict")
+    expect_array_items_ref("executor_intake_report", "blockers", "#/$defs/blocker", "executor_intake_blockers_not_strict")
+    expect_array_items_ref("goal_completion_receipt", "validator_outcomes", "#/$defs/validator_outcome", "goal_validator_outcomes_not_strict")
+    expect_array_items_ref("goal_completion_receipt", "unresolved_risks", "#/$defs/risk_record", "goal_unresolved_risks_not_strict")
+    require_schema_keys("goal_completion_receipt", ["final_source_control_context"], "goal_completion_missing_final_source_control_context")
+    expect_prop_ref("goal_completion_receipt", "final_source_control_context", "#/$defs/source_control_context", "goal_final_source_control_context_not_strict")
+    if "unknown" in def_props("goal_completion_receipt").get("final_source_state", {}).get("enum", []):
+        failures.append({"path": rel(schema_path), "error": "goal_completion_final_source_state_allows_unknown"})
+
+    handoff_row_props = def_props("handoff_row")
+    if handoff_row_props.get("row_id", {}).get("$ref") != "#/$defs/handoff_row_id":
+        failures.append({"path": rel(schema_path), "error": "handoff_row_id_not_strict_h_enum"})
+    if handoff_row_props.get("schema_payload", {}).get("items", {}).get("$ref") != "#/$defs/schema_payload_ref":
+        failures.append({"path": rel(schema_path), "error": "handoff_schema_payload_not_strict_ref_array"})
+    rows_prop = def_props("handoff_matrix").get("rows", {})
+    if rows_prop.get("minItems") != 18 or rows_prop.get("maxItems") != 18:
+        failures.append({"path": rel(schema_path), "error": "handoff_matrix_rows_not_exactly_h001_h018"})
+
+    matrix_path = PLANS / "Plan_To_Node_Compilation.md"
+    expected_rows = [f"H-{index:03d}" for index in range(1, 19)]
+    matrix_rows: list[dict[str, Any]] = []
+    try:
+        matrix_text = matrix_path.read_text(encoding="utf-8")
+        in_matrix = False
+        for line in matrix_text.splitlines():
+            if line.strip() == "#### Plans-To-Code Handoff Matrix Rows":
+                in_matrix = True
+                continue
+            if not in_matrix:
+                continue
+            if line.startswith("ContractRef:"):
+                break
+            if not line.startswith("| H-"):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if len(cells) < 15:
+                failures.append({"path": rel(matrix_path), "error": "handoff_matrix_row_malformed", "line": line})
+                continue
+            matrix_rows.append({"row_id": cells[0], "schema_payload": cells[9]})
+    except OSError as exc:
+        failures.append({"path": rel(matrix_path), "error": "handoff_matrix_unreadable", "detail": str(exc)})
+    row_ids = [row["row_id"] for row in matrix_rows]
+    if row_ids != expected_rows:
+        failures.append({"path": rel(matrix_path), "error": "handoff_matrix_rows_not_h001_to_h018_in_order", "actual": row_ids})
+    schema_payload_defs = set(defs) | set(kinds)
+    for row in matrix_rows:
+        payload_tokens = [token.strip() for token in str(row["schema_payload"]).split(",") if token.strip()]
+        if not payload_tokens:
+            failures.append({"path": rel(matrix_path), "error": "handoff_matrix_row_missing_schema_payload", "row_id": row["row_id"]})
+        for token in payload_tokens:
+            if token not in schema_payload_defs:
+                failures.append(
+                    {
+                        "path": rel(matrix_path),
+                        "error": "handoff_matrix_schema_payload_ref_missing_def",
+                        "row_id": row["row_id"],
+                        "schema_payload": token,
+                    }
+                )
+
     for pointer, item in iter_schema_dicts(schema):
         if item.get("additionalProperties") is True:
             failures.append({"path": rel(schema_path), "error": "additional_properties_true", "pointer": pointer})

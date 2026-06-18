@@ -4,13 +4,13 @@
   "current_phase": "compiled_plans_to_code_handoff_governance_sealed",
   "status": "compiled_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0014",
+    "last_event_id": "evt-0016",
     "ready_atom_count": 0,
-    "next_stage": "final_audit_clean_bounded_repair_only",
+    "next_stage": "final_validator_sweep_for_fidelity_repair",
     "compiled_atom_count": 64
   },
-  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. Final bounded reconciliation aligned the Auditor audit-to-repair loop until certification or critical block, row-by-row plans-to-code handoff matrix, strict handoff schema payload/metaschema definitions, source-control/WorkNode/test receipt contracts, seven-tab title/reference wording, doc-impact/readiness projections, README status, latest clean audit references, and compatibility-only old pass names. PlanCompile runtime remains design-only/disabled, node readiness is runtime_disabled, and no WorkNodes or NodeSeeds were created.",
-  "next_action": "No compile action remains for this ledger. Use audit-only or bounded repair if new findings appear; do not run PlanCompile or create WorkNodes/NodeSeeds until later explicit runtime enablement exists.",
+  "summary": "Bounded implementation-readiness fidelity repair updated live owner docs, consumers, schema, schema validator, ledger matrices, and latest-audit projections. The repair covers compile-wave/subagent contracts, capability_requirements, strict ordering relationships, generated/reused tests including reused_test_ids, source-control context preservation through the receipt chain, strict nested schema shapes/enums, exact-token compatibility dispositions, and H-001..H-018 schema_payload validation. PlanCompile runtime remains design-only/disabled, and no WorkNodes or NodeSeeds were created.",
+  "next_action": "Run final validators/governance refresh; certify only if all validators pass and forbidden artifacts remain absent.",
   "allowed_next_writes": [
     "audit artifacts or bounded repair docs/projections explicitly requested by Jared"
   ],
@@ -32,17 +32,21 @@
     "forbidden_artifacts": "not_created",
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
-    "doc_impact_matrix": "compiled_governance_sealed_reference_coverage_passed",
-    "latest_audit": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
-    "bounded_reconciliation": "evt-0014",
+    "doc_impact_matrix": "doc_impact_fidelity_repair_certified",
+    "latest_audit": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+    "bounded_reconciliation": "evt-0016",
     "active_fixed_pass_replacement": "auditor_audit_to_repair_loop_until_certified_or_critical_block",
-    "implementation_readiness_matrix": "compiled_to_plans_governance_sealed_final_repair_certified",
-    "latest_audit_ref": "Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md",
-    "handoff_schema_contract": "strict_payload_defs_and_draft_2020_12_validation_passed",
-    "handoff_matrix_rows": "explicit_row_by_row_matrix_added"
+    "implementation_readiness_matrix": "implementation_readiness_fidelity_repair_certified",
+    "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+    "handoff_schema_contract": "strict_payload_defs_nested_enums_h001_h018_validator_passed",
+    "handoff_matrix_rows": "explicit_row_by_row_matrix_added",
+    "latest_audit_status": "pass_certified",
+    "validator_sweep": "pass"
   },
   "open_blockers": [],
   "open_questions": [],
-  "updated_at_utc": "2026-06-18T04:55:25Z",
-  "last_event_id": "evt-0014"
+  "updated_at_utc": "2026-06-18T08:33:40Z",
+  "last_event_id": "evt-0016",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "latest_audit_status": "pass_certified"
 }

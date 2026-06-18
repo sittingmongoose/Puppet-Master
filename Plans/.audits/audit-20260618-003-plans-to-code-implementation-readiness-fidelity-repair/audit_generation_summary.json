@@ -1,0 +1,25 @@
+{
+  "schema_id": "pm.deep_audit_generation_summary.v1",
+  "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "generated_at_utc": "2026-06-18T08:33:40Z",
+  "current_ref": "b413cf5383c8f5975777f6fb4aa9150bd81d50f3",
+  "working_tree_has_changes": true,
+  "atom_rows": 64,
+  "all_rows_have_source_summary": true,
+  "all_rows_have_detail_keys": true,
+  "all_rows_have_exact_evidence": true,
+  "all_rows_have_per_detail_status": true,
+  "known_repaired_atoms": [
+    "atom-0003",
+    "atom-0010",
+    "atom-0011",
+    "atom-0013",
+    "atom-0022",
+    "atom-0025",
+    "atom-0033",
+    "atom-0039",
+    "atom-0048",
+    "atom-0057"
+  ]
+}

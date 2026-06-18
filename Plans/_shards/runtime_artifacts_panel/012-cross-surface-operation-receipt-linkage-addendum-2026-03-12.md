@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L365-L395
 
-Source SHA256: `a14e3dab7f704ffdc8e20e30b494a42232fbd78046f01ad1f7d290adc240987c`
+Source SHA256: `c3710351813388d2c2dbdeb9077b618df9f7fd3c9e0ea6b1d9aa7a4a60451883`
 
 ---
 
@@ -19,7 +19,7 @@ Receipt-like artifacts keep canonical runtime identity and bridge fields instead
 
 Minimum identity fields are `receipt_id`, `run_id`, optional `attempt_id`, `action_family`, and `action_name`. Legacy `tier_id` may appear only as derived display/grouping compatibility metadata; it is not a receipt key, approval correlation key, or usage join. Requested and `/effective` fields include `requested_action`, `effective_action`, `requested_target`, `effective_target`, and optional `reason_code`.
 
-SCM lineage fields include optional `repo_id`, `worktree_id`, `branch_name`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, and `pr_ref`. GitHub Actions lineage fields include optional `workflow_id`, `workflow_name`, `workflow_path`, `workflow_run_id`, `run_attempt`, `job_id`, `job_name`, `failed_step_name`, and `event_name`. Docker lineage fields include optional `context_name`, `container_id`, `image_ref`, and `registry_host`.
+SCM lineage fields include optional `repo_id`, `worktree_id`, `worktree_path`, `branch_name`, `branch_ref`, `branch_head_state`, `baseline_commit_oid`, `head_commit_oid`, `safe_point_id`, `changed_files`, `changed_paths`, `conflict_state`, `conflict_refs`, `rollback_available`, `rollback_ref`, `restore_command_or_action`, `compare_target_ref`, and `pr_ref`. GitHub Actions lineage fields include optional `workflow_id`, `workflow_name`, `workflow_path`, `workflow_run_id`, `run_attempt`, `job_id`, `job_name`, `failed_step_name`, and `event_name`. Docker lineage fields include optional `context_name`, `container_id`, `image_ref`, and `registry_host`.
 
 ### bridge-field viewer
 Required fields:

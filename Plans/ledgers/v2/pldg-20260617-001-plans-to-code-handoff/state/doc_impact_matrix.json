@@ -1,11 +1,11 @@
 {
   "schema_id": "pm.doc_impact_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T04:54:48Z",
-  "status": "compiled_governance_sealed_reference_coverage_passed",
-  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans. Current status is reconciled to the final clean audit and evt-0014 bounded repair.",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md",
-  "latest_audit_status": "pass",
+  "updated_at_utc": "2026-06-18T08:43:57Z",
+  "status": "doc_impact_fidelity_repair_certified",
+  "purpose": "Account for owner docs, consumers, references, and ledger/audit currentness after final implementation-readiness fidelity repair.",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "latest_audit_status": "pass_certified",
   "global_compile_rules": [
     "Before edits, Codex must adjudicate owner docs from this matrix and current repo evidence.",
     "After edits, Codex must run reference scans for touched terms and update direct references or record no-update/deferred evidence.",
@@ -88,7 +88,10 @@
         "design-only runtime boundary",
         "stage cards/resume/currentness",
         "NodeSeed/WorkGraph/WorkNode request contracts",
-        "Executor intake boundary"
+        "Executor intake boundary",
+        "compile_wave_contracts",
+        "current_state/receipts fields",
+        "per-artifact schema filename aliases as $defs compatibility only"
       ],
       "scan_terms": [
         "PlanCompile",
@@ -97,7 +100,11 @@
         "NodeSeed",
         "WorkNode request",
         "WorkGraph draft"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-002",
@@ -143,7 +150,11 @@
         "critical block",
         "auditor_cycle_report",
         "PRD Builder"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-003",
@@ -182,7 +193,11 @@
         "Executor Model",
         "requested model",
         "effective model"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-004",
@@ -218,7 +233,11 @@
         "stage timeline",
         "throughput",
         "ETA"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-005",
@@ -247,7 +266,10 @@
         "visual/browser/device evidence",
         "platform adapter policy",
         "Puppet Master browser primary for web",
-        "Slint as example only"
+        "Slint as example only",
+        "generated and reused tests including reused_test_ids",
+        "TestRunReceipt strategy/case/generated/reused provenance",
+        "strict probes/oracles/automation surface fields"
       ],
       "scan_terms": [
         "test_strategy",
@@ -260,7 +282,11 @@
         "Playwright",
         "visual evidence",
         "test receipt"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-006",
@@ -287,7 +313,9 @@
         "worktree allocation/reuse/cleanup policy",
         "safe point/snapshot/rollback receipts",
         "GitHub optional promotion/output",
-        "FileSafe mutation/restore integration"
+        "FileSafe mutation/restore integration",
+        "source_control_context through preflight/safe point/change/promotion/finalization",
+        "branch/head/baseline/safe-point/changed-files/conflicts/rollback fields"
       ],
       "scan_terms": [
         "worktree",
@@ -300,7 +328,11 @@
         "branch",
         "FileSafe",
         "source control"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-007",
@@ -341,7 +373,11 @@
         "secret",
         "network access",
         "destructive command"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-008",
@@ -365,7 +401,8 @@
         "GoalCompletionReceipt",
         "code-complete definition",
         "evidence truth separation",
-        "source-control/test/model receipts"
+        "source-control/test/model receipts",
+        "strict goal completion validator outcomes/unresolved risks/final source-control context"
       ],
       "scan_terms": [
         "receipt",
@@ -375,7 +412,11 @@
         "source-control receipt",
         "model resolution receipt",
         "evidence"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     },
     {
       "group_id": "impact-009",
@@ -417,7 +458,11 @@
         "History",
         "Ledger",
         "Tiers"
-      ]
+      ],
+      "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/doc_impact_reference_findings.jsonl",
+      "fidelity_status": "certified",
+      "latest_audit_status": "pass_certified",
+      "currentness_status": "current"
     }
   ],
   "high_signal_reference_docs_from_repo_scan": {

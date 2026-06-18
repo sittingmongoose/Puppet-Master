@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L407-L747
+Source lines: L407-L769
 
-Source SHA256: `b9af2e785603f1d11e3c2dd24ff2cfedce0ea47c7061e201efead96f8e054cef`
+Source SHA256: `d9a43ecb9aaeb688d5c6b03d941712b13034a5b2970ee768200518c5b830d180`
 
 ---
 
@@ -18,8 +18,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch_source, runtime_adapter, status, current_stage, cursor, last_green_stage, last_green_hashes, blockers, next_required_stage, and resume_command_or_action. The shared compiler core has two adapters, a Codex bootstrap adapter and a native Puppet Master adapter, so the truth model stays shared while execution surfaces differ. PlanCompile remains design_only_disabled with automatic_launch_enabled: false, native_plan_wizard_launch_enabled: false, and codex_bootstrap_launch_enabled: false until an explicit later enablement PlanUnit accepts runtime launch.
-  Resume must be possible through a bounded stage card, stage cards, and worklists, and the Codex bootstrap adapter may package Codex work packages without native runtime dispatch. Do not depend on the native Puppet Master scheduler for bootstrap. The explicit no-build boundary is No WorkNodes, No NodeSeeds, No executable queues, No final node manifests, and PlanCompile dry-run/non-executable schema examples may be documented but not emitted as runtime work.
+  PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch_source, runtime_adapter, status, current_state, current_stage, cursor, last_green_stage, last_green_hashes, blockers, next_required_stage, resume_command_or_action, receipts, and compile_wave_contracts. Compile waves are bounded subagent assignment contracts: each wave names assignment_id, assigned_agent_role, source_item_refs, read_set, write_set, forbidden_writes, parent_only_writes, result_status, retry_route, resume_ref, durable_evidence_refs, and parent_writeback_required so a parent compiler remains the only writer/adjudicator. The shared compiler core has two adapters, a Codex bootstrap adapter and a native Puppet Master adapter, so the truth model stays shared while execution surfaces differ. PlanCompile remains design_only_disabled with automatic_launch_enabled: false, native_plan_wizard_launch_enabled: false, and codex_bootstrap_launch_enabled: false until an explicit later enablement PlanUnit accepts runtime launch.
+  Resume must be possible through a bounded stage card, stage cards, worklists, compile-wave result receipts, and a single goal prompt carrying the compile_id plus current state refs, and the Codex bootstrap adapter may package Codex work packages without native runtime dispatch. Do not depend on the native Puppet Master scheduler for bootstrap. The explicit no-build boundary is No WorkNodes, No NodeSeeds, No executable queues, No final node manifests, and PlanCompile dry-run/non-executable schema examples may be documented but not emitted as runtime work.
 gui_related: false
 gui_classification_reason: State machine and compiler adapter contracts are backend planning/runtime design, not visual presentation.
 depends_on: [PNC-001, PNC-007, PNC-009]
@@ -28,6 +28,7 @@ acceptance_criteria:
   - PlanCompile stays design_only_disabled until explicit enablement.
   - The shared compiler core owns one truth model with Codex bootstrap and native Puppet Master adapters.
   - Resume is possible from durable state fields, source hashes, blockers, and exact NEXT routing without chat memory.
+  - Compile-wave assignment contracts preserve bounded assignments, result status, retry/resume routes, durable evidence, and parent-only writes.
   - The state machine emits no executable WorkNodes, NodeSeeds, queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -50,6 +51,9 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:corr-0005
 preserved_exact_tokens:
   - "PlanCompileRun"
+  - "current_state"
+  - "waves"
+  - "receipts"
   - "shared compiler core"
   - "Codex bootstrap adapter"
   - "native Puppet Master adapter"
@@ -57,8 +61,12 @@ preserved_exact_tokens:
   - "low quality agent"
   - "low context"
   - "resume"
+  - "startable from one goal prompt"
   - "source hashes"
   - "exact NEXT routing"
+  - "compile_wave_contracts"
+  - "parent_only_writes"
+  - "durable_evidence_refs"
   - "design_only"
   - "automatic_launch_enabled: false"
   - "native_plan_wizard_launch_enabled: false"
@@ -82,7 +90,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-    Each design-only PlanCompile stage has a bounded stage_card with purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, and blocked_route so a low-context agent can execute or resume the stage from state only after a later explicit runtime enablement. Required stage contracts include preflight/currentness, scope selection, PlanUnit normalization, dependency/cycle analysis, surface mapping, work type and effort classification, NodeSeed candidate drafting, split/merge sizing, NodeSeed review, WorkGraph draft, WorkNode request schema drafting, adapter packaging, and certification/handoff.
+    Each design-only PlanCompile stage has a bounded stage_card with purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state only after a later explicit runtime enablement. Required stage contracts include preflight/currentness, scope selection, PlanUnit normalization, dependency/cycle analysis, surface mapping, work type and effort classification, NodeSeed candidate drafting, split/merge sizing, NodeSeed review, WorkGraph draft, WorkNode request schema drafting, adapter packaging, and certification/handoff.
 gui_related: false
 gui_classification_reason: Stage cards and resumable worklists are compiler process contracts, not GUI implementation.
 depends_on: [PNC-010]
@@ -130,8 +138,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  NodeSeed candidates are non-executable intermediate artifacts. They carry source_plan_unit_ids, source_acceptance_unit_ids, objective, owner_area, implementation_surfaces, read_set, write_set_candidates, acceptance_criteria, validator_candidates, dependency_refs, risk_class, reasoning_tier, work_type, effort, gui_related, frontend_related, capability requirements, authority policy, sizing, status, and blockers. The NodeSeed review gate proves coverage, excluded dispositions, acceptance criteria, validators or explicit gaps, bounded write surfaces, dependencies, GUI flags, risk/reasoning/capability metadata, and absence of executable WorkNodes before a WorkGraph draft can be considered.
-  NodeSeed routing metadata preserves effort_class and capability_lane alongside work_type, gui_related, frontend_related, and reasoning_tier before any reviewable candidate can be promoted to a WorkGraph draft.
+  NodeSeed candidates are non-executable intermediate artifacts. They carry source_plan_unit_ids, source_acceptance_unit_ids, objective, owner_area, implementation_surfaces, read_set, write_set_candidates, acceptance_criteria, validator_candidates, dependency_refs, risk_class, reasoning_tier, work_type, effort, gui_related, frontend_related, capability_requirements, authority policy, sizing, status, and blockers. The NodeSeed review gate proves coverage, excluded dispositions, acceptance criteria, validators or explicit gaps, bounded write surfaces, dependencies, GUI flags, risk/reasoning/capability metadata, and absence of executable WorkNodes before a WorkGraph draft can be considered.
+  NodeSeed routing metadata preserves effort_class, capability_lane, and capability_requirements alongside work_type, gui_related, frontend_related, and reasoning_tier before any reviewable candidate can be promoted to a WorkGraph draft.
 gui_related: false
 gui_classification_reason: NodeSeed candidates and review gates are compiler artifact contracts, not visual presentation.
 depends_on: [PNC-010, PNC-011, PNC-002, PNC-005]
@@ -168,6 +176,7 @@ preserved_exact_tokens:
   - "effort_class"
   - "reasoning_tier"
   - "capability_lane"
+  - "capability_requirements"
 negative_constraints:
   - Do not treat NodeSeeds as final WorkNodes.
   - Do not emit NodeSeed candidates as runtime artifacts in this compile.
@@ -186,17 +195,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-    WorkGraph draft is the first executable-shaped artifact but remains reviewable and non-dispatched before Executor intake. It carries nodes, entrypoints, dependency_edges, scheduler_policy, graph_integrity, authority, evidence, and validation_state. When a later explicit runtime enablement exists, PlanCompile may draft WorkNodeRequest records for review, not runnable WorkNodes. Each WorkNode request schema must carry source PlanUnit refs, objective, implementation surfaces, read/write candidates, acceptance criteria, validator candidates, dependency refs, work_type, gui_related, frontend_related, effort_class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, capability_lane, test_binding, model routing, and ordering metadata. The design-only default build order records discovery, source-control/worktree/safe-point discovery, environment/toolchain setup, contracts/schemas/storage, core runtime/execution, providers/models/settings/permissions, GUI shell/navigation, features, integration/seams, automated tests/browser/device checks, source-control promotion, and final Auditor certification.
-    WorkNode request ordering metadata explicitly carries build_phase, dependency_type, parallel_group_id, scheduler_lane, and ordering_reason, and its test_binding includes generated_test_ids, browser_session_required, and visual_evidence_required when automated evidence is required. The current repair records schema contracts only and emits no NodeSeeds, WorkNodes, executable queues, or build tasks.
+    WorkGraph draft is the first executable-shaped artifact but remains reviewable and non-dispatched before Executor intake. It carries nodes, entrypoints, dependency_edges, scheduler_policy, graph_integrity, authority, evidence, and validation_state. When a later explicit runtime enablement exists, PlanCompile may draft WorkNodeRequest records for review, not runnable WorkNodes. Each WorkNode request schema must carry source PlanUnit refs, objective, implementation surfaces, read/write candidates, acceptance criteria, validator candidates, dependency refs, work_type, gui_related, frontend_related, effort_class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, capability_lane, capability_requirements, test_binding, model routing, and ordering metadata. The design-only default build order records discovery, source-control/worktree/safe-point discovery, environment/toolchain setup, contracts/schemas/storage, core runtime/execution, providers/models/settings/permissions, GUI shell/navigation, features, integration/seams, automated tests/browser/device checks, source-control promotion, and final Auditor certification.
+    WorkNode request ordering metadata explicitly carries build_phase, dependency_type, depends_on, unblocks, manual_priority, required_before_start, required_after_start, required_before_completion, required_after_completion, parallel_group_id, scheduler_lane, and ordering_reason. Its test_binding includes generated_test_ids, reused_test_ids, completion_commands, browser_session_required, emulator_required, visual_evidence_required, expected_artifacts, flake_policy, test_gap_policy, and manual_only_acceptance_not_allowed when automated evidence is required. The current repair records schema contracts only and emits no NodeSeeds, WorkNodes, executable queues, or build tasks.
 gui_related: true
 gui_classification_reason: WorkNode request routing includes GUI/frontend flags and user-visible risk metadata that drive visible routing and testing surfaces.
 depends_on: [PNC-012, ATS-003]
 unblocks: [EP-099, EP-100, EP-101, CV-289]
 acceptance_criteria:
   - WorkGraph drafts remain reviewable and cannot dispatch before Executor intake.
-    - When explicitly enabled later, PlanCompile may draft WorkNode requests, not runnable WorkNodes; the current repair emits no runtime artifacts.
+  - When explicitly enabled later, PlanCompile may draft WorkNode requests, not runnable WorkNodes; the current repair emits no runtime artifacts.
   - Requests carry test binding, model routing, ordering, risk, GUI/frontend, authority, and validation metadata.
-  - Default build order covers discovery, safe points, environment, contracts, runtime, providers, GUI shell, features, integrations, automated checks, promotion, and Auditor certification before execution is accepted.
+  - Default build order covers discovery, safe points, environment, contracts, runtime, providers, GUI shell, features, integrations, automated checks, promotion, and Auditor certification before execution is accepted, with manual priority and required-before/after start/completion relationships.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future WorkGraph draft and WorkNode request schema validation
@@ -225,12 +234,19 @@ preserved_exact_tokens:
   - "not runnable WorkNodes"
   - "effort_class"
   - "capability_lane"
+  - "capability_requirements"
   - "build_phase"
   - "dependency_type"
+  - "manual_priority"
+  - "required_before_start"
+  - "required_after_start"
+  - "required_before_completion"
+  - "required_after_completion"
   - "parallel_group_id"
   - "scheduler_lane"
   - "ordering_reason"
   - "test_binding"
+  - "reused_test_ids"
   - "test capability discovery"
   - "source-control/worktree/safe-point discovery"
   - "environment/toolchain setup"
@@ -255,7 +271,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Plan Wizard approval through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
-  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013]
@@ -306,6 +322,12 @@ preserved_exact_tokens:
   - "source_control_preflight_receipt"
   - "goal_completion_receipt"
   - "external GUI-agent CLI"
+  - "custom CLI providers"
+  - "provider_kind"
+  - "plan_compile_run.schema.json"
+  - "node_seed_candidate.schema.json"
+  - "worknode_request.schema.json"
+  - "test_capability_report.schema.json"
   - "Antigravity"
   - "Claude Code"
   - "Cursor"

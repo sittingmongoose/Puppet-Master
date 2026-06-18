@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.deep_audit_report.v1",
+  "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "generated_at_utc": "2026-06-18T08:43:57Z",
+  "current_ref": "b413cf5383c8f5975777f6fb4aa9150bd81d50f3",
+  "working_tree_has_changes": true,
+  "status": "pass_certified",
+  "phase": "implementation_readiness_fidelity_repair",
+  "artifact_status": "final_validator_sweep_passed",
+  "atom_fidelity": {
+    "atoms_checked": 64,
+    "classification_counts": {
+      "equivalent_or_dispositioned": 64
+    },
+    "matrix_path": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/atom_fidelity_matrix.jsonl"
+  },
+  "known_repaired_atoms": [
+    "atom-0003",
+    "atom-0010",
+    "atom-0011",
+    "atom-0013",
+    "atom-0022",
+    "atom-0025",
+    "atom-0033",
+    "atom-0039",
+    "atom-0048",
+    "atom-0057"
+  ],
+  "subagent_inputs": [
+    "Hypatia: atom-to-PlanUnit fidelity",
+    "Mill: schema/enums/nested shape audit",
+    "Anscombe: automated testing/source-control receipts",
+    "Turing: ledger/currentness/governance audit"
+  ],
+  "forbidden_artifacts": {
+    "schema_id": "pm.deep_audit_forbidden_artifacts.v1",
+    "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "status": "pass",
+    "checked_patterns": [
+      "WorkNodes/",
+      "NodeSeeds/",
+      "Plans/WorkNodes/",
+      "Plans/NodeSeeds/",
+      "worknode_request_queue",
+      "executable_queue",
+      "final_node_manifest"
+    ],
+    "forbidden_count": 0,
+    "forbidden_paths": [],
+    "plan_compile_runtime_status": "design_only_disabled",
+    "node_readiness_status": "runtime_disabled",
+    "notes": [
+      "No PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created by this bounded repair."
+    ]
+  },
+  "ledger_consistency": {
+    "schema_id": "pm.deep_audit_ledger_consistency.v1",
+    "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "status": "pass_certified",
+    "current_ref": "b413cf5383c8f5975777f6fb4aa9150bd81d50f3",
+    "working_tree_has_changes": true,
+    "changed_paths": [
+      "Plans/Automated_Testing_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Models_System.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/plans_to_code_handoff.schema.json",
+      "scripts/pm-plans-verify.py"
+    ],
+    "compact_phase": "compiled_plans_to_code_handoff_governance_sealed",
+    "compact_status": "sealed",
+    "last_event_id": "evt-0016",
+    "atom_count": 64,
+    "compiled_planunit_count_with_ledger_lineage": 38,
+    "open_blockers": [],
+    "open_questions": [],
+    "notes": [
+      "Ledger projections updated through evt-0016; validator sweep passed and certification status replaced pending sweep labels."
+    ],
+    "updated_at_utc": "2026-06-18T08:43:57Z"
+  },
+  "validator_results": {
+    "status": "pass",
+    "path": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/validator_results.json",
+    "note": "Final command capture is stored in validator_results.json."
+  },
+  "compile_readiness": "not_safe_to_enable_runtime_plancompile_disabled_by_contract",
+  "next_safe_action": "Keep PlanCompile runtime disabled; any later runtime enablement requires a separate explicit enablement and artifact-generation contract.",
+  "certification": {
+    "status": "pass_certified",
+    "atom_fidelity": "all_64_rows_represented_or_validly_dispositioned",
+    "references_current": true,
+    "validators": "pass",
+    "forbidden_runtime_artifacts": "absent",
+    "plan_compile_runtime": "design_only_disabled",
+    "worknode_nodeseed_generation": "not_created"
+  }
+}

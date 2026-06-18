@@ -1,17 +1,17 @@
 # Shard Index: Plans/Plan_To_Node_Compilation.md
 
-Generated: 2026-06-18T05:03:23Z
+Generated: 2026-06-18T08:35:44Z
 
-Source SHA256: `b9af2e785603f1d11e3c2dd24ff2cfedce0ea47c7061e201efead96f8e054cef`
+Source SHA256: `d9a43ecb9aaeb688d5c6b03d941712b13034a5b2970ee768200518c5b830d180`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `ab37173f0a52c58847a3098783462c887ceb36b01231b25b8754bd33c28a87ea`
-- [002 - 0. Scope](002-0.-scope.md) L5-L9 `5d6f61442ec609c2e840c4cbdcc4ee7813f7019cba635cbdd3e0fbeda20165e0`
-- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `c314d1e824f6c35c115d65f8d9599632269859271c2565a89d6993d0d541ce1f`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L289 `975bf6342214897a475c3c65bbeff2e901c4b40d2fc576905443a006b827ebb3`
-- [005 - 4. Runtime-Disabled Compiler Algorithm](005-4.-runtime-disabled-compiler-algorithm.md) L291-L384 `ceb98463d591770caa553274bead96b806e9e9d897db52e692c0f7330b37b2de`
-- [006 - 5. Compilation Coverage](006-5.-compilation-coverage.md) L386-L405 `57e10544299d0768fc03053a9166e1acea4cf1f2a0e22a74d57a8097ae91f321`
-- [007 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](007-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L407-L747 `22a871d2b1f37d767909980d564d4c8dc0f6176259480ad31d45c3ac2689da04`
+- [001 - Preamble](001-preamble.md) L1-L3 `233979b7fa3c927b9b4005a97e96fdb0b14fda6af9df3ec8fcdb729e12bc2058`
+- [002 - 0. Scope](002-0.-scope.md) L5-L9 `c1f03aba541bb5191de5db2c95e5b4a7a86ec474d099c465965d00392b56f2bb`
+- [003 - 1. Boundary](003-1.-boundary.md) L11-L21 `29fca94d4083188d4e4495e876037068e96397ac64247751daec83c7ad245a1f`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L23-L289 `41d36a32b9f2f90cc6cfb5d70875dd6aef4cb72a00248e73f8b7d38e1177cbc2`
+- [005 - 4. Runtime-Disabled Compiler Algorithm](005-4.-runtime-disabled-compiler-algorithm.md) L291-L384 `88f548e7bdf877b99dc946ebf3a45fd031b99453aaf6d40c22826c5c9c3c89bc`
+- [006 - 5. Compilation Coverage](006-5.-compilation-coverage.md) L386-L405 `b6c6768df7cb4ab40ef3ddb381641f632735f869d6c36a520470436e00d90433`
+- [007 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](007-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L407-L769 `c0f941ed34592b1adaa700a8ce65f1cbcd8ac92902ba35fe96e3fca1f70ac3aa`

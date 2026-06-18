@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L17297-L17374
+Source lines: L17297-L17379
 
-Source SHA256: `797bf08c3b3ef1097a188bdf483934fe61413687d378e116ab4925fd76be253a`
+Source SHA256: `6f57e3510084af406a9134a9f349ca087215eaf71ebc2212b055f8cdf631aa8b`
 
 ---
 
@@ -18,8 +18,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Contracts_V0 owns shared envelope references for handoff_matrix, handoff_row, PlanCompileRun, stage_card, compile_worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNodeRequest, compiler model routing, Codex bootstrap work package, Codex external GUI-agent request, PlanCompile receipt, TestCapabilityReport, TestHarnessProbeReport, TestStrategy, test case, TestRunReceipt, visual evidence, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_dispatch_receipt, worknode_change_receipt, worknode_completion_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility aliases, merge_or_promotion_receipt, source-control finalization receipt, model_resolution_receipt, ExecutorIntakeReport, WorkNode execution receipts, and GoalCompletionReceipt. These contract envelopes carry IDs, source refs, owner refs, validator refs, receipt refs, evidence refs, requested/effective model refs, source-control refs, authority refs, retry/rollback routes, and user_escalation_condition while owner docs retain behavior semantics. The design-only schema draft is Plans/plans_to_code_handoff.schema.json.
-  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, user_escalation_condition, and the design-only `Plans/plans_to_code_handoff.schema.json` `$defs` for `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` without creating runtime artifacts.
+  Contracts_V0 owns shared envelope references for handoff_matrix, handoff_row, PlanCompileRun, stage_card, compile_worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNodeRequest, compiler model routing, Codex bootstrap work package, Codex external GUI-agent request, PlanCompile receipt, TestCapabilityReport, TestHarnessProbeReport, TestStrategy, test case, TestRunReceipt, visual evidence, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_dispatch_receipt, worknode_change_receipt, worknode_completion_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility aliases, merge_or_promotion_receipt, source-control finalization receipt, model_resolution_receipt, ExecutorIntakeReport, WorkNode execution receipts, and GoalCompletionReceipt. These contract envelopes carry IDs, source refs, owner refs, validator refs, receipt refs, evidence refs, requested/effective model refs, source-control refs, authority refs, retry/rollback routes, user_escalation_condition, canonical enums, strict nested shapes, and source-control execution context while owner docs retain behavior semantics. The design-only schema draft is Plans/plans_to_code_handoff.schema.json.
+  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, user_escalation_condition, and the design-only `Plans/plans_to_code_handoff.schema.json` `$defs` for `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` without creating runtime artifacts. Historical per-artifact schema filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for the single schema draft's `$defs`, not separate schema files.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and schema references are backend schema work, not visual presentation.
 depends_on: [CV-288, PNC-014, EP-103, POA-048, MS-111, ATS-001]
@@ -27,6 +27,7 @@ unblocks: []
 acceptance_criteria:
   - Shared envelope refs exist for PlanCompile, NodeSeed candidate, WorkGraph draft, WorkNodeRequest, testing, source-control, model, Executor intake, and completion receipt families.
   - Contract envelopes carry refs and cross-owner fields without replacing owner behavior semantics.
+  - Per-artifact schema filename tokens resolve to $defs aliases in the single design-only handoff schema.
   - The schema draft remains design-only and does not create runtime artifacts.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -51,13 +52,17 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0026
 preserved_exact_tokens:
   - "PlanCompileRun"
+  - "plan_compile_run.schema.json"
   - "stage cards"
   - "NodeSeed candidate"
+  - "node_seed_candidate.schema.json"
   - "WorkGraph draft"
   - "WorkNodeRequest"
+  - "worknode_request.schema.json"
   - "handoff_matrix"
   - "handoff_row"
   - "TestCapabilityReport"
+  - "test_capability_report.schema.json"
   - "TestHarnessProbeReport"
   - "TestStrategy"
   - "TestRunReceipt"
