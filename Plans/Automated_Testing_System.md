@@ -98,8 +98,7 @@ acceptance_criteria:
   - Harness probes prove commands and adapters before they are bound to WorkNode requests.
   - Missing discovery evidence blocks test-ready status instead of guessing a runner.
 validation_surfaces:
-  - future TestCapabilityReport schema validation
-  - future TestHarnessProbeReport schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: false_test_capability
 reasoning_tier: high
 context_scope: automated_test_discovery
@@ -142,7 +141,7 @@ acceptance_criteria:
   - Test strategy chooses project-type-specific oracles rather than generic completion claims.
   - Visual/browser/device evidence requirements are explicit where user-visible behavior is under test.
 validation_surfaces:
-  - future TestStrategy schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - future WorkNode request intake validation
 risk_class: weak_test_oracle
 reasoning_tier: high
@@ -182,7 +181,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode, it must create a test capability blocker or a test-harness WorkNode request rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
+  WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode after the compiler/runtime boundary is explicitly enabled, it must record a test capability blocker or deferred non-executable test-harness WorkNode request candidate rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
   Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims.
 gui_related: true
 gui_classification_reason: Automated screenshots, browser sessions, GUI/device sessions, and visual evidence are user-visible verification surfaces.
@@ -190,11 +189,11 @@ depends_on: [ATS-001, ATS-002, ATS-003]
 unblocks: [GRS-030, EP-101, RAP-029, T-159]
 acceptance_criteria:
   - Human visual inspection is never a required completion criterion.
-  - Missing automatic verification creates a blocker or a test-harness WorkNode request.
+  - Missing automatic verification records a blocker or, after later runtime enablement, a deferred non-executable test-harness WorkNode request candidate.
   - Browser/GUI/device screenshots and logs are captured automatically where required.
   - Native web testing prefers Puppet Master built-in browser automation once available, while Playwright remains optional, fallback, or project-native.
 validation_surfaces:
-  - future TestRunReceipt schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - future test-gap blocker validation
 risk_class: manual_only_completion
 reasoning_tier: high

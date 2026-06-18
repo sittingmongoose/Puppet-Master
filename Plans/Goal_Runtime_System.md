@@ -2068,7 +2068,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
+  Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. GoalCompletionReceipt fields include rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, child_receipt_refs, worknode_receipt_refs, changed_artifact_refs, validator_outcomes, authority_check_refs, source_control_receipt_refs, test_receipt_refs, model_resolution_receipt_refs, unresolved_risks, and evidence_layers. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
   GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
 gui_classification_reason: Completion certification and evidence truth-layer policy are runtime/governance behavior.
@@ -2080,7 +2080,7 @@ acceptance_criteria:
   - Evidence truth layers remain separate and auditable.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future GoalCompletionReceipt schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: false_completion
 reasoning_tier: high
 context_scope: plans_to_code_completion

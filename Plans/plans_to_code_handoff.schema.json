@@ -25,6 +25,8 @@
     "artifact_kind": {
       "type": "string",
       "enum": [
+        "handoff_matrix",
+        "handoff_row",
         "plan_compile_run",
         "stage_card",
         "compile_worklist",
@@ -42,9 +44,16 @@
         "test_case",
         "test_run_receipt",
         "visual_evidence",
+        "source_control_receipt",
         "source_control_preflight_receipt",
         "safe_point_receipt",
+        "worknode_dispatch_receipt",
         "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "repair_attempt_receipt",
+        "validation_pass_report",
         "merge_or_promotion_receipt",
         "source_control_finalization_receipt",
         "model_resolution_receipt",
@@ -60,6 +69,114 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/ref"
+      }
+    },
+    "handoff_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_id",
+        "transition",
+        "source_artifact",
+        "destination_artifact",
+        "producer",
+        "consumer",
+        "owner",
+        "validator",
+        "receipt",
+        "schema_payload",
+        "retry_route",
+        "rollback_route",
+        "user_escalation_condition",
+        "evidence_refs",
+        "plan_unit_refs"
+      ],
+      "properties": {
+        "row_id": {
+          "type": "string"
+        },
+        "transition": {
+          "type": "string"
+        },
+        "source_artifact": {
+          "type": "string"
+        },
+        "destination_artifact": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "consumer": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "validator": {
+          "type": "string"
+        },
+        "receipt": {
+          "type": "string"
+        },
+        "schema_payload": {
+          "type": "string"
+        },
+        "retry_route": {
+          "type": "string"
+        },
+        "rollback_route": {
+          "type": "string"
+        },
+        "user_escalation_condition": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "plan_unit_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "handoff_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matrix_id",
+        "source_ledger_id",
+        "source_plan_unit_ids",
+        "rows",
+        "schema_contract_validation",
+        "status"
+      ],
+      "properties": {
+        "matrix_id": {
+          "type": "string"
+        },
+        "source_ledger_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/handoff_row"
+          }
+        },
+        "schema_contract_validation": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "design_only",
+            "validated",
+            "blocked"
+          ]
+        }
       }
     },
     "plan_compile_run": {
@@ -78,7 +195,10 @@
         "last_green_hashes",
         "blockers",
         "next_required_stage",
-        "resume_command_or_action"
+        "resume_command_or_action",
+        "automatic_launch_enabled",
+        "native_plan_wizard_launch_enabled",
+        "codex_bootstrap_launch_enabled"
       ],
       "properties": {
         "compile_id": {
@@ -145,6 +265,15 @@
             "string",
             "null"
           ]
+        },
+        "automatic_launch_enabled": {
+          "const": false
+        },
+        "native_plan_wizard_launch_enabled": {
+          "const": false
+        },
+        "codex_bootstrap_launch_enabled": {
+          "const": false
         }
       }
     },
@@ -209,7 +338,9 @@
         "risk_class",
         "reasoning_tier",
         "work_type",
-        "effort",
+        "gui_related",
+        "frontend_related",
+        "effort_class",
         "capability_lane",
         "authority",
         "sizing",
@@ -268,7 +399,11 @@
         "frontend_related": {
           "type": "boolean"
         },
+        "effort_class": {
+          "type": "string"
+        },
         "effort": {
+          "description": "Compatibility alias for effort_class; new payloads use effort_class.",
           "type": "string"
         },
         "capability_lane": {
@@ -350,7 +485,22 @@
         "source_plan_unit_ids",
         "objective",
         "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
         "acceptance_criteria",
+        "validator_candidates",
+        "dependency_refs",
+        "work_type",
+        "gui_related",
+        "frontend_related",
+        "effort_class",
+        "reasoning_tier",
+        "context_size",
+        "validation_cost",
+        "risk_class",
+        "authority_risk",
+        "user_visible_risk",
+        "capability_lane",
         "test_binding",
         "model_routing",
         "ordering",
@@ -367,17 +517,65 @@
         "implementation_surfaces": {
           "$ref": "#/$defs/ref_list"
         },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set_candidates": {
+          "$ref": "#/$defs/ref_list"
+        },
         "acceptance_criteria": {
           "type": "array",
           "items": {
             "type": "string"
           }
         },
+        "validator_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependency_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "work_type": {
+          "type": "string"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "effort_class": {
+          "type": "string"
+        },
+        "reasoning_tier": {
+          "type": "string"
+        },
+        "context_size": {
+          "type": "string"
+        },
+        "validation_cost": {
+          "type": "string"
+        },
+        "risk_class": {
+          "type": "string"
+        },
+        "authority_risk": {
+          "type": "string"
+        },
+        "user_visible_risk": {
+          "type": "string"
+        },
+        "capability_lane": {
+          "type": "string"
+        },
         "test_binding": {
           "$ref": "#/$defs/test_binding"
         },
         "model_routing": {
-          "$ref": "#/$defs/model_resolution_receipt"
+          "$ref": "#/$defs/compiler_model_routing"
         },
         "ordering": {
           "$ref": "#/$defs/ordering"
@@ -439,14 +637,19 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "receipt_id",
         "requested_lane",
         "requested_model_profile",
         "effective_model_profile",
         "fallback_used",
         "fallback_reason",
-        "capability_checks"
+        "capability_checks",
+        "handoff"
       ],
       "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
         "requested_lane": {
           "type": "string"
         },
@@ -470,6 +673,9 @@
           "items": {
             "type": "object"
           }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -484,7 +690,10 @@
         "browser_session_required",
         "emulator_required",
         "visual_evidence_required",
-        "test_gap_policy"
+        "expected_artifacts",
+        "flake_policy",
+        "test_gap_policy",
+        "manual_only_acceptance_not_allowed"
       ],
       "properties": {
         "required_capability_refs": {
@@ -511,8 +720,17 @@
         "visual_evidence_required": {
           "type": "boolean"
         },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "type": "string"
+        },
         "test_gap_policy": {
           "type": "string"
+        },
+        "manual_only_acceptance_not_allowed": {
+          "const": true
         }
       }
     },
@@ -523,6 +741,15 @@
         "project_platform",
         "framework_toolkit",
         "local_capabilities",
+        "installed_tools",
+        "app_launch_ability",
+        "browser_automation",
+        "gui_automation",
+        "device_emulator_automation",
+        "screenshot_support",
+        "logs_available",
+        "headless_headed_support",
+        "project_native_runners",
         "online_research",
         "probes"
       ],
@@ -537,6 +764,39 @@
           "type": "array",
           "items": {
             "type": "object"
+          }
+        },
+        "installed_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "app_launch_ability": {
+          "type": "string"
+        },
+        "browser_automation": {
+          "type": "string"
+        },
+        "gui_automation": {
+          "type": "string"
+        },
+        "device_emulator_automation": {
+          "type": "string"
+        },
+        "screenshot_support": {
+          "type": "string"
+        },
+        "logs_available": {
+          "type": "string"
+        },
+        "headless_headed_support": {
+          "type": "string"
+        },
+        "project_native_runners": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         },
         "online_research": {
@@ -560,8 +820,11 @@
         "expected_artifacts",
         "result",
         "evidence_refs",
+        "visual_evidence_refs",
         "flake_policy",
-        "test_gap_policy"
+        "test_gap_policy",
+        "manual_only_acceptance_not_allowed",
+        "handoff"
       ],
       "properties": {
         "test_level": {
@@ -587,11 +850,20 @@
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         },
+        "visual_evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
         "flake_policy": {
           "type": "string"
         },
         "test_gap_policy": {
           "type": "string"
+        },
+        "manual_only_acceptance_not_allowed": {
+          "const": true
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -599,6 +871,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "receipt_id",
         "repo_id",
         "worktree_id",
         "worktree_path",
@@ -609,9 +882,14 @@
         "merge_policy",
         "github_policy",
         "rollback_available",
-        "restore_command_or_action"
+        "restore_command_or_action",
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
         "repo_id": {
           "type": "string"
         },
@@ -644,6 +922,12 @@
         },
         "restore_command_or_action": {
           "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -651,15 +935,35 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "receipt_id",
         "all_worknodes_terminal",
         "all_tests_passed_or_dispositioned",
         "source_control_receipts_valid",
         "no_active_blockers",
+        "rollback_requirements_satisfied",
+        "safe_point_requirements_satisfied",
+        "no_stale_plan_workgraph_currentness_mismatch",
+        "final_source_state",
+        "final_summary_ref",
         "auditor_passed",
         "final_certifier_decision",
-        "evidence_refs"
+        "evidence_refs",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "changed_artifact_refs",
+        "validator_outcomes",
+        "authority_check_refs",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "unresolved_risks",
+        "evidence_layers",
+        "handoff"
       ],
       "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
         "all_worknodes_terminal": {
           "type": "boolean"
         },
@@ -671,6 +975,26 @@
         },
         "no_active_blockers": {
           "type": "boolean"
+        },
+        "rollback_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "safe_point_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "no_stale_plan_workgraph_currentness_mismatch": {
+          "type": "boolean"
+        },
+        "final_source_state": {
+          "enum": [
+            "clean",
+            "intentionally_preserved",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "final_summary_ref": {
+          "$ref": "#/$defs/ref"
         },
         "auditor_passed": {
           "type": "boolean"
@@ -685,6 +1009,78 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
+        },
+        "child_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "worknode_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "changed_artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "validator_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "authority_check_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_risks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "evidence_layers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_evidence",
+            "canonical_plan_evidence",
+            "process_evidence",
+            "governance_evidence",
+            "test_evidence",
+            "source_control_evidence",
+            "completion_receipts"
+          ],
+          "properties": {
+            "source_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "canonical_plan_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "process_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "governance_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "test_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "source_control_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "completion_receipts": {
+              "$ref": "#/$defs/ref_list"
+            }
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -929,7 +1325,8 @@
         "stage",
         "status",
         "summary",
-        "evidence_refs"
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -949,6 +1346,9 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -960,6 +1360,11 @@
         "target_surface",
         "harness_type",
         "capability",
+        "verification_command",
+        "required_adapters",
+        "expected_artifacts",
+        "flake_policy",
+        "gaps",
         "status",
         "evidence_refs"
       ],
@@ -975,6 +1380,27 @@
         },
         "capability": {
           "type": "string"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "required_adapters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "type": "string"
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
         },
         "status": {
           "type": "string"
@@ -992,7 +1418,12 @@
         "source_plan_unit_ids",
         "test_cases",
         "required_capabilities",
-        "gap_blockers"
+        "gap_blockers",
+        "test_level",
+        "generated_test_ids",
+        "browser_session_required",
+        "visual_evidence_required",
+        "oracles"
       ],
       "properties": {
         "strategy_id": {
@@ -1011,6 +1442,24 @@
           }
         },
         "gap_blockers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "test_level": {
+          "type": "string"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "browser_session_required": {
+          "type": "boolean"
+        },
+        "visual_evidence_required": {
+          "type": "boolean"
+        },
+        "oracles": {
           "type": "array",
           "items": {
             "type": "object"
@@ -1088,7 +1537,17 @@
         "branch_ref",
         "dirty_state",
         "safe_point_required",
-        "status"
+        "status",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action",
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -1111,6 +1570,36 @@
         },
         "status": {
           "type": "string"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "type": "string"
+        },
+        "conflict_policy": {
+          "type": "string"
+        },
+        "merge_policy": {
+          "type": "string"
+        },
+        "github_policy": {
+          "type": "string"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -1123,7 +1612,9 @@
         "repo_ref",
         "worktree_ref",
         "created_at_utc",
-        "status"
+        "status",
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -1143,6 +1634,65 @@
         },
         "status": {
           "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "worknode_dispatch_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_request_ref",
+        "executor_ref",
+        "dispatch_status",
+        "source_control_preflight_ref",
+        "model_resolution_ref",
+        "test_binding_ref",
+        "authority_ref",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_request_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "executor_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dispatch_status": {
+          "enum": [
+            "queued",
+            "dispatched",
+            "blocked",
+            "cancelled"
+          ]
+        },
+        "source_control_preflight_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "model_resolution_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_binding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "authority_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -1155,7 +1705,10 @@
         "changed_paths",
         "diff_refs",
         "test_run_refs",
-        "status"
+        "source_control_receipt_ref",
+        "status",
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -1173,8 +1726,300 @@
         "test_run_refs": {
           "$ref": "#/$defs/ref_list"
         },
+        "source_control_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
         "status": {
           "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "worknode_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "terminal_status",
+        "change_receipt_refs",
+        "test_run_refs",
+        "auditor_verification_ref",
+        "source_control_receipt_refs",
+        "unresolved_findings",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "terminal_status": {
+          "enum": [
+            "complete",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "change_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "auditor_verification_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_findings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "auditor_cycle_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cycle_id",
+        "cycle_number",
+        "auditor_model_profile",
+        "input_artifact_refs",
+        "findings",
+        "repairs_applied",
+        "unresolved_findings",
+        "terminal_state",
+        "certified",
+        "evidence_refs",
+        "compatibility_aliases",
+        "handoff"
+      ],
+      "properties": {
+        "cycle_id": {
+          "type": "string"
+        },
+        "cycle_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "auditor_model_profile": {
+          "type": "string"
+        },
+        "input_artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "repairs_applied": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "unresolved_findings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "terminal_state": {
+          "enum": [
+            "continue_repair",
+            "certified",
+            "critical_block",
+            "authority_boundary",
+            "repair_budget_exhausted"
+          ]
+        },
+        "certified": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "compatibility_aliases": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "validation_pass_report",
+              "pass_1",
+              "pass_2",
+              "pass_3"
+            ]
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "auditor_verification_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "auditor_cycle_refs",
+        "worknode_ref",
+        "test_run_refs",
+        "source_control_receipt_refs",
+        "certified",
+        "terminal_state",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "auditor_cycle_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "certified": {
+          "type": "boolean"
+        },
+        "terminal_state": {
+          "enum": [
+            "certified",
+            "critical_block",
+            "authority_boundary",
+            "repair_budget_exhausted"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "repair_attempt_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "failure_signature_ref",
+        "repair_strategy",
+        "changed_refs",
+        "test_run_refs",
+        "auditor_cycle_ref",
+        "status",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "failure_signature_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "repair_strategy": {
+          "type": "string"
+        },
+        "changed_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "auditor_cycle_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "enum": [
+            "applied",
+            "blocked",
+            "reverted",
+            "failed"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "validation_pass_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legacy_alias_for",
+        "cycle_report_ref",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "compatibility_only",
+        "handoff"
+      ],
+      "properties": {
+        "legacy_alias_for": {
+          "const": "auditor_cycle_report"
+        },
+        "cycle_report_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "pass_number": {
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        },
+        "pass_name": {
+          "enum": [
+            "document_creation",
+            "canonical_alignment",
+            "canonical_systems"
+          ]
+        },
+        "pass_verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "skipped",
+            "blocked"
+          ]
+        },
+        "compatibility_only": {
+          "const": true
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -1187,7 +2032,8 @@
         "destination_ref",
         "promotion_type",
         "status",
-        "evidence_refs"
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -1207,6 +2053,9 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -1219,7 +2068,8 @@
         "branch_ref",
         "commit_ref",
         "final_status",
-        "evidence_refs"
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "receipt_id": {
@@ -1239,6 +2089,9 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     },
@@ -1252,7 +2105,13 @@
         "accepted_refs",
         "rejected_refs",
         "blockers",
-        "status"
+        "status",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "authority_refs",
+        "evidence_refs",
+        "handoff"
       ],
       "properties": {
         "intake_id": {
@@ -1278,11 +2137,67 @@
         },
         "status": {
           "type": "string"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "authority_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
         }
       }
     }
   },
   "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "handoff_matrix"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/handoff_matrix"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "handoff_row"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/handoff_row"
+          }
+        }
+      }
+    },
     {
       "if": {
         "properties": {
@@ -1298,6 +2213,25 @@
         "properties": {
           "payload": {
             "$ref": "#/$defs/plan_compile_run"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_receipt"
           }
         }
       }
@@ -1325,6 +2259,25 @@
       "if": {
         "properties": {
           "artifact_kind": {
+            "const": "worknode_dispatch_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_dispatch_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
             "const": "compile_worklist"
           }
         },
@@ -1336,6 +2289,101 @@
         "properties": {
           "payload": {
             "$ref": "#/$defs/compile_worklist"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_completion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_completion_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "auditor_cycle_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/auditor_cycle_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "auditor_verification_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/auditor_verification_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "repair_attempt_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/repair_attempt_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "validation_pass_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/validation_pass_report"
           }
         }
       }

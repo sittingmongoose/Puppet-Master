@@ -31,9 +31,9 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
-Remaining high-value Orchestrator blind spots stay in scope for checklist verification: exact Source Control/worktree handshake, widget-system hostability and persistence, command palette / shortcut / context-menu / bulk-action integration, large-graph and many-record `/performance`, multi-run behavior in one project, object `/text` search across Seams / Graph / Evidence / History / Ledger, notification `/escalation` beyond in-page alerts, accessibility for dense `/records`, and safety `/confirmation` for user-facing actions.
+Remaining high-value Orchestrator blind spots stay in scope for checklist verification: exact Source Control/worktree handshake, widget-system hostability and persistence, command palette / shortcut / context-menu / bulk-action integration, large-graph and many-record `/performance`, multi-run behavior in one project, object `/text` search across Plan Compile / Seams / Graph / Evidence / History / Ledger, notification `/escalation` beyond in-page alerts, accessibility for dense `/records`, and safety `/confirmation` for user-facing actions.
 
-Orchestrator tab redesign is explicit: `Progress` is the widget-hosting operational summary; `Seams` replaces `Tiers` as seam-first, package-second, node-on-drill-in hierarchy; `Node Graph`, `Evidence`, `History`, and `Ledger` remain native tabs; `History` is the chronological runtime story and `Ledger` is structured exact-record inspection.
+Orchestrator tab redesign is explicit: `Progress` is the widget-hosting operational summary; `Plan Compile` is the plans-to-code projection tab; `Seams` replaces `Tiers` as seam-first, package-second, node-on-drill-in hierarchy; `Node Graph`, `Evidence`, `History`, and `Ledger` remain native tabs; `History` is the chronological runtime story and `Ledger` is structured exact-record inspection.
 
 `Orchestrator_Page` / `Orchestrator_Page.md` must retire `Tiers`, keep only `Progress` widget-composed, treat `Evidence`, `History`, and `Ledger` as native tabs, replace `tier_id` filters with canonical node `/attempt/runtime` identity, and elevate blocked/runtime event sources over request-centric HITL and `TierChanged` assumptions.
 
@@ -59,8 +59,8 @@ Orchestrator artifact checklist rows reference `Plans/FinalGUISpec.md`, `Plans/O
 
 | Area | Required canonical state | Verification status rule |
 |---|---|---|
-| Orchestrator tabs | `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger` | Fail if `Tiers` remains canonical or if non-Progress tabs remain widget canvases |
-| Widget hostability | Dashboard, Usage, and Orchestrator `Progress` only | Fail if `Seams`, `Node Graph`, `Evidence`, `History`, or `Ledger` are still treated as widgetized |
+| Orchestrator tabs | `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger` | Fail if `Tiers` remains canonical, if `Plan Compile` is omitted, or if non-Progress tabs remain widget canvases |
+| Widget hostability | Dashboard, Usage, and Orchestrator `Progress` only | Fail if `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, or `Ledger` are still treated as widgetized |
 | Runtime approval identity | blocked-episode identity with `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `allowed_action_ids[]` | Fail if `request_id`, `tier_id`, or `allowed_actions[]` remain primary |
 | Runtime identity display | inherited/overridden, requested/effective, honored/skipped/clamped | Fail if compact or detailed surfaces collapse these states |
 | Projection state | `projection_freshness` and `projection_health` | Fail if trust is still modeled as one overloaded field |
@@ -409,7 +409,7 @@ plan_unit_id: GRRC-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GUI_Rebuild_Requirements_Checklist.md
-canonical_text: 'The Orchestrator tab redesign is explicit: Progress is the widget-hosting operational summary; Seams replaces Tiers as seam-first, package-second, node-on-drill-in hierarchy; Node Graph, Evidence, History, and Ledger remain native tabs; non-Progress Orchestrator widget layouts and Tiers-era identifiers remain migration evidence only.'
+canonical_text: 'The Orchestrator tab redesign is explicit: Progress is the widget-hosting operational summary; Plan Compile is the plans-to-code projection tab; Seams replaces Tiers as seam-first, package-second, node-on-drill-in hierarchy; Node Graph, Evidence, History, and Ledger remain native tabs; non-Progress Orchestrator widget layouts and Tiers-era identifiers remain migration evidence only.'
 gui_related: true
 gui_classification_reason: This unit directly governs GUI navigation, tabs, widget hostability, and retired Orchestrator layout behavior.
 split_recommended: true
@@ -575,7 +575,7 @@ plan_unit_id: GRRC-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GUI_Rebuild_Requirements_Checklist.md
-canonical_text: The verification table fails if Tiers remains canonical, if non-Progress Orchestrator tabs remain widget canvases, or if widget hostability extends beyond Dashboard, Usage, and Orchestrator Progress.
+canonical_text: The verification table fails if Tiers remains canonical, if Plan Compile is omitted from the seven-tab shell, if non-Progress Orchestrator tabs remain widget canvases, or if widget hostability extends beyond Dashboard, Usage, and Orchestrator Progress.
 gui_related: true
 gui_classification_reason: This unit verifies visible Orchestrator tabs and widget-hosting behavior.
 split_recommended: true
@@ -602,6 +602,7 @@ source_lineage:
 preserved_exact_tokens:
 - Orchestrator tabs
 - Progress
+- Plan Compile
 - Seams
 - Node Graph
 - Evidence
@@ -613,7 +614,7 @@ preserved_exact_tokens:
 - Usage
 - Orchestrator Progress
 negative_constraints:
-- Fail if Tiers remains canonical or if Seams, Node Graph, Evidence, History, or Ledger are still treated as widgetized.
+- Fail if Tiers remains canonical, if Plan Compile is omitted, or if Plan Compile, Seams, Node Graph, Evidence, History, or Ledger are still treated as widgetized.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:

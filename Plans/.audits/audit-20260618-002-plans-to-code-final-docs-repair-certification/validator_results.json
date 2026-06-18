@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.deep_audit_validator_results.v1",
+  "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "generated_at_utc": "2026-06-18T05:05:23Z",
+  "status": "pass",
+  "commands": [
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
+      "status": "pass",
+      "summary": "ledger status pass; atoms=64; events=14; compile_queue_items=1; plan_units_checked=2519; questions=0; warnings=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": "PlanUnits=5105; acceptance_units=18228; coverage_status=pass; node_readiness_status=runtime_disabled"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "summary": "migration validation pass; live_plan_unit_count=5105; span_count=3916; failures=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "status": "pass",
+      "summary": "handoff schema contract validator pass; failures=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-audit-closure.py validate",
+      "status": "pass",
+      "summary": "semantic closure registry pass; row_count=94; errors=0; warnings=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": "shards_checked=936; docs_checked=52; failures=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "summary": "standard governance gates pass; failures=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plans-verify.py audit-governance",
+      "status": "pass",
+      "summary": "audit governance pass; failures=0"
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_jsonschema python3 -c \"import json, jsonschema; data=json.load(open(\"Plans/plans_to_code_handoff.schema.json\")); jsonschema.Draft202012Validator.check_schema(data); print(\"draft202012_schema_check=pass\")\"",
+      "status": "pass",
+      "summary": "Draft 2020-12 metaschema check pass"
+    },
+    {
+      "cmd": "git diff --check",
+      "status": "pass",
+      "summary": "no whitespace errors"
+    },
+    {
+      "cmd": "find . -prune exclusions for .git, Plans/.audits, Plans/ledgers, generated indexes/evidence; search names matching worknode/nodeseed/plancompile/plan_compile",
+      "status": "pass",
+      "summary": "no forbidden runtime artifact paths found outside allowed docs/generated audit/ledger surfaces"
+    },
+    {
+      "cmd": "rg fixed-pass compatibility scan across Chain Wizard, assistant chat, Final GUI, Models, Project Output, Contracts, and handoff schema",
+      "status": "pass_with_expected_compatibility_hits",
+      "summary": "remaining Pass 1 / Pass 2 / Pass 3 and validation_pass_report hits are compatibility aliases, source-lineage, or schema compatibility branches; active GUI label rule is compatibility-limited"
+    },
+    {
+      "cmd": "rg seven-tab/Tiers scan across non-generated Plans markdown",
+      "status": "pass_with_expected_compatibility_hits",
+      "summary": "active Orchestrator shell references use Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger; remaining Tiers/six-tab hits are stale, retired, legacy, source-lineage, trust/research tiers, or compatibility notes"
+    }
+  ],
+  "notes": [
+    "Final validator rerun completed after final doc, generated-artifact, evidence, and closure-registry refreshes.",
+    "No PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
+  ]
+}

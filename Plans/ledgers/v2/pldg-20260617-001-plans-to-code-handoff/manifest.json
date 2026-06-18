@@ -6,8 +6,8 @@
   "status": "sealed",
   "phase": "compiled_plans_to_code_handoff_governance_sealed",
   "created_at_utc": "2026-06-17T21:45:00Z",
-  "updated_at_utc": "2026-06-18T03:26:09Z",
-  "last_event_id": "evt-0013",
+  "updated_at_utc": "2026-06-18T04:54:48Z",
+  "last_event_id": "evt-0014",
   "source_context": "Conversation-derived v2 planning ledger capturing Plans-to-code handoff contracts, PlanCompile design-only state machine, automated testing, source-control rollback, Orchestrator Plan Compile UX, condensed model settings, autonomy/HITL, loop breakers, and final certification. Source/planning memory only.",
   "canonical_plan_targets": [
     "Plans/Plan_To_Node_Compilation.md"
@@ -46,7 +46,7 @@
   ],
   "governance_status": "sealed",
   "record_counts": {
-    "events": 13,
+    "events": 14,
     "design_atoms": 64,
     "decisions": 28,
     "questions": 0,
@@ -73,8 +73,8 @@
     "implementation_readiness_matrix": "state/implementation_readiness_matrix.json",
     "reference_impact_audit": "source_shards/reference_impact_audit.md"
   },
-  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Bounded reconciliations at evt-0012 and evt-0013 aligned Auditor audit-to-repair loop semantics, seven-tab title wording, strict handoff schema payload definitions, doc-impact status, README status, latest clean audit reference, and active Chain Wizard/Project Output/assistant settings/Contracts pass-loop owner surfaces. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness remains runtime_disabled. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
-  "last_updated_at_utc": "2026-06-18T03:26:09Z",
+  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Bounded reconciliations at evt-0012, evt-0013, and evt-0014 aligned Auditor audit-to-repair loop semantics, seven-tab title/reference wording, row-by-row handoff matrix rows, strict handoff schema payload/metaschema definitions, source-control/WorkNode/test receipt fields, doc-impact status, README status, latest clean audit reference, and active Chain Wizard/Project Output/assistant settings/Contracts pass-loop owner surfaces. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness is runtime_disabled. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
+  "last_updated_at_utc": "2026-06-18T04:54:48Z",
   "compiled_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
@@ -82,20 +82,28 @@
     "Plans/Executor_Protocol.md",
     "Plans/FileSafe.md",
     "Plans/FinalGUISpec.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
     "Plans/GitHub_Integration.md",
     "Plans/Goal_Runtime_System.md",
     "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
     "Plans/Orchestrator_Page.md",
     "Plans/Permissions_System.md",
     "Plans/Plan_Document_System.md",
     "Plans/Plan_To_Node_Compilation.md",
     "Plans/Planning_Ledger_System.md",
+    "Plans/Progression_Gates.md",
     "Plans/Project_Output_Artifacts.md",
     "Plans/Run_Graph_View.md",
     "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
     "Plans/Tools.md",
+    "Plans/Widget_System.md",
     "Plans/WorktreeGitImprovement.md",
-    "Plans/human-in-the-loop.md"
+    "Plans/assistant-chat-design.md",
+    "Plans/feature-list.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/rewrite-tie-in-memo.md"
   ],
   "compiled_plan_unit_ids": [
     "0PI-058",
@@ -136,5 +144,6 @@
     "RGV-013",
     "T-159",
     "W-072"
-  ]
+  ],
+  "last_updated_at": "2026-06-18T04:54:48"
 }

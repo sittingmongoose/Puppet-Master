@@ -8,9 +8,9 @@ This v2 Bootstrap Planning Ledger records the Plans-to-code handoff design decis
 
 - `phase`: `compiled_plans_to_code_handoff_governance_sealed`
 - `plan_compile_runtime_status`: `design_only_disabled`
-- `latest_audit`: `Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/FINAL_REPORT.md`
+- `latest_audit`: `Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md`
 - `latest_audit_status`: `PASS`
-- `latest_reconciliation_event`: `evt-0013`
+- `latest_reconciliation_event`: `evt-0014`
 - No open questions.
 - No open blockers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or dispatched GoalRuns are included or authorized.
@@ -20,10 +20,10 @@ This v2 Bootstrap Planning Ledger records the Plans-to-code handoff design decis
 1. Validate the ledger projection if needed:
 
 ```bash
-python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff
+PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff
 ```
 
-2. For any new finding, run audit-only or bounded repair against live Plans. The latest bounded repair aligned active fixed Pass 1 / Pass 2 / Pass 3 references to the Auditor audit-to-repair loop in Chain Wizard, Project Output, assistant settings, and Contracts owner surfaces; legacy pass names remain compatibility aliases only. Do not run PlanCompile or create WorkNodes/NodeSeeds from this ledger.
+2. For any new finding, run audit-only or bounded repair against live Plans. The latest bounded repair aligned row-by-row handoff matrix rows, strict schema payload/metaschema definitions, source-control/WorkNode/test receipt contracts, active fixed Pass 1 / Pass 2 / Pass 3 references to the Auditor audit-to-repair loop, and all seven-tab title/reference surfaces. Legacy pass names remain compatibility aliases only. Do not run PlanCompile or create WorkNodes/NodeSeeds from this ledger.
 
 ## Key rule
 
