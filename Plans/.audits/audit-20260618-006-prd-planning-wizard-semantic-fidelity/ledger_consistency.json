@@ -1,0 +1,27 @@
+{
+  "schema_id": "pm.semantic_fidelity.ledger_consistency.v1",
+  "audit_id": "audit-20260618-006-prd-planning-wizard-semantic-fidelity",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "generated_at_utc": "2026-06-18T20:23:10Z",
+  "status": "pass",
+  "manifest_status": "sealed",
+  "manifest_phase": "compiled_prd_planning_wizard_governance_sealed",
+  "current_status": "sealed",
+  "current_phase": "compiled_prd_planning_wizard_governance_sealed",
+  "compile_queue_status": "compiled_prd_planning_wizard_governance_sealed",
+  "last_event_id": "evt-0022",
+  "terminal_ledger_event_id": "evt-0022",
+  "design_atom_count": 168,
+  "compiled_atom_count": 168,
+  "compiled_plan_unit_count": 61,
+  "compile_queue_item_count": 61,
+  "question_count": 0,
+  "open_blockers": 0,
+  "open_questions": 0,
+  "ready_for_plan_compile_atoms": 0,
+  "sealed_in_registry": true,
+  "active_candidate_or_open_question_refs": [],
+  "notes": [
+    "No active candidate/open_question/ready_for_plan_compile residue found in sealed compact state projections. Historical records preserve ready_for_plan_compile decision provenance and were not treated as sealed-state drift."
+  ]
+}
