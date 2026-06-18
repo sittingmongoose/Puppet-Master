@@ -72,42 +72,369 @@
       }
     },
     "stage_success_route": {
-      "type": "string",
-      "enum": [
-        "next_stage",
-        "certify_stage",
-        "handoff_ready",
-        "parent_writeback"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "next_stage",
+            "certify_stage",
+            "handoff_ready",
+            "parent_writeback"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "handoff_ready",
+                  "parent_writeback"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "next_stage",
+                  "certify_stage"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
       ]
     },
     "stage_blocked_route": {
-      "type": "string",
-      "enum": [
-        "record_blocker",
-        "request_parent_adjudication",
-        "escalate_authority_boundary",
-        "pause_for_repair",
-        "critical_block"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "record_blocker",
+            "request_parent_adjudication",
+            "escalate_authority_boundary",
+            "pause_for_repair",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "request_parent_adjudication",
+                  "escalate_authority_boundary",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "record_blocker",
+                  "pause_for_repair"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
       ]
     },
     "compile_wave_retry_route": {
-      "type": "string",
-      "enum": [
-        "retry_same_assignment",
-        "split_assignment",
-        "resume_from_checkpoint",
-        "return_to_parent",
-        "critical_block"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "retry_same_assignment",
+            "split_assignment",
+            "resume_from_checkpoint",
+            "return_to_parent",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "return_to_parent",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "retry_same_assignment",
+                  "split_assignment",
+                  "resume_from_checkpoint"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
       ]
     },
     "compile_worklist_blocked_route": {
-      "type": "string",
-      "enum": [
-        "record_blocker",
-        "regenerate_worklist",
-        "request_parent_adjudication",
-        "pause_for_repair",
-        "critical_block"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "record_blocker",
+            "regenerate_worklist",
+            "request_parent_adjudication",
+            "pause_for_repair",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "request_parent_adjudication",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "record_blocker",
+                  "regenerate_worklist",
+                  "pause_for_repair"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
       ]
     },
     "node_seed_review_decision": {
@@ -307,9 +634,13 @@
           "$ref": "#/$defs/cursor"
         },
         "last_green_stage": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "last_green_hashes": {
@@ -322,9 +653,13 @@
           }
         },
         "next_required_stage": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "resume_command_or_action": {
@@ -370,6 +705,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "stage_id",
         "purpose",
         "read_files",
         "write_files",
@@ -383,6 +719,9 @@
         "parent_writeback_policy"
       ],
       "properties": {
+        "stage_id": {
+          "$ref": "#/$defs/stage_name"
+        },
         "purpose": {
           "type": "string"
         },

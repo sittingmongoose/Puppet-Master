@@ -459,7 +459,7 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-06-18T10:15:36Z",
+  "generated_at_utc": "2026-06-18T13:49:14Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 5105,
@@ -511,7 +511,7 @@
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"

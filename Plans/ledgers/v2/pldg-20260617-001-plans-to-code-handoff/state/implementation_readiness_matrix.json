@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.implementation_readiness_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "updated_at_utc": "2026-06-18T13:39:57Z",
   "status": "implementation_readiness_currentness_compatibility_certified",
   "purpose": "Preserve the implementation-readiness mapping after conversion to Plans with field-level fidelity repairs for all 64 design atoms, strict schema payloads, and current audit evidence.",
   "global_acceptance": [
@@ -449,6 +449,6 @@
       "validator_status": "pass"
     }
   ],
-  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

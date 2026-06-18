@@ -4,13 +4,13 @@
   "current_phase": "compiled_plans_to_code_handoff_governance_sealed",
   "status": "compiled_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0017",
+    "last_event_id": "evt-0018",
     "ready_atom_count": 0,
     "next_stage": "terminal_sealed_no_active_next_stage",
     "compiled_atom_count": 64
   },
-  "summary": "Terminal bounded plans-to-code currentness/compatibility repair is certified in audit-004. PlanCompile remains design-only disabled; Plan Wizard redesign may continue separately. No runtime/build artifacts were created.",
-  "next_action": "No current repair, validator, or PlanCompile action remains for this ledger. PlanCompile stays design-only disabled; Plan Wizard redesign may continue as a separate future planning lane.",
+  "summary": "Terminal bounded plans-to-code final corrective certification is recorded in audit-005. PlanCompile remains design-only disabled; no runtime/build artifacts were created.",
+  "next_action": "No current repair, validator, or PlanCompile action remains for this ledger after final corrective certification. PlanCompile stays design-only disabled; Plan Wizard redesign may continue as a separate future planning lane.",
   "allowed_next_writes": [
     "audit artifacts or bounded repair docs/projections explicitly requested by Jared"
   ],
@@ -33,23 +33,26 @@
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
     "doc_impact_matrix": "doc_impact_currentness_compatibility_certified",
-    "latest_audit": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
-    "bounded_reconciliation": "evt-0017",
+    "latest_audit": "audit-20260618-005-plans-to-code-final-corrective-certification",
+    "bounded_reconciliation": "evt-0018",
     "active_fixed_pass_replacement": "auditor_audit_to_repair_loop_until_certified_or_critical_block",
     "implementation_readiness_matrix": "implementation_readiness_currentness_compatibility_certified",
-    "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
-    "handoff_schema_contract": "strict_payload_defs_nested_enums_h001_h018_validator_passed",
+    "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
+    "handoff_schema_contract": "strict_route_objects_exact_stage_targets_stage_card_ids_validator_passed",
     "handoff_matrix_rows": "explicit_row_by_row_matrix_added",
     "latest_audit_status": "pass_certified",
     "validator_sweep": "pass",
     "validators": "pass",
-    "terminal_cursor": "evt-0017_no_pending_repair_or_validator_action",
-    "plan_wizard_redesign_next_lane": "allowed_separate_future_scope"
+    "terminal_cursor": "evt-0018_no_pending_repair_or_validator_action",
+    "plan_wizard_redesign_next_lane": "allowed_separate_future_scope",
+    "active_auditor_aliases": "auditor_cycle_report_canonical_validation_pass_report_compatibility_only_with_cycle_report_ref",
+    "orchestrator_tab_lists": "active_exhaustive_lists_include_plan_compile",
+    "exact_route_targets": "route_kind_target_stage_reason_required_terminal_null_enforced"
   },
   "open_blockers": [],
   "open_questions": [],
-  "updated_at_utc": "2026-06-18T12:49:21Z",
-  "last_event_id": "evt-0017",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+  "updated_at_utc": "2026-06-18T13:39:57Z",
+  "last_event_id": "evt-0018",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }
