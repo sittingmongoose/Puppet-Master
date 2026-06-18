@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+  "checked_for": [
+    "WorkNodes",
+    "NodeSeeds",
+    "node_queues",
+    "final_node_queues",
+    "*.rs",
+    "*.slint",
+    "Cargo.toml"
+  ],
+  "forbidden_count": 0,
+  "forbidden_paths": [],
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "schema_id": "pm.deep_audit_forbidden_artifacts.v1",
+  "status": "pass"
+}
