@@ -1,0 +1,26 @@
+{
+  "audit_id": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+  "counts": {
+    "atom_fidelity_rows": 64,
+    "closure_reuse_rows": 43,
+    "doc_impact_rows": 8,
+    "implementation_readiness_rows": 8,
+    "owner_routing_rows": 8,
+    "planunit_source_claim_rows": 38,
+    "semantic_risk_rows": 0
+  },
+  "generated_at_utc": "2026-06-18T00:48:18Z",
+  "initial_artifacts_written": [
+    "atom_fidelity_matrix.jsonl",
+    "closure_registry_audit.json",
+    "closure_reuse.jsonl",
+    "doc_impact_reference_findings.jsonl",
+    "forbidden_artifacts.json",
+    "implementation_readiness_findings.jsonl",
+    "ledger_consistency.json",
+    "owner_routing_findings.jsonl",
+    "planunit_source_claims.jsonl",
+    "semantic_risks.jsonl"
+  ],
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff"
+}
