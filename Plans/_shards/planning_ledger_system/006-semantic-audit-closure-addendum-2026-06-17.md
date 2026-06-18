@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L485-L576
+Source lines: L485-L577
 
-Source SHA256: `8b3e8d42f971f24e72c60274e4f378bca37052f50ff2893906d3f0da6a8fafac`
+Source SHA256: `66b6b78b63f2e00644cb1df299e39507371b2d36523169344a94534a8f126b71`
 
 ---
 
@@ -35,6 +35,7 @@ canonical_text: >-
   PlanUnit, owner, and closure evidence have not changed.
   Chat-sourced semantic closure support is recorded as source-lineage process
   support unless a v2 ledger atom or decision explicitly owns it.
+  This is the semantic closure registry contract for finding_key, previously_closed reuse, and reopen checks across Plan Wizard, PlanCompile, and WorkNode verification findings.
 gui_related: false
 gui_classification_reason: Audit closure durability and reopen policy are process/governance behavior, not GUI implementation work.
 depends_on:

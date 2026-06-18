@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L2415-L2460
+Source lines: L2415-L2461
 
-Source SHA256: `ee507a21b600be08f0abbf657d63ce092c83687df7b82a35a5d66a026dab7abe`
+Source SHA256: `34485ce1fc50fc0314cf8d88b7e36e485c834e0c1b276ea991f6ded1677efad6`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/human-in-the-loop.md
 canonical_text: >-
   HITL remains an explicit mode for plans-to-code execution. When enabled, it may add configured package, seam, promotion, destructive-operation, or critical certification checkpoints, but these checkpoints are not required for correctness in default hands-off mode. HITL consumes Permissions_System critical-escalation policy and Goal_Runtime_System autonomy policy; it does not replace internal Auditor, Overseer, test, source-control, or high-effort repair loops.
+  Configured checkpoints may pause for credentials/secrets or other critical authority blockers only when HITL policy enables them or critical escalation policy requires them.
 gui_related: true
 gui_classification_reason: HITL checkpoints, approvals, and continuation prompts are user-visible interaction surfaces.
 depends_on: [PS-116, GRS-029]

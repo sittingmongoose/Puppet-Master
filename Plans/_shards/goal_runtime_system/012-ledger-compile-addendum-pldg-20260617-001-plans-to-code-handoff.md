@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L1955-L2113
+Source lines: L1955-L2118
 
-Source SHA256: `60723b4ab6b0b95ab11b5f8a5e102525996c2f46b8bf3841fb1a8519c1ab24bb`
+Source SHA256: `065797682dea1110eb194b51d396f8a9a6974a47f94968e964ecead5f65535e7`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Future native Plan Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Plan Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns audit/repair/audit verification loops.
+  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Plan Wizard terminology. Do not introduce new references or meta-comments using the old Chain Wizard name.
 gui_related: false
 gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
 depends_on: [GRS-002, PNC-010, MS-110]
@@ -69,6 +70,7 @@ status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Plans-to-code execution defaults to hands-off autonomy. User escalation is last-resort for critical authority blockers: missing credentials or secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, unrecoverable environment failure, true product decision with no inferable answer, or security-sensitive approval. HITL is an explicit setting or mode that can add configured package, seam, or critical checkpoints without becoming required for correctness. Default runtime repair routes ordinary uncertainty through Auditor, Overseer, graph/work/model/source-control/test-harness repair, and high-effort repair before asking the user.
+  Configured checkpoints are HITL-only additions, while default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval. Internal repair escalation uses Overseer review and High-Effort Worker routing before user escalation when evidence permits.
 gui_related: false
 gui_classification_reason: Autonomy, HITL, and escalation policy are runtime/permission behavior.
 depends_on: [GRS-027, PS-116, HITL-036]
@@ -97,6 +99,8 @@ preserved_exact_tokens:
   - "hands-off"
   - "critical authority blockers"
   - "configured checkpoints"
+  - "Overseer review"
+  - "High-Effort Worker"
   - "credentials/secrets"
   - "billing/payment/legal/license"
   - "unsafe destructive operation"
@@ -120,6 +124,7 @@ status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
+  GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
 gui_classification_reason: Completion certification and evidence truth-layer policy are runtime/governance behavior.
 depends_on: [GRS-027, GRS-029, EP-103, ATS-004, POA-048]

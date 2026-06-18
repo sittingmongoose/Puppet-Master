@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "61e3368cb4d1348c093d1fbdaa58e29f65292cf4188ce6c7a3a35bbd5d3be338"
+      "sha256": "4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "4dc6c756bc7325bf2078660a185d6268bf4ac34024540370e63cc109f65d0561"
+      "sha256": "1c7d49ae45b29d053b0812ac9dd6ce4c863088c60a515248df163bd4084fa4bd"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "303dffe6d845c6899667b72d9c36cd62c58d7834a53c13b0643ebd1a19145f68"
+      "sha256": "57a1326ed5c514ea4244f8ccdbc844904e81498ba469e2496d046d20faa19414"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "32653abe668802ad2a8a9a02649de0ca5007ced747625ae54610871b6f6c634b"
+      "sha256": "982c077fc996c3ad985b351f26c46ffe2429524f4cc9a91f705fb30c22065ac3"
     }
   ],
   "checks": [

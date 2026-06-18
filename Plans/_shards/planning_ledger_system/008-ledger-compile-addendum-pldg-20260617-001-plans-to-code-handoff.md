@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L604-L660
+Source lines: L605-L662
 
-Source SHA256: `8b3e8d42f971f24e72c60274e4f378bca37052f50ff2893906d3f0da6a8fafac`
+Source SHA256: `66b6b78b63f2e00644cb1df299e39507371b2d36523169344a94534a8f126b71`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
   A v2 planning ledger may declare implementation_readiness_matrix.json and doc_impact_matrix.json as required compile inputs when a ledger-to-Plans compile must produce implementation-ready PlanUnits and reference coverage. implementation_readiness_matrix maps design areas to required PlanUnits, schemas, fields, acceptance criteria, validators, owner docs, consumer docs, and no-build boundaries. doc_impact_matrix maps primary owner docs, direct consumer docs, reference/index/UI docs, search tokens, required update types, deferred update handling, and per-doc no-update evidence. The ledger remains source/planning memory; canonical truth is established only by live non-pipeline Plans docs and schema drafts after compile.
+  The doc_impact_matrix rule forbids owner-only repairs: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs.
 gui_related: false
 gui_classification_reason: Matrix input handling is ledger/process behavior, not GUI implementation.
 depends_on: [PLS-010, PDS-015]

@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L1600-L1695
+Source lines: L1600-L1699
 
-Source SHA256: `fe20e7e4360a4af4d24e57e0dc29864a1b8e070217ac213ea5a477aa192385c6`
+Source SHA256: `b552c415ff7fb6d387cdfeb55d87aa47a473124af9a16717220dba5c4c4273cd`
 
 ---
 
@@ -19,12 +19,14 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Orchestrator has a dedicated Plan Compile tab for the long process of converting approved Plans into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The tab projects compile_id, current_stage, stage_timeline, current activity, PlanUnits processed, NodeSeeds drafted, WorkNode requests drafted, dependency/seam graph, test capability requirements, model lane routing, GUI/high-effort counts, Auditor loop status, throughput, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness. It consumes Plan_To_Node_Compilation, Models_System, Automated_Testing_System, Executor_Protocol, and Goal_Runtime_System records without becoming compiler or scheduler authority.
+  The tab groups stage progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness as progress/speed/ETA/status panels.
+  The tab can label the compile as Plans to WorkNodes, but Plan Compile tab scope excludes Executor execution progress except summarized handoff readiness or final handoff status.
 gui_related: true
 gui_classification_reason: This unit defines a user-visible Orchestrator tab, status panels, progress projection, and activity details.
 depends_on: [OP-022, PNC-010, PNC-014, MS-110, ATS-001, GRS-028]
 unblocks: [F3-397, RGV-013, RAP-029]
 acceptance_criteria:
-  - Plan Compile tab shows progress, speed, stage status, counts, blockers, warnings, ETA confidence, model lane status, test capability status, and handoff readiness.
+  - Plan Compile tab shows progress/speed/ETA/status panels for progress, speed, stage status, counts, blockers, warnings, ETA confidence, model lane status, test capability status, and handoff readiness.
   - The tab is scoped to Plans-to-node creation and does not display Executor code-generation progress except final handoff status.
   - Orchestrator consumes owner records and does not become PlanCompile or Executor authority.
 validation_surfaces:
@@ -47,6 +49,7 @@ preserved_exact_tokens:
   - "throughput"
   - "speed"
   - "ETA confidence"
+  - "progress/speed/ETA/status panels"
   - "NodeSeeds drafted"
   - "WorkNode requests drafted"
   - "Plan Compile tab scope"
@@ -67,6 +70,7 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Existing Orchestrator execution views remain responsible for queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, and final certification progress. Progress, Node Graph, Evidence, History, Ledger, Runtime Artifacts, Source Control, and Worktrees consume execution receipts and runtime projections after Executor intake; they do not belong inside the Plan Compile tab except as summarized handoff readiness or final handoff status.
+  Existing execution views, not Plan Compile, own Executor execution progress after handoff.
 gui_related: true
 gui_classification_reason: This unit maps visible execution progress to existing Orchestrator tabs and panels.
 depends_on: [OP-023, EP-103, GRS-030, RAP-029, W-072]

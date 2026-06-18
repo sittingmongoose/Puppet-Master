@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13035-L13082
+Source lines: L13035-L13083
 
-Source SHA256: `4e854b8a6922f930f34b8b3eaae1784919efd076fe4b769608da8bb501f676f6`
+Source SHA256: `3567dfde770d3870801f7fa798dacad0dd3e2c558b97a08507e013409105ea32`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   Mutation-capable WorkNode attempts must create or verify a safe point before risky execution, support restore_safe_point_then_retry where required, and record rollback_available in source-control and execution receipts. FileSafe owns the file mutation, safe-point, restore, rollback, evidence, and dirty-state guard inputs consumed by Executor after WorkNode requests are accepted. PlanCompile may reference safe-point requirements in request metadata but does not create safe points or mutate source control.
+  Safe-point receipts preserve safe_point_id as the canonical safe-point identity for rollback and retry evidence.
 gui_related: false
 gui_classification_reason: Safe-point and rollback guard inputs are filesystem/runtime safety contracts.
 depends_on: [F2-188, W-072]
