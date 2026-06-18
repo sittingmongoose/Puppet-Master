@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+  "closure_reuse_rows": 42,
+  "closure_reuse_status_counts": {
+    "previously_closed_reused": 42
+  },
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "notes": [
+    "No new closure rows were written in audit-only mode. Previous repaired closure rows were reused when registry validation passed."
+  ],
+  "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+  "registry_rows_total": 93,
+  "schema_id": "pm.deep_audit_closure_registry_audit.v1",
+  "status": "pass",
+  "target_ledger_registry_rows": 42,
+  "validator_result_name": "closure registry validate"
+}

@@ -1,0 +1,136 @@
+{
+  "artifact_status": "final_validator_results_recorded",
+  "atom_fidelity": {
+    "atoms_checked": 64,
+    "classification_counts": {
+      "equivalent_with_evidence": 64
+    }
+  },
+  "audit_artifacts": [
+    "atom_fidelity_matrix.jsonl",
+    "closure_registry_audit.json",
+    "closure_reuse.jsonl",
+    "doc_impact_reference_findings.jsonl",
+    "forbidden_artifacts.json",
+    "implementation_readiness_findings.jsonl",
+    "ledger_consistency.json",
+    "owner_routing_findings.jsonl",
+    "planunit_source_claims.jsonl",
+    "semantic_risks.jsonl",
+    "validator_results.json"
+  ],
+  "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+  "blockers": [
+    {
+      "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+      "consumer_docs": [],
+      "detail_keys": [
+        "impl-004"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "exact_tokens": [
+        "progress/speed/ETA/status panels"
+      ],
+      "finding_family": "implementation_readiness",
+      "finding_key": "sfk-0b8d4f027122575b9cfe5cc8",
+      "issue": "missing_required_plan_unit_terms",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "next_safe_action": "Audit-only: record for bounded repair; do not edit Plans in this pass.",
+      "owner_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "plan_unit_ids": [],
+      "severity": "low",
+      "source_atom_ids": [],
+      "status": "open_new"
+    }
+  ],
+  "closure_registry": {
+    "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+    "closure_reuse_rows": 42,
+    "closure_reuse_status_counts": {
+      "previously_closed_reused": 42
+    },
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "notes": [
+      "No new closure rows were written in audit-only mode. Previous repaired closure rows were reused when registry validation passed."
+    ],
+    "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "registry_rows_total": 93,
+    "schema_id": "pm.deep_audit_closure_registry_audit.v1",
+    "status": "pass",
+    "target_ledger_registry_rows": 42,
+    "validator_result_name": "closure registry validate"
+  },
+  "compile_readiness": "not_safe_to_enable_runtime_governance_stale",
+  "current_ref": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+  "doc_impact_refs": {
+    "groups_checked": 8,
+    "status_counts": {
+      "pass": 8
+    }
+  },
+  "forbidden_artifacts": {
+    "forbidden_count": 0,
+    "status": "pass"
+  },
+  "implementation_readiness": {
+    "areas": 8,
+    "status_counts": {
+      "pass": 7,
+      "warning": 1
+    }
+  },
+  "ledger_consistency": {
+    "atom_count": 64,
+    "compiled_planunit_count_with_ledger_lineage": 38,
+    "status": "pass_with_stale_compact_state_notes"
+  },
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "next_safe_action": "Bounded repair for impl-004 only: add or disposition the missing progress/speed/ETA/status panels PlanUnit wording in the Orchestrator/Final GUI ownership surface. Governance seal remains a separate explicit phase after repair/index artifacts stop changing.",
+  "owner_routing": {
+    "groups_checked": 8,
+    "status_counts": {
+      "pass": 8
+    }
+  },
+  "phase": "post_repair_deep_audit_only",
+  "planunit_source_claims": {
+    "plan_units_checked": 38,
+    "status_counts": {
+      "valid_source_claim": 38
+    }
+  },
+  "schema_id": "pm.deep_audit_report.v1",
+  "semantic_risks": {
+    "by_family": {
+      "implementation_readiness": 1
+    },
+    "by_severity": {
+      "low": 1
+    },
+    "by_status": {
+      "open_new": 1
+    },
+    "new_or_open": 1,
+    "previously_closed": 42
+  },
+  "source_baseline": {
+    "head": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+    "head_short": "88719f2f67",
+    "origin_main": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+    "start_git_status": []
+  },
+  "status": "blocked_with_findings",
+  "validator_results_path": "Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/validator_results.json",
+  "validator_summary": {
+    "core_status": "pass",
+    "governance_status": "stale_not_sealed",
+    "non_audit_side_effects": [],
+    "status": "pass_with_governance_stale"
+  }
+}

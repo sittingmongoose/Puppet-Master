@@ -1,0 +1,20 @@
+{
+  "atom_count": 64,
+  "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+  "compact_phase": "ready_for_plan_compile",
+  "compact_ready_atoms": 64,
+  "compact_status": "active",
+  "compiled_planunit_count_with_ledger_lineage": 38,
+  "correction_count": 10,
+  "current_ref": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+  "decision_count": 28,
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "notes": [
+    "Compact ledger state still describes pre-compile readiness; canonical Plans/.plan_index at current commit prove the post-compile/post-repair surface. Audit did not update ledger state."
+  ],
+  "open_blockers": [],
+  "open_questions": [],
+  "origin_main_ref": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+  "schema_id": "pm.deep_audit_ledger_consistency.v1",
+  "status": "pass_with_stale_compact_state_notes"
+}
