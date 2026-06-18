@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2175-L2195
+Source lines: L2178-L2198
 
-Source SHA256: `60b6e07279d170ab6fcaf8817873523922c64d666151f3c17cf4ff4b45618b7d`
+Source SHA256: `1032deeaa0afdad08c179d08e7e076d15765f9f9f20e83326cc9decfd44515a5`
 
 ---
 

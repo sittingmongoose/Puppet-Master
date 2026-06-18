@@ -1,6 +1,6 @@
 # Shard Index: Plans/Contracts_V0.md
 
-Generated: 2026-06-18T10:15:41Z
+Generated: 2026-06-18T13:49:14Z
 
 Source SHA256: `e0d2b0c4a3a0991e44741c1602e54681bb6faef0eececa78b3f149405c9eb09b`
 

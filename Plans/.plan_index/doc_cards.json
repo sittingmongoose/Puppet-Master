@@ -1673,7 +1673,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 10104,
+      "line_count": 10119,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 151,
       "plan_unit_ids": [
@@ -1986,7 +1986,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "60b6e07279d170ab6fcaf8817873523922c64d666151f3c17cf4ff4b45618b7d",
+      "sha256": "1032deeaa0afdad08c179d08e7e076d15765f9f9f20e83326cc9decfd44515a5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -8202,7 +8202,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "b76eae8f606ea4e44627d7a92ba3faed956bf9f88d0c50875d2eb12c78cbab47",
+      "sha256": "9e74cf16b7e3f9ed3797b787f72386732ef2619612fbf5cb43704a2eabd72067",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
@@ -8722,7 +8722,7 @@
         "routing_mismatch",
         "scheduling_correctness"
       ],
-      "sha256": "785df1e2fb4c2856b440921da79803f0491d591666048658753dc6bb1a128262",
+      "sha256": "b1733e93b20c61fbb559f144e73a78082a99cc1557fd13bc800196889ebbd5c6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13,
@@ -9096,7 +9096,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 3289,
+      "line_count": 3290,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 48,
       "plan_unit_ids": [
@@ -9203,7 +9203,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "74e54277c196587ce36191cfd5a93d1aae3bb203ec0f08242ef1e391a6064e3e",
+      "sha256": "ae7e0502a3f2c65598c998f9117b20d8670cb186c088c481a4869f5e9150cdb2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47,
@@ -9644,7 +9644,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "f8a39f6fe6e8cf2a35ef0c814409093ce52ca06e3cfde72179ef60cbbc3e8793",
+      "sha256": "f7845b472daa604ba4420ac833981da2b9667dd8c44f153b60152e72e58e709d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -10266,7 +10266,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 15056,
+      "line_count": 15066,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 215,
       "plan_unit_ids": [
@@ -10497,7 +10497,7 @@
         "storage_owner_stub_loss",
         "storage_plan_drift"
       ],
-      "sha256": "b1c070e413a45d4b39ec2500393ce3eaa357c6be415c297c8cc03e01a98fcad3",
+      "sha256": "1944e41a47c734e855660998d425b4d3cc2e08bf3e89e4248d046f9c3877bf85",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 214,
@@ -11371,7 +11371,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-18T10:15:14Z",
+  "generated_at_utc": "2026-06-18T13:49:00Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

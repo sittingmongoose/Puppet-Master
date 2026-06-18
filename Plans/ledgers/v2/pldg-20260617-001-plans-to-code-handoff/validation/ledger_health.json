@@ -3,13 +3,13 @@
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 17,
+    "events": 18,
     "design_atoms": 64,
     "decisions": 28,
     "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "corrections": 10,
+    "corrections": 11,
     "compile_queue_items": 1,
     "ready_for_plan_compile_atoms": 0,
     "candidate_atoms": 0,
@@ -22,8 +22,8 @@
     "plan_compile_runtime_status": "design_only_disabled",
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
-    "doc_impact_matrix": "doc_impact_currentness_compatibility_certified",
-    "implementation_readiness_matrix": "implementation_readiness_currentness_compatibility_certified",
+    "doc_impact_matrix": "doc_impact_final_corrective_certified",
+    "implementation_readiness_matrix": "implementation_readiness_final_corrective_certified",
     "forbidden_artifacts": "not_created",
     "plan_units_checked": 2519
   },
@@ -31,7 +31,7 @@
     {
       "check_id": "record-counts-0001",
       "status": "pass",
-      "summary": "Record counts match manifest, compile queue, and compact state through evt-0017."
+      "summary": "Record counts match manifest, compile queue, and compact state through evt-0018."
     },
     {
       "check_id": "compile-0001",
@@ -41,7 +41,7 @@
     {
       "check_id": "governance-0001",
       "status": "pass",
-      "summary": "Ledger compact state, registry, PlanUnit index, Spec Lock, sharding, evidence, closure registry, audit projections, and plan graph registration are sealed metadata-only surfaces."
+      "summary": "Ledger compact state, registry, PlanUnit index, Spec Lock, sharding, evidence, closure registry, audit projections, and plan graph registration are sealed metadata-only surfaces after final corrective certification."
     },
     {
       "check_id": "node-readiness-0001",
@@ -49,11 +49,11 @@
       "summary": "Node readiness intentionally remains runtime_disabled; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
-  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "updated_at_utc": "2026-06-18T13:39:57Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and later explicit enablement."
   ],
-  "last_event_id": "evt-0017",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+  "last_event_id": "evt-0018",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

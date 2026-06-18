@@ -1027,6 +1027,100 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
                 }
             )
 
+    def expect_route_object_def(def_name: str, route_kinds: set[str], terminal_kinds: set[str], error: str) -> None:
+        payload_def = defs.get(def_name, {})
+        properties = payload_def.get("properties", {})
+        required = set(payload_def.get("required", []))
+        if payload_def.get("type") != "object" or payload_def.get("additionalProperties") is not False:
+            failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "route_def_not_strict_object"})
+            return
+        for key in {"route_kind", "target_stage", "reason"} - required:
+            failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "route_def_missing_required_key", "key": key})
+        actual_kinds = set(properties.get("route_kind", {}).get("enum", []))
+        if actual_kinds != route_kinds:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "detail": "route_kind_enum_drift",
+                    "expected": sorted(route_kinds),
+                    "actual": sorted(actual_kinds),
+                }
+            )
+        target_any_of = properties.get("target_stage", {}).get("anyOf", [])
+        target_refs = {item.get("$ref") for item in target_any_of if isinstance(item, dict)}
+        target_has_null = any(isinstance(item, dict) and item.get("type") == "null" for item in target_any_of)
+        if "#/$defs/stage_name" not in target_refs or not target_has_null:
+            failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "target_stage_not_stage_name_or_null"})
+        if properties.get("reason", {}).get("type") != "string" or properties.get("reason", {}).get("minLength") != 1:
+            failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "reason_not_required_non_empty_string"})
+        if not isinstance(payload_def.get("allOf"), list) or len(payload_def.get("allOf", [])) < 2:
+            failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "route_def_missing_target_stage_conditionals"})
+        nonterminal_kinds = route_kinds - terminal_kinds
+        for conditional in payload_def.get("allOf", []):
+            if not isinstance(conditional, dict):
+                continue
+            kind_values = set(conditional.get("if", {}).get("properties", {}).get("route_kind", {}).get("enum", []))
+            target_schema = conditional.get("then", {}).get("properties", {}).get("target_stage", {})
+            if kind_values and kind_values <= terminal_kinds and target_schema.get("type") != "null":
+                failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "terminal_route_does_not_force_null", "route_kinds": sorted(kind_values)})
+            if kind_values and kind_values <= nonterminal_kinds and target_schema.get("$ref") != "#/$defs/stage_name":
+                failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "nonterminal_route_does_not_force_stage_name", "route_kinds": sorted(kind_values)})
+
+    stage_values = set(defs.get("stage_name", {}).get("enum", []))
+
+    route_policies = {
+        "stage_success_route": {
+            "kinds": {"next_stage", "certify_stage", "handoff_ready", "parent_writeback"},
+            "terminal": {"handoff_ready", "parent_writeback"},
+        },
+        "stage_blocked_route": {
+            "kinds": {"record_blocker", "request_parent_adjudication", "escalate_authority_boundary", "pause_for_repair", "critical_block"},
+            "terminal": {"request_parent_adjudication", "escalate_authority_boundary", "critical_block"},
+        },
+        "compile_wave_retry_route": {
+            "kinds": {"retry_same_assignment", "split_assignment", "resume_from_checkpoint", "return_to_parent", "critical_block"},
+            "terminal": {"return_to_parent", "critical_block"},
+        },
+        "compile_worklist_blocked_route": {
+            "kinds": {"record_blocker", "regenerate_worklist", "request_parent_adjudication", "pause_for_repair", "critical_block"},
+            "terminal": {"request_parent_adjudication", "critical_block"},
+        },
+    }
+
+    def route_fixture_accepts(def_name: str, value: Any) -> bool:
+        policy = route_policies[def_name]
+        if not isinstance(value, dict):
+            return False
+        if not {"route_kind", "target_stage", "reason"}.issubset(value):
+            return False
+        if set(value) - {"route_kind", "target_stage", "reason", "resume_ref"}:
+            return False
+        if not isinstance(value.get("reason"), str) or not value["reason"].strip():
+            return False
+        route_kind = value.get("route_kind")
+        if route_kind not in policy["kinds"]:
+            return False
+        target_stage = value.get("target_stage")
+        if route_kind in policy["terminal"]:
+            return target_stage is None
+        return isinstance(target_stage, str) and target_stage in stage_values
+
+    def expect_route_fixture(def_name: str, value: Any, should_accept: bool, error: str) -> None:
+        accepted = route_fixture_accepts(def_name, value)
+        if accepted != should_accept:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": error,
+                    "def": def_name,
+                    "fixture": value,
+                    "expected_acceptance": should_accept,
+                    "actual_acceptance": accepted,
+                }
+            )
+
     def expect_required_def(def_name: str) -> None:
         payload_def = defs.get(def_name)
         if not isinstance(payload_def, dict):
@@ -1061,11 +1155,14 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
 
     require_schema_keys("plan_compile_run", ["current_state", "receipts", "compile_wave_contracts"], "plan_compile_run_missing_wave_or_receipt_field")
     expect_prop_ref("plan_compile_run", "cursor", "#/$defs/cursor", "plan_compile_run_cursor_not_strict")
+    expect_nullable_prop_ref("plan_compile_run", "last_green_stage", "#/$defs/stage_name", "plan_compile_run_last_green_stage_not_stage_name_or_null")
+    expect_nullable_prop_ref("plan_compile_run", "next_required_stage", "#/$defs/stage_name", "plan_compile_run_next_required_stage_not_stage_name_or_null")
     expect_prop_ref("plan_compile_run", "last_green_hashes", "#/$defs/hash_snapshot", "plan_compile_run_hashes_not_strict")
     expect_array_items_ref("plan_compile_run", "blockers", "#/$defs/blocker", "plan_compile_run_blockers_not_strict")
     expect_array_items_ref("plan_compile_run", "compile_wave_contracts", "#/$defs/compile_wave_contract", "plan_compile_run_waves_not_strict")
 
-    require_schema_keys("stage_card", ["assignment_contract", "parent_writeback_policy"], "stage_card_missing_assignment_contract")
+    require_schema_keys("stage_card", ["stage_id", "assignment_contract", "parent_writeback_policy"], "stage_card_missing_assignment_contract")
+    expect_prop_ref("stage_card", "stage_id", "#/$defs/stage_name", "stage_card_stage_id_not_strict")
     expect_prop_ref("stage_card", "item_boundaries", "#/$defs/item_boundaries", "stage_card_item_boundaries_not_strict")
     expect_prop_ref("stage_card", "assignment_contract", "#/$defs/compile_wave_contract", "stage_card_assignment_contract_not_strict")
     expect_prop_ref("stage_card", "success_route", "#/$defs/stage_success_route", "stage_card_success_route_not_strict")
@@ -1077,26 +1174,8 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     require_schema_keys("node_seed_review", ["reviewer_role"], "node_seed_review_missing_reviewer_role")
     expect_prop_ref("node_seed_review", "decision", "#/$defs/node_seed_review_decision", "node_seed_review_decision_not_enum")
     expect_prop_ref("node_seed_review", "reviewer_role", "#/$defs/node_seed_reviewer_role", "node_seed_reviewer_role_not_enum")
-    expect_enum_def(
-        "stage_success_route",
-        {"next_stage", "certify_stage", "handoff_ready", "parent_writeback"},
-        "stage_success_route_enum_drift",
-    )
-    expect_enum_def(
-        "stage_blocked_route",
-        {"record_blocker", "request_parent_adjudication", "escalate_authority_boundary", "pause_for_repair", "critical_block"},
-        "stage_blocked_route_enum_drift",
-    )
-    expect_enum_def(
-        "compile_wave_retry_route",
-        {"retry_same_assignment", "split_assignment", "resume_from_checkpoint", "return_to_parent", "critical_block"},
-        "compile_wave_retry_route_enum_drift",
-    )
-    expect_enum_def(
-        "compile_worklist_blocked_route",
-        {"record_blocker", "regenerate_worklist", "request_parent_adjudication", "pause_for_repair", "critical_block"},
-        "compile_worklist_blocked_route_enum_drift",
-    )
+    for def_name, policy in route_policies.items():
+        expect_route_object_def(def_name, policy["kinds"], policy["terminal"], "strict_route_object_def_invalid")
     expect_enum_def(
         "node_seed_review_decision",
         {"approve_candidate", "changes_required", "reject_candidate", "split_candidate", "merge_candidate", "block_on_authority"},
@@ -1108,15 +1187,45 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         "node_seed_reviewer_role_enum_drift",
     )
     for def_name, accepted, rejected in [
-        ("stage_success_route", "next_stage", "freeform_next_step"),
-        ("stage_blocked_route", "critical_block", "blocked_because_unspecified"),
-        ("compile_wave_retry_route", "resume_from_checkpoint", "try_again_later"),
-        ("compile_worklist_blocked_route", "request_parent_adjudication", "ask_someone"),
         ("node_seed_review_decision", "changes_required", "maybe"),
         ("node_seed_reviewer_role", "owner_adjudicator", "reviewer"),
     ]:
         expect_enum_accepts(def_name, accepted, "strict_route_fixture_positive_failed")
         expect_enum_rejects(def_name, rejected, "strict_route_fixture_negative_failed")
+    for def_name, accepted, rejected in [
+        (
+            "stage_success_route",
+            {"route_kind": "next_stage", "target_stage": "scope_selection", "reason": "advance to scoped selection"},
+            "freeform_next_step",
+        ),
+        (
+            "stage_success_route",
+            {"route_kind": "handoff_ready", "target_stage": None, "reason": "terminal handoff"},
+            {"route_kind": "handoff_ready", "target_stage": "complete", "reason": "terminal routes cannot name a stage"},
+        ),
+        (
+            "stage_blocked_route",
+            {"route_kind": "pause_for_repair", "target_stage": "preflight_currentness", "reason": "repair before retry"},
+            {"route_kind": "pause_for_repair", "target_stage": None, "reason": "nonterminal route needs a stage"},
+        ),
+        (
+            "stage_blocked_route",
+            {"route_kind": "critical_block", "target_stage": None, "reason": "terminal block"},
+            {"route_kind": "critical_block", "target_stage": "blocked", "reason": "terminal routes cannot name a stage"},
+        ),
+        (
+            "compile_wave_retry_route",
+            {"route_kind": "resume_from_checkpoint", "target_stage": "planunit_normalization", "reason": "resume the wave at the exact stage"},
+            {"route_kind": "retry_same_assignment", "target_stage": "not_a_stage", "reason": "invalid stage id"},
+        ),
+        (
+            "compile_worklist_blocked_route",
+            {"route_kind": "regenerate_worklist", "target_stage": "scope_selection", "reason": "regenerate from selected scope"},
+            {"route_kind": "request_parent_adjudication", "target_stage": "blocked", "reason": "terminal parent route must be null"},
+        ),
+    ]:
+        expect_route_fixture(def_name, accepted, True, "strict_route_fixture_positive_failed")
+        expect_route_fixture(def_name, rejected, False, "strict_route_fixture_negative_failed")
 
     classification_refs = {
         "work_type": "#/$defs/work_type",

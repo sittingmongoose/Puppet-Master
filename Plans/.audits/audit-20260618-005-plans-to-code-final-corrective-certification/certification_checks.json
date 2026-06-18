@@ -1,0 +1,83 @@
+{
+  "alias_section_failures": [],
+  "active_tab_checks": {
+    "rgv_active_shell": true,
+    "rgv_native_surfaces": true,
+    "orch_shell": true,
+    "orch_native_surfaces": true
+  },
+  "schema_route_checks": {
+    "stage_success_route": {
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "target_stage_anyOf": [
+        {
+          "$ref": "#/$defs/stage_name"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "conditional_count": 2
+    },
+    "stage_blocked_route": {
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "target_stage_anyOf": [
+        {
+          "$ref": "#/$defs/stage_name"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "conditional_count": 2
+    },
+    "compile_wave_retry_route": {
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "target_stage_anyOf": [
+        {
+          "$ref": "#/$defs/stage_name"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "conditional_count": 2
+    },
+    "compile_worklist_blocked_route": {
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "target_stage_anyOf": [
+        {
+          "$ref": "#/$defs/stage_name"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "conditional_count": 2
+    }
+  },
+  "stage_card_stage_id_required": true,
+  "plan_compile_run_nullable_stage_refs": true,
+  "forbidden_changed_paths": [],
+  "all_passed": true
+}

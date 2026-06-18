@@ -335,7 +335,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
 
-ContractRef: Plans/Project_Output_Artifacts.md#10. Auditor Cycle Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record
+ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record
 
 Required fields:
 - workflow_run_id
@@ -349,7 +349,7 @@ Canonical terms and values:
 - auditor_cycle_report
 - cycle_report_ref
 - compatibility_only
-- validation_pass_report
+- validation_pass_report (legacy mirror only)
 - workflow_run_id
 - staged_bundle_ref
 - requirements_quality_report_ref
@@ -1274,7 +1274,7 @@ Before implementation, an implementation agent must complete or have clear specs
 47. **Single final approval gate:** Capture one final decision (`accept | reject | edit`) per Multi-Pass run with `findings_summary_shown=true` precondition.
 48. **Document pane recovery:** Persist `document_pane_state.v1` and restorable `document_checkpoint.v1` so recovery restores selected document/view and approval stage.
 49. **Auditor invariant loop (§12):** Implement as a post-Contract-Unification Auditor loop that audits the provisional project pack, applies bounded deterministic repairs where allowed, re-audits, and repeats until certified or stopped by a critical block/authority boundary.
-50. **Initial audit cycle:** Verify all required `.puppet-master/project/` artifacts are generated, validate requirements-quality and canonical contract coverage, and emit an Auditor cycle report. Legacy `validation_pass_report` / Pass 1 fields may be mirrored only for compatibility.
+50. **Initial audit cycle:** Verify all required `.puppet-master/project/` artifacts are generated, validate requirements-quality and canonical contract coverage, and emit an Auditor cycle report. Legacy `validation_pass_report` / Pass 1 fields may be mirrored only when `compatibility_only: true` and `cycle_report_ref` points to the Auditor cycle report.
 51. **Bounded repair cycle:** Compare artifacts against Project Contract Pack and platform canonicals, apply allowed deterministic fixes, record findings, changes, diff_pointers, and unresolved findings, then re-audit. Legacy Pass 2 fields are compatibility aliases only.
 52. **Certification/block cycle:** Enforce DRY/SSOT, plan graph integrity, wiring matrix, evidence/invariants, and deterministic decisions without modifying requirements.md, plan.md, or other user-intent-derived content. Legacy Pass 3 fields are compatibility aliases only.
 53. **Auditor loop provider/model:** Read the single Auditor validation loop provider+model from app settings (see assistant-chat-design.md §26 and Models_System.md); apply deterministic defaults when not configured.
@@ -1334,7 +1334,7 @@ The Auditor loop enforces canonical system integrity, DRY/SSOT compliance, plan 
 
 ### 12.2 Auditor Audit-To-Repair Loop
 
-Each Auditor cycle receives the artifact set as corrected by earlier cycles. The loop records findings, allowed repairs, unresolved findings, and certification/block status in Auditor cycle reports. `validation_pass_report`, `pass_number`, and legacy Pass 1 / Pass 2 / Pass 3 labels may be mirrored for import/export/search compatibility, but active scheduling and settings use Auditor loop cycle semantics.
+Each Auditor cycle receives the artifact set as corrected by earlier cycles. The loop records findings, allowed repairs, unresolved findings, and certification/block status in Auditor cycle reports. `validation_pass_report`, `pass_number`, and legacy Pass 1 / Pass 2 / Pass 3 labels may be mirrored for import/export/search compatibility only when `compatibility_only: true` and `cycle_report_ref` points to the Auditor cycle report, but active scheduling and settings use Auditor loop cycle semantics.
 
 ---
 
@@ -1467,7 +1467,7 @@ The following criteria are required for a conformant implementation of this work
 - [ ] Auditor loop cycles run deterministically without human intervention until certified or critically blocked.
 - [ ] Each cycle can be executed headless (no GUI required; no approval gates inside the loop).
 - [ ] Certification cycles never edit `requirements.md`, `plan.md`, or user-intent-derived content; they only enforce canonical system integrity, certify, or block.
-- [ ] Each cycle emits an Auditor cycle report stored in seglog; legacy `validation_pass_report` / Pass 1 / Pass 2 / Pass 3 rows are compatibility aliases only.
+- [ ] Each cycle emits an Auditor cycle report stored in seglog; legacy `validation_pass_report` / Pass 1 / Pass 2 / Pass 3 rows are compatibility aliases only with `compatibility_only: true` and `cycle_report_ref`.
 - [ ] The loop emits enough reports to prove audit, repair, re-audit, and terminal certification/block status; it does not require exactly three active process stages.
 - [ ] The final project artifacts reflect all corrections applied by bounded repair cycles.
 - [ ] A single Auditor loop provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
@@ -2009,6 +2009,9 @@ Required fields:
 - run_id
 
 Canonical terms and values:
+- auditor_cycle_report
+- cycle_report_ref
+- compatibility_only
 - node_id
 - attempt_id
 - lane_id
@@ -2016,7 +2019,7 @@ Canonical terms and values:
 - execution_role
 - effective_account_id
 - operational_identity
-- validation_pass_report
+- validation_pass_report (legacy mirror only)
 - workflow_run_id
 - run_id
 
@@ -3265,7 +3268,7 @@ plan_unit_id: CWF-016
 unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: Validation report bridge fields and canonical report terms must carry accepted or final sweep output into launched execution through a launch receipt or promoted package ref while preserving effective runtime identity and preventing pass reports from masquerading as run, node, or attempt records.
+canonical_text: Validation report bridge fields and canonical auditor_cycle_report terms must carry accepted or final sweep output into launched execution through a launch receipt or promoted package ref while preserving effective runtime identity; validation_pass_report may appear only as a legacy mirror with compatibility_only true and cycle_report_ref, and pass reports must not masquerade as run, node, or attempt records.
 gui_related: true
 gui_classification_reason: Validation bridge and runtime identity visibility feed wizard handoff, launch receipts, and user-visible validation/report surfaces.
 split_recommended: true
@@ -3274,7 +3277,8 @@ depends_on: [CWF-003, CWF-015]
 unblocks: []
 acceptance_criteria:
   - Required bridge fields include workflow_run_id, staged_bundle_ref, requirements_quality_report_ref, execution_role, effective_account_id, and run_id.
-  - Canonical terms include validation_pass_report, launch receipt, and promoted package ref.
+  - Canonical terms include auditor_cycle_report, launch receipt, and promoted package ref.
+  - validation_pass_report is allowed only as a legacy mirror with compatibility_only true and cycle_report_ref.
   - Accepted or final sweep output bridges into launched execution through a launch receipt or promoted package ref.
   - Pass reports do not masquerade as run, node, or attempt records.
   - Effective runtime identity survives downstream handoff.
@@ -3300,11 +3304,16 @@ preserved_exact_tokens:
   - "execution_role"
   - "effective_account_id"
   - "run_id"
+  - "auditor_cycle_report"
   - "validation_pass_report"
+  - "compatibility_only"
+  - "cycle_report_ref"
   - "launch receipt"
   - "promoted package ref"
 negative_constraints:
   - "Pass reports must not masquerade as run, node, or attempt records."
+compatibility_only_notes:
+  - "validation_pass_report is a legacy mirror only and must carry compatibility_only true plus cycle_report_ref to auditor_cycle_report."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
 ```
@@ -6658,7 +6667,7 @@ acceptance_criteria:
   - Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
   - Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
   - Initial Auditor audit is not the first author of requirements or contract fragments.
-  - Legacy Pass 1 validation_pass_report fields may be mirrored with pass_number 1 and pass_name document_creation for compatibility only.
+  - Legacy Pass 1 validation_pass_report fields may be mirrored with pass_number 1 and pass_name document_creation only when compatibility_only is true and cycle_report_ref points to the canonical Auditor cycle report.
   - Initial Auditor audit writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
   - requirements_quality_report is read-only for requirements intent and classifies auto_fixable true/false without editing requirements.
 validation_surfaces:
@@ -6827,7 +6836,7 @@ acceptance_criteria:
   - Defaults are deterministic and safe when not explicitly configured.
   - Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
   - The loop emits enough reports to prove audit, bounded repair, re-audit, and certified or critical-block terminal state.
-  - Legacy validation_pass_report rows and pass_verdict skipped values may be emitted only as compatibility mirrors.
+  - Legacy validation_pass_report rows and pass_verdict skipped values may be emitted only as compatibility mirrors with compatibility_only true and cycle_report_ref.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8638,7 +8647,8 @@ depends_on: [CWF-121]
 unblocks: [CWF-139]
 acceptance_criteria:
   - Handoff payload includes node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, workflow_run_id, and run_id.
-  - Canonical terms include validation_pass_report.
+  - Canonical terms include auditor_cycle_report.
+  - validation_pass_report is allowed only as a legacy mirror with compatibility_only true and cycle_report_ref.
   - Handoff explicitly carries validation lineage.
   - effective account and execution role survive wizard handoff payloads.
 validation_surfaces:
@@ -8664,8 +8674,13 @@ preserved_exact_tokens:
   - "execution_role"
   - "effective_account_id"
   - "operational_identity"
+  - "auditor_cycle_report"
   - "validation_pass_report"
+  - "compatibility_only"
+  - "cycle_report_ref"
 negative_constraints: []
+compatibility_only_notes:
+  - "validation_pass_report is a legacy mirror only and must carry compatibility_only true plus cycle_report_ref to auditor_cycle_report."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Project_Output_Artifacts.md

@@ -4,9 +4,9 @@
   "status": "sealed",
   "phase": "compiled_plans_to_code_handoff_governance_sealed",
   "created_at_utc": "2026-06-17T21:45:00Z",
-  "last_updated_at": "2026-06-18T12:49:21Z",
-  "last_updated_at_utc": "2026-06-18T12:49:21Z",
-  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "last_updated_at": "2026-06-18T13:39:57Z",
+  "last_updated_at_utc": "2026-06-18T13:39:57Z",
+  "updated_at_utc": "2026-06-18T13:39:57Z",
   "primary_goal": "Record and compile Plans-to-code handoff contracts, PlanCompile design-only state machine, automated testing, source-control rollback, Orchestrator Plan Compile UX, condensed model settings, autonomy/HITL, loop breakers, and final certification. Source/planning memory only.",
   "resume_file": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/handoff.json",
   "canonical_plan_targets": [
@@ -84,7 +84,7 @@
   ],
   "candidate_compile_owner_docs": [],
   "governance_status": "sealed",
-  "notes": "Compiled/sealed ledger terminally certified by audit-004; PlanCompile disabled; Plan Wizard redesign may continue separately.",
+  "notes": "Bounded final plans-to-code corrective certification repaired active Auditor cycle report aliasing, POA anchor, exhaustive Orchestrator tab lists, exact route-target schema constraints, and validator coverage. PlanCompile remains disabled/design-only; no NodeSeeds, WorkNodes, executable queues, manifests, GoalRuns, implementation code, or build tasks were created.",
   "source_lineage_pre_seal_candidate_compile_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
@@ -117,7 +117,7 @@
     "Plans/human-in-the-loop.md",
     "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/prompts/codex_after_plans_updated.md"
   ],
-  "last_event_id": "evt-0017",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+  "last_event_id": "evt-0018",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

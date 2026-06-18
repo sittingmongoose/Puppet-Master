@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-18T10:15:41Z",
+  "generated_at_utc": "2026-06-18T13:49:14Z",
   "index_path": "Plans/_shards/orchestrator_page/00-index.md",
-  "index_sha256": "46e018632faba6267255e4c92fba6d3c0c20427709a77d9cf1bdd38a3cac6225",
+  "index_sha256": "bca267df4d701af7889e4dfdce541c43d5daba9a75392f35071e39cc173d6f5e",
   "manifest_path": "Plans/_shards/orchestrator_page/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/orchestrator_page/001-preamble.md",
-      "sha256": "bffb17e617fd608d242765d28056c3867ec56f3f29a9ceedff001fc251f08823",
+      "sha256": "4a093fffa02cc1e16afd8039ab386deb312ba9b2210cef296bb1850550ec376d",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md",
-      "sha256": "be92dd7b309e210272771eb8d78d5989726c9812419944b51220bc28af0f00f5",
+      "sha256": "2da8114f5c8460130a3f35d6dc8b4267d7100b99efd99e9350c2c2262e503bb5",
       "shard_id": "002",
       "source_line_end": 52,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Scope and canonical model",
       "path": "Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md",
-      "sha256": "41923adb940ebec990b96c42a7c41680bb903612e0145970d97940867a6637af",
+      "sha256": "0b4fa2b222cd191d2fc6bd614e9f801e6eb193cec6a38a71bd71aae47f579974",
       "shard_id": "003",
       "source_line_end": 390,
       "source_line_start": 55,
@@ -35,7 +35,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/orchestrator_page/004-owner-consumer-map.md",
-      "sha256": "3c245517b7070d4758d4aa5adf7e5de5ae9231e3b001c3a291cd0f591a653e4d",
+      "sha256": "4c0b52a54ef93a79ed496fb736ded4343c8721610eb423e3baa4aa20c0f0fa22",
       "shard_id": "004",
       "source_line_end": 396,
       "source_line_start": 392,
@@ -44,7 +44,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/orchestrator_page/005-planunits.md",
-      "sha256": "6b3433affd2b53d96276623bb3fa21f64ef196cd32fdc2ef9914e9ff7f01bd66",
+      "sha256": "b50febe7c80d52df0efe5cf104eca2ea9220088e7ab0f40123cc3a7d75c58a06",
       "shard_id": "005",
       "source_line_end": 1403,
       "source_line_start": 398,
@@ -53,7 +53,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/orchestrator_page/006-migration-coverage.md",
-      "sha256": "b4a8580baf009bfcbbb5aabfb50ee049345e93cb6078aa60d9d4c615db42d82b",
+      "sha256": "53cf1b9669b4720e1cb988d24b7ceed4b7b1dcca3cc509456b29177444e795bf",
       "shard_id": "006",
       "source_line_end": 1415,
       "source_line_start": 1405,
@@ -62,7 +62,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "55821a8bc7489c40f0993588dcb1c8678ff06d2a9204200755a1694d581fdba1",
+      "sha256": "1731e62b43b84affa0fafd176657a81557971b291777f65182b047cd2bad35a7",
       "shard_id": "007",
       "source_line_end": 1497,
       "source_line_start": 1417,
@@ -71,7 +71,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/orchestrator_page/008-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "13f89fe4f4c309b05e3ade0ccd3025699253e6adf462206aac93dfde2bf034da",
+      "sha256": "3fe2fd25073b28d821f9a50b06f41c4fba3ee4b91ff0aaeab283a9d3c5e691ec",
       "shard_id": "008",
       "source_line_end": 1602,
       "source_line_start": 1499,
@@ -80,7 +80,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/orchestrator_page/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "a5b4dbc87f3dc57a675af6a7761ee4e49520b01566c86cac1276e1c81ec1b665",
+      "sha256": "688dae998d43323c98b24ebc37b55cac1bf7aa37090834040875c17587a2ee5a",
       "shard_id": "009",
       "source_line_end": 1703,
       "source_line_start": 1604,
@@ -90,6 +90,6 @@
   "source": {
     "line_count": 1703,
     "path": "Plans/Orchestrator_Page.md",
-    "sha256": "b76eae8f606ea4e44627d7a92ba3faed956bf9f88d0c50875d2eb12c78cbab47"
+    "sha256": "9e74cf16b7e3f9ed3797b787f72386732ef2619612fbf5cb43704a2eabd72067"
   }
 }

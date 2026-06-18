@@ -156,7 +156,7 @@ Concern notification alignment preserves acknowledged as reminder-noise reductio
 
 Reconciliation risk is modeled as authority semantics as much as storage or `/schema` drift, so Orchestrator must preserve owner authority alongside schema-facing projection records.
 
-Native surface ownership preserves `Widget_System.md`, Widget_System, `Orchestrator_Page.md`, Orchestrator_Page, widget-composed, widget-heavy, and Progress compatibility: only Progress remains widget-heavy, while Graph, Seams, Evidence, History, and Ledger are native Orchestrator surfaces.
+Native surface ownership preserves `Widget_System.md`, Widget_System, `Orchestrator_Page.md`, Orchestrator_Page, widget-composed, widget-heavy, and Progress compatibility: only Progress remains widget-heavy, while Plan Compile, Node Graph, Seams, Evidence, History, and Ledger are native Orchestrator surfaces.
 
 The canonical concern action matrix spans confirmation level, rationale requirements, who may perform the action, reversibility model, and lineage side effects for every action family.
 

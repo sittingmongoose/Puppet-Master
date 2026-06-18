@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2232-L14810
+Source lines: L2234-L14820
 
-Source SHA256: `b1c070e413a45d4b39ec2500393ce3eaa357c6be415c297c8cc03e01a98fcad3`
+Source SHA256: `1944e41a47c734e855660998d425b4d3cc2e08bf3e89e4248d046f9c3877bf85`
 
 ---
 
@@ -2464,7 +2464,7 @@ plan_unit_id: SP-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Cross-surface receipts preserve required attempt/provider/usage/workflow/container/Kubernetes/validation/run/verdict/phase/quality fields and keep attempt_id as the primary local anchor."
+canonical_text: "Cross-surface receipts preserve required attempt/provider/usage/workflow/container/Kubernetes/auditor-cycle/run/verdict/phase/quality fields, allow legacy validation_pass_report only as a compatibility mirror with compatibility_only true plus cycle_report_ref, and keep attempt_id as the primary local anchor."
 gui_related: false
 gui_classification_reason: "This unit preserves backend cross-surface receipt field and join requirements."
 split_recommended: false
@@ -2498,7 +2498,10 @@ preserved_exact_tokens:
 - "workflow_refs"
 - "docker_refs"
 - "kubernetes_refs"
+- "auditor_cycle_report"
 - "validation_pass_report"
+- "compatibility_only"
+- "cycle_report_ref"
 - "workflow_run_id"
 - "run_id"
 - "pass_verdict"
@@ -2511,7 +2514,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "provider_attempt_ref, usage_event_ref, and receipt refs do not replace the local key."
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "validation_pass_report is a legacy mirror only and must carry compatibility_only true plus cycle_report_ref to auditor_cycle_report."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/storage-plan.md"
@@ -3243,7 +3247,7 @@ plan_unit_id: SP-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Cross-surface receipt storage rules keep receipt fields lineage-bearing and storage-owned for runtime artifacts, worktree records, lane records, and project-state keys."
+canonical_text: "Cross-surface receipt storage rules keep auditor_cycle_report receipt fields lineage-bearing and storage-owned for runtime artifacts, worktree records, lane records, and project-state keys; validation_pass_report is legacy mirror storage only with compatibility_only true plus cycle_report_ref."
 gui_related: false
 gui_classification_reason: "This unit preserves backend receipt storage ownership and lineage requirements."
 split_recommended: false
@@ -3278,7 +3282,10 @@ preserved_exact_tokens:
 - "workflow_refs"
 - "docker_refs"
 - "kubernetes_refs"
+- "auditor_cycle_report"
 - "validation_pass_report"
+- "compatibility_only"
+- "cycle_report_ref"
 - "Receipt fields remain lineage-bearing"
 - "Runtime artifacts"
 - "worktree records"
@@ -3286,7 +3293,8 @@ preserved_exact_tokens:
 - "project-state keys"
 negative_constraints: []
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "validation_pass_report is a legacy mirror only and must carry compatibility_only true plus cycle_report_ref to auditor_cycle_report."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/storage-plan.md"

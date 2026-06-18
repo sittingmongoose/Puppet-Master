@@ -508,7 +508,7 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
 
 8) **Auditor validation loop artifact completeness (see §10)**
    - One or more Auditor cycle report events exist in seglog for each validation sweep run, sharing the same `workflow_run_id` and recording audit, bounded repair, re-audit, and certified or critical-block terminal state
-   - Legacy `validation_pass_report`, `pass_number`, and Pass 1 / Pass 2 / Pass 3 names may be mirrored only as compatibility aliases for import/export/search
+   - Legacy `validation_pass_report`, `pass_number`, and Pass 1 / Pass 2 / Pass 3 names may be mirrored only as compatibility aliases for import/export/search with `compatibility_only: true` and `cycle_report_ref`
    - Certification-cycle `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated
    - All Auditor cycle report `content_hash` values match the SHA-256 of their `content_bytes`
    - For each Auditor cycle report, `provider` and `model` match the resolved Auditor validation loop provider/model from sweep start (`Plans/assistant-chat-design.md §26`, `Plans/Models_System.md`)
@@ -781,15 +781,16 @@ Runtime evidence projections remain downstream consumers of the storage-owned re
 
 ### validation artifact lineage
 Required fields:
-- `validation_pass_report`
+- `auditor_cycle_report`
 - `workflow_run_id`
 - `pass_verdict`
 - `phase_plan_ref`
 - `requirements_quality_report_ref`
+- legacy `validation_pass_report` mirror only when `compatibility_only: true` and `cycle_report_ref` points to the canonical Auditor cycle report
 
 Rules:
 - Validation lineage stays concrete and inspectable.
-- Pass reports remain upstream artifacts rather than local replacement identifiers.
+- Auditor cycle reports remain upstream artifacts rather than local replacement identifiers; legacy pass-report mirrors are compatibility/export rows only.
 
 ## Owner / Consumer Map
 
