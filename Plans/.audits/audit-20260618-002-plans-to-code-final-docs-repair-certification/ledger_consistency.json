@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.deep_audit_ledger_consistency.v1",
+  "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass",
+  "current_ref": "0e909affe6a3a939bdd509f7470f9d7b79ed0a25",
+  "compact_phase": "compiled_plans_to_code_handoff_governance_sealed",
+  "compact_status": "sealed",
+  "governance_status_from_compact_state": "sealed",
+  "last_event_id": "evt-0014",
+  "atom_count": 64,
+  "compiled_planunit_count_with_ledger_lineage": 38,
+  "open_blockers": [],
+  "open_questions": [],
+  "notes": [
+    "Ledger README, doc-impact matrix, implementation-readiness matrix, compact state, manifest, registry entry, and global ledger registry point at the final audit and evt-0014."
+  ]
+}

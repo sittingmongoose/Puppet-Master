@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L130-L1013
 
-Source SHA256: `6bbf7a9fb1832d6b3a5ce05638b91a8793a33bee438bccdfd268a95917270b07`
+Source SHA256: `51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461`
 
 ---
 
@@ -17,7 +17,7 @@ plan_unit_id: WS-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Widget composition is in scope only for Dashboard widgets, Usage widgets, and Orchestrator Progress widgets. Seams, Node Graph, Evidence, History, and Ledger are not widget canvases.'
+canonical_text: 'Widget composition is in scope only for Dashboard widgets, Usage widgets, and Orchestrator Progress widgets. Plan Compile, Seams, Node Graph, Evidence, History, and Ledger are not widget canvases.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible widget hostability by surface.'
 split_recommended: false
@@ -503,7 +503,7 @@ plan_unit_id: WS-010
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Only Orchestrator `Progress` is widget-composed. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views. The Orchestrator UI composes exactly one consumer widget, `widget-orchestrator-progress`.'
+canonical_text: 'Only Orchestrator `Progress` is widget-composed. `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views. The Orchestrator UI composes exactly one consumer widget, `widget-orchestrator-progress`.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible Orchestrator widget composition boundaries.'
 split_recommended: false

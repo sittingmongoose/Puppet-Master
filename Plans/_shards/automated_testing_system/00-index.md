@@ -1,20 +1,20 @@
 # Shard Index: Plans/Automated_Testing_System.md
 
-Generated: 2026-06-18T03:28:12Z
+Generated: 2026-06-18T05:03:23Z
 
-Source SHA256: `4f116dba67b186788d2662afba12759175a0579e36dff78964a80319ed9cfb6a`
+Source SHA256: `7d465a4855a28bbf58027e4bc299ec590af67a2cd8cbf2f27cedf0533cb5f58f`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `a53b7abfa525c45b0d21e85c29f6cac0e0e1d42c8e892867e32910c06d54c7d1`
-- [002 - 0. Scope](002-0.-scope.md) L7-L11 `1b6997867d66ff62c414e03972449aca0123b25a72da941a23798ff1a5194390`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `ecb9c7ab9694eb76ac0847d4c8ba93089aa6ee6d36ed99e8281f48db241e9b92`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L229 `68169fc9a50761bba109365f696ec8ede1825fc4a151dfd44d8527238cb3b216`
-- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L231-L237 `c236e14e4b1aaf503638d68ee2ade3154ca3171c473bd3f8132bcac4f2647448`
-- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L239-L246 `c5fa55c4c57c69064bc2e2cfdc4ebc20173ce238af17c50e4ea9849aa69071f2`
-- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L248-L257 `360991fee81fb885ac7860fba8f80e8f20f58f7612af5059040dae1ace4d6187`
-- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L259-L261 `32769edd29c70a68355397b600109cdc049a645034d9ffeb1299b6624be8ce45`
-- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L263-L273 `07cd3a18e8a2413c5f45f70dcb4baf9de9dfa41c4f2dbf53f84bdb618e983a53`
-- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L275-L292 `df2d84b1baa2a08089a6e8065bbfb8a99bdd5bda7c850ca7cd0abeff9f115232`
+- [001 - Preamble](001-preamble.md) L1-L5 `3d824a90349613fad1fe2945e0347ec48ca12c5a74889672f002e1af8ee5a7b7`
+- [002 - 0. Scope](002-0.-scope.md) L7-L11 `01fc75196627558d6db68f3ea0c1798e8d5f103816d247478b77a575e93f3871`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L13-L26 `a95d1d703cccc4da75cfcca0566e4df6d14c5751b8008682a3dd790056e50a22`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L28-L228 `9cbbc9a8d2dfc58d35c1ed053dd039b2d5457d0ed9a2ac71ceaaa084b905d3d3`
+- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L230-L236 `afce3b5483878360e734a7a30060751415e50b03c3707a74b9eed9ef3463eece`
+- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L238-L245 `9b0cf6a2dea589258221e5b9e5f4d3beee376bbaabeac9bd39c9226dd98fa43d`
+- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L247-L256 `5c68afb5dff873de87dcc809ee044bf6f284a35cf225571022eb8cd0d0b0a2a0`
+- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L258-L260 `1854110d1fcce69e76c9ad3eecf0546bf47e0cb35281b0df23f85cbd60f17d7c`
+- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L262-L272 `d186f6da3c67571579aae38a8189654d54c245658f6c76849e37a1a6f2e06d73`
+- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L274-L291 `7a2838c20300f48e7a14caa56f49667cadd770f63807e257ddc5699918859a5e`

@@ -5906,7 +5906,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. PlanCompile emits requests and WorkGraph drafts only; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery.
+    WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. When explicitly enabled later, PlanCompile may draft non-executable requests and WorkGraph drafts only; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery.
 gui_related: false
 gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
 depends_on: [EP-098, PNC-013]
@@ -5917,7 +5917,7 @@ acceptance_criteria:
   - PlanCompile remains unable to dispatch runnable WorkNodes directly.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future ExecutorIntakeReport schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: executor_intake_bypass
 reasoning_tier: high
 context_scope: executor_worknode_request_intake
@@ -5961,7 +5961,7 @@ acceptance_criteria:
   - GitHub is optional promotion/output and local source-control/worktree state remains execution truth.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future source_control_preflight_receipt validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: unsafe_execution_context
 reasoning_tier: high
 context_scope: executor_preflight_context
@@ -6016,7 +6016,7 @@ acceptance_criteria:
   - Test gaps become blockers or harness work.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future WorkNode test binding intake tests
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: unverified_execution_completion
 reasoning_tier: high
 context_scope: executor_test_binding
@@ -6121,7 +6121,7 @@ acceptance_criteria:
   - Code completion is certified from receipts, tests, source-control state, Auditor result, blockers, and final evidence, not worker prose.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future execution receipt chain validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: false_completion
 reasoning_tier: high
 context_scope: plans_to_code_execution_receipts

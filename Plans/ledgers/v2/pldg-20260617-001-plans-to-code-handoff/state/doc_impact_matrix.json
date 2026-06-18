@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.doc_impact_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T03:26:09Z",
+  "updated_at_utc": "2026-06-18T04:54:48Z",
   "status": "compiled_governance_sealed_reference_coverage_passed",
-  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans. Current status is reconciled to the latest clean audit and post-audit bounded repair.",
-  "latest_audit_ref": "Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/FINAL_REPORT.md",
+  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans. Current status is reconciled to the final clean audit and evt-0014 bounded repair.",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass",
   "global_compile_rules": [
     "Before edits, Codex must adjudicate owner docs from this matrix and current repo evidence.",
@@ -51,7 +51,17 @@
     "HITL",
     "manual decision",
     "GoalCompletionReceipt",
-    "source-control receipt"
+    "source-control receipt",
+    "seven-tab shell",
+    "Plan Compile tab",
+    "Progress tab",
+    "Seams tab",
+    "Node Graph tab",
+    "Evidence tab",
+    "History tab",
+    "Ledger tab",
+    "Tiers tab",
+    "six-tab"
   ],
   "doc_groups": [
     {
@@ -366,6 +376,48 @@
         "model resolution receipt",
         "evidence"
       ]
+    },
+    {
+      "group_id": "impact-009",
+      "topic": "Seven-tab Orchestrator shell title and reference alignment",
+      "primary_owner_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "direct_consumers": [
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "reference_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "required_updates": [
+        "active Orchestrator title and shell references name seven tabs",
+        "Plan Compile appears as the second tab alongside Progress, Seams, Node Graph, Evidence, History, and Ledger",
+        "Tiers and six-tab language remain compatibility/source-lineage only",
+        "widget hostability remains Orchestrator Progress-only where applicable"
+      ],
+      "scan_terms": [
+        "seven-tab",
+        "six-tab",
+        "Plan Compile",
+        "Progress",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger",
+        "Tiers"
+      ]
     }
   ],
   "high_signal_reference_docs_from_repo_scan": {
@@ -408,7 +460,22 @@
       "Plans/Executor_Protocol.md",
       "Plans/FinalGUISpec.md",
       "Plans/Orchestrator_Page.md"
+    ],
+    "seven_tab_terms": [
+      "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "Plans/Multi-Account.md",
+      "Plans/Progression_Gates.md",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "Plans/Widget_System.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/feature-list.md",
+      "Plans/rewrite-tie-in-memo.md",
+      "Plans/00-plans-index.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md"
     ]
   },
-  "closure_requirement": "The post-plan-update audit must produce owner_routing_findings.jsonl and changed-doc fidelity evidence; every direct reference update/no-update/deferred decision must be represented in the repair closure matrix or final audit report."
+  "closure_requirement": "The final audit must represent owner routing, doc-impact reference coverage, schema payload validation, closure reuse/restamp status, and forbidden-artifact checks; every direct reference update/no-update/deferred decision must be represented in audit rows or final report."
 }

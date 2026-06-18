@@ -741,6 +741,205 @@ def cmd_check_project_artifact_requirements(args: argparse.Namespace) -> dict[st
     )
 
 
+def iter_schema_dicts(value: Any, path: str = "$") -> list[tuple[str, dict[str, Any]]]:
+    found: list[tuple[str, dict[str, Any]]] = []
+    if isinstance(value, dict):
+        found.append((path, value))
+        for key, child in value.items():
+            child_path = f"{path}.{key}"
+            found.extend(iter_schema_dicts(child, child_path))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            found.extend(iter_schema_dicts(child, f"{path}[{index}]"))
+    return found
+
+
+def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[str, Any]:
+    schema_path = PLANS / "plans_to_code_handoff.schema.json"
+    failures: list[dict[str, Any]] = []
+    try:
+        schema = load_json(schema_path)
+    except Exception as exc:  # noqa: BLE001
+        return report_status("validate-plans-to-code-handoff-schema", [{"path": rel(schema_path), "error": str(exc)}])
+
+    if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+        failures.append({"path": rel(schema_path), "error": "schema_not_draft_2020_12"})
+    if schema.get("additionalProperties") is not False:
+        failures.append({"path": rel(schema_path), "error": "top_level_not_strict"})
+    for key in ["schema_id", "artifact_kind", "payload"]:
+        if key not in schema.get("required", []):
+            failures.append({"path": rel(schema_path), "error": "missing_top_level_required_key", "key": key})
+
+    defs = schema.get("$defs", {})
+    kinds = defs.get("artifact_kind", {}).get("enum", [])
+    if not isinstance(kinds, list) or not kinds:
+        failures.append({"path": rel(schema_path), "error": "missing_artifact_kind_enum"})
+        kinds = []
+    if len(kinds) != len(set(kinds)):
+        failures.append({"path": rel(schema_path), "error": "duplicate_artifact_kind"})
+
+    expected_kinds = {
+        "handoff_matrix",
+        "handoff_row",
+        "plan_compile_run",
+        "stage_card",
+        "compile_worklist",
+        "node_seed_candidate",
+        "node_seed_review",
+        "workgraph_draft",
+        "worknode_request",
+        "compiler_model_routing",
+        "codex_work_package",
+        "codex_external_gui_agent_request",
+        "plan_compile_receipt",
+        "test_capability_report",
+        "test_harness_probe_report",
+        "test_strategy",
+        "test_case",
+        "test_run_receipt",
+        "visual_evidence",
+        "source_control_receipt",
+        "source_control_preflight_receipt",
+        "safe_point_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "repair_attempt_receipt",
+        "validation_pass_report",
+        "merge_or_promotion_receipt",
+        "source_control_finalization_receipt",
+        "model_resolution_receipt",
+        "executor_intake_report",
+        "goal_completion_receipt",
+    }
+    for kind in sorted(expected_kinds - set(kinds)):
+        failures.append({"path": rel(schema_path), "error": "missing_expected_artifact_kind", "artifact_kind": kind})
+
+    branch_map: dict[str, str | None] = {}
+    duplicate_branches: set[str] = set()
+    for item in schema.get("allOf", []):
+        if not isinstance(item, dict):
+            continue
+        const = item.get("if", {}).get("properties", {}).get("artifact_kind", {}).get("const")
+        ref = item.get("then", {}).get("properties", {}).get("payload", {}).get("$ref")
+        if not isinstance(const, str):
+            continue
+        if const in branch_map:
+            duplicate_branches.add(const)
+        branch_map[const] = ref
+
+    for kind in kinds:
+        if kind not in defs:
+            failures.append({"path": rel(schema_path), "error": "missing_payload_def", "artifact_kind": kind})
+            continue
+        payload_def = defs[kind]
+        if not isinstance(payload_def, dict) or payload_def.get("type") != "object":
+            failures.append({"path": rel(schema_path), "error": "payload_def_not_object", "artifact_kind": kind})
+            continue
+        if payload_def.get("additionalProperties") is not False:
+            failures.append({"path": rel(schema_path), "error": "payload_def_not_strict", "artifact_kind": kind})
+        required = payload_def.get("required", [])
+        properties = payload_def.get("properties", {})
+        if not isinstance(required, list) or not required:
+            failures.append({"path": rel(schema_path), "error": "payload_def_missing_required", "artifact_kind": kind})
+        if not isinstance(properties, dict) or not properties:
+            failures.append({"path": rel(schema_path), "error": "payload_def_missing_properties", "artifact_kind": kind})
+        for required_key in required if isinstance(required, list) else []:
+            if required_key not in properties:
+                failures.append(
+                    {
+                        "path": rel(schema_path),
+                        "error": "required_key_missing_property",
+                        "artifact_kind": kind,
+                        "key": required_key,
+                    }
+                )
+        expected_ref = f"#/$defs/{kind}"
+        if branch_map.get(kind) != expected_ref:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": "missing_or_bad_discriminator_branch",
+                    "artifact_kind": kind,
+                    "expected_ref": expected_ref,
+                    "actual_ref": branch_map.get(kind),
+                }
+            )
+
+    for kind in sorted(set(branch_map) - set(kinds)):
+        failures.append({"path": rel(schema_path), "error": "discriminator_branch_without_enum", "artifact_kind": kind})
+    for kind in sorted(duplicate_branches):
+        failures.append({"path": rel(schema_path), "error": "duplicate_discriminator_branch", "artifact_kind": kind})
+
+    handoff_required = {
+        "row_id",
+        "transition",
+        "source_artifact",
+        "destination_artifact",
+        "producer",
+        "consumer",
+        "owner",
+        "validator",
+        "receipt",
+        "schema_payload",
+        "retry_route",
+        "rollback_route",
+        "user_escalation_condition",
+        "evidence_refs",
+        "plan_unit_refs",
+    }
+    handoff_def = defs.get("handoff_row", {})
+    for key in sorted(handoff_required - set(handoff_def.get("required", []))):
+        failures.append({"path": rel(schema_path), "error": "handoff_row_missing_required_key", "key": key})
+    matrix_def = defs.get("handoff_matrix", {})
+    for key in ["matrix_id", "source_ledger_id", "source_plan_unit_ids", "rows", "schema_contract_validation", "status"]:
+        if key not in matrix_def.get("required", []):
+            failures.append({"path": rel(schema_path), "error": "handoff_matrix_missing_required_key", "key": key})
+
+    for kind in [
+        "plan_compile_receipt",
+        "test_run_receipt",
+        "source_control_receipt",
+        "source_control_preflight_receipt",
+        "safe_point_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "repair_attempt_receipt",
+        "validation_pass_report",
+        "merge_or_promotion_receipt",
+        "source_control_finalization_receipt",
+        "model_resolution_receipt",
+        "executor_intake_report",
+        "goal_completion_receipt",
+    ]:
+        if "handoff" not in defs.get(kind, {}).get("required", []):
+            failures.append({"path": rel(schema_path), "error": "receipt_payload_missing_handoff_key", "artifact_kind": kind})
+
+    validation_alias = defs.get("validation_pass_report", {})
+    if validation_alias.get("properties", {}).get("legacy_alias_for", {}).get("const") != "auditor_cycle_report":
+        failures.append({"path": rel(schema_path), "error": "validation_pass_report_not_aliasing_auditor_cycle_report"})
+    if validation_alias.get("properties", {}).get("compatibility_only", {}).get("const") is not True:
+        failures.append({"path": rel(schema_path), "error": "validation_pass_report_not_compatibility_only"})
+
+    for pointer, item in iter_schema_dicts(schema):
+        if item.get("additionalProperties") is True:
+            failures.append({"path": rel(schema_path), "error": "additional_properties_true", "pointer": pointer})
+        if item.get("allOf") == []:
+            failures.append({"path": rel(schema_path), "error": "empty_allOf", "pointer": pointer})
+
+    return report_status(
+        "validate-plans-to-code-handoff-schema",
+        failures,
+        artifact_kinds_checked=len(kinds),
+        discriminator_branches_checked=len(branch_map),
+    )
+
+
 def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[str, Any]:
     return {
         "status": report.get("status"),
@@ -759,6 +958,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("lint_contractrefs", cmd_lint_contractrefs(argparse.Namespace())),
         ("lint_banned_phrases", cmd_lint_banned_phrases(argparse.Namespace())),
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements(argparse.Namespace())),
+        ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())),
     ]
     shard_report = cmd_check_shards(argparse.Namespace(report=None))
     checks.append(("check_shards", shard_report))
@@ -782,6 +982,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
     refs = cmd_lint_contractrefs(argparse.Namespace())
     shards = cmd_check_shards(argparse.Namespace(report=None))
     project_artifacts = cmd_check_project_artifact_requirements(argparse.Namespace())
+    plans_to_code_handoff_schema = cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())
     failures: list[dict[str, Any]] = []
     for name, report in [
         ("spec_lock", spec),
@@ -791,6 +992,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("support_refs", refs),
         ("shards", shards),
         ("project_artifacts", project_artifacts),
+        ("plans_to_code_handoff_schema", plans_to_code_handoff_schema),
     ]:
         if report.get("status") != "pass":
             failures.append({"check": name, "failures": report.get("failures", [])[:100]})
@@ -804,6 +1006,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         support_refs=compact_gate_report(refs),
         shards=compact_gate_report(shards),
         project_artifacts=compact_gate_report(project_artifacts),
+        plans_to_code_handoff_schema=compact_gate_report(plans_to_code_handoff_schema),
     )
 
 
@@ -817,6 +1020,7 @@ COMMANDS = {
     "lint-banned-phrases": cmd_lint_banned_phrases,
     "check-shards": cmd_check_shards,
     "check-project-artifacts": cmd_check_project_artifact_requirements,
+    "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
 }

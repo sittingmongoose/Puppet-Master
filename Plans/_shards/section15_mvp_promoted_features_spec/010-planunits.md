@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L808-L8167
 
-Source SHA256: `9131a99c4642c084a0d0d13b4e5550d8eaa6d575aadfe0f52f8d50be485a8bec`
+Source SHA256: `97dcb243642c7aa3a3d14fe3d87cc93b622a00089c684d1281d3054585c338b7`
 
 ---
 
@@ -599,7 +599,7 @@ plan_unit_id: SMPFS-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Assistant worktree integration preserves GitHub Integration, WorktreeGitImprovement, FinalGUISpec, Orchestrator/Source Control, and chain-wizard owner splits, and keeps Non-MVP exclusions from becoming implicit MVP behavior.
+canonical_text: Assistant worktree integration preserves GitHub Integration, WorktreeGitImprovement, FinalGUISpec, Orchestrator/Source Control, and chain-wizard owner splits, consumes the current seven-tab Orchestrator shell from Orchestrator_Page, and keeps Non-MVP exclusions from becoming implicit MVP behavior.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: true

@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L152-L484
 
-Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
+Source SHA256: `cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514`
 
 ---
 
@@ -85,7 +85,7 @@ Reviewer coverage notes from `GPT-5.2` are treated as `owner-level` deltas when 
 
 Provider recovery controls stay automation-first. Browser auto-relogin may exist as an optional provider-specific recovery helper, but it is not a cross-provider assumption; log parsing is supplemental /evidence rather than quota truth; manual `set active` remains a settings /debug/operator control rather than the main execution model. Storage split-brain and projection-health issues stay in Plans/storage-plan.md, while minority_advisory, runtime-artifact schema registration, and source-open resolver rules must be raised to owner docs instead of remaining memo-only observations.
 
-Orchestrator GUI tabs are native-purpose except where a doc explicitly says otherwise: Seams, Node Graph, Evidence, History, and Ledger are native-purpose surfaces, while Progress remains the widget-composed tab. This preserves /UI behavior without letting universal rendering or file-opening language overtake the route/open subject contract.
+Orchestrator GUI tabs are native-purpose except where a doc explicitly says otherwise: Plan Compile, Seams, Node Graph, Evidence, History, and Ledger are native-purpose surfaces, while Progress remains the widget-composed tab. Plan Compile is the design-only plans-to-code projection tab and does not become Executor execution authority. This preserves /UI behavior without letting universal rendering or file-opening language overtake the route/open subject contract.
 
 #### PreviewSession lifecycle and identity contract
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L3171-L3276
+Source lines: L3171-L3280
 
-Source SHA256: `1538972357c908265e4c134ea879d3a5f91bd1436100a5bb208e3d15071dc54e`
+Source SHA256: `41f114ccea586d174447363ad60e4f54b69863b8d455e897542b7e70dc8f76f3`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, model resolution receipt, and GoalCompletionReceipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, and final certification status without becoming the runtime source of truth.
+  Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility mirrors, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, model resolution receipt, and GoalCompletionReceipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, schema payload, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, Auditor cycle refs, and final certification status without becoming the runtime source of truth.
   Receipt artifact families preserve canonical evidence as a separate truth layer and include source_artifact, destination_artifact, retry_route, and rollback_route for handoff rows.
 gui_related: false
 gui_classification_reason: Receipt artifact packaging and references are evidence/artifact contracts, not visual presentation.
@@ -27,10 +27,11 @@ unblocks: [POA-048, RAP-029, CV-289]
 acceptance_criteria:
   - Receipt artifact families are named and discoverable in project output packages.
   - Artifacts preserve handoff, evidence, test, source-control, model, and final certification refs.
+  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
   - Project output artifacts package receipt references without replacing runtime, storage, or contract authority.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future receipt artifact package validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: missing_completion_evidence
 reasoning_tier: high
 context_scope: plans_to_code_receipt_artifacts
@@ -45,14 +46,17 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0017
 preserved_exact_tokens:
   - "source_control_preflight_receipt"
+  - "source_control_receipt"
   - "safe_point_receipt"
   - "worknode_change_receipt"
   - "merge_or_promotion_receipt"
   - "worknode_dispatch_receipt"
   - "test_run_receipt"
+  - "auditor_cycle_report"
   - "auditor_verification_receipt"
   - "repair_attempt_receipt"
   - "worknode_completion_receipt"
+  - "validation_pass_report"
   - "source evidence"
   - "canonical evidence"
   - "process evidence"
@@ -75,8 +79,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  GoalCompletionReceipt package entries must prove all_worknodes_terminal, all_tests_passed_or_dispositioned, source_control_receipts_valid, no_active_blockers, rollback and safe-point requirements satisfied, Auditor passed, no stale Plan/WorkGraph/currentness mismatch, final source state clean or intentionally preserved, final summary/evidence written, and final certifier decision. The receipt links to child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, and model resolution receipts.
-  GoalCompletionReceipt packages preserve all WorkNodes terminal, all automated tests passed or dispositioned, canonical evidence, and final certification evidence as explicit fields.
+    GoalCompletionReceipt package entries must prove all_worknodes_terminal, all_tests_passed_or_dispositioned, source_control_receipts_valid, no_active_blockers, rollback and safe-point requirements satisfied, Auditor passed, no stale Plan/WorkGraph/currentness mismatch, final source state clean or intentionally preserved, final summary/evidence written, and final certifier decision. The receipt links to child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, model resolution receipts, source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts.
+    GoalCompletionReceipt packages preserve all WorkNodes terminal, all automated tests passed or dispositioned, rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, canonical evidence, and final certification evidence as explicit fields.
 gui_related: false
 gui_classification_reason: Completion receipt package fields are evidence contracts, not visual presentation.
 depends_on: [POA-047, GRS-030, EP-103]
@@ -87,7 +91,7 @@ acceptance_criteria:
   - Completion receipt references preserve separate evidence truth layers.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future GoalCompletionReceipt schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: false_completion
 reasoning_tier: high
 context_scope: goal_completion_artifact

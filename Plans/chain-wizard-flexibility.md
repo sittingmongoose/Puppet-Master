@@ -1846,7 +1846,7 @@ Rules:
 - Keys map to the numbered Multi-Pass Review passes configured for the Builder run.
 - If a configured run uses fewer passes than a stored key set, extra keys are ignored.
 - If a run uses more passes than are explicitly mapped, unmapped passes fall back to the deterministic reviewer-selection rules in §5.6.
-- GUI labels may display `Pass 1`, `Pass 2`, etc., but persistence MUST use the canonical key names above.
+- GUI labels may display `Pass 1`, `Pass 2`, etc. only when labeling legacy/imported Multi-Pass Review compatibility rows; new active UI copy uses reviewer-pass ordinal wording, and persistence MUST use the canonical key names above.
 - `review_pass_personas` maps review passes only; the final synthesis/writer step remains governed by the Builder workflow and is not implicitly overwritten by reviewer-pass mappings.
 
 Builder Persona settings MUST persist a canonical config object with at least:
@@ -8127,7 +8127,7 @@ canonical_text: >-
   treats extra or unmapped keys deterministically, may display human labels in
   the GUI, and does not override final synthesis or writer behavior.
 gui_related: true
-gui_classification_reason: The unit preserves persistence key rules plus GUI label allowance for review-pass persona mapping.
+gui_classification_reason: The unit preserves persistence key rules plus compatibility-limited GUI label handling for review-pass persona mapping.
 split_recommended: false
 depends_on: [CWF-111]
 unblocks: [CWF-113, CWF-114]
@@ -8135,7 +8135,7 @@ acceptance_criteria:
   - review_pass_personas uses canonical ordinal keys pass_1 through pass_5.
   - Extra keys are ignored when a configured run uses fewer passes.
   - Unmapped passes fall back to deterministic reviewer-selection rules in section 5.6.
-  - GUI labels may display Pass 1, Pass 2, and similar labels, but persistence uses canonical keys.
+  - GUI labels may display Pass 1, Pass 2, and similar labels only for legacy/imported Multi-Pass Review compatibility rows; active UI copy uses reviewer-pass ordinal wording, and persistence uses canonical keys.
   - Final synthesis/writer step is not implicitly overwritten by reviewer-pass mappings.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

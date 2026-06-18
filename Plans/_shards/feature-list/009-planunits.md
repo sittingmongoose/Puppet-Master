@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L219-L1570
 
-Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
+Source SHA256: `192f85416cb86b11080c50a32f9e0e803e794eb480d9ba72068334ff40a5286a`
 
 ---
 
@@ -385,7 +385,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/feature-list.md
 canonical_text: >-
-  The GUI layout and shell family keeps Orchestrator tab-first, Progress widget-hosting only, Seams/package-oriented ownership live, Node Graph/Evidence/History/Ledger as peer tabs, and Source Control narrow and worktree-first.
+    The GUI layout and shell family keeps Orchestrator tab-first, Progress widget-hosting only, Plan Compile as the plans-to-code projection tab, Seams/package-oriented ownership live, Node Graph/Evidence/History/Ledger as peer tabs, and Source Control narrow and worktree-first.
 gui_related: true
 gui_classification_reason: This unit summarizes workspace layout, tabs, and Source Control visible shell behavior.
 split_recommended: true

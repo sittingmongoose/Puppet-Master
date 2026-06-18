@@ -7439,6 +7439,7 @@ acceptance_criteria:
   - Executor remains deterministic runtime/scheduler machinery and does not gain an Executor Model setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - future Settings model-role review
 risk_class: model_role_drift
 reasoning_tier: high
@@ -7510,7 +7511,7 @@ acceptance_criteria:
   - Codex bootstrap external GUI-agent CLI request artifacts remain bootstrap-only and are not exposed as built product Settings.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future model resolution receipt validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
 risk_class: model_resolution_opacity
 reasoning_tier: high
 context_scope: worknode_model_resolution

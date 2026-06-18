@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.deep_audit_report.v1",
+  "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "generated_at_utc": "2026-06-18T05:05:23Z",
+  "current_ref": "0e909affe6a3a939bdd509f7470f9d7b79ed0a25",
+  "status": "pass_certified",
+  "phase": "final_docs_repair_certification",
+  "artifact_status": "final_validator_rerun_passed",
+  "semantic_risks": {
+    "new_or_open": 0,
+    "by_status": {},
+    "by_severity": {},
+    "by_family": {},
+    "previously_closed": 43
+  },
+  "atom_fidelity": {
+    "atoms_checked": 64,
+    "classification_counts": {
+      "equivalent_or_dispositioned": 64
+    }
+  },
+  "planunit_source_claims": {
+    "plan_units_checked": 38,
+    "status_counts": {
+      "valid_source_claim": 38
+    }
+  },
+  "owner_routing": {
+    "groups_checked": 9,
+    "status_counts": {
+      "pass": 9
+    }
+  },
+  "doc_impact_refs": {
+    "groups_checked": 9,
+    "status_counts": {
+      "pass": 9
+    }
+  },
+  "implementation_readiness": {
+    "areas": 9,
+    "status_counts": {
+      "pass": 9
+    }
+  },
+  "closure_registry": {
+    "schema_id": "pm.deep_audit_closure_registry_audit.v1",
+    "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "status": "pass",
+    "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "registry_rows_total": 94,
+    "target_ledger_registry_rows": 43,
+    "closure_reuse_rows": 43,
+    "closure_reuse_status_counts": {
+      "previously_closed_reused": 43
+    },
+    "validator_result_name": "closure registry validate",
+    "notes": [
+      "No new closure rows were required for the final clean audit; existing target-ledger closures were reused after current evidence hashes matched."
+    ]
+  },
+  "forbidden_artifacts": {
+    "schema_id": "pm.deep_audit_forbidden_artifacts.v1",
+    "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "status": "pass",
+    "checked_patterns": [
+      "WorkNodes/",
+      "NodeSeeds/",
+      "Plans/WorkNodes/",
+      "Plans/NodeSeeds/",
+      "worknode_request_queue",
+      "executable_queue",
+      "final_node_manifest"
+    ],
+    "forbidden_count": 0,
+    "forbidden_paths": [],
+    "plan_compile_runtime_status": "design_only_disabled",
+    "node_readiness_status": "runtime_disabled",
+    "notes": [
+      "Final repair did not create WorkNodes, NodeSeeds, executable queues, PlanCompile runtime outputs, implementation files, or production build tasks."
+    ]
+  },
+  "ledger_consistency": {
+    "schema_id": "pm.deep_audit_ledger_consistency.v1",
+    "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "status": "pass",
+    "current_ref": "0e909affe6a3a939bdd509f7470f9d7b79ed0a25",
+    "compact_phase": "compiled_plans_to_code_handoff_governance_sealed",
+    "compact_status": "sealed",
+    "governance_status_from_compact_state": "sealed",
+    "last_event_id": "evt-0014",
+    "atom_count": 64,
+    "compiled_planunit_count_with_ledger_lineage": 38,
+    "open_blockers": [],
+    "open_questions": [],
+    "notes": [
+      "Ledger README, doc-impact matrix, implementation-readiness matrix, compact state, manifest, registry entry, and global ledger registry point at the final audit and evt-0014."
+    ]
+  },
+  "compile_readiness": "not_safe_to_enable_runtime_plancompile_disabled_by_contract",
+  "next_safe_action": "Certified complete for the bounded docs/governance repair. Runtime PlanCompile remains disabled by contract until a separate explicit enablement phase.",
+  "non_audit_side_effects": [],
+  "audit_artifacts": [
+    "atom_fidelity_matrix.jsonl",
+    "audit_generation_summary.json",
+    "closure_registry_audit.json",
+    "closure_reuse.jsonl",
+    "doc_impact_reference_findings.jsonl",
+    "forbidden_artifacts.json",
+    "implementation_readiness_findings.jsonl",
+    "ledger_consistency.json",
+    "owner_routing_findings.jsonl",
+    "planunit_source_claims.jsonl",
+    "semantic_risks.jsonl",
+    "validator_results.json"
+  ],
+  "validator_results": {
+    "status": "pass",
+    "command_count": 13,
+    "path": "Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/validator_results.json"
+  }
+}

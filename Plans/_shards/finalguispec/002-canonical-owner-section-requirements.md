@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4-L136
 
-Source SHA256: `aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47`
+Source SHA256: `159b663a41cc9753510274b9d873cd3c9faf8ed0a56ce2fd0694025007b9da2c`
 
 ---
 
@@ -24,7 +24,7 @@ The active split names `Orchestrator search` as object-first, run-aware, cross-t
 
 
 ### Concern action policy and authority model
-- Concern surfaces map `Progress`, `Seams`, `Evidence`, `History`, and `Ledger` views onto concern-linked `/evidence`, `/package` rollups, exact source references, `/split/supersession`, and acknowledgment `/dismissal` rationale instead of flattening concern history into one summary row.
+- Concern surfaces map `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` views onto concern-linked `/evidence`, `/package` rollups, exact source references, `/split/supersession`, and acknowledgment `/dismissal` rationale instead of flattening concern history into one summary row.
 - Concern record surfaces expose a canonical record schema with `/routing`, `/blocked/remediation`, `/corroboration/graph`, `/recovery`, and relationship links to reviews and graph patches; structural actions use `/split/supersession` instead of local free-text history.
 - Concern lineage transitions use `merge`, `split`, and `superseded`; when one concern is reframed into several precise concerns, the original resolves with `resolution_kind = split` and retained lineage refs rather than being overwritten.
 - Concern updates append new `/evidence` and can raise `/attention`; two duplicate concerns merge into one retained id and `/redirect` the `merged-away` ids, while an older framing replaced by a `/newer` concern is `resolved` with `resolution_kind = superseded`.

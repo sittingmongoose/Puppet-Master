@@ -168,7 +168,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8",
+      "sha256": "2a3a42c58c92e68d7573debab6464a715cf1a891b427d1d259b03feae27d786c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 58
@@ -1244,7 +1244,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "18d83140885795522460af266e2e1478ff3227d9a1d610a5e20ee9250aa52324",
+      "sha256": "172f93204eff70bb72b05568b2fa5ea9a426608c27b69ba5bff09f539c2df951",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 420
@@ -1399,7 +1399,7 @@
         "Plans/Tools.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 292,
+      "line_count": 291,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 4,
       "plan_unit_ids": [
@@ -1417,7 +1417,7 @@
         "unverifiable_completion",
         "weak_test_oracle"
       ],
-      "sha256": "4f116dba67b186788d2662afba12759175a0579e36dff78964a80319ed9cfb6a",
+      "sha256": "7d465a4855a28bbf58027e4bc299ec590af67a2cd8cbf2f27cedf0533cb5f58f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 4
@@ -1427,14 +1427,11 @@
         "requirement": 4
       },
       "validation_surfaces": [
-        "future TestCapabilityReport schema validation",
-        "future TestHarnessProbeReport schema validation",
-        "future TestRunReceipt schema validation",
-        "future TestStrategy schema validation",
         "future WorkNode request intake validation",
         "future automated testing strategy validator",
         "future test-gap blocker validation",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -1989,7 +1986,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951",
+      "sha256": "79a7a3c908831a47e8493da2851d702929625b754b02a321b5bd5b76cb721df8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -2613,7 +2610,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17365,
+      "line_count": 17374,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 289,
       "plan_unit_ids": [
@@ -3202,7 +3199,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "e93a5ae670cc2f4545ae3c7bdb377ced223d99f0af6bba79fb6055652ad1c0bc",
+      "sha256": "797bf08c3b3ef1097a188bdf483934fe61413687d378e116ab4925fd76be253a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 287,
@@ -3220,14 +3217,14 @@
         "future Goal Runtime contract/schema review",
         "future Goal Runtime event schema registration review",
         "future GoalRun contract registration review",
-        "future plans_to_code_handoff schema validation",
         "manual contract owner review before promotion",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -3984,7 +3981,7 @@
         "unsafe_execution_context",
         "unverified_execution_completion"
       ],
-      "sha256": "1a22031388d1486374772b08fe0dc51ad7ece913791d0194057b78c62f3a1a2b",
+      "sha256": "7b9347e7647733e115ac97c978bb8e8a5249c7371d5bfec6ab5a2bce75598879",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 103
@@ -3996,16 +3993,13 @@
       },
       "validation_surfaces": [
         "future Executor WorkNode scheduler integration tests",
-        "future ExecutorIntakeReport schema validation",
-        "future WorkNode test binding intake tests",
-        "future execution receipt chain validation",
         "future failure_signature and PlanDiffImpactReport validation",
-        "future source_control_preflight_receipt validation",
         "manual Executor heading/owner review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -4055,7 +4049,7 @@
         "feature_summary_drift",
         "migration_lineage"
       ],
-      "sha256": "daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4",
+      "sha256": "192f85416cb86b11080c50a32f9e0e803e794eb480d9ba72068334ff40a5286a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25
@@ -4888,7 +4882,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47",
+      "sha256": "159b663a41cc9753510274b9d873cd3c9faf8ed0a56ce2fd0694025007b9da2c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 396,
@@ -5267,7 +5261,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "fe3333892f661a9aa79c4873f0076afe204c15a2263944c57ab5db2db3fcc4c7",
+      "sha256": "6e2315981eb83a31a6e569fef52d469a1bbacabd588952bf6c7f119a57fffc16",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28,
@@ -5288,7 +5282,6 @@
         "future Goal Runtime PlanApproved integration review",
         "future Goal Runtime lifecycle tests",
         "future Goal Runtime verification-loop tests",
-        "future GoalCompletionReceipt schema validation",
         "future UI design, persistence, and provider-policy reviews",
         "future attachment preservation tests",
         "future autonomy and HITL mode review",
@@ -5319,6 +5312,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-auto-decisions",
         "python3 scripts/pm-plans-verify.py validate-evidence",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "python3 scripts/pm-shard-plans.py --check"
       ]
@@ -5335,7 +5329,7 @@
         "Plans/FinalGUISpec.md",
         "Plans/GUI_Rebuild_Requirements_Checklist.md"
       ],
-      "line_count": 1832,
+      "line_count": 1833,
       "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -5378,7 +5372,7 @@
         "gui_rebuild_checklist_drift",
         "migration_lineage"
       ],
-      "sha256": "4be41b52dec769c8cdc1233561c3c776834e370b2c6eba1da17786ced3168e54",
+      "sha256": "28ffe502125883e33ded97b18f62b1a8b17abff9800c4c44fa951a19b274591a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -6112,7 +6106,7 @@
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md"
       ],
-      "line_count": 7542,
+      "line_count": 7543,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 111,
       "plan_unit_ids": [
@@ -6345,7 +6339,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "410b71b44fed676a4dfa161c9560c82c14d686eaa7bbdcc0fa53849107bb4f11",
+      "sha256": "4b1008cdbb474343ac8dd5ac6896c8473fe76d0352bc0046a722306fa8eaa24a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 111
@@ -6395,11 +6389,11 @@
         "future Goal Runtime model-role resolver review",
         "future Settings model-role review",
         "future capability-lane resolver review",
-        "future model resolution receipt validation",
         "manual provider/model owner review",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -6545,7 +6539,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "794a169fba760e2a47cefd4669cf64e4cfba113aab1c7bc8322322565344cdca",
+      "sha256": "db04cad4420c5d266b094ad11355b073b756f18bc82bb306cfcb9f73faa60cb0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -7024,7 +7018,7 @@
         "skills_plugins_coverage_rows",
         "stable_anchor_gap_audit_findings"
       ],
-      "sha256": "31241a089c3c4ff809bb964b215fa0e656aa99f5d9d849500bc20f1572d1bcaa",
+      "sha256": "ef41c8912e244286a61906a651b70fee14c39a342a5bda1095c1081c4fed56c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 17
@@ -8208,7 +8202,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "7a0326edb49c5e3edc748c7b0f63ee4ca248f15779b73a12280bb86166589040",
+      "sha256": "b76eae8f606ea4e44627d7a92ba3faed956bf9f88d0c50875d2eb12c78cbab47",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
@@ -8669,7 +8663,7 @@
         "False": 13,
         "True": 1
       },
-      "heading_count": 20,
+      "heading_count": 21,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.plan_index",
@@ -8692,7 +8686,7 @@
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 720,
+      "line_count": 747,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -8728,7 +8722,7 @@
         "routing_mismatch",
         "scheduling_correctness"
       ],
-      "sha256": "31b33034d0dc09bd887842a276d2dfc2b5e888529a4dca10f1114ef015104f81",
+      "sha256": "b9af2e785603f1d11e3c2dd24ff2cfedce0ea47c7061e201efead96f8e054cef",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13,
@@ -8762,7 +8756,8 @@
         "future node_seed_candidate schema validation",
         "future stage_card schema validation",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -9065,7 +9060,7 @@
         "progression_owner_definition_gap",
         "residual_bridge_overreach"
       ],
-      "sha256": "45216e8d2e6ba9cf1fdc70560b8d0b8932fb9c98243761ffa59ab967d4e17070",
+      "sha256": "fd898d79ba566f2ab1a8b6853aa9a721d2294a255aef1c7af160739af9240c9a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -9101,7 +9096,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 3276,
+      "line_count": 3280,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 48,
       "plan_unit_ids": [
@@ -9208,7 +9203,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "1538972357c908265e4c134ea879d3a5f91bd1436100a5bb208e3d15071dc54e",
+      "sha256": "41f114ccea586d174447363ad60e4f54b69863b8d455e897542b7e70dc8f76f3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47,
@@ -9223,12 +9218,11 @@
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
-        "future GoalCompletionReceipt schema validation",
-        "future receipt artifact package validation",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
       ]
     },
     {
@@ -9511,7 +9505,7 @@
       "implementation_surfaces": [
         "Plans/rewrite-tie-in-memo.md"
       ],
-      "line_count": 847,
+      "line_count": 846,
       "path": "Plans/rewrite-tie-in-memo.md",
       "plan_unit_count": 39,
       "plan_unit_ids": [
@@ -9562,7 +9556,7 @@
         "residual_bridge_overreach",
         "rewrite_tie_in_drift"
       ],
-      "sha256": "7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05",
+      "sha256": "cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 38,
@@ -9650,7 +9644,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "c226b714637e10ddcbf1bdb71b2831e704807365c37594dc3290cccc19a9f465",
+      "sha256": "f8a39f6fe6e8cf2a35ef0c814409093ce52ca06e3cfde72179ef60cbbc3e8793",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -9898,7 +9892,7 @@
         "stream_audit_drift",
         "structural_anchor_loss"
       ],
-      "sha256": "5c878b9ad9d6f6c67618d3ceed33d14e6f908843fa7ab9feaeb2fb1e05cb08bd",
+      "sha256": "a14e3dab7f704ffdc8e20e30b494a42232fbd78046f01ad1f7d290adc240987c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -10165,7 +10159,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "9131a99c4642c084a0d0d13b4e5550d8eaa6d575aadfe0f52f8d50be485a8bec",
+      "sha256": "97dcb243642c7aa3a3d14fe3d87cc93b622a00089c684d1281d3054585c338b7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 122,
@@ -11140,7 +11134,7 @@
         "residual_bridge_overreach",
         "widget_system_drift"
       ],
-      "sha256": "6bbf7a9fb1832d6b3a5ce05638b91a8793a33bee438bccdfd268a95917270b07",
+      "sha256": "51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -11377,7 +11371,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-18T03:28:08Z",
+  "generated_at_utc": "2026-06-18T05:03:01Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-18T03:28:12Z",
+  "generated_at_utc": "2026-06-18T05:03:23Z",
   "index_path": "Plans/_shards/assistant-chat-design/00-index.md",
-  "index_sha256": "bbc625e6f2ba2461a6ecee6b8d96532a4c3d48bbe57343fe638cb3d0a5127575",
+  "index_sha256": "8904a12fe30904a85d2e0bba009d0556931009ced3c5192c2ee4e1ef0e29b27b",
   "manifest_path": "Plans/_shards/assistant-chat-design/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/assistant-chat-design/001-preamble.md",
-      "sha256": "04a058fae2785d6ad608acce2ec0a0e628ba91aec4766fcf0b964fe3e9c552f5",
+      "sha256": "8b6962e6dae7de9e25d2be00ed52e67060891846baf187437a824592087aace2",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
-      "sha256": "13fd13efcf6760f2a366ce9055dc94c85b69bd822ef1ba1d65cba4c0d3eb8c3c",
+      "sha256": "fa1071429fe6d997fc0cc7e1bd6711576807aa1c5acb72ad46910d1141f498e5",
       "shard_id": "002",
       "source_line_end": 12,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/assistant-chat-design/003-change-summary.md",
-      "sha256": "79d6cca6cdce44bc28b13695dbe354025ca71c8afa78a14ef81d74cc0887791a",
+      "sha256": "4260c230b56e9b38c17cb7b7d3f6729e94d89f5b8cb4d7f82bf72c6380b9652b",
       "shard_id": "003",
       "source_line_end": 29,
       "source_line_start": 14,
@@ -35,7 +35,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md",
-      "sha256": "2c3c42de6f0bbb219b9c018fbd6b22db928d1033d4f0bdc27eff0662744d312f",
+      "sha256": "de25322bcd28d14f65f54c56dee3042d506afb69d9ebdb6cd9058f36917688ea",
       "shard_id": "004",
       "source_line_end": 46,
       "source_line_start": 31,
@@ -44,7 +44,7 @@
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/assistant-chat-design/005-executive-summary.md",
-      "sha256": "5ecc8e24f53afe203e294dd362117b1ee0d119eb7b1b9aebcae23e72be4ab914",
+      "sha256": "0c17922960c328bcb05acc5f5dce05fa79ded53d9f14f9cce0bbd464e8828444",
       "shard_id": "005",
       "source_line_end": 51,
       "source_line_start": 47,
@@ -53,7 +53,7 @@
     {
       "heading": "Table of Contents",
       "path": "Plans/_shards/assistant-chat-design/006-table-of-contents.md",
-      "sha256": "b7170fcba7e99a3c226e4f485e79472d9a4fe2d0607b2a632a1dc5b3da0d95cd",
+      "sha256": "51ff8d782fe0234fc6770bb23814cb3206e7da4dcdb756c8c70f7ebccbcba99d",
       "shard_id": "006",
       "source_line_end": 89,
       "source_line_start": 53,
@@ -62,7 +62,7 @@
     {
       "heading": "1. Modes Overview",
       "path": "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md",
-      "sha256": "3c02667a8fdf7f8d190f15e0b2f67ef250967735218954062c2a12e215e975f9",
+      "sha256": "d65d65b35a9534bfd4fb0571ceb0abc8d777ca1f73fd025a4e98bc86750c19a3",
       "shard_id": "007",
       "source_line_end": 203,
       "source_line_start": 91,
@@ -71,7 +71,7 @@
     {
       "heading": "2. ELI5 Mode",
       "path": "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
-      "sha256": "40dabebbb0ec8282bc2ebeb64b44b362cef83fe32891605487644e211b4197aa",
+      "sha256": "7429f068ae308c0cd9dffb124c40702c0383e856a2c95983b0d09035e662f66c",
       "shard_id": "008",
       "source_line_end": 227,
       "source_line_start": 205,
@@ -80,7 +80,7 @@
     {
       "heading": "3. Permissions: YOLO vs Regular",
       "path": "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md",
-      "sha256": "75fe20ecbb57cd0aad8ef0fb09d99a6a1434c7a3cac99e8d375d37bcc4c68faa",
+      "sha256": "214a68caf757e8ed840b45102015568a494cb9693b7233d48daf6e998a95c8f5",
       "shard_id": "009",
       "source_line_end": 235,
       "source_line_start": 229,
@@ -89,7 +89,7 @@
     {
       "heading": "4. Message submission (Steer vs Queue), queued editing, interrupt, and stop",
       "path": "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md",
-      "sha256": "09ae60169de3f7aa0bba070c289a271df4c6a53b28824c2c16b8c89845440a85",
+      "sha256": "debec007089aeb474ba0e37aaa0c184805c18514cf1d1e028f431377de37cdd0",
       "shard_id": "010",
       "source_line_end": 282,
       "source_line_start": 237,
@@ -98,7 +98,7 @@
     {
       "heading": "5. Commands (slash commands and custom commands)",
       "path": "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
-      "sha256": "b7cff26a7f74febce7ebde1b9880a9d39550af26efadeac3bc2ef07fe188f98f",
+      "sha256": "5228a45ce9f9bef62ce5ee44a4378aa24c127dfdc49aaa786c3c6f9eed4bb9c0",
       "shard_id": "011",
       "source_line_end": 426,
       "source_line_start": 283,
@@ -107,7 +107,7 @@
     {
       "heading": "6. Teach",
       "path": "Plans/_shards/assistant-chat-design/012-6.-teach.md",
-      "sha256": "18c0644969685d7c978e2ed27553b7a87154ca59fcb0ef1509db04ddd3ba4f08",
+      "sha256": "077ec3313ac2349e30ff47fa64911d2bf82ff94cdab700592cd6964dc11b8c2f",
       "shard_id": "012",
       "source_line_end": 465,
       "source_line_start": 427,
@@ -116,7 +116,7 @@
     {
       "heading": "7. Attachments, Web Search, and Extensibility",
       "path": "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md",
-      "sha256": "e69b9862ccdee15bd101c91803b1594969e8e0b03d54f26f59d5283125c1e3d5",
+      "sha256": "d9c05fe45e9fca5e1c87f5dc4c31d0cc4feb5255f0871470f534a9cb12069c8f",
       "shard_id": "013",
       "source_line_end": 605,
       "source_line_start": 467,
@@ -125,7 +125,7 @@
     {
       "heading": "8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)",
       "path": "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
-      "sha256": "f974153213afebd6262a42ec0a6a7917b8b8a540d6e5a7d41f15ca8d67c329c1",
+      "sha256": "56626c83bf7cee3056011d4042f25e547af9127892271fab505c8653f2f5d989",
       "shard_id": "014",
       "source_line_end": 896,
       "source_line_start": 606,
@@ -134,7 +134,7 @@
     {
       "heading": "9. File Manager, IDE-style editor, and @ Mention",
       "path": "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md",
-      "sha256": "c7c8a5b97d8ebc12edd7ebd0cd5ae0d54d56b730c8827b89bd63034e3fcb2bb3",
+      "sha256": "6dea85d6851bb4533bfb8d19d2729f2bc4fa82968e1d32480722f8431091a15f",
       "shard_id": "015",
       "source_line_end": 933,
       "source_line_start": 898,
@@ -143,7 +143,7 @@
     {
       "heading": "10. Chat History Search",
       "path": "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md",
-      "sha256": "2f30d6de063fb48c3cb55563df22d06377148d9d5992ee47bf6a7ef91d103796",
+      "sha256": "576b77dd50f3bf4030eadfe35e55b916f656b9d72ac802f9b692cfdc0177c29e",
       "shard_id": "016",
       "source_line_end": 1005,
       "source_line_start": 935,
@@ -152,7 +152,7 @@
     {
       "heading": "11. Threads and chat management",
       "path": "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md",
-      "sha256": "ef23a4b4b6ef5b66198eabd351159fb70ac438cc2f93c00a37d571461809caa9",
+      "sha256": "4e5726fa81e185fc21a5ca0cae496ce1261b14ba34fbbd8b7d5152528be8d470",
       "shard_id": "017",
       "source_line_end": 1151,
       "source_line_start": 1006,
@@ -161,7 +161,7 @@
     {
       "heading": "12. Context usage display",
       "path": "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md",
-      "sha256": "0e87dc16e3ac2a78261c14132b1474d6303371389081e50de9de520e74f9f7fe",
+      "sha256": "2fe156d3112eed86f2f57ce57c32679258a464afdebf5e569a06ff41025dbfe6",
       "shard_id": "018",
       "source_line_end": 1260,
       "source_line_start": 1152,
@@ -170,7 +170,7 @@
     {
       "heading": "13. Activity transparency: search, bash, and file activity",
       "path": "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md",
-      "sha256": "3551119790596d867dfc546a2aab8441a86d5a5381dd7699e02e38885a18e364",
+      "sha256": "13702440c385959d9686901f7ae53303ce19a63eaf714870f469589bb4db75e8",
       "shard_id": "019",
       "source_line_end": 1674,
       "source_line_start": 1261,
@@ -179,7 +179,7 @@
     {
       "heading": "14. Subagents & Crew",
       "path": "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md",
-      "sha256": "e98bdb4218d3f67fb6353318ff318dc79af2d1a0ea43f80010ec7adf262f926d",
+      "sha256": "92e02c1415ff5780857c4d04dfb577766800ae28c1462a6f3cebeff92d14e5ce",
       "shard_id": "020",
       "source_line_end": 1792,
       "source_line_start": 1675,
@@ -188,7 +188,7 @@
     {
       "heading": "15. Plan Mode + Crew Mode",
       "path": "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md",
-      "sha256": "83bcc42d43be8a70149360cb3ae362ea4a82d702175a7e296db4f4d7d612c8f8",
+      "sha256": "81d20a818c40a020f0e86f67111984d1f5d78b9bf6fba9fd427bdf1570293ff9",
       "shard_id": "021",
       "source_line_end": 1826,
       "source_line_start": 1793,
@@ -197,7 +197,7 @@
     {
       "heading": "16. Interview Phase UX (Chat Surface)",
       "path": "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md",
-      "sha256": "3aeed85438b0b9e3aa9e8cdc2b2c2e28ae1818d2aa47f0b110eb722935f0d47c",
+      "sha256": "4497c1993052e26f1a4e8263660e67a1070eb96554ee0287bad62ae8750de8f6",
       "shard_id": "022",
       "source_line_end": 1866,
       "source_line_start": 1827,
@@ -206,7 +206,7 @@
     {
       "heading": "17. Context & Truncation",
       "path": "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md",
-      "sha256": "adf3dd11b676ad9d657fbd71f652133f6a682402c0ed7447bda89ba5a8dab7e6",
+      "sha256": "bdfba97cd26e3ff4087182aa536e9b87a65d2ab48db54897a6de56e1802402bc",
       "shard_id": "023",
       "source_line_end": 1980,
       "source_line_start": 1868,
@@ -215,7 +215,7 @@
     {
       "heading": "18. BrainStorm Mode",
       "path": "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md",
-      "sha256": "3a00290149a4697d7be4b629600d22363e10cdc6f5e26b38f9fdb49395c51f85",
+      "sha256": "a412566f3412fd50b6037e25b1b046459fc071f388137e4a9b57fc62878388e4",
       "shard_id": "024",
       "source_line_end": 1992,
       "source_line_start": 1981,
@@ -224,7 +224,7 @@
     {
       "heading": "19. Documentation Audience (AI Overseer)",
       "path": "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md",
-      "sha256": "d7ae55e2c4acd04f6442e026bdba301e1b96d9904bd1d0fbb933e193f52543c3",
+      "sha256": "0c7e15bee9f9cb4ccea197132b6ae9a3fbbff94c374870735aacd70b9530c35e",
       "shard_id": "025",
       "source_line_end": 2003,
       "source_line_start": 1994,
@@ -233,7 +233,7 @@
     {
       "heading": "20. References",
       "path": "Plans/_shards/assistant-chat-design/026-20.-references.md",
-      "sha256": "591ac46f6b483dc2c962a396ba349f502a073e0e23471a3e65152f607076db1c",
+      "sha256": "660a62ecff763f5e2a6f752a1028bd055d4bc2bf6ccf6530ea924d17b4b06bc3",
       "shard_id": "026",
       "source_line_end": 2034,
       "source_line_start": 2005,
@@ -242,7 +242,7 @@
     {
       "heading": "21. Dashboard Warnings and Calls to Action",
       "path": "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md",
-      "sha256": "36191982744448ad70dd96c013bea0bb49f7d9d67bd6058b241a213dbd8ef267",
+      "sha256": "d9d5c731bb49ed61e801dd0664ff7e014ac37ee5aae58867373a2db895f3451c",
       "shard_id": "027",
       "source_line_end": 2053,
       "source_line_start": 2035,
@@ -251,7 +251,7 @@
     {
       "heading": "22. Live Testing Tools and Hot Reload",
       "path": "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md",
-      "sha256": "39dd5ef9dbc1da3bd15c7da55cfa6d3fdda9703bab2abc46af62026106ef0f09",
+      "sha256": "75bdbd4c9cb74176677ac012b94bac183bd47f35b934393b17976aca27d55e5d",
       "shard_id": "028",
       "source_line_end": 2086,
       "source_line_start": 2055,
@@ -260,7 +260,7 @@
     {
       "heading": "23. Gaps, Competitive Comparison, and Enhancements",
       "path": "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md",
-      "sha256": "69cb46f6f2d939ec1414836f281a079aa9c0760ced6cce3f2156044ce187fb2a",
+      "sha256": "d51438e7add1deab31846b381ad951f7fc79056117bb7e23f3536235ed1a3316",
       "shard_id": "029",
       "source_line_end": 2182,
       "source_line_start": 2087,
@@ -269,7 +269,7 @@
     {
       "heading": "24. Chat thread performance, virtualization, and flicker avoidance",
       "path": "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md",
-      "sha256": "67286fa80fa16c47f2f292d7ce47d697be954d9b3ace19c609edd5ca76afe40a",
+      "sha256": "8edabb5033457cf1468188993a425c2314ab604a1a4f896f4ff1ed106f068a5d",
       "shard_id": "030",
       "source_line_end": 2237,
       "source_line_start": 2184,
@@ -278,7 +278,7 @@
     {
       "heading": "25. Context Circle Enhancements (Addendum -- 2026-02-23)",
       "path": "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md",
-      "sha256": "9fd52d91139fdbb81dc6499545962593c49cc1757fce747753e7f0a94098b902",
+      "sha256": "4658b8ca9f878576e5c99f88d80b782281e808299e7d04e47c1177815000238b",
       "shard_id": "031",
       "source_line_end": 2244,
       "source_line_start": 2238,
@@ -287,7 +287,7 @@
     {
       "heading": "26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep)",
       "path": "Plans/_shards/assistant-chat-design/032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md",
-      "sha256": "fde848059146c4be06585e913ad308033507ecb0f9f56d193d3aadfda183906a",
+      "sha256": "9bc81a7407f49af00acee9468276fda5f7230c3870a3029f97fd99710e2f2f40",
       "shard_id": "032",
       "source_line_end": 2347,
       "source_line_start": 2245,
@@ -296,7 +296,7 @@
     {
       "heading": "27. Persona Control in Assistant Chat (2026-03-06)",
       "path": "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md",
-      "sha256": "56c56e40eaea4ec6d02bb262ac143ae9a677fd31d52b4379e701b73fdeb4d7c9",
+      "sha256": "3f22e4ac9ff46b753a2e467046434eaf136cddd1ab7b3ec538423f4904b1a3a5",
       "shard_id": "033",
       "source_line_end": 2484,
       "source_line_start": 2348,
@@ -305,7 +305,7 @@
     {
       "heading": "28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)",
       "path": "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md",
-      "sha256": "8fa39ec9897011d531378ef2a85230096f4b6fe266c698e8f6babd9aeda739d9",
+      "sha256": "f0a1d3250caf4fdfca8e3dca5dec71dc464c8997f3b9e3eb8ee5a61e1d7cb2d4",
       "shard_id": "034",
       "source_line_end": 2529,
       "source_line_start": 2486,
@@ -314,7 +314,7 @@
     {
       "heading": "29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)",
       "path": "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md",
-      "sha256": "8fd0e1129556941df988ce31d1b686ba83c60dcc671271007db163a4b8afca57",
+      "sha256": "ed8484f9130441399c59eb0b8e2221ee2882cf15c477f83f978366e5187fd75a",
       "shard_id": "035",
       "source_line_end": 2639,
       "source_line_start": 2530,
@@ -323,7 +323,7 @@
     {
       "heading": "Unified Thread Blocked-State Lifecycle",
       "path": "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md",
-      "sha256": "b9981715500d381c4c79235e3723ae79d20b7b6670059f0a410cbe326c265490",
+      "sha256": "acf451e6f7dd79c2d50286454fa8c98b5027130c62b05a5a22a617099777ab1c",
       "shard_id": "036",
       "source_line_end": 2656,
       "source_line_start": 2641,
@@ -332,7 +332,7 @@
     {
       "heading": "Worktrees in Assistant",
       "path": "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md",
-      "sha256": "c7454b7a340f9517b17a0ce6867e050189447074767bb023ea89fb60f1a65148",
+      "sha256": "2641b058702511df057a7856ac05713c323503b4243fb83dcf6dbbe35c0d3fb4",
       "shard_id": "037",
       "source_line_end": 3261,
       "source_line_start": 2657,
@@ -341,7 +341,7 @@
     {
       "heading": "Shared actor-boundary, route payload, and blocked_notice packet",
       "path": "Plans/_shards/assistant-chat-design/038-shared-actor-boundary-route-payload-and-blocked_notice-packet.md",
-      "sha256": "a34dc07c3bafc00ae4431c81a0d7923653dc7836d72314ba14a068b5c8b41303",
+      "sha256": "797b450b01aede4b84c8d40a9c6d6542533dc3720202bf9284f1ef9f74810486",
       "shard_id": "038",
       "source_line_end": 3282,
       "source_line_start": 3262,
@@ -350,7 +350,7 @@
     {
       "heading": "Shared Conversational Actor Runtime Identity",
       "path": "Plans/_shards/assistant-chat-design/039-shared-conversational-actor-runtime-identity.md",
-      "sha256": "5ed9b14043b267c35658557a1f71c13535b8ee87c98da44df62d7a840f13eabd",
+      "sha256": "405bfdccc5ad7ac747697c59b1c21defc46b2d7111e8f6992de8279805444b0b",
       "shard_id": "039",
       "source_line_end": 3298,
       "source_line_start": 3284,
@@ -359,7 +359,7 @@
     {
       "heading": "Chat Route, Permission, and History Behaviors",
       "path": "Plans/_shards/assistant-chat-design/040-chat-route-permission-and-history-behaviors.md",
-      "sha256": "22b7f7fc6bbc7167fece031dca216dfd58a47b098dd7833bd38e942530edc7f7",
+      "sha256": "a81fe9d2fb5ebb821702a1743edae9adb8a6933f5d79c4ab487a309bfb31c5cb",
       "shard_id": "040",
       "source_line_end": 3314,
       "source_line_start": 3300,
@@ -368,7 +368,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/assistant-chat-design/041-owner-consumer-map.md",
-      "sha256": "ddbd25d1bf7f58a870a7bbd795877f2d51d4cd461b8d26a1f04107bed11bc44a",
+      "sha256": "66f87901d4f906bf8f60c80ea9ce7558d8075b9d298211f8d08018a126439688",
       "shard_id": "041",
       "source_line_end": 3320,
       "source_line_start": 3316,
@@ -377,7 +377,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/assistant-chat-design/042-planunits.md",
-      "sha256": "1b6f3e56ebf687c4bb3ed844870f90f3cbe8665f73609b43ee19589d3b0ff47a",
+      "sha256": "df20e4bddfdfc5b227b5e836d17b3c3ce9d68ab3bbde3c8a77771f9b9b9231ee",
       "shard_id": "042",
       "source_line_end": 21665,
       "source_line_start": 3322,
@@ -386,7 +386,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/assistant-chat-design/043-migration-coverage.md",
-      "sha256": "fb43332015cf26818e1a66d5aa628c2961476cf6b9ef2df4bed0298cc4dad788",
+      "sha256": "dde9799c80bb981cc727aff25c3ca9694a5e2d1b8f895a7c3b1b592699fe99dd",
       "shard_id": "043",
       "source_line_end": 21697,
       "source_line_start": 21667,
@@ -395,7 +395,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/assistant-chat-design/044-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "ade78700ea2d4afa290619e879645357a93b5aec13ff1e4f1ddfb8a603c5d0bf",
+      "sha256": "d3479f048b5096bdefe30e8932e4a22ca13d5e94ff68bca8f593ed27a8103709",
       "shard_id": "044",
       "source_line_end": 21779,
       "source_line_start": 21699,
@@ -404,7 +404,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260615-001",
       "path": "Plans/_shards/assistant-chat-design/045-ledger-compile-addendum-pldg-20260615-001.md",
-      "sha256": "4a30ceb19f38ac59a7b5f6218625068e082b73191fcfdffe4b5ae22e7d6ae46e",
+      "sha256": "97d7cead2f02142d5000e67eeabac5472b3ff9ebcaade79bf2b6e5a9c5ffddb7",
       "shard_id": "045",
       "source_line_end": 21878,
       "source_line_start": 21781,
@@ -413,7 +413,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-001",
       "path": "Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260616-001.md",
-      "sha256": "cf36ba607a982e5160f89477218a39a3455527097ee27ac75ef2bd40de7c9474",
+      "sha256": "2e0896feba6c05a34460636f015d708663eb3abf16f4171d605fc80e248c6e03",
       "shard_id": "046",
       "source_line_end": 22192,
       "source_line_start": 21880,
@@ -422,7 +422,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "86507c72545f039f91b927372d3c5233b9cd24a5daff3f8c53e14c7c124a7ee4",
+      "sha256": "35b8f160ddb9d6b207a846379838f10c97d9f66b0feef9ceb077882c5b5dea89",
       "shard_id": "047",
       "source_line_end": 22259,
       "source_line_start": 22194,
@@ -432,6 +432,6 @@
   "source": {
     "line_count": 22259,
     "path": "Plans/assistant-chat-design.md",
-    "sha256": "18d83140885795522460af266e2e1478ff3227d9a1d610a5e20ee9250aa52324"
+    "sha256": "172f93204eff70bb72b05568b2fa5ea9a426608c27b69ba5bff09f539c2df951"
   }
 }

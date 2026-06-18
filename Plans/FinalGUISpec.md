@@ -17,7 +17,7 @@ The active split names `Orchestrator search` as object-first, run-aware, cross-t
 
 
 ### Concern action policy and authority model
-- Concern surfaces map `Progress`, `Seams`, `Evidence`, `History`, and `Ledger` views onto concern-linked `/evidence`, `/package` rollups, exact source references, `/split/supersession`, and acknowledgment `/dismissal` rationale instead of flattening concern history into one summary row.
+- Concern surfaces map `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` views onto concern-linked `/evidence`, `/package` rollups, exact source references, `/split/supersession`, and acknowledgment `/dismissal` rationale instead of flattening concern history into one summary row.
 - Concern record surfaces expose a canonical record schema with `/routing`, `/blocked/remediation`, `/corroboration/graph`, `/recovery`, and relationship links to reviews and graph patches; structural actions use `/split/supersession` instead of local free-text history.
 - Concern lineage transitions use `merge`, `split`, and `superseded`; when one concern is reframed into several precise concerns, the original resolves with `resolution_kind = split` and retained lineage refs rather than being overwritten.
 - Concern updates append new `/evidence` and can raise `/attention`; two duplicate concerns merge into one retained id and `/redirect` the `merged-away` ids, while an older framing replaced by a `/newer` concern is `resolved` with `resolution_kind = superseded`.
@@ -163,11 +163,11 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the current Iced-based GUI with a Slint 1.15.1 implementation. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.15.1 implementation. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
-Key changes from the current Iced GUI:
+Key changes from the retired Rust/Iced-lineage GUI:
 - **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
 - **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
 - **Settings restructure:** Old `Settings` becomes `App Settings`; old `Config` becomes `Settings`; Login and Doctor merge into unified Settings
@@ -925,7 +925,7 @@ Tier/group views, where retained as compatibility projections, carry pointers to
 
 When `Orchestrator_Page.md` and `Widget_System.md` disagree on Dashboard hostability, FinalGUISpec treats Progress widget Dashboard-hostability as an explicit allowlist rather than a catalog-wide default.
 
-The old `all Orchestrator tabs are widget canvases` model from `Widget_System.md` and `Orchestrator_Page.md` is compatibility-only; Progress stays the sole widget-composed Orchestrator tab, while Seams, Node Graph, Evidence, History, and Ledger remain native views.
+The old `all Orchestrator tabs are widget canvases` model from `Widget_System.md` and `Orchestrator_Page.md` is compatibility-only; Progress stays the sole widget-composed Orchestrator tab, while Plan Compile, Seams, Node Graph, Evidence, History, and Ledger remain native views.
 
 `Plans/FinalGUISpec.md` / `/FinalGUISpec.md`, `Widget_System` / `Widget_System.md`, and `Orchestrator_Page` / `Orchestrator_Page.md` migration notes treat `GUI`, `/Tiers/Node`, `/Evidence/History/Ledger`, phase `/task/subtask` progress, `widget.tier_tree`, `widget.progress_bars`, `/widget`, scheduler `/blocked`, and addenda `pile-up` as compatibility inventory; replacements use package `/seam/lane` groupings and native `view-state` contracts.
 
@@ -2185,7 +2185,7 @@ Rules:
 
 Agent ecosystem seams remain explicit migration references: `Plans/Skills_System.md` (`/Skills_System.md`), `Plans/MCP_Integration.md` (`/MCP_Integration.md`), and `Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`).
 
-| Current Iced View | New Slint Location | Notes |
+| Retired Rust/Iced-Lineage View | New Slint Location | Notes |
 |-------------------|-------------------|-------|
 | `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid, 4-split terminal |
 | `projects.rs` | `views/projects.slint` (Home group) | Minimal changes |
@@ -2213,7 +2213,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 
 ### 16.2 Widget Migration
 
-All 25 current Iced widgets map to Slint equivalents. Key differences:
+All 25 retired Rust/Iced-lineage widgets map to Slint equivalents. Key differences:
 - **Canvas-based widgets** (pixel_grid, paper_texture, step_circle, budget_donut, usage_chart): Use `SharedPixelBuffer` + `Image` instead of Iced's `canvas::Program`
 - **text_editor::Content** (for non-terminal logs or degraded/plain historical terminal transcript projections): Use Slint's `TextEdit` (read-only mode) or custom `ListView` with styled text lines; live terminal rendering follows the Section 15 terminal-core architecture and is not a normal text-editor/list widget.
 - **Subscriptions** (50ms polling): Replace with event-driven `invoke_from_event_loop`
@@ -2444,7 +2444,7 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 Two distinct catalogs now exist. To avoid confusion:
 
 - **Section 8 of this document** (FinalGUISpec Widget Catalog) = **atomic UI components**: StyledButton, StyledInput, StyledBadge, TreeView, CodeBlock, and other building-block primitives. These are reusable across all views and are NOT page widgets.
-- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator tabs.
+- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator `Progress` only.
 
 The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
 
@@ -15946,7 +15946,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All 25 current Iced widgets map to Slint equivalents; canvas-based widgets use
+  All 25 retired Rust/Iced-lineage widgets map to Slint equivalents; canvas-based widgets use
   `SharedPixelBuffer` plus `Image`, nonterminal logs or degraded/plain historical terminal
   transcript projections use read-only `TextEdit` or custom `ListView`, context menu is
   custom, and animations use property transitions and `animate`.
@@ -25032,7 +25032,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Orchestrator Plan Compile tab must feel polished, animated, and informative rather than a static JSON or log table. Plans flow into PlanUnits, cards sort into lanes, NodeSeeds assemble, dependency edges draw, GUI/frontend badges appear, test gates light up, WorkNode requests snap into graph clusters, and handoff pulses toward Executor. The tab presents stage timeline, progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness while preserving the scope boundary: Plan Compile shows Plans-to-node creation, and existing execution views show code-generation and WorkNode execution progress.
+  The Orchestrator Plan Compile tab must feel polished, animated, and informative rather than a static JSON or log table. Plans flow into PlanUnits, cards sort into lanes, non-executable NodeSeed candidate drafts assemble, dependency edges draw, GUI/frontend badges appear, test gates light up, WorkNode request drafts snap into graph clusters, and handoff pulses toward Executor. The tab presents stage timeline, progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness while preserving the scope boundary: Plan Compile shows Plans-to-node draft projection, and existing execution views show code-generation and WorkNode execution progress.
   The tab presents progress/speed/ETA/status panels as the visible summary for progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness.
   The presentation is an animated node factory and preserves Plan Compile tab scope: Executor execution progress stays in existing execution views rather than this compile tab.
 gui_related: true
@@ -25040,7 +25040,7 @@ gui_classification_reason: This unit defines visible animation, layout, status, 
 depends_on: [OP-023, OP-024, PNC-014, ATS-001]
 unblocks: []
 acceptance_criteria:
-  - The tab uses animated node-factory presentation for PlanUnits, NodeSeeds, dependency edges, test gates, WorkNode requests, and Executor handoff.
+  - The tab uses animated node-factory presentation for PlanUnits, non-executable NodeSeed candidate drafts, dependency edges, test gates, WorkNode request drafts, and Executor handoff.
   - It shows progress/speed/ETA/status panels with progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness.
   - It does not duplicate the code-generation dashboard.
 validation_surfaces:

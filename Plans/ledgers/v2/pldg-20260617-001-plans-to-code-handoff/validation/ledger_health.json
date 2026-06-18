@@ -3,7 +3,7 @@
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 13,
+    "events": 14,
     "design_atoms": 64,
     "decisions": 28,
     "open_questions": 0,
@@ -14,7 +14,7 @@
     "ready_for_plan_compile_atoms": 0,
     "candidate_atoms": 0,
     "compiled_to_plan_atoms": 64,
-    "compiled_owner_docs": 20,
+    "compiled_owner_docs": 28,
     "compiled_plan_units": 38,
     "governance_status": "sealed",
     "governance_seal": "passed",
@@ -22,15 +22,16 @@
     "plan_compile_runtime_status": "design_only_disabled",
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
-    "doc_impact_matrix": "compiled_and_dispositioned",
-    "implementation_readiness_matrix": "compiled_and_dispositioned",
-    "forbidden_artifacts": "not_created"
+    "doc_impact_matrix": "compiled_governance_sealed_reference_coverage_passed",
+    "implementation_readiness_matrix": "compiled_to_plans_governance_sealed_final_repair_certified",
+    "forbidden_artifacts": "not_created",
+    "plan_units_checked": 2519
   },
   "checks": [
     {
       "check_id": "record-counts-0001",
       "status": "pass",
-      "summary": "Record counts match manifest and compact state."
+      "summary": "Record counts match manifest, compile queue, and compact state through evt-0014."
     },
     {
       "check_id": "compile-0001",
@@ -48,7 +49,7 @@
       "summary": "Node readiness intentionally remains runtime_disabled; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
-  "updated_at_utc": "2026-06-18T03:26:09Z",
+  "updated_at_utc": "2026-06-18T04:55:25Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and later explicit enablement."
   ]

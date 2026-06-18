@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L1789-L1930
 
-Source SHA256: `c434127a6cd605a70df13b0eccbea11c7a16db829fe158d65069866d31bc5951`
+Source SHA256: `79a7a3c908831a47e8493da2851d702929625b754b02a321b5bd5b76cb721df8`
 
 ---
 
@@ -68,7 +68,7 @@ Rules:
 - Keys map to the numbered Multi-Pass Review passes configured for the Builder run.
 - If a configured run uses fewer passes than a stored key set, extra keys are ignored.
 - If a run uses more passes than are explicitly mapped, unmapped passes fall back to the deterministic reviewer-selection rules in §5.6.
-- GUI labels may display `Pass 1`, `Pass 2`, etc., but persistence MUST use the canonical key names above.
+- GUI labels may display `Pass 1`, `Pass 2`, etc. only when labeling legacy/imported Multi-Pass Review compatibility rows; new active UI copy uses reviewer-pass ordinal wording, and persistence MUST use the canonical key names above.
 - `review_pass_personas` maps review passes only; the final synthesis/writer step remains governed by the Builder workflow and is not implicitly overwritten by reviewer-pass mappings.
 
 Builder Persona settings MUST persist a canonical config object with at least:

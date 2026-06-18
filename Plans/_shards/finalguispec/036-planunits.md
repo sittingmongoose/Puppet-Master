@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L3499-L24322
 
-Source SHA256: `aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47`
+Source SHA256: `159b663a41cc9753510274b9d873cd3c9faf8ed0a56ce2fd0694025007b9da2c`
 
 ---
 
@@ -12458,7 +12458,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All 25 current Iced widgets map to Slint equivalents; canvas-based widgets use
+  All 25 retired Rust/Iced-lineage widgets map to Slint equivalents; canvas-based widgets use
   `SharedPixelBuffer` plus `Image`, nonterminal logs or degraded/plain historical terminal
   transcript projections use read-only `TextEdit` or custom `ListView`, context menu is
   custom, and animations use property transitions and `animate`.

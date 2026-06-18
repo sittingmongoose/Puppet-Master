@@ -1,0 +1,28 @@
+{
+  "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "generated_at_utc": "2026-06-18T05:05:23Z",
+  "counts": {
+    "atom_fidelity_rows": 64,
+    "planunit_source_claim_rows": 38,
+    "owner_routing_rows": 9,
+    "doc_impact_rows": 9,
+    "implementation_readiness_rows": 9,
+    "closure_reuse_rows": 43,
+    "semantic_risk_rows": 0
+  },
+  "initial_artifacts_written": [
+    "atom_fidelity_matrix.jsonl",
+    "closure_registry_audit.json",
+    "closure_reuse.jsonl",
+    "doc_impact_reference_findings.jsonl",
+    "forbidden_artifacts.json",
+    "implementation_readiness_findings.jsonl",
+    "ledger_consistency.json",
+    "owner_routing_findings.jsonl",
+    "planunit_source_claims.jsonl",
+    "semantic_risks.jsonl"
+  ],
+  "status": "pass_certified",
+  "validator_results_status": "pass"
+}

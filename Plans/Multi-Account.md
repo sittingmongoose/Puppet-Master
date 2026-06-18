@@ -67,7 +67,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_
 
 | Reference | Relevance |
 |-----------|-----------|
-| **Plans/rewrite-tie-in-memo.md** | UI/storage/provider alignment; Gemini API key exception; avoid coupling to current Iced/storage. |
+| **Plans/rewrite-tie-in-memo.md** | UI/storage/provider alignment; Gemini API key exception; avoid coupling to retired Rust/Iced lineage or legacy storage. |
 | **Plans/storage-plan.md** | Where account registry, cooldowns, and usage cache live (redb); usage/rate-limit events in seglog. |
 | **Plans/usage-feature.md** | Per-account usage visibility and 5h/7d; Usage view requirements. |
 | **AGENTS.md** | Usage Tracking (endpoints, env vars, error parsing); Platform CLI Commands; Gemini auth exception. |

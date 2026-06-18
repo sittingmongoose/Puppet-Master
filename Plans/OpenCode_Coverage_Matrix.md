@@ -45,7 +45,7 @@ GUI tab coverage references `Plans/FinalGUISpec.md`, `/FinalGUISpec.md`, `/tabs`
 
 Package/seam/lane coverage references `/package/seam/lane-aware`, tier-bound, Personas.md, Models_System, Models_System.md, Prompt_Pipeline, Prompt_Pipeline.md, and `/override` when persona/model/prompt overrides intersect package or lane semantics.
 
-Orchestrator tab coverage references FinalGUISpec.md, Orchestrator_Page, Orchestrator_Page.md, `/tab`, cross-referencing, and Tiers when this matrix audits Orchestrator page navigation.
+Orchestrator tab coverage references FinalGUISpec.md, Orchestrator_Page, Orchestrator_Page.md, `/tab`, cross-referencing, and the canonical seven-tab shell (`Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`) when this matrix audits Orchestrator page navigation; legacy `Tiers` labels are compatibility/search audit inputs only.
 
 Governance handoff observations are governance-relevant only when `/handoff` and raw_observation evidence affects audit reconstruction or orchestration projections.
 

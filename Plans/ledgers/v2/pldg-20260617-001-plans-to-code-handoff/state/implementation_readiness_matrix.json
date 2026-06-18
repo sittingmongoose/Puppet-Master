@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.implementation_readiness_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-18T03:26:09Z",
-  "status": "compiled_to_plans_governance_sealed",
-  "purpose": "Preserve the pre-compile implementation-readiness mapping after conversion to Plans by recording each design area against concrete PlanUnits, fields, schemas, acceptance criteria, validators, and boundaries.",
+  "updated_at_utc": "2026-06-18T04:54:48Z",
+  "status": "compiled_to_plans_governance_sealed_final_repair_certified",
+  "purpose": "Preserve the implementation-readiness mapping after conversion to Plans by recording each design area against concrete PlanUnits, fields, schemas, acceptance criteria, validators, boundaries, and final reference-repair disposition.",
   "global_acceptance": [
     "Every design area below becomes one or more PlanUnits or explicit disposition rows.",
     "Each PlanUnit includes owner_doc, source_lineage, validation_surfaces, implementation_surfaces, acceptance_criteria, risk_class, reasoning_tier, context_scope, gui_related, and node_compile_hint where applicable.",
@@ -339,6 +339,50 @@
         "code complete has objective receipt criteria",
         "worker says done is insufficient",
         "every handoff has owner, artifact, validator, receipt, retry/rollback route"
+      ]
+    },
+    {
+      "area_id": "impl-009",
+      "name": "Seven-tab shell and reference compatibility cleanup",
+      "owner_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "consumer_docs": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Multi-Account.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/00-plans-index.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "required_plan_units": [
+        "OP-023",
+        "F3-397",
+        "RGV-013",
+        "RAP-029"
+      ],
+      "required_fields": [
+        "Progress",
+        "Plan Compile",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger",
+        "compatibility alias only"
+      ],
+      "acceptance": [
+        "Active Orchestrator references use the seven-tab shell.",
+        "Plan Compile is present in title/reference surfaces.",
+        "Old six-tab/Tiers language is compatibility/source-lineage only.",
+        "No runtime PlanCompile, WorkNodes, NodeSeeds, executable queues, or implementation files are created."
       ]
     }
   ]

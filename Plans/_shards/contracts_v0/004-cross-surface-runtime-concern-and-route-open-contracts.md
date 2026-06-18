@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L312-L814
 
-Source SHA256: `e93a5ae670cc2f4545ae3c7bdb377ced223d99f0af6bba79fb6055652ad1c0bc`
+Source SHA256: `797bf08c3b3ef1097a188bdf483934fe61413687d378e116ab4925fd76be253a`
 
 ---
 
@@ -266,7 +266,7 @@ Event naming is shared across runtime and UI projections. Scheduling, execution,
 
 Shared record envelopes carry enough refs for audit and projection joins. Good base records include `record_id`, `record_kind`, `schema_version`, `project_id`, `run_id?`, `scope_type`, `scope_id`, `status`, `created_at_utc`, `updated_at_utc?`, `summary`, `summary_kind?`, `detail_ref?`, `source_refs`, `source_refs[]`, `artifact_refs`, `artifact_refs[]`, `related_record_refs`, `related_record_refs[]`, `lineage_refs`, `lineage_refs[]`, `actor_ref`, and `requested_effective_snapshot_refs`; shorter projection summaries may reference the shared envelope but must not silently drop these join fields when the user opens detail.
 
-Worktree cleanup and concern operations preserve runtime ownership. `recover`, `prune`, `/remove`, `active-run`, `safe-point`, remediation lineage, `dirty_worktree`, and `worktree_conflict` are runtime actions or blocked reasons, not trivial delete affordances. Concern operations from `Progress`, `Seams`, `Evidence`, `History`, `Ledger`, and the graph inspector share the same action policy so UI density changes do not weaken confirmation, authority, or auditability.
+Worktree cleanup and concern operations preserve runtime ownership. `recover`, `prune`, `/remove`, `active-run`, `safe-point`, remediation lineage, `dirty_worktree`, and `worktree_conflict` are runtime actions or blocked reasons, not trivial delete affordances. Concern operations from `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`, and the graph inspector share the same action policy so UI density changes do not weaken confirmation, authority, or auditability.
 
 Concern-action reversibility is a controlled audit field. Each concern action records actor authority, confirmation, rationale, and one reversibility class from `immediate_undo`, `compensating_action_only`, or `non_reversible`; `compensating_action_only` and `non_reversible` require consequence-specific confirmation before execution.
 

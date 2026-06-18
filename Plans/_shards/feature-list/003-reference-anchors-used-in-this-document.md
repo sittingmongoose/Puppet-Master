@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L13-L124
 
-Source SHA256: `daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4`
+Source SHA256: `192f85416cb86b11080c50a32f9e0e803e794eb480d9ba72068334ff40a5286a`
 
 ---
 
@@ -66,10 +66,10 @@ The chat-and-assistant feature family ensures Assistant Chat is a consumer of sh
 The GUI layout and shell feature family describes the product's high-level workspace composition, especially the tab-first Orchestrator and narrow, worktree-first Source Control layout. These decisions are architectural, not cosmetic: they define which surface owns each kind of state, how users pivot between views, and how shell-adjacent workflows remain legible inside the rewrite.
 
 **Key capabilities**
-- Orchestrator remains tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
+- Orchestrator remains tab-first with `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
 - `Progress` is the only widget-composed Orchestrator tab
 - Source Control remains narrow and worktree-first
-- Orchestrator shell summaries are tab-first rather than widget-first: `Progress` is widget-hosting, `Seams` is the `/package-oriented` replacement for stale `Tiers` language, `Node Graph Display` is preserved as the graph-patch lineage surface, and `Evidence`, `History`, and `Ledger` remain peer tabs rather than hidden composite-reference details.
+- Orchestrator shell summaries are tab-first rather than widget-first: `Progress` is widget-hosting, `Plan Compile` is the plans-to-code projection tab, `Seams` is the `/package-oriented` replacement for stale `Tiers` language, `Node Graph Display` is preserved as the graph-patch lineage surface, and `Evidence`, `History`, and `Ledger` remain peer tabs rather than hidden composite-reference details.
 - `Plans/Orchestrator_Page.md` may still explain widget-based Tiers as historical scaffolding, but feature copy treats `Tiers` as `/superseded` display vocabulary and keeps `Seams` plus package-oriented ownership as the live object model.
 - Crosswalk-level summaries must name routing/open primitives directly: `route_target`, `OpenSubject`, `/open-by-identity`, FileManager `open-by-identity`, runtime-artifact envelopes, and artifact-opening behavior are shared cross-surface contracts rather than local GUI conveniences.
 

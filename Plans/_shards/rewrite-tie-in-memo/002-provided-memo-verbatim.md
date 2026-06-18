@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L13-L87
 
-Source SHA256: `7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05`
+Source SHA256: `cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514`
 
 ---
 
@@ -23,7 +23,7 @@ The orchestrator rewrite is now locked to these cross-doc decisions:
 - `Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct promotion states
 - weak integration remains first-class and blocks seam completion when integration quality is insufficient
 - graph patching creates a new graph generation while preserving historical superseded paths as visible lineage
-- Orchestrator is tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
+- Orchestrator is tab-first with `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
 - `Progress` is the only widget-composed Orchestrator tab
 - Source Control remains compact and worktree-first while Orchestrator carries lane/package/seam operational context
 - shared requested/effective runtime identity spans conversational actors and orchestration actors without collapsing them into one ontology

@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.deep_audit_post_repair_report.v1",
+  "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass_certified",
+  "repair_scope": "final_bounded_docs_repair_and_governance_reconciliation",
+  "reconciled_items": [
+    "Auditor audit-to-repair loop until certified or critical block/authority boundary",
+    "Pass 1 / Pass 2 / Pass 3 retained only as compatibility/search aliases",
+    "explicit row-by-row handoff matrix rows H-001 through H-018",
+    "strict schema payload definitions and artifact_kind discriminator coverage",
+    "source-control, WorkNode dispatch/completion, testing, Auditor, repair, and GoalCompletionReceipt payload fields",
+    "seven-tab Orchestrator references and title alignment",
+    "ledger README, doc-impact matrix, implementation-readiness matrix, and latest-audit refs",
+    "generated PlanUnit index, shards, Spec Lock, evidence hashes, and closure hash restamp"
+  ],
+  "forbidden_artifacts_created": [],
+  "plancompile_runtime_status": "design_only_disabled",
+  "node_readiness_status": "runtime_disabled",
+  "generated_at_utc": "2026-06-18T05:05:23Z",
+  "validator_results": "pass"
+}

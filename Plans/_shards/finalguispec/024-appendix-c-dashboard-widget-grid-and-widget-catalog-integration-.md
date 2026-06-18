@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L2384-L2472
 
-Source SHA256: `aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47`
+Source SHA256: `159b663a41cc9753510274b9d873cd3c9faf8ed0a56ce2fd0694025007b9da2c`
 
 ---
 
@@ -71,7 +71,7 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 Two distinct catalogs now exist. To avoid confusion:
 
 - **Section 8 of this document** (FinalGUISpec Widget Catalog) = **atomic UI components**: StyledButton, StyledInput, StyledBadge, TreeView, CodeBlock, and other building-block primitives. These are reusable across all views and are NOT page widgets.
-- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator tabs.
+- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator `Progress` only.
 
 The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
 

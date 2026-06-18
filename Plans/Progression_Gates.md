@@ -69,7 +69,7 @@ This file defines deterministic gates used to validate plan quality and implemen
 - inspector_target and `inspector_target = evidence` are required when the target object is already selected and detail focus must land on evidence.
 - GUI_Rebuild_Requirements_Checklist, GUI_Rebuild_Requirements_Checklist.md, and stale upstream PASS conditions cannot create false confidence in progression gates.
 - Transfer coverage blockers cov-034, cov-511, cov-526, transfer-coverage, owner-definition, and evidence-collection require owner-definition records before gates can pass; each record must name coverage_id, owner doc/section, responsible domain, validation/evidence requirements, dependency/risk linkage, pass/fail criteria, affected PlanUnits or gates, escalation path, and retirement conditions.
-- Widget catalog refresh must replace widget.tier_tree and widget.progress_bars with package, seam, lane, and parallel execution visualizations before the Tiers tab can be renamed or replaced.
+- Widget catalog refresh must preserve the current seven-tab Orchestrator shell, keep `Progress` as the only widget-composed Orchestrator tab, and treat `widget.tier_tree`, `widget.progress_bars`, and `Tiers` as retired compatibility lineage rather than prerequisites for renaming or replacement.
 - automation-first defaults must be reconciled with HITL, `/schema`, mandatory gates, optional boundaries, and settings/schema flips.
 - Shared progression states are info, warning, attention_required, blocked, and system_notification.
 - GATE-010 route-aware verification must be explicit, either inside GATE-010 or as a sibling GATE boundary.
