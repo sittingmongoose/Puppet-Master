@@ -7425,7 +7425,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns the six user-facing model settings for plans-to-code automation: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. Default Model covers assistant chat, normal Plan Wizard conversation, ordinary research/browser lookup, and fallback behavior. Overseer Model covers Plan Wizard ledger-to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation, seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes; Auditor Model owns the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review. The loop repeats audit, bounded repair, and re-audit, also recorded by the legacy source token audit/repair/audit, until completion is certified or a critical block or authority boundary stops the loop. Executor has no user-facing Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer handles execution-level reasoning around it.
+  Models_System owns the six user-facing model settings for plans-to-code automation: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. Default Model covers assistant chat, normal Planning Wizard conversation, ordinary research/browser lookup, and fallback behavior. Overseer Model covers Planning Wizard ledger-to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation, seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes; Auditor Model owns the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review. The loop repeats audit, bounded repair, and re-audit, also recorded by the legacy source token audit/repair/audit, until completion is certified or a critical block or authority boundary stops the loop. Executor has no user-facing Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer handles execution-level reasoning around it.
   High-Effort Worker Model covers repo-wide reasoning explicitly, and Executor deterministic runtime behavior stays outside user-facing model settings.
 gui_related: true
 gui_classification_reason: This unit defines user-facing Settings labels and GUI/frontend model routing labels.
@@ -7433,7 +7433,7 @@ depends_on: [MS-109]
 unblocks: [F3-396, EP-100, OP-023, GRS-028]
 acceptance_criteria:
   - Exactly six user-facing model settings are exposed for this flow unless a later advanced override is accepted.
-  - Plan Compiler, Plan Wizard ledger-to-Plans, and PRD Builder structured conversion map to Overseer Model.
+  - Plan Compiler, Planning Wizard ledger-to-Plans, and PRD Builder structured conversion map to Overseer Model.
   - Old fixed validation-pass model settings are replaced by Auditor Model and an Auditor audit-to-repair loop where this compile touches the concept.
   - Legacy `validation_pass_report` artifact family names and old Pass 1 / Pass 2 / Pass 3 names remain Project Output/Chain Wizard lineage or compatibility aliases only; they are not user-facing validation-pass model selectors or active process stages.
   - Executor remains deterministic runtime/scheduler machinery and does not gain an Executor Model setting.
@@ -7485,6 +7485,8 @@ negative_constraints:
   - Do not create a separate user-facing Plan Compiler Model unless later added as advanced override.
   - Do not expose legacy Pass 1 / Pass 2 / Pass 3 Plan Wizard model settings or active stages; those names may survive only as legacy compatibility aliases.
   - Do not call the deterministic scheduler a model-backed Executor agent.
+stale_retired_dispositions:
+  - "Plan Wizard conversation is retained only as a legacy source token from the plans-to-code handoff cycle; current model-setting prose uses Planning Wizard."
 owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md

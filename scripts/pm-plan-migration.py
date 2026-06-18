@@ -1015,6 +1015,17 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
         if isinstance(unit.get("node_compile_hint"), dict)
         and unit["node_compile_hint"].get("mode") == "source_lineage_residual"
     )
+    node_readiness_report_path = ROOT / "Plans/.plan_index/node_readiness_report.json"
+    node_readiness_status = "runtime_disabled"
+    runtime_enablement_status = "runtime_disabled"
+    if node_readiness_report_path.exists():
+        node_readiness_report = read_json(node_readiness_report_path)
+        node_readiness_status = str(node_readiness_report.get("status") or node_readiness_status)
+        runtime_status = node_readiness_report.get("runtime_enablement_status")
+        if isinstance(runtime_status, dict):
+            runtime_enablement_status = str(runtime_status.get("status") or runtime_enablement_status)
+        elif isinstance(runtime_status, str):
+            runtime_enablement_status = runtime_status
 
     summary.update(
         {
@@ -1051,12 +1062,12 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
                 "seal_phase_required": [],
                 "forbidden_governance_artifacts_confirmed_not_updated": [],
                 "forbidden_governance_artifacts_changed": [],
-                "node_readiness_status": "runtime_disabled",
-                "runtime_enablement_status": "runtime_disabled",
+                "node_readiness_status": node_readiness_status,
+                "runtime_enablement_status": runtime_enablement_status,
                 "notes": [
                     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
                     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-                    "Node readiness remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled.",
+                    f"Node readiness remains {node_readiness_status}; runtime enablement remains {runtime_enablement_status} because PlanCompile runtime launch and node artifact generation are not enabled.",
                 ],
             }
         )

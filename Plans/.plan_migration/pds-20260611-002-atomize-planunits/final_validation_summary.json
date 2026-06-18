@@ -459,7 +459,7 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-06-18T19:56:52Z",
+  "generated_at_utc": "2026-06-18T20:59:17Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 5166,
@@ -468,12 +468,12 @@
   "no_executable_build_tasks_created": true,
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
-  "node_readiness_status": "runtime_disabled",
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
   "nodeseed_candidates_created": false,
   "notes": [
     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-    "Node readiness remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled."
+    "Node readiness remains blocked_compiler_contract_incomplete; runtime enablement remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
   "pre_conversion_repair": {
@@ -511,7 +511,7 @@
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"

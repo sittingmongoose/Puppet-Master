@@ -2,6 +2,10 @@
 
 The drop-in ledger was tested against `Puppet-Master-main-final-corrected.zip`.
 
+## Historical status
+
+This report is historical drop-in/package validation only. It is not current seal proof after `pldg-20260618-001-prd-planning-wizard` compiled to live Plans and governance was sealed. Current authority lives in `Plans/.plan_index/coverage_report.json`, `Plans/.plan_index/node_readiness_report.json`, and `Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json`.
+
 ## Passed
 
 - Baseline repository `pm-plans-verify.py run-gates`

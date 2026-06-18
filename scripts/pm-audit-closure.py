@@ -7,6 +7,7 @@ import hashlib
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -125,6 +126,18 @@ def read_jsonl(path: Path, errors: list[str], *, required: bool = True) -> list[
     return rows
 
 
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            clean = {key: value for key, value in row.items() if key != "_line_no"}
+            handle.write(json.dumps(clean, sort_keys=True, ensure_ascii=False))
+            handle.write("\n")
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def stable_strings(value: Any) -> list[str]:
     if value is None:
         return []
@@ -199,6 +212,29 @@ def validate_current_hashes(hash_group: Any, group_name: str, path_label: str, e
                 f"{path_label}: {group_name} for {ref} is stale "
                 f"(stored {stored_hash}, current {current_hash})"
             )
+
+
+def refresh_current_hashes(hash_group: Any) -> tuple[int, list[str]]:
+    if not isinstance(hash_group, dict):
+        return 0, []
+    updated = 0
+    missing: list[str] = []
+    for ref, stored_hash in sorted(list(hash_group.items())):
+        if not isinstance(ref, str) or not isinstance(stored_hash, str):
+            continue
+        ref_path = evidence_path_from_ref(ref)
+        if ref_path is None:
+            continue
+        if not ref_path.exists():
+            missing.append(ref)
+            continue
+        if not ref_path.is_file():
+            continue
+        current_hash = sha256_file(ref_path)
+        if stored_hash != current_hash:
+            hash_group[ref] = current_hash
+            updated += 1
+    return updated, missing
 
 
 def validate_hashes(hashes: Any, path_label: str, errors: list[str]) -> None:
@@ -586,6 +622,71 @@ def cmd_validate(args: argparse.Namespace) -> int:
     return 1 if errors else 0
 
 
+def cmd_refresh_hashes(args: argparse.Namespace) -> int:
+    registry_path = repo_path(args.registry)
+    errors: list[str] = []
+    rows = read_jsonl(registry_path, errors, required=True)
+    if errors:
+        print(json.dumps({
+            "schema_id": "pm.audit_closure.refresh_hashes_report.v1",
+            "status": "fail",
+            "path": rel(registry_path),
+            "errors": errors,
+        }, indent=2, sort_keys=True))
+        return 1
+
+    owner_updates = 0
+    closure_updates = 0
+    missing_refs: list[dict[str, Any]] = []
+    touched_rows = 0
+    now = utc_now()
+    for row in rows:
+        hashes = row.get("hashes")
+        if not isinstance(hashes, dict):
+            continue
+        before_owner = owner_updates
+        before_closure = closure_updates
+        updated, missing = refresh_current_hashes(hashes.get("owner_evidence_hashes"))
+        owner_updates += updated
+        missing_refs.extend(
+            {"line": row.get("_line_no"), "group": "owner_evidence_hashes", "ref": ref}
+            for ref in missing
+        )
+        updated, missing = refresh_current_hashes(hashes.get("closure_evidence_hashes"))
+        closure_updates += updated
+        missing_refs.extend(
+            {"line": row.get("_line_no"), "group": "closure_evidence_hashes", "ref": ref}
+            for ref in missing
+        )
+        if owner_updates != before_owner or closure_updates != before_closure:
+            row["updated_at"] = now
+            touched_rows += 1
+
+    if missing_refs:
+        print(json.dumps({
+            "schema_id": "pm.audit_closure.refresh_hashes_report.v1",
+            "status": "fail",
+            "path": rel(registry_path),
+            "missing_refs": missing_refs,
+        }, indent=2, sort_keys=True))
+        return 1
+
+    if not args.dry_run:
+        write_jsonl(registry_path, rows)
+
+    print(json.dumps({
+        "schema_id": "pm.audit_closure.refresh_hashes_report.v1",
+        "status": "pass",
+        "path": rel(registry_path),
+        "dry_run": bool(args.dry_run),
+        "row_count": len(rows),
+        "touched_rows": touched_rows,
+        "owner_evidence_hash_updates": owner_updates,
+        "closure_evidence_hash_updates": closure_updates,
+    }, indent=2, sort_keys=True))
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command")
@@ -600,6 +701,10 @@ def main() -> int:
         help="Audit JSONL artifact that must be covered by repair_closure_matrix.jsonl. Repeatable.",
     )
     validate.set_defaults(func=cmd_validate)
+    refresh = sub.add_parser("refresh-hashes", help="Refresh current owner/closure evidence file hashes in the semantic closure registry.")
+    refresh.add_argument("--registry", default=str(DEFAULT_REGISTRY), help="Path to _semantic_closure_registry.jsonl.")
+    refresh.add_argument("--dry-run", action="store_true", help="Report updates without writing.")
+    refresh.set_defaults(func=cmd_refresh_hashes)
 
     if len(sys.argv) == 1:
         args = parser.parse_args(["validate"])
