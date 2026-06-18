@@ -1,0 +1,74 @@
+{
+  "exact_labels": {
+    "planning_final_action": "Approve And Build",
+    "prd_final_action": "Approve PRD for Planning Wizard"
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "schema_id": "pm.planning_gui_impact_matrix.v1",
+  "surfaces": [
+    {
+      "requirements": [
+        "Assistant Chat panel",
+        "source uploads",
+        "live primary PRD",
+        "supporting artifacts",
+        "annotation/context menu",
+        "source traceability",
+        "readiness",
+        "Approve PRD for Planning Wizard"
+      ],
+      "surface": "PRD Builder workspace"
+    },
+    {
+      "requirements": [
+        "collapsible Planning Run parent",
+        "dynamic topic children",
+        "active bounded chat",
+        "live Topic/Final Plan preview",
+        "source/annotation/readiness",
+        "topic invalidation badges",
+        "conversion/audit progress",
+        "Approve And Build"
+      ],
+      "surface": "Planning Wizard workspace"
+    },
+    {
+      "requirements": [
+        "automatic navigation after approval",
+        "pending launch shell",
+        "stage timeline",
+        "parallel assignments",
+        "coverage",
+        "NodeSeed/WorkGraph/WorkNodeRequest status",
+        "testing/model/source-control readiness",
+        "audit/repair",
+        "handoff",
+        "Open Build"
+      ],
+      "surface": "Orchestrator Plan Compile tab"
+    },
+    {
+      "requirements": [
+        "WorkNode execution truth",
+        "visible browser/native testing",
+        "collapse/detach/background",
+        "receipts/evidence",
+        "safe points",
+        "repairs",
+        "completion"
+      ],
+      "surface": "Orchestrator execution/testing"
+    },
+    {
+      "requirements": [
+        "global and per-project capability families",
+        "Auto/On/Off",
+        "effective policy",
+        "visible testing default",
+        "installation/research policy"
+      ],
+      "surface": "Settings"
+    }
+  ],
+  "updated_at_utc": "2026-06-18T18:30:00Z"
+}

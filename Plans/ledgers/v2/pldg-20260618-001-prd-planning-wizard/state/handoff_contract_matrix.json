@@ -1,0 +1,42 @@
+{
+  "handoffs": [
+    {
+      "artifact": "structured handoff seed",
+      "authority": "source lineage only until normalized/approved",
+      "from": "Assistant Chat",
+      "idempotent": true,
+      "to": "PRD Builder or Planning Wizard intake"
+    },
+    {
+      "artifact": "Approved PRD Pack",
+      "authority": "immutable approved planning-intake input",
+      "from": "PRD Builder",
+      "idempotent": true,
+      "to": "Planning Wizard"
+    },
+    {
+      "artifact": "ApprovedPlanPack + PlanApproved",
+      "authority": "approved Plans and frozen PlanUnit/acceptance indexes; ledger is lineage",
+      "from": "Planning Wizard",
+      "idempotent": true,
+      "to": "Plan Compile"
+    },
+    {
+      "artifact": "certified WorkGraph + complete WorkNodeRequests + compile certification",
+      "authority": "certified compile output",
+      "from": "Plan Compile",
+      "idempotent": true,
+      "to": "Executor Structural Intake"
+    },
+    {
+      "artifact": "GoalRun + WorkGraph revision + WorkNodeRecords + queued entrypoints + BuildStarted",
+      "authority": "atomic runtime activation commit",
+      "from": "Executor Activation Decision",
+      "idempotent": true,
+      "to": "Goal Runtime/Orchestrator"
+    }
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "schema_id": "pm.planning_handoff_contract_matrix.v1",
+  "updated_at_utc": "2026-06-18T18:30:00Z"
+}

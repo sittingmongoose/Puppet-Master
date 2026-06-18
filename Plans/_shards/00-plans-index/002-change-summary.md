@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L20
+Source lines: L7-L21
 
-Source SHA256: `2a3a42c58c92e68d7573debab6464a715cf1a891b427d1d259b03feae27d786c`
+Source SHA256: `d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4`
 
 ---
 
@@ -19,6 +19,7 @@ Source SHA256: `2a3a42c58c92e68d7573debab6464a715cf1a891b427d1d259b03feae27d786c
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
 - 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, governance registration is metadata-only, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, dispatched GoalRuns, or production build tasks are authorized.
+- 2026-06-18: Registered PRD Builder and Planning Wizard owner routing compiled from ledger `pldg-20260618-001-prd-planning-wizard`; bootstrap compile remains Plans/index-only and does not run finished-product Plan Compile or create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

@@ -1,0 +1,14 @@
+{
+  "accepted_nonblocking_assumptions": [
+    "New canonical owner docs will be Plans/PRD_Builder.md and Plans/Planning_Wizard.md unless owner adjudication finds an existing exact owner that makes a new document unnecessary.",
+    "Current runtime-disabled bootstrap readiness remains valid until the native runtime v2 contracts are implemented and enabled.",
+    "Current WorkNode/testing updates from the latest repository are inputs to this ledger, not runtime actions performed by this ledger.",
+    "Optional pre-compile fit-check conversation does not reopen the ready-for-plan-compile state unless Jared adds or changes product intent."
+  ],
+  "deferred_questions": [],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "open_blockers": [],
+  "open_questions": [],
+  "schema_id": "pm.bootstrap_ledger_open_items.v1",
+  "updated_at_utc": "2026-06-18T20:04:18Z"
+}

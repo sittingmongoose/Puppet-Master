@@ -1,19 +1,20 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-06-18T13:49:14Z
+Generated: 2026-06-18T20:01:37Z
 
-Source SHA256: `9dab7d8a6d6bd82d48230a7621cbc2e94aa7d8ae65024259d5b18a3cd7e57452`
+Source SHA256: `90ce512c5e3f75283aff3532cf17f53756d27e460f542e20b64d26ff5e52d049`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `a6caf75dc285dc2d390a123833e96de8f624efe0a4304e8ef63599aa173b615c`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `54e000fd611fd7bd1da4ee387cdb70fe69b576ca4099ac93d7128957ef256471`
-- [003 - 0. Scope](003-0.-scope.md) L23-L30 `7b116723fc1f2508c9b1e0d4b63dc9fc71fc23a7439a6dbfd672edbac61775e1`
-- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `793a7fe6b9e9526086774de9f7437dd9bda6863b1db5490e3a50bb56f5d47b5e`
-- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1125 `462cb17d69377ad9c74b5aa5d4bf48e33fb8f5010c9c2934b118840298457d39`
-- [006 - References](006-references.md) L1126-L1219 `b509c3d770f63d24fc49ffa420c6112ab9795b8b9ee514f2d201177be6e27515`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1221-L1225 `443ce0f005b7fed6db3a39c8b6f426e233dd5b32415e09d489c7be41976cea29`
-- [008 - PlanUnits](008-planunits.md) L1227-L6827 `bd21da9af76911abe20bcbf1047a77a14fcbed6307fa5419ce3c1b08fe2d74d4`
-- [009 - Migration Coverage](009-migration-coverage.md) L6829-L6839 `41b7babae232d9788b6d8934b1fac19496d6b33a4963cbdbf9f27accc3788989`
+- [001 - Preamble](001-preamble.md) L1-L1 `eed3cb94136759fd4eb4e2e3590cf0effb0ca04444ecb4424de7c462ee9ea736`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `da354ee8ff2035cf956a703d0a766918967a18e877cc351a34217a4b0fb425e5`
+- [003 - 0. Scope](003-0.-scope.md) L23-L30 `49c98c9b564478ed7ce3cf4d1569d32dd0f3739d6211e884ffd8f6543f2b03af`
+- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `baa1db7ffa3812bc328e6253eeaa568e4b2baef9be079c52c61d4205ea4d6a0e`
+- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1125 `8a029bbbf6dce65200e70a869d1b38b306325157eba87dc344c91933ef35a245`
+- [006 - References](006-references.md) L1126-L1219 `e214400e9939bfbb07d6219d3373e8e623ad6ddb2b2a6f7669b1b6daf45be1c1`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1221-L1225 `071c6564e575126a37ff530243a84f68f8872adc51923f685b47cc6eb8a33d21`
+- [008 - PlanUnits](008-planunits.md) L1227-L6827 `deb833fd81b75da8a2985c160cb29840b2790f47af5e4810678ce5a6708e6926`
+- [009 - Migration Coverage](009-migration-coverage.md) L6829-L6839 `b480dfad2c43cd61ecde6dd0216d8dabee80e3d0d29baf45eeaaac3484d562be`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6842-L6926 `be1c9609fd19846a723b961aa05a270571579c816dfda2468b02e0b8c6fdd1ec`

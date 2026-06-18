@@ -1,12 +1,6 @@
 {
-  "schema_id": "pm.plan_compile_queue.v1",
-  "ledger_id": "pldg-20260610-001-ledger-plan-system",
-  "status": "compiled_initial_plan_docs_governance_sealed",
   "items": [
     {
-      "queue_id": "pcq-0001",
-      "status": "compiled",
-      "target_doc": "Plans/Planning_Ledger_System.md",
       "compiled_plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -19,6 +13,8 @@
         "PLS-009",
         "PLS-010"
       ],
+      "owner_adjudication_status": "target_owner_known",
+      "queue_id": "pcq-0001",
       "source_atom_ids": [
         "atom-0001",
         "atom-0002",
@@ -39,12 +35,10 @@
         "atom-0036",
         "atom-0042"
       ],
-      "owner_adjudication_status": "target_owner_known"
+      "status": "compiled",
+      "target_doc": "Plans/Planning_Ledger_System.md"
     },
     {
-      "queue_id": "pcq-0002",
-      "status": "compiled",
-      "target_doc": "Plans/Plan_Document_System.md",
       "compiled_plan_unit_ids": [
         "PDS-001",
         "PDS-002",
@@ -57,6 +51,8 @@
         "PDS-009",
         "PDS-010"
       ],
+      "owner_adjudication_status": "target_owner_known",
+      "queue_id": "pcq-0002",
       "source_atom_ids": [
         "atom-0015",
         "atom-0019",
@@ -70,12 +66,10 @@
         "atom-0037",
         "atom-0038"
       ],
-      "owner_adjudication_status": "target_owner_known"
+      "status": "compiled",
+      "target_doc": "Plans/Plan_Document_System.md"
     },
     {
-      "queue_id": "pcq-0003",
-      "status": "compiled",
-      "target_doc": "Plans/Plan_To_Node_Compilation.md",
       "compiled_plan_unit_ids": [
         "PNC-001",
         "PNC-002",
@@ -86,6 +80,8 @@
         "PNC-007",
         "PNC-008"
       ],
+      "owner_adjudication_status": "target_owner_known",
+      "queue_id": "pcq-0003",
       "source_atom_ids": [
         "atom-0017",
         "atom-0022",
@@ -99,12 +95,10 @@
         "atom-0034",
         "atom-0039"
       ],
-      "owner_adjudication_status": "target_owner_known"
+      "status": "compiled",
+      "target_doc": "Plans/Plan_To_Node_Compilation.md"
     },
     {
-      "queue_id": "pcq-0004",
-      "status": "compiled",
-      "target_doc": "Plans/Bootstrap_Planning_Migration.md",
       "compiled_plan_unit_ids": [
         "BPM-001",
         "BPM-002",
@@ -114,6 +108,8 @@
         "BPM-006",
         "BPM-007"
       ],
+      "owner_adjudication_status": "target_owner_known",
+      "queue_id": "pcq-0004",
       "source_atom_ids": [
         "atom-0011",
         "atom-0013",
@@ -126,7 +122,14 @@
         "atom-0040",
         "atom-0041"
       ],
-      "owner_adjudication_status": "target_owner_known"
+      "status": "compiled",
+      "target_doc": "Plans/Bootstrap_Planning_Migration.md"
     }
-  ]
+  ],
+  "last_event_id": "evt-0012",
+  "ledger_id": "pldg-20260610-001-ledger-plan-system",
+  "schema_id": "pm.plan_compile_queue.v1",
+  "status": "compiled_initial_plan_docs_governance_sealed",
+  "terminal_ledger_event_id": "evt-0012",
+  "updated_at_utc": "2026-06-18T20:03:24Z"
 }

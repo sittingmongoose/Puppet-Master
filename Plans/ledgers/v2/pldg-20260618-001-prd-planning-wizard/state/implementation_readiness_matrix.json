@@ -1,0 +1,44 @@
+{
+  "domains": [
+    {
+      "design_status": "converged",
+      "domain": "PRD Builder",
+      "implementation_gate": "Canonical owner/consumer PlanUnits, schemas, UI commands/states, and intake fixtures."
+    },
+    {
+      "design_status": "converged",
+      "domain": "Planning Wizard",
+      "implementation_gate": "Canonical PlanningRun/topic/audit/approval contracts, GUI wiring, and topic invalidation fixtures."
+    },
+    {
+      "design_status": "converged",
+      "domain": "Testing discovery and visibility",
+      "implementation_gate": "Capability registry/settings, official-source research adapter, install policy, session adapters, redaction, and fixtures."
+    },
+    {
+      "design_status": "converged",
+      "domain": "Approve And Build",
+      "implementation_gate": "Atomic pack/receipt/outbox, idempotent launch, immediate GUI navigation, and duplicate/restart fixture."
+    },
+    {
+      "design_status": "converged",
+      "domain": "Plan Compile runtime v2",
+      "implementation_gate": "Runtime schema, instantiated stages, typed dependencies, parallel receipt enforcement, validators, persistence."
+    },
+    {
+      "design_status": "converged",
+      "domain": "WorkNode materialization and activation",
+      "implementation_gate": "Canonical WorkNodeRecord, Executor three-stage intake, activation transaction/outbox, recovery states, scheduling fixture."
+    },
+    {
+      "design_status": "not_yet_proven",
+      "domain": "End-to-end readiness",
+      "implementation_gate": "Clean-room Approve And Build through first queued WorkNode visible in Orchestrator plus recovery fixture suite."
+    }
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "schema_id": "pm.planning_implementation_readiness_matrix.v1",
+  "status": "concept_converged_pending_canonical_plan_transfer_and_fixture",
+  "updated_at_utc": "2026-06-18T18:30:00Z",
+  "zero_incomplete_policy": "No stubs, TODOs, TBDs, placeholders, empty required sections, fake acceptance, mock production behavior, or deferred implementation details unless an exact durable user-approved exception exists."
+}

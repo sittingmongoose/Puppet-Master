@@ -4574,3 +4574,58 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch `phase2b-100-multi-account-lines-1-400` atomized `Multi-Account-S0002` through `Multi-Account-S0018` into `MA-002` through `MA-017`, dispositioned `Multi-Account-S0001` as the structural title anchor, and left `Multi-Account-S0019` as the next residual source-preserving cursor because that span crossed the line-400 window. Phase 2B batch `phase2b-101-multi-account-lines-354-740` atomized `Multi-Account-S0019` through `Multi-Account-S0034` into `MA-018` through `MA-053` and left `Multi-Account-S0035` as the next residual source-preserving cursor because that span crossed the line-740 window. Phase 2B batch `phase2b-102-multi-account-lines-740-952` atomized `Multi-Account-S0035` through `Multi-Account-S0037` into `MA-054` through `MA-059`, dispositioned `Multi-Account-S0038`, `Multi-Account-S0039`, and `Multi-Account-S0041` as structural rows, and retired `MA-001` to `source_preserving_bridge_retired` migration-lineage compatibility for `Multi-Account-S0040`. `Plans/Multi-Account.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### MA-061 - Testing Capability Policy Inheritance Consumer
+
+```yaml
+plan_unit_id: MA-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: 'atom-0089: Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Multi-Account.md
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0089
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+source_atom_ids:
+- atom-0089
+decision_refs:
+- dec-0018
+correction_refs:
+- corr-0015
+preserved_exact_tokens:
+- global settings
+- per-project settings
+- effective policy snapshot
+negative_constraints: []
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+- Plans/Multi-Account.md
+```

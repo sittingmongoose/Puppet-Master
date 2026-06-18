@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L203-L441
+Source lines: L204-L457
 
-Source SHA256: `2a3a42c58c92e68d7573debab6464a715cf1a891b427d1d259b03feae27d786c`
+Source SHA256: `d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4`
 
 ---
 
@@ -49,6 +49,21 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+
+### PRD Builder And Planning Wizard Map (2026-06-18)
+
+The PRD Builder and Planning Wizard packet compiled from `pldg-20260618-001-prd-planning-wizard` uses this owner split:
+- `Plans/PRD_Builder.md` owns finished-product PRD Builder intake, source ingestion, PRD projection, Approved PRD Pack creation, annotation/readiness behavior, and the explicit `Approve PRD for Planning Wizard` handoff.
+- `Plans/Planning_Wizard.md` owns PlanningRun, dynamic topic graphs, topic-scoped ledger work, Planning Context Capsules, topic conversion/audit, final integration, ApprovedPlanPack, compile readiness, Planning Wizard GUI states, and `Approve And Build`.
+- `Plans/Automated_Testing_System.md` owns testing defaults, current official-source capability research, safe installation policy, Auto/On/Off testing settings, visible verification sessions, redaction, and test receipts.
+- `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`, and `Plans/Goal_Runtime_System.md` own the downstream PlanCompile, Executor intake, WorkNodeRecord materialization, activation, receipt, and runtime boundary contracts. This compile records a runtime-capable v2 contract direction but does not enable runtime launch or emit runtime artifacts.
+- `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/assistant-chat-design.md`, `Plans/Crosswalk.md`, and `Plans/Wiring_Matrix.md` consume or route the user-facing surfaces, command families, thread model, and reference terminology.
+- `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` are compatibility/source-lineage consumers for semantically migrated legacy wizard material; `Chain Wizard`, `Plan Wizard`, `Requirements Doc Builder`, and `Start Chain` are not active current-product names except where explicitly marked historical or compatibility-only.
+
+Generated indexes may refresh under `Plans/.plan_index/**` after live Plans stabilize. Spec Lock, generated shards, evidence bundles, plan graph, and auto_decisions remain governance-seal-only. This compile does not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, production build tasks, runtime dispatch, or Orchestrator builds.
+
+ContractRef: ContractName:Plans/PRD_Builder.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Native Goal Runtime Map (2026-06-16)
 

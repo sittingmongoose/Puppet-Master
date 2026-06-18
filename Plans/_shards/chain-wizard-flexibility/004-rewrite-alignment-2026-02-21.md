@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L38-L44
 
-Source SHA256: `1032deeaa0afdad08c179d08e7e076d15765f9f9f20e83326cc9decfd44515a5`
+Source SHA256: `68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7`
 
 ---
 

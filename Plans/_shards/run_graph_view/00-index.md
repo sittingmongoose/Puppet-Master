@@ -1,22 +1,23 @@
 # Shard Index: Plans/Run_Graph_View.md
 
-Generated: 2026-06-18T13:49:14Z
+Generated: 2026-06-18T20:01:37Z
 
-Source SHA256: `f7845b472daa604ba4420ac833981da2b9667dd8c44f153b60152e72e58e709d`
+Source SHA256: `2c1580fa9bc8e46c15f5bf980dd9b9c5b74f72b7a84e5bf42fb8a04840187f7f`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `9d5a94a760d1b8368a4c8cdf6d84eddc1ef61e03c8f52a2d72f5473520f2d733`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `a4522b511252c704d53ed43ee9af002f0d495f34c1f26c5ba4435a0fb8d30228`
-- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `e1baa31ee1a84397acdfc5a318748fc9fe16032fbd91ff44396a8b5921c90a84`
-- [004 - 2. Layout](004-2.-layout.md) L97-L110 `989b75897b408d17a19aecaf0ef221261eb14e286d1fdea6b36f51d639e5da0d`
-- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `772705df58de0d5b46d91e4f502d2dc14d6f6274f6e4bdc6c64283df185fb536`
-- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `24ca06abb2f2fa2ffd7097cc379338cc26dab2bf7bd9d35abfa604c533450137`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `4fb0abcb02331b2a8fe7daeaa424195f35a04fe180aebc1f7ac73f745f034266`
-- [008 - PlanUnits](008-planunits.md) L141-L746 `5f1f79e8845592b92db502ee11fac0504491a0d1f6c29b27111d7892753f6cb1`
-- [009 - Migration Coverage](009-migration-coverage.md) L748-L761 `98b2bfce8d6a82acf24c13abbf88daefff2783bc0c727b28748085f4f0213f6a`
-- [010 - Ledger Compile Addendum - pldg-20260614-002](010-ledger-compile-addendum-pldg-20260614-002.md) L763-L805 `4163c7a894d5db61b3724f817b06124109a9e6cd4239ef5c2e18dde2b14463bb`
-- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L807-L890 `b814179561c63a4e2a56faaf8b4869d59745b86fa3803e77ee2ebc0a1b7d2aee`
-- [012 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](012-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L892-L942 `e02202086cdbacb08bb36353d4bf65ec43c845c1d932de96ab1dfd2228ccb535`
+- [001 - Preamble](001-preamble.md) L1-L1 `f700e81c8887ede6b8fbe70c91a7d5b47e1ce1630a15afe71cdd1bdd6d1cdbcf`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `042d9ed71dfb91e611adbaacc84e8f194d4968ad8d44037e8b6cb2129936cb82`
+- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `4676b0859fbd586cf1e329d6e5f9755c97a3bd04ed32eaaee9d8d3bfcd8edb4c`
+- [004 - 2. Layout](004-2.-layout.md) L97-L110 `773e1f33ba649a984012a6219de5d4afca64c72cf7dde316b2cd82b1de80725b`
+- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `d85fb4634bf8e23a021f872d68049d8f9acce2cb928da31e5f2ed1880fab4c74`
+- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `2d2e7c125ce45e9e944e434e7e2233c34ddd4cdbba7f654d5fcb68c22662a85b`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `752b0cee8ae01ffdf4e6a5c65d59f960a9e7edd168bd296b31cddeb76d86ac0c`
+- [008 - PlanUnits](008-planunits.md) L141-L746 `9a2561edfb91727903652c220e87523eb5d86ef68f3fdf5525ce45278c7a6c72`
+- [009 - Migration Coverage](009-migration-coverage.md) L748-L761 `df25351bc1d8d29cf99aca6f4b8c8506dfc3fa0d9136b22fdd25ceda47cc2f7e`
+- [010 - Ledger Compile Addendum - pldg-20260614-002](010-ledger-compile-addendum-pldg-20260614-002.md) L763-L805 `1745680d5f94da07a89a9ddcbe2b5c07e40355db744b9746453fdfd5ce972a21`
+- [011 - Ledger Compile Addendum - pldg-20260616-002](011-ledger-compile-addendum-pldg-20260616-002.md) L807-L890 `584a7d65db7044294ecb3c67982f8065091753fa275dad8034b209a4f4a9e7e9`
+- [012 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](012-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L892-L942 `a0ad07568a1a218f47c289db6c283761a6811a2042a27c64e6c5ec22c17b9766`
+- [013 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L945-L996 `a77ff2209b94131fccaeaac0314304614373b870be7147fcef3cc3d121a10507`

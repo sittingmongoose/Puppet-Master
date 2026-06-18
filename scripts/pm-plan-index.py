@@ -666,6 +666,7 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
         "runtime_enabled": False,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "status": "runtime_disabled",
+        "compiler_contract_complete": False,
         "disabled_guards": disabled_guards,
     }
 
@@ -677,11 +678,17 @@ def node_readiness_report(
 ) -> dict[str, Any]:
     coverage_blocked = bool(coverage.get("blockers"))
     runtime_status = runtime_enablement_status(units)
-    status = "blocked_plans_incomplete" if coverage_blocked else "runtime_disabled"
+    compiler_contract_incomplete = runtime_status.get("compiler_contract_complete") is False
+    if coverage_blocked:
+        status = "blocked_plans_incomplete"
+    elif compiler_contract_incomplete:
+        status = "blocked_compiler_contract_incomplete"
+    else:
+        status = "ready_for_node_compile"
     status_reason = (
         "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
         if coverage_blocked
-        else "Plans are indexed with required PlanUnit metadata, but PlanCompile runtime launch and node artifact generation remain disabled until an explicit later enablement accepts runtime PlanCompile/NodeSeed/WorkNode artifacts."
+        else "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete and runtime node artifact generation is disabled until an explicit later enablement accepts runtime PlanCompile/NodeSeed/WorkNode artifacts."
     )
     build_order_blockers = []
     if deps.get("unresolved_references"):

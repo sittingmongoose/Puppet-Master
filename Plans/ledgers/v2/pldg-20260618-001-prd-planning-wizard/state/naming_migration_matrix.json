@@ -1,0 +1,28 @@
+{
+  "blind_replacement_forbidden": true,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "migrations": [
+    {
+      "canonical_term": "PRD Builder",
+      "disposition": "replace in current product prose/UI/contracts; retain only explicit historical notes",
+      "stale_term": "Requirements Doc Builder"
+    },
+    {
+      "canonical_term": "Planning Wizard",
+      "disposition": "replace in current product prose/UI/contracts; semantically migrate owner docs",
+      "stale_term": "Chain Wizard"
+    },
+    {
+      "canonical_term": "Planning Wizard",
+      "disposition": "normalize recent partial rename",
+      "stale_term": "Plan Wizard"
+    },
+    {
+      "canonical_term": "Approve And Build",
+      "disposition": "replace final planning action; execution starts through Plan Compile and Orchestrator",
+      "stale_term": "Start Chain"
+    }
+  ],
+  "schema_id": "pm.naming_migration_matrix.v1",
+  "updated_at_utc": "2026-06-18T18:30:00Z"
+}

@@ -1,0 +1,42 @@
+{
+  "core_rules": [
+    "Ledger is source/planning memory, not canonical Plans.",
+    "Every substantive PRD Builder and Planning Wizard product turn writes its ledger before state advances.",
+    "Live non-pipeline Plans docs become canonical only after explicit ledger-to-Plans compilation.",
+    "Use PRD Builder and Planning Wizard as canonical product names.",
+    "Use mandatory parallel read-only subagents for broad extraction, compilation review, and audits; controller is sole canonical writer.",
+    "No unapproved stubs, TODOs, TBDs, placeholders, empty required sections, fake acceptance criteria, or deferred implementation details.",
+    "The bootstrap compile phase does not create WorkNodes, NodeSeeds, executable queues, implementation files, GoalRuns, or production build tasks.",
+    "Approve And Build is a finished-product runtime command, not an action performed while compiling this bootstrap ledger.",
+    "A compile-ready cursor is not compile authorization; compilation requires an explicit user instruction."
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "mode": "ledger_governance_sealed",
+  "model_routing": {
+    "audit_repair_certification": "Auditor",
+    "bounded_hard_analysis": "High-Effort Worker",
+    "canonical_writer": "parent/controller only",
+    "conversation": "Collaborator with workflow behavior profile",
+    "conversion_and_integration": "Overseer"
+  },
+  "preferred_terms": [
+    "PRD Builder",
+    "Planning Wizard",
+    "Approved PRD Pack",
+    "Planning Run",
+    "Topic Plan Draft",
+    "ApprovedPlanPack",
+    "Approve And Build",
+    "Plan Compile",
+    "WorkNodeRecord"
+  ],
+  "profile": "bootstrap_planning",
+  "retired_terms": [
+    "Requirements Doc Builder",
+    "Chain Wizard",
+    "Plan Wizard",
+    "Start Chain"
+  ],
+  "schema_id": "pm.bootstrap_operating_capsule.v1",
+  "updated_at_utc": "2026-06-18T20:04:18Z"
+}

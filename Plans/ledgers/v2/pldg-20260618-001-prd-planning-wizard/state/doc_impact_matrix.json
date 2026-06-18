@@ -1,0 +1,189 @@
+{
+  "generated_artifact_rule": "Do not edit generated indexes or governance artifacts until canonical Plans prose is stable and the appropriate explicit phase runs.",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "rows": [
+    {
+      "disposition": "create_owner",
+      "impact": "Canonical PRD Builder purpose, modes, ledger lifecycle, source ingestion, standard PRD, annotations, readiness, approval, and Planning Wizard handoff.",
+      "path": "Plans/PRD_Builder.md"
+    },
+    {
+      "disposition": "create_owner",
+      "impact": "Canonical Planning Wizard intake, PlanningRun, dynamic topics, project modes, per-topic conversion/audit, final integration, approval, and downstream boundary.",
+      "path": "Plans/Planning_Wizard.md"
+    },
+    {
+      "disposition": "semantic_migration_then_retire_or_redirect",
+      "impact": "Move still-valid product requirements to new owners; retain only explicit historical migration evidence if needed.",
+      "path": "Plans/chain-wizard.md"
+    },
+    {
+      "disposition": "semantic_migration_then_retire_or_redirect",
+      "impact": "Split valid PRD Builder, Planning Wizard, project-context, and flow requirements into proper owners; retire stale linear/start-chain semantics.",
+      "path": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "disposition": "update_consumer_and_shared_infrastructure",
+      "impact": "Typed Planning Wizard thread roles, PRD Builder threads, selection context, annotations, and Assistant Chat handoff seed.",
+      "path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "disposition": "update_shared_contract",
+      "impact": "Per-turn write discipline, topic-scoped records, ledger_sync_blocked, context capsules, source/canonical separation.",
+      "path": "Plans/Planning_Ledger_System.md"
+    },
+    {
+      "disposition": "update_consumer",
+      "impact": "Topic Plan Draft, Final Plan Pack, implementation-readiness and zero-incomplete requirements, source lineage.",
+      "path": "Plans/Plan_Document_System.md"
+    },
+    {
+      "disposition": "update_owner_or_consumer",
+      "impact": "Planning Run and PlanCompile durable controller behavior, mandatory parallel receipt enforcement, audit records, activation lifecycle.",
+      "path": "Plans/Goal_Runtime_System.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Online capability research, safe installation, Auto/On/Off settings, visible testing sessions, test override truthfulness.",
+      "path": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "ApprovedPlanPack authority, runtime v2, executable stages, typed dependencies, WorkNodeRequests, test discovery ordering, Executor handoff.",
+      "path": "Plans/Plan_To_Node_Compilation.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Structural intake, provisioning, activation decision, WorkNodeRecord materialization, harness revalidation, atomic queueing.",
+      "path": "Plans/Executor_Protocol.md"
+    },
+    {
+      "disposition": "update_owner_or_consumer",
+      "impact": "Immediate navigation to Plan Compile, pending launch shell, compile-stage truth, visible testing, Open Build transition.",
+      "path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "PRD Builder workspace, collapsible Planning Run tree, topic states, plan review, testing settings/visibility, Approve And Build navigation.",
+      "path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Approve PRD, Approve And Build, topic controls, Plan Compile controls, evidence/assignment inspection, Open Build.",
+      "path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "disposition": "update_consumer",
+      "impact": "Command state, permission, idempotency, receipt, stale projection, and recovery semantics.",
+      "path": "Plans/Commands_System.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Approved PRD Pack, PlanningRun, ApprovedPlanPack, PlanApproved, audit records, test receipts, WorkNodeRecord, activation receipts.",
+      "path": "Plans/Contracts_V0.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Persistence, indexes, optimistic concurrency, outbox, leases, audit closures, PlanningRun/PlanCompile/WorkNode records.",
+      "path": "Plans/storage-plan.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Collaborator behavior profiles and role boundaries; avoid unnecessary new protected persona.",
+      "path": "Plans/Personas.md"
+    },
+    {
+      "disposition": "update_owner_or_consumer",
+      "impact": "Collaborator/Overseer/Auditor/High-Effort routing and policy snapshots.",
+      "path": "Plans/Models_System.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Greenfield/non-Git/dirty/SSH safe-point and rollback implications, testing install protection.",
+      "path": "Plans/FileSafe.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Executor worktree ownership, greenfield baseline commit, dirty-state isolation, branch/worktree receipts.",
+      "path": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Optional repo/fork/PR context and setup operations.",
+      "path": "Plans/GitHub_Integration.md"
+    },
+    {
+      "disposition": "update_owner_or_consumer",
+      "impact": "Credential/authority and optional remote operations.",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Authority gates for source control, testing installation, cloud/device services, secrets, and external effects.",
+      "path": "Plans/Permissions_System.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "PRD/Plan packs, source manifests, traceability, testing research/session artifacts, receipts.",
+      "path": "Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "disposition": "update_consumer",
+      "impact": "Visible testing streams, logs, screenshots, evidence, redaction, compile artifacts.",
+      "path": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "disposition": "update_consumer",
+      "impact": "Plan Compile/WorkGraph/WorkNode visualization after runtime handoff.",
+      "path": "Plans/Run_Graph_View.md"
+    },
+    {
+      "disposition": "update_consumer",
+      "impact": "Global versus project testing settings and inherited policy.",
+      "path": "Plans/Multi-Account.md"
+    },
+    {
+      "disposition": "update_owner_or_consumer",
+      "impact": "Minimal user-decision taxonomy, test overrides, high-risk checkpoints, exact incomplete exceptions.",
+      "path": "Plans/human-in-the-loop.md"
+    },
+    {
+      "disposition": "update_owner",
+      "impact": "Zero-incomplete gates, Planning readiness, Plan Compile certification, WorkNode and Goal completion gates.",
+      "path": "Plans/Progression_Gates.md"
+    },
+    {
+      "disposition": "update_index",
+      "impact": "Register new owners and retire stale active names after migration.",
+      "path": "Plans/00-plans-index.md"
+    },
+    {
+      "disposition": "update_reference",
+      "impact": "Owner/consumer and term crosswalk.",
+      "path": "Plans/Crosswalk.md"
+    },
+    {
+      "disposition": "update_reference",
+      "impact": "Thread, command, artifact, PlanApproved, PlanCompile, Executor, WorkNode, and Orchestrator event wiring.",
+      "path": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "disposition": "update_concept",
+      "impact": "Replace old linear wizard and duplicate Requirements/PRD stages with PRD Builder and dynamic Planning Wizard concept.",
+      "path": "Concepts/PMConcept.html"
+    },
+    {
+      "disposition": "update_bootstrap_process",
+      "impact": "Install hardened ledger-local resume/compile/index/seal/audit/repair prompts.",
+      "path": "Plans/bootstrap/Codex_Prompts.md"
+    },
+    {
+      "disposition": "update_bootstrap_process",
+      "impact": "Clarify separate product/runtime versus Codex/bootstrap phases and mandatory parallel evidence.",
+      "path": "Plans/bootstrap/Bootstrap_Planning_Workflow.md"
+    }
+  ],
+  "schema_id": "pm.planning_doc_impact_matrix.v1",
+  "status": "ready_for_owner_adjudication",
+  "updated_at_utc": "2026-06-18T18:30:00Z"
+}

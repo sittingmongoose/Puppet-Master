@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
+      "details": "pm-plan-index.py validate passes with node_readiness_report.status=blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -85,6 +85,11 @@
       "name": "seven-tab-reference-repair",
       "result": "PASS",
       "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
+    },
+    {
+      "name": "governance-seal-scope",
+      "result": "PASS",
+      "details": "Governance seal refreshed generated shards, migration proof, evidence hashes, and Spec Lock after live Plans and PlanUnit index stabilization."
     }
   ],
   "commands_run": [

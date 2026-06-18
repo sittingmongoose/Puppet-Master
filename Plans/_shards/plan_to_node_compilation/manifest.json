@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-18T13:49:14Z",
+  "generated_at_utc": "2026-06-18T20:01:37Z",
   "index_path": "Plans/_shards/plan_to_node_compilation/00-index.md",
-  "index_sha256": "c5753eebf568da977e8a6cbb14202db5cd42072d951b541b353ae749b53631b5",
+  "index_sha256": "362d09896000185f9068db7c8a2791ffa0b689d6a2b8402533f2d6bd922fcfe6",
   "manifest_path": "Plans/_shards/plan_to_node_compilation/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/plan_to_node_compilation/001-preamble.md",
-      "sha256": "6c6b186d2a48f88476f8ce828b04fe680957c79213484e0098caaafa3b412ac1",
+      "sha256": "e75e8cc9ebbb86db0b66f536716cf05261d8984dccf9889076fa01dd228e490a",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/plan_to_node_compilation/002-0.-scope.md",
-      "sha256": "d3041b2df859b8b386b7b20c939db8358e04ffad9621dc32b0485e5684e6927c",
+      "sha256": "7f10e720c7ef772e385ddc2571c9df5aadfaef401ce39fd7a288ea13bc0a3396",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Boundary",
       "path": "Plans/_shards/plan_to_node_compilation/003-1.-boundary.md",
-      "sha256": "3a17cd6f1bc4cf5ff5a956f74aec982d4064fe6e4ceff61b20301d3884adb5ff",
+      "sha256": "82d77e0c01c74d50ae10a7e0dd6ba0644e7699a6b920d232abc4d3969dc5299d",
       "shard_id": "003",
       "source_line_end": 21,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/plan_to_node_compilation/004-2.-planunits.md",
-      "sha256": "d8f1fb954415ab3f36d954ecf545bc3ff9748f12c5f5ac1d7f2b5461b3bdafc0",
+      "sha256": "d59d87b8cd38c272f4174b6bf680431ef48ba9480763c9cb01fad6c35e9e2a8a",
       "shard_id": "004",
       "source_line_end": 289,
       "source_line_start": 23,
@@ -44,7 +44,7 @@
     {
       "heading": "4. Runtime-Disabled Compiler Algorithm",
       "path": "Plans/_shards/plan_to_node_compilation/005-4.-runtime-disabled-compiler-algorithm.md",
-      "sha256": "62a0540ac21c89bb5f3292c8f91a3bc14b437d34b4cefd0ec4e7d3a63e7b8b8a",
+      "sha256": "66d9855981e8c48207320bf5c25b9f68d77f322bf5c7f1777f69e681889fbebd",
       "shard_id": "005",
       "source_line_end": 384,
       "source_line_start": 291,
@@ -53,7 +53,7 @@
     {
       "heading": "5. Compilation Coverage",
       "path": "Plans/_shards/plan_to_node_compilation/006-5.-compilation-coverage.md",
-      "sha256": "c601493234716d1c20718c018c2d2c876fc6cfc0dde602488c5ff86312ea459b",
+      "sha256": "7137fe14d315460eecc79a7508fa70b9978eaa166dbff8504079c9910a98c89c",
       "shard_id": "006",
       "source_line_end": 405,
       "source_line_start": 386,
@@ -62,16 +62,25 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/plan_to_node_compilation/007-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "9f935f59f08a17501234a11ca3f3f4d29a58e6bc4adcda01a7fd29225b5e71c6",
+      "sha256": "20735f6d024b1991908c8dd5db58d36ba2dc63e419d9ba9da9f63955de47a98e",
       "shard_id": "007",
       "source_line_end": 769,
       "source_line_start": 407,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/plan_to_node_compilation/008-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "8f0de238618b9a21bcc266b0049e77aadd08f50802f3a243761e69537567c22a",
+      "shard_id": "008",
+      "source_line_end": 1044,
+      "source_line_start": 772,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 769,
+    "line_count": 1044,
     "path": "Plans/Plan_To_Node_Compilation.md",
-    "sha256": "b1733e93b20c61fbb559f144e73a78082a99cc1557fd13bc800196889ebbd5c6"
+    "sha256": "e713607536e43027c4f2c88df20fe6016ee11e4b063f43d400aca13b81c22d20"
   }
 }

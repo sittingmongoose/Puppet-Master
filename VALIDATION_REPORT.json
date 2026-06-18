@@ -1,0 +1,61 @@
+{
+  "canonical_plans_modified": false,
+  "generated_indexes_modified": false,
+  "governance_artifacts_modified": false,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "results": {
+    "baseline_run_gates": {
+      "note": "Latest supplied repository passed before overlay.",
+      "status": "pass"
+    },
+    "bootstrap_ledger_validator": {
+      "atoms": 168,
+      "compile_queue_items": 0,
+      "corrections": 15,
+      "decisions": 30,
+      "events": 17,
+      "questions": 0,
+      "status": "pass",
+      "warnings": 0
+    },
+    "installer_dry_run": {
+      "status": "pass"
+    },
+    "installer_first_run": {
+      "existing_entries_replaced": 0,
+      "status": "pass"
+    },
+    "installer_idempotent_second_run": {
+      "existing_entries_replaced": 1,
+      "status": "pass"
+    },
+    "json_jsonl_parse": {
+      "json_files": 14,
+      "jsonl_files": 6,
+      "status": "pass"
+    },
+    "plan_index_validate": {
+      "acceptance_unit_count": 18237,
+      "coverage_status": "pass",
+      "node_readiness_status": "runtime_disabled",
+      "plan_unit_count": 5105,
+      "status": "pass"
+    },
+    "plan_migration_validate": {
+      "status": "pass"
+    },
+    "post_registration_run_gates": {
+      "only_observed_issue": "Plans/ledgers/v2/ledger_registry.json hash changed, so existing evidence/plan-graph hashes are stale until governance seal.",
+      "status": "expected_pending_governance_seal"
+    },
+    "shard_check": {
+      "docs_checked": 52,
+      "shards_checked": 936,
+      "status": "pass"
+    }
+  },
+  "runtime_artifacts_created": false,
+  "schema_id": "pm.prd_planning_wizard_ledger_dropin_validation.v1",
+  "tested_against": "Puppet-Master-main-final-corrected.zip",
+  "validated_at_utc": "2026-06-18T18:44:27Z"
+}

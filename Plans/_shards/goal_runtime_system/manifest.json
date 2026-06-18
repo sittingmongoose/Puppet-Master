@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-18T13:49:14Z",
+  "generated_at_utc": "2026-06-18T20:01:37Z",
   "index_path": "Plans/_shards/goal_runtime_system/00-index.md",
-  "index_sha256": "669dca566aa48006ecef06345dd7b2b0bedde95b34dc2211a43b3d1234bf9f09",
+  "index_sha256": "5b74f808172a41a70cdde36cc3f5ee38c39ede5c71044d16aef21eb0da6370cf",
   "manifest_path": "Plans/_shards/goal_runtime_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/goal_runtime_system/001-preamble.md",
-      "sha256": "1cb50e2a56b2738301e6fcd559a2d09a58d845fbf488d075aaf5878cec8c7660",
+      "sha256": "8aea596d361c6dcac7c9a5e68d1c7dc3da1cfaa02ebe0c12e5026bd3f0c1f6c5",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/goal_runtime_system/002-0.-scope.md",
-      "sha256": "d26dd48ec866eb793bc6e3517b06865ce2e6c7af0bed5beeb3af6ff2df6c4001",
+      "sha256": "1b8465c06b951213f088adb0f93b23253b925b4ea75e4c093514754b9136d18e",
       "shard_id": "002",
       "source_line_end": 13,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
-      "sha256": "ef00b349479ff6efe6ce4e77389209ef2fb0c61a3b1f3c83511f5902c46b56fc",
+      "sha256": "3c9a54120e6fdc21d6c6c4fa7c9bf7d19a5c25962d7822ca7747077e6378024f",
       "shard_id": "003",
       "source_line_end": 29,
       "source_line_start": 15,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md",
-      "sha256": "8b7a660f4f5930f43c2e9edcbcf0403b6db590ca73ba8320c350e5ef5b0b6fde",
+      "sha256": "ca838ed07e042f08fedf81cb1baf6588a22f18ad43e6c9a3ec56f3201f71a6e1",
       "shard_id": "004",
       "source_line_end": 1669,
       "source_line_start": 31,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/goal_runtime_system/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "7eacedf9b94a3f155ae38adf02a09239402e8f3347fc9049383199f77da0e3ab",
+      "sha256": "5690f5fa496240a05d812b94185d40981d581702a10ac376d27821d0c9047f1b",
       "shard_id": "005",
       "source_line_end": 1685,
       "source_line_start": 1671,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/goal_runtime_system/006-4.-integration-surfaces.md",
-      "sha256": "6610daa19dc4015ed2d40174457aa7760aece5feda0636a1c924207e161b30be",
+      "sha256": "a653b6c915cc6cbe9193874d9d02ff24f4112c7823a9988d110b8dd5c38d0686",
       "shard_id": "006",
       "source_line_end": 1695,
       "source_line_start": 1687,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/goal_runtime_system/007-5.-validation-and-acceptance.md",
-      "sha256": "31b992655a381b551e4cefff8ff51acf05a23cf2926e8a813d66b3ff0a591e41",
+      "sha256": "b2738a8ad17d945690c349bd5ce2d9f3c8868ca2ec68111b6c51e386f81ddea6",
       "shard_id": "007",
       "source_line_end": 1710,
       "source_line_start": 1697,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/goal_runtime_system/008-6.-plan-to-node-readiness.md",
-      "sha256": "1008a77a73af35f1de964ad8ada547c5dc8ce8af44afa75fc472e47b70073032",
+      "sha256": "a980ea52a4e20e6b21501043acbe508716750e6b348c003b9575544154ac51a3",
       "shard_id": "008",
       "source_line_end": 1716,
       "source_line_start": 1712,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/goal_runtime_system/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "2497129ff7355d2ff00cabc4910ab45446d7f2fd33c0ea4199d327f7e703daad",
+      "sha256": "1746483d2138d10d917e0d57ab5378c85e2e9af8d2ff442bc89b97423e33d022",
       "shard_id": "009",
       "source_line_end": 1739,
       "source_line_start": 1718,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/goal_runtime_system/010-8.-source-lineage-and-governance.md",
-      "sha256": "0d4b82e7fc037a75ad599d315ad59115eddda46e9ffcbd948d56bcb473234eb5",
+      "sha256": "9fa40ece4f2d1a728472c16f27b0899a3b19e01298fef4ef44833e300e88d792",
       "shard_id": "010",
       "source_line_end": 1759,
       "source_line_start": 1741,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/goal_runtime_system/011-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "a66c3ddf78b5d7e1949e08c50f638913725b8f1500ff4574c827bb2b96c9320f",
+      "sha256": "cf0f00d796c1c8ef8c29d665da6911d90d21490ebbbcc7e58497756c17e2570b",
       "shard_id": "011",
       "source_line_end": 1953,
       "source_line_start": 1761,
@@ -107,16 +107,25 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/goal_runtime_system/012-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "1439d430d5c6639bd6a6b73273c22915e5693eaad153cb2ede767738f30854f6",
+      "sha256": "588f367934672fab699495d0cc87e6dc492ff0765800d276d23675d6764cecec",
       "shard_id": "012",
       "source_line_end": 2119,
       "source_line_start": 1955,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/_shards/goal_runtime_system/013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "sha256": "423b24a441d33fda4b038e4a3a95f9643a4e8c8bae2720871687d5fb5d69ebec",
+      "shard_id": "013",
+      "source_line_end": 2253,
+      "source_line_start": 2122,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2119,
+    "line_count": 2253,
     "path": "Plans/Goal_Runtime_System.md",
-    "sha256": "6e2315981eb83a31a6e569fef52d469a1bbacabd588952bf6c7f119a57fffc16"
+    "sha256": "eb59e172c2db94638e848554d560883f191ba8ee837ac07a2fa6f172dfad7dd8"
   }
 }

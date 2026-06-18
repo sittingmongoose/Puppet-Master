@@ -1,19 +1,20 @@
 # Shard Index: Plans/GitHub_Integration.md
 
-Generated: 2026-06-18T13:49:14Z
+Generated: 2026-06-18T20:01:37Z
 
-Source SHA256: `0a492a370100220a2ecba2ef6759d0e3a3489246fe935ece04de0a0d50538f23`
+Source SHA256: `6d474302af57dc236c49448d6ad0984e1bafe03f19c106e56a83c4b4796463ef`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `3c0c5b13891124e3b135168ec616b55b87d9612a7e6b5554086c775909d43ba4`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L30 `f05b06f8ece2aac66dbf35abb80c64d4ee90f16faf027b67adaa33dc644f6c1a`
-- [003 - Change Summary](003-change-summary.md) L32-L41 `ca69fea9a1ba5018d41003e1fcbe07525ce8f4a1d01b7464f8a7bb878e6df375`
-- [004 - SSOT References (DRY)](004-ssot-references-dry.md) L43-L78 `6968ec0d1526b59ce872f6dd9b0736ae27a260f66c5aae221090f085a95ea0d1`
-- [005 - Canonical owner and consumer reconciliation](005-canonical-owner-and-consumer-reconciliation.md) L80-L227 `1cc395a41fed79dfc0d7f3cafc84f10e0cd983d1dbce35de81b1f11d0d67a059`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L229-L233 `1c7983ecb17354e5a6e69138f0257153fd862bf574848268b8248b11c115d6e2`
-- [007 - PlanUnits](007-planunits.md) L235-L1793 `1849ad40135df30bd6ce7fa86fc1f881123960b3f8e9fd552ce5881ff7236ec4`
-- [008 - Migration Coverage](008-migration-coverage.md) L1795-L1805 `3c4ee3cb362cc7c1cf577687bb279d50717b424a88abb6021ca5f47f0196cfc0`
-- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1807-L1853 `5f11f7744fc55fefe5dd7bfd8e9346f173361dc8b8fb2900bc7d5238c35bf8b4`
+- [001 - Preamble](001-preamble.md) L1-L1 `577a3be34583164251bcaa130accc6d8e009c4cc25d5ab013ad41a9a8e9f00e0`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L30 `3167c534cb96eecb13da22271e5c9fbe636f252baa1f6729df1905494a336485`
+- [003 - Change Summary](003-change-summary.md) L32-L41 `e1819578dd51bfd7ef5cadab592836966dcb99553e1f63f923ba19971017f8c4`
+- [004 - SSOT References (DRY)](004-ssot-references-dry.md) L43-L78 `938405e19df9b96a00f397d3bc23fcbeea690de5ed305682674b080eeedd0a37`
+- [005 - Canonical owner and consumer reconciliation](005-canonical-owner-and-consumer-reconciliation.md) L80-L227 `e2546ff5729bdec4eb95389aa1947aee6538f10d4d5d4cd4224466e64723ac7e`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L229-L233 `2bdfc9ce49f2b2bb897ef6457bec3d5bbed0721ae72d2aaa127586a7a46510e2`
+- [007 - PlanUnits](007-planunits.md) L235-L1793 `4d809fcf8336a48dc8d012ba44c49ec9447c27a32b41d9803cc66c6df1dc9efc`
+- [008 - Migration Coverage](008-migration-coverage.md) L1795-L1805 `381a17acb6b9fb8ac607139fbdeb678bbe07e9a452b727abed0f227cab4b3012`
+- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1807-L1853 `672e1178d1481b4ad68a7fff1050309ed8471c0729b49bacbeee9634326a4983`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1856-L1945 `9f627874a9c08519cff5bf46a4ab72b0afc7fa9c29a8a3c960a954df1849a889`
