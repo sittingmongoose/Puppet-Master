@@ -1,5 +1,5 @@
 {
-  "doc_count": 69,
+  "doc_count": 71,
   "docs": [
     {
       "anchor_count": 0,
@@ -975,6 +975,23 @@
       "spec_locked": false
     },
     {
+      "anchor_count": 0,
+      "bytes": 25210,
+      "contractref_count": 0,
+      "gui_related_inferred": true,
+      "has_planunits_section": false,
+      "heading_count": 17,
+      "line_count": 529,
+      "path": "Plans/PRD_Builder.md",
+      "plan_unit_count": 7,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "6a653edac9f8ae9b2088c2f6e4f42f955964bb828db0efa2669481c2aa2fd576",
+      "sharded": false,
+      "span_count": 17,
+      "spec_locked": false
+    },
+    {
       "anchor_count": 28,
       "bytes": 110647,
       "contractref_count": 57,
@@ -1121,6 +1138,23 @@
       "sharded": true,
       "span_count": 15,
       "spec_locked": true
+    },
+    {
+      "anchor_count": 0,
+      "bytes": 52493,
+      "contractref_count": 0,
+      "gui_related_inferred": true,
+      "has_planunits_section": false,
+      "heading_count": 23,
+      "line_count": 1070,
+      "path": "Plans/Planning_Wizard.md",
+      "plan_unit_count": 13,
+      "plan_unit_parse_errors": [],
+      "recommended_batch": "pilot_or_early_batch_candidate",
+      "sha256": "06c69191b12600d530a51b35fd1511c2538ac08a9d1606125dcaed3bfe09c55b",
+      "sharded": false,
+      "span_count": 23,
+      "spec_locked": false
     },
     {
       "anchor_count": 29,
@@ -2069,7 +2103,7 @@
       "spec_locked": false
     }
   ],
-  "generated_at_utc": "2026-06-16T05:27:58Z",
+  "generated_at_utc": "2026-06-18T19:59:25Z",
   "locked_doc_count": 21,
   "phase2a_classification_artifact": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/phase2a_inventory.json",
   "phase2a_classification_summary": {

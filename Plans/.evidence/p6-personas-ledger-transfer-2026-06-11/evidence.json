@@ -8,17 +8,17 @@
     {
       "note": "Primary Persona owner repair.",
       "path": "Plans/Personas.md",
-      "sha256": "7393faaa8ab9bba5dd01f924855f2dba755f7e572f50ae96c5e7fa879778fbdb"
+      "sha256": "a98f034d790a019f65d56a17324b6badcc78920ee2393e3f8719a652afffcdc5"
     },
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "e6516b6b89193ee6763f69adca64e35af901fac0c03d0b3d61547c5361592362"
+      "sha256": "26bce4395c51a5c540bcaca4548bd680fc0d5a6e4eec5b776c9f58fc9efa6cb8"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "1032deeaa0afdad08c179d08e7e076d15765f9f9f20e83326cc9decfd44515a5"
+      "sha256": "68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "2a3a42c58c92e68d7573debab6464a715cf1a891b427d1d259b03feae27d786c"
+      "sha256": "d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "98834a0523ea8dbe0a4bce03fd3781e066791949fa2aede1acce22b9aa454a16"
+      "sha256": "a7de40a06612a920f5a49c33fd9a1c122b0192653293c86413c0b17cf1358d35"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "1725034908618855274624b2f9e6f0f90365e074a89d5b590c69bb5492bf782e"
+      "sha256": "22fcd9f2fa6cd488c47a473348e394f0555434b4c511e04180841e938d9e0508"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "a40bee463f9be9eaf3623a51f6e9c9130a11dc5618ef1d957d489a41331f7aeb"
+      "sha256": "01d8ff29670c17eb04b0b87b63cb6a0444e0e4160e8fe2c5d7aef0a4c001eb6a"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
+      "details": "pm-plan-index.py validate passes with node_readiness_report.status=blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -312,6 +312,11 @@
       "name": "seven-tab-reference-repair",
       "result": "PASS",
       "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
+    },
+    {
+      "name": "governance-seal-scope",
+      "result": "PASS",
+      "details": "Governance seal refreshed generated shards, migration proof, evidence hashes, and Spec Lock after live Plans and PlanUnit index stabilization."
     }
   ],
   "commands_run": [

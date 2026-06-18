@@ -1,0 +1,45 @@
+{
+  "completed_work": [
+    "Reviewed latest repository and relevant Planning, Goal, audit, testing, source-control, Plan Compile, WorkNode, Orchestrator, persona, model, and GUI materials.",
+    "Resolved naming, product boundaries, thread model, persona routing, per-turn ledger discipline, PRD Builder modes, Planning Wizard topic flow, source-control contexts, testing, approval/startup, audit/readiness, and prompt compatibility.",
+    "Created 168 compile-ready design atoms, 30 accepted decisions, and 15 accepted corrections.",
+    "Resumed in conversational Collaborator mode after the compile-ready cursor; no compile authorization was inferred and no canonical/generated/runtime artifacts were touched.",
+    "Compiled 168 accepted atoms into 61 live PlanUnits across canonical Plans owner docs.",
+    "Regenerated allowed Plans/.plan_index outputs only; no WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or refreshed."
+  ],
+  "current_phase": "compiled_prd_planning_wizard_governance_sealed",
+  "cursor": {
+    "last_event_id": "evt-0022",
+    "next_action": "Use sealed Plans/index/governance artifacts as current truth. Future work should start from audit/repair or explicit compiler/runtime enablement, not from redoing this compile."
+  },
+  "do_not_redo": [
+    "Do not rediscover whether the feature is called Requirements Doc Builder, PRD Builder, Chain Wizard, Plan Wizard, or Planning Wizard; naming is settled.",
+    "Do not redesign the WorkNode/Plan Compile architecture from scratch; integrate the accepted contracts and improve only where canonical owner docs expose a true conflict.",
+    "Do not use superseded experimental planning-pipeline artifacts as authority.",
+    "Do not create runtime WorkNodes or launch builds during ledger-to-Plans compilation."
+  ],
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_actions": [
+    "Run bounded audit/repair only if a new finding is raised.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, or production build tasks until a later explicit compiler/runtime enablement phase."
+  ],
+  "open_blockers": [],
+  "open_questions": [],
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "summary": "PRD Builder and Planning Wizard ledger compilation and governance seal are complete against live Plans, PlanUnit index, migration proof, shards, evidence, and Spec Lock. Node readiness remains blocked_compiler_contract_incomplete by design.",
+  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "validation_state": {
+    "git_diff_check": "pass",
+    "ledger_health": "pass_governance_sealed",
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass"
+  }
+}

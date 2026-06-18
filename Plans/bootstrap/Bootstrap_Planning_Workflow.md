@@ -149,3 +149,7 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 ## Governance seal
 
 Run only after docs and generated indexes are stable. Then regenerate governance artifacts, refresh Spec Lock, run plan/shard validators, and certify changed files/blockers/risks.
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+Ledger-to-Plans compile phases that exceed atom, owner-doc, or document-size thresholds must use bounded read-only subagents with assignment/result evidence. The parent/controller remains the only canonical writer. The compile phase writes live Plans docs and allowed `Plans/.plan_index/**` outputs only; it does not run the finished-product `Approve And Build` runtime, launch Plan Compile, create WorkNodes, create NodeSeeds, create executable queues, launch GoalRuns, edit implementation files, or update Spec Lock, shards, evidence, plan_graph, or auto_decisions.

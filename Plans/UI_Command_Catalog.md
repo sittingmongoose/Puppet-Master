@@ -6837,3 +6837,90 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 188 atomized `UI_Command_Catalog-S0001` through `UI_Command_Catalog-S0024` into fine-grained PlanUnits `UCC-002` through `UCC-036`. Phase 2B batch 189 atomized `UI_Command_Catalog-S0025` through `UI_Command_Catalog-S0032`, `UI_Command_Catalog-S0034` through `UI_Command_Catalog-S0036` into fine-grained PlanUnits `UCC-037` through `UCC-060` and structurally dispositioned `UI_Command_Catalog-S0033`. Phase 2B batch 190 atomized `UI_Command_Catalog-S0037` through `UI_Command_Catalog-S0046`, `UI_Command_Catalog-S0048`, and runtime recovery material in `UI_Command_Catalog-S0049` into fine-grained PlanUnits `UCC-061` through `UCC-090`, while structurally dispositioning `UI_Command_Catalog-S0047` and the references portion of `UI_Command_Catalog-S0049`. Phase 2B batch 191 atomized `UI_Command_Catalog-S0050` through `UI_Command_Catalog-S0052` into fine-grained PlanUnits `UCC-091` through `UCC-095`, structurally dispositioned generated tail spans `UI_Command_Catalog-S0053`, `UI_Command_Catalog-S0054`, and `UI_Command_Catalog-S0056`, and retired `UI_Command_Catalog-S0055` / `UCC-001` as generated artifact residual lineage. `Plans/UI_Command_Catalog.md` now has no active `source_preserving_planunit`; `UCC-001` remains migration lineage only and must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### UCC-097 - Planning Wizard And Plan Compile Command Family
+
+```yaml
+plan_unit_id: UCC-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: 'atom-0012: If the required end-of-turn ledger write fails, mark the active thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until durable synchronization is repaired. atom-0028: The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. atom-0101: The Planning Wizard final approval button and command label is exactly Approve And Build. atom-0107: After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. atom-0154: Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting
+  build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. atom-0155: Approve And Build intentionally navigates to Orchestrator Plan Compile, but later transitions present strong Open Build and status actions rather than forcibly moving the user whenever state changes.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Planning_Ledger_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/Orchestrator_Page.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0012
+- pldg-20260618-001-prd-planning-wizard:atom-0028
+- pldg-20260618-001-prd-planning-wizard:atom-0101
+- pldg-20260618-001-prd-planning-wizard:atom-0107
+- pldg-20260618-001-prd-planning-wizard:atom-0154
+- pldg-20260618-001-prd-planning-wizard:atom-0155
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+source_atom_ids:
+- atom-0012
+- atom-0028
+- atom-0101
+- atom-0107
+- atom-0154
+- atom-0155
+decision_refs:
+- dec-0004
+- dec-0008
+- dec-0020
+correction_refs:
+- corr-0011
+- corr-0012
+preserved_exact_tokens:
+- ledger_sync_blocked
+- Approve PRD for Planning Wizard
+- Approve And Build
+- Orchestrator
+- Plan Compile tab
+- pause
+- cancel
+- resume
+- inspect evidence
+- Open Build
+negative_constraints: []
+owner_hints:
+- Plans/Planning_Ledger_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Orchestrator_Page.md
+- Plans/Commands_System.md
+```

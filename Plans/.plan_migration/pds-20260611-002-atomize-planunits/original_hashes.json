@@ -1,4 +1,5 @@
 {
+  "file_count": 71,
   "files": [
     {
       "bytes": 119294,
@@ -199,6 +200,12 @@
       "sha256": "9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8"
     },
     {
+      "bytes": 25210,
+      "line_count": 529,
+      "path": "Plans/PRD_Builder.md",
+      "sha256": "6a653edac9f8ae9b2088c2f6e4f42f955964bb828db0efa2669481c2aa2fd576"
+    },
+    {
       "bytes": 110647,
       "line_count": 1465,
       "path": "Plans/Permissions_System.md",
@@ -227,6 +234,12 @@
       "line_count": 423,
       "path": "Plans/Planning_Ledger_System.md",
       "sha256": "f7b19989c67fde8bc6ecc6d7b43888943630ce0714e0b33b1c22be0332aca457"
+    },
+    {
+      "bytes": 52493,
+      "line_count": 1070,
+      "path": "Plans/Planning_Wizard.md",
+      "sha256": "06c69191b12600d530a51b35fd1511c2538ac08a9d1606125dcaed3bfe09c55b"
     },
     {
       "bytes": 46737,
@@ -415,7 +428,7 @@
       "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1"
     }
   ],
-  "generated_at_utc": "2026-06-16T05:27:58Z",
+  "generated_at_utc": "2026-06-18T19:59:25Z",
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.original_hashes.v1",
   "scope": "top-level Plans/*.md"

@@ -1,0 +1,38 @@
+{
+  "checks": {
+    "compile_queue_compiled": "pass",
+    "gui_related": "pass",
+    "open_items_consistent": "pass",
+    "phase_consistent": "pass",
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass",
+    "required_files": "pass",
+    "source_refs": "pass",
+    "stable_ids": "pass"
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "compile_queue_items": 61,
+    "compiled_owner_docs": 35,
+    "compiled_plan_units": 61,
+    "corrections": 15,
+    "decisions": 30,
+    "deferred_questions": 0,
+    "design_atoms": 168,
+    "events": 22,
+    "governance_seal": "passed",
+    "open_blockers": 0,
+    "open_questions": 0,
+    "ready_for_plan_compile_atoms": 0
+  },
+  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "warnings": []
+}

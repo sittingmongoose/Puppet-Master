@@ -1,0 +1,233 @@
+{
+  "counts": {
+    "compile_groups": 10,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 17,
+    "files_excluding_manifest": 43,
+    "open_blockers": 0,
+    "open_questions": 0
+  },
+  "created_at_utc": "2026-06-18T18:30:00Z",
+  "files": [
+    {
+      "bytes": 2251,
+      "path": "PM_PLANNING_WIZARD_LEDGER_INSTALL.md",
+      "sha256": "739210c9f24bf717d10a0c9a0782bb0040b5948fc8e041102b96d2c38cb629cc"
+    },
+    {
+      "bytes": 1357,
+      "path": "PROMPT_COMPATIBILITY.md",
+      "sha256": "46c9f7959803d2b4c0f5dde9e74ce5624bf8ccad03a8bd71020462c462485582"
+    },
+    {
+      "bytes": 2052,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/README.md",
+      "sha256": "ffb9c01b2a17eefe4e0f7c9177fccaaf56a2e5feecad2f997c2fc0d6ef98d03f"
+    },
+    {
+      "bytes": 7868,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/events.jsonl",
+      "sha256": "d2c5c4cfcfb0f25b2ca1e5938684c7ce9a02adba6096bb540385a9beea6d39d7"
+    },
+    {
+      "bytes": 332,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/indexes/README.md",
+      "sha256": "78b7b255b75d427b9e97a72cdac47f33359dd5258be335e88baf82d5080e8ebd"
+    },
+    {
+      "bytes": 2428,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+      "sha256": "15ac6fbbcecc4a24645c851a09b24cb2bc05e28601f1a27d0b7d8a804992948f"
+    },
+    {
+      "bytes": 3647,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/compile_ledger_to_plans.md",
+      "sha256": "43ce67c859dd9a522b32bf3dd8a142b009d6b10a9115d561d9f9c7ee012911a7"
+    },
+    {
+      "bytes": 3799,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/deep_audit.md",
+      "sha256": "4832dacb1ee34b171f551d96a1bf811b3517f78df4c18fa8cb60de79ad4e6d9e"
+    },
+    {
+      "bytes": 2008,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/generate_planunit_index.md",
+      "sha256": "b1bce820629abaf194f8efd5985f041994627d2cb443bfac12db049645e391a8"
+    },
+    {
+      "bytes": 2370,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/governance_seal.md",
+      "sha256": "ccb20c658ac5834c19e104b1282f863f036cf13052e4bdaa212034c8c7676b1e"
+    },
+    {
+      "bytes": 3406,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/repair_from_audit.md",
+      "sha256": "7a9e7106f4fe4b9517cc4aa08f9df1d201ab88c41ba98f72dc90d3eba61724b8"
+    },
+    {
+      "bytes": 2320,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/resume_ledger.md",
+      "sha256": "bafe4638cd4ef3a0116ea432fb42d38b28f42a4893ed5f79c25c60f7085de66b"
+    },
+    {
+      "bytes": 0,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/blockers.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 9126,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/corrections.jsonl",
+      "sha256": "3ee9c0fc516713ba99141b7e66c81b2017dbe4efcef50ea7abbac166aefe09bd"
+    },
+    {
+      "bytes": 18758,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl",
+      "sha256": "fe2cc354b18b165b1f90554d27d52cb0a6ed8a8c3d5476dfb3bfd0dc27025289"
+    },
+    {
+      "bytes": 197646,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl",
+      "sha256": "103c34d3c3bf229d3962b6543ccedf3a5fe4a1fbacc6b193ff8994b8b33f3b83"
+    },
+    {
+      "bytes": 0,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/questions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1020,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+      "sha256": "c88df2a0dbb0ad93ed4272ed33d73c918828c282d55c89a94340bb73ba68f555"
+    },
+    {
+      "bytes": 4509,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md",
+      "sha256": "ff3fd239fbc9a9780e91d9be15f793cdd85d5241673eb3b37bf130f680387ed1"
+    },
+    {
+      "bytes": 13882,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md",
+      "sha256": "b3a240c2039c7744c44e2a01afbcf98b0c3b73661dadb53b7ae1eb8833724052"
+    },
+    {
+      "bytes": 18371,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md",
+      "sha256": "0eb1c296a0391e64b12660b5d6a3bc9bcc471b056d1f502d6c51893e9efd30d9"
+    },
+    {
+      "bytes": 9940,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md",
+      "sha256": "377592c85be1912fc07c5fde561dcff8bd61d51cf65cbec111588862279aec40"
+    },
+    {
+      "bytes": 13808,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md",
+      "sha256": "45d2bb3e09c6a774cae24f64d7c94520277ddb55b3279bd3124a1c4ef5bec304"
+    },
+    {
+      "bytes": 18385,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md",
+      "sha256": "212200b935881e7b816dea5fa34e824fc56e631ee8670c2192c1857f1772317b"
+    },
+    {
+      "bytes": 11998,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md",
+      "sha256": "2eca4c7eca6995fa6c464e6f3ba6baa472ea507f0c103edfff7304a6d9ee7928"
+    },
+    {
+      "bytes": 8966,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md",
+      "sha256": "4d3edb2471c481a91c905b65a43211cb20f29fff35495895f84e99e5ad760130"
+    },
+    {
+      "bytes": 4985,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/09-bootstrap-prompts-and-transfer.md",
+      "sha256": "fe0f279bd88ce8565a1ed09a9f578c9e2c78549401af0ad1359cc0924c348291"
+    },
+    {
+      "bytes": 3099,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md",
+      "sha256": "ef210a5de614bb62c8e5a47765fc0a4d2b5547e655dcd67485a9f2b1152f249a"
+    },
+    {
+      "bytes": 11522,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+      "sha256": "8d53d93f80c6f6da13a90a05c4a65dd9c30048a59c450d4bff2cc7294785e548"
+    },
+    {
+      "bytes": 2156,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+      "sha256": "b55ccf66fb783b9325054e0070d5ab131d9417b1803765fd20218e08093dc217"
+    },
+    {
+      "bytes": 8389,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/doc_impact_matrix.json",
+      "sha256": "d977c985e6a1a72479de3f0dba0f3215fa7cc08afb455f8dec33be28476b1c95"
+    },
+    {
+      "bytes": 1998,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/gui_impact_matrix.json",
+      "sha256": "1648bc669325b2dc03c858f1407fc52947a9c2b397a39986c1ef4206858d8c27"
+    },
+    {
+      "bytes": 2165,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+      "sha256": "d71da824c2e11bf5059f18bb892496e1daa74eb5c59f00fc3d2bbc4f3db9794d"
+    },
+    {
+      "bytes": 1397,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff_contract_matrix.json",
+      "sha256": "4261db5259473ebdb65c8d45e34ee57364cc58f6184437b2bba617c444fe6971"
+    },
+    {
+      "bytes": 2112,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/implementation_readiness_matrix.json",
+      "sha256": "626367a8fe834f7ad14c772de21f5813f9f5c2963afb89e2f8f718cdd03c2f42"
+    },
+    {
+      "bytes": 962,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/naming_migration_matrix.json",
+      "sha256": "9712274e507ecfbff3f5de46008c6f6a5754e8fe0c33f5e6f1489dddef5193f5"
+    },
+    {
+      "bytes": 732,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+      "sha256": "319dffad4e5490734ab7808be4b167a44c6b30b7b74b3b34ed6e9c4b05a2d99d"
+    },
+    {
+      "bytes": 1807,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/operating_capsule.json",
+      "sha256": "a84eb5671869aebd68f0bd2662bb3a8beea60e05537d1d75981fdcec92e9d0a2"
+    },
+    {
+      "bytes": 1332,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/testing_capability_matrix.json",
+      "sha256": "f2949560f1c4a06f86fa0ddc138b529f7fdebac79ba7a7fe3da44e1062efc8fd"
+    },
+    {
+      "bytes": 724,
+      "path": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+      "sha256": "cbe6887597e3911afb860258323a6f94f2ffa70a6fd03130e518f592a5da66e2"
+    },
+    {
+      "bytes": 1764,
+      "path": "VALIDATION_REPORT.json",
+      "sha256": "c0da1ce4a939626955f2b82affa8f598e319ae7f0adc47b45e566d76fdfaac8a"
+    },
+    {
+      "bytes": 1470,
+      "path": "VALIDATION_REPORT.md",
+      "sha256": "7424ea88c25809026e84133f72a551269b6aa84c2143e4f724a5cb25432ef83b"
+    },
+    {
+      "bytes": 3281,
+      "path": "scripts/pm-install-prd-planning-wizard-ledger.py",
+      "sha256": "304e06a4565d479570f77b9b5f64c751189136cfa7dda14187511f24effbc495"
+    }
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "package_name": "PM PRD Builder and Planning Wizard Ledger Drop-in",
+  "schema_id": "pm.prd_planning_wizard_ledger_dropin_manifest.v1"
+}

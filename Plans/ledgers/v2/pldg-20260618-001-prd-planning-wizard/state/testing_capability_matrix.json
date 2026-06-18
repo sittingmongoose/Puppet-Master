@@ -1,0 +1,50 @@
+{
+  "capabilities": [
+    "online_capability_research",
+    "automated_installation",
+    "built_in_browser",
+    "headed_browser",
+    "visible_browser_automation",
+    "hot_reload",
+    "live_preview",
+    "desktop_gui_testing",
+    "simulator_or_emulator",
+    "physical_device",
+    "screenshot_or_visual_comparison",
+    "accessibility",
+    "api_or_contract",
+    "database",
+    "console_or_network",
+    "performance",
+    "security"
+  ],
+  "inheritance": [
+    "global default",
+    "project override",
+    "run policy snapshot"
+  ],
+  "installation_rules": [
+    "project-local/pre-authorized installs may be automated",
+    "privileged/global/paid/licensed/credentialed installs require authority",
+    "FileSafe/source-control receipt and rollback required"
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "online_research_rules": [
+    "use current official/primary sources",
+    "record provenance and freshness",
+    "do not rely solely on model memory"
+  ],
+  "schema_id": "pm.testing_capability_matrix.v1",
+  "setting_values": [
+    "Auto",
+    "On",
+    "Off"
+  ],
+  "truthfulness_rules": [
+    "Off is not a pass",
+    "explicit override never becomes automated pass",
+    "unaffected tests still run"
+  ],
+  "updated_at_utc": "2026-06-18T18:30:00Z",
+  "visibility_default": "show_when_possible"
+}

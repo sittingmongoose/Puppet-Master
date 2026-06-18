@@ -15,6 +15,7 @@
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
 - 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, governance registration is metadata-only, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, dispatched GoalRuns, or production build tasks are authorized.
+- 2026-06-18: Registered PRD Builder and Planning Wizard owner routing compiled from ledger `pldg-20260618-001-prd-planning-wizard`; bootstrap compile remains Plans/index-only and does not run finished-product Plan Compile or create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -241,6 +242,21 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+
+### PRD Builder And Planning Wizard Map (2026-06-18)
+
+The PRD Builder and Planning Wizard packet compiled from `pldg-20260618-001-prd-planning-wizard` uses this owner split:
+- `Plans/PRD_Builder.md` owns finished-product PRD Builder intake, source ingestion, PRD projection, Approved PRD Pack creation, annotation/readiness behavior, and the explicit `Approve PRD for Planning Wizard` handoff.
+- `Plans/Planning_Wizard.md` owns PlanningRun, dynamic topic graphs, topic-scoped ledger work, Planning Context Capsules, topic conversion/audit, final integration, ApprovedPlanPack, compile readiness, Planning Wizard GUI states, and `Approve And Build`.
+- `Plans/Automated_Testing_System.md` owns testing defaults, current official-source capability research, safe installation policy, Auto/On/Off testing settings, visible verification sessions, redaction, and test receipts.
+- `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`, and `Plans/Goal_Runtime_System.md` own the downstream PlanCompile, Executor intake, WorkNodeRecord materialization, activation, receipt, and runtime boundary contracts. This compile records a runtime-capable v2 contract direction but does not enable runtime launch or emit runtime artifacts.
+- `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/assistant-chat-design.md`, `Plans/Crosswalk.md`, and `Plans/Wiring_Matrix.md` consume or route the user-facing surfaces, command families, thread model, and reference terminology.
+- `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` are compatibility/source-lineage consumers for semantically migrated legacy wizard material; `Chain Wizard`, `Plan Wizard`, `Requirements Doc Builder`, and `Start Chain` are not active current-product names except where explicitly marked historical or compatibility-only.
+
+Generated indexes may refresh under `Plans/.plan_index/**` after live Plans stabilize. Spec Lock, generated shards, evidence bundles, plan graph, and auto_decisions remain governance-seal-only. This compile does not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, production build tasks, runtime dispatch, or Orchestrator builds.
+
+ContractRef: ContractName:Plans/PRD_Builder.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Native Goal Runtime Map (2026-06-16)
 
@@ -4195,3 +4211,103 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batches 111 and 112 atomized source spans `00-plans-index-S0001` through `00-plans-index-S0024` into fine-grained PlanUnits `0PI-002` through `0PI-054`, except for structural heading/container dispositions. `00-plans-index-S0007` is the Plan map heading, `00-plans-index-S0025` is the PlanUnits heading/container, and `00-plans-index-S0027` is Migration Coverage metadata. `00-plans-index-S0026` is the retired `0PI-001` bridge disposition. `0PI-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### 0PI-059 - PRD Builder And Planning Wizard Owner Map
+
+```yaml
+plan_unit_id: 0PI-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: 'atom-0158: Create Plans/PRD_Builder.md and Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. atom-0159: Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. atom-0160: Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs. atom-0161: After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. atom-0001: The finished-product feature formerly called
+  Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. atom-0002: The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. atom-0004: PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/00-plans-index.md
+- Plans/Plan_Document_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Crosswalk.md
+- Plans/Wiring_Matrix.md
+- Plans/Planning_Ledger_System.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0158
+- pldg-20260618-001-prd-planning-wizard:atom-0159
+- pldg-20260618-001-prd-planning-wizard:atom-0160
+- pldg-20260618-001-prd-planning-wizard:atom-0161
+- pldg-20260618-001-prd-planning-wizard:atom-0001
+- pldg-20260618-001-prd-planning-wizard:atom-0002
+- pldg-20260618-001-prd-planning-wizard:atom-0004
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+source_atom_ids:
+- atom-0158
+- atom-0159
+- atom-0160
+- atom-0161
+- atom-0001
+- atom-0002
+- atom-0004
+decision_refs:
+- dec-0029
+- dec-0001
+- dec-0002
+correction_refs:
+- corr-0001
+- corr-0002
+preserved_exact_tokens:
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- PlanProfile
+- Plans/chain-wizard.md
+- Plans/chain-wizard-flexibility.md
+- doc-impact pass
+- PlanUnit index
+- governance seal
+- PRD Builder
+- Requirements Doc Builder
+- Planning Wizard
+- Chain Wizard
+- Plan Wizard
+- planning-intake
+- Approved PRD Pack
+- implementation-ready planning
+negative_constraints:
+- Do not perform a blind filename or term replacement that preserves obsolete ownership and workflow.
+- Do not hand-edit generated shards, evidence, Spec Lock, or plan graph during the conversational ledger phase.
+- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
+- Do not use Chain Wizard or Plan Wizard as current terminology.
+- Do not collapse PRD Builder and Planning Wizard into one indistinguishable interview.
+owner_hints:
+- Plans/Plan_Document_System.md
+- Plans/00-plans-index.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Crosswalk.md
+- Plans/Wiring_Matrix.md
+- Plans/Planning_Ledger_System.md
+- Plans/FinalGUISpec.md
+```

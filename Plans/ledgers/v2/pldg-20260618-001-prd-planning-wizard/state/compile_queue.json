@@ -1,0 +1,1920 @@
+{
+  "candidate_compile_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Commands_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_API_Auth_and_Flows.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+    "Plans/bootstrap/Codex_Prompts.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/plans_to_code_handoff.schema.json",
+    "Plans/storage-plan.md"
+  ],
+  "compile_groups": [
+    {
+      "atom_ids": [
+        "atom-0001",
+        "atom-0002",
+        "atom-0003",
+        "atom-0004",
+        "atom-0005",
+        "atom-0006",
+        "atom-0158",
+        "atom-0159",
+        "atom-0160",
+        "atom-0161"
+      ],
+      "candidate_owner_docs": [
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/00-plans-index.md",
+        "Plans/chain-wizard.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "group_id": "cg-01",
+      "name": "Naming and canonical owner migration"
+    },
+    {
+      "atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0009",
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0013",
+        "atom-0014",
+        "atom-0015",
+        "atom-0016"
+      ],
+      "candidate_owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md"
+      ],
+      "group_id": "cg-02",
+      "name": "Shared chat, threads, personas, and ledger discipline"
+    },
+    {
+      "atom_ids": [
+        "atom-0017",
+        "atom-0018",
+        "atom-0019",
+        "atom-0020",
+        "atom-0021",
+        "atom-0022",
+        "atom-0023",
+        "atom-0024",
+        "atom-0025",
+        "atom-0026",
+        "atom-0027",
+        "atom-0028",
+        "atom-0029",
+        "atom-0030",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034",
+        "atom-0035",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038"
+      ],
+      "candidate_owner_docs": [
+        "Plans/PRD_Builder.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "group_id": "cg-03",
+      "name": "PRD Builder"
+    },
+    {
+      "atom_ids": [
+        "atom-0039",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047",
+        "atom-0048",
+        "atom-0049",
+        "atom-0050",
+        "atom-0051",
+        "atom-0052",
+        "atom-0053",
+        "atom-0054",
+        "atom-0055",
+        "atom-0056",
+        "atom-0057",
+        "atom-0058",
+        "atom-0059",
+        "atom-0060",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0064",
+        "atom-0065",
+        "atom-0066"
+      ],
+      "candidate_owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "group_id": "cg-04",
+      "name": "Planning Wizard"
+    },
+    {
+      "atom_ids": [
+        "atom-0067",
+        "atom-0068",
+        "atom-0069",
+        "atom-0070",
+        "atom-0071",
+        "atom-0072",
+        "atom-0073",
+        "atom-0074",
+        "atom-0075",
+        "atom-0076",
+        "atom-0077",
+        "atom-0078",
+        "atom-0079"
+      ],
+      "candidate_owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/FileSafe.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Permissions_System.md"
+      ],
+      "group_id": "cg-05",
+      "name": "Project context and source control"
+    },
+    {
+      "atom_ids": [
+        "atom-0080",
+        "atom-0081",
+        "atom-0082",
+        "atom-0083",
+        "atom-0084",
+        "atom-0085",
+        "atom-0086",
+        "atom-0087",
+        "atom-0088",
+        "atom-0089",
+        "atom-0090",
+        "atom-0091",
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095",
+        "atom-0096",
+        "atom-0097",
+        "atom-0098",
+        "atom-0099",
+        "atom-0100"
+      ],
+      "candidate_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "group_id": "cg-06",
+      "name": "Testing and visible verification"
+    },
+    {
+      "atom_ids": [
+        "atom-0101",
+        "atom-0102",
+        "atom-0103",
+        "atom-0104",
+        "atom-0105",
+        "atom-0106",
+        "atom-0107",
+        "atom-0108",
+        "atom-0109",
+        "atom-0110",
+        "atom-0111",
+        "atom-0112",
+        "atom-0113",
+        "atom-0114",
+        "atom-0115",
+        "atom-0116",
+        "atom-0117",
+        "atom-0118",
+        "atom-0119",
+        "atom-0120",
+        "atom-0121",
+        "atom-0122",
+        "atom-0123",
+        "atom-0124",
+        "atom-0125",
+        "atom-0126",
+        "atom-0127",
+        "atom-0128",
+        "atom-0129"
+      ],
+      "candidate_owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "group_id": "cg-07",
+      "name": "Approve And Build and runtime compile handoff"
+    },
+    {
+      "atom_ids": [
+        "atom-0130",
+        "atom-0131",
+        "atom-0132",
+        "atom-0133",
+        "atom-0134",
+        "atom-0135",
+        "atom-0136",
+        "atom-0137",
+        "atom-0138",
+        "atom-0139",
+        "atom-0140",
+        "atom-0141",
+        "atom-0142",
+        "atom-0143",
+        "atom-0144",
+        "atom-0145",
+        "atom-0146"
+      ],
+      "candidate_owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "group_id": "cg-08",
+      "name": "Audit, zero-incomplete, readiness, and certification"
+    },
+    {
+      "atom_ids": [
+        "atom-0147",
+        "atom-0148",
+        "atom-0149",
+        "atom-0150",
+        "atom-0151",
+        "atom-0152",
+        "atom-0153",
+        "atom-0154",
+        "atom-0155",
+        "atom-0156",
+        "atom-0157"
+      ],
+      "candidate_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "group_id": "cg-09",
+      "name": "GUI and commands"
+    },
+    {
+      "atom_ids": [
+        "atom-0162",
+        "atom-0163",
+        "atom-0164",
+        "atom-0165",
+        "atom-0166",
+        "atom-0167",
+        "atom-0168"
+      ],
+      "candidate_owner_docs": [
+        "Plans/bootstrap/Codex_Prompts.md",
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "group_id": "cg-10",
+      "name": "Bootstrap prompts and transfer workflow"
+    }
+  ],
+  "compiled_atom_ids": [
+    "atom-0001",
+    "atom-0002",
+    "atom-0003",
+    "atom-0004",
+    "atom-0005",
+    "atom-0006",
+    "atom-0007",
+    "atom-0008",
+    "atom-0009",
+    "atom-0010",
+    "atom-0011",
+    "atom-0012",
+    "atom-0013",
+    "atom-0014",
+    "atom-0015",
+    "atom-0016",
+    "atom-0017",
+    "atom-0018",
+    "atom-0019",
+    "atom-0020",
+    "atom-0021",
+    "atom-0022",
+    "atom-0023",
+    "atom-0024",
+    "atom-0025",
+    "atom-0026",
+    "atom-0027",
+    "atom-0028",
+    "atom-0029",
+    "atom-0030",
+    "atom-0031",
+    "atom-0032",
+    "atom-0033",
+    "atom-0034",
+    "atom-0035",
+    "atom-0036",
+    "atom-0037",
+    "atom-0038",
+    "atom-0039",
+    "atom-0040",
+    "atom-0041",
+    "atom-0042",
+    "atom-0043",
+    "atom-0044",
+    "atom-0045",
+    "atom-0046",
+    "atom-0047",
+    "atom-0048",
+    "atom-0049",
+    "atom-0050",
+    "atom-0051",
+    "atom-0052",
+    "atom-0053",
+    "atom-0054",
+    "atom-0055",
+    "atom-0056",
+    "atom-0057",
+    "atom-0058",
+    "atom-0059",
+    "atom-0060",
+    "atom-0061",
+    "atom-0062",
+    "atom-0063",
+    "atom-0064",
+    "atom-0065",
+    "atom-0066",
+    "atom-0067",
+    "atom-0068",
+    "atom-0069",
+    "atom-0070",
+    "atom-0071",
+    "atom-0072",
+    "atom-0073",
+    "atom-0074",
+    "atom-0075",
+    "atom-0076",
+    "atom-0077",
+    "atom-0078",
+    "atom-0079",
+    "atom-0080",
+    "atom-0081",
+    "atom-0082",
+    "atom-0083",
+    "atom-0084",
+    "atom-0085",
+    "atom-0086",
+    "atom-0087",
+    "atom-0088",
+    "atom-0089",
+    "atom-0090",
+    "atom-0091",
+    "atom-0092",
+    "atom-0093",
+    "atom-0094",
+    "atom-0095",
+    "atom-0096",
+    "atom-0097",
+    "atom-0098",
+    "atom-0099",
+    "atom-0100",
+    "atom-0101",
+    "atom-0102",
+    "atom-0103",
+    "atom-0104",
+    "atom-0105",
+    "atom-0106",
+    "atom-0107",
+    "atom-0108",
+    "atom-0109",
+    "atom-0110",
+    "atom-0111",
+    "atom-0112",
+    "atom-0113",
+    "atom-0114",
+    "atom-0115",
+    "atom-0116",
+    "atom-0117",
+    "atom-0118",
+    "atom-0119",
+    "atom-0120",
+    "atom-0121",
+    "atom-0122",
+    "atom-0123",
+    "atom-0124",
+    "atom-0125",
+    "atom-0126",
+    "atom-0127",
+    "atom-0128",
+    "atom-0129",
+    "atom-0130",
+    "atom-0131",
+    "atom-0132",
+    "atom-0133",
+    "atom-0134",
+    "atom-0135",
+    "atom-0136",
+    "atom-0137",
+    "atom-0138",
+    "atom-0139",
+    "atom-0140",
+    "atom-0141",
+    "atom-0142",
+    "atom-0143",
+    "atom-0144",
+    "atom-0145",
+    "atom-0146",
+    "atom-0147",
+    "atom-0148",
+    "atom-0149",
+    "atom-0150",
+    "atom-0151",
+    "atom-0152",
+    "atom-0153",
+    "atom-0154",
+    "atom-0155",
+    "atom-0156",
+    "atom-0157",
+    "atom-0158",
+    "atom-0159",
+    "atom-0160",
+    "atom-0161",
+    "atom-0162",
+    "atom-0163",
+    "atom-0164",
+    "atom-0165",
+    "atom-0166",
+    "atom-0167",
+    "atom-0168"
+  ],
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Bootstrap_Planning_Migration.md",
+    "Plans/Commands_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_API_Auth_and_Flows.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/chain-wizard.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/storage-plan.md"
+  ],
+  "compiled_plan_unit_ids": [
+    "PRDB-001",
+    "PRDB-002",
+    "PRDB-003",
+    "PRDB-004",
+    "PRDB-005",
+    "PRDB-006",
+    "PRDB-007",
+    "PWIZ-001",
+    "PWIZ-002",
+    "PWIZ-003",
+    "PWIZ-004",
+    "PWIZ-005",
+    "PWIZ-006",
+    "PWIZ-007",
+    "PWIZ-008",
+    "PWIZ-009",
+    "PWIZ-010",
+    "PWIZ-011",
+    "PWIZ-012",
+    "PWIZ-013",
+    "ACD-421",
+    "PLS-014",
+    "P-054",
+    "MS-112",
+    "PDS-016",
+    "ATS-005",
+    "ATS-006",
+    "ATS-007",
+    "ATS-008",
+    "ATS-009",
+    "ATS-010",
+    "PNC-015",
+    "PNC-016",
+    "PNC-017",
+    "EP-104",
+    "EP-105",
+    "GRS-031",
+    "CV-290",
+    "SP-216",
+    "F2-190",
+    "W-073",
+    "GI-032",
+    "GAAAF-013",
+    "PS-117",
+    "POA-049",
+    "RAP-030",
+    "RGV-014",
+    "MGAC-093",
+    "MA-061",
+    "HITL-037",
+    "PG-059",
+    "F3-398",
+    "OP-025",
+    "UCC-097",
+    "CS-052",
+    "0PI-059",
+    "C-050",
+    "WM-038",
+    "BPM-008",
+    "CW-009",
+    "CWF-152"
+  ],
+  "items": [
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-001"
+      ],
+      "disposition": "create_new_owner_doc",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0001",
+      "source_atom_ids": [
+        "atom-0001",
+        "atom-0003",
+        "atom-0004",
+        "atom-0005",
+        "atom-0006"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "PRD Builder Naming, Scope, And Product Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-002"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0002",
+      "source_atom_ids": [
+        "atom-0017",
+        "atom-0018",
+        "atom-0019"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "Conversation, Import, And Hybrid PRD Creation"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-003"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0003",
+      "source_atom_ids": [
+        "atom-0020",
+        "atom-0021",
+        "atom-0022"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "Discovery Questions And Planning-Intake Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-004"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0004",
+      "source_atom_ids": [
+        "atom-0010",
+        "atom-0023",
+        "atom-0024",
+        "atom-0025"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "PRD Ledger, Projection, Structure, And Stable IDs"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-005"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0005",
+      "source_atom_ids": [
+        "atom-0026",
+        "atom-0027",
+        "atom-0028",
+        "atom-0029",
+        "atom-0038"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "PRD Pack, Approval, Versioning, And Readiness"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-006"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0006",
+      "source_atom_ids": [
+        "atom-0030",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "Source Ingestion, Sharding, And Parallel Extraction"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PRDB-007"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0007",
+      "source_atom_ids": [
+        "atom-0035",
+        "atom-0036",
+        "atom-0037"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/PRD_Builder.md"
+      ],
+      "title": "Conflicts, Source Priority, And Ledger-Backed Annotations"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-001"
+      ],
+      "disposition": "create_new_owner_doc",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0008",
+      "source_atom_ids": [
+        "atom-0002",
+        "atom-0039",
+        "atom-0040",
+        "atom-0041"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Planning Wizard Naming, Inputs, And Handoff Seeds"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-002"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0009",
+      "source_atom_ids": [
+        "atom-0009",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "PlanningRun Aggregate, Thread Topology, Context, And Intent Axes"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-003"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0010",
+      "source_atom_ids": [
+        "atom-0046",
+        "atom-0047",
+        "atom-0048",
+        "atom-0049"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Dynamic Topic Graph And Topic Operations"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-004"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0011",
+      "source_atom_ids": [
+        "atom-0011",
+        "atom-0016",
+        "atom-0050",
+        "atom-0051",
+        "atom-0052",
+        "atom-0053"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Topic Agents, Context Capsules, Questions, And Safe Autonomy"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-005"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0012",
+      "source_atom_ids": [
+        "atom-0054",
+        "atom-0055",
+        "atom-0056",
+        "atom-0057"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Topic Ledger, Invalidation, Amendments, And PRD Immutability"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-006"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0013",
+      "source_atom_ids": [
+        "atom-0058",
+        "atom-0059",
+        "atom-0060",
+        "atom-0061",
+        "atom-0062"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Topic Conversion, Audit, Ready State, And Checkpoints"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-007"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0014",
+      "source_atom_ids": [
+        "atom-0063",
+        "atom-0064",
+        "atom-0065",
+        "atom-0066"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Final Integration, Plan Review, And Visual References"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-008"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0015",
+      "source_atom_ids": [
+        "atom-0067",
+        "atom-0068",
+        "atom-0070",
+        "atom-0071",
+        "atom-0072",
+        "atom-0075",
+        "atom-0076",
+        "atom-0077"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Project Context, Discovery, Setup Authority, And Currentness"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-009"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0016",
+      "source_atom_ids": [
+        "atom-0099"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Testing Topic Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-010"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0017",
+      "source_atom_ids": [
+        "atom-0101",
+        "atom-0102",
+        "atom-0103",
+        "atom-0106",
+        "atom-0107"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Approve And Build And ApprovedPlanPack Authority"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-011"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0018",
+      "source_atom_ids": [
+        "atom-0130",
+        "atom-0131",
+        "atom-0132",
+        "atom-0133",
+        "atom-0134",
+        "atom-0135"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Product-Native Planning Audit And Repair Ownership"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-012"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0019",
+      "source_atom_ids": [
+        "atom-0136",
+        "atom-0137",
+        "atom-0138",
+        "atom-0139",
+        "atom-0140",
+        "atom-0141",
+        "atom-0142",
+        "atom-0143",
+        "atom-0144"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Compile Readiness, Traceability, Blockers, And User Decisions"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PWIZ-013"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0020",
+      "source_atom_ids": [
+        "atom-0147",
+        "atom-0148",
+        "atom-0149",
+        "atom-0150",
+        "atom-0151"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "title": "Planning Run GUI, Topic Progress, And Attached Audits"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ACD-421"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0021",
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0040",
+        "atom-0041",
+        "atom-0064",
+        "atom-0148",
+        "atom-0157"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "title": "Planning Product Chat Reuse And Structured Handoff"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PLS-014"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0022",
+      "source_atom_ids": [
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0023",
+        "atom-0025",
+        "atom-0032",
+        "atom-0034",
+        "atom-0035",
+        "atom-0054",
+        "atom-0103",
+        "atom-0161",
+        "atom-0166",
+        "atom-0167",
+        "atom-0168"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "title": "Planning Product Ledger Synchronization And Compile Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "P-054"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0023",
+      "source_atom_ids": [
+        "atom-0013",
+        "atom-0014",
+        "atom-0015"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Personas.md"
+      ],
+      "title": "Planning Product Collaborator Profiles And Specialist Roles"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "MS-112"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0024",
+      "source_atom_ids": [
+        "atom-0015"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Models_System.md"
+      ],
+      "title": "Planning Product Role Routing Consumers"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PDS-016"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0025",
+      "source_atom_ids": [
+        "atom-0024",
+        "atom-0058",
+        "atom-0063",
+        "atom-0066",
+        "atom-0132",
+        "atom-0141",
+        "atom-0142",
+        "atom-0158",
+        "atom-0160"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Plan_Document_System.md"
+      ],
+      "title": "Planning Implementation Readiness And Claim Traceability"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-005"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0026",
+      "source_atom_ids": [
+        "atom-0080",
+        "atom-0081",
+        "atom-0082"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Testing Defaults And Scoped Overrides"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-006"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0027",
+      "source_atom_ids": [
+        "atom-0083",
+        "atom-0084",
+        "atom-0085"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Official-Source Testing Research And Provenance"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-007"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0028",
+      "source_atom_ids": [
+        "atom-0086",
+        "atom-0087",
+        "atom-0088"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Authorized Test Tool Installation And Rollback"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-008"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0029",
+      "source_atom_ids": [
+        "atom-0089",
+        "atom-0090",
+        "atom-0091"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Testing Capability Settings Model"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-009"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0030",
+      "source_atom_ids": [
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095",
+        "atom-0096",
+        "atom-0097"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Visible Verification Sessions And Redaction"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "ATS-010"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0031",
+      "source_atom_ids": [
+        "atom-0098",
+        "atom-0100",
+        "atom-0138",
+        "atom-0146"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "title": "Test Capability, Session Receipts, And Revalidation"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PNC-015"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0032",
+      "source_atom_ids": [
+        "atom-0077",
+        "atom-0078",
+        "atom-0109",
+        "atom-0110",
+        "atom-0111",
+        "atom-0129",
+        "atom-0164"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "title": "Runtime-Capable PlanCompile v2 Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PNC-016"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0033",
+      "source_atom_ids": [
+        "atom-0112",
+        "atom-0113",
+        "atom-0114",
+        "atom-0115",
+        "atom-0116",
+        "atom-0117",
+        "atom-0118"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "title": "Runtime Stage Cards, Parallel Worklists, And Typed Dependencies"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PNC-017"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0034",
+      "source_atom_ids": [
+        "atom-0137",
+        "atom-0142",
+        "atom-0145",
+        "atom-0146",
+        "atom-0168"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "title": "Compile Readiness Fixtures And No-Runtime-Artifact Boundary"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "EP-104"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0035",
+      "source_atom_ids": [
+        "atom-0119",
+        "atom-0120",
+        "atom-0078",
+        "atom-0100"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "title": "Three-Stage Executor Intake And Required Graph Acceptance"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "EP-105"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0036",
+      "source_atom_ids": [
+        "atom-0121",
+        "atom-0122",
+        "atom-0123",
+        "atom-0124",
+        "atom-0137",
+        "atom-0145",
+        "atom-0146"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "title": "Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "GRS-031"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0037",
+      "source_atom_ids": [
+        "atom-0104",
+        "atom-0105",
+        "atom-0106",
+        "atom-0114",
+        "atom-0115",
+        "atom-0120",
+        "atom-0125",
+        "atom-0126",
+        "atom-0127",
+        "atom-0130",
+        "atom-0133",
+        "atom-0135",
+        "atom-0143"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "title": "Approve And Build Launch, Parallel Enforcement, And Atomic Activation"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "CV-290"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0038",
+      "source_atom_ids": [
+        "atom-0027",
+        "atom-0029",
+        "atom-0039",
+        "atom-0042",
+        "atom-0048",
+        "atom-0055",
+        "atom-0056",
+        "atom-0081",
+        "atom-0082",
+        "atom-0090",
+        "atom-0104",
+        "atom-0105",
+        "atom-0110",
+        "atom-0113",
+        "atom-0118",
+        "atom-0121",
+        "atom-0122",
+        "atom-0123",
+        "atom-0124",
+        "atom-0125",
+        "atom-0126",
+        "atom-0127",
+        "atom-0128",
+        "atom-0130",
+        "atom-0133",
+        "atom-0134",
+        "atom-0139"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "title": "Planning Runtime Events, Packs, Records, And Exceptions"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "SP-216"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0039",
+      "source_atom_ids": [
+        "atom-0042",
+        "atom-0111",
+        "atom-0121",
+        "atom-0122",
+        "atom-0128",
+        "atom-0134"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "title": "PlanningRun, PlanCompile, WorkNode, And Audit Persistence"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "F2-190"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0040",
+      "source_atom_ids": [
+        "atom-0030",
+        "atom-0044",
+        "atom-0067",
+        "atom-0071",
+        "atom-0073",
+        "atom-0074",
+        "atom-0075",
+        "atom-0078",
+        "atom-0088"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/FileSafe.md"
+      ],
+      "title": "Planning Source-Control Safety, Non-Git Coverage, And Dirty-State Preservation"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "W-073"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0041",
+      "source_atom_ids": [
+        "atom-0067",
+        "atom-0070",
+        "atom-0071",
+        "atom-0072",
+        "atom-0074",
+        "atom-0076",
+        "atom-0088"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "title": "Planning Greenfield, Worktree Boundary, And Source-Control Receipts"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "GI-032"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0042",
+      "source_atom_ids": [
+        "atom-0044",
+        "atom-0068",
+        "atom-0069",
+        "atom-0070",
+        "atom-0072",
+        "atom-0076"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "title": "Optional GitHub, Repository Attachment, And Contribution PR Context"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "GAAAF-013"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0043",
+      "source_atom_ids": [
+        "atom-0069",
+        "atom-0075"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "title": "GitHub Auth Consumers For Optional Planning Context"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PS-117"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0044",
+      "source_atom_ids": [
+        "atom-0068",
+        "atom-0070",
+        "atom-0075",
+        "atom-0079",
+        "atom-0084",
+        "atom-0087",
+        "atom-0097"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Permissions_System.md"
+      ],
+      "title": "Planning Setup Authority, Remote Context, Secrets, And Testing Permissions"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "POA-049"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0045",
+      "source_atom_ids": [
+        "atom-0027",
+        "atom-0030",
+        "atom-0031",
+        "atom-0065",
+        "atom-0085",
+        "atom-0098",
+        "atom-0102"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "title": "Planning Packs, Source Manifests, And Testing Evidence Artifacts"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "RAP-030"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0046",
+      "source_atom_ids": [
+        "atom-0096",
+        "atom-0097"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "title": "Visible Testing And Compile Evidence Projection"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "RGV-014"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0047",
+      "source_atom_ids": [
+        "atom-0152"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "title": "Plan Compile Draft Graph Projection"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "MGAC-093"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0048",
+      "source_atom_ids": [
+        "atom-0065"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Media_Generation_and_Capabilities.md"
+      ],
+      "title": "Planning Visual Reference Artifact Consumers"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "MA-061"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0049",
+      "source_atom_ids": [
+        "atom-0089"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "title": "Testing Capability Policy Inheritance Consumer"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "HITL-037"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0050",
+      "source_atom_ids": [
+        "atom-0053",
+        "atom-0062",
+        "atom-0081",
+        "atom-0087",
+        "atom-0139",
+        "atom-0143",
+        "atom-0144"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "title": "Testing Overrides, High-Risk Checkpoints, And Exceptional User Decisions"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PG-059"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0051",
+      "source_atom_ids": [
+        "atom-0136",
+        "atom-0137",
+        "atom-0138",
+        "atom-0139",
+        "atom-0140"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Progression_Gates.md"
+      ],
+      "title": "Zero-Incomplete And Planning Compile-Ready Gates"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "F3-398"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0052",
+      "source_atom_ids": [
+        "atom-0001",
+        "atom-0002",
+        "atom-0017",
+        "atom-0018",
+        "atom-0019",
+        "atom-0021",
+        "atom-0024",
+        "atom-0026",
+        "atom-0028",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0046",
+        "atom-0048",
+        "atom-0049",
+        "atom-0055",
+        "atom-0061",
+        "atom-0064",
+        "atom-0068",
+        "atom-0089",
+        "atom-0090",
+        "atom-0091",
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0101",
+        "atom-0107",
+        "atom-0108",
+        "atom-0147",
+        "atom-0148",
+        "atom-0149",
+        "atom-0150",
+        "atom-0151",
+        "atom-0152",
+        "atom-0153",
+        "atom-0154",
+        "atom-0155",
+        "atom-0156",
+        "atom-0157"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "title": "PRD Builder And Planning Wizard GUI Surfaces"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "OP-025"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0053",
+      "source_atom_ids": [
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095",
+        "atom-0096",
+        "atom-0107",
+        "atom-0108",
+        "atom-0126",
+        "atom-0145",
+        "atom-0150",
+        "atom-0152",
+        "atom-0153",
+        "atom-0154",
+        "atom-0155"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "title": "Plan Compile Launch, Pending Shell, And Execution Separation"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "UCC-097"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0054",
+      "source_atom_ids": [
+        "atom-0012",
+        "atom-0028",
+        "atom-0101",
+        "atom-0107",
+        "atom-0154",
+        "atom-0155"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "title": "Planning Wizard And Plan Compile Command Family"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "CS-052"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0055",
+      "source_atom_ids": [
+        "atom-0154"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Commands_System.md"
+      ],
+      "title": "Planning Command State And Recovery Semantics"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "0PI-059"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0056",
+      "source_atom_ids": [
+        "atom-0158",
+        "atom-0159",
+        "atom-0160",
+        "atom-0161",
+        "atom-0001",
+        "atom-0002",
+        "atom-0004"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "title": "PRD Builder And Planning Wizard Owner Map"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "C-050"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0057",
+      "source_atom_ids": [
+        "atom-0001",
+        "atom-0002",
+        "atom-0159",
+        "atom-0160"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Crosswalk.md"
+      ],
+      "title": "PRD Builder And Planning Wizard Term Routing"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "WM-038"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0058",
+      "source_atom_ids": [
+        "atom-0104",
+        "atom-0105",
+        "atom-0125",
+        "atom-0154",
+        "atom-0160"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "title": "Planning Product Command And Event Wiring"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "BPM-008"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0059",
+      "source_atom_ids": [
+        "atom-0162",
+        "atom-0163",
+        "atom-0165",
+        "atom-0166",
+        "atom-0167",
+        "atom-0168"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Bootstrap_Planning_Migration.md"
+      ],
+      "title": "Mandatory Parallel Evidence And Prompt Hardening"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "CW-009"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0060",
+      "source_atom_ids": [
+        "atom-0002",
+        "atom-0159",
+        "atom-0156"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/chain-wizard.md"
+      ],
+      "title": "Planning Wizard Compatibility Redirect"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "CWF-152"
+      ],
+      "disposition": "create_new_planunit",
+      "owner_adjudication": "Owner doc chosen from ledger owner hints, impact matrices, existing Plans ownership, and read-only subagent proposals; main writer made the final canonical placement.",
+      "queue_id": "cq-0061",
+      "source_atom_ids": [
+        "atom-0001",
+        "atom-0002",
+        "atom-0159",
+        "atom-0156",
+        "atom-0157"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "title": "PRD Builder And Planning Wizard Semantic Migration"
+    }
+  ],
+  "last_event_id": "evt-0022",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "notes": "All compiled atoms remain represented in live Plans PlanUnits. Governance seal artifacts were refreshed after Plans and PlanUnit index stabilized. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, generated runtime artifacts, or production build tasks were created.",
+  "plan_index_outputs": [
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "ready_atom_ids": [],
+  "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
+  "status": "compiled_prd_planning_wizard_governance_sealed",
+  "terminal_ledger_event_id": "evt-0022",
+  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "validation_results": {
+    "git_diff_check": "pass",
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass"
+  }
+}

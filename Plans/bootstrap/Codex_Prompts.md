@@ -213,3 +213,7 @@ Append/update Plans/.audits/_semantic_closure_registry.jsonl with closure_id, fi
 
 Run python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix plus pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. If Plans docs or governed artifacts changed, perform governance seal after docs/indexes/evidence stabilize. Report changed files, closure counts, validators, registry updates, and remaining blocked user decisions.
 ```
+
+## 10. Ledger Compile Hardening Addendum - pldg-20260618-001-prd-planning-wizard
+
+For compile, audit, and repair prompts, use bounded read-only subagents when atom, owner-doc, or document-size thresholds are exceeded; require assignment/result evidence and keep the main agent as sole writer. Deep audit must cover atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance status, forbidden artifacts, and validator mutability. Repair must write a complete closure matrix and must not treat passing validators alone as semantic closure. PlanUnit indexing remains non-executable, and governance seal validates the target ledger only after Plans and indexes are stable.

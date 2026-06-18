@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "98834a0523ea8dbe0a4bce03fd3781e066791949fa2aede1acce22b9aa454a16"
+      "sha256": "a7de40a06612a920f5a49c33fd9a1c122b0192653293c86413c0b17cf1358d35"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
+      "details": "pm-plan-index.py validate passes with node_readiness_report.status=blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -177,6 +177,11 @@
       "name": "seven-tab-reference-repair",
       "result": "PASS",
       "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
+    },
+    {
+      "name": "governance-seal-scope",
+      "result": "PASS",
+      "details": "Governance seal refreshed generated shards, migration proof, evidence hashes, and Spec Lock after live Plans and PlanUnit index stabilization."
     }
   ],
   "commands_run": [
