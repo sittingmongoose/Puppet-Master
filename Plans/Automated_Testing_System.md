@@ -130,8 +130,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Test Strategy v2 binds each WorkNode request to required_capability_refs, required harnesses, generated or reused tests, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, expected artifacts, flake policy, and test_gap_policy. The strategy must choose project-type-specific oracles: browser DOM, console, network, screenshot, and visual checks for web; launch, window, screenshot, and accessibility checks for desktop GUI; emulator/device logs and screenshots for mobile; API, contract, and database checks for backend work; exit, output, and filesystem checks for CLI work; and unit, property, and API contracts for libraries.
-  TestStrategy records include test_level, generated_test_ids, browser_session_required, visual_evidence_required, test oracle, console/network, and contract tests where applicable.
+  Test Strategy v2 binds each WorkNode request to required_capability_refs, required harnesses, generated or reused tests, generated_test_ids, reused_test_ids, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, expected artifacts, flake policy, and test_gap_policy. The strategy must choose project-type-specific oracles: browser DOM, console, network, screenshot, and visual checks for web; launch, window, screenshot, and accessibility checks for desktop GUI; emulator/device logs and screenshots for mobile; API, contract, and database checks for backend work; exit, output, and filesystem checks for CLI work; and unit, property, and API contracts for libraries.
+  TestStrategy records include test_level, generated_test_ids, reused_test_ids, browser_session_required, visual_evidence_required, test oracle, console/network, and contract tests where applicable.
 gui_related: true
 gui_classification_reason: WorkNode test bindings can require visible browser, GUI, device, screenshot, and visual evidence surfaces.
 depends_on: [ATS-001, ATS-002]
@@ -156,6 +156,7 @@ preserved_exact_tokens:
   - "test_binding"
   - "required_capability_refs"
   - "generated_test_ids"
+  - "reused_test_ids"
   - "browser_session_required"
   - "visual_evidence_required"
   - "test_gap_policy"
@@ -182,7 +183,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode after the compiler/runtime boundary is explicitly enabled, it must record a test capability blocker or deferred non-executable test-harness WorkNode request candidate rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
-  Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims.
+  Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims. TestRunReceipt records include receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids, verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, and test_gap_policy.
 gui_related: true
 gui_classification_reason: Automated screenshots, browser sessions, GUI/device sessions, and visual evidence are user-visible verification surfaces.
 depends_on: [ATS-001, ATS-002, ATS-003]
@@ -211,6 +212,9 @@ preserved_exact_tokens:
   - "no human intervention"
   - "browser/GUI/device sessions"
   - "screenshots"
+  - "TestRunReceipt"
+  - "test_strategy_ref"
+  - "reused_test_ids"
   - "test capability blocker"
   - "test-harness WorkNode"
   - "manual_only_acceptance_not_allowed"

@@ -93,7 +93,7 @@
       ],
       "properties": {
         "row_id": {
-          "type": "string"
+          "$ref": "#/$defs/handoff_row_id"
         },
         "transition": {
           "type": "string"
@@ -120,7 +120,11 @@
           "type": "string"
         },
         "schema_payload": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/schema_payload_ref"
+          },
+          "minItems": 1
         },
         "retry_route": {
           "type": "string"
@@ -162,7 +166,8 @@
         },
         "rows": {
           "type": "array",
-          "minItems": 1,
+          "minItems": 18,
+          "maxItems": 18,
           "items": {
             "$ref": "#/$defs/handoff_row"
           }
@@ -198,7 +203,10 @@
         "resume_command_or_action",
         "automatic_launch_enabled",
         "native_plan_wizard_launch_enabled",
-        "codex_bootstrap_launch_enabled"
+        "codex_bootstrap_launch_enabled",
+        "current_state",
+        "receipts",
+        "compile_wave_contracts"
       ],
       "properties": {
         "compile_id": {
@@ -234,10 +242,10 @@
           ]
         },
         "current_stage": {
-          "type": "string"
+          "$ref": "#/$defs/stage_name"
         },
         "cursor": {
-          "type": "object"
+          "$ref": "#/$defs/cursor"
         },
         "last_green_stage": {
           "type": [
@@ -246,12 +254,12 @@
           ]
         },
         "last_green_hashes": {
-          "type": "object"
+          "$ref": "#/$defs/hash_snapshot"
         },
         "blockers": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/blocker"
           }
         },
         "next_required_stage": {
@@ -274,6 +282,28 @@
         },
         "codex_bootstrap_launch_enabled": {
           "const": false
+        },
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "initialized",
+            "preflight",
+            "stage_running",
+            "stage_blocked",
+            "stage_complete",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "receipts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "compile_wave_contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
         }
       }
     },
@@ -289,7 +319,9 @@
         "item_boundaries",
         "exit_gate",
         "success_route",
-        "blocked_route"
+        "blocked_route",
+        "assignment_contract",
+        "parent_writeback_policy"
       ],
       "properties": {
         "purpose": {
@@ -308,7 +340,7 @@
           "type": "string"
         },
         "item_boundaries": {
-          "type": "object"
+          "$ref": "#/$defs/item_boundaries"
         },
         "exit_gate": {
           "type": "string"
@@ -318,6 +350,12 @@
         },
         "blocked_route": {
           "type": "string"
+        },
+        "assignment_contract": {
+          "$ref": "#/$defs/compile_wave_contract"
+        },
+        "parent_writeback_policy": {
+          "$ref": "#/$defs/parent_writeback_policy"
         }
       }
     },
@@ -345,7 +383,8 @@
         "authority",
         "sizing",
         "status",
-        "blockers"
+        "blockers",
+        "capability_requirements"
       ],
       "properties": {
         "source_plan_unit_ids": {
@@ -385,13 +424,13 @@
           "$ref": "#/$defs/ref_list"
         },
         "risk_class": {
-          "type": "string"
+          "$ref": "#/$defs/risk_class"
         },
         "reasoning_tier": {
-          "type": "string"
+          "$ref": "#/$defs/reasoning_tier"
         },
         "work_type": {
-          "type": "string"
+          "$ref": "#/$defs/work_type"
         },
         "gui_related": {
           "type": "boolean"
@@ -400,20 +439,19 @@
           "type": "boolean"
         },
         "effort_class": {
-          "type": "string"
+          "$ref": "#/$defs/effort_class"
         },
         "effort": {
-          "description": "Compatibility alias for effort_class; new payloads use effort_class.",
-          "type": "string"
+          "$ref": "#/$defs/effort_class"
         },
         "capability_lane": {
-          "type": "string"
+          "$ref": "#/$defs/capability_lane"
         },
         "authority": {
-          "type": "string"
+          "$ref": "#/$defs/authority"
         },
         "sizing": {
-          "type": "object"
+          "$ref": "#/$defs/sizing"
         },
         "status": {
           "enum": [
@@ -427,7 +465,13 @@
         "blockers": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "capability_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
           }
         }
       }
@@ -449,7 +493,7 @@
         "nodes": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/workgraph_node"
           }
         },
         "entrypoints": {
@@ -458,23 +502,23 @@
         "dependency_edges": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/dependency_edge"
           }
         },
         "scheduler_policy": {
-          "type": "object"
+          "$ref": "#/$defs/scheduler_policy"
         },
         "graph_integrity": {
-          "type": "object"
+          "$ref": "#/$defs/graph_integrity"
         },
         "authority": {
-          "type": "string"
+          "$ref": "#/$defs/authority"
         },
         "evidence": {
           "$ref": "#/$defs/ref_list"
         },
         "validation_state": {
-          "type": "object"
+          "$ref": "#/$defs/validation_state"
         }
       }
     },
@@ -505,7 +549,8 @@
         "model_routing",
         "ordering",
         "authority",
-        "status"
+        "status",
+        "capability_requirements"
       ],
       "properties": {
         "source_plan_unit_ids": {
@@ -539,7 +584,7 @@
           "$ref": "#/$defs/ref_list"
         },
         "work_type": {
-          "type": "string"
+          "$ref": "#/$defs/work_type"
         },
         "gui_related": {
           "type": "boolean"
@@ -548,28 +593,28 @@
           "type": "boolean"
         },
         "effort_class": {
-          "type": "string"
+          "$ref": "#/$defs/effort_class"
         },
         "reasoning_tier": {
-          "type": "string"
+          "$ref": "#/$defs/reasoning_tier"
         },
         "context_size": {
-          "type": "string"
+          "$ref": "#/$defs/context_size"
         },
         "validation_cost": {
-          "type": "string"
+          "$ref": "#/$defs/validation_cost"
         },
         "risk_class": {
-          "type": "string"
+          "$ref": "#/$defs/risk_class"
         },
         "authority_risk": {
-          "type": "string"
+          "$ref": "#/$defs/authority_risk"
         },
         "user_visible_risk": {
-          "type": "string"
+          "$ref": "#/$defs/user_visible_risk"
         },
         "capability_lane": {
-          "type": "string"
+          "$ref": "#/$defs/capability_lane"
         },
         "test_binding": {
           "$ref": "#/$defs/test_binding"
@@ -581,7 +626,7 @@
           "$ref": "#/$defs/ordering"
         },
         "authority": {
-          "type": "string"
+          "$ref": "#/$defs/authority"
         },
         "status": {
           "enum": [
@@ -591,6 +636,12 @@
             "rejected",
             "blocked"
           ]
+        },
+        "capability_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
         }
       }
     },
@@ -604,14 +655,19 @@
         "unblocks",
         "parallel_group_id",
         "scheduler_lane",
-        "ordering_reason"
+        "ordering_reason",
+        "manual_priority",
+        "required_before_start",
+        "required_after_start",
+        "required_before_completion",
+        "required_after_completion"
       ],
       "properties": {
         "build_phase": {
-          "type": "string"
+          "$ref": "#/$defs/build_phase"
         },
         "dependency_type": {
-          "type": "string"
+          "$ref": "#/$defs/dependency_type"
         },
         "depends_on": {
           "$ref": "#/$defs/ref_list"
@@ -626,10 +682,26 @@
           ]
         },
         "scheduler_lane": {
-          "type": "string"
+          "$ref": "#/$defs/scheduler_lane"
         },
         "ordering_reason": {
           "type": "string"
+        },
+        "manual_priority": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "required_before_start": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_after_start": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_before_completion": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_after_completion": {
+          "$ref": "#/$defs/ref_list"
         }
       }
     },
@@ -651,13 +723,13 @@
           "type": "string"
         },
         "requested_lane": {
-          "type": "string"
+          "$ref": "#/$defs/capability_lane"
         },
         "requested_model_profile": {
-          "type": "string"
+          "$ref": "#/$defs/model_profile"
         },
         "effective_model_profile": {
-          "type": "string"
+          "$ref": "#/$defs/model_profile"
         },
         "fallback_used": {
           "type": "boolean"
@@ -671,7 +743,7 @@
         "capability_checks": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/capability_check"
           }
         },
         "handoff": {
@@ -693,7 +765,8 @@
         "expected_artifacts",
         "flake_policy",
         "test_gap_policy",
-        "manual_only_acceptance_not_allowed"
+        "manual_only_acceptance_not_allowed",
+        "reused_test_ids"
       ],
       "properties": {
         "required_capability_refs": {
@@ -724,13 +797,16 @@
           "$ref": "#/$defs/ref_list"
         },
         "flake_policy": {
-          "type": "string"
+          "$ref": "#/$defs/flake_policy"
         },
         "test_gap_policy": {
-          "type": "string"
+          "$ref": "#/$defs/test_gap_policy"
         },
         "manual_only_acceptance_not_allowed": {
           "const": true
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
         }
       }
     },
@@ -751,7 +827,15 @@
         "headless_headed_support",
         "project_native_runners",
         "online_research",
-        "probes"
+        "probes",
+        "automation_surface",
+        "requires_browser",
+        "requires_emulator",
+        "requires_display",
+        "requires_screenshot",
+        "verification_command",
+        "expected_artifacts",
+        "flake_policy"
       ],
       "properties": {
         "project_platform": {
@@ -763,7 +847,7 @@
         "local_capabilities": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/capability_requirement"
           }
         },
         "installed_tools": {
@@ -773,25 +857,25 @@
           }
         },
         "app_launch_ability": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "browser_automation": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "gui_automation": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "device_emulator_automation": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "screenshot_support": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "logs_available": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "headless_headed_support": {
-          "type": "string"
+          "$ref": "#/$defs/capability_status"
         },
         "project_native_runners": {
           "type": "array",
@@ -800,13 +884,37 @@
           }
         },
         "online_research": {
-          "type": "object"
+          "$ref": "#/$defs/online_research"
         },
         "probes": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/test_probe"
           }
+        },
+        "automation_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "requires_browser": {
+          "type": "boolean"
+        },
+        "requires_emulator": {
+          "type": "boolean"
+        },
+        "requires_display": {
+          "type": "boolean"
+        },
+        "requires_screenshot": {
+          "type": "boolean"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
         }
       }
     },
@@ -824,14 +932,19 @@
         "flake_policy",
         "test_gap_policy",
         "manual_only_acceptance_not_allowed",
-        "handoff"
+        "handoff",
+        "receipt_id",
+        "test_strategy_ref",
+        "test_case_refs",
+        "generated_test_ids",
+        "reused_test_ids"
       ],
       "properties": {
         "test_level": {
-          "type": "string"
+          "$ref": "#/$defs/test_level"
         },
         "automation_surface": {
-          "type": "string"
+          "$ref": "#/$defs/automation_surface"
         },
         "verification_command": {
           "type": "string"
@@ -854,16 +967,31 @@
           "$ref": "#/$defs/ref_list"
         },
         "flake_policy": {
-          "type": "string"
+          "$ref": "#/$defs/flake_policy"
         },
         "test_gap_policy": {
-          "type": "string"
+          "$ref": "#/$defs/test_gap_policy"
         },
         "manual_only_acceptance_not_allowed": {
           "const": true
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "test_strategy_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_case_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
         }
       }
     },
@@ -884,7 +1012,15 @@
         "rollback_available",
         "restore_command_or_action",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref"
       ],
       "properties": {
         "receipt_id": {
@@ -906,16 +1042,16 @@
           "type": "string"
         },
         "dirty_state_policy": {
-          "type": "string"
+          "$ref": "#/$defs/dirty_state_policy"
         },
         "conflict_policy": {
-          "type": "string"
+          "$ref": "#/$defs/conflict_policy"
         },
         "merge_policy": {
-          "type": "string"
+          "$ref": "#/$defs/merge_policy"
         },
         "github_policy": {
-          "type": "string"
+          "$ref": "#/$defs/github_policy"
         },
         "rollback_available": {
           "type": "boolean"
@@ -928,6 +1064,37 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -958,7 +1125,8 @@
         "model_resolution_receipt_refs",
         "unresolved_risks",
         "evidence_layers",
-        "handoff"
+        "handoff",
+        "final_source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -986,11 +1154,11 @@
           "type": "boolean"
         },
         "final_source_state": {
+          "type": "string",
           "enum": [
             "clean",
             "intentionally_preserved",
-            "blocked",
-            "unknown"
+            "blocked"
           ]
         },
         "final_summary_ref": {
@@ -1022,7 +1190,7 @@
         "validator_outcomes": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/validator_outcome"
           }
         },
         "authority_check_refs": {
@@ -1040,7 +1208,7 @@
         "unresolved_risks": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/risk_record"
           }
         },
         "evidence_layers": {
@@ -1081,6 +1249,9 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "final_source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -1092,19 +1263,20 @@
         "stage",
         "items",
         "source_plan_index_hash",
-        "status"
+        "status",
+        "wave_assignments"
       ],
       "properties": {
         "compile_id": {
           "type": "string"
         },
         "stage": {
-          "type": "string"
+          "$ref": "#/$defs/stage_name"
         },
         "items": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/compile_worklist_item"
           }
         },
         "source_plan_index_hash": {
@@ -1131,6 +1303,12 @@
             "string",
             "null"
           ]
+        },
+        "wave_assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
         }
       }
     },
@@ -1159,7 +1337,7 @@
         "findings": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/auditor_finding"
           }
         },
         "decision": {
@@ -1192,13 +1370,13 @@
           "$ref": "#/$defs/ref_list"
         },
         "requested_lane": {
-          "type": "string"
+          "$ref": "#/$defs/capability_lane"
         },
         "requested_model_profile": {
-          "type": "string"
+          "$ref": "#/$defs/model_profile"
         },
         "effective_model_profile": {
-          "type": "string"
+          "$ref": "#/$defs/model_profile"
         },
         "fallback_used": {
           "type": "boolean"
@@ -1212,7 +1390,7 @@
         "capability_checks": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/capability_check"
           }
         }
       }
@@ -1277,7 +1455,9 @@
         "target_surfaces",
         "prompt",
         "acceptance_criteria",
-        "status"
+        "status",
+        "provider_kind",
+        "provider_id"
       ],
       "properties": {
         "request_id": {
@@ -1313,6 +1493,19 @@
             "complete",
             "cancelled"
           ]
+        },
+        "provider_kind": {
+          "type": "string",
+          "enum": [
+            "antigravity",
+            "claude_code",
+            "cursor",
+            "opencode",
+            "custom_cli_provider"
+          ]
+        },
+        "provider_id": {
+          "type": "string"
         }
       }
     },
@@ -1336,10 +1529,10 @@
           "type": "string"
         },
         "stage": {
-          "type": "string"
+          "$ref": "#/$defs/stage_name"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/result_status"
         },
         "summary": {
           "type": "string"
@@ -1376,7 +1569,7 @@
           "type": "string"
         },
         "harness_type": {
-          "type": "string"
+          "$ref": "#/$defs/automation_surface"
         },
         "capability": {
           "type": "string"
@@ -1394,16 +1587,22 @@
           "$ref": "#/$defs/ref_list"
         },
         "flake_policy": {
-          "type": "string"
+          "$ref": "#/$defs/flake_policy"
         },
         "gaps": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/blocker"
           }
         },
         "status": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
@@ -1423,7 +1622,8 @@
         "generated_test_ids",
         "browser_session_required",
         "visual_evidence_required",
-        "oracles"
+        "oracles",
+        "reused_test_ids"
       ],
       "properties": {
         "strategy_id": {
@@ -1438,17 +1638,17 @@
         "required_capabilities": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/$defs/capability_requirement"
           }
         },
         "gap_blockers": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/blocker"
           }
         },
         "test_level": {
-          "type": "string"
+          "$ref": "#/$defs/test_level"
         },
         "generated_test_ids": {
           "$ref": "#/$defs/ref_list"
@@ -1462,8 +1662,11 @@
         "oracles": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/test_oracle"
           }
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
         }
       }
     },
@@ -1486,16 +1689,24 @@
           "$ref": "#/$defs/ref_list"
         },
         "kind": {
-          "type": "string"
+          "$ref": "#/$defs/test_level"
         },
         "description": {
           "type": "string"
         },
         "oracle": {
-          "type": "object"
+          "$ref": "#/$defs/test_oracle"
         },
         "status": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "draft",
+            "ready",
+            "generated",
+            "reused",
+            "deprecated",
+            "blocked"
+          ]
         }
       }
     },
@@ -1547,7 +1758,15 @@
         "rollback_available",
         "restore_command_or_action",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref"
       ],
       "properties": {
         "receipt_id": {
@@ -1563,13 +1782,13 @@
           "$ref": "#/$defs/ref"
         },
         "dirty_state": {
-          "type": "string"
+          "$ref": "#/$defs/source_control_dirty_state"
         },
         "safe_point_required": {
           "type": "boolean"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/source_control_status"
         },
         "baseline_commit_oid": {
           "type": "string"
@@ -1578,16 +1797,16 @@
           "type": "string"
         },
         "dirty_state_policy": {
-          "type": "string"
+          "$ref": "#/$defs/dirty_state_policy"
         },
         "conflict_policy": {
-          "type": "string"
+          "$ref": "#/$defs/conflict_policy"
         },
         "merge_policy": {
-          "type": "string"
+          "$ref": "#/$defs/merge_policy"
         },
         "github_policy": {
-          "type": "string"
+          "$ref": "#/$defs/github_policy"
         },
         "rollback_available": {
           "type": "boolean"
@@ -1600,6 +1819,37 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -1614,7 +1864,10 @@
         "created_at_utc",
         "status",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context",
+        "rollback_available",
+        "restore_command_or_action"
       ],
       "properties": {
         "receipt_id": {
@@ -1633,13 +1886,22 @@
           "type": "string"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/source_control_status"
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
         }
       }
     },
@@ -1656,7 +1918,8 @@
         "test_binding_ref",
         "authority_ref",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -1693,6 +1956,9 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -1708,7 +1974,8 @@
         "source_control_receipt_ref",
         "status",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -1730,13 +1997,16 @@
           "$ref": "#/$defs/ref"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/change_status"
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -1753,7 +2023,8 @@
         "source_control_receipt_refs",
         "unresolved_findings",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -1785,7 +2056,7 @@
         "unresolved_findings": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/auditor_finding"
           }
         },
         "evidence_refs": {
@@ -1793,6 +2064,9 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -1830,19 +2104,19 @@
         "findings": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/auditor_finding"
           }
         },
         "repairs_applied": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/repair_record"
           }
         },
         "unresolved_findings": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/auditor_finding"
           }
         },
         "terminal_state": {
@@ -1947,7 +2221,7 @@
           "$ref": "#/$defs/ref"
         },
         "repair_strategy": {
-          "type": "string"
+          "$ref": "#/$defs/repair_strategy"
         },
         "changed_refs": {
           "$ref": "#/$defs/ref_list"
@@ -2033,7 +2307,8 @@
         "promotion_type",
         "status",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -2046,16 +2321,19 @@
           "$ref": "#/$defs/ref"
         },
         "promotion_type": {
-          "type": "string"
+          "$ref": "#/$defs/promotion_type"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/$defs/promotion_status"
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -2069,7 +2347,8 @@
         "commit_ref",
         "final_status",
         "evidence_refs",
-        "handoff"
+        "handoff",
+        "source_control_context"
       ],
       "properties": {
         "receipt_id": {
@@ -2085,13 +2364,16 @@
           "$ref": "#/$defs/ref"
         },
         "final_status": {
-          "type": "string"
+          "$ref": "#/$defs/source_control_status"
         },
         "evidence_refs": {
           "$ref": "#/$defs/ref_list"
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
         }
       }
     },
@@ -2132,11 +2414,17 @@
         "blockers": {
           "type": "array",
           "items": {
-            "type": "object"
+            "$ref": "#/$defs/blocker"
           }
         },
         "status": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked",
+            "mixed"
+          ]
         },
         "source_control_receipt_refs": {
           "$ref": "#/$defs/ref_list"
@@ -2155,6 +2443,1438 @@
         },
         "handoff": {
           "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "handoff_row_id": {
+      "type": "string",
+      "enum": [
+        "H-001",
+        "H-002",
+        "H-003",
+        "H-004",
+        "H-005",
+        "H-006",
+        "H-007",
+        "H-008",
+        "H-009",
+        "H-010",
+        "H-011",
+        "H-012",
+        "H-013",
+        "H-014",
+        "H-015",
+        "H-016",
+        "H-017",
+        "H-018"
+      ]
+    },
+    "schema_payload_ref": {
+      "type": "string",
+      "enum": [
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "capability_requirement",
+        "codex_external_gui_agent_request",
+        "codex_work_package",
+        "compile_wave_contract",
+        "compile_worklist",
+        "compiler_model_routing",
+        "executor_intake_report",
+        "goal_completion_receipt",
+        "handoff_matrix",
+        "handoff_row",
+        "merge_or_promotion_receipt",
+        "model_resolution_receipt",
+        "node_seed_candidate",
+        "node_seed_review",
+        "ordering",
+        "plan_compile_receipt",
+        "plan_compile_run",
+        "repair_attempt_receipt",
+        "safe_point_receipt",
+        "source_control_context",
+        "source_control_finalization_receipt",
+        "source_control_preflight_receipt",
+        "source_control_receipt",
+        "stage_card",
+        "test_binding",
+        "test_capability_report",
+        "test_case",
+        "test_harness_probe_report",
+        "test_run_receipt",
+        "test_strategy",
+        "validation_pass_report",
+        "visual_evidence",
+        "workgraph_draft",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_request"
+      ]
+    },
+    "stage_name": {
+      "type": "string",
+      "enum": [
+        "preflight_currentness",
+        "scope_selection",
+        "planunit_normalization",
+        "dependency_cycle_analysis",
+        "surface_mapping",
+        "classification",
+        "nodeseed_candidate_drafting",
+        "split_merge_sizing",
+        "nodeseed_review",
+        "workgraph_draft",
+        "worknode_request_schema_drafting",
+        "adapter_packaging",
+        "certification_handoff",
+        "complete",
+        "blocked"
+      ]
+    },
+    "result_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "complete",
+        "blocked",
+        "failed",
+        "cancelled",
+        "retry_required"
+      ]
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "false_node_generation",
+        "executor_boundary_bypass",
+        "unsafe_execution_context",
+        "false_completion",
+        "manual_only_completion",
+        "weak_test_oracle",
+        "unverifiable_completion",
+        "handoff_gap",
+        "shared_contract_gap",
+        "model_role_drift",
+        "settings_model_role_drift",
+        "receipt_projection_authority_drift",
+        "missing_completion_evidence",
+        "schema_contract_gap",
+        "source_control_drift",
+        "test_gap",
+        "authority_boundary",
+        "currentness_drift",
+        "implementation_readiness_drift",
+        "unknown"
+      ]
+    },
+    "reasoning_tier": {
+      "type": "string",
+      "enum": [
+        "low",
+        "standard",
+        "high",
+        "xhigh",
+        "audit"
+      ]
+    },
+    "work_type": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "schema",
+        "backend",
+        "frontend",
+        "gui",
+        "testing",
+        "source_control",
+        "model_routing",
+        "documentation",
+        "governance",
+        "integration",
+        "repair",
+        "audit"
+      ]
+    },
+    "effort_class": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "small",
+        "medium",
+        "large",
+        "xl",
+        "high_effort",
+        "unknown"
+      ]
+    },
+    "context_size": {
+      "type": "string",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large",
+        "repo_wide",
+        "unknown"
+      ]
+    },
+    "validation_cost": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "requires_browser",
+        "requires_device",
+        "unknown"
+      ]
+    },
+    "authority_risk": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "requires_owner_review",
+        "blocked"
+      ]
+    },
+    "user_visible_risk": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "capability_lane": {
+      "type": "string",
+      "enum": [
+        "default",
+        "overseer",
+        "worker",
+        "gui_frontend_worker",
+        "high_effort_worker",
+        "auditor",
+        "source_control",
+        "testing",
+        "codex_bootstrap",
+        "external_gui_agent",
+        "unknown"
+      ]
+    },
+    "model_profile": {
+      "type": "string",
+      "enum": [
+        "default_model",
+        "overseer_model",
+        "worker_model",
+        "gui_frontend_worker_model",
+        "high_effort_worker_model",
+        "auditor_model",
+        "custom_provider"
+      ]
+    },
+    "build_phase": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "source_control",
+        "environment",
+        "contracts_storage",
+        "core_runtime",
+        "providers_models_permissions",
+        "gui_shell",
+        "features",
+        "integrations",
+        "automated_tests",
+        "promotion",
+        "auditor_certification"
+      ]
+    },
+    "dependency_type": {
+      "type": "string",
+      "enum": [
+        "hard",
+        "soft",
+        "ordering_only",
+        "parallel_ok",
+        "blocks_start",
+        "blocks_completion"
+      ]
+    },
+    "scheduler_lane": {
+      "type": "string",
+      "enum": [
+        "serial",
+        "parallel",
+        "gui_frontend",
+        "source_control",
+        "test",
+        "audit",
+        "high_effort"
+      ]
+    },
+    "automation_surface": {
+      "type": "string",
+      "enum": [
+        "cli",
+        "browser",
+        "desktop_gui",
+        "mobile_device",
+        "backend_api",
+        "library",
+        "mixed",
+        "none"
+      ]
+    },
+    "test_level": {
+      "type": "string",
+      "enum": [
+        "unit",
+        "integration",
+        "e2e",
+        "smoke",
+        "visual",
+        "contract",
+        "manual_blocked",
+        "mixed"
+      ]
+    },
+    "flake_policy": {
+      "type": "string",
+      "enum": [
+        "no_flake_allowed",
+        "rerun_once",
+        "quarantine_with_evidence",
+        "block_on_flake",
+        "not_applicable"
+      ]
+    },
+    "test_gap_policy": {
+      "type": "string",
+      "enum": [
+        "block_completion",
+        "defer_non_executable_harness_candidate",
+        "allow_with_disposition",
+        "not_applicable"
+      ]
+    },
+    "capability_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "missing",
+        "blocked",
+        "requires_research",
+        "unknown",
+        "not_applicable"
+      ]
+    },
+    "source_control_dirty_state": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "conflicted",
+        "blocked_preserved",
+        "contaminated",
+        "lineage_mismatch",
+        "unknown"
+      ]
+    },
+    "source_control_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "valid",
+        "blocked",
+        "failed",
+        "complete",
+        "skipped"
+      ]
+    },
+    "branch_head_state": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "ahead",
+        "behind",
+        "diverged",
+        "detached",
+        "conflicted",
+        "unknown"
+      ]
+    },
+    "owner_lane": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "worker",
+        "source_control",
+        "github_promotion",
+        "unknown"
+      ]
+    },
+    "lease_state": {
+      "type": "string",
+      "enum": [
+        "unleased",
+        "leased",
+        "released",
+        "blocked",
+        "unknown"
+      ]
+    },
+    "dirty_state_policy": {
+      "type": "string",
+      "enum": [
+        "require_clean",
+        "preserve_intentional",
+        "block_on_dirty",
+        "allow_tracked_only",
+        "not_applicable"
+      ]
+    },
+    "conflict_policy": {
+      "type": "string",
+      "enum": [
+        "block",
+        "manual_resolution_required",
+        "auto_resolve_allowed",
+        "not_applicable"
+      ]
+    },
+    "merge_policy": {
+      "type": "string",
+      "enum": [
+        "no_merge",
+        "fast_forward_only",
+        "squash_allowed",
+        "merge_commit_allowed",
+        "promotion_only"
+      ]
+    },
+    "github_policy": {
+      "type": "string",
+      "enum": [
+        "local_only",
+        "optional_promotion",
+        "required_checks",
+        "not_configured"
+      ]
+    },
+    "change_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "applied",
+        "blocked",
+        "failed",
+        "reverted",
+        "complete"
+      ]
+    },
+    "promotion_type": {
+      "type": "string",
+      "enum": [
+        "local_finalization",
+        "branch_merge",
+        "pull_request",
+        "tag",
+        "release",
+        "not_applicable"
+      ]
+    },
+    "promotion_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "promoted",
+        "blocked",
+        "failed",
+        "skipped",
+        "complete"
+      ]
+    },
+    "finding_severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "finding_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "repaired",
+        "dispositioned",
+        "blocked",
+        "certified"
+      ]
+    },
+    "cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "item_index",
+        "checkpoint_ref",
+        "source_hash"
+      ],
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "item_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "item_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "hash_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_index_hash",
+        "plan_unit_hash_refs",
+        "schema_hash_refs",
+        "created_at_utc"
+      ],
+      "properties": {
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "plan_unit_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "schema_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "created_at_utc": {
+          "type": "string"
+        }
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker_id",
+        "blocker_type",
+        "severity",
+        "description",
+        "owner",
+        "resolution_route",
+        "evidence_refs"
+      ],
+      "properties": {
+        "blocker_id": {
+          "type": "string"
+        },
+        "blocker_type": {
+          "type": "string",
+          "enum": [
+            "missing_evidence",
+            "authority_boundary",
+            "schema_gap",
+            "test_gap",
+            "source_control_gap",
+            "currentness_gap",
+            "runtime_forbidden",
+            "other"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "resolution_route": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "capability_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "capability_lane",
+        "required_capability_refs",
+        "required_level",
+        "verification_refs",
+        "fallback_policy",
+        "blocker_policy"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "required_capability_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_level": {
+          "type": "string",
+          "enum": [
+            "required",
+            "preferred",
+            "fallback",
+            "blocked_if_missing"
+          ]
+        },
+        "verification_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "fallback_policy": {
+          "type": "string",
+          "enum": [
+            "no_fallback",
+            "allowed_with_evidence",
+            "requires_research",
+            "not_applicable"
+          ]
+        },
+        "blocker_policy": {
+          "type": "string",
+          "enum": [
+            "block_if_missing",
+            "warn_if_missing",
+            "defer_with_disposition"
+          ]
+        }
+      }
+    },
+    "capability_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "capability_ref",
+        "capability_lane",
+        "result",
+        "fallback_allowed",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string"
+        },
+        "capability_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "not_checked"
+          ]
+        },
+        "fallback_allowed": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_level",
+        "mutation_policy",
+        "escalation_required",
+        "owner_refs"
+      ],
+      "properties": {
+        "authority_level": {
+          "type": "string",
+          "enum": [
+            "design_only",
+            "review_only",
+            "executor_owned",
+            "owner_doc_owned",
+            "blocked"
+          ]
+        },
+        "mutation_policy": {
+          "type": "string",
+          "enum": [
+            "no_mutation",
+            "schema_only",
+            "plans_only",
+            "mutation_after_executor_intake",
+            "blocked"
+          ]
+        },
+        "escalation_required": {
+          "type": "boolean"
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "sizing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "size_class",
+        "estimated_files",
+        "estimated_plan_units",
+        "split_recommended",
+        "sizing_reason"
+      ],
+      "properties": {
+        "size_class": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "small",
+            "medium",
+            "large",
+            "xl",
+            "unknown"
+          ]
+        },
+        "estimated_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_plan_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "split_recommended": {
+          "type": "boolean"
+        },
+        "sizing_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "item_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_items",
+        "source_refs",
+        "write_scope",
+        "split_merge_policy"
+      ],
+      "properties": {
+        "max_items": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_scope": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "split_merge_policy": {
+          "type": "string",
+          "enum": [
+            "split_if_over_limit",
+            "merge_if_same_owner",
+            "block_if_ambiguous"
+          ]
+        }
+      }
+    },
+    "parent_writeback_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parent_only_writes",
+        "parent_writeback_required",
+        "allowed_write_refs"
+      ],
+      "properties": {
+        "parent_only_writes": {
+          "const": true
+        },
+        "parent_writeback_required": {
+          "const": true
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "compile_wave_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wave_id",
+        "assignment_id",
+        "assigned_agent_role",
+        "source_item_refs",
+        "read_set",
+        "write_set",
+        "forbidden_writes",
+        "parent_only_writes",
+        "result_status",
+        "retry_route",
+        "resume_ref",
+        "durable_evidence_refs",
+        "parent_writeback_required"
+      ],
+      "properties": {
+        "wave_id": {
+          "type": "string"
+        },
+        "assignment_id": {
+          "type": "string"
+        },
+        "assigned_agent_role": {
+          "type": "string",
+          "enum": [
+            "parent",
+            "subagent",
+            "auditor",
+            "repairer",
+            "reviewer"
+          ]
+        },
+        "source_item_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "parent_only_writes": {
+          "const": true
+        },
+        "result_status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "retry_route": {
+          "type": "string"
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "durable_evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "parent_writeback_required": {
+          "const": true
+        }
+      }
+    },
+    "compile_worklist_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "source_refs",
+        "status",
+        "assigned_wave_ref",
+        "evidence_refs"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "assigned_wave_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "workgraph_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_ref",
+        "source_candidate_refs",
+        "status",
+        "ordering"
+      ],
+      "properties": {
+        "node_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_candidate_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "review_ready",
+            "blocked",
+            "approved"
+          ]
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        }
+      }
+    },
+    "dependency_edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_ref",
+        "to_ref",
+        "dependency_type",
+        "evidence_refs"
+      ],
+      "properties": {
+        "from_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "to_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dependency_type": {
+          "$ref": "#/$defs/dependency_type"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "scheduler_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduler_lane",
+        "parallelism_policy",
+        "ordering"
+      ],
+      "properties": {
+        "scheduler_lane": {
+          "$ref": "#/$defs/scheduler_lane"
+        },
+        "parallelism_policy": {
+          "type": "string",
+          "enum": [
+            "serial_only",
+            "parallel_allowed",
+            "requires_isolated_worktree",
+            "blocked"
+          ]
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        }
+      }
+    },
+    "graph_integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "cycle_check_status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "blocked",
+            "invalid"
+          ]
+        },
+        "cycle_check_status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "validation_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validator_refs",
+        "blockers"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "valid",
+            "blocked",
+            "invalid"
+          ]
+        },
+        "validator_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        }
+      }
+    },
+    "online_research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status",
+        "source_refs"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_required",
+            "required_pending",
+            "complete",
+            "blocked"
+          ]
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "verification_command",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "oracle_id",
+        "oracle_type",
+        "automation_surface",
+        "assertion_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "oracle_id": {
+          "type": "string"
+        },
+        "oracle_type": {
+          "type": "string",
+          "enum": [
+            "browser_dom",
+            "console",
+            "network",
+            "screenshot",
+            "visual",
+            "launch",
+            "window",
+            "accessibility",
+            "emulator_logs",
+            "api",
+            "contract",
+            "database",
+            "exit_code",
+            "output",
+            "filesystem",
+            "unit",
+            "property"
+          ]
+        },
+        "automation_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "assertion_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "source_control_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_id",
+        "worktree_id",
+        "worktree_path",
+        "branch_ref",
+        "branch_head_state",
+        "baseline_commit_oid",
+        "head_commit_oid",
+        "safe_point_id",
+        "changed_files",
+        "conflict_refs",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "rollback_ref",
+        "restore_command_or_action",
+        "owner_lane",
+        "lease_state"
+      ],
+      "properties": {
+        "repo_id": {
+          "type": "string"
+        },
+        "worktree_id": {
+          "type": "string"
+        },
+        "worktree_path": {
+          "type": "string"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "dirty_state_policy": {
+          "$ref": "#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        }
+      }
+    },
+    "auditor_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "finding_id",
+        "severity",
+        "category",
+        "detail",
+        "source_refs",
+        "evidence_refs",
+        "status"
+      ],
+      "properties": {
+        "finding_id": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/finding_severity"
+        },
+        "category": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "$ref": "#/$defs/finding_status"
+        }
+      }
+    },
+    "repair_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repair_id",
+        "finding_refs",
+        "strategy",
+        "changed_refs",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "repair_id": {
+          "type": "string"
+        },
+        "finding_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "changed_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "applied",
+            "blocked",
+            "reverted",
+            "failed"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "repair_strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "finding_ref",
+        "approach",
+        "allowed_write_refs",
+        "rollback_route"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string"
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "approach": {
+          "type": "string",
+          "enum": [
+            "bounded_repair",
+            "schema_repair",
+            "doc_repair",
+            "test_repair",
+            "source_control_repair",
+            "block"
+          ]
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_route": {
+          "type": "string"
+        }
+      }
+    },
+    "validator_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "validator_id",
+        "command",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "validator_id": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "risk_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "risk_id",
+        "risk_class",
+        "status",
+        "mitigation",
+        "evidence_refs"
+      ],
+      "properties": {
+        "risk_id": {
+          "type": "string"
+        },
+        "risk_class": {
+          "$ref": "#/$defs/risk_class"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "mitigated",
+            "accepted",
+            "blocked"
+          ]
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
         }
       }
     }

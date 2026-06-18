@@ -1,0 +1,32 @@
+{
+  "schema_id": "pm.deep_audit_ledger_consistency.v1",
+  "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "status": "pass_certified",
+  "current_ref": "b413cf5383c8f5975777f6fb4aa9150bd81d50f3",
+  "working_tree_has_changes": true,
+  "changed_paths": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/plans_to_code_handoff.schema.json",
+    "scripts/pm-plans-verify.py"
+  ],
+  "compact_phase": "compiled_plans_to_code_handoff_governance_sealed",
+  "compact_status": "sealed",
+  "last_event_id": "evt-0016",
+  "atom_count": 64,
+  "compiled_planunit_count_with_ledger_lineage": 38,
+  "open_blockers": [],
+  "open_questions": [],
+  "notes": [
+    "Ledger projections updated through evt-0016; validator sweep passed and certification status replaced pending sweep labels."
+  ],
+  "updated_at_utc": "2026-06-18T08:43:57Z"
+}
