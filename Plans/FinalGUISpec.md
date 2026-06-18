@@ -25029,6 +25029,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The Orchestrator Plan Compile tab must feel polished, animated, and informative rather than a static JSON or log table. Plans flow into PlanUnits, cards sort into lanes, NodeSeeds assemble, dependency edges draw, GUI/frontend badges appear, test gates light up, WorkNode requests snap into graph clusters, and handoff pulses toward Executor. The tab presents stage timeline, progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness while preserving the scope boundary: Plan Compile shows Plans-to-node creation, and existing execution views show code-generation and WorkNode execution progress.
+  The tab presents progress/speed/ETA/status panels as the visible summary for progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness.
   The presentation is an animated node factory and preserves Plan Compile tab scope: Executor execution progress stays in existing execution views rather than this compile tab.
 gui_related: true
 gui_classification_reason: This unit defines visible animation, layout, status, and interaction behavior.
@@ -25036,7 +25037,7 @@ depends_on: [OP-023, OP-024, PNC-014, ATS-001]
 unblocks: []
 acceptance_criteria:
   - The tab uses animated node-factory presentation for PlanUnits, NodeSeeds, dependency edges, test gates, WorkNode requests, and Executor handoff.
-  - It shows progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness.
+  - It shows progress/speed/ETA/status panels with progress, speed, ETA confidence, blockers, warnings, model lane status, test capability status, and handoff readiness.
   - It does not duplicate the code-generation dashboard.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -25064,6 +25065,7 @@ preserved_exact_tokens:
   - "throughput"
   - "speed"
   - "ETA confidence"
+  - "progress/speed/ETA/status panels"
 negative_constraints:
   - Do not implement Plan Compile as a static JSON/log table.
   - Do not overload Plan Compile tab with WorkNode execution/code-generation details beyond handoff status.
