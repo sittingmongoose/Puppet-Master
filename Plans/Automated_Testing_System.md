@@ -1,8 +1,16 @@
 # Automated Testing System
 
-> Compliance: This document follows `Plans/DRY_Rules.md` and uses PlanUnit metadata defined by `Plans/Plan_Document_System.md`. It is the canonical owner for automated test discovery, harness probing, test strategy, test binding, test receipts, visual/browser/device evidence policy, platform adapters, and test-gap blockers. It does not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, or production build tasks.
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and uses PlanUnit metadata defined by `Plans/Plan_Document_System.md`. Naming: "Puppet Master" only.
+> **PlanProfile:** New Plan Authoring Profile
+> **Authority:** Canonical owner for automated test discovery, harness probing, test strategy, test binding, test receipts, visual/browser/device evidence policy, platform adapters, and test-gap blockers.
 
-## Owner / Consumer Map
+## 0. Scope
+
+The Automated Testing System is the plans-to-code owner for platform-capability-discovery-first verification. It defines how Puppet Master discovers available test capabilities, probes project harnesses, binds tests to future WorkNode requests, records test receipts, handles visual/browser/device evidence, and blocks completion when automated verification is missing.
+
+This document is a contract and policy owner. It does not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, or production build tasks.
+
+## 1. Ownership And Consumers
 
 Primary owner:
 - `Plans/Automated_Testing_System.md` owns test capability discovery, harness probing, test strategy generation, WorkNode test binding, test run receipts, test oracle policy, platform adapter policy, and automated-verification gap handling.
@@ -17,7 +25,7 @@ Consumers:
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
-## PlanUnits
+## 2. Canonical PlanUnits
 
 ### ATS-001 - Automated Testing System SSOT
 
@@ -220,7 +228,55 @@ owner_hints:
   - Plans/Tools.md
 ```
 
-## Compilation Coverage
+## 3. Contracts, Schemas, Events, Or Data Shapes
+
+Automated testing contracts are represented in `Plans/plans_to_code_handoff.schema.json` as design-only `$defs` and artifact families, including `test_capability_report`, `test_harness_probe_report`, `test_strategy`, `test_case`, `test_run_receipt`, and `visual_evidence`. These names are schema definitions inside the single plans-to-code handoff schema draft; they are not separate runtime queues or emitted product artifacts.
+
+Required automated-testing data shapes include project platform and framework/toolkit identity, local capability inventory, online research requirement, harness probe command and adapter results, required capability refs, generated or reused test IDs, browser/session requirements, visual evidence requirements, expected artifacts, flake policy, test oracle selection, and test-gap policy.
+
+ContractRef: ContractName:Plans/plans_to_code_handoff.schema.json, ContractName:Plans/Contracts_V0.md
+
+## 4. Integration Surfaces
+
+Integration surfaces:
+- `Plans/Plan_To_Node_Compilation.md` consumes capability and binding requirements while drafting future non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests after the compiler contract exists.
+- `Plans/Executor_Protocol.md` consumes test binding and receipt contracts at intake, dispatch, verification, repair, and certification boundaries.
+- `Plans/Tools.md` owns concrete browser, GUI, device, CLI, and project-native test helpers.
+- `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` project test artifacts and evidence without becoming test policy owners.
+- `Plans/FinalGUISpec.md` may show visible testing capability and evidence state, but it does not re-own automated-testing policy.
+
+## 5. Validation And Acceptance
+
+Acceptance for this owner doc is established by PlanUnit index validation, standard plan governance gates, future schema validation for test reports and strategies, and future Executor intake checks that reject missing required test bindings.
+
+Safe current validators:
+- `PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate`
+- `python3 scripts/pm-plans-verify.py run-gates`
+- `python3 scripts/pm-shard-plans.py --check`
+
+Future validators may check TestCapabilityReport, TestHarnessProbeReport, TestStrategy, TestRunReceipt, and test-gap blocker shapes once the runtime/compiler contract is explicitly enabled.
+
+## 6. Plan-To-Node Readiness
+
+The Automated Testing System is ready as a contract source for future Plan-to-node compilation, but it does not make the compiler executable. Current node readiness remains blocked by `blocked_compiler_contract_incomplete` until `Plans/Plan_To_Node_Compilation.md` completes the compiler artifact contract and a later explicit enablement allows runtime artifacts.
+
+## 7. Deferred, Retired, Compatibility, And Non-Goals
+
+Deferred:
+- Runtime validators for the testing report families remain future work.
+- Concrete project-native runner adapters remain implementation work after the compiler/runtime boundary is enabled.
+
+Compatibility and non-goals:
+- Slint is an example for Puppet Master itself, not the default test strategy for every user project.
+- Playwright is optional, fallback, or project-native once Puppet Master's built-in browser automation exists.
+- Manual-only visual acceptance is not an allowed completion substitute for required automated verification.
+- This document does not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, or production build tasks.
+
+## 8. Source Lineage And Governance
+
+`Plans/Automated_Testing_System.md` was created from `pldg-20260617-001-plans-to-code-handoff` as a new top-level owner doc. It uses the New Plan Authoring Profile and must be registered in governance/sharding surfaces when governance is sealed for this compile. Ledger lineage remains source memory only; live PlanUnits below are canonical product prose.
+
+### Compilation Coverage
 
 | Ledger atom | Disposition |
 | --- | --- |

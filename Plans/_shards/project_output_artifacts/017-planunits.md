@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L794-L3100
+Source lines: L794-L3101
 
-Source SHA256: `0079643cb0802dac2e9e9bddfb3ce1026492350017ec502379c8e4884c158ba0`
+Source SHA256: `3b9f23c2da8153a70b6467b165d40ec77ed57df5a94905da9170804c2586d5ba`
 
 ---
 
@@ -1410,7 +1410,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields.
+  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for validation pass reports.
 split_recommended: false
@@ -1419,6 +1419,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "Validation Pass Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "validation_pass_report remains an artifact-family lineage name, not a user-facing validation-pass model selector."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:

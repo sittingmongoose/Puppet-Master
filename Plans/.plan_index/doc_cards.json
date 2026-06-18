@@ -42,7 +42,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4196,
+      "line_count": 4197,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 58,
       "plan_unit_ids": [
@@ -168,7 +168,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb",
+      "sha256": "031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 58
@@ -1390,7 +1390,7 @@
         "False": 2,
         "True": 2
       },
-      "heading_count": 8,
+      "heading_count": 15,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Executor_Protocol.md",
@@ -1399,7 +1399,7 @@
         "Plans/Tools.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 236,
+      "line_count": 292,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 4,
       "plan_unit_ids": [
@@ -1417,7 +1417,7 @@
         "unverifiable_completion",
         "weak_test_oracle"
       ],
-      "sha256": "9852e5e990b4695a4e746206934025c20810cc02a7f4fe81567cf9b43442a35d",
+      "sha256": "2b7cd6eb5b407d0f475efb40bcaaca0207987da2a0b159614e638876181f2093",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 4
@@ -3202,7 +3202,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "6e9f95616b4f31cd33b9c70ead2938c7836099aac0b0e02a7f154087f38e373c",
+      "sha256": "9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 287,
@@ -3385,7 +3385,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "87e9726d43ebe99698b62e6a35b362674b4207f4d8d2aaa904ec79b9a1f77429",
+      "sha256": "4fbd9a0ca8b6f031cb6cabb9abef630d5a42e9f0f388d0ec1d3b176062019c49",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -4888,7 +4888,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "9b58ce2c15f13da7d6e7d35797ecef1263fcd1c39f1cb5fe421ad2bb5ed7e91b",
+      "sha256": "63c890c69c30302d218467bdd01f4db739951dad5c5eb0ace96327bb0f6215a7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 396,
@@ -5140,7 +5140,7 @@
         "glossary_drift",
         "migration_lineage"
       ],
-      "sha256": "8fc040e311a2881753efff00e0297eaa44a817a84c90d29958f2d4990691baad",
+      "sha256": "cf86d78ef62a90bd3af41b039b33c4b3731756f6d0471f67b78d0b6c385a4faf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25
@@ -6112,7 +6112,7 @@
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md"
       ],
-      "line_count": 7540,
+      "line_count": 7541,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 111,
       "plan_unit_ids": [
@@ -6345,7 +6345,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "6138886bcdec614b066be98bdf05954ab7ab7fcbd4f250c0876bdbbc90d42994",
+      "sha256": "bd3d52b044fc2c43a2659733d11a49cbfef3e4d8d11230288c1492533dce4187",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 111
@@ -8149,7 +8149,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 1699,
+      "line_count": 1703,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -8208,7 +8208,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "b552c415ff7fb6d387cdfeb55d87aa47a473124af9a16717220dba5c4c4273cd",
+      "sha256": "5e956e4b209713eedf745659945cbdb88f8a5e2119889d9bd775f1f70d3eade5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
@@ -8692,7 +8692,7 @@
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 718,
+      "line_count": 719,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -8728,7 +8728,7 @@
         "routing_mismatch",
         "scheduling_correctness"
       ],
-      "sha256": "3a3366d7881a5180e243b9593ac162bf8b89d872ed16ff2f8df2d0a31915bb68",
+      "sha256": "e07b77a5d56c8012b7b1cfdee8d57aa3e4855c75375dacd3703b75307692d5d2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13,
@@ -9101,7 +9101,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 3269,
+      "line_count": 3270,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 48,
       "plan_unit_ids": [
@@ -9208,7 +9208,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "0079643cb0802dac2e9e9bddfb3ce1026492350017ec502379c8e4884c158ba0",
+      "sha256": "3b9f23c2da8153a70b6467b165d40ec77ed57df5a94905da9170804c2586d5ba",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47,
@@ -9650,7 +9650,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "d57670d628c93ed10bede2a20f143df4880e9b3e8c1d32a3560d41bf78bc528b",
+      "sha256": "b4155d43d1fa2bb56c7ebe132bbc5b24ec788cf83cc6f139921da891df8ddd95",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -11377,7 +11377,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-18T00:10:16Z",
+  "generated_at_utc": "2026-06-18T01:37:26Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

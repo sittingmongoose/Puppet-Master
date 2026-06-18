@@ -535,7 +535,7 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
-Validation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history.
+Validation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history. `validation_pass_report` is a legacy artifact family name for requirements-quality lineage; it is not a user-facing validation-pass model setting. New plans-to-code audit, verification, certification, quality-gate, and evidence-review model routing uses Auditor Model semantics, while any broad artifact-family rename remains deferred to a targeted requirements-quality cleanup.
 
 Required lineage fields include:
 - `project_id`
@@ -2193,7 +2193,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields.
+  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for validation pass reports.
 split_recommended: false
@@ -2202,6 +2202,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "Validation Pass Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "validation_pass_report remains an artifact-family lineage name, not a user-facing validation-pass model selector."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:

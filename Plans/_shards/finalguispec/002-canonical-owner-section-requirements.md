@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4-L136
 
-Source SHA256: `9b58ce2c15f13da7d6e7d35797ecef1263fcd1c39f1cb5fe421ad2bb5ed7e91b`
+Source SHA256: `63c890c69c30302d218467bdd01f4db739951dad5c5eb0ace96327bb0f6215a7`
 
 ---
 
@@ -42,7 +42,7 @@ Visible projection trust grammar includes `last_updated_at`, `data_source_kind`,
 
 
 ### Progress-only widget hostability
-- `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) six-tab `Tiers` carry-through is stale: widget-based tabs `1, 2, 4, 5, 6`, `widget.tier_tree`, `widget.current_task`, `widget.progress_bars`, `tier_id`, `request_id`, `requested_persona_id`, `effective_persona_id`, `provider`, `model`, and `PuppetMasterEvent` / `PuppetMasterEvent::TierChanged` / `PuppetMasterEvent::UserInteractionRequired` / `TierChanged` / `UserInteractionRequired` inputs are compatibility signals, while new live-state UI uses native Orchestrator surfaces and explicit `HITL` runtime objects.
+- `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) six-tab `Tiers` carry-through is stale and predates the canonical Plan Compile tab: widget-based tabs `1, 2, 4, 5, 6`, `widget.tier_tree`, `widget.current_task`, `widget.progress_bars`, `tier_id`, `request_id`, `requested_persona_id`, `effective_persona_id`, `provider`, `model`, and `PuppetMasterEvent` / `PuppetMasterEvent::TierChanged` / `PuppetMasterEvent::UserInteractionRequired` / `TierChanged` / `UserInteractionRequired` inputs are compatibility signals, while new live-state UI uses native Orchestrator surfaces, the seven-tab shell, and explicit `HITL` runtime objects.
 - `Plans/Widget_System.md` (`/Widget_System.md`) tier-centric `Orch/Tiers` and `/Tiers` entries, `widget.agent_terminal`, `widget.completed_prose`, `widget.tier_tree`, older `TierChanged` / `IterationStart` pushes, and `/task/subtask`-oriented `widget.current_task` remain compatibility vocabulary; only `Progress` is widget-hosted in the current Orchestrator model.
 - Legacy `GUI` inventory entries such as `/current-task`, `7.7 Tiers`, tier-oriented Settings, `Orchestrator tabs`, `wizard_attention_required`, `resume_url`, and phase-task-subtask progress bars stay searchable compatibility copy, but primary navigation moves to native graph/package/lane/seam surfaces rather than treating `Tiers` as canonical.
 - Legacy Progress widget catalog fields such as `widget.current_task`, `widget.progress_bars`, `widget.cta_stack`, `widget.agent_terminal`, and `widget.completed_prose` plus `PuppetMasterEvent`, `PuppetMasterEvent::UserInteractionRequired`, `UserInteractionRequired`, `tier_id`, `/tasks`, `/task/subtask`, and `/objective/elapsed` are compatibility inputs only; native Orchestrator views own live progress display.

@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L7-L20
 
-Source SHA256: `4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb`
+Source SHA256: `031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8`
 
 ---
 
@@ -18,7 +18,7 @@ Source SHA256: `4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb
 - 2026-06-16: Registered `Plans/Goal_Runtime_System.md` as the canonical owner for native Goal Mode runtime/control-plane behavior compiled from ledger `pldg-20260616-001-goal-runtime-system`.
 - 2026-06-16: Registered Orchestrator Goal Runtime Flow owner routing compiled from ledger `pldg-20260616-002-orchestrator-goal-runtime-flow`; an explicit governance seal may refresh generated governance artifacts after live Plans and allowed PlanUnit indexes stabilize.
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
-- 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, production build tasks, or governance seal artifacts are authorized.
+- 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, governance registration is metadata-only, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, dispatched GoalRuns, or production build tasks are authorized.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L398-L1400
+Source lines: L398-L1403
 
-Source SHA256: `b552c415ff7fb6d387cdfeb55d87aa47a473124af9a16717220dba5c4c4273cd`
+Source SHA256: `5e956e4b209713eedf745659945cbdb88f8a5e2119889d9bd775f1f70d3eade5`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
+  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
 split_recommended: true
@@ -28,8 +28,8 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Orchestrator remains distinct from the UI, CLI, and external providers.
-  - The page shell remains a six-tab single-page surface over node/package/seam/lane-aware runtime state.
-  - The live tab set is Progress, Seams, Node Graph, Evidence, History, and Ledger.
+  - The page shell is a seven-tab single-page surface over node/package/seam/lane-aware runtime state.
+  - The live tab set is Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
   - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -53,9 +53,12 @@ preserved_exact_tokens:
   - "Orchestrator Page -- Single-Page 6-Tab Specification"
   - "/page-shell"
   - "six-tab single-page surface"
+  - "seven-tab single-page surface"
   - "Tiers"
   - "Progress/Seams/Node Graph/Evidence/History/Ledger"
+  - "Progress/Plan Compile/Seams/Node Graph/Evidence/History/Ledger"
   - "Progress"
+  - "Plan Compile"
   - "Seams"
   - "Node Graph"
   - "History"

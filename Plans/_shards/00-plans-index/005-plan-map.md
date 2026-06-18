@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L203-L441
 
-Source SHA256: `4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb`
+Source SHA256: `031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8`
 
 ---
 
@@ -40,13 +40,13 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 - `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
 - `Plans/Goal_Runtime_System.md` owns future Plan Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
 - `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
-- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
+- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the seven-tab Orchestrator shell, visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
 - `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
 - `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth.
 - `Plans/Contracts_V0.md` owns shared contract envelopes and points to `Plans/plans_to_code_handoff.schema.json` as the design-only schema draft.
 - `Plans/Planning_Ledger_System.md` and `Plans/Plan_Document_System.md` own implementation-readiness/doc-impact matrix handling and the owner/consumer/reference scan gate for this compile class.
 
-The ledger is source-lineage/planning memory only. This compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, generated PlanUnit indexes, Spec Lock updates, shards, evidence bundles, plan graph refreshes, auto_decisions, or governance seal artifacts.
+The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 

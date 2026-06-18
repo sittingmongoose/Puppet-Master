@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7418-L7540
+Source lines: L7418-L7541
 
-Source SHA256: `6138886bcdec614b066be98bdf05954ab7ab7fcbd4f250c0876bdbbc90d42994`
+Source SHA256: `bd3d52b044fc2c43a2659733d11a49cbfef3e4d8d11230288c1492533dce4187`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Exactly six user-facing model settings are exposed for this flow unless a later advanced override is accepted.
   - Plan Compiler, Plan Wizard ledger-to-Plans, and PRD Builder structured conversion map to Overseer Model.
   - Old fixed validation-pass model settings are replaced by Auditor Model and audit/repair/audit loops where this compile touches the concept.
+  - Legacy `validation_pass_report` artifact family names remain Project Output/Chain Wizard lineage and are not a user-facing validation-pass model selector; broad artifact-family rename is deferred.
   - Executor remains deterministic runtime/scheduler machinery and does not gain an Executor Model setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

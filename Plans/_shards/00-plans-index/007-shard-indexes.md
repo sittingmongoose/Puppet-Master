@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L464-L520
+Source lines: L464-L521
 
-Source SHA256: `4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb`
+Source SHA256: `031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8`
 
 ---
 
@@ -60,6 +60,7 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `Planning_Ledger_System.md` | [`Plans/_shards/planning_ledger_system/00-index.md`](Plans/_shards/planning_ledger_system/00-index.md) |
 | `Plan_Document_System.md` | [`Plans/_shards/plan_document_system/00-index.md`](Plans/_shards/plan_document_system/00-index.md) |
 | `Plan_To_Node_Compilation.md` | [`Plans/_shards/plan_to_node_compilation/00-index.md`](Plans/_shards/plan_to_node_compilation/00-index.md) |
+| `Automated_Testing_System.md` | [`Plans/_shards/automated_testing_system/00-index.md`](Plans/_shards/automated_testing_system/00-index.md) |
 | `Bootstrap_Planning_Migration.md` | [`Plans/_shards/bootstrap_planning_migration/00-index.md`](Plans/_shards/bootstrap_planning_migration/00-index.md) |
 | `Prompt_Pipeline.md` | [`Plans/_shards/prompt_pipeline/00-index.md`](Plans/_shards/prompt_pipeline/00-index.md) |
 | `Wiring_Matrix.md` | [`Plans/_shards/wiring_matrix/00-index.md`](Plans/_shards/wiring_matrix/00-index.md) |

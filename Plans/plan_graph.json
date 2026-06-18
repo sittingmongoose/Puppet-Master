@@ -63,14 +63,17 @@
         "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
         "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
         "SchemaID:pm.auto_decisions.schema.v1",
-        "ContractName:Plans/Goal_Runtime_System.md"
+        "ContractName:Plans/Goal_Runtime_System.md",
+        "ContractName:Plans/Automated_Testing_System.md",
+        "ContractName:Plans/plans_to_code_handoff.schema.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
         "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
-        "dec-2026-06-16-goal-runtime-system-governance-seal"
+        "dec-2026-06-16-goal-runtime-system-governance-seal",
+        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -120,6 +123,14 @@
         {
           "kind": "file",
           "ref": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/plans_to_code_handoff.schema.json"
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -164,6 +175,14 @@
         {
           "kind": "file",
           "ref": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/plans_to_code_handoff.schema.json"
         }
       ],
       "policy_mode": "workspace-write",
@@ -231,13 +250,15 @@
         "ContractName:Plans/00-plans-index.md",
         "ContractName:Plans/sharding_config.json",
         "Gate:GATE-005",
-        "Gate:GATE-009"
+        "Gate:GATE-009",
+        "ContractName:Plans/Automated_Testing_System.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
-        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal"
+        "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
+        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -359,14 +380,17 @@
         "ContractName:Plans/Progression_Gates.md",
         "ContractName:Plans/Plan_Document_System.md",
         "ContractName:Plans/Plan_To_Node_Compilation.md",
-        "ContractName:Plans/Goal_Runtime_System.md"
+        "ContractName:Plans/Goal_Runtime_System.md",
+        "ContractName:Plans/Automated_Testing_System.md",
+        "ContractName:Plans/plans_to_code_handoff.schema.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
         "dec-2026-06-09-exact-build-governance-support-seal",
         "dec-2026-06-10-clean-repo-governance-seal",
         "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
-        "dec-2026-06-16-goal-runtime-system-governance-seal"
+        "dec-2026-06-16-goal-runtime-system-governance-seal",
+        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",

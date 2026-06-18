@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L17295-L17363
 
-Source SHA256: `6e9f95616b4f31cd33b9c70ead2938c7836099aac0b0e02a7f154087f38e373c`
+Source SHA256: `9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4`
 
 ---
 
@@ -19,7 +19,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Contracts_V0 owns shared envelope references for PlanCompileRun, stage_card, compile_worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNodeRequest, compiler model routing, Codex bootstrap work package, Codex external GUI-agent request, PlanCompile receipt, TestCapabilityReport, TestHarnessProbeReport, TestStrategy, test case, TestRunReceipt, visual evidence, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, merge_or_promotion_receipt, source-control finalization receipt, model_resolution_receipt, ExecutorIntakeReport, WorkNode execution receipts, and GoalCompletionReceipt. These contract envelopes carry IDs, source refs, owner refs, validator refs, receipt refs, evidence refs, requested/effective model refs, source-control refs, authority refs, retry/rollback routes, and user_escalation_condition while owner docs retain behavior semantics. The design-only schema draft is Plans/plans_to_code_handoff.schema.json.
-  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, plan_compile_run.schema.json, node_seed_candidate.schema.json, worknode_request.schema.json, test_capability_report.schema.json, and goal_completion_receipt without creating runtime artifacts.
+  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, and the design-only `Plans/plans_to_code_handoff.schema.json` `$defs` for `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, and `goal_completion_receipt` without creating runtime artifacts.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and schema references are backend schema work, not visual presentation.
 depends_on: [CV-288, PNC-014, EP-103, POA-048, MS-111, ATS-001]

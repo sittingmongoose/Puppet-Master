@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L663-L4183
+Source lines: L664-L4184
 
-Source SHA256: `4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb`
+Source SHA256: `031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8`
 
 ---
 
@@ -3439,7 +3439,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Plan Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own visible Plan Compile tab and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
+  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Plan Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
   The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
@@ -3466,7 +3466,7 @@ unblocks: []
 acceptance_criteria:
   - The index names the primary owners and consumer boundaries for the Plans-to-code handoff compile.
   - The index records Automated_Testing_System and plans_to_code_handoff.schema.json as canonical docs/schema drafts.
-  - The index explicitly preserves the no-build boundary: PlanCompile disabled, no WorkNodes, no NodeSeeds, no executable queues, no implementation files, no dispatched GoalRuns, and no governance seal.
+  - The index explicitly preserves the no-build boundary: PlanCompile disabled, no WorkNodes, no NodeSeeds, no executable queues, no implementation files, no dispatched GoalRuns, and governance registration remains metadata-only.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-shard-plans.py --check
@@ -3519,7 +3519,7 @@ preserved_exact_tokens:
   - "no-update evidence"
 negative_constraints:
   - Do not run PlanCompile or build WorkNodes from this index entry.
-  - Do not update generated governance artifacts during ordinary ledger compile.
+  - Do not update generated governance artifacts during ordinary ledger compile; refresh them only in explicit governance registration/seal scope.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Plan_To_Node_Compilation.md

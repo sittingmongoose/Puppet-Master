@@ -6,11 +6,11 @@
     },
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "4f7a00b8f320df763318ced0a86857e641431318c743179a068ae776eccb14cb"
+      "sha256": "031cdc70cba2302a468e4f36633e6e846905e3dfdd8dbb3815f43b3c7ddad2a8"
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "9b58ce2c15f13da7d6e7d35797ecef1263fcd1c39f1cb5fe421ad2bb5ed7e91b"
+      "sha256": "63c890c69c30302d218467bdd01f4db739951dad5c5eb0ace96327bb0f6215a7"
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -18,27 +18,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "ab9aa02c7f5e6c009b370caf7965bef1a1ebcb6e58bdfca6f95f18064268e953"
+      "sha256": "e7c100edb93b5397c3bf734c782b4317f4aba37713573d4dfdd8d2abf4736926"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "6cb2cda6066d445d92cae7d2fb3756ca53cc538394a1600483bce2b6cc2fd0de"
+      "sha256": "95ca0e95e0fb3a4096a429bb204cc2e574a5cf562ce867c3b867cface05afa08"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "85f6bb22ce6ed35fd89df0fbd0efe61e0efa31c2a05b3cba590c93b92351590b"
+      "sha256": "9e94a2f14962cd33ac6e08eaa3ba9e95c8906b88f588c596207be4aebad5ff8c"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "fe65e0126054d2ebd1c086e39a80bc30bba480a2ff965e39325e58a4764c0c1a"
+      "sha256": "da26a5803684b22fb82ccbd9d3c335a32d3bd93d629f275afeccce970fffe2bd"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "b75beccbf1a7f73c92e0c7a3c1ca2516624b3c176fd5e9ac45b2deb542543c8e"
+      "sha256": "e2187d2d186f69b01714c961c8d928c5bf310d1f5d0f94312074142a21cefedc"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "07d341a7023e89f484e54a6328db6df68ef1889e5fbb40294eb6b94d17881717"
+      "sha256": "ce89290f3590b09840115edc8e946a1298d9c1f7afac07ac542d99d126d62e87"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -74,27 +74,27 @@
     },
     {
       "path": "Plans/sharding_config.json",
-      "sha256": "54fd9e8d8a965cd7111b9615506de0419e73ab182efbd3e3d390241a94bfa88f"
+      "sha256": "f353f839b224257651ddb62d9dcc8d24e86a7c4b41a69612b5bf9cd9f5fd466b"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "57a1326ed5c514ea4244f8ccdbc844904e81498ba469e2496d046d20faa19414"
+      "sha256": "32f9667f06341a432c53233fe4c9043cdc9917f35ebd8bfcfbdf5947ae6aa6da"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "1c7d49ae45b29d053b0812ac9dd6ce4c863088c60a515248df163bd4084fa4bd"
+      "sha256": "44989af8d87edcc578be1710a7da41c5d07b38c896e38e1a13aa62e4dc53a9e5"
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "7d9fa20ffb5dcbdbee7da1636d9c18553952d73368c77d5094bbc283928ab07c"
+      "sha256": "123e65e55e4960846e6d57ec5ea5101d389b863bc994a3c4b71c3e6cbc2adf09"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "02df224d649225ec6e3f8b1516f3089f6230afe5f533d810c143e8f2f3ed64fe"
+      "sha256": "bd700f2ddc1726dcae94940ca34dd050351998134f5a6492710bdca2c61d36ee"
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "072d46cf613f9d27f8a606b59be447bc4228886f12336ed43a094765f9ed53f2"
+      "sha256": "5a78f08095b01ec6eaabaff1d5a4286eb5d7a1364ffa6cec3b7c51a1b80fe2b6"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
@@ -167,7 +167,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates with 5105 PlanUnits, 18220 acceptance units, coverage pass; node readiness remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeeds created."
+      "details": "PlanUnit index generation and validation pass; node_readiness_report.status remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeed candidates created."
     },
     {
       "name": "migration-validate",
@@ -213,6 +213,16 @@
       "name": "plans-to-code-handoff-governance-seal",
       "result": "PASS",
       "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase."
+    },
+    {
+      "name": "plans-to-code-handoff-ledger-projection",
+      "result": "PASS",
+      "details": "pldg-20260617-001-plans-to-code-handoff compact state, registry, and compile queue are compiled/governance-sealed."
+    },
+    {
+      "name": "automated-testing-shard-registration",
+      "result": "PASS",
+      "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence."
     }
   ],
   "commands_run": [
@@ -266,7 +276,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; errors=0; warnings=0; plan_units_checked=892"
     },
@@ -288,7 +298,7 @@
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; plan_unit_count=5045; acceptance_unit_count=17965; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -296,7 +306,7 @@
       "stdout_excerpt": "status=pass; live_plan_unit_count=5045; source_preserving_unit_count=0"
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
       "exit_code": 0
     },
     {
@@ -316,7 +326,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/.pydeps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
       "exit_code": 0
     },
     {
@@ -353,6 +363,10 @@
     },
     {
       "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py generate",
       "exit_code": 0
     }
   ],

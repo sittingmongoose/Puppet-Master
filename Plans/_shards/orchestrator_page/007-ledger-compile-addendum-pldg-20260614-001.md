@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L1414-L1494
+Source lines: L1417-L1497
 
-Source SHA256: `b552c415ff7fb6d387cdfeb55d87aa47a473124af9a16717220dba5c4c4273cd`
+Source SHA256: `5e956e4b209713eedf745659945cbdb88f8a5e2119889d9bd775f1f70d3eade5`
 
 ---
 
@@ -19,7 +19,7 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Orchestrator_Page owns page layout, controls, view-model projections, routing presentation, focused run and historical routing,
-  six-tab behavior, notification display, concern inspectors, and user-visible action affordances. It consumes Contracts_V0 for durable
+  seven-tab behavior, notification display, concern inspectors, and user-visible action affordances. It consumes Contracts_V0 for durable
   concern ids, route/open primitives, blocked episode identity, approval scope, and approver identity. Its top owner-section headings must
   be hydrated from OP PlanUnits and local sections instead of remaining hollow headers.
 gui_related: true
@@ -27,7 +27,7 @@ gui_classification_reason: Orchestrator_Page governs user-visible pages, tabs, c
 depends_on: [OP-002, OP-003, OP-004, OP-005, OP-006, OP-007, OP-008, CV-279]
 unblocks: []
 acceptance_criteria:
-  - The six canonical tabs remain Progress, Seams, Node Graph, Evidence, History, and Ledger.
+  - The seven canonical tabs remain Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
   - Tiers remains compatibility/search vocabulary only, not the live Orchestrator tab model.
   - Contract primitives are consumed from Contracts_V0 instead of redefined locally.
 validation_surfaces:
@@ -45,7 +45,7 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0057
   - source_ref:Plans/Orchestrator_Page.md:4
   - source_ref:Plans/Orchestrator_Page.md:55
-preserved_exact_tokens: ["Progress", "Seams", "Node Graph", "Evidence", "History", "Ledger", "Tiers", "Progress-only widget hostability", "focused_run_id", "focus_mode = live | historical"]
+preserved_exact_tokens: ["Progress", "Plan Compile", "Seams", "Node Graph", "Evidence", "History", "Ledger", "Tiers", "six-tab behavior", "Progress-only widget hostability", "focused_run_id", "focus_mode = live | historical"]
 negative_constraints:
   - Do not let Orchestrator_Page redefine durable contract primitives owned by Contracts_V0.
   - Do not make the dense Scope section the only readable owner body.

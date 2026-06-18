@@ -93,7 +93,7 @@ Canonical runtime and provider wording:
 - **Route payload vocabulary** -- route payloads use canonical surface, `/tab/object`, and object terms; generic `page: string` payloads are retired or constrained when they hide non-canonical tab naming.
 - **Evidence wrapper alias terms** -- `/wrapper/alias` evidence records route, wrapper, and alias verification failures in a structured machine-readable form so a generic evidence model does not hide whether a wrapper command normalized to the canonical target.
 - **Glossary/Crosswalk rewrite routing** -- `Glossary.md` owns short term definitions and `/Crosswalk` owns primitive routing; both must absorb rewrite-era terms before downstream specs continue as append-only, contradictory consumer notes.
-- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab or `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the rewrite tab model.
+- **Crosswalk Orchestrator primitive drift** -- `Crosswalk.md` entries such as `OrchestratorPage` must not keep stale six-tab text that omits `Plan Compile` or stale `Tiers` primitive text; `Tiers` is compatibility wording and must not conflict with the seven-tab rewrite model.
 - **Blocked sequence runtime identity** -- runtime/blocking state uses node, attempt, `/attempt/blocked-sequence`, and `/blocking` identity; storage `tier_id` fields are compatibility aliases until mapped to node/attempt identity.
 - **Attempt attribution migration** -- replace `tier-first` aggregation and event anchoring in `/storage/UI`, usage, and storage docs with `/node/lane/package/seam-aware` attempt/node/lane/package/seam-aware attribution; tier terms remain compatibility aliases.
 - **Projects registry scope** -- `projects:v1` is project registry only: path, display metadata, detection metadata, `last-opened`, and stable config references. Free-form `health status` wording is sharply narrowed or removed from that registry scope.
@@ -613,7 +613,7 @@ plan_unit_id: G-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: Tier-shaped, widget-hostability, projection-era event, route payload, evidence wrapper alias, Crosswalk drift, blocked sequence, attempt attribution, Projects registry, and assistant-chat compatibility terms are migration/source-lineage vocabulary that must not revive stale tier-era, widget-era, standalone, page:string, or six-tab models.
+canonical_text: Tier-shaped, widget-hostability, projection-era event, route payload, evidence wrapper alias, Crosswalk drift, blocked sequence, attempt attribution, Projects registry, and assistant-chat compatibility terms are migration/source-lineage vocabulary that must not revive stale tier-era, widget-era, standalone, page:string, or six-tab models that omit Plan Compile.
 gui_related: true
 gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
 split_recommended: true
@@ -653,7 +653,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not revive stale tier-era execution terms, widget-era non-Progress Orchestrator assumptions, standalone-surface page models, non-canonical persona fields, or tier_type as a core node UI field.
 - widget-hostability and widget-layout are compatibility-only vocabulary for non-Progress Orchestrator surfaces.
-- Crosswalk Orchestrator primitive text must not keep stale six-tab or Tiers wording that conflicts with the rewrite tab model.
+- Crosswalk Orchestrator primitive text must not keep stale six-tab or Tiers wording that conflicts with the seven-tab rewrite model.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

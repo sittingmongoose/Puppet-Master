@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "status": "pass_ready_for_plan_compile",
+  "status": "pass_governance_sealed",
   "summary": {
     "events": 11,
     "design_atoms": 64,
@@ -10,42 +10,46 @@
     "deferred_questions": 0,
     "open_blockers": 0,
     "corrections": 10,
-    "compile_queue_items": 0,
-    "ready_for_plan_compile_atoms": 64,
-    "candidate_owner_docs": 30,
+    "compile_queue_items": 1,
+    "ready_for_plan_compile_atoms": 0,
+    "candidate_atoms": 0,
+    "compiled_to_plan_atoms": 64,
+    "compiled_owner_docs": 20,
+    "compiled_plan_units": 38,
+    "governance_status": "sealed",
+    "governance_seal": "passed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
     "plan_compile_runtime_status": "design_only_disabled",
-    "doc_impact_matrix": "present",
-    "implementation_readiness_matrix": "present"
+    "pm_plan_index_validate": "pass_node_readiness_blocked_compiler_contract_incomplete",
+    "shard_registration": "Automated_Testing_System_registered",
+    "doc_impact_matrix": "compiled_and_dispositioned",
+    "implementation_readiness_matrix": "compiled_and_dispositioned",
+    "forbidden_artifacts": "not_created"
   },
   "checks": [
     {
-      "check": "record_counts_match",
-      "status": "pass"
+      "check_id": "record-counts-0001",
+      "status": "pass",
+      "summary": "Record counts match manifest and compact state."
     },
     {
-      "check": "open_questions_none",
-      "status": "pass"
+      "check_id": "compile-0001",
+      "status": "pass_governance_sealed",
+      "summary": "All 64 ready atoms are marked compiled_to_plan with live PlanUnit IDs from the post-governance audit matrix."
     },
     {
-      "check": "open_blockers_none",
-      "status": "pass"
+      "check_id": "governance-0001",
+      "status": "pass",
+      "summary": "Ledger compact state, registry, PlanUnit index, Spec Lock, sharding, evidence, and plan graph registration are sealed metadata-only surfaces."
     },
     {
-      "check": "plan_compile_disabled",
-      "status": "pass"
-    },
-    {
-      "check": "worknode_generation_forbidden",
-      "status": "pass"
-    },
-    {
-      "check": "doc_impact_matrix_present",
-      "status": "pass"
-    },
-    {
-      "check": "implementation_readiness_matrix_present",
-      "status": "pass"
+      "check_id": "node-readiness-0001",
+      "status": "pass",
+      "summary": "Node readiness intentionally remains blocked_compiler_contract_incomplete; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
-  "updated_at_utc": "2026-06-17T22:20:00Z"
+  "updated_at_utc": "2026-06-18T01:30:32Z",
+  "warnings": [
+    "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and later explicit enablement."
+  ]
 }

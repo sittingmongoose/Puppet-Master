@@ -4,7 +4,7 @@ Source: `Plans/Run_Graph_View.md`
 
 Source lines: L141-L746
 
-Source SHA256: `d57670d628c93ed10bede2a20f143df4880e9b3e8c1d32a3560d41bf78bc528b`
+Source SHA256: `b4155d43d1fa2bb56c7ebe132bbc5b24ec788cf83cc6f139921da891df8ddd95`
 
 ---
 
@@ -348,14 +348,14 @@ plan_unit_id: RGV-007
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
+canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
 gui_related: true
 gui_classification_reason: This disposition retires or constrains user-visible Tiers tab/page assumptions and graph layout vocabulary.
 depends_on: [RGV-001, RGV-006]
 unblocks: [RGV-010]
 acceptance_criteria:
 - GUI navigation demotes Tiers from primary Orchestrator tab/page authority.
-- Node Graph, Seams, Evidence, History, and Ledger use the rewrite tab model.
+- Plan Compile, Node Graph, Seams, Evidence, History, and Ledger use the rewrite tab model; Run Graph does not own Plan Compile scope.
 - hitl_request_id and request_id remain compatibility lineage only where they appear.
 - Graph command payloads use blocked/runtime approval identity and allowed_action_ids-backed runtime command targets.
 validation_surfaces:

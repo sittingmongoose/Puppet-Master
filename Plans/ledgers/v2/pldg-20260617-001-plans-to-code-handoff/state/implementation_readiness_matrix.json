@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.implementation_readiness_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-17T22:20:00Z",
-  "status": "ready_for_plan_compile",
-  "purpose": "Make the ledger implementation-ready once converted to Plans by mapping each design area to concrete PlanUnits, fields, schemas, acceptance criteria, validators, and boundaries.",
+  "updated_at_utc": "2026-06-18T01:39:30Z",
+  "status": "compiled_to_plans_governance_sealed",
+  "purpose": "Preserve the pre-compile implementation-readiness mapping after conversion to Plans by recording each design area against concrete PlanUnits, fields, schemas, acceptance criteria, validators, and boundaries.",
   "global_acceptance": [
     "Every design area below becomes one or more PlanUnits or explicit disposition rows.",
     "Each PlanUnit includes owner_doc, source_lineage, validation_surfaces, implementation_surfaces, acceptance_criteria, risk_class, reasoning_tier, context_scope, gui_related, and node_compile_hint where applicable.",
