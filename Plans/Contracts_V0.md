@@ -1025,19 +1025,21 @@ Rules:
 - `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
 - permission and denial surfaces must still expose effective actor and account identity.
 - Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields.
-Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical **validation pass report** artifact and launch handoff lineage.
+Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical Auditor cycle report plus legacy **validation pass report** compatibility artifact and launch handoff lineage.
 
-ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
 
 **Authoritative shared payload fields**
 
 | Field | Requirement |
 | --- | --- |
-| `validation_pass_report` | Canonical artifact family for the persisted quality result. |
-| `workflow_run_id` | Workflow execution lineage for the validation pass. |
-| `pass_number` | Ordered validation pass index. |
-| `pass_name` | Stable name for the pass. |
-| `pass_verdict` | Verdict value for the pass; supports `skipped` where the flow requires it. |
+| `auditor_cycle_report` | Canonical artifact family for the active persisted quality result. |
+| `validation_pass_report` | Legacy compatibility artifact family that may mirror Auditor cycle data for import/export/search. |
+| `workflow_run_id` | Workflow execution lineage for the Auditor loop. |
+| `cycle_number` | Ordered Auditor loop cycle index. |
+| `pass_number` | Legacy compatibility alias for imported/exported pass-shaped rows only. |
+| `pass_name` | Legacy compatibility name for imported/exported pass-shaped rows only. |
+| `pass_verdict` | Legacy verdict value for compatibility rows; active Auditor cycle reports record certified, blocked, pass, fail, or repaired state as applicable. |
 | `verdict_reason` | Structured reason for the emitted verdict. |
 | `provider` | Provider used for the validation step. |
 | `model` | Model used for the validation step. |
@@ -7328,7 +7330,7 @@ preserved_exact_tokens:
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
 owner_hints:

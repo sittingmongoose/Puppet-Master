@@ -15,7 +15,7 @@ These requirements are canonical live specification text for this owner document
 
 - 2026-02-26: Added media generation and capability introspection requirements (§7): image attachment nuance (all platforms accept image attachments; image *generation* is Cursor-native or Google-key-backed), `capabilities.get` introspection rule, natural-language model override semantics (per-message only), and media-generation invocation model. SSOT: `Plans/Media_Generation_and_Capabilities.md`.
 - 2026-02-25: Remediation alignment with `Plans/GitHub_Integration.md §B.3` — `/actions` and `/actions logs` outputs now require the same run/log summary fields and failure-state parity as the Actions panel.
-- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation model settings in §26. Validation report stages still emit pass_number and pass_name, but all pass reports mirror the single Auditor validation loop provider/model resolved from the Auditor Model role.
+- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation model settings and active process stages in §26. Auditor cycle reports mirror the single Auditor validation loop provider/model resolved from the Auditor Model role; legacy pass_number and pass_name fields are compatibility aliases only.
 - 2026-02-25: Added §5.3 Git & GitHub command boundary and §23.6 Git & GitHub parity note; cross-references Plans/GitHub_Integration.md.
 - 2026-02-25: Added §26 Validation Model/Provider Settings UX for the invariant sweep. The original fixed per-pass selector model is retired by the 2026-06-18 Auditor loop update; stored app settings now resolve through the Auditor Model role rather than legacy pass-specific keys.
 - 2026-02-24: Aligned Interview/Assistant output surfacing with **canonical sharded plan graphs** under `.puppet-master/project/plan_graph/` (**index + node shards**). Outputs are **persisted canonically in seglog** and projected into `.puppet-master/project/...` for file-based review; `.puppet-master/project/plan.md` remains the human-readable plan view.
@@ -2242,14 +2242,14 @@ Historical note:
 - compact-now behavior remains valid when backed by canonical compaction commands
 - the detached usage pop-out is no longer canonical
 - any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread-scoped Context Detail Pane/editor-tab model and its stable command IDs
-## 26. Auditor Validation Loop Model/Provider Settings (Invariant Sweep)
+## 26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep)
 
 > **Addendum — 2026-02-25**
-> **Repair — 2026-06-18:** fixed Pass 1 / Pass 2 / Pass 3 provider-model selectors are retired. Pass names remain report-stage labels only; model selection is one Auditor validation loop.
+> **Repair — 2026-06-18:** fixed Pass 1 / Pass 2 / Pass 3 provider-model selectors and active process stages are retired. Pass names remain compatibility aliases only; model selection is one Auditor audit-to-repair loop.
 
 ### 26.1 Context
 
-The Three-Pass Canonical Validation Workflow (see `Plans/chain-wizard-flexibility.md §12`) runs three sequential report stages after every interview/wizard project-plan generation cycle. All three stages use the same resolved Auditor validation loop provider and model. This section specifies the **settings UX** that exposes that single Auditor loop selection to the user.
+The mandatory Auditor invariant loop (see `Plans/chain-wizard-flexibility.md §12`) runs after every interview/wizard project-plan generation cycle. It repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary, using one resolved Auditor validation loop provider and model. This section specifies the **settings UX** that exposes that single Auditor loop selection to the user.
 
 ### 26.2 Settings Location
 
@@ -2288,13 +2288,13 @@ Default provider and model values are resolved using the following deterministic
 **Invariants:**
 - Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).
 - On first explicit save of the Auditor loop setting, the resolved default is written to app settings so that subsequent reads are reproducible.
-- Pass 1, Pass 2, and Pass 3 are not independently configurable model selections.
+- Pass 1, Pass 2, and Pass 3 are not independently configurable model selections or active process stages.
 
 ### 26.5 Storage
 
 Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.
 
-For auditability, each pass's `validation_pass_report` payload fields (`provider`, `model`) mirror the Auditor loop provider/model that was active when the sweep started (see `Plans/Project_Output_Artifacts.md §10.2`). This does not store the settings keys themselves as project artifacts.
+For auditability, each Auditor cycle report's payload fields (`provider`, `model`) mirror the Auditor loop provider/model that was active when the sweep started (see `Plans/Project_Output_Artifacts.md §10.2`). Legacy `validation_pass_report` exports may mirror the same values for compatibility. This does not store the settings keys themselves as project artifacts.
 
 **Normative storage keys:**
 
@@ -2311,7 +2311,7 @@ These keys are written to the same app settings store as all other GUI configura
 |---------|------|
 | Section header | "Auditor Validation" |
 | Section description | "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop." |
-| Loop description | "Audit / Repair / Audit - runs Document Creation, Canonical Alignment, and Canonical Systems report stages with one Auditor loop model." |
+| Loop description | "Audit / Repair / Re-audit - repeats bounded repair and review until certified or critically blocked with one Auditor loop model." |
 | Default indicator | Show "(Default)" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |
 
 ### 26.7 DRY Rules
@@ -2328,14 +2328,14 @@ ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md#p
 | 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |
 | 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *"Auditor validation provider [name] is unavailable; using Auditor Model default."* |
 | 3 | Auditor validation provider/model settings are preserved across app restarts. |
-| 4 | Pass 1, Pass 2, and Pass 3 are not independently configurable model settings; all three pass reports mirror the same Auditor loop provider/model. |
+| 4 | Pass 1, Pass 2, and Pass 3 are not independently configurable model settings or active process stages; any legacy pass reports mirror the same Auditor loop provider/model. |
 | 5 | The "(Default)" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |
 | 6 | Provider and model dropdowns draw from the same `platform_specs` data source as the §1.1 chat controls — no divergence. |
-| 7 | For each emitted `validation_pass_report`, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start (see `Plans/Project_Output_Artifacts.md §10.2`). |
+| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |
 
 ### 26.9 References (Section 26)
 
-- `Plans/chain-wizard-flexibility.md §12` — Three-Pass Canonical Validation Workflow (primary specification)
+- `Plans/chain-wizard-flexibility.md §12` — Auditor invariant loop (primary specification)
 - `Plans/chain-wizard-flexibility.md §3.1.1` — OpenCode provider settings surface reference
 - `Plans/Project_Output_Artifacts.md §10.2` — validation pass report payload fields (`provider`, `model`)
 - `Plans/Models_System.md` — Auditor Model role ownership for audit/repair/audit verification loops
@@ -14754,13 +14754,13 @@ plan_unit_id: ACD-253
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Per-pass validation settings expose provider/model choices for the Three-Pass Canonical Validation Workflow after interview/wizard project-plan generation.
+canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
 gui_related: true
-gui_classification_reason: Per-pass provider/model settings are visible Settings UI.
+gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
 depends_on: []
 unblocks: [ACD-254]
 acceptance_criteria:
-  - Three-pass canonical validation workflow is exposed through provider/model settings.
+  - Auditor invariant loop is exposed through one provider/model settings row.
   - Settings apply after interview/wizard project-plan generation cycles.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -14780,7 +14780,8 @@ source_lineage:
 preserved_exact_tokens:
   - "Three-Pass Canonical Validation Workflow"
   - "provider + model selection"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose per-pass provider/model settings."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
@@ -15294,14 +15295,15 @@ plan_unit_id: ACD-266
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are not independently configurable model settings.
+canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are compatibility aliases only, not independently configurable model settings or active stages.
 gui_related: false
 gui_classification_reason: Restart persistence and one-loop Auditor validation settings are configuration behavior.
 depends_on: [ACD-253, ACD-260]
 unblocks: []
 acceptance_criteria:
   - Auditor validation settings are preserved across app restarts.
-  - Pass 1, Pass 2, and Pass 3 use the same resolved Auditor validation loop provider/model.
+  - Auditor cycle reports use the same resolved Auditor validation loop provider/model.
+  - Legacy Pass 1, Pass 2, and Pass 3 report mirrors are compatibility aliases only.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15372,15 +15374,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Auditor validation provider/model dropdowns draw from `platform_specs`, and
-  each pass report emits `validation_pass_report.provider` and `.model` values
-  matching the resolved Auditor validation loop provider/model.
+  each Auditor cycle report emits provider and model values matching the
+  resolved Auditor validation loop provider/model; legacy
+  `validation_pass_report.provider` and `.model` values mirror them for
+  compatibility.
 gui_related: false
 gui_classification_reason: Dropdown data-source and emitted report parity are contract/config behavior.
 depends_on: [ACD-260, ACD-262, ACD-263]
 unblocks: []
 acceptance_criteria:
   - Auditor validation dropdowns use the same `platform_specs` source as chat controls.
-  - Each emitted validation pass report provider/model matches the resolved Auditor validation loop settings.
+  - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
+  - Legacy validation pass report provider/model values mirror the Auditor cycle report values for compatibility.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

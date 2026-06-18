@@ -145,6 +145,10 @@
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --write-report",
       "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -255,11 +259,11 @@
   "artifacts": [
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "63c890c69c30302d218467bdd01f4db739951dad5c5eb0ace96327bb0f6215a7"
+      "sha256": "aded0f2de7957960698d685765deaeaa812e2dcc549088fba41c4ae77d8b3b47"
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02"
+      "sha256": "18d83140885795522460af266e2e1478ff3227d9a1d610a5e20ee9250aa52324"
     },
     {
       "path": "Plans/Tools.md",
@@ -267,7 +271,7 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "9514fa715a8e119c554095a24d32aa6c2f97b24ba8f22a7461028a6c2a4d03a4"
+      "sha256": "e93a5ae670cc2f4545ae3c7bdb377ced223d99f0af6bba79fb6055652ad1c0bc"
     },
     {
       "path": "Plans/Executor_Protocol.md",
@@ -279,27 +283,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "1b6e578352b4dc38d19a8e64738dac77e51dc031474782ec0c901197cd4ca862"
+      "sha256": "2d55ccbd461cc3c48b876c87ca949f213225ca83a94dd42d98529dbb0aa82d5e"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "593b429be15b144e28754d2cbc287ad1f76c37b1e73d24ea411f5b6f405ee0d5"
+      "sha256": "875e535cf26b2af29f472c736a19daf2004e4a6c7558e20300ba6379267f11cd"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "e54af527a1deebd278e9ebe5c5697efab2e1e1892fe65e353ba897dbfa1bb733"
+      "sha256": "ba726eb56898484d72b06e6261bc857f9bef5140e29091503e6f1fb21856baf6"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "48cce875143704db6769f4bb7f7e4858826e385d61bb3c795693153d707a3418"
+      "sha256": "a2598d76bdf06cd3f82fa88b772eaf77c444434b49a83bbee37d748680ae3119"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "3ad31ceabb5fabe5f51d2a81d63db58f36edc3a4744b6dcaf76f5715d42faca0"
+      "sha256": "d0b3f30960ebaa16617273f1c1d4de256d48fbf5cfaf92aaef0b9df84c5f688a"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "d6d240a1048e7ecc75c930189aa28a1a3527d49035b740db54abaeb2cacf5914"
+      "sha256": "1206c0c57921a47463244f3e5ba461e0439c5434e645f091d027aed0654f78c0"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
@@ -323,7 +327,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "8560c76f3a429bc18d78b8afcc97bdca5b874020adecbbb449e323a332f0016c"
+      "sha256": "9821507128d42e6da211e3a196797aae5e9f56ccd600fa726e2734df437b1b0c"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -331,7 +335,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "bc119ec1215c592d50ce4cc5f0d4e5f8d7e50ee7893ff691debccff2bb3d446c"
+      "sha256": "7a3df16ff4a73b186a1972af31c859372be5ff0fc8895ac5bbb2caccf0109418"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json",
@@ -425,7 +429,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
+      "details": "Plan index validates after bounded plans-to-code reconciliation; node readiness remains runtime_disabled and no WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks were created."
     },
     {
       "name": "shard-check",
@@ -501,6 +505,11 @@
       "name": "seven-tab-reference-repair",
       "result": "PASS",
       "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
+    },
+    {
+      "name": "plans-to-code-bounded-reconciliation",
+      "result": "PASS",
+      "details": "Auditor audit-to-repair loop, seven-tab title/reference cleanup, strict handoff schema payload definitions, and ledger README/doc-impact/latest-audit references were reconciled without PlanCompile runtime or node/work artifacts."
     }
   ]
 }

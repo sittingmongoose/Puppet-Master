@@ -1962,7 +1962,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future native Plan Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Plan Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns audit/repair/audit verification loops.
+  Future native Plan Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Plan Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
   Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Plan Wizard terminology. Do not introduce new references or meta-comments using the old Chain Wizard name.
 gui_related: false
 gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
@@ -1995,7 +1995,8 @@ preserved_exact_tokens:
   - "invisible to the user"
   - "Overseer Model"
   - "Auditor Model"
-  - "audit/repair/audit"
+  - "Auditor audit-to-repair loop"
+  - "critical block"
 negative_constraints:
   - Do not enable this automatic launch yet.
   - Do not introduce new references using the old wizard name.

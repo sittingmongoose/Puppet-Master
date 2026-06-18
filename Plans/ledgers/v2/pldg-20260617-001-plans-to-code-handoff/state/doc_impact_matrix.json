@@ -1,9 +1,11 @@
 {
   "schema_id": "pm.doc_impact_matrix.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
-  "updated_at_utc": "2026-06-17T22:20:00Z",
-  "status": "candidate_reference_coverage_required",
-  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans.",
+  "updated_at_utc": "2026-06-18T03:26:09Z",
+  "status": "compiled_governance_sealed_reference_coverage_passed",
+  "purpose": "Account for owner docs, consumer docs, reference/index/UI docs, and known stale-reference risk before and after compiling this ledger to Plans. Current status is reconciled to the latest clean audit and post-audit bounded repair.",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/FINAL_REPORT.md",
+  "latest_audit_status": "pass",
   "global_compile_rules": [
     "Before edits, Codex must adjudicate owner docs from this matrix and current repo evidence.",
     "After edits, Codex must run reference scans for touched terms and update direct references or record no-update/deferred evidence.",
@@ -22,8 +24,15 @@
     "Plan Wizard",
     "Chain Wizard",
     "validation pass",
+    "Pass 1",
+    "Pass 2",
+    "Pass 3",
     "Overseer Model",
     "Auditor Model",
+    "audit-to-repair",
+    "Auditor invariant loop",
+    "critical block",
+    "auditor_cycle_report",
     "Executor Model",
     "GUI / Frontend Worker Model",
     "High-Effort Worker Model",
@@ -91,7 +100,8 @@
         "Plans/FinalGUISpec.md",
         "Plans/assistant-chat-design.md",
         "Plans/Contracts_V0.md",
-        "Plans/Project_Output_Artifacts.md"
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/chain-wizard-flexibility.md"
       ],
       "reference_docs": [
         "Plans/00-plans-index.md",
@@ -102,8 +112,10 @@
       "required_updates": [
         "Plan Wizard terminology in new content",
         "ledger-to-Plans conversion through Overseer",
-        "Auditor audit/repair loop",
-        "retire fixed validation pass model where touched"
+        "Auditor audit-to-repair loop until certified or critical block",
+        "Auditor invariant loop replaces active fixed validation pass stages",
+        "retire fixed validation pass model where touched",
+        "old Pass 1 / Pass 2 / Pass 3 names remain compatibility aliases only"
       ],
       "deferred_updates": [
         "Broad repo-wide rename from old wizard name to Plan Wizard remains for Plan Wizard redesign unless directly touched."
@@ -112,7 +124,14 @@
         "Plan Wizard",
         "Chain Wizard",
         "validation pass",
+        "Pass 1",
+        "Pass 2",
+        "Pass 3",
         "Auditor",
+        "audit-to-repair",
+        "Auditor invariant loop",
+        "critical block",
+        "auditor_cycle_report",
         "PRD Builder"
       ]
     },
