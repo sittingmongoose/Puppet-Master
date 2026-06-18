@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L1856-L1945
 
-Source SHA256: `6d474302af57dc236c49448d6ad0984e1bafe03f19c106e56a83c4b4796463ef`
+Source SHA256: `0b601e48eed3d549fa0470dd6050393b7b7d8c2fdea8f4c2a9a8147d49081320`
 
 ---
 
@@ -19,8 +19,8 @@ plan_unit_id: GI-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: 'atom-0044: Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. atom-0068: Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness, and permissions. atom-0069: GitHub is optional for repository creation, fork, push, and PR workflows; local or remote Git and FileSafe remain valid without GitHub credentials, and repository/worktree state is execution truth. atom-0070: Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. atom-0072: For greenfield work, Planning Wizard can create a directory, initialize Git, select
-  an initial branch, create an empty or baseline initialization commit, and optionally connect or create a GitHub repository when explicitly authorized. atom-0076: Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth.'
+canonical_text: 'Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness, and permissions. GitHub is optional for repository creation, fork, push, and PR workflows; local or remote Git and FileSafe remain valid without GitHub credentials, and repository/worktree state is execution truth. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. For greenfield work, Planning Wizard can create a directory, initialize Git, select
+  an initial branch, create an empty or baseline initialization commit, and optionally connect or create a GitHub repository when explicitly authorized. Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

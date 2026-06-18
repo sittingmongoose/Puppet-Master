@@ -1888,9 +1888,19 @@
       "title": "PRD Builder And Planning Wizard Semantic Migration"
     }
   ],
-  "last_event_id": "evt-0022",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "last_event_id": "evt-0023",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "notes": "All compiled atoms remain represented in live Plans PlanUnits. Governance seal artifacts were refreshed after Plans and PlanUnit index stabilized. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, generated runtime artifacts, or production build tasks were created.",
   "plan_index_outputs": [
@@ -1904,8 +1914,8 @@
   "ready_atom_ids": [],
   "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
   "status": "compiled_prd_planning_wizard_governance_sealed",
-  "terminal_ledger_event_id": "evt-0022",
-  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "terminal_ledger_event_id": "evt-0023",
+  "updated_at_utc": "2026-06-18T21:42:37Z",
   "validation_results": {
     "git_diff_check": "pass",
     "pm_bootstrap_ledger_validate": "pass",

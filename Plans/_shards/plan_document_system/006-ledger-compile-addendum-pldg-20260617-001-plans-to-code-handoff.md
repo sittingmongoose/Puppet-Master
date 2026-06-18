@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_Document_System.md`
 
-Source lines: L661-L729
+Source lines: L661-L734
 
-Source SHA256: `a67f050cc257383e1d68066c5bd45d8a75a227d7281a3bc1c7c93bd232a28a8d`
+Source SHA256: `a13d7540774b88f3209d8be9649b9154763ef347ded110c87c280be53501b0c8`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_Document_System.md
 canonical_text: >-
-  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. Broad Plan Wizard rename remains deferred to the Plan Wizard redesign unless a touched section would otherwise introduce stale wording or contradiction; new content uses Plan Wizard terminology. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
+  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. The former broad Plan Wizard rename deferral is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map; new active content uses Planning Wizard terminology, while retained Plan Wizard and Chain Wizard tokens require explicit historical/source-lineage or compatibility disposition. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
   Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.
@@ -27,7 +27,7 @@ unblocks: []
 acceptance_criteria:
   - Owner, consumer, reference/index/UI, and wiring docs are accounted for after owner contract edits.
   - Direct references are updated, intentionally unchanged with evidence, or explicitly deferred.
-  - Broad Plan Wizard rename is not done during unrelated compiles, but new touched content uses Plan Wizard wording.
+  - Active owner and consumer prose uses Planning Wizard after the 2026-06-18 owner map; retained Plan Wizard or Chain Wizard tokens are historical/source-lineage or compatibility-only.
   - Post-compile closure validates Plans first, repairs exact-detail drift before index generation, regenerates only Plans/.plan_index, and does not seal governance without an explicit request.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -61,6 +61,7 @@ preserved_exact_tokens:
   - "reference/index/UI docs"
   - "directly reference"
   - "broad Plan Wizard rename remains deferred"
+  - "Planning Wizard"
   - "post-compile audit/index"
   - "repairs exact-detail drift"
   - "Plans/.plan_index"
@@ -70,6 +71,10 @@ negative_constraints:
   - Do not do an uncontrolled whole-repo rename as part of this compile.
   - Do not leave direct contradictions in touched sections.
   - Do not run governance seal unless explicitly asked.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard and Chain Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - The old Plan Wizard redesign deferred framing is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map.
 owner_hints:
   - Plans/Plan_Document_System.md
   - Plans/Planning_Ledger_System.md

@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L7549-L7606
 
-Source SHA256: `49d4b9a64271da4737a46717702a57761ffa7a67a5bd234a1cbe59eea29f356e`
+Source SHA256: `d7dc16646d4bd91ae7e6c47bc58daf2265ccfd65859370f94e668f795d2b1440`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: MS-112
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: 'atom-0015: Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+canonical_text: 'Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []

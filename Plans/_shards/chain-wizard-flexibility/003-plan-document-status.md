@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L27-L36
+Source lines: L27-L35
 
-Source SHA256: `68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7`
+Source SHA256: `f3d36df91449821add7b4fb1ccd89743610c2b29a761660fb3ae1a96bc4db6dc`
 
 ---
 
@@ -12,9 +12,8 @@ Source SHA256: `68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 
-- Intent-based workflow definitions (New project, Fork & evolve, Enhance/rewrite/add, Contribute PR)
-- GUI and flow changes to support multiple entry points and flexible requirements
-- Requirements Doc Builder (Assistant → Interview handoff), Multi-Pass Review (requirements doc), and multiple requirements uploads
-- Adaptive interview phases (AI-driven cut/double-down)
-- Project setup and GitHub: create repo, fork (offer or user), PR flow (start and finish)
-- Gaps, risks, and cross-references to other plans
+- Historical intent-based workflow definitions retained for source-lineage compatibility.
+- Historical GUI and flow examples that current PRD Builder, Planning Wizard, Final GUI, GitHub, and source-control owner docs may consume after revalidation.
+- Legacy Requirements Doc Builder, Interview, and multiple requirements upload material retained as compatibility lineage for PRD Builder and Planning Wizard owner docs.
+- Historical adaptive interview, project setup, GitHub, fork, and PR-flow material retained as consumer/source-lineage inputs.
+- Gaps, risks, and cross-references preserved for migration audit rather than direct current implementation authority.

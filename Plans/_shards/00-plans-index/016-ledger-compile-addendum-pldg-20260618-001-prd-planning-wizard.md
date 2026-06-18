@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L4216-L4313
+Source lines: L4220-L4323
 
-Source SHA256: `d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4`
+Source SHA256: `7585e268b27481053ff7e171ca1e040c8820e4bce7ff77d7b5f5940a99a5a1aa`
 
 ---
 
@@ -19,8 +19,8 @@ plan_unit_id: 0PI-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: 'atom-0158: Create Plans/PRD_Builder.md and Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. atom-0159: Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. atom-0160: Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs. atom-0161: After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. atom-0001: The finished-product feature formerly called
-  Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. atom-0002: The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. atom-0004: PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning.'
+canonical_text: 'Create Plans/PRD_Builder.md and Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs. After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. The finished-product feature formerly called
+  Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -96,6 +96,12 @@ negative_constraints:
 - Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
 - Do not use Chain Wizard or Plan Wizard as current terminology.
 - Do not collapse PRD Builder and Planning Wizard into one indistinguishable interview.
+compatibility_only_notes:
+- Chain Wizard, Plan Wizard, Requirements Doc Builder, Run Chain Wizard later, and Start Chain are retained only for historical migration, source-lineage, and search compatibility.
+- Current product prose must use PRD Builder, Planning Wizard, Approve PRD for Planning Wizard, and Approve And Build.
+stale_retired_dispositions:
+- Active Chain Wizard and Plan Wizard ownership is retired.
+- Current owner routing is PRD Builder intake -> Planning Wizard planning -> Approve And Build -> Orchestrator Plan Compile.
 owner_hints:
 - Plans/Plan_Document_System.md
 - Plans/00-plans-index.md

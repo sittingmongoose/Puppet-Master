@@ -2,15 +2,15 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L1955-L2119
+Source lines: L1963-L2132
 
-Source SHA256: `eb59e172c2db94638e848554d560883f191ba8ee837ac07a2fa6f172dfad7dd8`
+Source SHA256: `97aef6a0cd2fb95d62d49286220d2de73aad14fe9106e3c6e99e9e38cbe80d41`
 
 ---
 
 ## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
 
-### GRS-028 - Plan Wizard Approval To PlanCompile Boundary
+### GRS-028 - Planning Wizard Approval To PlanCompile Boundary
 
 ```yaml
 plan_unit_id: GRS-028
@@ -18,24 +18,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future native Plan Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Plan Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
-  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Plan Wizard terminology. Do not introduce new references or meta-comments using the old Chain Wizard name.
+  Future native Planning Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Planning Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
+  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Planning Wizard terminology. Do not introduce new references or meta-comments using retired Chain Wizard or Plan Wizard names as active terminology.
 gui_related: false
 gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
 depends_on: [GRS-002, PNC-010, MS-110]
 unblocks: [OP-023, F3-396]
 acceptance_criteria:
   - Native PlanCompile launch remains disabled until explicit enablement.
-  - Plan Wizard approval is the future trigger source, not this compile's runtime action.
+  - Planning Wizard approval is the future trigger source, not this compile's runtime action.
   - Overseer and Auditor model roles are consumed from Models_System.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future Goal Runtime PlanApproved integration review
 risk_class: premature_runtime_launch
 reasoning_tier: high
-context_scope: plan_wizard_plancompile_trigger
+context_scope: planning_wizard_plancompile_trigger
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Models_System.md, Plans/Orchestrator_Page.md]
-node_compile_hint: {mode: future_plan_wizard_plancompile_trigger, create_worknodes: false}
+node_compile_hint: {mode: future_planning_wizard_plancompile_trigger, create_worknodes: false}
 source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:atom-0008
   - pldg-20260617-001-plans-to-code-handoff:atom-0009
@@ -45,6 +45,7 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0008
   - pldg-20260617-001-plans-to-code-handoff:dec-0028
 preserved_exact_tokens:
+  - "Planning Wizard"
   - "Plan Wizard"
   - "PlanApproved event"
   - "PlanCompileRun"
@@ -55,7 +56,11 @@ preserved_exact_tokens:
   - "critical block"
 negative_constraints:
   - Do not enable this automatic launch yet.
-  - Do not introduce new references using the old wizard name.
+  - Do not introduce new references using retired Chain Wizard or Plan Wizard names as active terminology.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - Plan Wizard is retired as active product/runtime/compile terminology; current prose, PlanUnits, commands, events, prompts, and index rows use Planning Wizard.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md

@@ -2,15 +2,15 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L38-L44
+Source lines: L37-L43
 
-Source SHA256: `68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7`
+Source SHA256: `f3d36df91449821add7b4fb1ccd89743610c2b29a761660fb3ae1a96bc4db6dc`
 
 ---
 
 ## Rewrite alignment (2026-02-21)
 
-This plan's workflow semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+This plan's workflow semantics are retained as historical/source-lineage compatibility. Current PRD intake and planning authority routes through `Plans/PRD_Builder.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md`, and downstream PlanCompile/Executor owner docs before implementation:
 
 - Wizard/Interview/Assistant orchestration should emit and consume the **unified event model** (seglog ledger → projections)
 - "Canonical requirements" artifacts should be treated as first-class **artifacts** in the event stream and projection layer

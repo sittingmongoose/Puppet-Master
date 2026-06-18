@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L22272-L22360
 
-Source SHA256: `6deeed2f549aa72007cf80665d3aa13c76a6632da40b1f4a1a66c20d30288214`
+Source SHA256: `efab96c75c99597ff28c9aee4c0eabab73cdf7a9db72a3ad4cde81ac01daa32e`
 
 ---
 
@@ -19,8 +19,8 @@ plan_unit_id: ACD-421
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'atom-0007: PRD Builder and Planning Wizard reuse the existing Assistant Chat message, attachment, selection-context, command, persistence, and thread infrastructure rather than creating new chat subsystems. atom-0008: All Planning Wizard child conversations use thread_type planning_wizard and distinguish intake, topic, final_integration, audit_review, and final_review through thread_role and Planning Run membership. atom-0040: Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. atom-0041: When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions. atom-0064: Final planning review uses the shared live document preview,
-  selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. atom-0148: The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. atom-0157: Reuse and formalize existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation, activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'
+canonical_text: 'PRD Builder and Planning Wizard reuse the existing Assistant Chat message, attachment, selection-context, command, persistence, and thread infrastructure rather than creating new chat subsystems. All Planning Wizard child conversations use thread_type planning_wizard and distinguish intake, topic, final_integration, audit_review, and final_review through thread_role and Planning Run membership. Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions. Final planning review uses the shared live document preview,
+  selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Reuse and formalize existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation, activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

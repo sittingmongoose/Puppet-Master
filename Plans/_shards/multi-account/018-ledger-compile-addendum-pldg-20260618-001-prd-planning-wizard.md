@@ -4,7 +4,7 @@ Source: `Plans/Multi-Account.md`
 
 Source lines: L4579-L4631
 
-Source SHA256: `4e5f8b7b03ae7a06d68a200c191df3cc11a510124af3d3a8e884179e07bc2a76`
+Source SHA256: `3f281fb746ae606cbb38b04c81ecff30f21cf4d16c0704ccab20aa1028b77738`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: MA-061
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: 'atom-0089: Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
+canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

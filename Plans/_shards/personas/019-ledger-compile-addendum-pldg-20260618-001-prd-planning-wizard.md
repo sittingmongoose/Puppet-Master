@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L3239-L3307
 
-Source SHA256: `f4441554904a5137589c4d41db33fffb77be3a96c49489e7a41fdbf61abfa169`
+Source SHA256: `31445b995f23e515187e6a96600226e408289ec5e0d432f4ee7d37d0a19d083a`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: P-054
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
-canonical_text: 'atom-0013: PRD Builder uses the protected Collaborator Persona with workflow_behavior_profile prd_builder for discovery, source-aware clarification, conflict surfacing, and planning-intake document co-creation. atom-0014: Topic conversations use the Collaborator Persona with workflow_behavior_profile planning_wizard, asking topic-local implementation-readiness questions while preserving a cooperative, technically serious interaction style. atom-0015: Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+canonical_text: 'PRD Builder uses the protected Collaborator Persona with workflow_behavior_profile prd_builder for discovery, source-aware clarification, conflict surfacing, and planning-intake document co-creation. Topic conversations use the Collaborator Persona with workflow_behavior_profile planning_wizard, asking topic-local implementation-readiness questions while preserving a cooperative, technically serious interaction style. Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []

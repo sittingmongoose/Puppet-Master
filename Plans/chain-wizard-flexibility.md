@@ -28,16 +28,15 @@
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 
-- Intent-based workflow definitions (New project, Fork & evolve, Enhance/rewrite/add, Contribute PR)
-- GUI and flow changes to support multiple entry points and flexible requirements
-- Requirements Doc Builder (Assistant → Interview handoff), Multi-Pass Review (requirements doc), and multiple requirements uploads
-- Adaptive interview phases (AI-driven cut/double-down)
-- Project setup and GitHub: create repo, fork (offer or user), PR flow (start and finish)
-- Gaps, risks, and cross-references to other plans
+- Historical intent-based workflow definitions retained for source-lineage compatibility.
+- Historical GUI and flow examples that current PRD Builder, Planning Wizard, Final GUI, GitHub, and source-control owner docs may consume after revalidation.
+- Legacy Requirements Doc Builder, Interview, and multiple requirements upload material retained as compatibility lineage for PRD Builder and Planning Wizard owner docs.
+- Historical adaptive interview, project setup, GitHub, fork, and PR-flow material retained as consumer/source-lineage inputs.
+- Gaps, risks, and cross-references preserved for migration audit rather than direct current implementation authority.
 
 ## Rewrite alignment (2026-02-21)
 
-This plan's workflow semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+This plan's workflow semantics are retained as historical/source-lineage compatibility. Current PRD intake and planning authority routes through `Plans/PRD_Builder.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md`, and downstream PlanCompile/Executor owner docs before implementation:
 
 - Wizard/Interview/Assistant orchestration should emit and consume the **unified event model** (seglog ledger → projections)
 - "Canonical requirements" artifacts should be treated as first-class **artifacts** in the event stream and projection layer
@@ -59,7 +58,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, PolicyR
 
 ## Executive Summary
 
-The current Chain wizard and Interview flow assume a single path: **start a new project** (with an optional "existing project" toggle). That does not support users who want to **fork and evolve** a repo, **enhance/rewrite/add** to an existing project that is new to Puppet Master, or **contribute a feature and open a Pull Request**. This plan defines **intent-based workflows** so the wizard, Interview, and execution path adapt to what the user is trying to do. It also expands the requirements step (multiple uploads, Requirements Doc Builder via Assistant), makes the Interview phase set **adaptive** (AI decides what to cut or double down on), and strengthens Project setup and GitHub integration (create repo, offer to create fork or let the user do it, and guide PR start/finish for first-time contributors).
+This legacy Chain Wizard and Interview flow assumed a single path: **start a new project** (with an optional "existing project" toggle). Its still-valid source-lineage material informs current PRD Builder intake, Planning Wizard planning, GitHub/source-control setup, and Final GUI routing only after those current owner docs accept the behavior. The current active UX is PRD Builder intake, dynamic PlanningRun topics, live topic/plan projections, audits/final integration, Approve And Build, and Orchestrator Plan Compile.
 
 **Scope:**
 
@@ -579,11 +578,13 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 ---
 
-## 5. Requirements Doc Builder (Assistant → Interview Handoff)
+## 5. Legacy Requirements Doc Builder Compatibility Lineage (PRD Builder Current Owner)
+
+This section is retained for historical migration and source-lineage compatibility only. Current PRD Builder behavior is owned by `Plans/PRD_Builder.md`; current Planning Wizard intake and handoff behavior is owned by `Plans/Planning_Wizard.md`.
 
 ### 5.1 Concept
 
-- **Requirements Doc Builder** is a button in the requirements step that opens Builder chat on the requirements/wizard page.
+- Legacy **Requirements Doc Builder** material maps to current PRD Builder behavior only after revalidation through `Plans/PRD_Builder.md`.
 - The Builder is a conversation-first flow. No questionnaire appears before the first user response.
 - The Builder output remains a staged artifact until the flow reaches final approval and handoff.
 
@@ -10130,7 +10131,7 @@ plan_unit_id: CWF-152
 unit_type: constraint
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: 'atom-0001: The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. atom-0002: The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. atom-0159: Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. atom-0156: PMConcept and FinalGUISpec must replace the old fixed Project Setup through Start Chain sequence with PRD Builder intake, dynamic Planning Run topics, live topic and plan projections, audits, Approve And Build, and Orchestrator Plan Compile navigation. atom-0157: Reuse and formalize existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation,
+canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md are legacy compatibility/source-lineage consumers for material now owned by PRD Builder, Planning Wizard, Final GUI, and downstream PlanCompile/Executor owners. PMConcept and FinalGUISpec replace the old fixed Project Setup through Start Chain sequence with PRD Builder intake, dynamic Planning Run topics, live topic and plan projections, audits, Approve And Build, and Orchestrator Plan Compile navigation. Existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation,
   activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
@@ -10196,6 +10197,14 @@ negative_constraints:
 - Do not use Chain Wizard or Plan Wizard as current terminology.
 - Do not perform a blind filename or term replacement that preserves obsolete ownership and workflow.
 - Do not retain the old nine-step linear wizard as canonical UX.
+compatibility_only_notes:
+- Chain Wizard, Plan Wizard, Requirements Doc Builder, Run Chain Wizard later, and Start Chain are retained only for historical migration, source-lineage, and search compatibility.
+- Current product prose must use PRD Builder, Planning Wizard, Approve PRD for Planning Wizard, and Approve And Build.
+- Still-valid legacy details in this doc are consumer/source-lineage inputs and must route through current owner docs before implementation.
+stale_retired_dispositions:
+- Active Chain Wizard and Plan Wizard ownership is retired.
+- The old fixed Project Setup through Start Chain sequence is retired as canonical UX.
+- Current UX is PRD Builder intake -> dynamic PlanningRun topics -> live topic/plan projections -> audits/final integration -> Approve And Build -> Orchestrator Plan Compile.
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/FinalGUISpec.md

@@ -187,7 +187,7 @@
   ],
   "cursor": {
     "last_completed_atom_id": "atom-0168",
-    "next_action": "Governance seal is complete. Use bounded audit/repair only for future findings; do not create runtime/build artifacts until the compiler/runtime contracts explicitly allow them.",
+    "next_action": "Complete audit-20260618-007 repair artifacts, regenerate allowed indexes/governance after Plans stabilize, and run closure/governance validators before claiming completion.",
     "next_atom_id": null
   },
   "deferred_questions_count": 0,
@@ -199,9 +199,19 @@
     "Plans/Spec_Lock.json"
   ],
   "governance_status": "sealed",
-  "last_event_id": "evt-0022",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
+  "last_event_id": "evt-0023",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers_count": 0,
   "open_questions_count": 0,
@@ -217,5 +227,5 @@
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
   "status": "sealed",
-  "updated_at_utc": "2026-06-18T20:04:18Z"
+  "updated_at_utc": "2026-06-18T21:42:37Z"
 }

@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L3514-L3568
 
-Source SHA256: `c19850e85ce201861b31a48a5fc3cdebbb035540becb91107a2aa4c634b2a67b`
+Source SHA256: `f4a3952776b709d40022d87f2ccc9b50d10f0014dee88a4bc7a1bfdb58c7f5a7`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: CS-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'atom-0154: Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery.'
+canonical_text: 'Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

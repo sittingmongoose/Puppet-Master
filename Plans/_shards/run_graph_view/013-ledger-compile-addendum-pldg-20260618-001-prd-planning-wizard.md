@@ -4,7 +4,7 @@ Source: `Plans/Run_Graph_View.md`
 
 Source lines: L945-L996
 
-Source SHA256: `2c1580fa9bc8e46c15f5bf980dd9b9c5b74f72b7a84e5bf42fb8a04840187f7f`
+Source SHA256: `37ef4a0b0658d15ac7fe291a3458d6ca744575601e26249934cccfbd1be14e56`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: RGV-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
-canonical_text: 'atom-0152: Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status.'
+canonical_text: 'Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

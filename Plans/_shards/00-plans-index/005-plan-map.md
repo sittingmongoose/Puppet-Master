@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L204-L457
 
-Source SHA256: `d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4`
+Source SHA256: `7585e268b27481053ff7e171ca1e040c8820e4bce7ff77d7b5f5940a99a5a1aa`
 
 ---
 
@@ -38,7 +38,7 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 - `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter.
 - `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers.
 - `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
-- `Plans/Goal_Runtime_System.md` owns future Plan Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
+- `Plans/Goal_Runtime_System.md` owns future Planning Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
 - `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
 - `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the seven-tab Orchestrator shell, visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
 - `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
@@ -46,7 +46,7 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 - `Plans/Contracts_V0.md` owns shared contract envelopes and points to `Plans/plans_to_code_handoff.schema.json` as the design-only schema draft.
 - `Plans/Planning_Ledger_System.md` and `Plans/Plan_Document_System.md` own implementation-readiness/doc-impact matrix handling and the owner/consumer/reference scan gate for this compile class.
 
-The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
+The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Planning Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
@@ -71,7 +71,7 @@ The native Goal Runtime packet uses the following owner split:
 - `Plans/Goal_Runtime_System.md` owns native Goal Mode runtime/control-plane behavior, invisible/internal goals, durable goal state, scheduler updates, attachments, weak-model safety, child goals, write authority, completion receipts, verifier/adjudicator policy, approval-boundary invocation, and runtime evidence requirements.
 - `Plans/assistant-chat-design.md` owns visible Assistant Chat Goal UI and thread-surface behavior, including activation, status, task tracker, controls, evidence/activity display, completion reports, and collapsible child-goal details.
 - `Plans/FinalGUISpec.md` owns Settings GUI placement for the separate Goal Mode worker model and verifier/adjudicator model selectors.
-- `Plans/chain-wizard-flexibility.md` remains the Chain Wizard flow consumer for future invisible Goal Mode ledger-to-Plans transfer; this compile does not redesign Chain Wizard flow.
+- `Plans/Planning_Wizard.md` owns current Planning Wizard flow semantics for future invisible Goal Mode ledger-to-Plans transfer. `Plans/chain-wizard-flexibility.md` remains a legacy compatibility/source-lineage consumer only; this compile does not revive Chain Wizard as current product terminology.
 - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Permissions_System.md` own shared envelope, persistence, and approval-scope registration needed by Goal Runtime data shapes while `Plans/Goal_Runtime_System.md` keeps behavior semantics.
 - `Plans/Runtime_Artifacts_Panel.md` consumes Goal Runtime evidence and receipt identities for browsing, retention visibility, and redaction surfaces; `Plans/Project_Output_Artifacts.md` remains a project-output package boundary reference, not a Goal Runtime evidence owner.
 - `Plans/Models_System.md`, `Plans/Multi-Account.md`, and provider-specific docs such as `Plans/Provider_OpenCode.md` own concrete requested/effective model, account, and provider capability resolution consumed by Goal Runtime role policy.

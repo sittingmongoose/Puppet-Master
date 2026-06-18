@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1057-L1210
 
-Source SHA256: `b25aae7b5aae414e64daafa83d8df6a2bf9463f273118a7e5aa4dd5fdc8c12bb`
+Source SHA256: `7bbd7a9e304c1e8dfc6888f169af76a11b743c53861a30cb3191c8bbeab08a40`
 
 ---
 

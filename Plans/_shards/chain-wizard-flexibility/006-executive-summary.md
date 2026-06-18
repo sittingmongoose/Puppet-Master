@@ -2,15 +2,15 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L60-L78
+Source lines: L59-L77
 
-Source SHA256: `68c5caa8b0ab2dc022b78943f96a63b56c41df44912d958613b08dcdd20072e7`
+Source SHA256: `f3d36df91449821add7b4fb1ccd89743610c2b29a761660fb3ae1a96bc4db6dc`
 
 ---
 
 ## Executive Summary
 
-The current Chain wizard and Interview flow assume a single path: **start a new project** (with an optional "existing project" toggle). That does not support users who want to **fork and evolve** a repo, **enhance/rewrite/add** to an existing project that is new to Puppet Master, or **contribute a feature and open a Pull Request**. This plan defines **intent-based workflows** so the wizard, Interview, and execution path adapt to what the user is trying to do. It also expands the requirements step (multiple uploads, Requirements Doc Builder via Assistant), makes the Interview phase set **adaptive** (AI decides what to cut or double down on), and strengthens Project setup and GitHub integration (create repo, offer to create fork or let the user do it, and guide PR start/finish for first-time contributors).
+This legacy Chain Wizard and Interview flow assumed a single path: **start a new project** (with an optional "existing project" toggle). Its still-valid source-lineage material informs current PRD Builder intake, Planning Wizard planning, GitHub/source-control setup, and Final GUI routing only after those current owner docs accept the behavior. The current active UX is PRD Builder intake, dynamic PlanningRun topics, live topic/plan projections, audits/final integration, Approve And Build, and Orchestrator Plan Compile.
 
 **Scope:**
 

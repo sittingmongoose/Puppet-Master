@@ -16,6 +16,20 @@
     "source_refs": "pass",
     "stable_ids": "pass"
   },
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_status_counts": {
+    "not_for_plan": 14,
+    "repaired": 72,
+    "source_lineage_only": 2,
+    "stale_retired": 6
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
+  "latest_validation_note": "Post-audit repair closure validated; ledger remains sealed.",
+  "latest_validation_status": "pass",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass_governance_sealed",
@@ -27,12 +41,13 @@
     "decisions": 30,
     "deferred_questions": 0,
     "design_atoms": 168,
-    "events": 22,
+    "events": 23,
     "governance_seal": "passed",
+    "nonatom_compile_disposition": "source_lineage_only_after_seal",
     "open_blockers": 0,
     "open_questions": 0,
     "ready_for_plan_compile_atoms": 0
   },
-  "updated_at_utc": "2026-06-18T20:04:18Z",
+  "updated_at_utc": "2026-06-18T21:42:37Z",
   "warnings": []
 }

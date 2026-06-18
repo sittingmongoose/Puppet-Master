@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L680-L4200
+Source lines: L680-L4204
 
-Source SHA256: `d23bf38d5494519f57aae84ffc7f4c72cb34fbbaa5eedce11fa291683be17fd4`
+Source SHA256: `7585e268b27481053ff7e171ca1e040c8820e4bce7ff77d7b5f5940a99a5a1aa`
 
 ---
 
@@ -3147,7 +3147,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; chain-wizard-flexibility remains the future Chain Wizard flow consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; Planning_Wizard owns current Planning Wizard flow semantics while chain-wizard-flexibility remains a legacy compatibility/source-lineage consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
 gui_related: false
 gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
 depends_on:
@@ -3156,7 +3156,7 @@ unblocks: []
 acceptance_criteria:
   - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
   - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
-  - Chain Wizard, contract, storage, permission, runtime artifact, project-output boundary, model, account, and provider owner/consumer refs are recorded without moving Goal Runtime behavior out of Goal_Runtime_System.
+  - Planning Wizard, legacy Chain Wizard compatibility, contract, storage, permission, runtime artifact, project-output boundary, model, account, and provider owner/consumer refs are recorded without moving Goal Runtime behavior out of Goal_Runtime_System.
   - The index preserves the no-WorkNode boundary and separates ledger compile, explicit PlanUnit indexing, and later explicit governance seal phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -3439,7 +3439,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Plan Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
+  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Planning Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
   The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
@@ -3520,6 +3520,10 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not run PlanCompile or build WorkNodes from this index entry.
   - Do not update generated governance artifacts during ordinary ledger compile; refresh them only in explicit governance registration/seal scope.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - Plan Wizard is retired as active product/runtime/compile terminology; current prose, PlanUnits, commands, events, prompts, and index rows use Planning Wizard.
 owner_hints:
   - Plans/00-plans-index.md
   - Plans/Plan_To_Node_Compilation.md
