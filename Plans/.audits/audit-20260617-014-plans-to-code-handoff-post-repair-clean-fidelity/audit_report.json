@@ -1,0 +1,141 @@
+{
+  "artifact_status": "final_validator_results_recorded",
+  "atom_fidelity": {
+    "atoms_checked": 64,
+    "classification_counts": {
+      "equivalent_with_evidence": 64
+    }
+  },
+  "audit_artifacts": [
+    "atom_fidelity_matrix.jsonl",
+    "audit_generation_summary.json",
+    "audit_report.json",
+    "closure_registry_audit.json",
+    "closure_reuse.jsonl",
+    "doc_impact_reference_findings.jsonl",
+    "forbidden_artifacts.json",
+    "implementation_readiness_findings.jsonl",
+    "ledger_consistency.json",
+    "owner_routing_findings.jsonl",
+    "planunit_source_claims.jsonl",
+    "semantic_risks.jsonl",
+    "validator_results.json"
+  ],
+  "audit_id": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+  "blockers": [],
+  "closure_registry": {
+    "audit_id": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+    "closure_reuse_rows": 43,
+    "closure_reuse_status_counts": {
+      "previously_closed_reused": 43
+    },
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "notes": [
+      "No new closure rows were written in audit-only mode. All target ledger closure rows were reused when registry validation passed."
+    ],
+    "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "registry_rows_total": 94,
+    "schema_id": "pm.deep_audit_closure_registry_audit.v1",
+    "status": "pass",
+    "target_closure_status_counts": {
+      "repaired": 43
+    },
+    "target_ledger_registry_rows": 43,
+    "validator_result_name": "closure registry validate"
+  },
+  "compile_readiness": "not_safe_to_enable_runtime_governance_stale_plancompile_disabled",
+  "current_ref": "4bc466bf84ae04823721ef966f49cfa1e31e1fc8",
+  "doc_impact_refs": {
+    "groups_checked": 8,
+    "status_counts": {
+      "pass": 8
+    }
+  },
+  "forbidden_artifacts": {
+    "audit_id": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+    "checked_patterns": [
+      "WorkNodes/",
+      "NodeSeeds/",
+      "Plans/WorkNodes/",
+      "Plans/NodeSeeds/",
+      "node_seed_candidate",
+      "worknode_request_queue",
+      "executable_queue",
+      "final_node_manifest"
+    ],
+    "forbidden_count": 0,
+    "forbidden_paths": [],
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "notes": [
+      "Audit-only pass did not create WorkNodes, NodeSeeds, executable queues, PlanCompile runtime outputs, or implementation files."
+    ],
+    "schema_id": "pm.deep_audit_forbidden_artifacts.v1",
+    "status": "pass"
+  },
+  "generated_at_utc": "2026-06-18T00:24:51Z",
+  "implementation_readiness": {
+    "areas": 8,
+    "status_counts": {
+      "pass": 8
+    }
+  },
+  "ledger_consistency": {
+    "atom_count": 64,
+    "audit_id": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+    "compact_phase": "ready_for_plan_compile",
+    "compact_ready_atoms": 64,
+    "compact_status": "active",
+    "compiled_planunit_count_with_ledger_lineage": 38,
+    "correction_count": 10,
+    "current_ref": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+    "decision_count": 28,
+    "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+    "notes": [
+      "Compact ledger state still describes ready_for_plan_compile source state while live Plans/.plan_index and repair artifacts prove a post-compile/post-repair audit surface.",
+      "Audit-only pass did not rewrite compact ledger state."
+    ],
+    "open_blockers": [],
+    "open_questions": [],
+    "origin_main_ref": "88719f2f67a8c515cc8bd5bde8858ae8f1965b87",
+    "schema_id": "pm.deep_audit_ledger_consistency.v1",
+    "status": "pass_with_stale_compact_state_notes"
+  },
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "next_safe_action": "Audit-only bundle is clean. Next safe action is commit the audit artifacts, or run an explicit governance seal phase if stale Spec Lock/shards/evidence/plan graph should be refreshed.",
+  "non_audit_side_effects": [],
+  "owner_routing": {
+    "groups_checked": 8,
+    "status_counts": {
+      "pass": 8
+    }
+  },
+  "phase": "post_repair_clean_fidelity_audit_only",
+  "planunit_source_claims": {
+    "plan_units_checked": 38,
+    "status_counts": {
+      "valid_source_claim": 38
+    }
+  },
+  "schema_id": "pm.deep_audit_report.v1",
+  "semantic_risks": {
+    "by_family": {},
+    "by_severity": {},
+    "by_status": {},
+    "new_or_open": 0,
+    "previously_closed": 43
+  },
+  "status": "pass_with_governance_stale",
+  "validator_summary": {
+    "core_status": "pass",
+    "governance_status": "stale_not_sealed",
+    "non_audit_side_effects": [],
+    "status": "pass_with_governance_stale",
+    "summary": {
+      "core_failures": 0,
+      "governance_expected_failures": 5,
+      "governance_passes": 1,
+      "governance_unexpected_failures": 0,
+      "total_checks": 14
+    }
+  }
+}
