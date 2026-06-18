@@ -542,7 +542,7 @@ The shared identity envelope emitted before prompt assembly contains at least `r
 - Tool/runtime surface gaps also remain sharply defined: - `Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees. - `agent-rules-context.md` still under-scopes actor coverage and execution-role inputs relative to Prompt Pipeline, Multi-Account, and Assistant chat identity disclosure requirements.
 - But the owner doc still frames those fields through stale scope vocabulary: - `Run envelope (tier, mode, selected Persona ID(s), selected model/variant)` - `Active mode and tier` - `plan_or_tier_default` - `Orchestrator tier override` - `stage/tier/task/repo context` - `persona_override_owner_id` still allows `tier_id`
 - Introduce `execution_role` / `actor_role` into effective-resolution, event, and usage contracts.
-- Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing: - `wizard_id` - `project_id` - `thread_id?` - `phase_plan_ref?` - input/output artifact-bundle refs - `requirements_quality_report_ref?` when applicable
+- Extend `auditor_cycle_report` identity so it carries the planning/governance lineage needed for audit and routing. Legacy `validation_pass_report` mirrors may carry the same lineage only with `compatibility_only: true` and `cycle_report_ref`: - `wizard_id` - `project_id` - `thread_id?` - `phase_plan_ref?` - input/output artifact-bundle refs - `requirements_quality_report_ref?` when applicable
 - `Plans/Orchestrator_Page.md` - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure
 - `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT. - destructive Git/worktree actions should resolve through Source Control semantics, even if launched from Orchestrator.
 - The gap is real and now very concrete: - canonical docs already model `requested_account_policy` - canonical docs already model `effective_account_id` - but there is still no canonical way to represent a requested concrete account on the requested side
@@ -640,8 +640,8 @@ After the run starts, the frozen snapshot and any observed provider deviations M
 - The attempt snapshot remains the canonical bridge between planning-time wizard state and the run that actually executes the approved work.
 
 #### Wizard/interview lineage bridge
-- Extend `validation_pass_report` with planning/governance lineage and an explicit bridge into the launched run.
-- `validation_pass_report` preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
+- Extend `auditor_cycle_report` with planning/governance lineage and an explicit bridge into the launched run. Legacy `validation_pass_report` mirrors may expose the same bridge only with `compatibility_only: true` and `cycle_report_ref`.
+- `auditor_cycle_report` preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
 - Review, preview, resume, and drill-through surfaces follow that launched-run bridge instead of reconstructing lineage from timestamps, filenames, or ad hoc provider metadata.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md
@@ -3257,7 +3257,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  validation_pass_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata.
+  auditor_cycle_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
 gui_related: false
 gui_classification_reason: This unit defines wizard/interview lineage fields rather than visual presentation.
 split_recommended: false
@@ -3282,7 +3282,10 @@ node_compile_hint:
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0041"
 preserved_exact_tokens:
+  - "auditor_cycle_report"
   - "validation_pass_report"
+  - "cycle_report_ref"
+  - "compatibility_only"
   - "phase_plan_ref"
   - "requirements_quality_report_ref"
   - "workflow_run_id"

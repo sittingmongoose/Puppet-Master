@@ -305,7 +305,7 @@ ContractRef: `PolicyRule:Decision_Policy.md§4`, `ContractName:Plans/chain-wizar
 ### 6.4 Requirements quality report boundary, severity, and persistence
 
 
-The `requirements_quality_report` is a pre-execution artifact. It MUST be generated during the mandatory validation sweep defined in `Plans/chain-wizard-flexibility.md §12` after Contract Unification and before any orchestrator run, plan-node execution, or user-visible "Start Run" action begins.
+The `requirements_quality_report` is a pre-execution artifact. It MUST be generated during the mandatory Auditor invariant loop defined in `Plans/chain-wizard-flexibility.md §12` after Contract Unification and before any orchestrator run, plan-node execution, or user-visible "Start Run" action begins. Legacy references to the former three-pass anchor are compatibility aliases only and do not revive fixed Pass 1 / Pass 2 / Pass 3 scheduling.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
 
@@ -328,7 +328,7 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:no_se
 Lifecycle note:
 - Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only.
 
-ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4, PolicyRule:no_secrets_in_storage, Invariant:INV-002, ContractName:Plans/chain-wizard-flexibility.md#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4, PolicyRule:no_secrets_in_storage, Invariant:INV-002, ContractName:Plans/chain-wizard-flexibility.md#12-auditor-invariant-loop-mandatory-invariant-sweep
 
 ## Runtime Decision Rules Addendum (2026-03-08)
 

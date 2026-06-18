@@ -1,0 +1,25 @@
+{
+  "audit_id": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+  "checked_patterns": [
+    "WorkNodes/",
+    "NodeSeeds/",
+    "Plans/WorkNodes/",
+    "Plans/NodeSeeds/",
+    "worknode_request_queue",
+    "executable_queue",
+    "final_node_manifest",
+    "dispatched GoalRuns",
+    "production build tasks"
+  ],
+  "forbidden_count": 0,
+  "forbidden_paths": [],
+  "generated_at_utc": "2026-06-18T10:13:23Z",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "node_readiness_status": "runtime_disabled",
+  "notes": [
+    "No PlanCompile runtime was enabled and no NodeSeeds, WorkNodes, executable queues, final node manifests, dispatched GoalRuns, implementation code, or production build tasks were created by this bounded repair."
+  ],
+  "plan_compile_runtime_status": "design_only_disabled",
+  "schema_id": "pm.deep_audit_forbidden_artifacts.v1",
+  "status": "pass"
+}

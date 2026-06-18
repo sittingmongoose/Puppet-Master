@@ -1,0 +1,33 @@
+{
+  "assignments": [
+    {
+      "agent_id": "019ed9c8-f91e-7662-8988-c594af8fe1bd",
+      "mode": "read_only",
+      "role": "ledger_and_atom_currentness_auditor",
+      "scope": "Compare all 64 atom source details to live PlanUnits; audit latest audit/ledger currentness."
+    },
+    {
+      "agent_id": "019ed9c9-28f7-7470-a706-412b09a34899",
+      "mode": "read_only",
+      "role": "auditor_loop_compatibility_auditor",
+      "scope": "Find stale Pass 1/2/3, validation_pass_report, and Auditor-loop compatibility references."
+    },
+    {
+      "agent_id": "019ed8fd-75cb-76e0-a73a-a6e4fdbd9f1e",
+      "mode": "read_only",
+      "role": "orchestrator_seven_tab_auditor",
+      "scope": "Audit active seven-tab shell references, titles, stale Tiers/six-tab aliases, and route enum consumers."
+    },
+    {
+      "agent_id": "019ed8fd-82a0-7113-81dd-f22bdb7574da",
+      "mode": "read_only",
+      "role": "schema_route_strictness_auditor",
+      "scope": "Audit schema required fields, enums, nested route/review shapes, and validator coverage."
+    }
+  ],
+  "audit_id": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+  "generated_at_utc": "2026-06-18T10:13:23Z",
+  "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+  "main_agent_writes_only": true,
+  "schema_id": "pm.read_only_subagent_assignments.v1"
+}

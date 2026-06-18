@@ -335,7 +335,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
 
-ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record
+ContractRef: Plans/Project_Output_Artifacts.md#10. Auditor Cycle Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record
 
 Required fields:
 - workflow_run_id
@@ -346,6 +346,9 @@ Required fields:
 - run_id
 
 Canonical terms and values:
+- auditor_cycle_report
+- cycle_report_ref
+- compatibility_only
 - validation_pass_report
 - workflow_run_id
 - staged_bundle_ref
@@ -1344,17 +1347,19 @@ Each Auditor cycle receives the artifact set as corrected by earlier cycles. The
 **Produces:**
 - The first validation snapshot of the provisional `.puppet-master/project/` pack, plus any missing deterministic projections required for the full package.
 - An Auditor cycle report stored in seglog. Legacy exports may mirror `artifact_type: validation_pass_report` with:
+  - `compatibility_only: true`
+  - `cycle_report_ref`: reference to the canonical Auditor cycle report
   - `pass_number: 1`
   - `pass_name: "document_creation"`
-  - `pass_verdict`: `"pass"` or `"fail"`
+  - `pass_verdict`: `"pass"`, `"fail"`, or `"skipped"`
   - `verdict_reason`: human-readable reason
   - `changes_applied_summary`: list of artifact paths written
   - `diff_pointers`: empty for the initial audit cycle when it records generation rather than correction
 - A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The initial audit cycle report is **read-only** for requirements intent — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements intent are made in the initial audit cycle.
 
 **Verdict rules:**
-- `pass_verdict: "pass"` — all required artifacts were present or deterministically completed.
-- `pass_verdict: "fail"` — one or more required artifacts were missing or invalid and could not be completed deterministically; reason recorded.
+- Auditor cycle terminal status records whether all required artifacts were present or deterministically completed, failed validation, were skipped through a compatibility mirror, or stopped on a critical block.
+- Legacy `pass_verdict` mirrors may use `"pass"`, `"fail"`, or `"skipped"` only when `compatibility_only: true` and `cycle_report_ref` links back to the canonical Auditor cycle report.
 
 ---
 
@@ -1382,13 +1387,15 @@ Each Auditor cycle receives the artifact set as corrected by earlier cycles. The
 **Produces:**
 - Updated artifact set with all resolvable fixes applied.
 - Auditor repair-cycle report stored in seglog. Legacy exports may mirror `validation_pass_report` fields:
+  - `compatibility_only: true`
+  - `cycle_report_ref`: reference to the canonical Auditor cycle report
   - `pass_number: 2`
   - `pass_name: "canonical_alignment"`
   - `findings[]`: list of all gaps and contradictions detected
   - `changes_applied_summary`: list of fixes applied, each with `diff_pointer`
   - `unresolved_findings[]`: items where no fix could be applied
   - `auto_fixes_applied[]`: list of requirement quality issues auto-fixed in this pass (each entry: `{ issue_id, criterion, fix_applied, diff_pointer }`)
-  - `pass_verdict`: `"pass"` or `"fail"`
+  - `pass_verdict`: `"pass"`, `"fail"`, or `"skipped"`
   - `verdict_reason`: human-readable reason (including unresolved findings when fail)
 
 ---
@@ -1414,12 +1421,14 @@ Each Auditor cycle receives the artifact set as corrected by earlier cycles. The
 **Produces:**
 - Final artifact set with all structural corrections applied.
 - Auditor certification-cycle report stored in seglog. Legacy exports may mirror `validation_pass_report` fields:
+  - `compatibility_only: true`
+  - `cycle_report_ref`: reference to the canonical Auditor cycle report
   - `pass_number: 3`
   - `pass_name: "canonical_systems"`
   - `findings[]`: list of all pass-3 canonical violations detected
   - `changes_applied_summary`: list of structural corrections applied, each with `diff_pointer`
   - `unresolved_findings[]`: violations requiring human or product-level resolution
-  - `pass_verdict`: `"pass"` or `"fail"`
+  - `pass_verdict`: `"pass"`, `"fail"`, or `"skipped"`
   - `verdict_reason`: human-readable reason
 
 > **Invariant (normative):** The Auditor certification cycle MUST NOT modify `requirements.md`, `plan.md`, or any artifact whose content is driven by user intent or product scope. It enforces structural/canonical invariants, certifies the pack, or stops on a critical block.
@@ -1478,7 +1487,7 @@ The following criteria are required for a conformant implementation of this work
 
 ---
 
-ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts
+ContractRef: Plans/Project_Output_Artifacts.md#POA-045
 
 Required fields:
 - workflow_run_id
@@ -1495,7 +1504,8 @@ Canonical terms and values:
 - run_id
 
 Labels:
-- validation pass report
+- Auditor cycle report
+- validation pass report compatibility mirror
 
 Behavioral rules:
 - Auditor cycle reports must emit lineage-rich report records that can explain what was evaluated and what execution was seeded; legacy validation pass reports may mirror this lineage for compatibility only.
@@ -2505,7 +2515,7 @@ preserved_exact_tokens:
 - 2.2 Canonical wizard runtime state
 - 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md'
 - 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore'
-- 'ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record'
+- 'ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record'
 - 2.3 Wizard Cancellation Cleanup
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md'
@@ -2564,7 +2574,7 @@ owner_boundary_notes:
 - '- Canonical terms: `Plans/Glossary.md`'
 - '- **§4:** Requirements: multiple uploads, merge/canonical input, storage.'
 - '- **§11:** User-project output artifacts (sharded-only canonical graph).'
-- 12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
+- 12. [Auditor Invariant Loop (Mandatory Invariant Sweep)](#12-auditor-invariant-loop-mandatory-invariant-sweep) (legacy three-pass anchor is a compatibility alias only)
 - '- **Entry:** User selects "Fork & evolve." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub HTTPS API; see `Plans/GitHub_API_Auth_and_Flows.md`), or the user can create the fork themselves and point us at the fork path or URL.'
 - '- **Entry:** User selects "Contribute (PR)." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user, or they can create it themselves and point us at their fork.'
 - Thread lifecycle references in this wizard/Interview plan use the canonical thread states `active`, `attention_required`, `blocked`, `completed`, and `failed`; permanent thread removal is a `delete` action with confirmation, and `archive` is not a thread lifecycle state.
@@ -6905,26 +6915,27 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-### CWF-087 - Validation Pass Report Lineage and Runtime Identity Carry-Through
+### CWF-087 - Auditor Cycle Report Lineage and Runtime Identity Carry-Through
 
 ```yaml
 plan_unit_id: CWF-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: Validation pass reports carry lineage fields and skipped-verdict support, and effective runtime identity survives validation into launch handoff.
+canonical_text: Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime identity survives validation into launch handoff.
 gui_related: false
 gui_classification_reason: Validation report lineage and runtime identity handoff are backend/report semantics.
 split_recommended: false
 depends_on: [CWF-016, CWF-085]
 unblocks: []
 acceptance_criteria:
-  - Validation pass reports include workflow_run_id.
-  - Validation pass reports include phase_plan_ref.
-  - Validation pass reports include staged_bundle_ref.
-  - Validation pass reports include requirements_quality_report_ref.
-  - Validation pass reports include run_id.
-  - Validation passes emit lineage-rich pass reports explaining what was evaluated and what execution was seeded.
+  - Auditor cycle reports include workflow_run_id.
+  - Auditor cycle reports include phase_plan_ref.
+  - Auditor cycle reports include staged_bundle_ref.
+  - Auditor cycle reports include requirements_quality_report_ref.
+  - Auditor cycle reports include run_id.
+  - Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution was seeded.
+  - Legacy validation_pass_report mirrors carry compatibility_only true and cycle_report_ref.
   - pass_verdict supports skipped.
   - Effective runtime identity survives validation into launch handoff.
 validation_surfaces:

@@ -1027,7 +1027,7 @@ Rules:
 - Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields.
 Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical Auditor cycle report plus legacy **validation pass report** compatibility artifact and launch handoff lineage.
 
-ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
 
 **Authoritative shared payload fields**
 
@@ -1689,7 +1689,7 @@ Route validity rules:
 - Legacy labels `tab-family` and `open-disposition` map to `tab_family` and `open_disposition`; producers must use the canonical underscore field names in payloads.
 - A route is rejected as `invalid_route` when `target_kind`, selector, `resolver_scope`, `tab_family`, or `open_disposition` is not valid for the destination surface.
 - Resolver scope must be explicit when the same `object_kind` can exist in more than one run, thread, or project.
-- `tab_id` is valid with `target_kind = page_tab` or with a routed page whose visibility depends on a known stable tab family; otherwise `tab_id` is rejected as shell-local state.
+- `tab_id` is valid with `target_kind = page_tab` or with a routed page whose visibility depends on a known stable tab family; otherwise `tab_id` is rejected as shell-local state. For `tab_family = orchestrator`, the active closed values are `progress`, `plan_compile`, `seams`, `node_graph`, `evidence`, `history`, and `ledger`; retired `tiers` / `Tiers` labels are compatibility/search aliases only and are not valid active route targets.
 - `tab_id` does not replace `target_kind`; `tab_id` does not replace `inspector_target`.
 - Route examples are normative selector examples: a chat search result uses `object_kind = message` with `object_id = <message_id>`, and a wizard resume uses `object_kind = wizard` with `object_id = <wizard_id>`.
 - Scoped-resolution rules are part of the refinement layer: `blocked_episode` uses `object_id = blocked_sequence` and requires `focused_run_id` plus node membership inside that run; `scheduler_pass` uses `object_id = scheduler_pass_id` and requires `focused_run_id`; `safe_point` uses `object_id = safe_point_id` and requires `focused_run_id`; `remediation` uses `object_id = remediation_root_id` and requires `focused_run_id`; `attempt` uses `object_id = attempt_id` and requires `focused_run_id`.
@@ -7286,7 +7286,7 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-099 - Validation Pass Report Event Payload
+### CV-099 - Auditor Cycle Report Event Payload
 
 ```yaml
 plan_unit_id: CV-099
@@ -7295,15 +7295,18 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Requirements-quality workflow state persists as stable event payload fields
-  anchored to validation_pass_report and launch handoff lineage, with
-  pass_verdict supporting skipped where the flow requires it.
+  anchored to auditor_cycle_report and launch handoff lineage. Legacy
+  validation_pass_report records are compatibility mirrors only with
+  compatibility_only true and cycle_report_ref, and pass_verdict supports
+  skipped where the compatibility flow requires it.
 gui_related: false
 gui_classification_reason: This unit defines persisted validation workflow event payloads.
 split_recommended: true
 depends_on: [CV-039, CV-060]
 unblocks: []
 acceptance_criteria:
-  - validation_pass_report, workflow_run_id, pass_number, pass_name, pass_verdict, and verdict_reason fields are preserved.
+  - auditor_cycle_report, workflow_run_id, pass_verdict, and verdict_reason fields are canonical.
+  - Legacy validation_pass_report mirrors preserve pass_number and pass_name only with compatibility_only true and cycle_report_ref.
   - Phase plan, staged bundle, requirements quality report, runtime identity, and run lineage fields are preserved.
   - pass_verdict supports skipped where the flow requires it.
   - Accepted or final pass output bridges into launched execution.
@@ -7312,7 +7315,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: validation_pass_event_lineage_loss
 reasoning_tier: high
-context_scope: validation_pass_report_event_payload
+context_scope: auditor_cycle_report_event_payload
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
@@ -7323,16 +7326,20 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
 preserved_exact_tokens:
+  - "`auditor_cycle_report`"
   - "`validation_pass_report`"
+  - "`cycle_report_ref`"
+  - "`compatibility_only`"
   - "`workflow_run_id`"
   - "`pass_number`"
   - "`pass_verdict`"
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
+  - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -17305,7 +17312,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Contracts_V0 owns shared envelope references for handoff_matrix, handoff_row, PlanCompileRun, stage_card, compile_worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNodeRequest, compiler model routing, Codex bootstrap work package, Codex external GUI-agent request, PlanCompile receipt, TestCapabilityReport, TestHarnessProbeReport, TestStrategy, test case, TestRunReceipt, visual evidence, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_dispatch_receipt, worknode_change_receipt, worknode_completion_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility aliases, merge_or_promotion_receipt, source-control finalization receipt, model_resolution_receipt, ExecutorIntakeReport, WorkNode execution receipts, and GoalCompletionReceipt. These contract envelopes carry IDs, source refs, owner refs, validator refs, receipt refs, evidence refs, requested/effective model refs, source-control refs, authority refs, retry/rollback routes, user_escalation_condition, canonical enums, strict nested shapes, and source-control execution context while owner docs retain behavior semantics. The design-only schema draft is Plans/plans_to_code_handoff.schema.json.
-  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, user_escalation_condition, and the design-only `Plans/plans_to_code_handoff.schema.json` `$defs` for `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` without creating runtime artifacts. Historical per-artifact schema filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for the single schema draft's `$defs`, not separate schema files.
+  Shared contract envelopes name source_artifact, destination_artifact, retry_route, rollback_route, user_escalation_condition, and the design-only `Plans/plans_to_code_handoff.schema.json` `$defs` for `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` without creating runtime artifacts. Low-context route and review fields use strict schema defs rather than free-form strings: stage_success_route, stage_blocked_route, compile_wave_retry_route, compile_worklist_blocked_route, node_seed_review_decision, and node_seed_reviewer_role. Historical per-artifact schema filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for the single schema draft's `$defs`, not separate schema files.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and schema references are backend schema work, not visual presentation.
 depends_on: [CV-288, PNC-014, EP-103, POA-048, MS-111, ATS-001]
@@ -17315,6 +17322,7 @@ acceptance_criteria:
   - Contract envelopes carry refs and cross-owner fields without replacing owner behavior semantics.
   - Per-artifact schema filename tokens resolve to $defs aliases in the single design-only handoff schema.
   - The schema draft remains design-only and does not create runtime artifacts.
+  - Low-context route and NodeSeed-review fields resolve to canonical route/role defs, not unrestricted strings.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema

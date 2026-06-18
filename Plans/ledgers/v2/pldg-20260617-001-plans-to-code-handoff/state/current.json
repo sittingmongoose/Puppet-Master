@@ -5,8 +5,8 @@
   "phase": "compiled_plans_to_code_handoff_governance_sealed",
   "status": "sealed",
   "created_at_utc": "2026-06-17T21:45:00Z",
-  "updated_at_utc": "2026-06-18T08:33:40Z",
-  "last_event_id": "evt-0016",
+  "updated_at_utc": "2026-06-18T12:49:21Z",
+  "last_event_id": "evt-0017",
   "design_atoms_total": 64,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
@@ -87,7 +87,7 @@
     "Plans/rewrite-tie-in-memo.md"
   ],
   "candidate_compile_owner_docs": [],
-  "next_action": "Run final validators/governance refresh for the bounded implementation-readiness fidelity repair; do not run PlanCompile or create WorkNodes/NodeSeeds.",
+  "next_action": "No current repair, validator, or PlanCompile action remains for this ledger. PlanCompile stays design-only disabled; Plan Wizard redesign may continue as a separate future planning lane.",
   "open_blockers": [],
   "open_questions": [],
   "validation_state": {
@@ -98,17 +98,20 @@
     "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "governance_status": "sealed",
     "shard_registration": "Automated_Testing_System_registered",
-    "doc_impact_matrix": "doc_impact_fidelity_repair_certified",
-    "implementation_readiness_matrix": "implementation_readiness_fidelity_repair_certified",
-    "latest_audit": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
-    "bounded_reconciliation": "evt-0016",
+    "doc_impact_matrix": "doc_impact_currentness_compatibility_certified",
+    "implementation_readiness_matrix": "implementation_readiness_currentness_compatibility_certified",
+    "latest_audit": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+    "bounded_reconciliation": "evt-0017",
     "active_fixed_pass_replacement": "auditor_audit_to_repair_loop_until_certified_or_critical_block",
     "forbidden_artifacts": "not_created",
-    "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+    "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
     "handoff_schema_contract": "strict_payload_defs_nested_enums_h001_h018_validator_passed",
     "handoff_matrix_rows": "explicit_row_by_row_matrix_added",
     "latest_audit_status": "pass_certified",
-    "validator_sweep": "pass"
+    "validator_sweep": "pass",
+    "validators": "pass",
+    "plan_wizard_redesign_next_lane": "allowed_separate_future_scope",
+    "terminal_cursor": "evt-0017_no_pending_repair_or_validator_action"
   },
   "doc_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/doc_impact_matrix.json",
   "implementation_readiness_matrix_ref": "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/state/implementation_readiness_matrix.json",
@@ -152,6 +155,6 @@
     "T-159",
     "W-072"
   ],
-  "latest_audit_ref": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

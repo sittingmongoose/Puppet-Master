@@ -25,20 +25,20 @@ Debug/runtime targets are workspace-bound for Project Plan Package linkage only 
 
 ### P5 project-output artifact recovery requirements
 
-- `Project_Output_Artifacts.md`, `FileManager.md`, `newtools.md`, and `assistant-memory-subsystem.md` now form a stronger artifact/event/runtime-observability gap cluster: - `validation_pass_report.pass_verdict` still conflicts with downstream `skipped` behavior. - project artifact events are under-keyed relative to the canonical EventRecord envelope and still lack project/run/thread/wizard/account lineage. - `glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table. - `FileManager.md`'s addendum requires open-by-identity and generated non-repo drafts, but `OpenFile { path: PathBuf }` plus root-path validation cannot satisfy it; no `OpenArtifact`-style contract, no `evidence_by_attempt` projection, and no artifact-index freshness/degraded fallback exist. - `newtools.md`, storage-plan, `/Assistant`, `/custom-headless`, `/AutoMilestone`, and assistant memory introduce uncataloged preview/build command IDs, unregistered `live.*`, `memory.gist`, `memory.gist.*`, `cmd.*`, and `/permissions` artifacts.
-- Artifact / persistence / lineage owner docs still have field-family holes that downstream passes kept surfacing: - `Project_Output_Artifacts.md` is now clearly under-keyed relative to the canonical EventRecord/runtime model: artifact events and validation pass reports still omit project/thread/run/attempt/account identity details, `pass_verdict` mismatches the wizard producer doc, and interview-emitted artifact types (`glossary`, `evidence/<node_id>.json`) still do not line up with the package SSOT. - `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required. - `assistant-memory-subsystem.md` and storage-plan surface a new storage-owner gap: memory event families, AutoRunBoundary/AutoMilestone tri; `/command`, `/dashboard`, and CTA routing remain part of this artifact lineage surface.
+- Historical P5 recovery note, superseded for validation-report naming: `Project_Output_Artifacts.md`, `FileManager.md`, `newtools.md`, and `assistant-memory-subsystem.md` formed a stronger artifact/event/runtime-observability gap cluster. The current validation-report family is `auditor_cycle_report`; legacy `validation_pass_report.pass_verdict` survives only in compatibility mirrors with `compatibility_only: true` and `cycle_report_ref`. The remaining identity/open-by-identity observations are lineage inputs and do not override implementation-facing PlanUnits.
+- Historical P5 recovery note, superseded for validation-report naming: artifact / persistence / lineage owner docs exposed field-family holes that downstream sweeps surfaced. Active canon resolves Auditor cycle identity through `auditor_cycle_report`; legacy `validation_pass_report` mirrors may carry pass-shaped fields only with `compatibility_only: true` and `cycle_report_ref`. The remaining project/thread/run/attempt/account identity, artifact registration, open-by-runtime-identity, and storage-owner observations remain lineage inputs for their owner docs.
 - **`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`** - **Why impacted:** These are the executable graph contracts. - **Old assumption:** Lexicographic node selection, weak dependency duality (`depends_on` vs `blockers/unblocks`), no package/seam/worktree/account identity. - **New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.
-- Project artifact / file-management gaps continued to deepen: - `validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 also pinned missing `auto_fixes_applied[]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_run_id` vs canonical `run_id` identity. - `project_id` omission is now clearly a determinism problem in app-global seglog mode because artifact events cannot be partitioned safely by project otherwise. - `OpenFile { path }` is now unambiguously workspace-root-only, proving that generated/runtime opens need a separate open-by-identity router. - attempt-scoped evidence remains blocked not just by missing filters but by storage/UI keying that is still tier/node-centric instead of attempt-centric.
+- Historical P5 recovery note, superseded for validation-report naming: earlier project artifact / file-management gaps cited `validation_pass_report`, `skipped`, and Pass-1 lineage contradictions. Active canon resolves the report family through `auditor_cycle_report`; compatibility exports may mirror legacy pass fields only with `compatibility_only: true` and `cycle_report_ref`. The `project_id`, open-by-identity, and attempt-scoped evidence concerns remain lineage inputs for their owner docs.
 - `Ledger` - must be exact, but exact does not mean fully materialized at once - filtered query + paging + stable sort are required - export can retrieve more than the viewport, but normal browsing should stay slice-based
-- Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.
-- The current lineage story is fragmented across multiple docs: - `chain-wizard-flexibility.md` ties reports to the three-pass sweep and wizard blocked/attention behavior - `Project_Output_Artifacts.md` owns the artifact type and `workflow_run_id` - wizard state elsewhere owns `wizard_id`, `phase_plan_ref`, staged bundle refs, and blocked report refs - no single pass-report contract currently ties those together cleanly
+- Auditor cycle reports require `provider` and `model` values matching the resolved Auditor loop provider/model and may mirror those values into legacy `validation_pass_report` compatibility exports.
+- Historical lineage fragmentation around a three-pass sweep is superseded: `auditor_cycle_report` is the canonical report family, while `validation_pass_report` is a compatibility mirror that carries `compatibility_only: true`, `cycle_report_ref`, lineage fields, and no independent scheduling or model settings.
 - State the precedence rule directly in `Contracts_V0.md`. - Reject multi-selector route payloads as non-canonical.
 - Promote artifact/memory/live/runtime-observability records to full owner status: - align project-artifact events to EventRecord-level identity, - add missing artifact types, - define an `OpenArtifact`-style FileManager contract plus required supporting projections, - register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where they truly belong.
 - The canonical-storage side is already disciplined: - `seglog` is canonical - JSONL mirror is derived - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache - packaged document sets already have explicit `manifest.json` ownership
 - `Plans/FileSafe.md` - **Why impacted:** Defines the structure of the active plan and write scopes. - **Old assumption:** `Phase/Task/Subtask/Iteration` hierarchy is the only way to organize work; single active plan. - **New model pressure:** Needs to support "Pack" or "Seam" based scopes and potentially concurrent active contexts.
 - `acknowledged` concerns should reduce repeat in-app surfacing, but they must not mask an active blocked state if the underlying condition still blocks progress.
 - Source Control and artifact navigation surfaces are showing a broader object-identity problem: - `GitHub_Integration.md` still frames worktree ownership around `run/tier` - `FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first - `Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly
-- `workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.
+- `workflow_run_id` links Auditor cycles in a sweep, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run; compatibility pass mirrors must point back to the canonical `auditor_cycle_report` through `cycle_report_ref`.
 - Export correctness now depends on the earlier projection-trust work. - Recommended rule: - exports derived from stale/degraded projections must either: - disclose trust state in the export/manifest - or re-query from canonical/current backing data before export
 - `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.
 - Adjacent owner reference remains `Plans/Runtime_Artifacts_Panel.md` for this recovery seam.
@@ -49,8 +49,8 @@ Debug/runtime targets are workspace-bound for Project Plan Package linkage only 
 - The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.
 - `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.
 - The current docs already contain several different export families: - config sync/export bundles (`.pm-bundle`) - render/preview exports (for example Mermaid `SVG` / `PNG`) - runtime artifact export from the Artifacts panel - Usage/Ledger CSV/JSON exports - project-output materialization and optional derived exports under `.puppet-master/project/**` - generic thread/run history export from seglog / JSONL mirror
-- Validation sweep and pass-report artifacts are upstream artifacts, not execution attempts, but they must bridge `/session`, `/node/attempt`, and `/history/ledger/search` views through wizard/session lineage, staged artifact bundle refs, promoted artifact tree refs, and launched `run_id?` when execution later starts from the validated output.
-- `validation-pass` reports are hard-gating canon for promotion and launch decisions, so weak identity in those upstream artifacts must block downstream export, History/Ledger, or run-handoff claims until the lineage bridge is explicit.
+- Auditor cycle reports and legacy pass-report compatibility mirrors are upstream artifacts, not execution attempts, but they must bridge `/session`, `/node/attempt`, and `/history/ledger/search` views through wizard/session lineage, staged artifact bundle refs, promoted artifact tree refs, and launched `run_id?` when execution later starts from the validated output.
+- Auditor validation reports are hard-gating canon for promotion and launch decisions, so weak identity in those upstream artifacts must block downstream export, History/Ledger, or run-handoff claims until the lineage bridge is explicit.
 - Artifact lineage fields include `linked_artifact_id?` and `logical_artifact_id?` when a renderable output points at another durable artifact or a stable logical artifact identity across materializations.
 - Generated and staged artifacts may enter the UI as `generated://<artifact_id>` or `artifact:<artifact_id>` non-path subjects before any backing file path exists; `artifact_id` remains the identity that open routes, previews, and manifests preserve.
 - `Runtime_Artifacts_Panel.md` depends on open-by-identity behavior, so Project Output artifact records must expose enough identity and resolver metadata that surfaces do not get re-invented as per-surface open contracts.
@@ -536,7 +536,7 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
-Validation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history. `validation_pass_report` is a legacy artifact family name for requirements-quality lineage; it is not a user-facing validation-pass model setting. New plans-to-code audit, verification, certification, quality-gate, and evidence-review model routing uses Auditor Model semantics, while any broad artifact-family rename remains deferred to a targeted requirements-quality cleanup.
+Auditor cycle reports remain upstream governance artifacts, and they require strong lineage into execution and artifact history. `auditor_cycle_report` is the canonical artifact family for active validation-loop results. `validation_pass_report` is a legacy artifact family name for requirements-quality lineage only; every legacy mirror must carry `compatibility_only: true` and `cycle_report_ref`, and it is not a user-facing validation-pass model setting. New plans-to-code audit, verification, certification, quality-gate, and evidence-review model routing uses Auditor Model semantics.
 
 Required lineage fields include:
 - `project_id`
@@ -555,22 +555,25 @@ Required lineage fields include:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 Rules:
-- validation pass reports do not become runtime attempts
-- validation reports must be traceable both backward to planning/wizard state and forward to launched execution when that bridge exists
-- pass reports remain first-class records in History/Ledger and first-class export members in manifests
+- Auditor cycle reports and legacy pass-report compatibility mirrors do not become runtime attempts
+- Auditor validation reports must be traceable both backward to planning/wizard state and forward to launched execution when that bridge exists
+- Auditor cycle reports remain first-class records in History/Ledger and first-class export members in manifests; legacy pass-report mirrors are export/search compatibility rows only
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
 ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
 
-Required fields:
+Required canonical fields:
+- auditor_cycle_report
+- cycle_report_ref
+- compatibility_only
 - pass_number
 - pass_name
 - pass_verdict
 - verdict_reason
 - staged_bundle_ref
 
-Canonical terms and values:
+Compatibility mirror terms and values:
 - validation_pass_report
 - pass_number
 - pass_name
@@ -580,8 +583,9 @@ Canonical terms and values:
 - skipped
 
 Behavioral rules:
-- Validation pass reports remain upstream artifacts.
-- Pass reports must bridge into launchable execution through explicit lineage fields.
+- Auditor cycle reports remain upstream artifacts.
+- Legacy validation pass reports are compatibility mirrors only and must bridge to the canonical Auditor cycle through `cycle_report_ref`.
+- Report records must bridge into launchable execution through explicit lineage fields when that bridge exists.
 
 Permission carry-through:
 - effective runtime/account identity must survive from pass report into downstream execution handoff
@@ -764,7 +768,7 @@ ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Proje
 - 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 model settings for validation reports; provider/model parity now points to the single Auditor validation loop setting resolved at sweep start.
 - 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage later superseded by the single Auditor validation loop, deterministic/headless sweep provenance requirement, post-loop artifact finality requirement, and fixed `unresolved_findings[]` naming in the certification-cycle write-protection invariant.
-- 2026-02-25: Added `validation_pass_report` artifact typing in §8.2 and §10 Validation Pass Report Artifacts, including execution-bridge lineage and validation-sweep acceptance requirements. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
+- 2026-02-25: Added legacy `validation_pass_report` artifact typing in §8.2 and the former §10 validation-pass artifact lineage section, including execution-bridge lineage and validation-sweep acceptance requirements. This title is now superseded by Auditor cycle report lineage, with validation-pass rows retained only as compatibility mirrors.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
 - 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).
 - 2026-02-24: Replaced this document to be the canonical SSOT for user-project **Project Plan Package** outputs under `.puppet-master/project/**`.
@@ -900,7 +904,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Project artifact events and validation pass reports must align to EventRecord-level identity, register missing artifact and event families, and resolve pass/report lineage across project, run, thread, wizard, account, provider, model, and later launched run identity.
+  Project artifact events, Auditor cycle reports, and legacy pass-report compatibility mirrors must align to EventRecord-level identity, register missing artifact and event families, and resolve report lineage across project, run, thread, wizard, account, provider, model, and later launched run identity.
 gui_related: false
 gui_classification_reason: This unit defines artifact/event identity and lineage requirements rather than visual presentation.
 split_recommended: false
@@ -2096,7 +2100,7 @@ canonical_text: >-
   Validation sweeps must produce Auditor cycle reports tied by workflow_run_id,
   preserve provider/model provenance, remain deterministic/headless, and
   validate post-loop corrected artifacts until certified or critically blocked;
-  exactly three pass reports remain compatibility mirrors only.
+  zero or more legacy pass-shaped report rows may exist only as import/export/search compatibility mirrors.
 gui_related: true
 gui_classification_reason: The source span is GUI-related in the migration map and covers user-visible validation sweep provenance and corrected output finality.
 split_recommended: false
@@ -2190,7 +2194,7 @@ owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```
 
-### POA-029 - Validation Pass Report Lineage Bridge
+### POA-029 - Auditor Cycle Report Lineage Bridge
 
 ```yaml
 plan_unit_id: POA-029
@@ -2198,16 +2202,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation pass reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
+  Auditor cycle reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is a compatibility mirror, not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
 gui_related: true
-gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for validation pass reports.
+gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for Auditor cycle reports and legacy compatibility mirrors.
 split_recommended: false
 depends_on:
   - "POA-027"
 unblocks: []
 acceptance_criteria:
-  - "Validation Pass Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
-  - "validation_pass_report remains an artifact-family lineage name, not a user-facing validation-pass model selector."
+  - "Auditor Cycle Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "validation_pass_report remains a compatibility mirror artifact-family lineage name with compatibility_only true and cycle_report_ref, not a user-facing validation-pass model selector."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -2239,7 +2243,7 @@ preserved_exact_tokens:
   - "pass_verdict"
   - "skipped"
 negative_constraints:
-  - "Validation pass reports do not become runtime attempts."
+  - "Auditor cycle reports and legacy validation_pass_report mirrors do not become runtime attempts."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
@@ -2969,7 +2973,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Validation artifact lineage requires validation_pass_report, workflow_run_id, pass_verdict, phase_plan_ref, and requirements_quality_report_ref; validation lineage stays concrete and inspectable, and pass reports remain upstream artifacts rather than local replacement identifiers.
+  Validation artifact lineage requires auditor_cycle_report, workflow_run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref, and any legacy validation_pass_report mirror to carry compatibility_only true plus cycle_report_ref; validation lineage stays concrete and inspectable, and report records remain upstream artifacts rather than local replacement identifiers.
 gui_related: false
 gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
 split_recommended: false
@@ -3187,7 +3191,7 @@ unblocks: [POA-048, RAP-029, CV-289]
 acceptance_criteria:
   - Receipt artifact families are named and discoverable in project output packages.
   - Artifacts preserve handoff, evidence, test, source-control, model, and final certification refs.
-  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
+  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, carry compatibility_only true and cycle_report_ref, and are not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
   - Project output artifacts package receipt references without replacing runtime, storage, or contract authority.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
