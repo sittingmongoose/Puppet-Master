@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L688-L3173
+Source lines: L688-L3175
 
-Source SHA256: `a98f034d790a019f65d56a17324b6badcc78920ee2393e3f8719a652afffcdc5`
+Source SHA256: `f4441554904a5137589c4d41db33fffb77be3a96c49489e7a41fdbf61abfa169`
 
 ---
 
@@ -2018,6 +2018,8 @@ preserved_exact_tokens:
   - "document generation"
 negative_constraints:
   - "Requirements drafting and section summaries are workflow outputs, not a handoff to a separate core Document Writer."
+stale_retired_dispositions:
+  - "Chain Wizard and Requirements Doc Builder are retained here only as legacy source tokens; current persona fit is PRD Builder and Planning Wizard topic/intake conversations."
 owner_hints:
   - Plans/Personas.md
 ```

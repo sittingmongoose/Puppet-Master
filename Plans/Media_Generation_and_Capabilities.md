@@ -129,7 +129,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
 
 ### 1.6 Agent invocation rule
 
-The **Assistant** and **Interviewer** personas MUST call `capabilities.get` when the user asks about available capabilities, features, or what Puppet Master can do. When Assistant is operating in the **Requirements Doc Builder** workflow, the same requirement applies. The response is used to give the user an accurate, real-time answer about what is enabled and what is not (with reasons and setup guidance).
+The **Assistant** and **Interviewer** personas MUST call `capabilities.get` when the user asks about available capabilities, features, or what Puppet Master can do. When Assistant is operating in the **PRD Builder** workflow, the same requirement applies. The response is used to give the user an accurate, real-time answer about what is enabled and what is not (with reasons and setup guidance).
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
 
@@ -754,7 +754,7 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 <a id="AC-MED09"></a>
-**AC-MED09:** The Assistant and Interviewer MUST call `capabilities.get` when the user asks about capabilities or features. When Assistant is operating in the Requirements Doc Builder workflow, the same requirement applies.
+**AC-MED09:** The Assistant and Interviewer MUST call `capabilities.get` when the user asks about capabilities or features. When Assistant is operating in the PRD Builder workflow, the same requirement applies.
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
 
@@ -1323,7 +1323,7 @@ plan_unit_id: MGAC-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Assistant, Interviewer, and Requirements Doc Builder workflows must call capabilities.get when users ask about available capabilities, features, or what Puppet Master can do, so answers reflect real-time enabled state, reasons, and setup guidance.
+canonical_text: Assistant, Interviewer, and PRD Builder workflows must call capabilities.get when users ask about available capabilities, features, or what Puppet Master can do, so answers reflect real-time enabled state, reasons, and setup guidance.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: false
@@ -1360,7 +1360,8 @@ preserved_exact_tokens:
 - reasons and setup guidance
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Requirements Doc Builder is retained here only as a legacy source token for the former workflow; current product prose uses PRD Builder.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -4901,7 +4902,7 @@ plan_unit_id: MGAC-076
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED09 requires the Assistant and Interviewer to call capabilities.get when users ask about capabilities or features, including the Requirements Doc Builder workflow.
+canonical_text: AC-MED09 requires the Assistant and Interviewer to call capabilities.get when users ask about capabilities or features, including the PRD Builder workflow.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4931,7 +4932,7 @@ preserved_exact_tokens:
 - Assistant
 - Interviewer
 - capabilities.get
-- Requirements Doc Builder workflow
+- PRD Builder workflow
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

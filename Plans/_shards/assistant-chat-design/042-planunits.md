@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3322-L21671
+Source lines: L3322-L21673
 
-Source SHA256: `26bce4395c51a5c540bcaca4548bd680fc0d5a6e4eec5b776c9f58fc9efa6cb8`
+Source SHA256: `6deeed2f549aa72007cf80665d3aa13c76a6632da40b1f4a1a66c20d30288214`
 
 ---
 
@@ -2514,7 +2514,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Planning overlays may recommend the Chain Wizard when work is better treated
+  Planning overlays may recommend the Planning Wizard when work is better treated
   as feature or enhancement specification plus adaptive interview/orchestrator
   flow. Deep Plan must perform the wizard-escalation check before final
   execute-first recommendations, but the recommendation is a CTA, not a forced
@@ -2524,7 +2524,7 @@ gui_classification_reason: Wizard recommendations and CTAs are visible planning 
 depends_on: [ACD-038, ACD-040]
 unblocks: []
 acceptance_criteria:
-  - Standard Plan may recommend Chain Wizard when signals are strong.
+  - Standard Plan may recommend Planning Wizard when signals are strong.
   - Deep Plan performs a wizard-escalation check before final execute-first recommendations.
   - Recommendations are user-facing suggestions and not automatic redirects.
 validation_surfaces:
@@ -2542,10 +2542,12 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0043
 preserved_exact_tokens:
-  - "Chain Wizard"
+  - "Planning Wizard"
   - "UI + data + security + deployment"
 negative_constraints:
   - "Recommendation is a user-facing suggestion/CTA, not an automatic forced redirect."
+stale_retired_dispositions:
+  - "Chain Wizard is a legacy source token for this span; current product prose and UI use Planning Wizard."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
@@ -11483,13 +11485,13 @@ plan_unit_id: ACD-254
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Plan Wizard -> Auditor Validation, not the chat UI.
+canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Planning Wizard -> Auditor Validation, not the chat UI.
 gui_related: true
 gui_classification_reason: Settings navigation and non-chat placement are visible configuration UI.
 depends_on: [ACD-253]
 unblocks: [ACD-255, ACD-261]
 acceptance_criteria:
-  - Auditor Validation settings group exists under Interview / Plan Wizard settings.
+  - Auditor Validation settings group exists under Interview / Planning Wizard settings.
   - Auditor loop selection is not placed in chat UI.
   - Validation settings remain co-located with interview/wizard settings.
 validation_surfaces:
@@ -11509,7 +11511,7 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
 preserved_exact_tokens:
   - "Auditor Validation"
-  - "Settings -> Interview / Plan Wizard -> Auditor Validation"
+  - "Settings -> Interview / Planning Wizard -> Auditor Validation"
 negative_constraints:
   - "Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired."
 owner_hints:
@@ -13505,7 +13507,7 @@ plan_unit_id: ACD-301
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Natural-language mode invocation and wizard escalation define how chat resolves workflow identity, runtime posture, and Chain Wizard escalation.
+canonical_text: Natural-language mode invocation and wizard escalation define how chat resolves workflow identity, runtime posture, and Planning Wizard escalation.
 gui_related: false
 gui_classification_reason: This scope statement defines behavior and escalation ownership.
 depends_on: []
@@ -13725,20 +13727,20 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-### ACD-306 - Assistant Chain Wizard Recommendation
+### ACD-306 - Assistant Planning Wizard Recommendation
 
 ```yaml
 plan_unit_id: ACD-306
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Assistant chat recommends Chain Wizard when feature, substantial enhancement, major refactor/change, broad scope, open questions, or Deep Plan output suggests interview scoping and orchestrator follow-through would help.
+canonical_text: Assistant chat recommends Planning Wizard when feature, substantial enhancement, major refactor/change, broad scope, open questions, or Deep Plan output suggests planning-workspace scoping and orchestrator follow-through would help.
 gui_related: false
 gui_classification_reason: Recommendation trigger detection is workflow behavior; CTA display is covered separately.
 depends_on: [ACD-301]
 unblocks: [ACD-307, ACD-308, ACD-314]
 acceptance_criteria:
-  - Assistant chat detects feature, enhancement, major change, and major refactor requests as Wizard recommendation candidates.
+  - Assistant chat detects feature, enhancement, major change, and major refactor requests as Planning Wizard recommendation candidates.
   - Broad scope, many open questions, or large plan size may trigger recommendation.
   - Deep Plan output may trigger recommendation when interview scoping or orchestrator follow-through would help.
 validation_surfaces:
@@ -13751,7 +13753,7 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
 node_compile_hint:
-  mode: assistant_chain_wizard_recommendation
+  mode: assistant_planning_wizard_recommendation
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
@@ -13766,20 +13768,20 @@ owner_hints:
   - Plans/chain-wizard-flexibility.md
 ```
 
-### ACD-307 - Chain Wizard Recommendation CTA
+### ACD-307 - Planning Wizard Recommendation CTA
 
 ```yaml
 plan_unit_id: ACD-307
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Chain Wizard recommendation is a CTA, not an automatic redirect; the user may accept or decline, and declining keeps the user in chat with no hidden workflow switch.
+canonical_text: Planning Wizard recommendation is a CTA, not an automatic redirect; the user may accept or decline, and declining keeps the user in chat with no hidden workflow switch.
 gui_related: true
 gui_classification_reason: Recommendation CTA and accept/decline behavior are visible user-facing flow.
 depends_on: [ACD-306]
 unblocks: [ACD-309]
 acceptance_criteria:
-  - Chain Wizard recommendation appears as a CTA.
+  - Planning Wizard recommendation appears as a CTA.
   - The user may accept or decline the recommendation.
   - Declining keeps the user in chat without a hidden workflow switch.
 validation_surfaces:
@@ -13793,7 +13795,7 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/chain-wizard-flexibility.md
 node_compile_hint:
-  mode: chain_wizard_recommendation_cta
+  mode: planning_wizard_recommendation_cta
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
@@ -13807,7 +13809,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-### ACD-308 - Deep Plan Wizard Escalation Evaluation
+### ACD-308 - Deep Planning Wizard Escalation Evaluation
 
 ```yaml
 plan_unit_id: ACD-308
@@ -13816,7 +13818,7 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Deep Plan performs a final wizard-escalation evaluation before defaulting to
-  chat execution and recommends Chain Wizard when work spans several domains,
+  chat execution and recommends Planning Wizard when work spans several domains,
   has unresolved material questions, reads like a feature spec, or should
   produce orchestrator-ready artifacts.
 gui_related: false
@@ -13825,7 +13827,7 @@ depends_on: [ACD-301, ACD-306]
 unblocks: [ACD-309, ACD-314]
 acceptance_criteria:
   - Deep Plan performs a final wizard-escalation evaluation before chat execution.
-  - Deep Plan recommends Chain Wizard for multi-domain, unresolved, spec-like, or artifact-producing work.
+  - Deep Plan recommends Planning Wizard for multi-domain, unresolved, spec-like, or artifact-producing work.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13836,7 +13838,7 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/chain-wizard-flexibility.md
 node_compile_hint:
-  mode: deep_plan_wizard_escalation_evaluation
+  mode: deep_planning_wizard_escalation_evaluation
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0140
@@ -13849,7 +13851,7 @@ owner_hints:
   - Plans/chain-wizard-flexibility.md
 ```
 
-### ACD-309 - Chain Wizard Handoff Bundle
+### ACD-309 - Planning Wizard Handoff Bundle
 
 ```yaml
 plan_unit_id: ACD-309
@@ -13857,7 +13859,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Accepting a recommendation launches Chain Wizard / Interview with a structured
+  Accepting a recommendation launches Planning Wizard / Interview with a structured
   handoff bundle containing source, reason, origin IDs, project context,
   `default_intent = EnhanceRewriteAdd`, user goal, summaries, GUI hint, plan
   refs, todos, open questions, assumptions, and `chat_excerpt_refs[]`.
@@ -13866,7 +13868,7 @@ gui_classification_reason: Handoff bundle schema is integration data behavior.
 depends_on: [ACD-307, ACD-308]
 unblocks: [ACD-310, ACD-311, ACD-312]
 acceptance_criteria:
-  - Accepting a recommendation launches Chain Wizard / Interview with a structured handoff bundle.
+  - Accepting a recommendation launches Planning Wizard / Interview with a structured handoff bundle.
   - The handoff bundle carries source, reason, origin, project, goal, summary, GUI hint, plan, TODO, question, assumption, and excerpt references.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -13879,7 +13881,7 @@ implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/interview-subagent-integration.md
 node_compile_hint:
-  mode: chain_wizard_handoff_bundle
+  mode: planning_wizard_handoff_bundle
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
@@ -14092,8 +14094,8 @@ depends_on: [ACD-302, ACD-304, ACD-306, ACD-308, ACD-311, ACD-312]
 unblocks: []
 acceptance_criteria:
   - Ask, Plan, and Deep Plan are reachable through natural-language requests.
-  - Assistant chat and Deep Plan can recommend Chain Wizard when appropriate.
-  - Accepting a recommendation opens Chain Wizard / Interview with imported assistant context and plan artifact references when present.
+  - Assistant chat and Deep Plan can recommend Planning Wizard when appropriate.
+  - Accepting a recommendation opens Planning Wizard / Interview with imported assistant context and plan artifact references when present.
   - Handoff remains visible/auditable and does not silently create a repo file.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

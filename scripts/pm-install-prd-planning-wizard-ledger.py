@@ -42,6 +42,27 @@ def main() -> int:
     if entry.get("ledger_id") != LEDGER_ID or manifest.get("ledger_id") != LEDGER_ID:
         print("Ledger identity mismatch", file=sys.stderr)
         return 2
+    existing_entries = [
+        row
+        for bucket in BUCKETS
+        for row in registry.get(bucket, [])
+        if row.get("ledger_id") == LEDGER_ID
+    ]
+    sealed_present = any(
+        row.get("status") == "sealed" or row.get("governance_status") == "sealed"
+        for row in existing_entries
+    )
+    if sealed_present or manifest.get("status") == "sealed":
+        print(json.dumps({
+            "status": "already_sealed_noop" if not args.dry_run else "dry_run_already_sealed_noop",
+            "repo": str(repo),
+            "ledger_id": LEDGER_ID,
+            "existing_entries": len(existing_entries),
+            "target_bucket": "sealed_ledgers",
+            "registry": str(registry_path),
+            "note": "Refusing to downgrade a sealed ledger to the active precompile bucket."
+        }, indent=2))
+        return 0
     if entry.get("status") != "active" or entry.get("phase") != "ready_for_plan_compile":
         print("Registry entry is not the expected active precompile state", file=sys.stderr)
         return 2

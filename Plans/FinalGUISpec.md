@@ -1275,7 +1275,7 @@ Bulk action families include stage/unstage/discard (`/unstage/discard`), rerun/c
 
 ### 7.6 Wizard
 
-Wizard view anchors are source-backed entrypoints for requirements, PRD, plan review, blocked-question, and approval workflows. Wizard pages consume Chain Wizard, Contracts, HITL, storage, and assistant-chat owners; this section is a route and presentation anchor, not the owner of blocked lifecycle records.
+Wizard view anchors are source-backed entrypoints for requirements, PRD, plan review, blocked-question, and approval workflows. Wizard pages consume Planning Wizard, PRD Builder, Contracts, HITL, storage, and assistant-chat owners; this section is a route and presentation anchor, not the owner of blocked lifecycle records.
 
 ### 7.7 Legacy Tiers Alias
 
@@ -2805,9 +2805,9 @@ The plan document may contain:
 - file paths / references
 - validation and rollout notes
 
-### 4. Assistant recommendation card for Chain Wizard
+### 4. Assistant recommendation card for Planning Wizard
 
-When Assistant Chat or Deep Plan recommends the Chain Wizard, show a visible recommendation card rather than silently switching surfaces.
+When Assistant Chat or Deep Plan recommends the Planning Wizard, show a visible recommendation card rather than silently switching surfaces.
 
 Required card content:
 - reason summary (for example: `This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow.`)
@@ -2815,13 +2815,13 @@ Required card content:
 - secondary action: `Stay in Chat` / `Not now`
 
 Optional supporting copy may mention:
-- that the interview can prune irrelevant phases automatically
+- that Planning Wizard can prune irrelevant topics automatically
 - that imported plan/chat context will be carried into the wizard
 
 ### 5. Post-acceptance wizard handoff surface
 
 If the user accepts the recommendation:
-- switch to the Chain Wizard / Interview flow
+- switch to the Planning Wizard intake/interview flow
 - show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)
 - show whether a plan artifact was included
 - show the imported goal/scope summary
@@ -2847,7 +2847,7 @@ If a project is already active, the wizard should open on the preloaded feature/
 - PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
 - Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
 - When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
-- Accepting the CTA opens the Chain Wizard / Interview flow with visible imported context.
+- Accepting the CTA opens the Planning Wizard intake/interview flow with visible imported context.
 - Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
 
 ## Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
@@ -20729,7 +20729,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-324 - Assistant Chain Wizard Recommendation Card
+### F3-324 - Assistant Planning Wizard Recommendation Card
 
 ```yaml
 plan_unit_id: F3-324
@@ -20737,7 +20737,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  When Assistant Chat or Deep Plan recommends the Chain Wizard, the GUI shows a visible
+  When Assistant Chat or Deep Plan recommends the Planning Wizard, the GUI shows a visible
   recommendation card with reason summary, primary CTA Add a new Feature or Enhancement,
   secondary action Stay in Chat or Not now, and optional supporting copy about phase pruning
   and imported context carry-through.
@@ -20762,12 +20762,12 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: assistant_chain_wizard_recommendation_card
+  mode: assistant_planning_wizard_recommendation_card
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0193"
 preserved_exact_tokens:
-- "Assistant recommendation card for Chain Wizard"
+- "Assistant recommendation card for Planning Wizard"
 - "This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow."
 - "Add a new Feature or Enhancement"
 - "Stay in Chat"
@@ -20781,7 +20781,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-325 - Imported Context Wizard Handoff Surface
+### F3-325 - Imported Context Planning Wizard Handoff Surface
 
 ```yaml
 plan_unit_id: F3-325
@@ -20789,7 +20789,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Accepting the wizard recommendation switches to the Chain Wizard or Interview flow, shows an
+  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an
   Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan
   artifact was included, shows imported goal and scope summary, and opens an existing project
   on the preloaded feature/enhancement path instead of a blank intent picker.
@@ -24979,7 +24979,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Plan Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
+  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
   Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls.
   Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
 gui_related: true
@@ -25351,6 +25351,8 @@ negative_constraints:
 - Do not present every backend subagent or audit thread as a separate top-level app surface.
 - Do not mix ongoing WorkNode execution into Plan Compile stage progress.
 - Do not retain the old nine-step linear wizard as canonical UX.
+stale_retired_dispositions:
+- Requirements Doc Builder, Chain Wizard, Plan Wizard, and Start Chain are preserved here only as source-lineage tokens; active product prose uses PRD Builder, Planning Wizard, and Approve And Build.
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/FinalGUISpec.md

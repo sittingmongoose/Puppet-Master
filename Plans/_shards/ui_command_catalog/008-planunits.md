@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1227-L6827
+Source lines: L1227-L6828
 
-Source SHA256: `90ce512c5e3f75283aff3532cf17f53756d27e460f542e20b64d26ff5e52d049`
+Source SHA256: `3b4a10abf0c468780a4a61097cb713b82c1b443e5b1bc54ebe371a4ce5d99dc1`
 
 ---
 
@@ -53,7 +53,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- cmd.project.chain_wizard_open_deferred remains a legacy command alias for deferred Planning Wizard intake; active product copy and affected surfaces use Planning Wizard terminology until a dedicated command-ID migration is accepted.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

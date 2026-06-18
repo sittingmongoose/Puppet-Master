@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L3499-L24322
 
-Source SHA256: `9a1dd78d5160d91073d1a8365c39600e6f5c59e90509f12053d9398a1b96958d`
+Source SHA256: `aced4324d7410537f926b2e667e5115467354b6b69b1e2dae796fcf36bf1ab6f`
 
 ---
 
@@ -17241,7 +17241,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-324 - Assistant Chain Wizard Recommendation Card
+### F3-324 - Assistant Planning Wizard Recommendation Card
 
 ```yaml
 plan_unit_id: F3-324
@@ -17249,7 +17249,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  When Assistant Chat or Deep Plan recommends the Chain Wizard, the GUI shows a visible
+  When Assistant Chat or Deep Plan recommends the Planning Wizard, the GUI shows a visible
   recommendation card with reason summary, primary CTA Add a new Feature or Enhancement,
   secondary action Stay in Chat or Not now, and optional supporting copy about phase pruning
   and imported context carry-through.
@@ -17274,12 +17274,12 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: assistant_chain_wizard_recommendation_card
+  mode: assistant_planning_wizard_recommendation_card
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0193"
 preserved_exact_tokens:
-- "Assistant recommendation card for Chain Wizard"
+- "Assistant recommendation card for Planning Wizard"
 - "This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow."
 - "Add a new Feature or Enhancement"
 - "Stay in Chat"
@@ -17293,7 +17293,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-325 - Imported Context Wizard Handoff Surface
+### F3-325 - Imported Context Planning Wizard Handoff Surface
 
 ```yaml
 plan_unit_id: F3-325
@@ -17301,7 +17301,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Accepting the wizard recommendation switches to the Chain Wizard or Interview flow, shows an
+  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an
   Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan
   artifact was included, shows imported goal and scope summary, and opens an existing project
   on the preloaded feature/enhancement path instead of a blank intent picker.

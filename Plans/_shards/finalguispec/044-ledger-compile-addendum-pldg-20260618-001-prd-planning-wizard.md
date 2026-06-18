@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L25085-L25372
+Source lines: L25085-L25374
 
-Source SHA256: `9a1dd78d5160d91073d1a8365c39600e6f5c59e90509f12053d9398a1b96958d`
+Source SHA256: `aced4324d7410537f926b2e667e5115467354b6b69b1e2dae796fcf36bf1ab6f`
 
 ---
 
@@ -277,6 +277,8 @@ negative_constraints:
 - Do not present every backend subagent or audit thread as a separate top-level app surface.
 - Do not mix ongoing WorkNode execution into Plan Compile stage progress.
 - Do not retain the old nine-step linear wizard as canonical UX.
+stale_retired_dispositions:
+- Requirements Doc Builder, Chain Wizard, Plan Wizard, and Start Chain are preserved here only as source-lineage tokens; active product prose uses PRD Builder, Planning Wizard, and Approve And Build.
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/FinalGUISpec.md

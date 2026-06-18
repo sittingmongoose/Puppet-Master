@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L2742-L2851
 
-Source SHA256: `9a1dd78d5160d91073d1a8365c39600e6f5c59e90509f12053d9398a1b96958d`
+Source SHA256: `aced4324d7410537f926b2e667e5115467354b6b69b1e2dae796fcf36bf1ab6f`
 
 ---
 
@@ -74,9 +74,9 @@ The plan document may contain:
 - file paths / references
 - validation and rollout notes
 
-### 4. Assistant recommendation card for Chain Wizard
+### 4. Assistant recommendation card for Planning Wizard
 
-When Assistant Chat or Deep Plan recommends the Chain Wizard, show a visible recommendation card rather than silently switching surfaces.
+When Assistant Chat or Deep Plan recommends the Planning Wizard, show a visible recommendation card rather than silently switching surfaces.
 
 Required card content:
 - reason summary (for example: `This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow.`)
@@ -84,13 +84,13 @@ Required card content:
 - secondary action: `Stay in Chat` / `Not now`
 
 Optional supporting copy may mention:
-- that the interview can prune irrelevant phases automatically
+- that Planning Wizard can prune irrelevant topics automatically
 - that imported plan/chat context will be carried into the wizard
 
 ### 5. Post-acceptance wizard handoff surface
 
 If the user accepts the recommendation:
-- switch to the Chain Wizard / Interview flow
+- switch to the Planning Wizard intake/interview flow
 - show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)
 - show whether a plan artifact was included
 - show the imported goal/scope summary
@@ -116,5 +116,5 @@ If a project is already active, the wizard should open on the preloaded feature/
 - PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
 - Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
 - When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
-- Accepting the CTA opens the Chain Wizard / Interview flow with visible imported context.
+- Accepting the CTA opens the Planning Wizard intake/interview flow with visible imported context.
 - Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
