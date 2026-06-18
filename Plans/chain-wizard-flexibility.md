@@ -8,7 +8,8 @@
 
 - 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.
 - 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with "Run Chain Wizard later" affordance; full spec in Plans/GitHub_Integration.md §D.
-- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. Per-pass provider/model selection in GUI settings (Plans/assistant-chat-design.md §26). Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.
+- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings. The invariant sweep still emits Pass 1, Pass 2, and Pass 3 reports, but all reports mirror the single Auditor validation loop provider/model resolved through `Plans/assistant-chat-design.md §26` and `Plans/Models_System.md`.
+- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. The original fixed pass-specific model setting was superseded by the 2026-06-18 Auditor validation loop repair. Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.
 - 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.
 - 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.
 - 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.
@@ -1273,7 +1274,7 @@ Before implementation, an implementation agent must complete or have clear specs
 50. **Pass 1 (Document Creation):** Verify all required `.puppet-master/project/` artifacts are generated and emit `validation_pass_report` (Pass 1) to seglog.
 51. **Pass 2 (Docs + Canonical Alignment):** Compare artifacts against Project Contract Pack and platform canonicals; apply fixes; emit `validation_pass_report` (Pass 2) with findings, changes, diff_pointers.
 52. **Pass 3 (Canonical Systems Only):** Enforce DRY/SSOT, plan graph integrity, wiring matrix, evidence/invariants, deterministic decisions; emit `validation_pass_report` (Pass 3); MUST NOT modify requirements.md or plan.md.
-53. **Per-pass provider/model:** Read per-pass provider+model from app settings (see assistant-chat-design.md §26); apply deterministic defaults when not configured.
+53. **Auditor loop provider/model:** Read the single Auditor validation loop provider+model from app settings (see assistant-chat-design.md §26 and Models_System.md); apply deterministic defaults when not configured.
 54. **Headless execution:** All three passes MUST run headless (no GUI, no user approval gates between passes).
 55. **Failure surfacing:** If Pass 1 fails, halt and surface failure; if Pass 2 or 3 fails, surface unresolved findings while still writing the corrected artifact set.
 
@@ -1430,9 +1431,9 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 - All three passes run **deterministically without human intervention**.
 - Each pass runs **headless** — no GUI is required; no user approval gate exists between passes.
 - Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
-- Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
-- Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
+- The Auditor validation loop provider and model are configurable once for the whole sweep (see `Plans/assistant-chat-design.md §26` and `Plans/Models_System.md`); defaults are deterministic and safe when not explicitly configured.
+- Each `validation_pass_report` MUST include `provider` and `model` values matching the resolved Auditor validation loop provider/model from sweep start (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md
 - Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
 - **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
@@ -1905,9 +1906,9 @@ Use reviewer Personas such as:
 - `security-auditor`
 - `architect-reviewer`
 
-### Per-stage platform/model control
+### Per-stage and Auditor-loop platform/model control
 
-Requirements Builder settings must allow platform/model selection per stage or pass, and these settings must still pass through provider capability filtering.
+Requirements Builder settings must allow platform/model selection per stage. Validation sweep pass reports use the single Auditor validation loop provider/model from `Plans/assistant-chat-design.md §26`, and these settings must still pass through provider capability filtering.
 
 ### Requested vs effective visibility
 
@@ -1916,7 +1917,7 @@ Requirements Builder UI should display:
 - effective Persona,
 - selection reason,
 - effective platform/model,
-- and skipped unsupported Persona controls for the active builder stage/pass.
+- and skipped unsupported Persona controls for the active builder stage or Auditor loop.
 
 ### Acceptance criteria addendum
 
@@ -6788,9 +6789,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  The sweep runs deterministically and headlessly, uses per-pass provider/model
-  settings, emits exactly three pass reports, and uses pass_verdict skipped for
-  blocked later passes.
+  The sweep runs deterministically and headlessly, uses one Auditor validation
+  loop provider/model setting for all pass reports, emits exactly three pass
+  reports, and uses pass_verdict skipped for blocked later passes.
 gui_related: false
 gui_classification_reason: Sweep execution settings and report emission are backend validation behavior.
 split_recommended: true
@@ -6800,9 +6801,9 @@ unblocks: [CWF-086, CWF-087]
 acceptance_criteria:
   - All three passes run deterministically without human intervention.
   - Each pass runs headless with no GUI and no approval gate between passes.
-  - Per-pass provider and model are configurable through app settings.
+  - Auditor validation loop provider and model are configurable through app settings.
   - Defaults are deterministic and safe when not explicitly configured.
-  - Each validation_pass_report includes provider and model matching validation_sweep.passN.provider and validation_sweep.passN.model settings.
+  - Each validation_pass_report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
   - Exactly three pass reports are emitted per sweep.
   - Later passes blocked by an earlier failure emit pass_verdict skipped with explanatory verdict_reason.
 validation_surfaces:
@@ -6822,12 +6823,14 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0080
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0081
 preserved_exact_tokens:
-  - "validation_sweep.passN.provider"
-  - "validation_sweep.passN.model"
+  - "model_roles.auditor.provider"
+  - "model_roles.auditor.model"
+  - "Auditor validation loop"
   - "Exactly three pass reports"
   - "pass_verdict: \"skipped\""
 negative_constraints:
   - "No GUI is required and no user approval gate exists between passes."
+  - "Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/assistant-chat-design.md
@@ -8345,7 +8348,7 @@ owner_hints:
   - Plans/Personas.md
 ```
 
-### CWF-117 - Per-Stage Platform Model Filtering
+### CWF-117 - Stage And Auditor Loop Platform Model Filtering
 
 ```yaml
 plan_unit_id: CWF-117
@@ -8353,8 +8356,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Requirements Builder settings allow platform and model selection per stage or
-  pass while still enforcing provider capability filtering.
+  Requirements Builder settings allow platform and model selection per stage and
+  use the Auditor validation loop for sweep pass reports while still enforcing
+  provider capability filtering.
 gui_related: false
 gui_classification_reason: Provider capability filtering is runtime selection behavior.
 split_recommended: false
@@ -8362,8 +8366,8 @@ depends_on: [CWF-113]
 unblocks: [CWF-118]
 acceptance_criteria:
   - Builder settings allow platform/model selection per stage.
-  - Builder settings allow platform/model selection per pass.
-  - Per-stage and per-pass selections pass through provider capability filtering.
+  - Validation sweep pass reports use the Auditor validation loop provider/model.
+  - Per-stage selections and Auditor loop selection pass through provider capability filtering.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8375,14 +8379,16 @@ implementation_surfaces:
   - Plans/Provider_OpenCode.md
   - Plans/Prompt_Pipeline.md
 node_compile_hint:
-  mode: chain_wizard_per_stage_platform_model_filtering
+  mode: chain_wizard_stage_auditor_platform_model_filtering
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0118
 preserved_exact_tokens:
-  - "platform/model selection per stage or pass"
+  - "platform/model selection per stage"
+  - "Auditor validation loop"
   - "provider capability filtering"
-negative_constraints: []
+negative_constraints:
+  - "Do not keep independent provider/model settings per validation pass."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Provider_OpenCode.md
@@ -8397,7 +8403,7 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder UI exposes effective Persona, selection reason, effective
-  platform/model, and skipped unsupported controls for the active stage or pass,
+  platform/model, and skipped unsupported controls for the active stage or Auditor loop,
   while acceptance preserves stage/pass Persona selection, collaborator intake,
   non-required Document Writer, distinct reviewer Personas, and visibility.
 gui_related: true

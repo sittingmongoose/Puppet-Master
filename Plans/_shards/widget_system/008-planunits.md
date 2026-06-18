@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L130-L1012
+Source lines: L130-L1013
 
-Source SHA256: `e283765c71f305daeef1982657f9929aacda6cb1da9ddbda8e667b6273d12437`
+Source SHA256: `6bbf7a9fb1832d6b3a5ce05638b91a8793a33bee438bccdfd268a95917270b07`
 
 ---
 
@@ -368,7 +368,7 @@ plan_unit_id: WS-008
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: '`/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `UserInteractionRequired`, tier-targeted filters, PTY filtering, and the older `Progress / Tiers / Node Graph / Evidence / History / Ledger` list are compatibility lineage only.'
+canonical_text: '`/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `UserInteractionRequired`, tier-targeted filters, PTY filtering, and the older six-tab `Progress / Tiers / Node Graph / Evidence / History / Ledger` list are compatibility lineage only; the active Orchestrator shell is `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`.'
 gui_related: true
 gui_classification_reason: 'The unit preserves GUI-era compatibility terms and retired widget tabs as non-live lineage.'
 split_recommended: false
@@ -409,7 +409,8 @@ preserved_exact_tokens:
 - 'UserInteractionRequired'
 - 'tier-targeted filters'
 - 'PTY filtering'
-- 'Progress / Tiers / Node Graph / Evidence / History / Ledger'
+- 'older six-tab Progress / Tiers / Node Graph / Evidence / History / Ledger list'
+- 'Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger'
 - 'Dashboard, Usage, Orchestrator widget tabs'
 - '### 15.1'
 - '### 15.9'

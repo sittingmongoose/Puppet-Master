@@ -523,7 +523,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 22257,
+      "line_count": 22254,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 420,
       "plan_unit_ids": [
@@ -1244,7 +1244,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4",
+      "sha256": "53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 420
@@ -1417,7 +1417,7 @@
         "unverifiable_completion",
         "weak_test_oracle"
       ],
-      "sha256": "2b7cd6eb5b407d0f475efb40bcaaca0207987da2a0b159614e638876181f2093",
+      "sha256": "4f116dba67b186788d2662afba12759175a0579e36dff78964a80319ed9cfb6a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 4
@@ -1676,7 +1676,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 10074,
+      "line_count": 10080,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 151,
       "plan_unit_ids": [
@@ -1989,7 +1989,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a",
+      "sha256": "8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -5267,7 +5267,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "065797682dea1110eb194b51d396f8a9a6974a47f94968e964ecead5f65535e7",
+      "sha256": "de908bd571a6d6a6bea6135bdfd039844852cfc9261a60527fc968f2829b3088",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28,
@@ -8208,7 +8208,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "5e956e4b209713eedf745659945cbdb88f8a5e2119889d9bd775f1f70d3eade5",
+      "sha256": "49256f932a10394b1ecd9f39ba7ed83cb4ddc4a650902eaeb66d6be7d2cf9325",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23,
@@ -8692,7 +8692,7 @@
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 719,
+      "line_count": 720,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -8728,7 +8728,7 @@
         "routing_mismatch",
         "scheduling_correctness"
       ],
-      "sha256": "e07b77a5d56c8012b7b1cfdee8d57aa3e4855c75375dacd3703b75307692d5d2",
+      "sha256": "31b33034d0dc09bd887842a276d2dfc2b5e888529a4dca10f1114ef015104f81",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13,
@@ -9101,7 +9101,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json"
       ],
-      "line_count": 3270,
+      "line_count": 3272,
       "path": "Plans/Project_Output_Artifacts.md",
       "plan_unit_count": 48,
       "plan_unit_ids": [
@@ -9208,7 +9208,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "3b9f23c2da8153a70b6467b165d40ec77ed57df5a94905da9170804c2586d5ba",
+      "sha256": "58cd2470e2b080b5821950c64f8ba0b2d600dfaf3c68c848f69d416f01278f7d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47,
@@ -9650,7 +9650,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "b4155d43d1fa2bb56c7ebe132bbc5b24ec788cf83cc6f139921da891df8ddd95",
+      "sha256": "c226b714637e10ddcbf1bdb71b2831e704807365c37594dc3290cccc19a9f465",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -11114,7 +11114,7 @@
       "implementation_surfaces": [
         "Plans/Widget_System.md"
       ],
-      "line_count": 1024,
+      "line_count": 1025,
       "path": "Plans/Widget_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -11140,7 +11140,7 @@
         "residual_bridge_overreach",
         "widget_system_drift"
       ],
-      "sha256": "e283765c71f305daeef1982657f9929aacda6cb1da9ddbda8e667b6273d12437",
+      "sha256": "6bbf7a9fb1832d6b3a5ce05638b91a8793a33bee438bccdfd268a95917270b07",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -11377,7 +11377,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-18T01:37:26Z",
+  "generated_at_utc": "2026-06-18T02:28:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

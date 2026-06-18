@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2294-L9877
+Source lines: L2295-L9883
 
-Source SHA256: `d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a`
+Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
 
 ---
 
@@ -4505,9 +4505,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  The sweep runs deterministically and headlessly, uses per-pass provider/model
-  settings, emits exactly three pass reports, and uses pass_verdict skipped for
-  blocked later passes.
+  The sweep runs deterministically and headlessly, uses one Auditor validation
+  loop provider/model setting for all pass reports, emits exactly three pass
+  reports, and uses pass_verdict skipped for blocked later passes.
 gui_related: false
 gui_classification_reason: Sweep execution settings and report emission are backend validation behavior.
 split_recommended: true
@@ -4517,9 +4517,9 @@ unblocks: [CWF-086, CWF-087]
 acceptance_criteria:
   - All three passes run deterministically without human intervention.
   - Each pass runs headless with no GUI and no approval gate between passes.
-  - Per-pass provider and model are configurable through app settings.
+  - Auditor validation loop provider and model are configurable through app settings.
   - Defaults are deterministic and safe when not explicitly configured.
-  - Each validation_pass_report includes provider and model matching validation_sweep.passN.provider and validation_sweep.passN.model settings.
+  - Each validation_pass_report includes provider and model matching the resolved Auditor validation loop provider/model from sweep start.
   - Exactly three pass reports are emitted per sweep.
   - Later passes blocked by an earlier failure emit pass_verdict skipped with explanatory verdict_reason.
 validation_surfaces:
@@ -4539,12 +4539,14 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0080
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0081
 preserved_exact_tokens:
-  - "validation_sweep.passN.provider"
-  - "validation_sweep.passN.model"
+  - "model_roles.auditor.provider"
+  - "model_roles.auditor.model"
+  - "Auditor validation loop"
   - "Exactly three pass reports"
   - "pass_verdict: \"skipped\""
 negative_constraints:
   - "No GUI is required and no user approval gate exists between passes."
+  - "Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/assistant-chat-design.md
@@ -6062,7 +6064,7 @@ owner_hints:
   - Plans/Personas.md
 ```
 
-### CWF-117 - Per-Stage Platform Model Filtering
+### CWF-117 - Stage And Auditor Loop Platform Model Filtering
 
 ```yaml
 plan_unit_id: CWF-117
@@ -6070,8 +6072,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
-  Requirements Builder settings allow platform and model selection per stage or
-  pass while still enforcing provider capability filtering.
+  Requirements Builder settings allow platform and model selection per stage and
+  use the Auditor validation loop for sweep pass reports while still enforcing
+  provider capability filtering.
 gui_related: false
 gui_classification_reason: Provider capability filtering is runtime selection behavior.
 split_recommended: false
@@ -6079,8 +6082,8 @@ depends_on: [CWF-113]
 unblocks: [CWF-118]
 acceptance_criteria:
   - Builder settings allow platform/model selection per stage.
-  - Builder settings allow platform/model selection per pass.
-  - Per-stage and per-pass selections pass through provider capability filtering.
+  - Validation sweep pass reports use the Auditor validation loop provider/model.
+  - Per-stage selections and Auditor loop selection pass through provider capability filtering.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6092,14 +6095,16 @@ implementation_surfaces:
   - Plans/Provider_OpenCode.md
   - Plans/Prompt_Pipeline.md
 node_compile_hint:
-  mode: chain_wizard_per_stage_platform_model_filtering
+  mode: chain_wizard_stage_auditor_platform_model_filtering
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:chain-wizard-flexibility-S0118
 preserved_exact_tokens:
-  - "platform/model selection per stage or pass"
+  - "platform/model selection per stage"
+  - "Auditor validation loop"
   - "provider capability filtering"
-negative_constraints: []
+negative_constraints:
+  - "Do not keep independent provider/model settings per validation pass."
 owner_hints:
   - Plans/chain-wizard-flexibility.md
   - Plans/Provider_OpenCode.md
@@ -6114,7 +6119,7 @@ status: accepted
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder UI exposes effective Persona, selection reason, effective
-  platform/model, and skipped unsupported controls for the active stage or pass,
+  platform/model, and skipped unsupported controls for the active stage or Auditor loop,
   while acceptance preserves stage/pass Persona selection, collaborator intake,
   non-required Document Writer, distinct reviewer Personas, and visibility.
 gui_related: true

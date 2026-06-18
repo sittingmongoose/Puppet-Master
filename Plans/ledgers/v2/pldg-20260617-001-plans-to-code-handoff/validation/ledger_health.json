@@ -18,9 +18,9 @@
     "compiled_plan_units": 38,
     "governance_status": "sealed",
     "governance_seal": "passed",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "runtime_disabled",
     "plan_compile_runtime_status": "design_only_disabled",
-    "pm_plan_index_validate": "pass_node_readiness_blocked_compiler_contract_incomplete",
+    "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered",
     "doc_impact_matrix": "compiled_and_dispositioned",
     "implementation_readiness_matrix": "compiled_and_dispositioned",
@@ -45,7 +45,7 @@
     {
       "check_id": "node-readiness-0001",
       "status": "pass",
-      "summary": "Node readiness intentionally remains blocked_compiler_contract_incomplete; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
+      "summary": "Node readiness intentionally remains runtime_disabled; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
   "updated_at_utc": "2026-06-18T01:30:32Z",

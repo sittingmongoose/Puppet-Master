@@ -258,7 +258,7 @@ Future validators may check TestCapabilityReport, TestHarnessProbeReport, TestSt
 
 ## 6. Plan-To-Node Readiness
 
-The Automated Testing System is ready as a contract source for future Plan-to-node compilation, but it does not make the compiler executable. Current node readiness remains blocked by `blocked_compiler_contract_incomplete` until `Plans/Plan_To_Node_Compilation.md` completes the compiler artifact contract and a later explicit enablement allows runtime artifacts.
+The Automated Testing System is ready as a contract source for future Plan-to-node compilation, but it does not make the compiler executable. Current node readiness remains `runtime_disabled` until `Plans/Plan_To_Node_Compilation.md` and a later explicit enablement allow runtime PlanCompile launch and node-artifact generation.
 
 ## 7. Deferred, Retired, Compatibility, And Non-Goals
 

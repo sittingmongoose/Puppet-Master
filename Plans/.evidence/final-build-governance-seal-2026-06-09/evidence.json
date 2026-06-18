@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "44989af8d87edcc578be1710a7da41c5d07b38c896e38e1a13aa62e4dc53a9e5"
+      "sha256": "8560c76f3a429bc18d78b8afcc97bdca5b874020adecbbb449e323a332f0016c"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "70925deac24380281e7aee547edbc77977f26694abda5a114a482132b6e4b3ba"
+      "sha256": "07fc3ca0fe698f220a7cd3ada7915cde264bfde00c269bc5e520434eca7fe571"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "627bafc8a9b341ba3fcacf68e22554c002285ba880b5e87f07b08b0105906983"
+      "sha256": "9a8b7ba331169447cc629a8a28e4369d32dbd808dd2e625e2a4f20cfc3c42fe4"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "2c4b3a84116fd0a7c82640a151907ca416097708d59433a5f8e43264b3a279b2"
+      "sha256": "e2f7eb409112cdad178c1906291cf439c80630c27881b74e7649a64b86cea223"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "e7c100edb93b5397c3bf734c782b4317f4aba37713573d4dfdd8d2abf4736926"
+      "sha256": "1b6e578352b4dc38d19a8e64738dac77e51dc031474782ec0c901197cd4ca862"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "95ca0e95e0fb3a4096a429bb204cc2e574a5cf562ce867c3b867cface05afa08"
+      "sha256": "593b429be15b144e28754d2cbc287ad1f76c37b1e73d24ea411f5b6f405ee0d5"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "9e94a2f14962cd33ac6e08eaa3ba9e95c8906b88f588c596207be4aebad5ff8c"
+      "sha256": "e54af527a1deebd278e9ebe5c5697efab2e1e1892fe65e353ba897dbfa1bb733"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "da26a5803684b22fb82ccbd9d3c335a32d3bd93d629f275afeccce970fffe2bd"
+      "sha256": "48cce875143704db6769f4bb7f7e4858826e385d61bb3c795693153d707a3418"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "e2187d2d186f69b01714c961c8d928c5bf310d1f5d0f94312074142a21cefedc"
+      "sha256": "3ad31ceabb5fabe5f51d2a81d63db58f36edc3a4744b6dcaf76f5715d42faca0"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "ce89290f3590b09840115edc8e946a1298d9c1f7afac07ac542d99d126d62e87"
+      "sha256": "d6d240a1048e7ecc75c930189aa28a1a3527d49035b740db54abaeb2cacf5914"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeed candidates created.",
+      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -173,6 +173,31 @@
       "name": "automated-testing-shard-registration",
       "result": "PASS",
       "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence."
+    },
+    {
+      "name": "node-readiness-status-runtime-disabled",
+      "result": "PASS",
+      "details": "Plans/.plan_index/node_readiness_report.json status is runtime_disabled because runtime PlanCompile launch and node artifact generation are disabled."
+    },
+    {
+      "name": "plans-to-code-runtime-disabled-repair",
+      "result": "PASS",
+      "details": "Plans-to-code repair replaced compiler-incomplete readiness wording with runtime_disabled across PNC, scripts, generated index, and the current handoff ledger projections."
+    },
+    {
+      "name": "auditor-loop-settings-repair",
+      "result": "PASS",
+      "details": "Fixed Pass 1 / Pass 2 / Pass 3 validation model settings are retired; validation pass reports mirror the single Auditor validation loop provider/model."
+    },
+    {
+      "name": "handoff-schema-discriminator",
+      "result": "PASS",
+      "details": "Plans/plans_to_code_handoff.schema.json defines a payload $defs schema for every artifact_kind and discriminates payload by artifact_kind."
+    },
+    {
+      "name": "seven-tab-reference-repair",
+      "result": "PASS",
+      "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
     }
   ],
   "commands_run": [
@@ -300,7 +325,11 @@
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; node_readiness_status=runtime_disabled; no_worknodes_created=true; nodeseed_candidates_created=false"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --write-report",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

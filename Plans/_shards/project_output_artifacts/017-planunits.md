@@ -2,9 +2,9 @@
 
 Source: `Plans/Project_Output_Artifacts.md`
 
-Source lines: L794-L3101
+Source lines: L795-L3103
 
-Source SHA256: `3b9f23c2da8153a70b6467b165d40ec77ed57df5a94905da9170804c2586d5ba`
+Source SHA256: `58cd2470e2b080b5821950c64f8ba0b2d600dfaf3c68c848f69d416f01278f7d`
 
 ---
 
@@ -1342,8 +1342,8 @@ preserved_exact_tokens:
   - "quickstart.md"
   - "provider"
   - "model"
-  - "validation_sweep.passN.provider"
-  - "validation_sweep.passN.model"
+  - "model_roles.auditor.provider"
+  - "model_roles.auditor.model"
 negative_constraints:
   - "Pass 3 summary contains no write-protected requirements.md or plan.md."
   - "No human approval gates occur between Pass 1, Pass 2, and Pass 3."
@@ -2108,7 +2108,8 @@ preserved_exact_tokens:
   - "pm.requirements_quality_report.schema.v1"
   - "orphaned_node_requirement_refs[].reason"
   - "uncovered_acceptance[]"
-  - "validation_sweep.passN.*"
+  - "single Auditor validation loop"
+  - "model_roles.auditor.*"
   - "unresolved_findings[]"
   - "validation_pass_report"
   - "sharded-only"

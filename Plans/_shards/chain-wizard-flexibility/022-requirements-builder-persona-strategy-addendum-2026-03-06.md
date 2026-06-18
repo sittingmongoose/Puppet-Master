@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L1786-L1927
+Source lines: L1787-L1928
 
-Source SHA256: `d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a`
+Source SHA256: `8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840`
 
 ---
 
@@ -130,9 +130,9 @@ Use reviewer Personas such as:
 - `security-auditor`
 - `architect-reviewer`
 
-### Per-stage platform/model control
+### Per-stage and Auditor-loop platform/model control
 
-Requirements Builder settings must allow platform/model selection per stage or pass, and these settings must still pass through provider capability filtering.
+Requirements Builder settings must allow platform/model selection per stage. Validation sweep pass reports use the single Auditor validation loop provider/model from `Plans/assistant-chat-design.md §26`, and these settings must still pass through provider capability filtering.
 
 ### Requested vs effective visibility
 
@@ -141,7 +141,7 @@ Requirements Builder UI should display:
 - effective Persona,
 - selection reason,
 - effective platform/model,
-- and skipped unsupported Persona controls for the active builder stage/pass.
+- and skipped unsupported Persona controls for the active builder stage or Auditor loop.
 
 ### Acceptance criteria addendum
 

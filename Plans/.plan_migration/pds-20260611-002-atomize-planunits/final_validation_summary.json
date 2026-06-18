@@ -459,7 +459,7 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-06-18T00:16:18Z",
+  "generated_at_utc": "2026-06-18T02:28:22Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 5105,
@@ -468,12 +468,12 @@
   "no_executable_build_tasks_created": true,
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
-  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "node_readiness_status": "runtime_disabled",
   "nodeseed_candidates_created": false,
   "notes": [
     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-    "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract."
+    "Node readiness remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
   "pre_conversion_repair": {
@@ -493,6 +493,7 @@
   "production_build_tasks_created": false,
   "residual_source_preserving_plan_units": [],
   "run_id": "pds-20260611-002-atomize-planunits",
+  "runtime_enablement_status": "runtime_disabled",
   "schema_id": "pm.plan_migration.phase2_final_validation_summary.v2",
   "scope": "Phase 2 Plan standardization currentness finalized for pds-20260611-002-atomize-planunits without broad Plan re-conversion.",
   "seal_phase_required": [],

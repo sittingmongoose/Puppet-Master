@@ -13,12 +13,12 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4"
+      "sha256": "53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a"
+      "sha256": "8234488c4b5d20ad363dd5b986a91f7927c40f8c5bdb5cb22702a68cf0a9a840"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "44989af8d87edcc578be1710a7da41c5d07b38c896e38e1a13aa62e4dc53a9e5"
+      "sha256": "8560c76f3a429bc18d78b8afcc97bdca5b874020adecbbb449e323a332f0016c"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "32f9667f06341a432c53233fe4c9043cdc9917f35ebd8bfcfbdf5947ae6aa6da"
+      "sha256": "6fbe444b27da41b8285fef16f9e0158522dca38936bac4ad60af5c15cb923c46"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "14290ddf9d55e0eb4603885970c378e86592d8783b2ebdd3e3ea6b4f77398852"
+      "sha256": "e5a9ae8d0a2876dc8ca16a6e19e570d133dec97c6bdfe5c0a032deab1d6c61e6"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeed candidates created."
+      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -287,6 +287,31 @@
       "name": "automated-testing-shard-registration",
       "result": "PASS",
       "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence."
+    },
+    {
+      "name": "node-readiness-status-runtime-disabled",
+      "result": "PASS",
+      "details": "Plans/.plan_index/node_readiness_report.json status is runtime_disabled because runtime PlanCompile launch and node artifact generation are disabled."
+    },
+    {
+      "name": "plans-to-code-runtime-disabled-repair",
+      "result": "PASS",
+      "details": "Plans-to-code repair replaced compiler-incomplete readiness wording with runtime_disabled across PNC, scripts, generated index, and the current handoff ledger projections."
+    },
+    {
+      "name": "auditor-loop-settings-repair",
+      "result": "PASS",
+      "details": "Fixed Pass 1 / Pass 2 / Pass 3 validation model settings are retired; validation pass reports mirror the single Auditor validation loop provider/model."
+    },
+    {
+      "name": "handoff-schema-discriminator",
+      "result": "PASS",
+      "details": "Plans/plans_to_code_handoff.schema.json defines a payload $defs schema for every artifact_kind and discriminates payload by artifact_kind."
+    },
+    {
+      "name": "seven-tab-reference-repair",
+      "result": "PASS",
+      "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
     }
   ],
   "commands_run": [
@@ -523,7 +548,11 @@
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; node_readiness_status=runtime_disabled; no_worknodes_created=true; nodeseed_candidates_created=false"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --write-report",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

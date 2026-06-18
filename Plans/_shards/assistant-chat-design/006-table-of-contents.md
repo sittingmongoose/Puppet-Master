@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L53-L89
 
-Source SHA256: `a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4`
+Source SHA256: `53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02`
 
 ---
 
@@ -42,6 +42,6 @@ Source SHA256: `a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4
 23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)
 24. [Chat thread performance, virtualization, and flicker avoidance](#24-chat-thread-performance-virtualization-and-flicker-avoidance)
 25. [Context Circle Enhancements (Addendum -- 2026-02-23)](#25-context-circle-enhancements-addendum----2026-02-23)
-26. [Per-Pass Validation Model/Provider Settings (Invariant Sweep)](#26-per-pass-validation-modelprovider-settings-invariant-sweep)
+26. [Auditor Validation Loop Model/Provider Settings (Invariant Sweep)](#26-auditor-validation-loop-modelprovider-settings-invariant-sweep)
 
 ---

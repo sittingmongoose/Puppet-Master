@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L407-L719
+Source lines: L407-L720
 
-Source SHA256: `e07b77a5d56c8012b7b1cfdee8d57aa3e4855c75375dacd3703b75307692d5d2`
+Source SHA256: `31b33034d0dc09bd887842a276d2dfc2b5e888529a4dca10f1114ef015104f81`
 
 ---
 
@@ -255,7 +255,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Plan Wizard approval through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name source_artifact, destination_artifact, owner, validator, receipt, retry_route, rollback_route, and user_escalation_condition. The schema draft in Plans/plans_to_code_handoff.schema.json records PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
-  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_preflight_receipt`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_preflight_receipt`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013]
@@ -263,6 +263,7 @@ unblocks: [EP-102, GRS-030, POA-048, CV-289]
 acceptance_criteria:
   - Every handoff names artifact, owner, validator, receipt, retry, rollback, and escalation route.
   - The schema draft records required artifact families without enabling PlanCompile.
+  - The schema draft discriminates payload schemas by artifact_kind and defines every artifact_kind payload under $defs.
   - Codex bootstrap external GUI-agent request is documented as a bootstrap artifact only, not a built Puppet Master setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

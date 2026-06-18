@@ -73,7 +73,7 @@
     "implementation_readiness_matrix": "state/implementation_readiness_matrix.json",
     "reference_impact_audit": "source_shards/reference_impact_audit.md"
   },
-  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness remains blocked_compiler_contract_incomplete. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
+  "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, and metadata-only governance registration artifacts; governance_status=sealed. Plans/Automated_Testing_System.md is registered as a New Plan Authoring Profile owner doc and shard source. Node readiness remains runtime_disabled. No PlanCompile runtime, native Plan Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch were created.",
   "last_updated_at_utc": "2026-06-18T01:30:32Z",
   "compiled_owner_docs": [
     "Plans/00-plans-index.md",

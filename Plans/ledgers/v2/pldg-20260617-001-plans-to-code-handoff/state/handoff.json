@@ -9,8 +9,8 @@
     "next_stage": "post_governance_audit_or_bounded_repair_only",
     "compiled_atom_count": 64
   },
-  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. PlanCompile runtime remains design-only/disabled, node readiness remains blocked_compiler_contract_incomplete, and no WorkNodes or NodeSeeds were created.",
-  "next_action": "No compile action remains for this ledger. Use audit-only or bounded repair if new findings appear; do not run PlanCompile or create WorkNodes/NodeSeeds until a later explicit compiler-contract enablement exists.",
+  "summary": "This ledger has been compiled into live Plans PlanUnits and metadata-only governance registration artifacts. PlanCompile runtime remains design-only/disabled, node readiness is runtime_disabled, and no WorkNodes or NodeSeeds were created.",
+  "next_action": "No compile action remains for this ledger. Use audit-only or bounded repair if new findings appear; do not run PlanCompile or create WorkNodes/NodeSeeds until later explicit runtime enablement exists.",
   "allowed_next_writes": [
     "audit artifacts or bounded repair docs/projections explicitly requested by Jared"
   ],
@@ -27,10 +27,10 @@
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
     "governance_status": "sealed",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "runtime_disabled",
     "plan_compile_runtime": "disabled_design_only",
     "forbidden_artifacts": "not_created",
-    "pm_plan_index_validate": "pass_node_readiness_blocked_compiler_contract_incomplete",
+    "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "shard_registration": "Automated_Testing_System_registered"
   },
   "open_blockers": [],

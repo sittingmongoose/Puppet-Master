@@ -81,19 +81,71 @@
         "resume_command_or_action"
       ],
       "properties": {
-        "compile_id": {"type": "string"},
-        "source_plan_set_id": {"type": "string"},
-        "source_plan_index_hash": {"type": "string"},
-        "launch_source": {"enum": ["codex_bootstrap", "native_plan_wizard"]},
-        "runtime_adapter": {"enum": ["codex_bootstrap_adapter", "native_puppet_master_adapter"]},
-        "status": {"enum": ["design_only_disabled", "preflight", "running", "blocked", "ready_for_executor_intake", "cancelled", "complete"]},
-        "current_stage": {"type": "string"},
-        "cursor": {"type": "object"},
-        "last_green_stage": {"type": ["string", "null"]},
-        "last_green_hashes": {"type": "object"},
-        "blockers": {"type": "array", "items": {"type": "object"}},
-        "next_required_stage": {"type": ["string", "null"]},
-        "resume_command_or_action": {"type": ["string", "null"]}
+        "compile_id": {
+          "type": "string"
+        },
+        "source_plan_set_id": {
+          "type": "string"
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "launch_source": {
+          "enum": [
+            "codex_bootstrap",
+            "native_plan_wizard"
+          ]
+        },
+        "runtime_adapter": {
+          "enum": [
+            "codex_bootstrap_adapter",
+            "native_puppet_master_adapter"
+          ]
+        },
+        "status": {
+          "enum": [
+            "design_only_disabled",
+            "preflight",
+            "running",
+            "blocked",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "current_stage": {
+          "type": "string"
+        },
+        "cursor": {
+          "type": "object"
+        },
+        "last_green_stage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_green_hashes": {
+          "type": "object"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "next_required_stage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resume_command_or_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
     "stage_card": {
@@ -111,15 +163,33 @@
         "blocked_route"
       ],
       "properties": {
-        "purpose": {"type": "string"},
-        "read_files": {"$ref": "#/$defs/ref_list"},
-        "write_files": {"$ref": "#/$defs/ref_list"},
-        "forbidden_writes": {"$ref": "#/$defs/ref_list"},
-        "entry_gate": {"type": "string"},
-        "item_boundaries": {"type": "object"},
-        "exit_gate": {"type": "string"},
-        "success_route": {"type": "string"},
-        "blocked_route": {"type": "string"}
+        "purpose": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "entry_gate": {
+          "type": "string"
+        },
+        "item_boundaries": {
+          "type": "object"
+        },
+        "exit_gate": {
+          "type": "string"
+        },
+        "success_route": {
+          "type": "string"
+        },
+        "blocked_route": {
+          "type": "string"
+        }
       }
     },
     "node_seed_candidate": {
@@ -147,27 +217,84 @@
         "blockers"
       ],
       "properties": {
-        "source_plan_unit_ids": {"$ref": "#/$defs/ref_list"},
-        "source_acceptance_unit_ids": {"$ref": "#/$defs/ref_list"},
-        "objective": {"type": "string"},
-        "owner_area": {"type": "string"},
-        "implementation_surfaces": {"$ref": "#/$defs/ref_list"},
-        "read_set": {"$ref": "#/$defs/ref_list"},
-        "write_set_candidates": {"$ref": "#/$defs/ref_list"},
-        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
-        "validator_candidates": {"type": "array", "items": {"type": "string"}},
-        "dependency_refs": {"$ref": "#/$defs/ref_list"},
-        "risk_class": {"type": "string"},
-        "reasoning_tier": {"type": "string"},
-        "work_type": {"type": "string"},
-        "gui_related": {"type": "boolean"},
-        "frontend_related": {"type": "boolean"},
-        "effort": {"type": "string"},
-        "capability_lane": {"type": "string"},
-        "authority": {"type": "string"},
-        "sizing": {"type": "object"},
-        "status": {"enum": ["candidate", "review_ready", "approved_for_workgraph_draft", "blocked", "excluded"]},
-        "blockers": {"type": "array", "items": {"type": "object"}}
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_acceptance_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "objective": {
+          "type": "string"
+        },
+        "owner_area": {
+          "type": "string"
+        },
+        "implementation_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set_candidates": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validator_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependency_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "risk_class": {
+          "type": "string"
+        },
+        "reasoning_tier": {
+          "type": "string"
+        },
+        "work_type": {
+          "type": "string"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "effort": {
+          "type": "string"
+        },
+        "capability_lane": {
+          "type": "string"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "sizing": {
+          "type": "object"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "review_ready",
+            "approved_for_workgraph_draft",
+            "blocked",
+            "excluded"
+          ]
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
       }
     },
     "workgraph_draft": {
@@ -199,15 +326,42 @@
         "status"
       ],
       "properties": {
-        "source_plan_unit_ids": {"$ref": "#/$defs/ref_list"},
-        "objective": {"type": "string"},
-        "implementation_surfaces": {"$ref": "#/$defs/ref_list"},
-        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
-        "test_binding": {"$ref": "#/$defs/test_binding"},
-        "model_routing": {"$ref": "#/$defs/model_resolution_receipt"},
-        "ordering": {"$ref": "#/$defs/ordering"},
-        "authority": {"type": "string"},
-        "status": {"enum": ["request_draft", "intake_pending", "accepted_by_executor", "rejected", "blocked"]}
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "objective": {
+          "type": "string"
+        },
+        "implementation_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "test_binding": {
+          "$ref": "#/$defs/test_binding"
+        },
+        "model_routing": {
+          "$ref": "#/$defs/model_resolution_receipt"
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "request_draft",
+            "intake_pending",
+            "accepted_by_executor",
+            "rejected",
+            "blocked"
+          ]
+        }
       }
     },
     "ordering": {
@@ -235,12 +389,30 @@
         "capability_checks"
       ],
       "properties": {
-        "requested_lane": {"type": "string"},
-        "requested_model_profile": {"type": "string"},
-        "effective_model_profile": {"type": "string"},
-        "fallback_used": {"type": "boolean"},
-        "fallback_reason": {"type": ["string", "null"]},
-        "capability_checks": {"type": "array", "items": {"type": "object"}}
+        "requested_lane": {
+          "type": "string"
+        },
+        "requested_model_profile": {
+          "type": "string"
+        },
+        "effective_model_profile": {
+          "type": "string"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
       }
     },
     "test_binding": {
@@ -311,6 +483,1081 @@
         "final_certifier_decision",
         "evidence_refs"
       ]
+    },
+    "compile_worklist": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "compile_id",
+        "stage",
+        "items",
+        "source_plan_index_hash",
+        "status"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready",
+            "running",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        },
+        "blocked_route": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resume_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "node_seed_review": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "candidate_ref",
+        "review_status",
+        "findings",
+        "decision"
+      ],
+      "properties": {
+        "candidate_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "review_status": {
+          "enum": [
+            "pending",
+            "approved",
+            "changes_required",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "decision": {
+          "type": "string"
+        },
+        "reviewer_role": {
+          "type": "string"
+        },
+        "required_changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "compiler_model_routing": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "source_plan_unit_ids",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "capability_checks"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "requested_lane": {
+          "type": "string"
+        },
+        "requested_model_profile": {
+          "type": "string"
+        },
+        "effective_model_profile": {
+          "type": "string"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "codex_work_package": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "package_id",
+        "stage",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "instructions",
+        "validation_commands",
+        "status"
+      ],
+      "properties": {
+        "package_id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "validation_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready_for_codex",
+            "claimed",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        }
+      }
+    },
+    "codex_external_gui_agent_request": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "request_id",
+        "gui_related",
+        "frontend_related",
+        "target_surfaces",
+        "prompt",
+        "acceptance_criteria",
+        "status"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "target_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "assets": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "bootstrap_only_draft",
+            "ready",
+            "sent",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        }
+      }
+    },
+    "plan_compile_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "compile_id",
+        "stage",
+        "status",
+        "summary",
+        "evidence_refs"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_harness_probe_report": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "harness_type",
+        "capability",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "type": "string"
+        },
+        "harness_type": {
+          "type": "string"
+        },
+        "capability": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_strategy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "strategy_id",
+        "source_plan_unit_ids",
+        "test_cases",
+        "required_capabilities",
+        "gap_blockers"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_cases": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gap_blockers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "test_case": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "test_case_id",
+        "source_plan_unit_ids",
+        "kind",
+        "description",
+        "oracle",
+        "status"
+      ],
+      "properties": {
+        "test_case_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "oracle": {
+          "type": "object"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "visual_evidence": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "evidence_id",
+        "source_ref",
+        "artifact_refs",
+        "inspection_status",
+        "notes"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "inspection_status": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "source_control_preflight_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "worktree_ref",
+        "branch_ref",
+        "dirty_state",
+        "safe_point_required",
+        "status"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dirty_state": {
+          "type": "string"
+        },
+        "safe_point_required": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "allOf": []
+    },
+    "safe_point_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "safe_point_ref",
+        "repo_ref",
+        "worktree_ref",
+        "created_at_utc",
+        "status"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "safe_point_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at_utc": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "allOf": []
+    },
+    "worknode_change_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "changed_paths",
+        "diff_refs",
+        "test_run_refs",
+        "status"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "changed_paths": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "diff_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "allOf": []
+    },
+    "merge_or_promotion_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "source_ref",
+        "destination_ref",
+        "promotion_type",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "destination_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "promotion_type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      },
+      "allOf": []
+    },
+    "source_control_finalization_receipt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "branch_ref",
+        "commit_ref",
+        "final_status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "commit_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "final_status": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      },
+      "allOf": []
+    },
+    "executor_intake_report": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "intake_id",
+        "workgraph_ref",
+        "worknode_request_refs",
+        "accepted_refs",
+        "rejected_refs",
+        "blockers",
+        "status"
+      ],
+      "properties": {
+        "intake_id": {
+          "type": "string"
+        },
+        "workgraph_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worknode_request_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "accepted_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rejected_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "status": {
+          "type": "string"
+        }
+      }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "plan_compile_run"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/plan_compile_run"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "stage_card"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/stage_card"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "compile_worklist"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/compile_worklist"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "node_seed_candidate"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/node_seed_candidate"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "node_seed_review"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/node_seed_review"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "workgraph_draft"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/workgraph_draft"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_request"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "compiler_model_routing"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/compiler_model_routing"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "codex_work_package"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/codex_work_package"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "codex_external_gui_agent_request"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/codex_external_gui_agent_request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "plan_compile_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/plan_compile_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_capability_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_capability_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_harness_probe_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_harness_probe_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_strategy"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_strategy"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_case"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_case"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_run_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_run_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "visual_evidence"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/visual_evidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_preflight_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_preflight_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "safe_point_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/safe_point_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_change_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_change_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "merge_or_promotion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/merge_or_promotion_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_finalization_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_finalization_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "model_resolution_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/model_resolution_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "executor_intake_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/executor_intake_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "goal_completion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/goal_completion_receipt"
+          }
+        }
+      }
+    }
+  ]
 }
