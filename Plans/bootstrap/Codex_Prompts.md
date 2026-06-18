@@ -123,7 +123,7 @@ Rules:
 - Do not create WorkNodes, executable build tasks, or final node queues.
 - Do not create NodeSeed candidates unless Plans/Plan_To_Node_Compilation.md already defines that candidate contract.
 - If Plans are incomplete, set node_readiness_report.status = blocked_plans_incomplete.
-- If the compiler contract is incomplete, set status = blocked_compiler_contract_incomplete.
+- If PlanCompile runtime launch and node-artifact generation are disabled, set status = runtime_disabled.
 - Preserve depends_on, unblocks, validation surfaces, acceptance criteria, risk_class, reasoning_tier, context_scope, implementation surfaces, source lineage, and gui_related.
 - Do not update Spec_Lock or governance artifacts.
 

@@ -140,7 +140,11 @@
     {
       "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "stdout_excerpt": "status=pass; node_readiness_status=blocked_compiler_contract_incomplete"
+      "stdout_excerpt": "status=pass; node_readiness_status=runtime_disabled; no_worknodes_created=true; nodeseed_candidates_created=false"
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --write-report",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -255,7 +259,7 @@
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4"
+      "sha256": "53464bddad94b3bbdf518c3af718f012d8268fc82ae4cb75a26422fa3b230d02"
     },
     {
       "path": "Plans/Tools.md",
@@ -275,43 +279,43 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "e7c100edb93b5397c3bf734c782b4317f4aba37713573d4dfdd8d2abf4736926"
+      "sha256": "1b6e578352b4dc38d19a8e64738dac77e51dc031474782ec0c901197cd4ca862"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "95ca0e95e0fb3a4096a429bb204cc2e574a5cf562ce867c3b867cface05afa08"
+      "sha256": "593b429be15b144e28754d2cbc287ad1f76c37b1e73d24ea411f5b6f405ee0d5"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "9e94a2f14962cd33ac6e08eaa3ba9e95c8906b88f588c596207be4aebad5ff8c"
+      "sha256": "e54af527a1deebd278e9ebe5c5697efab2e1e1892fe65e353ba897dbfa1bb733"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "da26a5803684b22fb82ccbd9d3c335a32d3bd93d629f275afeccce970fffe2bd"
+      "sha256": "48cce875143704db6769f4bb7f7e4858826e385d61bb3c795693153d707a3418"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "e2187d2d186f69b01714c961c8d928c5bf310d1f5d0f94312074142a21cefedc"
+      "sha256": "3ad31ceabb5fabe5f51d2a81d63db58f36edc3a4744b6dcaf76f5715d42faca0"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "ce89290f3590b09840115edc8e946a1298d9c1f7afac07ac542d99d126d62e87"
+      "sha256": "d6d240a1048e7ecc75c930189aa28a1a3527d49035b740db54abaeb2cacf5914"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "2a8a569975d6c18d6806083da4035d20b0e72e3e9068ee1e907cc877e7393441"
+      "sha256": "a281bbcf1fa855f2e01db945c379bfd0c181bfc666211ca652210b88ac060fe4"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "4b4f5855bfed86a7ea419f550202ee7c8e507387d6f9bd2ed1b2e03b87ca4d45"
+      "sha256": "491cb9e88fc959fa8a28a8c57fe60146ef2817319b2e1fb3bffdc98785f4a949"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
-      "sha256": "33d3859e4c6d059cc5f4a2b5c63db8c0e2db1cf2d31c76c9646f9bff1523d9fb"
+      "sha256": "f2709bb64d65799190f45d9b541f6d55976b65c6c637e9b72d0499d64313d32c"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "32f9667f06341a432c53233fe4c9043cdc9917f35ebd8bfcfbdf5947ae6aa6da"
+      "sha256": "6fbe444b27da41b8285fef16f9e0158522dca38936bac4ad60af5c15cb923c46"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -319,7 +323,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "44989af8d87edcc578be1710a7da41c5d07b38c896e38e1a13aa62e4dc53a9e5"
+      "sha256": "8560c76f3a429bc18d78b8afcc97bdca5b874020adecbbb449e323a332f0016c"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -327,7 +331,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "5a78f08095b01ec6eaabaff1d5a4286eb5d7a1364ffa6cec3b7c51a1b80fe2b6"
+      "sha256": "bc119ec1215c592d50ce4cc5f0d4e5f8d7e50ee7893ff691debccff2bb3d446c"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json",
@@ -375,7 +379,7 @@
     },
     {
       "path": "scripts/pm-plan-migration.py",
-      "sha256": "3f7f7d17e98f1d8ab6f4d1f8159121942aa3ca1b9cd3b4ae87fa5c8738a24efe"
+      "sha256": "6c7e7250214e137e2c62514c4876544bbe15509b97803c0bfa44a0433af9132e"
     },
     {
       "path": "scripts/pm-governance-seal.py",
@@ -421,7 +425,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index generation and validation pass; node_readiness_report.status remains blocked_compiler_contract_incomplete; no WorkNodes or NodeSeed candidates created."
+      "details": "PlanUnit index generation and validation pass; node_readiness_report.status is runtime_disabled; no WorkNodes or NodeSeed candidates created."
     },
     {
       "name": "shard-check",
@@ -472,6 +476,31 @@
       "name": "automated-testing-shard-registration",
       "result": "PASS",
       "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence."
+    },
+    {
+      "name": "node-readiness-status-runtime-disabled",
+      "result": "PASS",
+      "details": "Plans/.plan_index/node_readiness_report.json status is runtime_disabled because runtime PlanCompile launch and node artifact generation are disabled."
+    },
+    {
+      "name": "plans-to-code-runtime-disabled-repair",
+      "result": "PASS",
+      "details": "Plans-to-code repair replaced compiler-incomplete readiness wording with runtime_disabled across PNC, scripts, generated index, and the current handoff ledger projections."
+    },
+    {
+      "name": "auditor-loop-settings-repair",
+      "result": "PASS",
+      "details": "Fixed Pass 1 / Pass 2 / Pass 3 validation model settings are retired; validation pass reports mirror the single Auditor validation loop provider/model."
+    },
+    {
+      "name": "handoff-schema-discriminator",
+      "result": "PASS",
+      "details": "Plans/plans_to_code_handoff.schema.json defines a payload $defs schema for every artifact_kind and discriminates payload by artifact_kind."
+    },
+    {
+      "name": "seven-tab-reference-repair",
+      "result": "PASS",
+      "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
     }
   ]
 }

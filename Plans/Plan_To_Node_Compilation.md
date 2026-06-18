@@ -146,14 +146,14 @@ plan_unit_id: PNC-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The node-readiness report catalogs whether PlanUnits are ready for future node conversion, why they are blocked, which dependencies or validators are missing, and whether compiler-contract incompleteness prevents safe conversion. It is an analysis artifact only.
+canonical_text: The node-readiness report catalogs whether PlanUnits are ready for future node conversion, why they are blocked, which dependencies or validators are missing, and whether runtime PlanCompile/node-artifact generation is disabled. It is an analysis artifact only.
 gui_related: false
 gui_classification_reason: Readiness report generation is backend/governance behavior.
 depends_on: [PNC-001, PNC-002, PNC-003, PDS-006]
 unblocks: [BPM-005]
 acceptance_criteria:
   - If Plans are incomplete, readiness status records blocked_plans_incomplete.
-  - If this compiler contract is incomplete, readiness status records blocked_compiler_contract_incomplete.
+  - If PlanCompile runtime launch and node-artifact generation are disabled, readiness status records runtime_disabled.
   - The report preserves gui_related routing inheritance without creating WorkNodes.
 validation_surfaces:
   - Plans/.plan_index/node_readiness_report.json
@@ -259,7 +259,7 @@ plan_unit_id: PNC-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, compiler_contract_status, no_worknodes_created, and next_required_action. It may recommend future grouping questions, but it must not create NodeSeed candidates or WorkNodes until this owner doc defines those artifact contracts.
+canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, runtime_enablement_status, no_worknodes_created, and next_required_action. It may recommend future grouping questions, but it must not create NodeSeed candidates or WorkNodes until an explicit later enablement PlanUnit accepts runtime launch and node-artifact generation.
 gui_related: false
 gui_classification_reason: Readiness report structure and routing analysis are backend/orchestration behavior.
 depends_on: [PNC-001, PNC-002, PNC-003, PNC-004, PNC-005]
@@ -279,31 +279,31 @@ node_compile_hint: {mode: readiness_report_schema, create_worknodes: false, crea
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0039
   - source_ref:chat:implementation-readiness-review
-preserved_exact_tokens: ["status", "status_reason", "source_plan_unit_index", "plan_unit_count", "missing_required_metadata", "dependency_graph_summary", "build_order_blockers", "risk_and_reasoning_summary", "gui_related_units", "compiler_contract_status", "no_worknodes_created", "next_required_action"]
+preserved_exact_tokens: ["status", "status_reason", "source_plan_unit_index", "plan_unit_count", "missing_required_metadata", "dependency_graph_summary", "build_order_blockers", "risk_and_reasoning_summary", "gui_related_units", "runtime_enablement_status", "runtime_disabled", "no_worknodes_created", "next_required_action"]
 negative_constraints:
-  - Do not create NodeSeed candidates from a readiness report unless this doc later defines the NodeSeed candidate contract.
+  - Do not create NodeSeed candidates from a readiness report unless an explicit later enablement PlanUnit accepts runtime launch and node-artifact generation.
   - Do not create WorkNodes from node-readiness output.
 owner_hints: [Plans/Plan_To_Node_Compilation.md]
 ```
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 
-## 4. Deferred Compiler Algorithm
+## 4. Runtime-Disabled Compiler Algorithm
 
-The exact future PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm is intentionally deferred. Current work reserves interface fields and readiness reporting only.
+The exact future PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm is intentionally runtime-disabled. Current work reserves interface fields and readiness reporting only.
 
 ```yaml
 plan_unit_id: PNC-007
 unit_type: deferred_decision
 status: deferred
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm remains deferred to a dedicated design process. The current standard reserves fields and reports node-readiness without generating NodeSeed candidates or WorkNodes.
+canonical_text: The exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm remains runtime-disabled until an explicit later enablement PlanUnit accepts runtime PlanCompile launch and node-artifact generation. The current standard reserves fields and reports node-readiness without generating NodeSeed candidates or WorkNodes.
 gui_related: false
-gui_classification_reason: Deferred compiler algorithm design is not GUI implementation work.
+gui_classification_reason: Runtime-disabled compiler algorithm design is not GUI implementation work.
 depends_on: [PNC-001, PNC-002, PNC-003]
 unblocks: []
 acceptance_criteria:
-  - Readiness report can mark blocked_compiler_contract_incomplete until this algorithm is defined.
+  - Readiness report marks runtime_disabled until runtime PlanCompile launch and node-artifact generation are explicitly enabled.
   - No executable node artifacts are produced by this deferred decision.
 validation_surfaces:
   - Future compiler design review.
@@ -312,7 +312,7 @@ risk_class: deferred_algorithm
 reasoning_tier: high
 context_scope: future_compiler
 implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, future compiler]
-node_compile_hint: {mode: blocked_compiler_contract_incomplete, create_worknodes: false}
+node_compile_hint: {mode: runtime_disabled, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0030
   - pldg-20260610-001-ledger-plan-system:q-0001
@@ -651,7 +651,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Plan Wizard approval through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name source_artifact, destination_artifact, owner, validator, receipt, retry_route, rollback_route, and user_escalation_condition. The schema draft in Plans/plans_to_code_handoff.schema.json records PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
-  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_preflight_receipt`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_preflight_receipt`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, and rollback_route fields. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013]
@@ -659,6 +659,7 @@ unblocks: [EP-102, GRS-030, POA-048, CV-289]
 acceptance_criteria:
   - Every handoff names artifact, owner, validator, receipt, retry, rollback, and escalation route.
   - The schema draft records required artifact families without enabling PlanCompile.
+  - The schema draft discriminates payload schemas by artifact_kind and defines every artifact_kind payload under $defs.
   - Codex bootstrap external GUI-agent request is documented as a bootstrap artifact only, not a built Puppet Master setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

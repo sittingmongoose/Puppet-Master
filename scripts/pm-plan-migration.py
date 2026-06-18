@@ -1051,12 +1051,12 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
                 "seal_phase_required": [],
                 "forbidden_governance_artifacts_confirmed_not_updated": [],
                 "forbidden_governance_artifacts_changed": [],
-                "node_readiness_status": "blocked_compiler_contract_incomplete",
-                "compiler_contract_status": "blocked_compiler_contract_incomplete",
+                "node_readiness_status": "runtime_disabled",
+                "runtime_enablement_status": "runtime_disabled",
                 "notes": [
                     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
                     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-                    "Node readiness remains blocked by the incomplete Plan-to-Node compiler contract.",
+                    "Node readiness remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled.",
                 ],
             }
         )

@@ -641,32 +641,32 @@ def coverage_report(units: list[dict[str, Any]], docs: list[dict[str, Any]], iss
     }
 
 
-def compiler_contract_status(units: list[dict[str, Any]]) -> dict[str, Any]:
+def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     pnc_007 = next((unit for unit in units if unit_id(unit) == "PNC-007"), None)
     pnc_008 = next((unit for unit in units if unit_id(unit) == "PNC-008"), None)
-    blockers: list[dict[str, Any]] = []
+    disabled_guards: list[dict[str, Any]] = []
     if pnc_007 and pnc_007.get("status") == "deferred":
-        blockers.append(
+        disabled_guards.append(
             {
                 "plan_unit_id": "PNC-007",
-                "blocker": "compiler_algorithm_deferred",
+                "guard": "plancompile_runtime_disabled",
                 "source_location": pnc_007.get("source_location"),
                 "canonical_text": pnc_007.get("canonical_text"),
             }
         )
-    blockers.append(
+    disabled_guards.append(
         {
             "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-            "blocker": "nodeseed_candidate_contract_absent",
-            "evidence": "PNC-001 and PNC-008 forbid NodeSeed candidates until this owner doc defines that artifact contract.",
+            "guard": "node_artifact_generation_disabled",
+            "evidence": "PNC-001 and PNC-008 forbid runtime NodeSeed/WorkNode artifacts until an explicit later enablement accepts runtime launch.",
             "source_location": pnc_008.get("source_location") if pnc_008 else None,
         }
     )
     return {
-        "complete": False,
+        "runtime_enabled": False,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-        "status": "blocked_compiler_contract_incomplete",
-        "blockers": blockers,
+        "status": "runtime_disabled",
+        "disabled_guards": disabled_guards,
     }
 
 
@@ -676,12 +676,12 @@ def node_readiness_report(
     deps: dict[str, Any],
 ) -> dict[str, Any]:
     coverage_blocked = bool(coverage.get("blockers"))
-    compiler_status = compiler_contract_status(units)
-    status = "blocked_plans_incomplete" if coverage_blocked else "blocked_compiler_contract_incomplete"
+    runtime_status = runtime_enablement_status(units)
+    status = "blocked_plans_incomplete" if coverage_blocked else "runtime_disabled"
     status_reason = (
         "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
         if coverage_blocked
-        else "Plans are indexed with required PlanUnit metadata, but Plan_To_Node_Compilation.md deliberately defers the compiler algorithm and does not define a NodeSeed candidate contract."
+        else "Plans are indexed with required PlanUnit metadata, but PlanCompile runtime launch and node artifact generation remain disabled until an explicit later enablement accepts runtime PlanCompile/NodeSeed/WorkNode artifacts."
     )
     build_order_blockers = []
     if deps.get("unresolved_references"):
@@ -732,13 +732,13 @@ def node_readiness_report(
             "count": len(gui_units),
             "units": gui_units,
         },
-        "compiler_contract_status": compiler_status,
+        "runtime_enablement_status": runtime_status,
         "no_worknodes_created": True,
         "no_executable_build_tasks_created": True,
         "no_final_node_queues_created": True,
         "nodeseed_candidates_created": False,
         "next_required_action": (
-            "Complete the Plan_To_Node_Compilation.md compiler algorithm and explicit NodeSeed candidate contract in a future design phase before generating NodeSeeds, WorkNodes, executable tasks, or final node queues. Run the separate governance seal after index artifacts stop changing."
+            "Accept an explicit runtime enablement PlanUnit and governance seal before generating runtime PlanCompile artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues. Run the separate governance seal after index artifacts stop changing."
         ),
     }
 

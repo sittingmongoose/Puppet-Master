@@ -8,7 +8,7 @@
     "Live non-pipeline Plans docs and schema drafts are canonical after compile.",
     "PlanCompile runtime remains design-only/disabled until later explicit enablement.",
     "Do not run PlanCompile or build WorkNodes/NodeSeeds from this ledger.",
-    "Node readiness remains blocked_compiler_contract_incomplete until the compiler contract exists.",
+    "Node readiness is runtime_disabled until runtime PlanCompile/node-artifact enablement exists.",
     "Governance/shard registration is metadata-only and must not create runtime or build artifacts."
   ],
   "model_setting_decision": [

@@ -308,7 +308,7 @@
       "compile_disposition_summary": {
         "compiled_to_plan": 64,
         "governance_status": "sealed",
-        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "node_readiness_status": "runtime_disabled",
         "forbidden_artifacts": "not_created"
       },
       "owner_adjudication": "Plan_To_Node_Compilation is the strict handoff/compiler-boundary target. Automated_Testing_System is the automated-testing SSOT. Executor_Protocol, Goal_Runtime_System, Models_System, Orchestrator_Page, FinalGUISpec, source-control, artifact, runtime-artifact, contracts, ledger, document, and tool docs consume through their compiled PlanUnits."

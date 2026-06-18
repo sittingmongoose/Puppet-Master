@@ -71,15 +71,15 @@
     "Plans/.plan_index/node_readiness_report.json"
   ],
   "candidate_compile_owner_docs": [],
-  "next_action": "Plans-to-code handoff compile is complete and governance-sealed. Next safe action is audit/repair only if new findings appear; do not run PlanCompile or build WorkNodes/NodeSeeds until the compiler contract is explicitly enabled.",
+  "next_action": "Plans-to-code handoff compile is complete and governance-sealed. Next safe action is audit/repair only if new findings appear; do not run PlanCompile or build WorkNodes/NodeSeeds until runtime PlanCompile/node-artifact enablement is explicitly accepted.",
   "open_blockers": [],
   "open_questions": [],
   "validation_state": {
     "ledger_health": "pass_governance_sealed",
     "plan_compile_runtime": "disabled_design_only",
     "worknode_generation": "forbidden_until_later_enablement",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
-    "pm_plan_index_validate": "pass_node_readiness_blocked_compiler_contract_incomplete",
+    "node_readiness_status": "runtime_disabled",
+    "pm_plan_index_validate": "pass_node_readiness_runtime_disabled",
     "governance_status": "sealed",
     "shard_registration": "Automated_Testing_System_registered",
     "doc_impact_matrix": "compiled_and_dispositioned",
