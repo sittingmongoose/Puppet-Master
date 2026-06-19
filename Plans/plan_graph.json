@@ -65,7 +65,9 @@
         "SchemaID:pm.auto_decisions.schema.v1",
         "ContractName:Plans/Goal_Runtime_System.md",
         "ContractName:Plans/Automated_Testing_System.md",
-        "ContractName:Plans/plans_to_code_handoff.schema.json"
+        "ContractName:Plans/plans_to_code_handoff.schema.json",
+        "ContractName:Plans/PRD_Builder.md",
+        "ContractName:Plans/Planning_Wizard.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -73,7 +75,8 @@
         "dec-2026-06-10-clean-repo-governance-seal",
         "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
         "dec-2026-06-16-goal-runtime-system-governance-seal",
-        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair"
+        "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair",
+        "dec-2026-06-19-prd-planning-wizard-governance-coverage-repair"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -131,6 +134,16 @@
         {
           "kind": "file",
           "ref": "Plans/plans_to_code_handoff.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/PRD_Builder.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Planning_Wizard.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -183,6 +196,16 @@
         {
           "kind": "file",
           "ref": "Plans/plans_to_code_handoff.schema.json"
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/PRD_Builder.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Planning_Wizard.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "policy_mode": "workspace-write",

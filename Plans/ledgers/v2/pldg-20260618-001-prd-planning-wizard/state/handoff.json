@@ -8,12 +8,13 @@
     "Regenerated allowed Plans/.plan_index outputs during compile, then governance seal refreshed migration proof, shards, evidence, and Spec Lock after Plans and PlanUnit index stabilized; no WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
     "Started bounded post-audit repair for audit-20260618-007 and recorded ledger projection/disposition cleanup in source-lineage state only.",
     "Closed audit-20260618-007 with a 94-row repair_closure_matrix, PASS_CERTIFIED repair report, semantic closure registry rows, refreshed evidence hashes, and passing closure/governance validators.",
-    "Closed audit-20260618-009 with a 10-row repair_closure_matrix, repair report, semantic closure registry rows, refreshed PlanUnit index/migration/shards/evidence/Spec Lock, and passing closure/governance validators."
+    "Closed audit-20260618-009 with a 10-row repair_closure_matrix, repair report, semantic closure registry rows, refreshed PlanUnit index/migration/shards/evidence/Spec Lock, and passing closure/governance validators.",
+    "Closed audit-20260619-001 with a 16-row repair_closure_matrix, repair report, semantic closure registry rows, governance coverage registration for PRD Builder and Planning Wizard, refreshed generated governance artifacts, and passing validators."
   ],
   "current_phase": "compiled_prd_planning_wizard_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0025",
-    "next_action": "Audit-20260618-009 bounded repair is validated; wait for Jared to request a new conversational design turn, audit, compile, or build phase."
+    "last_event_id": "evt-0026",
+    "next_action": "Audit-20260619-001 bounded repair is validated; wait for Jared to request a new conversational design turn, audit, compile, or build phase."
   },
   "do_not_redo": [
     "Do not rediscover whether the feature is called Requirements Doc Builder, PRD Builder, Chain Wizard, Plan Wizard, or Planning Wizard; naming is settled.",
@@ -21,18 +22,18 @@
     "Do not use superseded experimental planning-pipeline artifacts as authority.",
     "Do not create runtime WorkNodes or launch builds during ledger-to-Plans compilation."
   ],
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 10,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 16,
   "latest_audit_closure_status_counts": {
-    "repaired": 10
+    "repaired": 16
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T00:50:57Z",
+  "latest_audit_validated_at_utc": "2026-06-19T01:40:00Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "next_actions": [
-    "Use audit-20260618-009 repair artifacts as the current closure record.",
+    "Use audit-20260619-001 repair artifacts as the current closure record.",
     "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks.",
     "Proceed only if Jared asks for a new conversational design turn, a new audit, or an explicit compile/build phase."
   ],
@@ -40,8 +41,8 @@
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "summary": "PRD Builder and Planning Wizard ledger compilation, governance seal, bounded audit-007 repair, audit-008 closure, and audit-20260618-009 bounded repair are complete against live Plans, PlanUnit index, migration proof, shards, evidence, Spec Lock, and audit closure registry. Node readiness remains blocked_compiler_contract_incomplete by design.",
-  "updated_at_utc": "2026-06-19T00:50:57Z",
+  "summary": "PRD Builder and Planning Wizard ledger compilation, governance seal, prior bounded repairs, and audit-20260619-001 bounded repair are complete against live Plans, PlanUnit index, migration proof, shards, evidence, Spec Lock, plan graph, and audit closure registry. Node readiness remains blocked_compiler_contract_incomplete by design.",
+  "updated_at_utc": "2026-06-19T01:40:00Z",
   "validation_state": {
     "pm_audit_closure_validate_with_matrix": "pass",
     "pm_bootstrap_ledger_validate": "pass",

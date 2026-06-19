@@ -225,7 +225,7 @@ plan_unit_id: PNC-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: Future Chain Wizard uses native Goal Mode invisibly for ledger-to-Plans transfer, Plans-to-node conversion after this compiler contract is complete, and audit. Assistant chat can invoke Goal Mode visibly for arbitrary execution tasks.
+canonical_text: Future Planning Wizard uses native Goal Mode invisibly for ledger-to-Plans transfer, Plans-to-node conversion after this compiler contract is complete, and audit. Assistant chat can invoke Goal Mode visibly for arbitrary execution tasks.
 gui_related: false
 gui_classification_reason: Goal handoff and compiler orchestration are not GUI implementation work.
 depends_on: [PLS-008, PNC-001]
@@ -239,13 +239,16 @@ validation_surfaces:
 risk_class: phase_boundary
 reasoning_tier: standard
 context_scope: native_future
-implementation_surfaces: [future Chain Wizard, future Goal Mode service, future compiler]
+implementation_surfaces: [future Planning Wizard, future Goal Mode service, future compiler]
 node_compile_hint: {mode: future_native_goal_handoff, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0029
   - source_ref:chat:design-discussion
-preserved_exact_tokens: ["Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
-negative_constraints: []
+preserved_exact_tokens: ["Planning Wizard", "Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
+negative_constraints:
+  - Chain Wizard is retained only as retired compatibility/source-lineage terminology and must not name the current product.
+stale_retired_dispositions:
+  - Chain Wizard in source lineage is retired; active current-product prose uses Planning Wizard.
 owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md]
 ```
 

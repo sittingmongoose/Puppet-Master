@@ -526,4 +526,4 @@ Retired current-product names such as `Requirements Doc Builder` may appear only
 
 ## 8. Source Lineage And Governance
 
-Compiled from `Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/`. Generated shards, evidence bundles, Spec Lock, plan graph, and auto_decisions remain pending for an explicit governance seal phase.
+Compiled from `Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/`. The ledger remains source-lineage memory; generated shard and evidence coverage, Spec Lock hashes, and plan-graph references include this owner doc after the bounded audit repair and governance seal. `Plans/auto_decisions.jsonl` remains deterministic-log managed and is not product prose authority.

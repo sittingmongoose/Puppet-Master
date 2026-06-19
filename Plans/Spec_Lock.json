@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "7585e268b27481053ff7e171ca1e040c8820e4bce7ff77d7b5f5940a99a5a1aa"
+        "sha256": "d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -99,7 +99,7 @@
       },
       {
         "path": "Plans/plan_graph.json",
-        "sha256": "123e65e55e4960846e6d57ec5ea5101d389b863bc994a3c4b71c3e6cbc2adf09"
+        "sha256": "64628bf83e1ab725909b5a2d2e4d11a22048e98c735c2afca07a8d907043ec01"
       },
       {
         "path": "Plans/plan_graph.schema.json",
@@ -107,11 +107,11 @@
       },
       {
         "path": "Plans/Plan_To_Node_Compilation.md",
-        "sha256": "44aeac49d5cc9b68a0fe169bfd88faf5f1a15d4ba441a57929b0daffdf047a30"
+        "sha256": "4cf4fbee306b53456df35b9b956a1a93a87490ae08d82c33bb5c8af1ad784290"
       },
       {
         "path": "Plans/Planning_Ledger_System.md",
-        "sha256": "217e2b62d5f27a425abfd0789e23087ca1dccd89211001b1006fb6dea849cdc6"
+        "sha256": "683244565930333652282da6995a689383fe525c08be09b0dfe270f2c51e3bde"
       },
       {
         "path": "Plans/plans_to_code_handoff.schema.json",
@@ -143,7 +143,7 @@
       },
       {
         "path": "Plans/sharding_config.json",
-        "sha256": "f353f839b224257651ddb62d9dcc8d24e86a7c4b41a69612b5bf9cd9f5fd466b"
+        "sha256": "ce59d54ebea5ed2990d422ce447a8d4b026a590ab6ca601476ada8063c02ae82"
       },
       {
         "path": "Plans/test_strategy.schema.json",
@@ -164,6 +164,14 @@
       {
         "path": "scripts/pm-shard-plans.py",
         "sha256": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e"
+      },
+      {
+        "path": "Plans/PRD_Builder.md",
+        "sha256": "bd4a3401ed0bf4c6e11ec89966039c3cf73ea58f2a7b92598a6ea65639e02367"
+      },
+      {
+        "path": "Plans/Planning_Wizard.md",
+        "sha256": "121bf48efacec0f28a00ab2e90478feeafaad014ba805014b1547e302b3a1cc6"
       }
     ],
     "hash_alg": "sha256"

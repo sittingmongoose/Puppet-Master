@@ -170,6 +170,18 @@
     {
       "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl --source-artifact atom_fidelity_matrix.jsonl --source-artifact planunit_source_claims.jsonl --source-artifact owner_routing_findings.jsonl --source-artifact ledger_consistency.json --source-artifact validator_results.json",
       "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

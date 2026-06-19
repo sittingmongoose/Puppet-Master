@@ -517,6 +517,8 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `Models_System.md` | [`Plans/_shards/models_system/00-index.md`](Plans/_shards/models_system/00-index.md) |
 | `Run_Modes.md` | [`Plans/_shards/run_modes/00-index.md`](Plans/_shards/run_modes/00-index.md) |
 | `Goal_Runtime_System.md` | [`Plans/_shards/goal_runtime_system/00-index.md`](Plans/_shards/goal_runtime_system/00-index.md) |
+| `PRD_Builder.md` | [`Plans/_shards/prd_builder/00-index.md`](Plans/_shards/prd_builder/00-index.md) |
+| `Planning_Wizard.md` | [`Plans/_shards/planning_wizard/00-index.md`](Plans/_shards/planning_wizard/00-index.md) |
 | `Commands_System.md` | [`Plans/_shards/commands_system/00-index.md`](Plans/_shards/commands_system/00-index.md) |
 | `Executor_Protocol.md` | [`Plans/_shards/executor_protocol/00-index.md`](Plans/_shards/executor_protocol/00-index.md) |
 | `UI_Command_Catalog.md` | [`Plans/_shards/ui_command_catalog/00-index.md`](Plans/_shards/ui_command_catalog/00-index.md) |

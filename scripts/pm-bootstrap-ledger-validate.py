@@ -107,6 +107,14 @@ def load_json(path: Path) -> Any:
         raise SystemExit(f"INVALID JSON: {path}: {exc}")
 
 
+def has_new_plan_authoring_profile(path_ref: str) -> bool:
+    path, path_error = exact_path(path_ref)
+    if path_error or path is None or not path.exists() or not path.is_file():
+        return False
+    head = "\n".join(path.read_text(encoding="utf-8", errors="replace").splitlines()[:12])
+    return "PlanProfile:** New Plan Authoring Profile" in head or "PlanProfile: New Plan Authoring Profile" in head
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     if not path.exists():
@@ -365,17 +373,29 @@ def main() -> int:
                 errors.append("sealed ledger still has candidate design atoms")
             if atom_status_counts.get("ready_for_plan_compile", 0):
                 errors.append("sealed ledger still has ready_for_plan_compile design atoms")
+            for projection_name, projection in (("current", current), ("compile_queue", compile_queue)):
+                if projection.get("candidate_compile_owner_docs"):
+                    errors.append(
+                        f"sealed ledger {projection_name} retains active candidate_compile_owner_docs; "
+                        "move pre-seal candidates to source_lineage_pre_seal_candidate_compile_owner_docs"
+                    )
 
     last_event_id = current.get("last_event_id")
     handoff_last_event_id = handoff.get("cursor", {}).get("last_event_id")
     queue_last_event_id = compile_queue.get("last_event_id")
     queue_terminal_event_id = compile_queue.get("terminal_ledger_event_id")
+    cursor_last_event_id = current.get("cursor", {}).get("last_event_id")
     if last_event_id != handoff_last_event_id:
         errors.append("current last_event_id disagrees with handoff cursor.last_event_id")
     if last_event_id != queue_last_event_id:
         errors.append("current last_event_id disagrees with compile_queue last_event_id")
     if compiled_phase and queue_terminal_event_id != last_event_id:
         errors.append("compiled compile_queue terminal_ledger_event_id disagrees with current last_event_id")
+    if cursor_last_event_id and cursor_last_event_id != last_event_id:
+        errors.append("current cursor.last_event_id disagrees with current last_event_id")
+    cursor_next_action = str(current.get("cursor", {}).get("next_action", ""))
+    if current.get("governance_status") == "sealed" and "run final validators" in cursor_next_action.lower():
+        errors.append("sealed ledger current cursor.next_action still asks to run final validators")
     if last_event_id and last_event_id not in ids["event"]:
         errors.append(f"last_event_id not found in events: {last_event_id}")
     if events and last_event_id != events[-1].get("event_id"):
@@ -541,17 +561,27 @@ def main() -> int:
             if target not in plan_unit_ids:
                 errors.append(f"atom {atom_id} compiled_output_plan_unit_id {target} is not present in compiled Plan docs")
 
+    governance_coverage_targets = set(canonical_targets)
+    if current.get("governance_status") == "sealed":
+        governance_coverage_targets.update(
+            doc
+            for doc in compiled_owner_docs
+            if doc.startswith("Plans/")
+            and doc.endswith(".md")
+            and has_new_plan_authoring_profile(doc)
+        )
+
     sharding_config = load_json(PLANS / "sharding_config.json")
     sharding_sources = set(map(str, sharding_config.get("sources", [])))
-    missing_sharding_sources = sorted(canonical_targets - sharding_sources)
+    missing_sharding_sources = sorted(governance_coverage_targets - sharding_sources)
     if missing_sharding_sources:
-        errors.append(f"canonical_plan_targets missing from sharding_config sources: {missing_sharding_sources}")
+        errors.append(f"governance coverage targets missing from sharding_config sources: {missing_sharding_sources}")
 
     spec_lock = load_json(PLANS / "Spec_Lock.json")
     locked_paths = {str(row.get("path")) for row in spec_lock.get("canonical_ssot_hashes", {}).get("files", [])}
-    missing_spec_lock = sorted(canonical_targets - locked_paths)
+    missing_spec_lock = sorted(governance_coverage_targets - locked_paths)
     if missing_spec_lock:
-        errors.append(f"canonical_plan_targets missing from Spec_Lock coverage: {missing_spec_lock}")
+        errors.append(f"governance coverage targets missing from Spec_Lock coverage: {missing_spec_lock}")
 
     plan_graph = load_json(PLANS / "plan_graph.json")
     plan_graph_refs: set[str] = set()
@@ -561,9 +591,9 @@ def main() -> int:
         for contract_ref in node.get("contract_refs", []):
             if str(contract_ref).startswith("ContractName:"):
                 plan_graph_refs.add(str(contract_ref).removeprefix("ContractName:").split("#", 1)[0])
-    missing_plan_graph = sorted(canonical_targets - plan_graph_refs)
+    missing_plan_graph = sorted(governance_coverage_targets - plan_graph_refs)
     if missing_plan_graph:
-        errors.append(f"canonical_plan_targets missing from plan_graph coverage: {missing_plan_graph}")
+        errors.append(f"governance coverage targets missing from plan_graph coverage: {missing_plan_graph}")
 
     registry_path = ledger_dir.parent / "ledger_registry.json"
     if registry_path.exists():

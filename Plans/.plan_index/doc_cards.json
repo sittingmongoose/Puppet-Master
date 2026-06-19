@@ -45,7 +45,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4323,
+      "line_count": 4325,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 59,
       "plan_unit_ids": [
@@ -173,7 +173,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "7585e268b27481053ff7e171ca1e040c8820e4bce7ff77d7b5f5940a99a5a1aa",
+      "sha256": "d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59
@@ -8855,14 +8855,14 @@
         "Plans/bootstrap/Codex_Prompts.md",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md",
-        "future Chain Wizard",
         "future Goal Mode service",
         "future NodeSeed compiler",
+        "future Planning Wizard",
         "future WorkNode compiler",
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 1060,
+      "line_count": 1063,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -8903,7 +8903,7 @@
         "scheduling_correctness",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "44aeac49d5cc9b68a0fe169bfd88faf5f1a15d4ba441a57929b0daffdf047a30",
+      "sha256": "4cf4fbee306b53456df35b9b956a1a93a87490ae08d82c33bb5c8af1ad784290",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16,
@@ -8992,7 +8992,7 @@
         "scripts/pm-audit-closure.py",
         "scripts/pm-bootstrap-ledger-validate.py"
       ],
-      "line_count": 805,
+      "line_count": 811,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -9030,7 +9030,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "217e2b62d5f27a425abfd0789e23087ca1dccd89211001b1006fb6dea849cdc6",
+      "sha256": "683244565930333652282da6995a689383fe525c08be09b0dfe270f2c51e3bde",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -9125,7 +9125,7 @@
         "owner_drift",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "b9243384005c0a0f04edd5162089df6f5c9d48b5ae8a1c121fb4f806c171d59e",
+      "sha256": "121bf48efacec0f28a00ab2e90478feeafaad014ba805014b1547e302b3a1cc6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -9285,7 +9285,7 @@
         "owner_drift",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "930898255aa7ea8798bcc2a49ae17ab16d252e774cf6ffdefc52abcc79007461",
+      "sha256": "bd4a3401ed0bf4c6e11ec89966039c3cf73ea58f2a7b92598a6ea65639e02367",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 7
@@ -11745,7 +11745,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T00:39:20Z",
+  "generated_at_utc": "2026-06-19T01:30:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

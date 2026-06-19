@@ -1,0 +1,104 @@
+{
+  "generated_at_utc": "2026-06-19T01:31:22Z",
+  "index_path": "Plans/_shards/prd_builder/00-index.md",
+  "index_sha256": "d7d63f485f82f909d1774ed6e51acc9c8a947a903587d2e0313b555e733de7b9",
+  "manifest_path": "Plans/_shards/prd_builder/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/prd_builder/001-preamble.md",
+      "sha256": "cee6bb47b28f18ba11ec4abf51b97a897535fa9eb98cf7ccd7c1cb321fc91615",
+      "shard_id": "001",
+      "source_line_end": 5,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/prd_builder/002-0.-scope.md",
+      "sha256": "afe8a2e82fe2036152e20df4cb8a4e54cc269d9b0c53986941c29966faf2e658",
+      "shard_id": "002",
+      "source_line_end": 9,
+      "source_line_start": 7,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Ownership And Consumers",
+      "path": "Plans/_shards/prd_builder/003-1.-ownership-and-consumers.md",
+      "sha256": "2ca9e1c5cd1dcfbea9c377f22455c6791b1e856a9181ba0c9be3fce4484ea5e4",
+      "shard_id": "003",
+      "source_line_end": 14,
+      "source_line_start": 12,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Canonical PlanUnits",
+      "path": "Plans/_shards/prd_builder/004-2.-canonical-planunits.md",
+      "sha256": "51cf8fdd7e85b733a722bc055eef5e633156578c215aa116eb4d580d4908342c",
+      "shard_id": "004",
+      "source_line_end": 499,
+      "source_line_start": 17,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
+      "path": "Plans/_shards/prd_builder/005-3.-contracts-schemas-events-or-data-shapes.md",
+      "sha256": "78102c5f136cb790cae59e4bd323d4c261877808742514e3060914b5b783eff6",
+      "shard_id": "005",
+      "source_line_end": 504,
+      "source_line_start": 502,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Integration Surfaces",
+      "path": "Plans/_shards/prd_builder/006-4.-integration-surfaces.md",
+      "sha256": "a4f1bded22ce3e1ddceb841fd8d4cae0ed7ad54e7f15894f08a7e4cca818f7f8",
+      "shard_id": "006",
+      "source_line_end": 509,
+      "source_line_start": 507,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Validation And Acceptance",
+      "path": "Plans/_shards/prd_builder/007-5.-validation-and-acceptance.md",
+      "sha256": "e3427f6b13ebf9d5942b69748d18f0e9bf16355ca5d779432043c8bb0a7b3562",
+      "shard_id": "007",
+      "source_line_end": 514,
+      "source_line_start": 512,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Plan-To-Node Readiness",
+      "path": "Plans/_shards/prd_builder/008-6.-plan-to-node-readiness.md",
+      "sha256": "63fbadb59e22bf59c5c2bff93f589a3b0ee020c5a587e3d654b29791a73e32a4",
+      "shard_id": "008",
+      "source_line_end": 519,
+      "source_line_start": 517,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
+      "path": "Plans/_shards/prd_builder/009-7.-deferred-retired-compatibility-and-non-goals.md",
+      "sha256": "65b434de786d34e6632ac12d28e94ba2bca3a1fce0355177bccc421f44bdd53e",
+      "shard_id": "009",
+      "source_line_end": 524,
+      "source_line_start": 522,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Source Lineage And Governance",
+      "path": "Plans/_shards/prd_builder/010-8.-source-lineage-and-governance.md",
+      "sha256": "17b95c771b84a7f6e00ba007ccc4caad2b924a79a74c576b01c24b60b48ed007",
+      "shard_id": "010",
+      "source_line_end": 529,
+      "source_line_start": 527,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 529,
+    "path": "Plans/PRD_Builder.md",
+    "sha256": "bd4a3401ed0bf4c6e11ec89966039c3cf73ea58f2a7b92598a6ea65639e02367"
+  }
+}
