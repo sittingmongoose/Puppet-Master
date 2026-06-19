@@ -1,0 +1,38 @@
+{
+  "audit_id": "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity",
+  "counts": {
+    "candidate_compile_owner_docs": 0,
+    "compile_queue_items": 62,
+    "compiled_plan_unit_count": 62,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 29,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "ready_atom_ids": 0
+  },
+  "evidence": [
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "failures": [],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "range": "242415aba82384c58032bcaed49ad0819d8551c8..HEAD",
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "pass",
+  "status_phase": {
+    "governance_status": "sealed",
+    "latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "latest_audit_status": "repair_validated",
+    "ledger_status": "sealed",
+    "phase": "compiled_prd_planning_wizard_governance_sealed",
+    "status": "consistent"
+  },
+  "subagent_result": "PASS_NO_LEDGER_CONSISTENCY_INCONSISTENCIES",
+  "warnings": []
+}
