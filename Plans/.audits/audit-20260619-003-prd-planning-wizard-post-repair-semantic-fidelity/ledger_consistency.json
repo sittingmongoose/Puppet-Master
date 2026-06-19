@@ -1,0 +1,64 @@
+{
+  "audit_id": "audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity",
+  "candidate_atoms_count": 0,
+  "canonical_plan_targets": [
+    "Plans/PRD_Builder.md",
+    "Plans/Planning_Wizard.md"
+  ],
+  "compile_queue_status": "compiled_prd_planning_wizard_governance_sealed",
+  "compiled_atom_count": 168,
+  "compiled_plan_unit_count": 62,
+  "compiled_schema_outputs": [
+    "Plans/plans_to_code_handoff.schema.json"
+  ],
+  "compiled_workflow_support_outputs": [
+    "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+    "Plans/bootstrap/Codex_Prompts.md"
+  ],
+  "current_status": "sealed",
+  "cursor_last_event_id": "evt-0027",
+  "forbidden_artifacts": [],
+  "governance_seal_outputs": [
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "Plans/_shards",
+    "Plans/.evidence",
+    "Plans/Spec_Lock.json",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
+  ],
+  "inconsistencies": [],
+  "last_event_id": "evt-0027",
+  "latest_audit_closure_rows": 16,
+  "latest_audit_closure_status_counts": {
+    "repaired": 15,
+    "source_lineage_only": 1
+  },
+  "latest_audit_status": "repair_validated",
+  "ledger_health_status": "pass_governance_sealed",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "manifest_status": "sealed",
+  "note": "Sealed ledger projections, compact state, registry entry, closure rows, and compile queue agree at HEAD; no active candidates, open questions, blockers, or ready atoms remain.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_prd_planning_wizard_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "registry_status": "sealed",
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "unchanged_prior_canon_support_docs": [
+    "Plans/Tools.md"
+  ],
+  "warnings": [
+    {
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:163-167",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:15-18",
+        "latest_audit_ref=Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md"
+      ],
+      "field": "cursor.next_action",
+      "severity": "low",
+      "warning": "current.json and handoff.json cursor.next_action still name audit-20260619-001, while latest_audit_* fields correctly point to audit-20260619-002 repair validation; treated as stale projection wording, not canonical product drift."
+    }
+  ]
+}
