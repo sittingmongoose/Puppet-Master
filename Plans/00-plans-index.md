@@ -218,8 +218,8 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 ### PM Semantic Audit Closure Map (2026-06-17)
 
 Semantic audit closure support uses this owner split:
-- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, and reopen policy.
-- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_closure_matrix.jsonl`, and validator-facing matrix coverage.
+- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules.
+- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, and validator-facing actionable-row coverage.
 - `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics.
 - `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
 
@@ -4045,9 +4045,11 @@ canonical_text: >-
   Plans/00-plans-index.md records the semantic audit closure owner split
   without re-owning closure semantics. Planning_Ledger_System/PLS-012 owns the
   durable Plans/.audits/_semantic_closure_registry.jsonl row shape,
-  previously_closed reuse, and reopen policy. Plan_Document_System/PDS-014 owns
-  deterministic finding_key construction, repair_closure_matrix.jsonl, and
-  validator-facing closure matrix coverage. Bootstrap_Planning_Workflow and
+  previously_closed reuse, reopen policy, subject_ref/observation_ref, and
+  latest_audit_* terminal-state rules. Plan_Document_System/PDS-014 owns
+  deterministic finding_key construction, repair_required/finding_level,
+  repair_closure_matrix.jsonl, and validator-facing actionable-row coverage.
+  Bootstrap_Planning_Workflow and
   Codex_Prompts consume those owner PlanUnits for workflow and reusable prompt
   text. scripts/pm-audit-closure.py, the global closure registry, and
   audit-scoped repair_closure_matrix.jsonl are support/governance surfaces, not
@@ -4061,7 +4063,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - The index routes closure registry row shape and reopen policy to PLS-012.
-  - The index routes deterministic finding_key and repair_closure_matrix validation to PDS-014.
+  - The index routes subject_ref, observation_ref, and latest_audit_* terminal-state rules to PLS-012.
+  - The index routes deterministic finding_key, repair_required/finding_level, and repair_closure_matrix validation to PDS-014.
   - Bootstrap workflow and prompt docs are recorded as consumers rather than schema owners.
   - Closure support artifacts and scripts are not product implementation, WorkNode, NodeSeed, executable queue, final node manifest, or build-task artifacts.
 validation_surfaces:
@@ -4087,11 +4090,16 @@ preserved_exact_tokens:
   - "repair_closure_matrix.jsonl"
   - "finding_key"
   - "previously_closed"
+  - "repair_required"
+  - "finding_level"
+  - "subject_ref"
+  - "observation_ref"
   - "scripts/pm-audit-closure.py"
   - "PLS-012"
   - "PDS-014"
 negative_constraints:
   - Do not make Plans/00-plans-index.md the owner of closure registry schema or closure matrix validation.
+  - Do not route repair_required=false warnings, previously_closed rows, audit-only observations, or hygiene-only runs into repair obligations.
   - Do not treat audit closure support scripts or audit JSONL artifacts as product implementation files.
   - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or build tasks from closure registry state.
 owner_hints:

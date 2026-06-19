@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a6243d6a31b9928e2fbf63a45a710f1326616436737359a588ac53530cc5d4d8"
+      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "a43322235e7eb04087fad66da7df2c9eab5fceeef3d06489fb947e589e1ccc4d"
+      "sha256": "d2fba1d816ef7735ea9db877c8d0bbbfe1ccc4d21da78a6bec59b48317938cc0"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -175,6 +175,11 @@
       "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
       "result": "PASS",
       "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
+    },
+    {
+      "name": "pm-semantic-terminal-state-governance-refresh",
+      "result": "PASS",
+      "details": "Refreshed Spec Lock, shard report, plan index, and migration batch hashes after process-owner PlanUnit updates; no node/build/runtime artifacts created."
     }
   ],
   "commands_run": [

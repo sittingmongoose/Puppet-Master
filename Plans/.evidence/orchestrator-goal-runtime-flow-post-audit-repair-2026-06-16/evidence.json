@@ -108,6 +108,10 @@
     {
       "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -248,7 +252,7 @@
   "artifacts": [
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573"
+      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887"
     },
     {
       "path": "Plans/Contracts_V0.md",
@@ -284,7 +288,7 @@
     },
     {
       "path": "Plans/Planning_Ledger_System.md",
-      "sha256": "683244565930333652282da6995a689383fe525c08be09b0dfe270f2c51e3bde"
+      "sha256": "9aa7510cb8c1c644ba7e9659fbba88da8064c7ad89863f1e5b6bae3b394b9723"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -312,31 +316,31 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "b06758f4e16709b58a0959c99f57f8f9440f15d109531ceecaec2ae97d569416"
+      "sha256": "3624fa231bfb7939bc2e2427912a8e51dc03fc5f5013ee4811c92614c74eb7a2"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e8c26edc0597007ea58b83374e3dcbf59a44716abe6b345ac89414fba8283e6f"
+      "sha256": "e84f76f52063b25f591189c77fdf3b251d0657de6d134860aff8d2fbf4eed17c"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "e84358576ecb70fe1135b6f37e19de7230e709392519fadc22acf84c831ea9d9"
+      "sha256": "0294e7dbc07a35b71a3a0f5a4c3ad7cae80282995ec66a30f6e04af8a1368b6d"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "9563898c5a7d2e4ea2528227024ee32ec5ce69536364c9f30191b349735a4bdd"
+      "sha256": "0434445a146d5a83362d7a75bbe59f976fc8af7450524c5be8823d553eba6f25"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "36cabc05588effcf7aaf389ee010aca25660895083f987ce2574857d075ae4c8"
+      "sha256": "c4a4de2a6fa5e0b2b5bff0360c9964d5b77e573393902f81cb6b77fa07e00963"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "11fe3d16b3d4798e01510536ab1fdf0403725c74abb726f36a87322c3d0b70d9"
+      "sha256": "adeace2097777583a10ea97d730a60c170eb78a465167126096a8b2d654d5e6c"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "80ab38a4873464cfcca7961a750c2ea293a54aa5387f21d7b649fc999041649c"
+      "sha256": "23b81ecc9dc65c75f40a3ebcf5430741423b875994721abf0580eb5db19bbf73"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
@@ -348,15 +352,15 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "a43322235e7eb04087fad66da7df2c9eab5fceeef3d06489fb947e589e1ccc4d"
+      "sha256": "d2fba1d816ef7735ea9db877c8d0bbbfe1ccc4d21da78a6bec59b48317938cc0"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "1bef4405bab5143134abcda725f09a71318cb65348b5bcc3f5cbb42871901967"
+      "sha256": "aa29ca00e427749a202dfd7cc84b2b441ef9f925409e1abcca569b20aae76901"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a6243d6a31b9928e2fbf63a45a710f1326616436737359a588ac53530cc5d4d8"
+      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -406,7 +410,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index validate after audit-20260618-009 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created."
+      "details": "Plan index regenerated after PM semantic audit terminal-state process PlanUnit updates; node_readiness remains blocked_compiler_contract_incomplete and no WorkNodes or NodeSeeds were created."
     },
     {
       "name": "post-audit-repair-governance-seal",
@@ -492,6 +496,11 @@
       "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
       "result": "PASS",
       "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
+    },
+    {
+      "name": "pm-audit-closure-terminal-state-tests",
+      "result": "PASS",
+      "details": "python3 -m unittest tests/test_pm_audit_closure.py passed, covering previously_closed no matrix, warning-only terminal audits, audit-only subject_ref exclusion, and zero-actionable no-op validation."
     }
   ]
 }
