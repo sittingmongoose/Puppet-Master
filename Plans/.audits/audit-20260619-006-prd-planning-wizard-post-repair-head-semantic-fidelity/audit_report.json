@@ -1,0 +1,343 @@
+{
+  "atom_fidelity": {
+    "classification_counts": {
+      "equivalent_with_evidence": 62,
+      "exact_present": 92,
+      "previously_closed": 14
+    },
+    "missing_or_drift_count": 0,
+    "previously_closed_count": 14,
+    "row_count": 168,
+    "summary": "All compiled atoms are either exact_present, equivalent_with_evidence, or previously_closed; no unclosed exact-detail loss or semantic drift found in live non-pipeline Plans."
+  },
+  "audit_id": "audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "242415aba82384c58032bcaed49ad0819d8551c8",
+  "changed_files": {
+    "audit_artifacts": [
+      "Plans/.audits/_semantic_closure_registry.jsonl",
+      "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+      "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_closure_matrix.jsonl",
+      "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
+      "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_validator_results.json",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/FINAL_REPORT.md",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/audit_report.json",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/closure_reuse.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/ledger_consistency.json",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/owner_routing_findings.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/planunit_source_claims.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_validator_results.json",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/semantic_risks.jsonl",
+      "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/validator_results.json"
+    ],
+    "auto_decisions_changed": false,
+    "generated_governance_artifacts": [
+      "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "Plans/.plan_index/acceptance_units.jsonl",
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl",
+      "Plans/Spec_Lock.json",
+      "Plans/_shards/00-plans-index/00-index.md",
+      "Plans/_shards/00-plans-index/manifest.json",
+      "Plans/_shards/agent-rules-context/00-index.md",
+      "Plans/_shards/agent-rules-context/manifest.json",
+      "Plans/_shards/assistant-chat-design/00-index.md",
+      "Plans/_shards/assistant-chat-design/manifest.json",
+      "Plans/_shards/assistant-memory-subsystem/00-index.md",
+      "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "Plans/_shards/automated_testing_system/00-index.md",
+      "Plans/_shards/automated_testing_system/manifest.json",
+      "Plans/_shards/bootstrap_planning_migration/00-index.md",
+      "Plans/_shards/bootstrap_planning_migration/manifest.json",
+      "Plans/_shards/chain-wizard-flexibility/00-index.md",
+      "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "Plans/_shards/cli_bridged_providers/00-index.md",
+      "Plans/_shards/cli_bridged_providers/manifest.json",
+      "Plans/_shards/commands_system/00-index.md",
+      "Plans/_shards/commands_system/manifest.json",
+      "Plans/_shards/contracts_v0/00-index.md",
+      "Plans/_shards/contracts_v0/manifest.json",
+      "Plans/_shards/crosswalk/00-index.md",
+      "Plans/_shards/crosswalk/manifest.json",
+      "Plans/_shards/executor_protocol/00-index.md",
+      "Plans/_shards/executor_protocol/manifest.json",
+      "Plans/_shards/feature-list/00-index.md",
+      "Plans/_shards/feature-list/manifest.json",
+      "Plans/_shards/filemanager/00-index.md",
+      "Plans/_shards/filemanager/manifest.json",
+      "Plans/_shards/filesafe/00-index.md",
+      "Plans/_shards/filesafe/manifest.json",
+      "Plans/_shards/finalguispec/00-index.md",
+      "Plans/_shards/finalguispec/manifest.json",
+      "Plans/_shards/github_integration/00-index.md",
+      "Plans/_shards/github_integration/manifest.json",
+      "Plans/_shards/goal_runtime_system/00-index.md",
+      "Plans/_shards/goal_runtime_system/manifest.json",
+      "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "Plans/_shards/human-in-the-loop/00-index.md",
+      "Plans/_shards/human-in-the-loop/manifest.json",
+      "Plans/_shards/interview-subagent-integration/00-index.md",
+      "Plans/_shards/interview-subagent-integration/manifest.json",
+      "Plans/_shards/lspsupport/00-index.md",
+      "Plans/_shards/lspsupport/manifest.json",
+      "Plans/_shards/mcp_integration/00-index.md",
+      "Plans/_shards/mcp_integration/manifest.json",
+      "Plans/_shards/miscplan/00-index.md",
+      "Plans/_shards/miscplan/manifest.json",
+      "Plans/_shards/models_system/00-index.md",
+      "Plans/_shards/models_system/manifest.json",
+      "Plans/_shards/multi-account/00-index.md",
+      "Plans/_shards/multi-account/manifest.json",
+      "Plans/_shards/newfeatures/00-index.md",
+      "Plans/_shards/newfeatures/manifest.json",
+      "Plans/_shards/newtools/00-index.md",
+      "Plans/_shards/newtools/manifest.json",
+      "Plans/_shards/opencode_deep_extraction/00-index.md",
+      "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "Plans/_shards/orchestrator_page/00-index.md",
+      "Plans/_shards/orchestrator_page/manifest.json",
+      "Plans/_shards/permissions_system/00-index.md",
+      "Plans/_shards/permissions_system/manifest.json",
+      "Plans/_shards/personas/00-index.md",
+      "Plans/_shards/personas/manifest.json",
+      "Plans/_shards/plan_document_system/00-index.md",
+      "Plans/_shards/plan_document_system/manifest.json",
+      "Plans/_shards/plan_to_node_compilation/00-index.md",
+      "Plans/_shards/plan_to_node_compilation/001-preamble.md",
+      "Plans/_shards/plan_to_node_compilation/002-0.-scope.md",
+      "Plans/_shards/plan_to_node_compilation/003-1.-boundary.md",
+      "Plans/_shards/plan_to_node_compilation/004-2.-planunits.md",
+      "Plans/_shards/plan_to_node_compilation/005-4.-runtime-disabled-compiler-algorithm.md",
+      "Plans/_shards/plan_to_node_compilation/006-5.-compilation-coverage.md",
+      "Plans/_shards/plan_to_node_compilation/007-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/plan_to_node_compilation/008-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/plan_to_node_compilation/manifest.json",
+      "Plans/_shards/planning_ledger_system/00-index.md",
+      "Plans/_shards/planning_ledger_system/manifest.json",
+      "Plans/_shards/planning_wizard/00-index.md",
+      "Plans/_shards/planning_wizard/manifest.json",
+      "Plans/_shards/prd_builder/00-index.md",
+      "Plans/_shards/prd_builder/manifest.json",
+      "Plans/_shards/project_output_artifacts/00-index.md",
+      "Plans/_shards/project_output_artifacts/manifest.json",
+      "Plans/_shards/prompt_pipeline/00-index.md",
+      "Plans/_shards/prompt_pipeline/manifest.json",
+      "Plans/_shards/provider_opencode/00-index.md",
+      "Plans/_shards/provider_opencode/manifest.json",
+      "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "Plans/_shards/run_graph_view/00-index.md",
+      "Plans/_shards/run_graph_view/manifest.json",
+      "Plans/_shards/run_modes/00-index.md",
+      "Plans/_shards/run_modes/manifest.json",
+      "Plans/_shards/runtime_artifacts_panel/00-index.md",
+      "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "Plans/_shards/skills_system/00-index.md",
+      "Plans/_shards/skills_system/manifest.json",
+      "Plans/_shards/storage-plan/00-index.md",
+      "Plans/_shards/storage-plan/manifest.json",
+      "Plans/_shards/tools/00-index.md",
+      "Plans/_shards/tools/manifest.json",
+      "Plans/_shards/ui_command_catalog/00-index.md",
+      "Plans/_shards/ui_command_catalog/manifest.json",
+      "Plans/_shards/usage-feature/00-index.md",
+      "Plans/_shards/usage-feature/manifest.json",
+      "Plans/_shards/widget_system/00-index.md",
+      "Plans/_shards/widget_system/manifest.json",
+      "Plans/_shards/wiring_matrix/00-index.md",
+      "Plans/_shards/wiring_matrix/manifest.json",
+      "Plans/_shards/worktreegitimprovement/00-index.md",
+      "Plans/_shards/worktreegitimprovement/manifest.json"
+    ],
+    "ledger_records": [
+      "Plans/ledgers/v2/ledger_registry.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/events.jsonl",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+      "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json"
+    ],
+    "live_non_pipeline_plan_docs": [
+      "Plans/Plan_To_Node_Compilation.md"
+    ]
+  },
+  "closure_reuse": {
+    "closure_status_counts": {
+      "false_positive": 1,
+      "repaired": 15
+    },
+    "hash_mismatch_count": 0,
+    "row_count": 16,
+    "summary": "Audit-005 closure rows were checked against current hashes and reused instead of reopening."
+  },
+  "compact_repair_prompt": "Bounded repair only for audit-20260619-006: update sealed ledger latest_audit_* projections to reflect audit-20260619-005 repair validation, or explicitly mark audit-005 as artifact-only/non-projection latest; update stale audit-005 repair next-action wording from review/commit to post-commit/fresh-audit wording if editing prior audit artifacts is allowed; optionally add a governance provenance/no-decision-required note for the PNC-014 Spec Lock/index refresh. Do not change canonical Plans text, WorkNodes, NodeSeeds, executable queues, manifests, implementation files, runtime dispatch, or production build tasks unless explicitly requested.",
+  "created_at_utc": "2026-06-19T10:22:55Z",
+  "current_ref": "0f3edbfa3e95ac9f749121f2f20334f6a5e052a3",
+  "forbidden_artifacts": {
+    "build_tasks": 0,
+    "executable_queues": 0,
+    "final_node_manifests": 0,
+    "implementation_files": 0,
+    "nodeseed_candidates": 0,
+    "nodeseeds": 0,
+    "summary": "No WorkNodes, NodeSeeds, candidates, executable queues, manifests, build tasks, runtime dispatch, or implementation files were created by the audited range or this audit.",
+    "worknodes": 0
+  },
+  "inference": {
+    "audit_id_inference": "Existing 2026-06-19 PRD Planning Wizard audits ended at audit-005, so audit-006 is the next available id.",
+    "baseline_ref_inference": "Earliest contiguous target ledger/registry cycle commit is da55b1732f484a60d16cd716a6ac81eec04fb493; baseline_ref is its parent 242415aba82384c58032bcaed49ad0819d8551c8.",
+    "current_ref_evidence": "HEAD/main/origin-main clean and pushed at 0f3edbfa3e95ac9f749121f2f20334f6a5e052a3 before audit artifact writes.",
+    "latest_cycle_commit": "da55b1732f484a60d16cd716a6ac81eec04fb493",
+    "ledger_id_inference": "Latest non-background ledger in registry/recent commits touching Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard and registry; excluded pldg-20260610-001-ledger-plan-system as background ledger system work."
+  },
+  "ledger_consistency": {
+    "failures": [],
+    "status": "pass_with_warnings",
+    "warnings": [
+      {
+        "classification": "missing_or_drift",
+        "evidence": [
+          "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:188",
+          "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:34",
+          "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json:31",
+          "Plans/ledgers/v2/ledger_registry.json:458",
+          "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json:14",
+          "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json:42",
+          "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md:39"
+        ],
+        "risk_key": "ledger_latest_audit_projection_stale",
+        "severity": "medium",
+        "summary": "Sealed ledger projections still name audit-004 as latest even though audit-005 repair validation is committed in HEAD."
+      }
+    ]
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_safe_action": "Bounded projection/governance provenance repair only if requested; no canonical Plans semantic repair is required by this audit.",
+  "owner_routing_findings": {
+    "row_count": 0,
+    "summary": "No owner-routing findings. PNC-014 correctly owns the handoff matrix/schema boundary in Plan_To_Node_Compilation; adjacent GUI/contracts/storage/security/provider/governance owners remain consumer/reference placements."
+  },
+  "plan_index": {
+    "acceptance_unit_count": 18423,
+    "coverage_status": "pass",
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 5166,
+    "runtime_disabled": true
+  },
+  "planunit_delta": {
+    "added_plan_units": [],
+    "changed_plan_unit_json_row_count": 17,
+    "changed_source_lineage_plan_units": [
+      "PNC-014"
+    ],
+    "deleted_plan_units": [],
+    "generated_index_only_deltas": [
+      "PNC-015",
+      "PNC-016",
+      "PNC-017"
+    ],
+    "substantive_live_planunit_deltas": [
+      {
+        "delta": "Adds source_atom_ids for atom-0002, atom-0101, atom-0102, atom-0103, atom-0104, atom-0105, atom-0106, and atom-0109; canonical PlanUnit text is otherwise unchanged.",
+        "evidence": [
+          "Plans/Plan_To_Node_Compilation.md:712"
+        ],
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "plan_unit_id": "PNC-014"
+      }
+    ]
+  },
+  "planunit_source_claims": {
+    "claim_status_counts": {
+      "source_lineage_supported": 62
+    },
+    "missing_lineage_count": 0,
+    "overclaim_count": 0,
+    "row_count": 62,
+    "summary": "Every audited PlanUnit source_lineage claim is supported by compile_queue atoms and live Plan evidence."
+  },
+  "range": "242415aba82384c58032bcaed49ad0819d8551c8..0f3edbfa3e95ac9f749121f2f20334f6a5e052a3",
+  "schema_id": "pm.semantic_fidelity_audit_report.v1",
+  "semantic_risks": {
+    "classification_counts": {
+      "missing_or_drift": 1,
+      "source_lineage_only": 1
+    },
+    "risk_keys": [
+      "ledger_latest_audit_projection_stale",
+      "governance_provenance_pnc014_refresh_ambiguous"
+    ],
+    "row_count": 2
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subagent_summaries": [
+    {
+      "agent": "Aristotle",
+      "focus": "atom fidelity and PlanUnit lineage",
+      "status": "pass",
+      "summary": "168 compiled atoms and 62 PlanUnits proved against live non-pipeline Plan evidence; no unclosed atom drift."
+    },
+    {
+      "agent": "Harvey",
+      "focus": "changed-doc and reciprocal fidelity",
+      "status": "pass",
+      "summary": "Only live PlanUnit delta is PNC-014 source_atom_ids; no removed headings/prose/ContractRefs/exact tokens."
+    },
+    {
+      "agent": "Schrodinger",
+      "focus": "owner routing",
+      "status": "pass",
+      "summary": "No wrong-owner or consumer-only-placement findings across contracts, schemas, storage, permissions, artifacts, providers, GUI, security, or governance."
+    },
+    {
+      "agent": "Dewey",
+      "focus": "ledger consistency and drift criticism",
+      "status": "pass_with_warnings",
+      "summary": "Sealed ledger is closed and blocker-free, but latest_audit_* projections still point at audit-004 instead of audit-005 repair validation."
+    },
+    {
+      "agent": "Sagan",
+      "focus": "index, governance, forbidden artifacts, validator mutability",
+      "status": "pass_with_warnings",
+      "summary": "Validators/index/forbidden scans pass with no side effects; governance provenance for PNC-014 refresh is artifact-clean but not separately named in auto_decisions."
+    }
+  ],
+  "validators": {
+    "results_path": "Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json",
+    "side_effect_count": 0,
+    "summary": {
+      "fail": 0,
+      "git_status_after_each": "clean",
+      "git_status_before_each": "clean",
+      "pass": 13,
+      "side_effect_count": 0
+    }
+  }
+}
