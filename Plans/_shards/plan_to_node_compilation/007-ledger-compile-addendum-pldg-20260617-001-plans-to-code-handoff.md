@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L407-L769
+Source lines: L407-L784
 
-Source SHA256: `18d51ca55ef09753e0674a3d9580bc2dfc6763f56c35360e7ff69b6a1072d0e7`
+Source SHA256: `44aeac49d5cc9b68a0fe169bfd88faf5f1a15d4ba441a57929b0daffdf047a30`
 
 ---
 
@@ -270,7 +270,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Plan Wizard approval through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
+  Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Planning Wizard Approve And Build approval and the PlanApproved handoff into PlanCompileRun state, then through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. For the current v1 matrix, Plan Compile source authority is the immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes; the Planning Wizard ledger remains source and reasoning lineage rather than executable Plan Compile authority. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
   The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
@@ -292,6 +292,13 @@ context_scope: plans_to_code_handoff
 implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/Project_Output_Artifacts.md, Plans/plans_to_code_handoff.schema.json]
 node_compile_hint: {mode: handoff_matrix_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - pldg-20260618-001-prd-planning-wizard:atom-0002
+  - pldg-20260618-001-prd-planning-wizard:atom-0101
+  - pldg-20260618-001-prd-planning-wizard:atom-0102
+  - pldg-20260618-001-prd-planning-wizard:atom-0103
+  - pldg-20260618-001-prd-planning-wizard:atom-0106
+  - pldg-20260618-001-prd-planning-wizard:atom-0107
+  - pldg-20260618-001-prd-planning-wizard:atom-0109
   - pldg-20260617-001-plans-to-code-handoff:atom-0007
   - pldg-20260617-001-plans-to-code-handoff:atom-0011
   - pldg-20260617-001-plans-to-code-handoff:atom-0041
@@ -304,6 +311,13 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0026
 preserved_exact_tokens:
   - "Plan Compile"
+  - "Planning Wizard"
+  - "Approve And Build"
+  - "ApprovedPlanPack"
+  - "PlanApproved"
+  - "PlanUnit index"
+  - "acceptance-unit index"
+  - "lineage"
   - "Plans to WorkNodes"
   - "WorkNode requests"
   - "Plans-to-Code Handoff Matrix"
@@ -334,6 +348,7 @@ preserved_exact_tokens:
   - "OpenCode"
   - "Codex parent verification"
 negative_constraints:
+  - Do not treat the Planning Wizard ledger as executable Plan Compile authority.
   - Do not show Executor code-generation progress inside the Plan Compile tab except final handoff status.
   - Do not expose the Codex external GUI-agent bridge as a built Puppet Master setting.
   - Do not compile vague roadmap prose that leaves future agents to infer the contracts.
@@ -351,7 +366,7 @@ These rows are design-only contract rows. They do not launch PlanCompile, create
 
 | row_id | transition | source_artifact | destination_artifact | producer | consumer | owner | validator | receipt | schema_payload | retry_route | rollback_route | user_escalation_condition | evidence_refs | plan_unit_refs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| H-001 | Plan Wizard approval to design-only compile state | approved Plan Wizard ledger plus PlanUnit index | PlanCompileRun state | Goal Runtime / Plan Wizard | Plan_To_Node_Compilation | Goal_Runtime_System + Plan_To_Node_Compilation | currentness, PlanUnit index hash, runtime disabled gate | plan_compile_receipt | plan_compile_run | rerun currentness preflight | no runtime mutation to roll back | true product decision, missing approval evidence, or stale Plan hash | source PlanUnit index, approval ref, compile state ref | GRS-028, PNC-010 |
+| H-001 | Planning Wizard Approve And Build approval to design-only PlanCompileRun state | immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes plus PlanApproved event | PlanCompileRun state | Planning Wizard Approve And Build / PlanApproved outbox | Plan_To_Node_Compilation | Planning_Wizard + Plan_To_Node_Compilation + Contracts_V0 | ApprovedPlanPack currentness, PlanUnit index hash, acceptance-unit index hash, runtime disabled gate | plan_compile_receipt | plan_compile_run | rerun currentness preflight or reissue PlanApproved from the same approved pack | no runtime mutation to roll back | true product decision, missing Approve And Build approval evidence, stale ApprovedPlanPack hash, or stale PlanUnit/acceptance-unit index hash | ApprovedPlanPack ref, PlanApproved/approval receipt ref, PlanUnit index ref, acceptance-unit index ref, compile state ref | PWIZ-010, PNC-010, PNC-015, CV-290, GRS-028, GRS-031 |
 | H-002 | Compile state to bounded stage work | PlanCompileRun state | stage_card and compile_worklist | Plan_To_Node_Compilation | low-context compile adapter | Plan_To_Node_Compilation | stage entry/exit gate validation | plan_compile_receipt | stage_card, compile_worklist | regenerate bounded worklist from same source hashes | discard draft worklist | stage cannot name bounded read/write/forbidden surfaces | compile state ref, stage card ref, worklist ref | PNC-010, PNC-011 |
 | H-003 | Stage work to non-executable NodeSeed candidate review | compile_worklist | NodeSeed candidate plus NodeSeed review | Plan_To_Node_Compilation | Plan_To_Node_Compilation review gate | Plan_To_Node_Compilation | coverage, exclusions, validators/gaps, GUI flags, no executable WorkNodes | plan_compile_receipt | node_seed_candidate, node_seed_review | split/merge candidate and rerun review | mark candidate excluded or blocked | source PlanUnit ambiguity or authority boundary | candidate ref, review ref, coverage ref | PNC-012 |
 | H-004 | Reviewed candidates to WorkGraph draft | approved NodeSeed reviews | WorkGraph draft | Plan_To_Node_Compilation | Executor intake preview | Plan_To_Node_Compilation | graph integrity, dependencies, scheduler policy, authority | plan_compile_receipt | workgraph_draft | repair graph edges or candidate sizing | return to NodeSeed review | irreconcilable dependency cycle or authority conflict | workgraph ref, candidate refs, graph validation ref | PNC-012, PNC-013 |

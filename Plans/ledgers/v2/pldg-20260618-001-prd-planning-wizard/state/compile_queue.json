@@ -1888,21 +1888,18 @@
       "title": "PRD Builder And Planning Wizard Semantic Migration"
     }
   ],
-  "last_event_id": "evt-0023",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 94,
+  "last_event_id": "evt-0025",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 10,
   "latest_audit_closure_status_counts": {
-    "not_for_plan": 14,
-    "repaired": 72,
-    "source_lineage_only": 2,
-    "stale_retired": 6
+    "repaired": 10
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
+  "latest_audit_validated_at_utc": "2026-06-19T00:50:57Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
-  "notes": "All compiled atoms remain represented in live Plans PlanUnits. Governance seal artifacts were refreshed after Plans and PlanUnit index stabilized. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, generated runtime artifacts, or production build tasks were created.",
+  "notes": "All compiled atoms remain represented in live Plans PlanUnits. Audit-20260618-009 repaired PNC-014/H-001 authority wording and handoff provenance, then refreshed allowed PlanUnit index and governance artifacts. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
   "plan_index_outputs": [
     "Plans/.plan_index/plan_units.jsonl",
     "Plans/.plan_index/doc_cards.json",
@@ -1914,8 +1911,8 @@
   "ready_atom_ids": [],
   "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
   "status": "compiled_prd_planning_wizard_governance_sealed",
-  "terminal_ledger_event_id": "evt-0023",
-  "updated_at_utc": "2026-06-18T21:42:37Z",
+  "terminal_ledger_event_id": "evt-0025",
+  "updated_at_utc": "2026-06-19T00:50:57Z",
   "validation_results": {
     "git_diff_check": "pass",
     "pm_bootstrap_ledger_validate": "pass",
@@ -1925,6 +1922,10 @@
     "pm_plans_verify_validate_auto_decisions": "pass",
     "pm_plans_verify_validate_evidence": "pass",
     "pm_plans_verify_verify_spec_lock": "pass",
-    "pm_shard_plans_check": "pass"
+    "pm_shard_plans_check": "pass",
+    "pm_audit_closure_validate_with_matrix": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_validate_plans_to_code_handoff_schema": "pass"
   }
 }

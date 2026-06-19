@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "24dab1d85a6d62221e39d6a804213b153b66ca889e4d70a467f66e43cb5e31dd"
+      "sha256": "63d39390624d2c70ae7f774f6d0ead04ce2199156e62d9ffe29bd49b1931d60f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index validate after audit-20260618-007 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created."
+      "details": "pm-plan-index validate after audit-20260618-009 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -187,6 +187,11 @@
       "name": "audit_20260618_007_closure_matrix",
       "result": "PASS",
       "details": "Closed 94 audit rows across semantic risks, atom fidelity, PlanUnit source claims, owner routing, ledger consistency, and validator context."
+    },
+    {
+      "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
+      "result": "PASS",
+      "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
     }
   ],
   "commands_run": [

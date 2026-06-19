@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "24dab1d85a6d62221e39d6a804213b153b66ca889e4d70a467f66e43cb5e31dd"
+      "sha256": "63d39390624d2c70ae7f774f6d0ead04ce2199156e62d9ffe29bd49b1931d60f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "5fdb82aaa335837c948575de680d46059c7fa849427334eaf10cfa58ef40572a"
+      "sha256": "d9939fdf3db0c2286f2e2755a172a146560f2be6bad571ced63fbb778857a899"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "4a4fe5f21d37f03a9e9b1cab3ad0ec4c6258d9b627da6deb1ca9f226e2f06309"
+      "sha256": "3af0daf996866cae7d2adc826aecb0a674efee2b95db60724d486a5f69e592e9"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "b869c701132cd0698de906f2011f7d08c9bea9a23c2abcf5d3bb65122be0e25f"
+      "sha256": "a1efbbb000ff32bd06915339e646823b9d80c6450f60b60d8ede9e76d7f3a1ee"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "70607c20ffd1157ca13ea3c024c9c5849ba20a9356cddad73114d2b362bd5ba2"
+      "sha256": "c9f76a0c6da2add9fa46dc949ca5c5133e8c065a6d69e35c418c916a8af8a2df"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "1ec9b482bd3d512eb2aa0d720cab382e37f685192ae5374d8099c896d5b16499"
+      "sha256": "f595a8aea25dc9ef5309adee28961b60dbf482961d65b821648e42979339deea"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "75241866ee35255ec1d61b97990ad7237a05d9dd8816371a6e7a21a61b5303da"
+      "sha256": "f559cfcfaac97b23996ffd9b03fb5f140e2d425ec88c1a7deead2aa27fb41881"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "bb7904bfa33499551ca281bae51b8dc03bc7345718fcdb10adb7a0e7f7016d5e"
+      "sha256": "a3882e67b5a1fb8585e8ab11eb1416bc0d15cc7b1600237aad66ad96ef535097"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "6b266cbfca6f11cbd37db8a0e1b429f020be10feba611aa4d2a206d11973b37a"
+      "sha256": "ea1724ce223bcee53afd501acf544810fc6243b7a31f73b53f653b3339d4f8c0"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "pm-plan-index validate after audit-20260618-007 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created.",
+      "details": "pm-plan-index validate after audit-20260618-009 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -208,6 +208,11 @@
       "name": "audit_20260618_007_closure_matrix",
       "result": "PASS",
       "details": "Closed 94 audit rows across semantic risks, atom fidelity, PlanUnit source claims, owner routing, ledger consistency, and validator context."
+    },
+    {
+      "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
+      "result": "PASS",
+      "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
     }
   ],
   "commands_run": [
