@@ -8,17 +8,17 @@
     {
       "note": "Primary Persona owner repair.",
       "path": "Plans/Personas.md",
-      "sha256": "31445b995f23e515187e6a96600226e408289ec5e0d432f4ee7d37d0a19d083a"
+      "sha256": "75b45e602969e00f98f65cfb7e2a3951224818e3240cc8e9db43de4932a0559f"
     },
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "efab96c75c99597ff28c9aee4c0eabab73cdf7a9db72a3ad4cde81ac01daa32e"
+      "sha256": "09e6a5a6ba8f7c839c3163a9b6b832b0924830d9f4646c626f0e37b6b31ea28c"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "f3d36df91449821add7b4fb1ccd89743610c2b29a761660fb3ae1a96bc4db6dc"
+      "sha256": "a9b5fbfbdf0de54c9447b116a9680bc755a2a5ce2c6b87a9d549a4a409bec2fd"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887"
+      "sha256": "d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
+      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d2fba1d816ef7735ea9db877c8d0bbbfe1ccc4d21da78a6bec59b48317938cc0"
+      "sha256": "1db235d53f48d62d5dadd3d976de78144a78199085f45a354a136d2fe4f982cc"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "26fedd0425401683aa698a699b8e9e6406ab9d80e3d0d93932e2c3f56695b710"
+      "sha256": "c9108fa14d0dfce29af39749f3d3070f0facdcfd8158c76e8e8d49a6f318c23f"
     }
   ],
   "checks": [
@@ -486,7 +486,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -498,7 +498,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -518,7 +518,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -592,6 +592,10 @@
     },
     {
       "cmd": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity --require-closure-matrix",
       "exit_code": 0
     }
   ],

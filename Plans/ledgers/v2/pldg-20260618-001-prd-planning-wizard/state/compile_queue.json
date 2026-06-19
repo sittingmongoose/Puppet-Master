@@ -1887,16 +1887,16 @@
     }
   ],
   "last_event_id": "evt-0029",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 20,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 4,
   "latest_audit_closure_status_counts": {
-    "repaired": 19,
-    "false_positive": 1
+    "repaired": 3,
+    "stale_retired": 1
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T05:13:09Z",
+  "latest_audit_validated_at_utc": "2026-06-19T12:04:46Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "notes": "Compiled/sealed ledger remains closed. Audit-20260619-004 bounded repair validated governance evidence scope labeling, PNC-014 source_atom_ids/index shape, compact handoff PlanUnit count, and post-commit next action without changing product design or creating runtime/build artifacts.",
   "plan_index_outputs": [
@@ -1952,7 +1952,7 @@
   "unchanged_prior_canon_support_docs": [
     "Plans/Tools.md"
   ],
-  "updated_at_utc": "2026-06-19T05:19:50Z",
+  "updated_at_utc": "2026-06-19T12:04:46Z",
   "validation_results": {
     "git_diff_check": "pass",
     "pm_audit_closure_validate_with_matrix": "pass",

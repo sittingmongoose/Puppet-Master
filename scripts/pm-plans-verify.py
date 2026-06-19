@@ -1160,6 +1160,73 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     expect_prop_ref("plan_compile_run", "last_green_hashes", "#/$defs/hash_snapshot", "plan_compile_run_hashes_not_strict")
     expect_array_items_ref("plan_compile_run", "blockers", "#/$defs/blocker", "plan_compile_run_blockers_not_strict")
     expect_array_items_ref("plan_compile_run", "compile_wave_contracts", "#/$defs/compile_wave_contract", "plan_compile_run_waves_not_strict")
+    plan_compile_def = defs.get("plan_compile_run", {})
+    plan_compile_props = plan_compile_def.get("properties", {}) if isinstance(plan_compile_def, dict) else {}
+    if plan_compile_props.get("automatic_launch_enabled", {}).get("type") != "boolean":
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_automatic_launch_not_mode_split_boolean"})
+    if plan_compile_props.get("native_plan_wizard_launch_enabled", {}).get("type") != "boolean":
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_native_launch_not_mode_split_boolean"})
+    if plan_compile_props.get("codex_bootstrap_launch_enabled", {}).get("const") is not False:
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_codex_bootstrap_launch_not_const_false"})
+
+    def plan_compile_mode_properties(mode: str) -> dict[str, Any]:
+        for conditional in plan_compile_def.get("allOf", []) if isinstance(plan_compile_def, dict) else []:
+            if not isinstance(conditional, dict):
+                continue
+            const = conditional.get("if", {}).get("properties", {}).get("contract_mode", {}).get("const")
+            if const == mode:
+                props = conditional.get("then", {}).get("properties", {})
+                return props if isinstance(props, dict) else {}
+        return {}
+
+    design_only_props = plan_compile_mode_properties("design_only")
+    if not design_only_props:
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_missing_design_only_mode_branch"})
+    else:
+        expected_design_only = {
+            "launch_policy": "disabled",
+            "status": "design_only_disabled",
+            "automatic_launch_enabled": False,
+            "native_plan_wizard_launch_enabled": False,
+            "codex_bootstrap_launch_enabled": False,
+        }
+        for key, expected in expected_design_only.items():
+            if design_only_props.get(key, {}).get("const") != expected:
+                failures.append({"path": rel(schema_path), "error": "plan_compile_run_design_only_branch_drift", "key": key})
+        if design_only_props.get("runtime_enablement_ref", {}).get("type") != "null":
+            failures.append({"path": rel(schema_path), "error": "plan_compile_run_design_only_enablement_ref_not_null"})
+        if design_only_props.get("runtime_policy_snapshot_ref", {}).get("type") != "null":
+            failures.append({"path": rel(schema_path), "error": "plan_compile_run_design_only_policy_ref_not_null"})
+
+    native_runtime_props = plan_compile_mode_properties("native_runtime")
+    if not native_runtime_props:
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_missing_native_runtime_mode_branch"})
+    else:
+        expected_native_runtime = {
+            "launch_policy": "automatic_after_approval",
+            "runtime_adapter": "native_puppet_master_adapter",
+            "automatic_launch_enabled": True,
+            "native_plan_wizard_launch_enabled": True,
+            "codex_bootstrap_launch_enabled": False,
+        }
+        for key, expected in expected_native_runtime.items():
+            if native_runtime_props.get(key, {}).get("const") != expected:
+                failures.append({"path": rel(schema_path), "error": "plan_compile_run_native_runtime_branch_drift", "key": key})
+        if native_runtime_props.get("runtime_enablement_ref", {}).get("$ref") != "#/$defs/ref":
+            failures.append({"path": rel(schema_path), "error": "plan_compile_run_native_enablement_ref_not_required"})
+        if native_runtime_props.get("runtime_policy_snapshot_ref", {}).get("$ref") != "#/$defs/ref":
+            failures.append({"path": rel(schema_path), "error": "plan_compile_run_native_policy_ref_not_required"})
+        native_statuses = set(native_runtime_props.get("status", {}).get("enum", []))
+        expected_statuses = {"preflight", "running", "blocked", "ready_for_executor_intake", "cancelled", "complete"}
+        if native_statuses != expected_statuses:
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "error": "plan_compile_run_native_status_enum_drift",
+                    "expected": sorted(expected_statuses),
+                    "actual": sorted(native_statuses),
+                }
+            )
 
     require_schema_keys("stage_card", ["stage_id", "assignment_contract", "parent_writeback_policy"], "stage_card_missing_assignment_contract")
     expect_prop_ref("stage_card", "stage_id", "#/$defs/stage_name", "stage_card_stage_id_not_strict")

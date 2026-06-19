@@ -6,19 +6,19 @@
     "Optional pre-compile fit-check conversation does not reopen the ready-for-plan-compile state unless Jared adds or changes product intent."
   ],
   "deferred_questions": [],
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 20,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 4,
   "latest_audit_closure_status_counts": {
-    "repaired": 19,
-    "false_positive": 1
+    "repaired": 3,
+    "stale_retired": 1
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T05:13:09Z",
+  "latest_audit_validated_at_utc": "2026-06-19T12:04:46Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_ledger_open_items.v1",
-  "updated_at_utc": "2026-06-19T05:19:50Z"
+  "updated_at_utc": "2026-06-19T12:04:46Z"
 }

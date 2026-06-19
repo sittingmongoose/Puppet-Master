@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
+      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "1dfc5af4c08bf32154530589e66bb83852a127d97b0efdd8326e1d1a3f4edab4"
+      "sha256": "468a5c0913b8afd261363428a635a4ac508cb2e9f9219ad3b0d5614ea74c7693"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "a07713bedd557b0f008c7d709c777e22833b17f3fdba2eb29c928470a2a9f216"
+      "sha256": "05edf870aadc12adb12295e053f7c94cf09042245c5098aaec34aa74d6dba50c"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "aa29ca00e427749a202dfd7cc84b2b441ef9f925409e1abcca569b20aae76901"
+      "sha256": "38a82e2892736d2b0e735eb64b3737aae09f1b67dbbb6a3099c72cc49c0cec3f"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "750031477e79dc8d4f2ace4fc9e935317d587e58b7ed544c29f0ec180d3b1949"
+      "sha256": "17a3f6cfa1bb16dde6cfd706a1bf38d372863a8164254556a9514ae25f2c994d"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3624fa231bfb7939bc2e2427912a8e51dc03fc5f5013ee4811c92614c74eb7a2"
+      "sha256": "4b08e23fe29b09d83c9890c180419c20211895f7a9916904db80679339ca760b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e84f76f52063b25f591189c77fdf3b251d0657de6d134860aff8d2fbf4eed17c"
+      "sha256": "b61b24ec1fc8455978dbbeff782a3a4f43b54e8fa6951edf2d782cfd25ce498f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "0294e7dbc07a35b71a3a0f5a4c3ad7cae80282995ec66a30f6e04af8a1368b6d"
+      "sha256": "e81c1393a19f5724d83c6014f50334e5aceaeae74abdd51050d55052cf22e0f8"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "0434445a146d5a83362d7a75bbe59f976fc8af7450524c5be8823d553eba6f25"
+      "sha256": "370303af474e2229c73d831ca1f1408f62e919fd218ea139759abcc63a621a09"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c4a4de2a6fa5e0b2b5bff0360c9964d5b77e573393902f81cb6b77fa07e00963"
+      "sha256": "19768cad5f8ac3da7341e328e74dd7640b5ffae994d474181d880c0f3432f6da"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "adeace2097777583a10ea97d730a60c170eb78a465167126096a8b2d654d5e6c"
+      "sha256": "a774a01521589e1ca46c6ab4dc47fceae92bf863d7b5442c2d7ee354fb47060b"
     }
   ],
   "checks": [
@@ -232,7 +232,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -271,7 +271,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -291,7 +291,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -369,6 +369,10 @@
     },
     {
       "cmd": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity --require-closure-matrix",
       "exit_code": 0
     }
   ],

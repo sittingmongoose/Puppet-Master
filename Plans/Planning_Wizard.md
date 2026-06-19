@@ -36,7 +36,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile
@@ -110,7 +110,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -196,7 +196,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile
@@ -263,7 +263,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -346,7 +346,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: stale_or_forbidden_behavior
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile
@@ -417,7 +417,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: stale_or_forbidden_behavior
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -487,7 +487,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile
@@ -557,7 +557,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -657,7 +657,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile
@@ -694,7 +694,7 @@ plan_unit_id: PWIZ-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references. The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. Ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator
+canonical_text: 'The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references. The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains a product contract and does not launch PlanCompile. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator
   page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
@@ -706,7 +706,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -790,7 +790,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: implementation_readiness
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -879,7 +879,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: stale_or_forbidden_behavior
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -985,7 +985,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

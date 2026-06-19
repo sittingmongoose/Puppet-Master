@@ -8,7 +8,8 @@
     "No unapproved stubs, TODOs, TBDs, placeholders, empty required sections, fake acceptance criteria, or deferred implementation details.",
     "The bootstrap compile phase does not create WorkNodes, NodeSeeds, executable queues, implementation files, GoalRuns, or production build tasks.",
     "Approve And Build is a finished-product runtime command, not an action performed while compiling this bootstrap ledger.",
-    "A compile-ready cursor is not compile authorization; compilation requires an explicit user instruction."
+    "A compile-ready cursor is not compile authorization; compilation requires an explicit user instruction.",
+    "Repair closure matrices cover every and only repair_required=true actionable rows; stale source-lineage atoms may be closed stale_retired with evidence."
   ],
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "mode": "ledger_governance_sealed",
@@ -38,5 +39,5 @@
     "Start Chain"
   ],
   "schema_id": "pm.bootstrap_operating_capsule.v1",
-  "updated_at_utc": "2026-06-18T20:04:18Z"
+  "updated_at_utc": "2026-06-19T12:05:14Z"
 }
