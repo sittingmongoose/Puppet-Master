@@ -22,18 +22,18 @@
     "stable_ids": "pass",
     "pm_audit_closure_validate_current_matrix": "pass"
   },
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 16,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 20,
   "latest_audit_closure_status_counts": {
-    "repaired": 13,
-    "source_lineage_only": 3
+    "repaired": 19,
+    "false_positive": 1
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T04:27:01Z",
-  "latest_validation_note": "Audit-20260619-003 bounded repair closure recorded with 16 closure rows; final validator results are captured in the audit repair report for this pass.",
-  "latest_validation_status": "pass",
+  "latest_audit_validated_at_utc": "2026-06-19T05:13:09Z",
+  "latest_validation_note": "Audit-20260619-004 repair validated; compact projections are current, PNC-014 source_atom_ids/index shape is repaired, and no node/build/runtime artifacts were created.",
+  "latest_validation_status": "pass_governance_sealed_post_audit_004_repair",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass_governance_sealed",
@@ -45,13 +45,13 @@
     "decisions": 30,
     "deferred_questions": 0,
     "design_atoms": 168,
-    "events": 28,
+    "events": 29,
     "governance_seal": "passed",
     "nonatom_compile_disposition": "source_lineage_only_after_seal",
     "open_blockers": 0,
     "open_questions": 0,
     "ready_for_plan_compile_atoms": 0
   },
-  "updated_at_utc": "2026-06-19T04:27:01Z",
+  "updated_at_utc": "2026-06-19T05:19:50Z",
   "warnings": []
 }

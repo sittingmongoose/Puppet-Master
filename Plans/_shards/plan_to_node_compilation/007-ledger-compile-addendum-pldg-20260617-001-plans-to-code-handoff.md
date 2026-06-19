@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L410-L792
+Source lines: L410-L801
 
-Source SHA256: `b52550a019043d6733099ac905c264b0cd947345de761025c01dfd13370aa4ed`
+Source SHA256: `249d9765c483b4d39a8d3e390b2d35497c9f0c7142293e4cf369ada1eb40dd71`
 
 ---
 
@@ -310,6 +310,15 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0017
   - pldg-20260617-001-plans-to-code-handoff:dec-0024
   - pldg-20260617-001-plans-to-code-handoff:dec-0026
+source_atom_ids:
+  - atom-0002
+  - atom-0101
+  - atom-0102
+  - atom-0103
+  - atom-0104
+  - atom-0105
+  - atom-0106
+  - atom-0109
 preserved_exact_tokens:
   - "Plan Compile"
   - "Planning Wizard"
