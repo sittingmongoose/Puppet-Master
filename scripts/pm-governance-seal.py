@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -29,12 +30,186 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def utc_now() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    if not path.exists():
+        return rows
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rows.append(json.loads(line))
+    return rows
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True))
+            handle.write("\n")
+
+
+def append_unique_string(values: list[Any], value: str) -> bool:
+    if value in values:
+        return False
+    values.append(value)
+    return True
+
+
+def append_unique_ref(values: list[dict[str, Any]], ref: str, *, kind: str = "file", note: str | None = None) -> bool:
+    for row in values:
+        if row.get("kind") == kind and row.get("ref") == ref:
+            return False
+    entry: dict[str, Any] = {"kind": kind, "ref": ref}
+    if note:
+        entry["note"] = note
+    values.append(entry)
+    return True
+
+
+def register_sharding_sources(path: Path, docs: list[str]) -> dict[str, Any]:
+    data = load_json(path)
+    sources = data.setdefault("sources", [])
+    added = [doc for doc in docs if append_unique_string(sources, doc)]
+    if added:
+        write_json(path, data)
+    return {"path": str(path.relative_to(ROOT)), "changed": bool(added), "added_sources": added}
+
+
+def register_spec_lock_files(path: Path, docs: list[str]) -> dict[str, Any]:
+    data = load_json(path)
+    files = data.setdefault("canonical_ssot_hashes", {}).setdefault("files", [])
+    by_path = {entry.get("path"): entry for entry in files if entry.get("path")}
+    added: list[str] = []
+    updated: list[str] = []
+    for doc in docs:
+        target = repo_path(doc)
+        digest = sha256_file(target)
+        entry = by_path.get(doc)
+        if entry is None:
+            files.append({"path": doc, "sha256": digest})
+            by_path[doc] = files[-1]
+            added.append(doc)
+        elif entry.get("sha256") != digest:
+            entry["sha256"] = digest
+            updated.append(doc)
+    if added or updated:
+        write_json(path, data)
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "changed": bool(added or updated),
+        "added_files": added,
+        "updated_hashes": updated,
+    }
+
+
+def register_plan_graph_refs(path: Path, docs: list[str], node_id: str, decision_id: str | None) -> dict[str, Any]:
+    data = load_json(path)
+    target_node: dict[str, Any] | None = None
+    for node in data.get("nodes", []):
+        if node.get("node_id") == node_id:
+            target_node = node
+            break
+    if target_node is None:
+        raise SystemExit(f"plan graph node not found: {node_id}")
+
+    changed = False
+    added_inputs: list[str] = []
+    added_outputs: list[str] = []
+    added_contract_refs: list[str] = []
+    inputs = target_node.setdefault("inputs", [])
+    outputs = target_node.setdefault("outputs", [])
+    contract_refs = target_node.setdefault("contract_refs", [])
+    for doc in docs:
+        if append_unique_ref(inputs, doc, note="Registered canonical owner doc coverage."):
+            added_inputs.append(doc)
+            changed = True
+        if append_unique_ref(outputs, doc, note="Registered canonical owner doc coverage."):
+            added_outputs.append(doc)
+            changed = True
+        contract_ref = f"ContractName:{doc}"
+        if append_unique_string(contract_refs, contract_ref):
+            added_contract_refs.append(contract_ref)
+            changed = True
+    if decision_id:
+        decision_refs = target_node.setdefault("decision_refs", [])
+        changed = append_unique_string(decision_refs, decision_id) or changed
+    if changed:
+        write_json(path, data)
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "changed": changed,
+        "node_id": node_id,
+        "added_inputs": added_inputs,
+        "added_outputs": added_outputs,
+        "added_contract_refs": added_contract_refs,
+        "decision_id": decision_id,
+    }
+
+
+def upsert_auto_decision(
+    path: Path,
+    *,
+    decision_id: str,
+    scope: str,
+    decision: str,
+    rationale: str,
+    applied_to: list[str],
+    contract_refs: list[str],
+) -> dict[str, Any]:
+    rows = read_jsonl(path)
+    hash_payload = {
+        "decision_id": decision_id,
+        "scope": scope,
+        "decision": decision,
+        "rationale": rationale,
+        "applied_to": applied_to,
+        "contract_refs": contract_refs,
+        "artifact_hashes": {
+            item: sha256_file(repo_path(item))
+            for item in applied_to
+            if "*" not in item and repo_path(item).exists() and repo_path(item).is_file()
+        },
+    }
+    inputs_hash = hashlib.sha256(
+        json.dumps(hash_payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
+    row = {
+        "schema_id": "pm.auto_decisions.schema.v1",
+        "decision_id": decision_id,
+        "timestamp_utc": utc_now(),
+        "scope": scope,
+        "inputs_hash": inputs_hash,
+        "decision": decision,
+        "rationale": rationale,
+        "applied_to": applied_to,
+        "contract_refs": contract_refs,
+    }
+    changed = False
+    for index, existing in enumerate(rows):
+        if existing.get("decision_id") != decision_id:
+            continue
+        row["timestamp_utc"] = existing.get("timestamp_utc", row["timestamp_utc"])
+        if existing != row:
+            rows[index] = row
+            changed = True
+        break
+    else:
+        rows.append(row)
+        changed = True
+    if changed:
+        write_jsonl(path, rows)
+    return {"path": str(path.relative_to(ROOT)), "changed": changed, "decision_id": decision_id}
 
 
 def update_or_append_command(commands: list[dict[str, Any]], cmd: str, *, stdout_excerpt: str | None = None) -> bool:
@@ -245,6 +420,59 @@ def cmd_sync_plan_sharding_evidence(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_register_canonical_docs(args: argparse.Namespace) -> int:
+    docs = [str(Path(doc).as_posix()) for doc in args.doc]
+    for doc in docs:
+        target = repo_path(doc)
+        if not target.exists() or not target.is_file():
+            raise SystemExit(f"canonical doc does not exist: {doc}")
+
+    decision_id = args.decision_id
+    report: dict[str, Any] = {
+        "schema_id": "pm.governance_seal.register_canonical_docs.v1",
+        "docs": docs,
+        "sharding_config": register_sharding_sources(repo_path(args.sharding_config), docs),
+        "spec_lock": register_spec_lock_files(repo_path(args.spec_lock), docs),
+        "plan_graph": register_plan_graph_refs(repo_path(args.plan_graph), docs, args.plan_graph_node_id, decision_id),
+        "auto_decision": None,
+    }
+    if args.auto_decisions and decision_id:
+        applied_to = docs + [
+            args.sharding_config,
+            args.spec_lock,
+            args.plan_graph,
+            "Plans/_shards/**",
+            "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+            "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+        ]
+        contract_refs = [
+            "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+            "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+            "SchemaID:pm.auto_decisions.schema.v1",
+            "SchemaID:pm.evidence.schema.v1",
+            "ContractName:Plans/PRD_Builder.md",
+            "ContractName:Plans/Planning_Wizard.md",
+            "ContractName:Plans/Planning_Ledger_System.md",
+            "ContractName:Plans/Plan_Document_System.md",
+            "Gate:GATE-001",
+            "Gate:GATE-002",
+            "Gate:GATE-005",
+            "Gate:GATE-006",
+            "Gate:GATE-009",
+        ]
+        report["auto_decision"] = upsert_auto_decision(
+            repo_path(args.auto_decisions),
+            decision_id=decision_id,
+            scope=args.scope,
+            decision=args.decision,
+            rationale=args.rationale,
+            applied_to=applied_to,
+            contract_refs=contract_refs,
+        )
+    print(json.dumps(report, indent=2, ensure_ascii=False))
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -268,6 +496,37 @@ def main() -> int:
     sync.add_argument("--evidence", required=True, help="Plan sharding evidence.json path to update.")
     sync.add_argument("--report", required=True, help="Generated shard_report.json path to read.")
     sync.set_defaults(func=cmd_sync_plan_sharding_evidence)
+    register = sub.add_parser(
+        "register-canonical-docs",
+        help="Register explicit canonical docs in sharding config, Spec Lock, plan graph, and optional auto decisions.",
+    )
+    register.add_argument("--doc", action="append", required=True, help="Canonical doc path to register.")
+    register.add_argument("--sharding-config", default="Plans/sharding_config.json")
+    register.add_argument("--spec-lock", default="Plans/Spec_Lock.json")
+    register.add_argument("--plan-graph", default="Plans/plan_graph.json")
+    register.add_argument("--plan-graph-node-id", default="pm.build-governance.spec-lock-support-refresh")
+    register.add_argument("--auto-decisions", default=None)
+    register.add_argument("--decision-id", default=None)
+    register.add_argument(
+        "--scope",
+        default="plans.prd_planning_wizard_governance_coverage_repair",
+        help="Auto-decision scope when --auto-decisions and --decision-id are provided.",
+    )
+    register.add_argument(
+        "--decision",
+        default="register_prd_builder_and_planning_wizard_owner_docs_in_governance_coverage",
+        help="Auto-decision decision value.",
+    )
+    register.add_argument(
+        "--rationale",
+        default=(
+            "Bounded audit repair registers the PRD Builder and Planning Wizard canonical owner docs in "
+            "script-managed governance coverage after the owner docs stabilized; this does not create "
+            "WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
+        ),
+        help="Auto-decision rationale.",
+    )
+    register.set_defaults(func=cmd_register_canonical_docs)
     args = parser.parse_args()
     return args.func(args)
 

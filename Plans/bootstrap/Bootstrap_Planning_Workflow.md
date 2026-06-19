@@ -1,6 +1,6 @@
 # Bootstrap Planning Workflow
 
-This workflow tells Codex how to use the PM Bootstrap Planning Ledger before native Puppet Master Chain Wizard and Goal Mode exist.
+This workflow tells Codex how to use the PM Bootstrap Planning Ledger before native Puppet Master Planning Wizard and Goal Mode exist.
 
 ## Two operating modes
 

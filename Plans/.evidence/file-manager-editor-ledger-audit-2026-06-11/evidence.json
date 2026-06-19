@@ -18,17 +18,17 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "63d39390624d2c70ae7f774f6d0ead04ce2199156e62d9ffe29bd49b1931d60f"
+      "sha256": "3c75aaec96e4e86bfa54058d3bf48d687d27d857fd9afd631f4c6ff57a49fdc8"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "bd700f2ddc1726dcae94940ca34dd050351998134f5a6492710bdca2c61d36ee"
+      "sha256": "7e7af01b5a579900fbed155c7fe6cdd1cfd0562877f5f100924f0657e6c5d538"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "c6fdf221924d2b24efa127316bcc7feaf2d65b1f8a6105345e17a17ae87b4b23"
+      "sha256": "6535ac1875b13dd5fde087485118966c2925b00f81a20ce6895508ee79176768"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -360,6 +360,18 @@
     },
     {
       "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl --source-artifact atom_fidelity_matrix.jsonl --source-artifact planunit_source_claims.jsonl --source-artifact owner_routing_findings.jsonl --source-artifact ledger_consistency.json --source-artifact validator_results.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
       "exit_code": 0
     }
   ],

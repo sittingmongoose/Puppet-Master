@@ -509,12 +509,12 @@ canonical_text: >-
   than a new warning. A finding reopens only when the source atom hash,
   PlanUnit hash, owner evidence hash, or closure evidence hash changes, or when
   the current closure_status is blocked_requires_user_decision or reopened.
-  Plans-to-code audits reuse this registry for repeated Plan Wizard,
+  Plans-to-code audits reuse this registry for repeated Planning Wizard,
   PlanCompile, and WorkNode verification findings when source, canonical
   PlanUnit, owner, and closure evidence have not changed.
   Chat-sourced semantic closure support is recorded as source-lineage process
   support unless a v2 ledger atom or decision explicitly owns it.
-  This is the semantic closure registry contract for finding_key, previously_closed reuse, and reopen checks across Plan Wizard, PlanCompile, and WorkNode verification findings.
+  This is the semantic closure registry contract for finding_key, previously_closed reuse, and reopen checks across Planning Wizard, PlanCompile, and WorkNode verification findings.
 gui_related: false
 gui_classification_reason: Audit closure durability and reopen policy are process/governance behavior, not GUI implementation work.
 depends_on:
@@ -525,7 +525,7 @@ unblocks:
 acceptance_criteria:
   - The global closure registry exists at Plans/.audits/_semantic_closure_registry.jsonl.
   - Deep audits treat unchanged closed findings as previously_closed, not new semantic_risks.
-  - Plan Wizard, PlanCompile, and WorkNode audit findings reuse closed registry rows when evidence has not changed.
+  - Planning Wizard, PlanCompile, and WorkNode audit findings reuse closed registry rows when evidence has not changed.
   - Reopen decisions are based on changed source atom, PlanUnit, owner evidence, or closure evidence hashes, or on blocked/reopened closure status.
   - Closure rows preserve the allowed statuses repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, blocked_requires_user_decision, and reopened.
   - Chat-sourced closure-support PlanUnits are not represented as outputs of a target ledger compile unless their source_lineage names that ledger atom or decision.
@@ -548,6 +548,8 @@ source_lineage:
   - source_ref:chat:2026-06-17-semantic-closure-registry-support
 preserved_exact_tokens:
   - "Plans/.audits/_semantic_closure_registry.jsonl"
+  - "Planning Wizard"
+  - "Plan Wizard"
   - "closure_id"
   - "finding_key"
   - "finding_family"
@@ -569,6 +571,10 @@ preserved_exact_tokens:
   - "reopen_conditions"
   - "previously_closed"
   - "source-lineage process support"
+compatibility_only_notes:
+  - Plan Wizard is a retired compatibility/search term; active audit prose uses Planning Wizard.
+stale_retired_dispositions:
+  - Plan Wizard is retained only as compatibility/source-lineage terminology and not as the current product name.
 negative_constraints:
   - Do not re-emit unchanged closed findings as new warnings.
   - Do not hide a finding when source/canonical/owner/closure evidence hashes changed.
