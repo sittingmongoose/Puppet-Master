@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L10058-L10126
+Source lines: L10058-L10133
 
-Source SHA256: `c3c001c4ee9f934c1ffca82b4ab9a5dea924c0540983a19fcf5c95caae350670`
+Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
 
 ---
 
@@ -50,6 +50,13 @@ node_compile_hint:
   mode: prd_builder_legacy_ledger_to_invisible_goal
   create_worknodes: false
 source_lineage:
+  - pldg-20260618-001-prd-planning-wizard:atom-0001
+  - pldg-20260618-001-prd-planning-wizard:atom-0002
+  - pldg-20260618-001-prd-planning-wizard:atom-0004
+  - pldg-20260618-001-prd-planning-wizard:atom-0158
+  - pldg-20260618-001-prd-planning-wizard:atom-0159
+  - pldg-20260618-001-prd-planning-wizard:atom-0160
+  - pldg-20260618-001-prd-planning-wizard:atom-0161
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0007
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103

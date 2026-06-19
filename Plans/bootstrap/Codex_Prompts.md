@@ -180,13 +180,13 @@ Do not read full event logs or legacy ledgers unless the compact state points to
 /goal
 Audit latest PM Bootstrap Ledger-to-Plans cycle for closed-world semantic fidelity and terminal state.
 
-Input: ledger_id=infer_latest. Audit-only. Do not repair/edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks. Write only Plans/.audits/<audit_id>/*.
+Input: ledger_id=infer_latest. Audit-only. Do not edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks. Write only Plans/.audits/<audit_id>/*.
 
-Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/.audits/_semantic_closure_registry.jsonl, compact state for inferred ledger, compile_queue, changed Plans docs, .plan_index, FINAL_REPORT, and scripts/pm-audit-closure.py.
+Read AGENTS.md, Plans/00-plans-index.md, Planning_Ledger_System, Plan_Document_System, Bootstrap_Planning_Workflow, closure registry, compact inferred-ledger state, compile_queue, changed Plans docs, .plan_index, FINAL_REPORT, and scripts/pm-audit-closure.py.
 
-Owner refs: PLS-012 owns registry, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, reopen policy, refs, and latest_audit_* rules. PDS-014 owns sfk finding_key, chk check_id, repair_required/finding_level, source validation, and closure/impact coverage.
+Owner refs: PLS-012 owns registry, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, reopen policy, refs, and latest_audit_* rules. PDS-014 owns sfk finding_key, chk check_id, repair_required/finding_level, source validation, and coverage.
 
-Infer observation_ref=HEAD. Infer subject_ref as the latest substantive commit touching live Plans, target-ledger governing state, .plan_index, governance, or process scripts; exclude Plans/.audits/**, closure-registry-only commits, and hygiene-only report edits. Infer ledger_id from latest non-background registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the parent of the earliest contiguous subject cycle commit.
+Infer observation_ref=HEAD. Infer subject_ref as latest substantive commit touching live Plans, target-ledger governing state, .plan_index, governance, or process scripts; exclude Plans/.audits/**, closure-registry-only commits, and hygiene-only report edits. Infer ledger_id from latest non-background registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the parent of the earliest contiguous subject cycle commit.
 
 Before semantic review, build audit_scope_manifest.jsonl with deterministic chk check_id rows for every compiled atom detail, compile target, added/changed PlanUnit claim, reciprocal source_lineage claim, owner/consumer route, schema/contract identity, depends_on/unblocks edge, ledger projection field, index/governance check, and forbidden-artifact check. Rows carry refs, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, covered_artifacts, classification, repair_required, and finding_level. Completion requires 100% classified rows.
 
@@ -200,7 +200,7 @@ BLOCKED only when repair_required=true, a validator fails/mutates state, forbidd
 
 Do not emit semantic/currentness findings about old audit report wording, review/commit text, or missing ledger pointers to audit-only observation/hygiene runs. ledger latest_audit_* is stale only when a state-certifying audit/repair that changed or validated canonical Plans, ledger governing state, index, or governance is missing.
 
-Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed count, repair_required count, validators, forbidden artifacts, and next action.
+Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed, repair_required, validators, forbidden artifacts, and next action.
 ```
 
 ## 9. Goal prompt — repair and certify closed-world audit

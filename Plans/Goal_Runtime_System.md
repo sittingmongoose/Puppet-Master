@@ -124,6 +124,13 @@ node_compile_hint:
   mode: shared_goal_runtime
   create_worknodes: false
 source_lineage:
+  - pldg-20260618-001-prd-planning-wizard:atom-0001
+  - pldg-20260618-001-prd-planning-wizard:atom-0002
+  - pldg-20260618-001-prd-planning-wizard:atom-0004
+  - pldg-20260618-001-prd-planning-wizard:atom-0158
+  - pldg-20260618-001-prd-planning-wizard:atom-0159
+  - pldg-20260618-001-prd-planning-wizard:atom-0160
+  - pldg-20260618-001-prd-planning-wizard:atom-0161
   - pldg-20260616-001-goal-runtime-system:atom-0006
   - pldg-20260616-001-goal-runtime-system:atom-0007
   - pldg-20260616-001-goal-runtime-system:atom-0008

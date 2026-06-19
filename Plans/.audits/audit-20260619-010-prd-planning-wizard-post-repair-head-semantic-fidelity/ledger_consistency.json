@@ -5,7 +5,16 @@
   "finding_level": "observation",
   "findings": [
     {
+      "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
       "classification": "missing_or_drift",
+      "detail_keys": [
+        "state.handoff.cursor.next_action",
+        "state.handoff.next_actions",
+        "state.handoff.next_recommended_action",
+        "state.handoff.summary",
+        "state.current.cursor.next_action"
+      ],
       "evidence_refs": [
         "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:21",
         "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:40",
@@ -13,25 +22,65 @@
         "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:46",
         "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:166"
       ],
-      "finding_key": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::ledger_compact_state_stale_audit007_prose",
+      "exact_tokens": [
+        "audit-20260619-007",
+        "audit-20260619-009",
+        "next_action",
+        "next_actions",
+        "next_recommended_action",
+        "latest_audit_*"
+      ],
+      "finding_family": "ledger_governing_projection_currentness",
+      "finding_key": "sfk-561a390845f15d53324dca5a",
       "finding_level": "warning",
       "finding_type": "ledger_governing_projection_currentness",
+      "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+      "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json"
+      ],
+      "plan_unit_ids": [],
       "repair_hint": "Refresh only the stale compact-state prose/cursor fields to audit-009 or later, preserving audit-only omission policy.",
       "repair_required": true,
+      "source_atom_ids": [],
+      "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
       "summary": "Machine-readable latest_audit_* fields point to audit-009, but compact handoff/current prose still directs the next agent to the older audit-007 bounded-repair loop."
     },
     {
+      "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
       "classification": "missing_or_drift",
+      "detail_keys": [
+        "ledger_registry.ledgers[].updated_at_utc",
+        "registry_entry.updated_at_utc",
+        "registry_entry.last_updated_at_utc"
+      ],
       "evidence_refs": [
         "Plans/ledgers/v2/ledger_registry.json:509",
         "Plans/ledgers/v2/ledger_registry.json:512",
         "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json:100"
       ],
-      "finding_key": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::ledger_registry_row_updated_at_stale",
+      "exact_tokens": [
+        "updated_at_utc",
+        "last_updated_at_utc",
+        "2026-06-19T15:35:54Z"
+      ],
+      "finding_family": "ledger_registry_currentness",
+      "finding_key": "sfk-4356fd7d65b55921ebce4ab3",
       "finding_level": "warning",
       "finding_type": "ledger_registry_currentness",
+      "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+      "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+      "owner_docs": [
+        "Plans/ledgers/v2/ledger_registry.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json"
+      ],
+      "plan_unit_ids": [],
       "repair_hint": "Refresh the global sealed-ledger row timestamp/metadata to match the local registry entry without changing ledger substance.",
       "repair_required": true,
+      "source_atom_ids": [],
+      "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
       "summary": "The global registry top-level audit fields are current, but the sealed ledger row updated_at_utc remains older than the local registry entry and post-audit-009 state."
     }
   ],
