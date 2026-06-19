@@ -8,6 +8,10 @@
       },
       "heading_count": 90,
       "implementation_surfaces": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
+        "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
+        "Plans/.audits/audit-*/repair_impact_matrix.jsonl",
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -45,7 +49,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4335,
+      "line_count": 4348,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 59,
       "plan_unit_ids": [
@@ -173,7 +177,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf",
+      "sha256": "5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59
@@ -8718,7 +8722,9 @@
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
+        "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
         "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
+        "Plans/.audits/audit-*/repair_impact_matrix.jsonl",
         "Plans/.plan_index",
         "Plans/.plan_index/acceptance_units.jsonl",
         "Plans/.plan_index/coverage_report.json",
@@ -8743,7 +8749,7 @@
         "scripts/pm-plan-index.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 866,
+      "line_count": 897,
       "path": "Plans/Plan_Document_System.md",
       "plan_unit_count": 16,
       "plan_unit_ids": [
@@ -8783,7 +8789,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "1ff575326a95228f524368b725dd37ecef5289c61ca0eb7472138dba905ba11f",
+      "sha256": "59565b7722e420dbeb1f009068cf87988b24a9bd60d78844d58f244b3e789e0c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16
@@ -8953,7 +8959,9 @@
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
+        "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
         "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
+        "Plans/.audits/audit-*/repair_impact_matrix.jsonl",
         "Plans/00-plans-index.md",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/PRD_Builder.md",
@@ -8994,7 +9002,7 @@
         "scripts/pm-bootstrap-ledger-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 838,
+      "line_count": 875,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -9032,7 +9040,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "55135085930e0216a31caa4bacf81c8b0e8273ba04d3cc8453157a61c7cbcc28",
+      "sha256": "9cd70737b7e1b524045af9c7b5e47fbace2e219af3023b355014c6cd2fba9bfd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -11749,7 +11757,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T15:32:46Z",
+  "generated_at_utc": "2026-06-19T16:55:50Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

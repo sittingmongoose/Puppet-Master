@@ -28,6 +28,111 @@ ALLOWED_STATUSES = {
 OPEN_STATUSES = {"blocked_requires_user_decision", "reopened"}
 FINDING_LEVELS = {"blocker", "warning", "observation"}
 TERMINAL_CLASSIFICATIONS = {"exact_present", "equivalent_with_evidence", "previously_closed"}
+AUDIT_REF_FIELDS = ("audit_id", "ledger_id", "baseline_ref", "subject_ref", "observation_ref")
+AUDIT_SOURCE_FINDING_REQUIRED_FIELDS = {
+    "finding_family",
+    "ledger_id",
+    "source_atom_ids",
+    "plan_unit_ids",
+    "owner_docs",
+    "detail_keys",
+    "exact_tokens",
+    "repair_required",
+    "finding_level",
+    "finding_key",
+}
+AUDIT_SOURCE_FINDING_LIST_FIELDS = {
+    "source_atom_ids",
+    "plan_unit_ids",
+    "owner_docs",
+    "detail_keys",
+    "exact_tokens",
+}
+AUDIT_FINDING_ARTIFACTS = {
+    "semantic_risks.jsonl",
+    "owner_routing_findings.jsonl",
+}
+SCOPE_MANIFEST = "audit_scope_manifest.jsonl"
+SCOPE_REQUIRED_FAMILIES = {
+    "compiled_atom_detail",
+    "compile_target",
+    "planunit_claim",
+    "reciprocal_source_lineage",
+    "owner_consumer_route",
+    "schema_contract_identity",
+    "dependency_edge",
+    "ledger_projection_field",
+    "index_governance_check",
+    "forbidden_artifact_check",
+}
+SCOPE_REQUIRED_FIELDS = {
+    "check_id",
+    "check_family",
+    "audit_id",
+    "ledger_id",
+    "baseline_ref",
+    "subject_ref",
+    "observation_ref",
+    "source_atom_ids",
+    "plan_unit_ids",
+    "owner_docs",
+    "detail_keys",
+    "exact_tokens",
+    "covered_artifacts",
+    "classification",
+    "repair_required",
+    "finding_level",
+}
+SCOPE_LIST_FIELDS = {
+    "source_atom_ids",
+    "plan_unit_ids",
+    "owner_docs",
+    "detail_keys",
+    "exact_tokens",
+    "covered_artifacts",
+    "finding_keys",
+}
+UNCLASSIFIED_VALUES = {"", "pending", "todo", "unchecked", "unclassified", "unknown"}
+IMPACT_MATRIX = "repair_impact_matrix.jsonl"
+IMPACT_REQUIRED_FIELDS = {
+    "impact_id",
+    "audit_id",
+    "ledger_id",
+    "baseline_ref",
+    "subject_ref",
+    "observation_ref",
+    "source_artifact",
+    "source_row",
+    "finding_key",
+    "files",
+    "plan_unit_ids",
+    "schemas",
+    "dependency_edges",
+    "owner_refs",
+    "ledger_projection_fields",
+    "index_artifacts",
+    "governance_artifacts",
+    "scope_check_ids",
+    "post_repair_semantic_audit",
+}
+IMPACT_LIST_FIELDS = {
+    "files",
+    "plan_unit_ids",
+    "schemas",
+    "dependency_edges",
+    "owner_refs",
+    "ledger_projection_fields",
+    "index_artifacts",
+    "governance_artifacts",
+    "scope_check_ids",
+}
+POST_REPAIR_DRIFT_FIELDS = {
+    "schema_identity",
+    "reciprocal_lineage",
+    "dependencies",
+    "owner_routing",
+    "ledger_projections",
+}
 REOPEN_CONDITIONS = {
     "source_atom_hash_changed",
     "plan_unit_hash_changed",
@@ -85,7 +190,11 @@ MATRIX_REQUIRED_FIELDS = {
     "source_artifact",
     "source_row",
     "finding_family",
+    "audit_id",
     "ledger_id",
+    "baseline_ref",
+    "subject_ref",
+    "observation_ref",
     "source_atom_ids",
     "plan_unit_ids",
     "owner_docs",
@@ -194,6 +303,32 @@ def compute_finding_key(row: dict[str, Any]) -> str:
     }
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     return f"sfk-{hashlib.sha256(encoded).hexdigest()[:24]}"
+
+
+def compute_check_id(row: dict[str, Any]) -> str:
+    payload = {
+        "check_family": str(row.get("check_family", "")),
+        "ledger_id": str(row.get("ledger_id", "")),
+        "source_atom_ids": stable_strings(row.get("source_atom_ids")),
+        "plan_unit_ids": stable_strings(row.get("plan_unit_ids")),
+        "owner_docs": stable_strings(row.get("owner_docs")),
+        "detail_keys": stable_strings(row.get("detail_keys")),
+        "exact_tokens": stable_strings(row.get("exact_tokens")),
+        "covered_artifacts": stable_strings(row.get("covered_artifacts")),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return f"chk-{hashlib.sha256(encoded).hexdigest()[:24]}"
+
+
+def compute_impact_id(row: dict[str, Any]) -> str:
+    payload = {
+        "ledger_id": str(row.get("ledger_id", "")),
+        "source_artifact": str(row.get("source_artifact", "")),
+        "source_row": str(row.get("source_row", "")),
+        "finding_key": str(row.get("finding_key", "")),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return f"imp-{hashlib.sha256(encoded).hexdigest()[:24]}"
 
 
 def evidence_path_from_ref(ref: str) -> Path | None:
@@ -433,6 +568,328 @@ def explicit_repair_required(
     return bool(repair_required) if isinstance(repair_required, bool) else None
 
 
+def load_json_object(path: Path, errors: list[str], *, required: bool = True) -> dict[str, Any] | None:
+    if not path.exists():
+        if required:
+            errors.append(f"missing {rel(path)}")
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        errors.append(f"{rel(path)}: invalid JSON: {exc}")
+        return None
+    if not isinstance(data, dict):
+        errors.append(f"{rel(path)}: JSON root must be an object")
+        return None
+    return data
+
+
+def validate_ref_fields(
+    row: dict[str, Any],
+    expected: dict[str, str],
+    path_label: str,
+    errors: list[str],
+    *,
+    require: bool,
+) -> None:
+    for field, expected_value in expected.items():
+        value = row.get(field)
+        if value is None:
+            if require:
+                errors.append(f"{path_label}: missing required ref field {field}")
+            continue
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{path_label}: {field} must be a non-empty string")
+            continue
+        if expected_value and value != expected_value:
+            errors.append(f"{path_label}: {field} {value!r} does not match audit_report {expected_value!r}")
+
+
+def load_audit_report(audit_dir: Path, errors: list[str]) -> tuple[dict[str, Any] | None, dict[str, str]]:
+    report_path = audit_dir / "audit_report.json"
+    report = load_json_object(report_path, errors, required=True)
+    refs: dict[str, str] = {}
+    if report is None:
+        return None, refs
+    label = rel(report_path)
+    for field in AUDIT_REF_FIELDS:
+        value = report.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{label}: {field} must be a non-empty string")
+            refs[field] = ""
+        else:
+            refs[field] = value
+    return report, refs
+
+
+def is_finding_row(row: dict[str, Any], artifact: str) -> bool:
+    classification = str(row.get("classification", ""))
+    return (
+        artifact in AUDIT_FINDING_ARTIFACTS
+        or row.get("repair_required") is True
+        or bool(row.get("finding_key"))
+        or bool(row.get("finding_family"))
+        or classification == "missing_or_drift"
+    )
+
+
+def validate_source_finding_row(
+    row: dict[str, Any],
+    artifact: str,
+    path_label: str,
+    refs: dict[str, str],
+    errors: list[str],
+) -> None:
+    if not is_finding_row(row, artifact):
+        return
+    missing = sorted(AUDIT_SOURCE_FINDING_REQUIRED_FIELDS - set(row))
+    if missing:
+        errors.append(f"{path_label}: audit finding missing required fields {missing}")
+    validate_ref_fields(row, refs, path_label, errors, require=True)
+    for field in AUDIT_SOURCE_FINDING_LIST_FIELDS:
+        if field in row and not isinstance(row.get(field), list):
+            errors.append(f"{path_label}: {field} must be a list")
+    explicit_repair_required(row, path_label, errors)
+    audit_id = refs.get("audit_id", "")
+    finding_key = row.get("finding_key")
+    if isinstance(finding_key, str):
+        if not finding_key.startswith("sfk-"):
+            errors.append(f"{path_label}: finding_key must use deterministic sfk-* form, got {finding_key!r}")
+        if audit_id and (finding_key.startswith(audit_id) or f"{audit_id}::" in finding_key or "::" in finding_key):
+            errors.append(f"{path_label}: finding_key must not contain audit-specific identity {finding_key!r}")
+        expected_key = compute_finding_key(row)
+        if finding_key != expected_key:
+            errors.append(f"{path_label}: finding_key {finding_key} does not match deterministic {expected_key}")
+
+
+def validate_source_jsonl_artifact(path: Path, artifact: str, refs: dict[str, str], errors: list[str]) -> int:
+    if not path.exists():
+        return 0
+    finding_count = 0
+    for row in read_jsonl(path, errors, required=True):
+        label = f"{rel(path)}:{row.get('_line_no')}"
+        validate_ref_fields(row, refs, label, errors, require=False)
+        if is_finding_row(row, artifact):
+            finding_count += 1
+            validate_source_finding_row(row, artifact, label, refs, errors)
+    return finding_count
+
+
+def validate_source_json_artifact(path: Path, artifact: str, refs: dict[str, str], errors: list[str]) -> int:
+    data = load_json_object(path, errors, required=False)
+    if data is None:
+        return 0
+    validate_ref_fields(data, refs, rel(path), errors, require=True)
+    finding_count = 0
+    for field in ("warnings", "findings", "semantic_risks"):
+        values = data.get(field)
+        if not isinstance(values, list):
+            continue
+        for index, item in enumerate(values):
+            if not isinstance(item, dict):
+                continue
+            label = f"{rel(path)}:{field}[{index}]"
+            validate_ref_fields(item, refs, label, errors, require=False)
+            if is_finding_row(item, artifact):
+                finding_count += 1
+                validate_source_finding_row(item, artifact, label, refs, errors)
+    return finding_count
+
+
+def validate_source_artifacts(
+    audit_dir: Path,
+    requested_artifacts: list[str],
+    refs: dict[str, str],
+    errors: list[str],
+) -> dict[str, Any]:
+    finding_count = 0
+    for artifact in requested_artifacts:
+        path = audit_dir / artifact
+        if artifact.endswith(".jsonl"):
+            finding_count += validate_source_jsonl_artifact(path, artifact, refs, errors)
+        elif artifact.endswith(".json"):
+            finding_count += validate_source_json_artifact(path, artifact, refs, errors)
+    return {"finding_count": finding_count}
+
+
+def validate_scope_manifest(audit_dir: Path, refs: dict[str, str], errors: list[str]) -> dict[str, Any]:
+    path = audit_dir / SCOPE_MANIFEST
+    rows = read_jsonl(path, errors, required=True)
+    check_ids: set[str] = set()
+    families: set[str] = set()
+    classified_rows = 0
+    finding_keys: set[str] = set()
+    for row in rows:
+        label = f"{rel(path)}:{row.get('_line_no')}"
+        missing = sorted(SCOPE_REQUIRED_FIELDS - set(row))
+        if missing:
+            errors.append(f"{label}: missing required fields {missing}")
+        validate_ref_fields(row, refs, label, errors, require=True)
+        check_id = row.get("check_id")
+        if not isinstance(check_id, str) or not check_id.strip():
+            errors.append(f"{label}: check_id must be a non-empty string")
+        else:
+            if check_id in check_ids:
+                errors.append(f"{label}: duplicate check_id {check_id}")
+            check_ids.add(check_id)
+            expected_id = compute_check_id(row)
+            if check_id != expected_id:
+                errors.append(f"{label}: check_id {check_id} does not match deterministic {expected_id}")
+            audit_id = refs.get("audit_id", "")
+            if audit_id and audit_id in check_id:
+                errors.append(f"{label}: check_id must not contain audit_id {audit_id}")
+        family = row.get("check_family")
+        if isinstance(family, str):
+            families.add(family)
+            if family not in SCOPE_REQUIRED_FAMILIES:
+                errors.append(f"{label}: unknown check_family {family!r}")
+        else:
+            errors.append(f"{label}: check_family must be a string")
+        for field in SCOPE_LIST_FIELDS:
+            if field in row and not isinstance(row.get(field), list):
+                errors.append(f"{label}: {field} must be a list")
+        classification = str(row.get("classification", "")).strip().lower()
+        if classification in UNCLASSIFIED_VALUES:
+            errors.append(f"{label}: classification must be final, not {row.get('classification')!r}")
+        else:
+            classified_rows += 1
+        explicit_repair_required(row, label, errors)
+        for key in stable_strings(row.get("finding_keys")):
+            finding_keys.add(key)
+    missing_families = sorted(SCOPE_REQUIRED_FAMILIES - families)
+    if missing_families:
+        errors.append(f"{rel(path)}: missing required check_family coverage {missing_families}")
+    return {
+        "path": rel(path),
+        "row_count": len(rows),
+        "classified_rows": classified_rows,
+        "check_family_count": len(families),
+        "missing_check_families": missing_families,
+        "finding_keys": sorted(finding_keys),
+    }
+
+
+def validate_post_repair_audit(value: Any, path_label: str, errors: list[str]) -> None:
+    if not isinstance(value, dict):
+        errors.append(f"{path_label}: post_repair_semantic_audit must be an object")
+        return
+    status = value.get("status")
+    if status not in {"PASS", "PASS_WITH_WARNINGS"}:
+        errors.append(f"{path_label}: post_repair_semantic_audit.status must be PASS or PASS_WITH_WARNINGS")
+    if value.get("repair_required_count") != 0:
+        errors.append(f"{path_label}: post_repair_semantic_audit.repair_required_count must be 0")
+    if value.get("covered_original_scope") is not True:
+        errors.append(f"{path_label}: post_repair_semantic_audit.covered_original_scope must be true")
+    if value.get("covered_impact_rows") is not True:
+        errors.append(f"{path_label}: post_repair_semantic_audit.covered_impact_rows must be true")
+    drift = value.get("drift")
+    if not isinstance(drift, dict):
+        errors.append(f"{path_label}: post_repair_semantic_audit.drift must be an object")
+        return
+    for field in sorted(POST_REPAIR_DRIFT_FIELDS):
+        if drift.get(field) is not False:
+            errors.append(f"{path_label}: post_repair_semantic_audit.drift.{field} must be false")
+
+
+def validate_repair_impact_matrix(
+    audit_dir: Path,
+    refs: dict[str, str],
+    actionable_rows: set[tuple[str, str]],
+    errors: list[str],
+) -> dict[str, Any]:
+    path = audit_dir / IMPACT_MATRIX
+    if not path.exists():
+        if actionable_rows:
+            errors.append(f"missing required {rel(path)}")
+        return {
+            "path": rel(path),
+            "row_count": 0,
+            "missing_coverage": [
+                {"source_artifact": artifact, "source_row": source_row}
+                for artifact, source_row in sorted(actionable_rows)
+            ][:50],
+            "extra_coverage": [],
+        }
+
+    rows = read_jsonl(path, errors, required=True)
+    covered: set[tuple[str, str]] = set()
+    impact_ids: set[str] = set()
+    for row in rows:
+        label = f"{rel(path)}:{row.get('_line_no')}"
+        missing = sorted(IMPACT_REQUIRED_FIELDS - set(row))
+        if missing:
+            errors.append(f"{label}: missing required fields {missing}")
+        validate_ref_fields(row, refs, label, errors, require=True)
+        impact_id = row.get("impact_id")
+        if not isinstance(impact_id, str) or not impact_id.strip():
+            errors.append(f"{label}: impact_id must be a non-empty string")
+        else:
+            if impact_id in impact_ids:
+                errors.append(f"{label}: duplicate impact_id {impact_id}")
+            impact_ids.add(impact_id)
+            expected_id = compute_impact_id(row)
+            if impact_id != expected_id:
+                errors.append(f"{label}: impact_id {impact_id} does not match deterministic {expected_id}")
+            audit_id = refs.get("audit_id", "")
+            if audit_id and audit_id in impact_id:
+                errors.append(f"{label}: impact_id must not contain audit_id {audit_id}")
+        for field in IMPACT_LIST_FIELDS:
+            if field in row and not isinstance(row.get(field), list):
+                errors.append(f"{label}: {field} must be a list")
+        key = source_row_key(str(row.get("source_artifact", "")), row.get("source_row"))
+        if key is None:
+            errors.append(f"{label}: source_artifact/source_row must identify an actionable audit row")
+        else:
+            covered.add(key)
+        finding_key = row.get("finding_key")
+        if not isinstance(finding_key, str) or not finding_key.startswith("sfk-"):
+            errors.append(f"{label}: finding_key must use deterministic sfk-* form")
+        validate_post_repair_audit(row.get("post_repair_semantic_audit"), label, errors)
+
+    missing_coverage = [
+        {"source_artifact": artifact, "source_row": source_row}
+        for artifact, source_row in sorted(actionable_rows - covered)
+    ]
+    if missing_coverage:
+        errors.append(f"{rel(path)}: missing impact rows for {len(missing_coverage)} source rows")
+    extra_coverage = sorted(covered - actionable_rows)
+    if extra_coverage:
+        errors.append(f"{rel(path)}: impact rows present for {len(extra_coverage)} non-actionable source rows")
+    return {
+        "path": rel(path),
+        "row_count": len(rows),
+        "missing_coverage": missing_coverage[:50],
+        "extra_coverage": [
+            {"source_artifact": artifact, "source_row": source_row}
+            for artifact, source_row in extra_coverage[:50]
+        ],
+    }
+
+
+def validate_audit_report_status(
+    audit_report: dict[str, Any] | None,
+    audit_dir: Path,
+    repair_required_count: int,
+    finding_count: int,
+    errors: list[str],
+) -> None:
+    if audit_report is None:
+        return
+    label = rel(audit_dir / "audit_report.json")
+    reported_count = audit_report.get("repair_required_count")
+    if reported_count != repair_required_count:
+        errors.append(
+            f"{label}: repair_required_count {reported_count!r} does not match computed {repair_required_count}"
+        )
+    status = str(audit_report.get("status", "")).upper()
+    if repair_required_count > 0 and status != "BLOCKED":
+        errors.append(f"{label}: status must be BLOCKED when repair_required_count is {repair_required_count}")
+    if repair_required_count == 0 and status == "BLOCKED":
+        errors.append(f"{label}: status must not be BLOCKED when repair_required_count is 0")
+    if repair_required_count == 0 and finding_count > 0 and status == "PASS":
+        errors.append(f"{label}: status should be PASS_WITH_WARNINGS when non-actionable findings exist")
+
+
 def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
     """Compatibility inference for pre-repair_required audit artifacts."""
     risk_key = str(row.get("risk_key", "")).lower()
@@ -618,14 +1075,28 @@ def validate_audit_dir(
     if not audit_dir.exists():
         return {"path": rel(audit_dir), "errors": [f"missing audit dir {rel(audit_dir)}"], "warnings": warnings}
 
+    audit_report, audit_refs = load_audit_report(audit_dir, errors)
+
     requested_artifacts = source_artifacts
     if requested_artifacts is None:
         requested_artifacts = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (audit_dir / name).exists()]
+
+    source_report = validate_source_artifacts(audit_dir, requested_artifacts, audit_refs, errors)
+    scope_report = validate_scope_manifest(audit_dir, audit_refs, errors)
 
     actionable_rows: set[tuple[str, str]] = set()
     for artifact in requested_artifacts:
         for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors):
             actionable_rows.add((artifact, str(source_row)))
+
+    impact_report = validate_repair_impact_matrix(audit_dir, audit_refs, actionable_rows, errors)
+    validate_audit_report_status(
+        audit_report,
+        audit_dir,
+        repair_required_count=len(actionable_rows),
+        finding_count=int(source_report.get("finding_count", 0)),
+        errors=errors,
+    )
 
     if not matrix_path.exists():
         if require_matrix and actionable_rows:
@@ -639,6 +1110,9 @@ def validate_audit_dir(
             "warnings": warnings,
             "matrix_rows": 0,
             "coverage_artifacts": requested_artifacts,
+            "source_artifacts": source_report,
+            "scope_manifest": {key: value for key, value in scope_report.items() if key != "finding_keys"},
+            "repair_impact_matrix": impact_report,
             "repair_required_count": len(actionable_rows),
             "matrix_required": bool(actionable_rows),
             "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
@@ -658,6 +1132,7 @@ def validate_audit_dir(
         missing = sorted(MATRIX_REQUIRED_FIELDS - set(row))
         if missing:
             errors.append(f"{label}: missing required fields {missing}")
+        validate_ref_fields(row, audit_refs, label, errors, require=True)
         status = str(row.get("closure_status", ""))
         status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:
@@ -725,6 +1200,9 @@ def validate_audit_dir(
         "matrix_rows": len(rows),
         "status_counts": status_counts,
         "coverage_artifacts": requested_artifacts,
+        "source_artifacts": source_report,
+        "scope_manifest": {key: value for key, value in scope_report.items() if key != "finding_keys"},
+        "repair_impact_matrix": impact_report,
         "repair_required_count": len(actionable_rows),
         "matrix_required": bool(actionable_rows),
         "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",

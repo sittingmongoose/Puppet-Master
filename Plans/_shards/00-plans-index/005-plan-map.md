@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L204-L459
 
-Source SHA256: `d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf`
+Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
 
 ---
 
@@ -25,10 +25,10 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 ### PM Semantic Audit Closure Map (2026-06-17)
 
 Semantic audit closure support uses this owner split:
-- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules.
-- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, and validator-facing actionable-row coverage.
+- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, `audit_scope_manifest.jsonl`, `repair_impact_matrix.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules.
+- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` and `check_id` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, audit source artifact validation, cross-artifact ref checks, scope/impact coverage, and validator-facing actionable-row coverage.
 - `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics.
-- `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
+- `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, `Plans/.audits/audit-*/audit_scope_manifest.jsonl`, `Plans/.audits/audit-*/repair_impact_matrix.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
 
@@ -213,7 +213,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Canonical persistence and restore model for project identity, workspace tabs, windows, browser/preview state, terminal sessions, dev sessions, plan/TODO/question/activity state, usage projections, and analytics scan rollups. |
 | `chain-wizard-flexibility.md` | Wizard intents + requirements canonicalization + GitHub flows | Canonical for intent-based flows and requirements merge/canonical artifact |
 | `Document_Packaging_Policy.md` | Deterministic packaging for large Markdown/text artifacts | Canonical Document Set contract: sharded set + `00-index.md` + `manifest.json` + full audits with non-bypassable run failure on verification breach. |
-| `Planning_Ledger_System.md` | Bootstrap planning ledger and future native ledger service | Canonical for the Bootstrap Ledger, Native Ledger Service import/export boundary, compact operating capsules, per-turn ledger protocol, design_atom lifecycle, exact source-lineage preservation, owner ambiguity handling, ledger-to-Plan compilation boundary, semantic closure registry row shape, and reopen policy. |
+| `Planning_Ledger_System.md` | Bootstrap planning ledger and future native ledger service | Canonical for the Bootstrap Ledger, Native Ledger Service import/export boundary, compact operating capsules, per-turn ledger protocol, design_atom lifecycle, exact source-lineage preservation, owner ambiguity handling, ledger-to-Plan compilation boundary, semantic closure registry row shape, audit scope manifests, repair impact matrices, and reopen policy. |
 | `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, node-readiness metadata, deterministic semantic finding keys, and repair closure matrix validation. |
 | `Plan_To_Node_Compilation.md` | PlanUnit index and node-readiness boundary | Canonical for future PlanUnit-to-NodeSeed-to-WorkNode compiler inputs and the current readiness-only boundary. It does not create WorkNodes, executable build tasks, or NodeSeed candidates before the compiler contract is complete. |
 | `Bootstrap_Planning_Migration.md` | Bootstrap ledger migration and governance seal workflow | Canonical for AGENTS trigger use, Codex Goal-phase migration, less-than-4,000-character goal prompt posture, controlled Plan conversion batches, Spec Lock seal timing, and retired prompt-packet/tranche experiment exclusions. |

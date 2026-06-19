@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L684-L4216
+Source lines: L684-L4229
 
-Source SHA256: `d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf`
+Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
 
 ---
 
@@ -3374,16 +3374,20 @@ canonical_text: >-
   Plans/00-plans-index.md records the semantic audit closure owner split
   without re-owning closure semantics. Planning_Ledger_System/PLS-012 owns the
   durable Plans/.audits/_semantic_closure_registry.jsonl row shape,
-  previously_closed reuse, reopen policy, subject_ref/observation_ref, and
-  latest_audit_* terminal-state rules. Plan_Document_System/PDS-014 owns
-  deterministic finding_key construction, repair_required/finding_level,
-  repair_closure_matrix.jsonl, and validator-facing actionable-row coverage.
+  audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, previously_closed
+  reuse, reopen policy, subject_ref/observation_ref, and latest_audit_*
+  terminal-state rules. Plan_Document_System/PDS-014 owns deterministic
+  finding_key and check_id construction, repair_required/finding_level,
+  audit source artifact validation, cross-artifact ref checks,
+  repair_closure_matrix.jsonl, scope/impact coverage, and validator-facing
+  actionable-row coverage.
   Bootstrap_Planning_Workflow and
   Codex_Prompts consume those owner PlanUnits for workflow and reusable prompt
-  text. scripts/pm-audit-closure.py, the global closure registry, and
-  audit-scoped repair_closure_matrix.jsonl are support/governance surfaces, not
-  product implementation files, WorkNodes, NodeSeeds, executable queues, final
-  node manifests, or build tasks.
+  text. scripts/pm-audit-closure.py, the global closure registry,
+  audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, and audit-scoped
+  repair_closure_matrix.jsonl are support/governance surfaces, not product
+  implementation files, WorkNodes, NodeSeeds, executable queues, final node
+  manifests, or build tasks.
 gui_related: false
 gui_classification_reason: This unit records canonical owner routing for audit governance support; it does not implement user-visible GUI behavior.
 depends_on:
@@ -3392,8 +3396,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - The index routes closure registry row shape and reopen policy to PLS-012.
+  - The index routes audit_scope_manifest.jsonl and repair_impact_matrix.jsonl process behavior to PLS-012.
   - The index routes subject_ref, observation_ref, and latest_audit_* terminal-state rules to PLS-012.
-  - The index routes deterministic finding_key, repair_required/finding_level, and repair_closure_matrix validation to PDS-014.
+  - The index routes deterministic finding_key/check_id, repair_required/finding_level, audit source validation, scope/impact coverage, and repair_closure_matrix validation to PDS-014.
   - Bootstrap workflow and prompt docs are recorded as consumers rather than schema owners.
   - Closure support artifacts and scripts are not product implementation, WorkNode, NodeSeed, executable queue, final node manifest, or build-task artifacts.
 validation_surfaces:
@@ -3409,6 +3414,10 @@ implementation_surfaces:
   - Plans/bootstrap/Bootstrap_Planning_Workflow.md
   - Plans/bootstrap/Codex_Prompts.md
   - scripts/pm-audit-closure.py
+  - Plans/.audits/_semantic_closure_registry.jsonl
+  - Plans/.audits/audit-*/audit_scope_manifest.jsonl
+  - Plans/.audits/audit-*/repair_impact_matrix.jsonl
+  - Plans/.audits/audit-*/repair_closure_matrix.jsonl
 node_compile_hint:
   mode: owner_routing_only
   create_worknodes: false
@@ -3417,7 +3426,10 @@ source_lineage:
 preserved_exact_tokens:
   - "Plans/.audits/_semantic_closure_registry.jsonl"
   - "repair_closure_matrix.jsonl"
+  - "audit_scope_manifest.jsonl"
+  - "repair_impact_matrix.jsonl"
   - "finding_key"
+  - "check_id"
   - "previously_closed"
   - "repair_required"
   - "finding_level"
@@ -3428,6 +3440,7 @@ preserved_exact_tokens:
   - "PDS-014"
 negative_constraints:
   - Do not make Plans/00-plans-index.md the owner of closure registry schema or closure matrix validation.
+  - Do not make Plans/00-plans-index.md the owner of scope-manifest or impact-matrix schema semantics.
   - Do not route repair_required=false warnings, previously_closed rows, audit-only observations, or hygiene-only runs into repair obligations.
   - Do not treat audit closure support scripts or audit JSONL artifacts as product implementation files.
   - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or build tasks from closure registry state.
