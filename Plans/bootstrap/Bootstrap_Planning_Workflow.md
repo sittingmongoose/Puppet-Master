@@ -113,22 +113,37 @@ The node-readiness report may classify future readiness and blockers, including 
 
 ## Semantic audit closure registry
 
-This workflow section consumes `PLS-012` and `PDS-014`; those owner PlanUnits define the durable registry, deterministic finding keys, repair closure matrix, and validator behavior.
+This workflow section consumes `PLS-012` and `PDS-014`; those owner PlanUnits define the durable registry, closed-world scope manifest, deterministic finding and check keys, repair impact matrix, repair closure matrix, and validator behavior.
 
 Deep semantic audits and bounded repairs use:
 
 ```text
 Plans/.audits/_semantic_closure_registry.jsonl
+Plans/.audits/<audit_id>/audit_scope_manifest.jsonl
+Plans/.audits/<audit_id>/repair_impact_matrix.jsonl
+Plans/.audits/<audit_id>/repair_closure_matrix.jsonl
 ```
 
 Each row is keyed by a deterministic `finding_key` derived from `finding_family`, `ledger_id`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `detail_keys`, and `exact_tokens`. The registry row preserves `closure_id`, `finding_key`, `finding_family`, `ledger_id`, `audit_ids`, `source_atom_ids`, `plan_unit_ids`, `owner_docs`, `consumer_docs`, `detail_keys`, `exact_tokens`, `closure_status`, `closure_evidence`, `closure_reason`, `hashes`, `created_at`, `updated_at`, `closed_by_audit_id`, and `reopen_conditions`.
 
-Every new audit finding row must include:
+Before semantic review, the audit writes `audit_scope_manifest.jsonl` with deterministic `check_id` rows for compiled atom details, compile targets, added/changed PlanUnit claims, reciprocal `source_lineage`, owner/consumer routes, schema/contract identity, `depends_on`/`unblocks` edges, synchronized ledger projection fields, index/governance checks, and forbidden-artifact checks. Completion requires every scope row to be classified.
+
+Every audit finding row must include:
 
 ```text
+finding_family
+ledger_id
+source_atom_ids
+plan_unit_ids
+owner_docs
+detail_keys
+exact_tokens
 repair_required: true|false
 finding_level: blocker|warning|observation
+finding_key: sfk-...
 ```
+
+Audit-specific finding keys based on `audit_id`, row number, or prose order are invalid. Audit artifacts must agree on `audit_id`, `ledger_id`, `baseline_ref`, `subject_ref`, and `observation_ref`.
 
 `BLOCKED` is used only when `repair_required=true`, a validator fails or mutates state, forbidden artifacts exist, or a user decision is required. `PASS_WITH_WARNINGS` is terminal when all findings have `repair_required=false`; `PASS` means no findings.
 
@@ -151,7 +166,13 @@ reopened
 
 Deep audits read the registry before writing new risks. If a finding is already closed and the source atom, PlanUnit, owner evidence, and closure evidence hashes are unchanged, the audit records `previously_closed` with `repair_required=false` and does not emit the item as a new semantic warning. A closed finding reopens only when one of those hashes changes, or when the current closure status is `blocked_requires_user_decision` or `reopened`. Deep audits may schema-check prior audit artifacts, but they must not emit semantic/currentness findings about old report wording, "review/commit" text, or missing pointers to audit-only runs.
 
-Bounded repairs write `repair_closure_matrix.jsonl` only when the latest audit has at least one `repair_required=true` source row. Each actionable row is closed as `repaired`, `false_positive`, `explicitly_deferred`, `source_lineage_only`, `not_for_plan`, `stale_retired`, or `blocked_requires_user_decision`. If the latest audit has zero actionable rows, the repair must refuse/no-op and must not revalidate `previously_closed` rows or create registry rows for them. Repairs append or update the global registry only for actionable rows and run:
+Bounded repairs write `repair_impact_matrix.jsonl` before editing when the latest audit has at least one `repair_required=true` source row. The impact matrix maps every actionable finding to synchronized files, PlanUnits, schemas, dependency edges, owner refs, ledger projection fields, index artifacts, governance artifacts, and covered scope checks.
+
+Bounded repairs write `repair_closure_matrix.jsonl` only for actionable source rows. Each actionable row is closed as `repaired`, `false_positive`, `explicitly_deferred`, `source_lineage_only`, `not_for_plan`, `stale_retired`, or `blocked_requires_user_decision`. If the latest audit has zero actionable rows, the repair must refuse/no-op and must not revalidate `previously_closed` rows or create registry rows for them.
+
+After repair edits, run an internal post-repair semantic audit over the original `audit_scope_manifest.jsonl` plus every impact row. Newly discovered actionable findings are added to the same scope/impact set and closed in the same Goal. Repair may finish only with `repair_required_count=0` or a true user decision; passing validators alone are insufficient. Only after internal semantic closure may repair append/update the global registry, regenerate PlanUnit index or governance artifacts, seal governance, or write `REPAIR_CERTIFICATION.md`.
+
+Repairs run:
 
 ```text
 python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix

@@ -566,25 +566,36 @@ owner_doc: Plans/Plan_Document_System.md
 canonical_text: >-
   Semantic audit findings use a stable deterministic finding_key derived from
   finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs,
-  detail_keys, and exact_tokens. Each new audit finding records
-  repair_required:boolean and finding_level:blocker|warning|observation. Repair
-  cycles write repair_closure_matrix.jsonl only when at least one source row has
+  detail_keys, and exact_tokens. Each audit finding records finding_family,
+  ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys,
+  exact_tokens, repair_required:boolean,
+  finding_level:blocker|warning|observation, and deterministic sfk finding_key;
+  audit-id, row-number, and
+  prose-order keys are invalid. Audits write audit_scope_manifest.jsonl with
+  deterministic check_id rows for the closed-world audit universe and every row
+  must be classified before completion. Repair cycles write
+  repair_closure_matrix.jsonl only when at least one source row has
   repair_required=true, and close only those actionable rows as repaired,
   false_positive, explicitly_deferred, source_lineage_only, not_for_plan,
   stale_retired, or blocked_requires_user_decision; reopened is reserved for a
   previously closed finding whose source atom, PlanUnit, owner evidence, or
-  closure evidence changed. Repair must refuse/no-op when the latest audit has
-  zero repair_required rows, and must not revalidate previously_closed rows or
-  create registry rows for repair_required=false observations. The
+  closure evidence changed. Before repair edits, repair_impact_matrix.jsonl maps
+  each actionable source row to synchronized files, PlanUnits, schemas,
+  dependency edges, owner refs, ledger projection fields, index artifacts, and
+  governance artifacts. Repair must refuse/no-op when the latest audit has zero
+  repair_required rows, and must not revalidate previously_closed rows or create
+  registry rows for repair_required=false observations. The
   scripts/pm-audit-closure.py validator checks the global registry JSONL,
-  required fields, duplicate
-  open finding_keys, invalid closure_status values, missing evidence refs,
-  reopened rows, matrix source_artifact/source_row coverage for actionable
-  rows, closure evidence, closure reasons, registry_closure_id linkage, and
-  per-audit closure matrix completeness across semantic_risks.jsonl,
-  atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl,
-  owner_routing_findings.jsonl, ledger_consistency.json, and
-  validator_results.json by default.
+  required fields, duplicate open finding_keys, invalid closure_status values,
+  missing evidence refs, reopened rows, audit source finding identity,
+  cross-artifact audit_id/ledger_id/baseline_ref/subject_ref/observation_ref,
+  status versus repair_required_count, complete audit_scope_manifest coverage,
+  repair_impact_matrix coverage and post-repair drift proof, matrix
+  source_artifact/source_row coverage for actionable rows, closure evidence,
+  closure reasons, registry_closure_id linkage, and per-audit closure matrix
+  completeness across semantic_risks.jsonl, atom_fidelity_matrix.jsonl,
+  planunit_source_claims.jsonl, owner_routing_findings.jsonl,
+  ledger_consistency.json, and validator_results.json by default.
 gui_related: false
 gui_classification_reason: Finding identity, closure matrices, and validators are docs/governance behavior, not GUI implementation work.
 depends_on:
@@ -594,6 +605,12 @@ unblocks: []
 acceptance_criteria:
   - The finding_key algorithm is deterministic and excludes volatile audit prose.
   - New audit finding rows include repair_required:boolean and finding_level:blocker|warning|observation.
+  - Audit finding rows fail validation unless finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, repair_required, finding_level, and deterministic sfk finding_key are present.
+  - audit_scope_manifest.jsonl rows fail validation when check_id is unstable, required check families are missing, or any row is unclassified.
+  - Audit source artifacts fail validation when audit_id, ledger_id, baseline_ref, subject_ref, or observation_ref disagree with audit_report.json.
+  - audit_report.json fails validation when status and repair_required_count disagree with computed source-artifact findings.
+  - repair_impact_matrix.jsonl is mandatory when repair_required=true rows exist and must cover every actionable source row before repair can certify.
+  - repair_impact_matrix.jsonl rows fail validation when post-repair semantic audit proof does not cover original scope and impact rows, repair_required_count is nonzero, or schema identity, reciprocal lineage, dependencies, owner routing, or ledger projections drifted.
   - repair_closure_matrix.jsonl is mandatory only when repair_required=true rows exist and covers every actionable source row selected for repair.
   - Warning-only audits with repair_required=false are terminal PASS_WITH_WARNINGS and do not require repair closure rows.
   - previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, and audit-artifact wording rows do not require closure rows.
@@ -613,6 +630,8 @@ implementation_surfaces:
   - scripts/pm-audit-closure.py
   - tests/test_pm_audit_closure.py
   - Plans/.audits/_semantic_closure_registry.jsonl
+  - Plans/.audits/audit-*/audit_scope_manifest.jsonl
+  - Plans/.audits/audit-*/repair_impact_matrix.jsonl
   - Plans/.audits/audit-*/repair_closure_matrix.jsonl
   - Plans/bootstrap/Codex_Prompts.md
 node_compile_hint:
@@ -634,6 +653,14 @@ preserved_exact_tokens:
   - "registry_closure_id"
   - "repair_required"
   - "finding_level"
+  - "audit_scope_manifest.jsonl"
+  - "check_id"
+  - "audit_id"
+  - "baseline_ref"
+  - "subject_ref"
+  - "observation_ref"
+  - "repair_impact_matrix.jsonl"
+  - "post_repair_semantic_audit"
   - "blocker"
   - "warning"
   - "observation"
@@ -647,6 +674,10 @@ preserved_exact_tokens:
   - "PASS_WITH_WARNINGS"
 negative_constraints:
   - Do not use audit_id, row number, or prose order as the finding identity.
+  - Do not accept incomplete or unclassified audit_scope_manifest.jsonl rows.
+  - Do not accept source findings whose audit_id, ledger_id, baseline_ref, subject_ref, or observation_ref disagree with audit_report.json.
+  - Do not certify repair without repair_impact_matrix.jsonl coverage for actionable rows.
+  - Do not certify repair when post-repair semantic audit proof shows schema identity, reciprocal lineage, dependency, owner routing, or ledger projection drift.
   - Do not claim repair completion with green validators alone when repair_required=true rows lack closure rows.
   - Do not require or generate closure rows for repair_required=false rows.
   - Do not revalidate previously_closed rows as fresh repair work.

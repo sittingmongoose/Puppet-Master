@@ -174,52 +174,58 @@ Report:
 Do not read full event logs or legacy ledgers unless the compact state points to a specific source_ref.
 ```
 
-## 8. Goal prompt — deep semantic audit with closure registry
+## 8. Goal prompt — closed-world semantic audit
 
 ```text
 /goal
-Deep-audit latest PM Bootstrap Ledger-to-Plans cycle for exact semantic fidelity and terminal state.
+Audit latest PM Bootstrap Ledger-to-Plans cycle for closed-world semantic fidelity and terminal state.
 
-Input: ledger_id=infer_latest. Audit-only. Do not repair/edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or product build tasks. Write only Plans/.audits/<audit_id>/*.
+Input: ledger_id=infer_latest. Audit-only. Do not repair/edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks. Write only Plans/.audits/<audit_id>/*.
 
-Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, Plans/.audits/_semantic_closure_registry.jsonl, compact state for the inferred ledger, compile_queue, changed live Plans docs, .plan_index, and latest related audit FINAL_REPORT.
+Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/.audits/_semantic_closure_registry.jsonl, compact state for inferred ledger, compile_queue, changed Plans docs, .plan_index, FINAL_REPORT, and scripts/pm-audit-closure.py.
 
-Owner refs: PLS-012 owns closure registry, reopen policy, subject_ref/observation_ref, and latest_audit_* terminal rules. PDS-014 owns finding_key, repair_required/finding_level, and repair_closure_matrix validation.
+Owner refs: PLS-012 owns registry, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, reopen policy, refs, and latest_audit_* rules. PDS-014 owns sfk finding_key, chk check_id, repair_required/finding_level, source validation, and closure/impact coverage.
 
 Infer observation_ref=HEAD. Infer subject_ref as the latest substantive commit touching live Plans, target-ledger governing state, .plan_index, governance, or process scripts; exclude Plans/.audits/**, closure-registry-only commits, and hygiene-only report edits. Infer ledger_id from latest non-background registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the parent of the earliest contiguous subject cycle commit.
 
-For every finding/detail, emit repair_required:boolean and finding_level:blocker|warning|observation. BLOCKED only when repair_required=true, a validator fails/mutates state, forbidden artifacts exist, or a user decision is required. PASS_WITH_WARNINGS is terminal when all findings are repair_required=false. PASS means no findings.
+Before semantic review, build audit_scope_manifest.jsonl with deterministic chk check_id rows for every compiled atom detail, compile target, added/changed PlanUnit claim, reciprocal source_lineage claim, owner/consumer route, schema/contract identity, depends_on/unblocks edge, ledger projection field, index/governance check, and forbidden-artifact check. Rows carry refs, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, covered_artifacts, classification, repair_required, and finding_level. Completion requires 100% classified rows.
 
-Compute finding_key from finding_family + ledger_id + source_atom_ids + plan_unit_ids + owner_docs + detail_keys + exact_tokens. Read the registry before emitting risks. If a finding is closed and hashes/evidence match, classify previously_closed with repair_required=false and write closure_reuse.jsonl; do not emit it as a semantic_risk. Reopen only on changed source/PlanUnit/owner/closure hashes or blocked/reopened status.
+Every finding must carry finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, repair_required, finding_level, and deterministic sfk finding_key from those stable fields. Reject audit-specific keys based on audit_id, row number, or prose order. Audit artifacts must agree on audit_id, ledger_id, baseline_ref, subject_ref, and observation_ref.
+
+Read registry before emitting risks. If a finding is closed and hashes/evidence match, classify previously_closed with repair_required=false and write closure_reuse.jsonl, not a new semantic risk. Reopen only on changed source/PlanUnit/owner/closure hashes or blocked/reopened status.
 
 Build atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, closure_reuse.jsonl, ledger_consistency.json, validator_results.json, semantic_risks.jsonl, audit_report.json, and FINAL_REPORT.md. Prove live non-pipeline Plans evidence for exact details; metadata/source_lineage alone is insufficient.
 
+BLOCKED only when repair_required=true, a validator fails/mutates state, forbidden artifacts exist, or a user decision is required. PASS_WITH_WARNINGS is terminal when all findings are repair_required=false. PASS means no findings.
+
 Do not emit semantic/currentness findings about old audit report wording, review/commit text, or missing ledger pointers to audit-only observation/hygiene runs. ledger latest_audit_* is stale only when a state-certifying audit/repair that changed or validated canonical Plans, ledger governing state, index, or governance is missing.
 
-Run pm-audit-closure validate, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record validator git status and side effects. FINAL_REPORT must include status, subject_ref, observation_ref, baseline_ref, changed files, PlanUnit deltas, previously_closed count, repair_required count, validators, forbidden artifacts, and next safe action.
+Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed count, repair_required count, validators, forbidden artifacts, and next action.
 ```
 
-## 9. Goal prompt — bounded semantic repair with closure registry
+## 9. Goal prompt — repair and certify closed-world audit
 
 ```text
 /goal
-Repair latest PM Bootstrap deep semantic audit only if repair_required findings exist.
+Repair and certify latest PM Bootstrap closed-world semantic audit.
 
-Input: audit_id=infer_latest. Infer ledger_id from audit artifacts. Bounded repair only; do not redo the audit or broaden scope. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or product build tasks.
+Input: audit_id=infer_latest. Infer ledger_id from audit artifacts. Bounded repair only; do not broaden product scope. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or product build tasks.
 
-Read AGENTS.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, Plans/.audits/_semantic_closure_registry.jsonl, the audit FINAL_REPORT, closure_reuse.jsonl if present, semantic_risks.jsonl, atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, and compact ledger state.
+Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, scripts/pm-audit-closure.py, Plans/.audits/_semantic_closure_registry.jsonl, audit_report.json, FINAL_REPORT.md, audit_scope_manifest.jsonl, closure_reuse.jsonl if present, semantic_risks.jsonl, atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, and compact ledger state.
 
-Owner refs: PLS-012 owns terminal audit state, latest_audit_* rules, and reopen policy. PDS-014 owns repair_required/finding_level and repair_closure_matrix validation.
+Owner refs: PLS-012 owns terminal audit state, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, latest_audit_* rules, and reopen policy. PDS-014 owns sfk finding_key, repair_required/finding_level, source-artifact validation, and closure/impact validation.
 
-Scan audit artifacts for repair_required=true. If count is zero, stop with a no-op report: do not edit Plans, ledgers, governance, registry, repair_closure_matrix.jsonl, or prior audit artifacts; report PASS_WITH_WARNINGS terminal or PASS terminal from the audit.
+First run python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix as a source check. If it fails only because repair_closure_matrix.jsonl or repair_impact_matrix.jsonl is missing for actionable rows, continue; any unstable finding_key, incomplete scope, ref mismatch, or malformed source artifact must be fixed in audit artifacts before editing canon.
 
-For each repair_required=true row only, write/update Plans/.audits/<audit_id>/repair_closure_matrix.jsonl with source_artifact, source_row, finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, finding_key, closure_status, closure_evidence, closure_reason, and registry_closure_id. Close as repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision. Use reopened only in the global registry when prior closed evidence changed.
+Scan audit artifacts for repair_required=true. If count is zero, no-op: do not edit Plans, ledgers, governance, registry, repair_closure_matrix.jsonl, repair_impact_matrix.jsonl, or prior audit artifacts; report PASS_WITH_WARNINGS terminal or PASS terminal from the audit.
 
-Do not revalidate previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, audit-artifact wording, or repair_required=false observations. Audit-only observation/hygiene repairs do not stale or restamp ledger latest_audit_*.
+Before editing, write repair_impact_matrix.jsonl. Map every actionable finding to files, PlanUnits, schemas, dependency_edges, owner_refs, ledger_projection_fields, index_artifacts, governance_artifacts, scope_check_ids, and post_repair_semantic_audit placeholder. Then repair only mapped impact surfaces. Do not revalidate previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, audit-artifact wording, or repair_required=false observations. Audit-only observation/hygiene repairs do not stale/restamp ledger latest_audit_*.
 
-Append/update Plans/.audits/_semantic_closure_registry.jsonl only for actionable closures. finding_key is deterministic from finding_family + ledger_id + source_atom_ids + plan_unit_ids + owner_docs + detail_keys + exact_tokens.
+Write/update repair_closure_matrix.jsonl for repair_required=true rows with source_artifact, source_row, finding_family, audit_id, ledger_id, baseline_ref, subject_ref, observation_ref, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, sfk finding_key, closure_status, closure_evidence, closure_reason, and registry_closure_id. Close as repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision. Use reopened only in the global registry when prior closed evidence changed.
 
-Run python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix plus pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. If Plans docs or governed artifacts changed, perform governance seal after docs/indexes/evidence stabilize. Report changed files, repair_required count, closure counts, validators, registry updates, no-op decision if applicable, and remaining blocked user decisions.
+Run an internal post-repair semantic audit over the original audit_scope_manifest.jsonl plus every impact row. If new repair_required findings appear, add them to the same scope/impact set and repair/adjudicate in this Goal. Iterate until repair_required_count=0 or a true user decision blocks. Passing validators alone are insufficient.
+
+Only after internal semantic closure may you append/update the global registry, regenerate PlanUnit index, seal governance if governed files changed, and write REPAIR_CERTIFICATION.md. Then run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Report changed files, repair_required count, closure/impact counts, validators, registry updates, prompt no-op if applicable, and remaining user decisions.
 ```
 
 ## 10. Ledger Compile Hardening Addendum - pldg-20260618-001-prd-planning-wizard
