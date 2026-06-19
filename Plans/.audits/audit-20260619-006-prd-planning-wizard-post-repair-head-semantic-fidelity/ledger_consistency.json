@@ -1,0 +1,53 @@
+{
+  "audit_id": "audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "242415aba82384c58032bcaed49ad0819d8551c8",
+  "candidate_owner_doc_count": 0,
+  "compile_queue_item_count": 62,
+  "compile_queue_source_atom_count": 168,
+  "compiled_plan_unit_count": 62,
+  "current_ref": "0f3edbfa3e95ac9f749121f2f20334f6a5e052a3",
+  "failures": [],
+  "governance_status": null,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "ledger_phase": "compiled_prd_planning_wizard_governance_sealed",
+  "ledger_status": "sealed",
+  "open_blocker_count": 0,
+  "open_question_count": 0,
+  "projection_latest_audit_refs": {
+    "current_json_latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "handoff_json_latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "ledger_health_latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "open_items_json_latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "registry_latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md"
+  },
+  "range": "242415aba82384c58032bcaed49ad0819d8551c8..0f3edbfa3e95ac9f749121f2f20334f6a5e052a3",
+  "ready_for_plan_compile_atom_count": 0,
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 29,
+    "questions": 0
+  },
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "subagent_summary": "Dewey found projection drift only; no active candidates, open questions, blockers, or ready_for_plan_compile atoms remain in the sealed ledger.",
+  "warnings": [
+    {
+      "classification": "missing_or_drift",
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:188",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:34",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json:31",
+        "Plans/ledgers/v2/ledger_registry.json:458",
+        "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json:14",
+        "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json:42",
+        "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md:39"
+      ],
+      "risk_key": "ledger_latest_audit_projection_stale",
+      "severity": "medium",
+      "summary": "Sealed ledger projections still name audit-004 as latest even though audit-005 repair validation is committed in HEAD."
+    }
+  ]
+}
