@@ -1,0 +1,83 @@
+{
+  "advisory_count": 2,
+  "artifacts": {
+    "atom_fidelity_matrix": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/atom_fidelity_matrix.jsonl",
+    "closure_reuse": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/closure_reuse.jsonl",
+    "final_report": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md",
+    "ledger_consistency": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/ledger_consistency.json",
+    "owner_routing_findings": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/owner_routing_findings.jsonl",
+    "parallel_assignment_receipts": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/parallel_assignment_receipts.jsonl",
+    "planunit_source_claims": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/planunit_source_claims.jsonl",
+    "semantic_risks": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/semantic_risks.jsonl",
+    "validator_results": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json"
+  },
+  "atom_fidelity_summary": {
+    "classification_counts": {
+      "equivalent_with_evidence": 61,
+      "exact_present": 99,
+      "previously_closed": 7,
+      "stale_retired": 1
+    },
+    "design_atoms_checked": 168,
+    "exact_token_loss_detected": false,
+    "missing_or_drift_count": 0,
+    "notes": "No atom-level missing_or_drift rows were reopened at post-repair HEAD. Prior matching closure rows were reused as previously_closed."
+  },
+  "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "finding_level": "warning",
+  "forbidden_artifacts_summary": {
+    "implementation_files_found": false,
+    "legacy_iced_app_recreated": false,
+    "nodeseeds_found": false,
+    "queues_or_manifests_found": false,
+    "secrets_or_local_machine_state_found": false,
+    "status": "pass",
+    "worknodes_found": false
+  },
+  "inference_evidence": {
+    "audit_id_inferred_from": "Existing Plans/.audits/audit-20260619-009-* directory; next sequence is 010.",
+    "baseline_ref_inferred_from": "Parent of the earliest substantive PRD Planning Wizard Ledger-to-Plans cycle commit, matching the prior audit-009 full-cycle baseline.",
+    "ledger_inferred_from": [
+      "Plans/ledgers/v2/ledger_registry.json current/latest non-background entry",
+      "recent commits touching PRD Planning Wizard ledger, live Plans, .plan_index, governance, and audit/process scripts"
+    ],
+    "observation_ref_inferred_from": "HEAD",
+    "subject_ref_inferred_from": "HEAD commit at observation time and latest substantive post-repair/governance commit."
+  },
+  "ledger_governance_summary": {
+    "forbidden_artifacts_found": false,
+    "governance_advisory_count": 1,
+    "governance_validators_passed": true,
+    "ledger_repair_required_count": 2
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "lineage_summary": {
+    "findings": [
+      "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::cv289_prd_runtime_source_lineage_gap",
+      "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::legacy_adjacent_prd_source_lineage_gap"
+    ],
+    "repair_required_count": 2
+  },
+  "next_action": "Run a bounded repair for the six repair_required findings, then revalidate and write a repair closure matrix; do not create WorkNodes, NodeSeeds, executable queues, manifests, implementation files, or build tasks.",
+  "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "owner_routing_summary": {
+    "findings": [
+      "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::runtime_branch_dependency_edges_missing"
+    ],
+    "repair_required_count": 1
+  },
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "repair_required": true,
+  "repair_required_count": 6,
+  "schema_id": "pm.semantic_fidelity_audit_report.v1",
+  "status": "BLOCKED",
+  "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "validator_summary": {
+    "command_count": 17,
+    "git_status_after": "clean",
+    "git_status_before": "clean",
+    "side_effects_detected": false,
+    "status": "pass"
+  }
+}

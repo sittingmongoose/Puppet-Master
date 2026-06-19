@@ -1,0 +1,125 @@
+{
+  "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "commands": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+      "name": "audit_closure_registry_validate",
+      "status": "pass",
+      "summary": "registry validated; row_count=305; duplicate_finding_keys=0; invalid_rows=0"
+    },
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "name": "bootstrap_ledger_validate",
+      "status": "pass",
+      "summary": "ledger validated; atoms=168; compile_queue_items=62; corrections=15; decisions=30; events=31; plan_units_checked=2961"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "name": "plan_index_validate",
+      "status": "pass",
+      "summary": "plan index validated; plan_unit_count=5166; acceptance_unit_count=18435; node_readiness_status=blocked_compiler_contract_incomplete"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "name": "plan_migration_validate",
+      "status": "pass",
+      "summary": "migration run validated; live_plan_unit_count=5166; doc_count=71; span_count=3916"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "name": "plans_run_gates",
+      "status": "pass",
+      "summary": "standard plan-governance gates passed"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "name": "shard_check",
+      "status": "pass",
+      "summary": "shards checked; docs_checked=54; shards_checked=985"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "name": "validate_auto_decisions",
+      "status": "pass",
+      "summary": "auto decisions valid"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "name": "verify_spec_lock",
+      "status": "pass",
+      "summary": "spec lock verified"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "name": "validate_evidence",
+      "status": "pass",
+      "summary": "evidence validation passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "name": "validate_plan_graph",
+      "status": "pass",
+      "summary": "plan graph validation passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "name": "validate_plans_to_code_handoff_schema",
+      "status": "pass",
+      "summary": "plans-to-code handoff schema validation passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py audit-governance",
+      "name": "audit_governance",
+      "status": "pass",
+      "summary": "governance audit passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py json-syntax",
+      "name": "json_syntax",
+      "status": "pass",
+      "summary": "JSON syntax valid"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "name": "lint_contractrefs",
+      "status": "pass",
+      "summary": "ContractRef lint passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py lint-banned-phrases",
+      "name": "lint_banned_phrases",
+      "status": "pass",
+      "summary": "banned phrase lint passed"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py check-project-artifacts",
+      "name": "check_project_artifacts",
+      "status": "pass",
+      "summary": "project artifact guard passed"
+    },
+    {
+      "command": "git diff --check",
+      "name": "git_diff_check",
+      "status": "pass",
+      "summary": "no whitespace errors"
+    }
+  ],
+  "finding_level": "observation",
+  "forbidden_state_mutation_detected": false,
+  "git_status_after": "clean",
+  "git_status_before": "clean",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "notes": [
+    "All validators passed at observation_ref.",
+    "The before/after status check showed no validator side effects.",
+    "Audit artifacts were written only after the full read-only validator run."
+  ],
+  "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "repair_required": false,
+  "schema_id": "pm.audit_validator_results.v1",
+  "status": "pass",
+  "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "validator_side_effects": false
+}

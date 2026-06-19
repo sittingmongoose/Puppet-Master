@@ -1,0 +1,64 @@
+{
+  "advisory_count": 0,
+  "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "finding_level": "observation",
+  "findings": [
+    {
+      "classification": "missing_or_drift",
+      "evidence_refs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:21",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:40",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:42",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:46",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:166"
+      ],
+      "finding_key": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::ledger_compact_state_stale_audit007_prose",
+      "finding_level": "warning",
+      "finding_type": "ledger_governing_projection_currentness",
+      "repair_hint": "Refresh only the stale compact-state prose/cursor fields to audit-009 or later, preserving audit-only omission policy.",
+      "repair_required": true,
+      "summary": "Machine-readable latest_audit_* fields point to audit-009, but compact handoff/current prose still directs the next agent to the older audit-007 bounded-repair loop."
+    },
+    {
+      "classification": "missing_or_drift",
+      "evidence_refs": [
+        "Plans/ledgers/v2/ledger_registry.json:509",
+        "Plans/ledgers/v2/ledger_registry.json:512",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json:100"
+      ],
+      "finding_key": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity::ledger_registry_row_updated_at_stale",
+      "finding_level": "warning",
+      "finding_type": "ledger_registry_currentness",
+      "repair_hint": "Refresh the global sealed-ledger row timestamp/metadata to match the local registry entry without changing ledger substance.",
+      "repair_required": true,
+      "summary": "The global registry top-level audit fields are current, but the sealed ledger row updated_at_utc remains older than the local registry entry and post-audit-009 state."
+    }
+  ],
+  "governing_state_checked": [
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/**",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/operating_capsule.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json"
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "positive_checks": [
+    "compile_queue status is compiled_prd_planning_wizard_governance_sealed and points to audit-20260619-009",
+    "current/open_items/handoff latest_audit_* machine fields point to audit-20260619-009 where present",
+    "ledger health status is pass_governance_sealed_post_audit_009_repair",
+    "ledger validator passed at observation_ref"
+  ],
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "repair_required": false,
+  "repair_required_count": 2,
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "BLOCKED",
+  "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499"
+}
