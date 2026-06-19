@@ -1,0 +1,268 @@
+{
+  "audit_id": "audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity",
+  "changed_files": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+    "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/events.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_validator_results.json"
+  ],
+  "closure_summary": {
+    "blocked_requires_user_decision": 0,
+    "status_counts": {
+      "repaired": 13,
+      "source_lineage_only": 3
+    },
+    "total_rows": 16
+  },
+  "deferred_or_non_repair_items": [
+    {
+      "closure_reason": "Testing/tool-helper atom remains intentionally closed as source_lineage_only/prior-canon support; Tools.md is not a current compile owner for this ledger repair.",
+      "closure_status": "source_lineage_only",
+      "finding_family": "source_lineage_only_atom_fidelity_revalidated",
+      "finding_key": "sfk-76183fa8f620ac1c000f7688",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 83
+    },
+    {
+      "closure_reason": "Testing/tool-helper atom remains intentionally closed as source_lineage_only/prior-canon support; Tools.md is not a current compile owner for this ledger repair.",
+      "closure_status": "source_lineage_only",
+      "finding_family": "source_lineage_only_atom_fidelity_revalidated",
+      "finding_key": "sfk-7aaa9d67c3b6528379671a30",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 84
+    },
+    {
+      "closure_reason": "Testing/tool-helper atom remains intentionally closed as source_lineage_only/prior-canon support; Tools.md is not a current compile owner for this ledger repair.",
+      "closure_status": "source_lineage_only",
+      "finding_family": "source_lineage_only_atom_fidelity_revalidated",
+      "finding_key": "sfk-2ac48d15e27c1fc09e6ecc34",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 85
+    }
+  ],
+  "false_positives": [],
+  "generated_at_utc": "2026-06-19T04:28:50Z",
+  "governance_status": "refreshed_generated_evidence_hashes_after_ledger_registry_change; Spec_Lock and .plan_index unchanged",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "ledger_records_changed": [
+    "events.jsonl",
+    "manifest.json",
+    "registry_entry.json",
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "validation/ledger_health.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "next_safe_action": "Review or commit the bounded repair package. No repair action remains for audit-20260619-003.",
+  "planunits_changed": [],
+  "registry_rows_written": [
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-001",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-002",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-003",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-004",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-005",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-006",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-007",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-008",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-009",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-010",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-011",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-012",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-013",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-014",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-015",
+    "closure-audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity-repair-016"
+  ],
+  "repaired_items": [
+    {
+      "closure_reason": "Ledger cursor and latest-audit projections now point to audit-20260619-003 repair validation instead of stale audit-20260619-001 wording; evt-0028 records the bounded repair without changing canonical Plans or runtime/build artifacts.",
+      "closure_status": "repaired",
+      "finding_family": "ledger_cursor_projection_drift",
+      "finding_key": "sfk-7ae45e59669266ce24789445",
+      "source_artifact": "ledger_consistency.json",
+      "source_row": "warnings[0]"
+    },
+    {
+      "closure_reason": "The audit-only closure-validator warning is closed by this repair pass because repair_closure_matrix.jsonl now exists and will be validated with --require-closure-matrix.",
+      "closure_status": "repaired",
+      "finding_family": "audit_only_closure_warning_resolved",
+      "finding_key": "sfk-d562a5e80c9f284cd460ee53",
+      "source_artifact": "validator_results.json",
+      "source_row": "results.pm_audit_closure_validate_audit_only"
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-264cbf22712f17ec18908acb",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 2
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-56c871de188c06bab081401f",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 8
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-d34ac1d96f4b0174ce772435",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 101
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-1c836848cac971860552f16b",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 102
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-eda73b02806c47210b6f185b",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 103
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-93c93de5a193df272d622fd4",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 104
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-2bde31a5ccfe303f543c78bf",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 105
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-a27692cfb5e69caae161b95f",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 106
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-74a29b83f137bd50bf7604c0",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 107
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-51812d622dd3d42409fd3836",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 109
+    },
+    {
+      "closure_reason": "Previously closed atom-fidelity detail remains closed by audit-003 closure reuse and live canonical evidence; no new canonical repair was required.",
+      "closure_status": "repaired",
+      "finding_family": "previously_closed_atom_fidelity_revalidated",
+      "finding_key": "sfk-c92eb16fed146a104b10288b",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 110
+    }
+  ],
+  "schema_id": "pm.audit_repair_report.v1",
+  "status": "pass",
+  "validators": {
+    "results": [
+      {
+        "name": "pm_audit_closure_validate_current_matrix",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_bootstrap_ledger_validate",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plan_index_validate",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plan_migration_validate",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_run_gates",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_shard_plans_check",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_validate_auto_decisions",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_verify_spec_lock",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_validate_evidence",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "git_diff_check",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_validate_plan_graph",
+        "side_effects": false,
+        "status": "pass"
+      },
+      {
+        "name": "pm_plans_verify_validate_plans_to_code_handoff_schema",
+        "side_effects": false,
+        "status": "pass"
+      }
+    ],
+    "status": "pass",
+    "summary": {
+      "fail_count": 0,
+      "pass_count": 12,
+      "side_effect_count": 0
+    }
+  }
+}

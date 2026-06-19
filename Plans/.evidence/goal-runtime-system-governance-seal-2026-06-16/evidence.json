@@ -94,7 +94,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "efac265aa194428f037933f8c7634c81693eedf895efea7696e5dd95b731f755"
+      "sha256": "71bfe69b0becac366ea6ba4ae11724698ce1f016093023ac32e1baa8f54cb1c1"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
@@ -436,6 +436,10 @@
     },
     {
       "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity --require-closure-matrix",
       "exit_code": 0
     }
   ],
