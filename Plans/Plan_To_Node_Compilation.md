@@ -709,6 +709,15 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0017
   - pldg-20260617-001-plans-to-code-handoff:dec-0024
   - pldg-20260617-001-plans-to-code-handoff:dec-0026
+source_atom_ids:
+  - atom-0002
+  - atom-0101
+  - atom-0102
+  - atom-0103
+  - atom-0104
+  - atom-0105
+  - atom-0106
+  - atom-0109
 preserved_exact_tokens:
   - "Plan Compile"
   - "Planning Wizard"

@@ -18,27 +18,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "a58c48e5d7be68236c1ee0c3e2daff1bd9139866c629b8758a7aa3c02669803a"
+      "sha256": "b06758f4e16709b58a0959c99f57f8f9440f15d109531ceecaec2ae97d569416"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "0d6d926c291a723ec606a4665e20d254d86041a22b24baf264185341d2f2b77c"
+      "sha256": "e8c26edc0597007ea58b83374e3dcbf59a44716abe6b345ac89414fba8283e6f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "512eaa4c2d1d11cfa2f31dc1872ae5acdbb20d9a80e7c10b5da8ccff7b7305f4"
+      "sha256": "e84358576ecb70fe1135b6f37e19de7230e709392519fadc22acf84c831ea9d9"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "2a42c5285d1950d2bd4a2cf38fe4fe208da09dbdaf127285ee836fa099b2edfa"
+      "sha256": "9563898c5a7d2e4ea2528227024ee32ec5ce69536364c9f30191b349735a4bdd"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "01711fe17ea3dbf65dbc6f978408911f49f1edca84382891bdb1083b110a241d"
+      "sha256": "36cabc05588effcf7aaf389ee010aca25660895083f987ce2574857d075ae4c8"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "49dfab10dc5d81af12af0a57194766e6299b0534cee0ea74180de8fa80aaab72"
+      "sha256": "11fe3d16b3d4798e01510536ab1fdf0403725c74abb726f36a87322c3d0b70d9"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -78,11 +78,11 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "51536c35c1b3a9879def59d644cda5beccbcca097e977ca0466a9cec06da2131"
+      "sha256": "a43322235e7eb04087fad66da7df2c9eab5fceeef3d06489fb947e589e1ccc4d"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "c6a437151b059ec2c795b1373ce671b1b003cc2764e5ca6a2912a44dc428f493"
+      "sha256": "a6243d6a31b9928e2fbf63a45a710f1326616436737359a588ac53530cc5d4d8"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -94,7 +94,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "71bfe69b0becac366ea6ba4ae11724698ce1f016093023ac32e1baa8f54cb1c1"
+      "sha256": "4c7e04b8920b8dbe41e77e58b19226ed8867199670f1a17ab562c075fd97749c"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
@@ -268,6 +268,11 @@
       "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
       "result": "PASS",
       "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
+    },
+    {
+      "name": "audit-003-closure-validation-global-current-snapshot",
+      "result": "PASS",
+      "details": "The audit-003 closure-validation command is retained here only as global-current closure-registry evidence captured during the audit-004 bounded repair; it does not expand this older evidence bundle into PRD Planning Wizard product scope."
     }
   ],
   "commands_run": [
@@ -440,7 +445,8 @@
     },
     {
       "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity --require-closure-matrix",
-      "exit_code": 0
+      "exit_code": 0,
+      "stdout_excerpt": "GLOBAL CURRENT SNAPSHOT: audit-003 closure validation was recorded during the audit-004 bounded repair to prove the current semantic closure registry state; it is not original scope evidence for this older evidence bundle."
     }
   ],
   "contract_refs_satisfied": [

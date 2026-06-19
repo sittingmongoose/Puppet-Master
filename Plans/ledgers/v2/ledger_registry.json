@@ -447,20 +447,20 @@
       ],
       "created_at_utc": "2026-06-18T18:30:00Z",
       "governance_status": "sealed",
-      "last_updated_at": "2026-06-19T04:27:01Z",
-      "last_updated_at_utc": "2026-06-19T04:27:01Z",
-      "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl",
-      "latest_audit_closure_rows": 16,
+      "last_updated_at": "2026-06-19T05:19:50Z",
+      "last_updated_at_utc": "2026-06-19T05:19:50Z",
+      "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_closure_matrix.jsonl",
+      "latest_audit_closure_rows": 20,
       "latest_audit_closure_status_counts": {
-        "repaired": 13,
-        "source_lineage_only": 3
+        "repaired": 19,
+        "false_positive": 1
       },
-      "latest_audit_ref": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md",
-      "latest_audit_repair_report": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json",
+      "latest_audit_ref": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+      "latest_audit_repair_report": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
       "latest_audit_status": "repair_validated",
-      "latest_audit_validated_at_utc": "2026-06-19T04:27:01Z",
+      "latest_audit_validated_at_utc": "2026-06-19T05:13:09Z",
       "ledger_id": "pldg-20260618-001-prd-planning-wizard",
-      "notes": "Audit-20260619-003 bounded repair closed stale cursor projection wording, the audit-only repair matrix warning, and explicit previously_closed/source_lineage_only atom-fidelity closure rows. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
+      "notes": "Audit-20260619-004 bounded repair closed governance evidence scope labeling, PNC-014 source_atom_ids/index shape, compact handoff PlanUnit count, and post-commit next action. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
       "phase": "compiled_prd_planning_wizard_governance_sealed",
       "primary_goal": "Compile the settled PRD Builder and Planning Wizard product architecture, visible automated testing, Approve And Build, Plan Compile, WorkNode materialization, and Orchestrator startup contracts into canonical Plans with exact fidelity.",
       "resume_file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
@@ -506,8 +506,9 @@
       "title": "PRD Builder, Planning Wizard, Testing, Approve And Build, and Runtime Handoff",
       "unchanged_prior_canon_support_docs": [
         "Plans/Tools.md"
-      ]
+      ],
+      "updated_at_utc": "2026-06-19T05:19:50Z"
     }
   ],
-  "updated_at_utc": "2026-06-19T04:27:01Z"
+  "updated_at_utc": "2026-06-19T05:19:50Z"
 }
