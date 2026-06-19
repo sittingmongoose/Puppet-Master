@@ -1,0 +1,262 @@
+{
+  "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+  "created_at_utc": "2026-06-19T04:50:00Z",
+  "invalid_invocations": [
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plan_migration_validate",
+      "returncode": 2,
+      "side_effects": [],
+      "status": "invalid_invocation",
+      "stderr": "usage: pm-plan-migration.py validate [-h] --run-dir RUN_DIR [--write-report]\npm-plan-migration.py validate: error: the following arguments are required: --run-dir\n",
+      "stdout": "",
+      "superseded_by": "pm_plan_migration_validate with --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+    }
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "results": [
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_audit_closure_validate_audit_004",
+      "rerun_after_final_artifact_update": true,
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"audit_dirs\": [\n    {\n      \"errors\": [],\n      \"matrix_rows\": 0,\n      \"path\": \"Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity\",\n      \"warnings\": [\n        \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity; completeness check skipped\"\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 260,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 2,\n      \"not_for_plan\": 20,\n      \"repaired\": 201,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 7\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity; completeness check skipped\"\n  ]\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity --require-closure-matrix",
+      "env_overrides": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_audit_closure_validate_audit_003_require_matrix",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"audit_dirs\": [\n    {\n      \"coverage_artifacts\": [\n        \"semantic_risks.jsonl\",\n        \"atom_fidelity_matrix.jsonl\",\n        \"planunit_source_claims.jsonl\",\n        \"owner_routing_findings.jsonl\",\n        \"ledger_consistency.json\",\n        \"validator_results.json\"\n      ],\n      \"errors\": [],\n      \"matrix\": \"Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl\",\n      \"matrix_rows\": 16,\n      \"missing_coverage\": [],\n      \"path\": \"Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity\",\n      \"status_counts\": {\n        \"repaired\": 13,\n        \"source_lineage_only\": 3\n      },\n      \"warnings\": []\n    }\n  ],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 260,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 2,\n      \"not_for_plan\": 20,\n      \"repaired\": 201,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 7\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_bootstrap_ledger_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260618-001-prd-planning-wizard\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 168,\n    \"compile_queue_items\": 62,\n    \"corrections\": 15,\n    \"decisions\": 30,\n    \"events\": 28,\n    \"plan_units_checked\": 2961,\n    \"questions\": 0\n  },\n  \"warnings\": []\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plan_index_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:36Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 18423,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5166\n  }\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plan_migration_validate",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "d_covered\": 5,\n      \"phase2b_batch_132_atomized_covered\": 1,\n      \"phase2b_batch_133_atomized_covered\": 10,\n      \"phase2b_batch_134_atomized_covered\": 1,\n      \"phase2b_batch_135_atomized_covered\": 1,\n      \"phase2b_batch_136_atomized_covered\": 18,\n      \"phase2b_batch_137_atomized_covered\": 15,\n      \"phase2b_batch_138_atomized_covered\": 36,\n      \"phase2b_batch_139_structural_dispositioned\": 4,\n      \"phase2b_batch_140_structural_dispositioned\": 1,\n      \"phase2b_batch_141_structural_dispositioned\": 4,\n      \"phase2b_batch_142_atomized_covered\": 75,\n      \"phase2b_batch_142_structural_dispositioned\": 1,\n      \"phase2b_batch_143_retired_bridge_disposition\": 1,\n      \"phase2b_batch_143_structural_dispositioned\": 1,\n      \"phase2b_batch_144_atomized_covered\": 38,\n      \"phase2b_batch_145_atomized_covered\": 20,\n      \"phase2b_batch_146_retired_bridge_disposition\": 1,\n      \"phase2b_batch_146_structural_dispositioned\": 3,\n      \"phase2b_batch_147_atomized_covered\": 26,\n      \"phase2b_batch_148_atomized_covered\": 20,\n      \"phase2b_batch_148_structural_covered\": 1,\n      \"phase2b_batch_149_retired_bridge_disposition\": 1,\n      \"phase2b_batch_149_structural_dispositioned\": 3,\n      \"phase2b_batch_150_atomized_covered\": 24,\n      \"phase2b_batch_151_atomized_covered\": 22,\n      \"phase2b_batch_152_atomized_covered\": 3,\n      \"phase2b_batch_152_retired_bridge_disposition\": 1,\n      \"phase2b_batch_152_structural_dispositioned\": 3,\n      \"phase2b_batch_153_atomized_covered\": 20,\n      \"phase2b_batch_154_atomized_covered\": 22,\n      \"phase2b_batch_155_retired_bridge_disposition\": 1,\n      \"phase2b_batch_155_structural_dispositioned\": 3,\n      \"phase2b_batch_156_atomized_covered\": 27,\n      \"phase2b_batch_156_structural_dispositioned\": 4,\n      \"phase2b_batch_157_atomized_covered\": 22,\n      \"phase2b_batch_157_structural_dispositioned\": 1,\n      \"phase2b_batch_158_retired_bridge_disposition\": 1,\n      \"phase2b_batch_158_structural_dispositioned\": 3,\n      \"phase2b_batch_159_atomized_covered\": 42,\n      \"phase2b_batch_160_retired_bridge_disposition\": 1,\n      \"phase2b_batch_160_structural_dispositioned\": 3,\n      \"phase2b_batch_161_atomized_covered\": 35,\n      \"phase2b_batch_161_structural_dispositioned\": 3,\n      \"phase2b_batch_162_retired_bridge_disposition\": 1,\n      \"phase2b_batch_162_structural_dispositioned\": 3,\n      \"phase2b_batch_163_atomized\": 29,\n      \"phase2b_batch_164_atomized\": 30,\n      \"phase2b_batch_165_retired_bridge_disposition\": 1,\n      \"phase2b_batch_165_structural_dispositioned\": 3,\n      \"phase2b_batch_166_atomized\": 31,\n      \"phase2b_batch_167_retired_bridge_disposition\": 1,\n      \"phase2b_batch_167_structural_dispositioned\": 3,\n      \"phase2b_batch_168_atomized\": 20,\n      \"phase2b_batch_169_atomized\": 27,\n      \"phase2b_batch_169_structural_dispositioned\": 1,\n      \"phase2b_batch_170_atomized\": 2,\n      \"phase2b_batch_170_retired_bridge_disposition\": 1,\n      \"phase2b_batch_170_structural_dispositioned\": 3,\n      \"phase2b_batch_171_atomized\": 29,\n      \"phase2b_batch_172_atomized\": 1,\n      \"phase2b_batch_172_retired_bridge_disposition\": 1,\n      \"phase2b_batch_172_structural_dispositioned\": 3,\n      \"phase2b_batch_173_atomized\": 42,\n      \"phase2b_batch_174_atomized\": 33,\n      \"phase2b_batch_175_atomized\": 1,\n      \"phase2b_batch_176_atomized\": 1,\n      \"phase2b_batch_177_atomized\": 9,\n      \"phase2b_batch_178_atomized\": 14,\n      \"phase2b_batch_179_atomized\": 27,\n      \"phase2b_batch_180_generated_bridge_disposition\": 1,\n      \"phase2b_batch_180_structural_dispositioned\": 2,\n      \"phase2b_batch_181_atomized\": 23,\n      \"phase2b_batch_182_atomized\": 10,\n      \"phase2b_batch_183_atomized\": 21,\n      \"phase2b_batch_183_structural_dispositioned\": 1,\n      \"phase2b_batch_184_atomized\": 37,\n      \"phase2b_batch_184_structural_dispositioned\": 2,\n      \"phase2b_batch_185_atomized\": 7,\n      \"phase2b_batch_185_structural_dispositioned\": 1,\n      \"phase2b_batch_186_atomized\": 10,\n      \"phase2b_batch_186_structural_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 71,\n    \"live_plan_unit_count\": 5166,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3916,\n    \"unique_live_plan_unit_count\": 5166\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_run_gates",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:42Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "env_overrides": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_shard_plans_check",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"docs_checked\": 54,\n  \"failures\": [],\n  \"shards_checked\": 985,\n  \"source_count\": 54,\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:42Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_verify_spec_lock",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:42Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_validate_evidence",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:43Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "git diff --check",
+      "env_overrides": {},
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "git_diff_check",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_validate_plan_graph",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:44Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "env_overrides": {
+        "PYTHONPATH": "/private/tmp/pm-py-deps:/private/tmp/pm-jsonschema"
+      },
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/"
+      ],
+      "name": "pm_plans_verify_validate_plans_to_code_handoff_schema",
+      "returncode": 0,
+      "side_effects": [],
+      "status": "pass",
+      "stderr": "",
+      "stdout": "{\n  \"check\": \"validate-plans-to-code-handoff-schema\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T04:45:44Z\",\n  \"status\": \"pass\"\n}\n"
+    }
+  ],
+  "schema_id": "pm.audit_validator_results.v1",
+  "status": "pass",
+  "summary": {
+    "fail": 0,
+    "invalid_invocation_count": 1,
+    "pass": 13,
+    "side_effect_count": 0
+  }
+}

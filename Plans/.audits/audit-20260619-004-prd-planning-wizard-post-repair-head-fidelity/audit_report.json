@@ -1,0 +1,122 @@
+{
+  "atom_fidelity": {
+    "classification_counts": {
+      "equivalent_with_evidence": 62,
+      "exact_present": 92,
+      "previously_closed": 14
+    },
+    "rows": 168,
+    "source_atom_set_mismatch": []
+  },
+  "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+  "baseline_ref": "98b13fb77685649a0a27e75caf4ec6a9c1d49d14",
+  "changed_files": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_validator_results.json",
+    "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+    "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/events.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json"
+  ],
+  "changed_live_plan_docs": [],
+  "closure_reuse": {
+    "hash_mismatches": [],
+    "rows": 32,
+    "status_counts": {
+      "repaired": 28,
+      "source_lineage_only": 4
+    }
+  },
+  "created_at_utc": "2026-06-19T04:45:00Z",
+  "current_ref": "20f6850c04637bc207860ded49e6e66738cf2183",
+  "forbidden_artifacts": "pass",
+  "inference": {
+    "audit_id_evidence": [
+      "existing audit dirs end at audit-20260619-003; next numeric id is audit-20260619-004"
+    ],
+    "ledger_evidence": [
+      "Plans/ledgers/v2/ledger_registry.json newest sealed non-background ledger",
+      "recent HEAD commit touches ledger registry and pldg-20260618-001 state",
+      "excluded pldg-20260610-001-ledger-plan-system because newer relevant sealed ledgers exist"
+    ],
+    "range_evidence": [
+      "HEAD 20f6850c touches ledger registry and pldg-20260618-001 projection files",
+      "parent 98b13fb7 is audit-only; baseline is direct parent of latest ledger-touching commit per prompt"
+    ]
+  },
+  "ledger_consistency": {
+    "failures": [],
+    "status": "pass_with_warnings",
+    "warnings": [
+      {
+        "risk_key": "handoff_planunit_count_narrative_drift",
+        "severity": "low"
+      },
+      {
+        "risk_key": "handoff_next_action_post_commit_stale",
+        "severity": "low"
+      }
+    ]
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "notes": [
+    "No live canonical Plans docs changed in the audit range; audit verifies post-repair ledger/projection/closure state plus unchanged full atom/PlanUnit fidelity."
+  ],
+  "owner_routing_findings": 0,
+  "planunit_delta": {
+    "added": [],
+    "changed": [],
+    "changed_live_plan_docs": [],
+    "deleted": []
+  },
+  "planunit_source_claims": {
+    "claim_status_counts": {
+      "source_lineage_supported": 61,
+      "source_lineage_supported_with_index_shape_warning": 1
+    },
+    "rows": 62
+  },
+  "range": "98b13fb7..HEAD",
+  "schema_id": "pm.audit_report.v1",
+  "semantic_risks": {
+    "risk_keys": [
+      "governance_evidence_scope_drift",
+      "pnc_014_plan_index_source_atom_ids_gap",
+      "handoff_planunit_count_narrative_drift",
+      "handoff_next_action_post_commit_stale"
+    ],
+    "rows": 4,
+    "severity_counts": {
+      "low": 2,
+      "medium": 2
+    }
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subagent_summaries": {
+    "atom_fidelity": "no unclosed atom-fidelity gaps; 168/168 compiled_to_plan atoms covered",
+    "changed_doc_fidelity": "no live canonical Plan docs or PlanUnits changed in range; evidence/projection warnings found",
+    "governance": "PASS_WITH_WARNINGS; no forbidden artifacts; evidence scope warning retained",
+    "owner_routing": "no owner-routing findings",
+    "reciprocal_lineage": "one index-shape warning for PNC-014 source_atom_ids convenience key; semantic lineage supported",
+    "validator_mutability": "13 valid checks passed, no side effects; one superseded invalid invocation recorded"
+  },
+  "validators": {
+    "status": "pass",
+    "summary": {
+      "fail": 0,
+      "invalid_invocation_count": 1,
+      "pass": 13,
+      "side_effect_count": 0
+    }
+  }
+}
