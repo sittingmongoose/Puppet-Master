@@ -1,0 +1,43 @@
+{
+  "audit_id": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "checks": {
+    "compile_queue_item_count": 62,
+    "compiled_atom_count": 168,
+    "open_blockers": 0,
+    "planunit_lineage_claims": 62,
+    "ready_for_plan_compile_treated_as_status_not_permission": true,
+    "registry_status": "sealed"
+  },
+  "finding_level": "observation",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..3b9e20b6b58438ff7993a76950b919b316442449",
+  "repair_required": false,
+  "schema_id": "pm.ledger_consistency_audit.v1",
+  "status": "pass",
+  "subject_ref": "3b9e20b6b58438ff7993a76950b919b316442449",
+  "summary": "Sealed ledger governing state is compiled/sealed, blocker-free, and consistent. latest_audit_* state-certifying repair refs are not stale merely because later audit-only or hygiene runs exist under the final PLS/PDS closure contract.",
+  "warnings": [
+    {
+      "evidence_refs": [
+        "Plans/Planning_Ledger_System.md:713-714",
+        "Plans/Plan_Document_System.md:576-600",
+        "Plans/bootstrap/Codex_Prompts.md:214-218"
+      ],
+      "finding_level": "observation",
+      "id": "audit_006_projection_warning_obsoleted_by_final_process_contract",
+      "repair_required": false,
+      "summary": "Prior audit projection-staleness warning is not carried as actionable because final PLS/PDS rules say audit-only observations and hygiene repairs do not stale or restamp latest_audit_*."
+    },
+    {
+      "evidence_refs": [
+        "reports/shard_report.json",
+        "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+      ],
+      "finding_level": "observation",
+      "id": "root_reports_shard_report_json_historical_not_gate",
+      "repair_required": false,
+      "summary": "Root reports/shard_report.json is treated as historical and is not used as this audit gate result; validator_results.json records a fresh shard check for subject_ref."
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "audit_id": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "created_at_utc": "2026-06-19T11:34:51Z",
+  "fail_count": 0,
+  "failed_results": [],
+  "final_git_status_short": [
+    "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+  ],
+  "finding_level": "observation",
+  "initial_git_status_short": [
+    "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+  ],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "non_audit_side_effects": [],
+  "pass_count": 16,
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..3b9e20b6b58438ff7993a76950b919b316442449",
+  "repair_required": false,
+  "result_count": 16,
+  "results": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "duration_seconds": 0.022,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "git_status_before",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:33:57Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "duration_seconds": 5.3,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_run_gates",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:33:57Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:03Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "duration_seconds": 0.421,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_shard_plans_check",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:03Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 54,\n  \"failures\": [],\n  \"shards_checked\": 985,\n  \"source_count\": 54,\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "duration_seconds": 19.224,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plan_index_validate",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:03Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:22Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 18432,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5166\n  }\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate",
+        "--registry",
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "--audit-dir",
+        "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity"
+      ],
+      "duration_seconds": 0.959,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_audit_closure_validate_audit_007",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:22Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [\n    {\n      \"coverage_artifacts\": [\n        \"semantic_risks.jsonl\",\n        \"atom_fidelity_matrix.jsonl\",\n        \"planunit_source_claims.jsonl\",\n        \"owner_routing_findings.jsonl\",\n        \"ledger_consistency.json\"\n      ],\n      \"errors\": [],\n      \"matrix_required\": true,\n      \"matrix_rows\": 0,\n      \"missing_coverage\": [\n        {\n          \"source_artifact\": \"atom_fidelity_matrix.jsonl\",\n          \"source_row\": \"167\"\n        },\n        {\n          \"source_artifact\": \"owner_routing_findings.jsonl\",\n          \"source_row\": \"1\"\n        },\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"1\"\n        },\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"2\"\n        }\n      ],\n      \"path\": \"Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity\",\n      \"repair_required_count\": 4,\n      \"terminal_repair_state\": \"repair_required\",\n      \"warnings\": [\n        \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity; completeness check skipped\"\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 296,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 235,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 7\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity; completeness check skipped\"\n  ]\n}\n",
+      "warnings": [
+        "Audit-only result has repair_required rows and no repair_closure_matrix.jsonl; this is expected before a bounded repair lane and was run without --require-closure-matrix."
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-bootstrap-ledger-validate.py",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard"
+      ],
+      "duration_seconds": 7.511,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_bootstrap_ledger_validate_prd_planning_wizard",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:23Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260618-001-prd-planning-wizard\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 168,\n    \"compile_queue_items\": 62,\n    \"corrections\": 15,\n    \"decisions\": 30,\n    \"events\": 29,\n    \"plan_units_checked\": 2961,\n    \"questions\": 0\n  },\n  \"warnings\": []\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-migration.py",
+        "validate",
+        "--run-dir",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+      ],
+      "duration_seconds": 13.414,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plan_migration_validate",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:31Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "se2b_batch_102_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_102_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_102_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_atomized_covered\": 11,\n      \"phase2b_batch_103_retired_bridge_disposition\": 1,\n      \"phase2b_batch_103_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_103_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_103_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_structural_section_container\": 2,\n      \"phase2b_batch_103_structural_title_anchor\": 1,\n      \"phase2b_batch_104_atomized_covered\": 28,\n      \"phase2b_batch_104_structural_section_container\": 3,\n      \"phase2b_batch_104_structural_title_anchor\": 1,\n      \"phase2b_batch_104_structural_toc_disposition\": 1,\n      \"phase2b_batch_105_atomized_covered\": 16,\n      \"phase2b_batch_105_structural_parent_covered\": 1,\n      \"phase2b_batch_105_structural_section_container\": 1,\n      \"phase2b_batch_106_atomized_covered\": 19,\n      \"phase2b_batch_106_structural_section_container\": 1,\n      \"phase2b_batch_107_atomized_covered\": 4,\n      \"phase2b_batch_107_reference_only_structural\": 1,\n      \"phase2b_batch_107_structural_addendum_heading\": 1,\n      \"phase2b_batch_107_structural_section_container\": 1,\n      \"phase2b_batch_108_atomized_covered\": 19,\n      \"phase2b_batch_108_retired_bridge_disposition\": 1,\n      \"phase2b_batch_108_structural_migration_coverage\": 1,\n      \"phase2b_batch_108_structural_planunits_heading\": 1,\n      \"phase2b_batch_108_structural_section_and_planunit\": 3,\n      \"phase2b_batch_109_atomized_covered\": 28,\n      \"phase2b_batch_109_structural_commands_heading\": 1,\n      \"phase2b_batch_109_structural_expanded_extraction_coverage_heading\": 1,\n      \"phase2b_batch_109_structural_formatters_heading\": 1,\n      \"phase2b_batch_109_structural_migration_coverage\": 1,\n      \"phase2b_batch_109_structural_owner_consumer_map\": 1,\n      \"phase2b_batch_109_structural_permissions_heading\": 1,\n      \"phase2b_batch_109_structural_planunits_heading\": 1,\n      \"phase2b_batch_109_structural_run_modes_heading\": 1,\n      \"phase2b_batch_109_structural_subagents_heading\": 1,\n      \"phase2b_batch_110_atomized_covered\": 32,\n      \"phase2b_batch_110_retired_bridge_disposition\": 1,\n      \"phase2b_batch_110_structural_delta_hooks_heading\": 1,\n      \"phase2b_batch_110_structural_models_heading\": 1,\n      \"phase2b_batch_110_structural_plugins_heading\": 1,\n      \"phase2b_batch_110_structural_skills_heading\": 1,\n      \"phase2b_batch_111_atomized_covered\": 15,\n      \"phase2b_batch_111_structural_plan_map_heading\": 1,\n      \"phase2b_batch_112_atomized_covered\": 8,\n      \"phase2b_batch_112_migration_coverage_metadata\": 1,\n      \"phase2b_batch_112_retired_bridge_disposition\": 1,\n      \"phase2b_batch_112_structural_planunits_heading\": 1,\n      \"phase2b_batch_113_atomized_covered\": 43,\n      \"phase2b_batch_113_structural_planunits_heading\": 1,\n      \"phase2b_batch_114_migration_coverage_metadata\": 1,\n      \"phase2b_batch_114_retired_bridge_disposition\": 1,\n      \"phase2b_batch_115_atomized_covered\": 35,\n      \"phase2b_batch_116_atomized_covered\": 5,\n      \"phase2b_batch_116_migration_coverage_metadata\": 1,\n      \"phase2b_batch_116_planunits_heading_structural\": 1,\n      \"phase2b_batch_116_retired_bridge_disposition\": 1,\n      \"phase2b_batch_118_atomized_covered\": 21,\n      \"phase2b_batch_119_atomized_covered\": 1,\n      \"phase2b_batch_120_atomized_covered\": 18,\n      \"phase2b_batch_121_atomized_covered\": 48,\n      \"phase2b_batch_122_atomized_covered\": 8,\n      \"phase2b_batch_123_atomized_covered\": 1,\n      \"phase2b_batch_124_atomized_covered\": 12,\n      \"phase2b_batch_126_atomized_covered\": 1,\n      \"phase2b_batch_127_atomized_covered\": 8,\n      \"phase2b_batch_128_atomized_covered\": 1,\n      \"phase2b_batch_129_duplicate_aware_atomized_covered\": 6,\n      \"phase2b_batch_130_atomized_covered\": 11,\n      \"phase2b_batch_131_atomized_covered\": 5,\n      \"phase2b_batch_132_atomized_covered\": 1,\n      \"phase2b_batch_133_atomized_covered\": 10,\n      \"phase2b_batch_134_atomized_covered\": 1,\n      \"phase2b_batch_135_atomized_covered\": 1,\n      \"phase2b_batch_136_atomized_covered\": 18,\n      \"phase2b_batch_137_atomized_covered\": 15,\n      \"phase2b_batch_138_atomized_covered\": 36,\n      \"phase2b_batch_139_structural_dispositioned\": 4,\n      \"phase2b_batch_140_structural_dispositioned\": 1,\n      \"phase2b_batch_141_structural_dispositioned\": 4,\n      \"phase2b_batch_142_atomized_covered\": 75,\n      \"phase2b_batch_142_structural_dispositioned\": 1,\n      \"phase2b_batch_143_retired_bridge_disposition\": 1,\n      \"phase2b_batch_143_structural_dispositioned\": 1,\n      \"phase2b_batch_144_atomized_covered\": 38,\n      \"phase2b_batch_145_atomized_covered\": 20,\n      \"phase2b_batch_146_retired_bridge_disposition\": 1,\n      \"phase2b_batch_146_structural_dispositioned\": 3,\n      \"phase2b_batch_147_atomized_covered\": 26,\n      \"phase2b_batch_148_atomized_covered\": 20,\n      \"phase2b_batch_148_structural_covered\": 1,\n      \"phase2b_batch_149_retired_bridge_disposition\": 1,\n      \"phase2b_batch_149_structural_dispositioned\": 3,\n      \"phase2b_batch_150_atomized_covered\": 24,\n      \"phase2b_batch_151_atomized_covered\": 22,\n      \"phase2b_batch_152_atomized_covered\": 3,\n      \"phase2b_batch_152_retired_bridge_disposition\": 1,\n      \"phase2b_batch_152_structural_dispositioned\": 3,\n      \"phase2b_batch_153_atomized_covered\": 20,\n      \"phase2b_batch_154_atomized_covered\": 22,\n      \"phase2b_batch_155_retired_bridge_disposition\": 1,\n      \"phase2b_batch_155_structural_dispositioned\": 3,\n      \"phase2b_batch_156_atomized_covered\": 27,\n      \"phase2b_batch_156_structural_dispositioned\": 4,\n      \"phase2b_batch_157_atomized_covered\": 22,\n      \"phase2b_batch_157_structural_dispositioned\": 1,\n      \"phase2b_batch_158_retired_bridge_disposition\": 1,\n      \"phase2b_batch_158_structural_dispositioned\": 3,\n      \"phase2b_batch_159_atomized_covered\": 42,\n      \"phase2b_batch_160_retired_bridge_disposition\": 1,\n      \"phase2b_batch_160_structural_dispositioned\": 3,\n      \"phase2b_batch_161_atomized_covered\": 35,\n      \"phase2b_batch_161_structural_dispositioned\": 3,\n      \"phase2b_batch_162_retired_bridge_disposition\": 1,\n      \"phase2b_batch_162_structural_dispositioned\": 3,\n      \"phase2b_batch_163_atomized\": 29,\n      \"phase2b_batch_164_atomized\": 30,\n      \"phase2b_batch_165_retired_bridge_disposition\": 1,\n      \"phase2b_batch_165_structural_dispositioned\": 3,\n      \"phase2b_batch_166_atomized\": 31,\n      \"phase2b_batch_167_retired_bridge_disposition\": 1,\n      \"phase2b_batch_167_structural_dispositioned\": 3,\n      \"phase2b_batch_168_atomized\": 20,\n      \"phase2b_batch_169_atomized\": 27,\n      \"phase2b_batch_169_structural_dispositioned\": 1,\n      \"phase2b_batch_170_atomized\": 2,\n      \"phase2b_batch_170_retired_bridge_disposition\": 1,\n      \"phase2b_batch_170_structural_dispositioned\": 3,\n      \"phase2b_batch_171_atomized\": 29,\n      \"phase2b_batch_172_atomized\": 1,\n      \"phase2b_batch_172_retired_bridge_disposition\": 1,\n      \"phase2b_batch_172_structural_dispositioned\": 3,\n      \"phase2b_batch_173_atomized\": 42,\n      \"phase2b_batch_174_atomized\": 33,\n      \"phase2b_batch_175_atomized\": 1,\n      \"phase2b_batch_176_atomized\": 1,\n      \"phase2b_batch_177_atomized\": 9,\n      \"phase2b_batch_178_atomized\": 14,\n      \"phase2b_batch_179_atomized\": 27,\n      \"phase2b_batch_180_generated_bridge_disposition\": 1,\n      \"phase2b_batch_180_structural_dispositioned\": 2,\n      \"phase2b_batch_181_atomized\": 23,\n      \"phase2b_batch_182_atomized\": 10,\n      \"phase2b_batch_183_atomized\": 21,\n      \"phase2b_batch_183_structural_dispositioned\": 1,\n      \"phase2b_batch_184_atomized\": 37,\n      \"phase2b_batch_184_structural_dispositioned\": 2,\n      \"phase2b_batch_185_atomized\": 7,\n      \"phase2b_batch_185_structural_dispositioned\": 1,\n      \"phase2b_batch_186_atomized\": 10,\n      \"phase2b_batch_186_structural_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 71,\n    \"live_plan_unit_count\": 5166,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3916,\n    \"unique_live_plan_unit_count\": 5166\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "audit-governance"
+      ],
+      "duration_seconds": 4.879,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_audit_governance",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:44Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"audit-governance\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:49Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "verify-spec-lock"
+      ],
+      "duration_seconds": 0.058,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_spec_lock",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:49Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:49Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-auto-decisions"
+      ],
+      "duration_seconds": 0.054,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_auto_decisions",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:49Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:49Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-evidence"
+      ],
+      "duration_seconds": 0.524,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_evidence",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:49Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:50Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-plan-graph"
+      ],
+      "duration_seconds": 0.486,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_plan_graph",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:50Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:50Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-plans-to-code-handoff-schema"
+      ],
+      "duration_seconds": 0.052,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "pm_plans_verify_handoff_schema",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:51Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plans-to-code-handoff-schema\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-19T11:34:51Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests/test_pm_audit_closure.py"
+      ],
+      "duration_seconds": 0.054,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "test_pm_audit_closure_unittest",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:51Z",
+      "status": "pass",
+      "stderr_tail": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.004s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+        "3b9e20b6b58438ff7993a76950b919b316442449"
+      ],
+      "duration_seconds": 0.351,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "git_diff_check_cycle_range",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:51Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "duration_seconds": 0.018,
+      "exit_code": 0,
+      "finding_level": "observation",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/"
+      ],
+      "name": "git_status_after",
+      "non_audit_side_effects": [],
+      "repair_required": false,
+      "side_effect_count": 0,
+      "started_at_utc": "2026-06-19T11:34:51Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "?? Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/\n"
+    }
+  ],
+  "schema_id": "pm.validator_results.v1",
+  "status": "pass",
+  "subject_ref": "3b9e20b6b58438ff7993a76950b919b316442449"
+}

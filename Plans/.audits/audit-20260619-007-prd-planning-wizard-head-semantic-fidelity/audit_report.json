@@ -1,0 +1,155 @@
+{
+  "atom_fidelity": {
+    "classification_counts": {
+      "equivalent_with_evidence": 61,
+      "exact_present": 99,
+      "missing_or_drift": 1,
+      "previously_closed": 7
+    },
+    "missing_or_drift_count": 1,
+    "repair_required_count": 1,
+    "row_count": 168,
+    "summary": "167/168 source atoms are exact_present, equivalent_with_evidence, or hash-matched previously_closed against current live non-pipeline PlanUnit text. atom-0167 is a semantic scope drift requiring adjudication."
+  },
+  "audit_id": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "closure_reuse": {
+    "closure_status_counts": {
+      "false_positive": 1,
+      "repaired": 8
+    },
+    "hash_mismatch_count": 0,
+    "not_reused_due_hash_mismatch_count": 7,
+    "row_count": 9,
+    "summary": "Only current hash-matching closure-registry rows were reused. Seven audit-005 atom closure rows were not reused because their PlanUnit index hash is stale at subject_ref."
+  },
+  "created_at_utc": "2026-06-19T11:32:46Z",
+  "finding_level_counts": {
+    "blocker": 3,
+    "observation": 0,
+    "warning": 1
+  },
+  "first_substantive_commit": "c205ca507832a23c9393c6e470229cc72f7f5eeb",
+  "forbidden_artifacts": {
+    "build_tasks": 0,
+    "executable_queues": 0,
+    "final_node_manifests": 0,
+    "forbidden_paths": [],
+    "implementation_files": 0,
+    "nodeseed_candidates": 0,
+    "nodeseeds": 0,
+    "summary": "No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime dispatch, implementation files, or production build tasks were created by the audited cycle.",
+    "worknodes": 0
+  },
+  "inference": {
+    "audit_id_inference": "Existing 2026-06-19 PRD Planning Wizard audits ended at audit-006, so audit-007 is next.",
+    "baseline_ref_inference": "First substantive ledger-cycle commit is c205ca507832a23c9393c6e470229cc72f7f5eeb; baseline_ref is its parent.",
+    "ledger_id_inference": "Latest sealed non-background ledger in registry and recent commits is pldg-20260618-001-prd-planning-wizard.",
+    "subject_ref_inference": "HEAD changed live Plans, generated indexes/governance artifacts, scripts/tests, and audit closure state after audit-006, so subject_ref=HEAD."
+  },
+  "ledger_consistency": {
+    "repair_required_count": 0,
+    "status": "pass",
+    "summary": "Sealed ledger governing state is compiled/sealed, blocker-free, and consistent. latest_audit_* state-certifying repair refs are not stale merely because later audit-only or hygiene runs exist under the final PLS/PDS closure contract."
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_action": "Repair required: run a bounded repair lane for four actionable rows, then rerun this semantic audit at the new HEAD. Do not broaden into WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or product build tasks.",
+  "observation_ref": "3b9e20b6b58438ff7993a76950b919b316442449",
+  "owner_routing_findings": {
+    "repair_required_count": 1,
+    "row_count": 1,
+    "summary": "Index map ContractRef underreports compiled owner docs with source lineage for this ledger."
+  },
+  "plan_index": {
+    "acceptance_unit_count": 18432,
+    "coverage_status": "pass",
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 5166
+  },
+  "planunit_source_claims": {
+    "claim_status_counts": {
+      "source_lineage_supported": 62
+    },
+    "missing_lineage_count": 0,
+    "overclaim_count": 0,
+    "repair_required_count": 0,
+    "row_count": 62,
+    "summary": "Every audited PlanUnit source claim is supported by current compile_queue source atoms and current PlanUnit source_atom_ids/source_lineage."
+  },
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..3b9e20b6b58438ff7993a76950b919b316442449",
+  "repair_prompt": "Repair PM Bootstrap deep semantic audit audit-20260619-007-prd-planning-wizard-head-semantic-fidelity: read the audit bundle, repair only repair_required=true rows, write repair_closure_matrix.jsonl and registry closures for actionable rows only, run validators, then re-audit current HEAD.",
+  "repair_required_count": 4,
+  "schema_id": "pm.semantic_fidelity_audit_report.v1",
+  "semantic_risks": {
+    "classification_counts": {
+      "missing_or_drift": 2
+    },
+    "repair_required_count": 2,
+    "risk_keys": [
+      "live_planunit_validation_surface_local_state",
+      "plancompile_launch_mode_schema_contradiction"
+    ],
+    "row_count": 2
+  },
+  "status": "BLOCKED",
+  "subagent_summaries": [
+    {
+      "accepted_findings": [
+        "atom-0167 semantic scope drift"
+      ],
+      "agent": "Noether",
+      "area": "atom fidelity",
+      "disposition": "accepted with hash-strict closure adjustment"
+    },
+    {
+      "accepted_findings": [],
+      "agent": "Wegener",
+      "area": "lineage",
+      "disposition": "reciprocal lineage passed"
+    },
+    {
+      "accepted_findings": [
+        "owner map underreports compiled owner docs"
+      ],
+      "agent": "Sartre",
+      "area": "owner routing",
+      "disposition": "accepted as repair-required warning"
+    },
+    {
+      "accepted_findings": [
+        "local validation path leakage",
+        "PlanCompile launch/schema contradiction"
+      ],
+      "agent": "Einstein",
+      "area": "semantic drift",
+      "disposition": "accepted as blocker findings"
+    },
+    {
+      "accepted_findings": [],
+      "agent": "Hubble",
+      "area": "governance/currentness",
+      "disposition": "fresh validators required and will be recorded in validator_results.json"
+    },
+    {
+      "accepted_findings": [],
+      "agent": "Dirac",
+      "area": "forbidden artifacts",
+      "disposition": "forbidden runtime/scaffold artifacts absent; pre-existing .claude local state excluded from this cycle audit"
+    }
+  ],
+  "subject_ref": "3b9e20b6b58438ff7993a76950b919b316442449",
+  "validators": {
+    "closure_validator_note": "Audit-only closure validation passed without --require-closure-matrix and reported repair_required_count=4; repair_closure_matrix.jsonl is intentionally absent until bounded repair.",
+    "fail_count": 0,
+    "failed_results": [],
+    "non_audit_side_effects": [],
+    "pass_count": 16,
+    "result_count": 16,
+    "results_path": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/validator_results.json",
+    "status": "pass"
+  }
+}
