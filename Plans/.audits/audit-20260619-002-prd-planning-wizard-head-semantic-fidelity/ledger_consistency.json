@@ -1,0 +1,88 @@
+{
+  "audit_id": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity",
+  "candidate_atoms_count": 0,
+  "compile_queue_status": "compiled_prd_planning_wizard_governance_sealed",
+  "compiled_atom_count": 168,
+  "compiled_plan_unit_count": 62,
+  "current_status": "sealed",
+  "cursor_last_event_id": "evt-0026",
+  "inconsistencies": [
+    {
+      "actual": "ready_for_plan_compile",
+      "expected": "compiled_prd_planning_wizard_governance_sealed / sealed",
+      "field": "phase",
+      "file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/README.md",
+      "severity": "high"
+    },
+    {
+      "actual": [],
+      "expected": [
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "field": "canonical_plan_targets",
+      "file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+      "severity": "high"
+    },
+    {
+      "actual": [],
+      "expected": [
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "field": "sealed_ledgers[].canonical_plan_targets",
+      "file": "Plans/ledgers/v2/ledger_registry.json",
+      "severity": "high"
+    },
+    {
+      "actual": [],
+      "expected": [
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "field": "canonical_plan_targets",
+      "file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+      "severity": "high"
+    },
+    {
+      "actual": [
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "Plans/_shards",
+        "Plans/.evidence",
+        "Plans/Spec_Lock.json"
+      ],
+      "expected_includes": [
+        "Plans/plan_graph.json",
+        "Plans/auto_decisions.jsonl",
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "field": "governance_seal_outputs",
+      "file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+      "severity": "medium"
+    }
+  ],
+  "last_event_id": "evt-0026",
+  "ledger_health_status": "pass_governance_sealed",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "manifest_status": "sealed",
+  "note": "Compact event/cursor state is aligned at evt-0026 and no active candidates remain, but secondary ledger/output projections still drift from the sealed current cycle.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_prd_planning_wizard_governance_sealed",
+  "ready_for_plan_compile_atoms": 0,
+  "registry_status": "sealed",
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "fail",
+  "warnings": [
+    {
+      "file": "current.json",
+      "severity": "low",
+      "warning": "ready_for_plan_compile token appears in sealed ledger projection; reviewed as historical/source-lineage if present."
+    },
+    {
+      "file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+      "severity": "medium",
+      "warning": "plans_to_code_handoff.schema.json and bootstrap prompt/workflow changes are under-reported or demoted to source lineage despite live diff touches."
+    }
+  ]
+}
