@@ -1,0 +1,131 @@
+{
+  "audit_id": "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity",
+  "blocked_decisions": [],
+  "canonical_plans_changed": [],
+  "changed_files": [
+    "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/repair_validator_results.json",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
+  ],
+  "closure_matrix_rows": 16,
+  "closure_status_counts": {
+    "false_positive": 1,
+    "repaired": 15
+  },
+  "deferred_items": [],
+  "false_positives": [
+    "pm_plan_index_validate_default_env"
+  ],
+  "forbidden_artifacts_created": [],
+  "generated_at_utc": "2026-06-19T09:12:17Z",
+  "generated_governance_changed": [],
+  "governance_status": "not_refreshed_not_required",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "ledger_records_changed": [],
+  "next_safe_action": "No further repair action remains for audit-20260619-005; safe next action is review/commit of this bounded audit-artifact repair package, or a fresh audit only if requested.",
+  "not_for_plan_items": [],
+  "plan_units_changed": [],
+  "registry_rows_written": 16,
+  "repair_scope": "bounded audit-artifact hygiene and closure bookkeeping only",
+  "repaired_items": [
+    "audit_004_repair_report_next_safe_action_stale",
+    "previously_closed_atom_fidelity_revalidated_rows_14"
+  ],
+  "schema_id": "pm.audit_repair_report.v1",
+  "source_audit_status": "PASS_WITH_WARNINGS",
+  "source_lineage_only_items": [],
+  "stale_retired_items": [],
+  "status": "pass",
+  "validated_at_utc": "2026-06-19T09:14:09Z",
+  "validator_summary": {
+    "fail": 0,
+    "pass": 10,
+    "side_effect_count": 0
+  },
+  "validators": [
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity --require-closure-matrix",
+      "duration_sec": 0.969,
+      "exit_code": 0,
+      "name": "pm_audit_closure_validate_audit_005",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "duration_sec": 7.702,
+      "exit_code": 0,
+      "name": "pm_bootstrap_ledger_validate",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "duration_sec": 19.523,
+      "exit_code": 0,
+      "name": "pm_plan_index_validate",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "duration_sec": 13.969,
+      "exit_code": 0,
+      "name": "pm_plan_migration_validate",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "duration_sec": 5.53,
+      "exit_code": 0,
+      "name": "pm_plans_verify_run_gates",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "duration_sec": 0.45,
+      "exit_code": 0,
+      "name": "pm_shard_plans_check",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "duration_sec": 0.092,
+      "exit_code": 0,
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "duration_sec": 0.068,
+      "exit_code": 0,
+      "name": "pm_plans_verify_verify_spec_lock",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "duration_sec": 0.553,
+      "exit_code": 0,
+      "name": "pm_plans_verify_validate_evidence",
+      "side_effect_count": 0,
+      "status": "pass"
+    },
+    {
+      "cmd": "git diff --check",
+      "duration_sec": 0.022,
+      "exit_code": 0,
+      "name": "git_diff_check",
+      "side_effect_count": 0,
+      "status": "pass"
+    }
+  ]
+}

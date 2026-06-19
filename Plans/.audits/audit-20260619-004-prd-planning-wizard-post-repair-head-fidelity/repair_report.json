@@ -55,7 +55,7 @@
     "registry_entry.json",
     "Plans/ledgers/v2/ledger_registry.json"
   ],
-  "next_safe_action": "Review or commit the audit-20260619-004 bounded repair package; no further audit-004 repair action remains.",
+  "next_safe_action": "Post-commit review, or a fresh audit only if requested; no further audit-004 repair action remains.",
   "planunits_changed": [
     "PNC-014"
   ],

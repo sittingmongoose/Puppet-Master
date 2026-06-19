@@ -37,4 +37,4 @@ Validators:
 
 No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, GoalRuns, runtime dispatch, or production build tasks were created.
 
-Next safe action: review or commit the audit-20260619-004 bounded repair package; no further audit-004 repair action remains.
+Next safe action: post-commit review, or a fresh audit only if requested; no further audit-004 repair action remains.
