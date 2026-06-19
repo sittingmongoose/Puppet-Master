@@ -1,0 +1,80 @@
+{
+  "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "changed_files_or_globs": [
+    "Plans/plans_to_code_handoff.schema.json",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Contracts_V0.md",
+    "Plans/chain-wizard.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/.plan_index/**",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/Spec_Lock.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/**",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/**"
+  ],
+  "closure_counts": {
+    "repaired": 6
+  },
+  "closure_matrix": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "forbidden_artifacts_created": false,
+  "generated_at_utc": "2026-06-19T17:19:04Z",
+  "impact_matrix": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_impact_matrix.jsonl",
+  "internal_post_repair_audit": "PASS",
+  "latest_repair_summary": "PASS: all 6 audit-20260619-010 closure rows are repaired; schema identity, reciprocal source lineage, dependency metadata, ledger projection currentness, and registry timestamps are synchronized.",
+  "ledger_events_added": [],
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "observation_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "plan_units_touched": [
+    "PNC-014",
+    "PNC-015",
+    "CV-289",
+    "CV-290",
+    "CW-008",
+    "CWF-151",
+    "GRS-002"
+  ],
+  "post_repair_audit_report": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/post_repair_audit_report.json",
+  "post_repair_repair_required_count": 0,
+  "registry_rows": [
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-001",
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-002",
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-003",
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-004",
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-005",
+    "closure-audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity-repair-006"
+  ],
+  "repair_required_count": 6,
+  "schema_id": "pm.audit_repair_report.v1",
+  "scope_manifest": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/audit_scope_manifest.jsonl",
+  "status": "repair_validated",
+  "subject_ref": "b257345ec12fa2e290948f4aee6c2b4a07a4b499",
+  "validator_results": {
+    "commands": [
+      "python3 -m unittest tests/test_pm_audit_closure.py",
+      "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity --require-closure-matrix",
+      "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "python3 scripts/pm-plans-verify.py run-gates",
+      "python3 scripts/pm-shard-plans.py --check",
+      "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "python3 scripts/pm-plans-verify.py validate-evidence",
+      "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "python3 scripts/pm-plans-verify.py audit-governance",
+      "python3 scripts/pm-plans-verify.py json-syntax",
+      "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "python3 scripts/pm-plans-verify.py lint-banned-phrases",
+      "python3 scripts/pm-plans-verify.py check-project-artifacts",
+      "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "git diff --check"
+    ],
+    "status": "pass"
+  }
+}

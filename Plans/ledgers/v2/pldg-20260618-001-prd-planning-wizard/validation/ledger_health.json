@@ -5,6 +5,7 @@
     "gui_related": "pass",
     "open_items_consistent": "pass",
     "phase_consistent": "pass",
+    "pm_audit_closure_validate_current_matrix": "pass",
     "pm_audit_closure_validate_with_matrix": "pass",
     "pm_bootstrap_ledger_validate": "pass",
     "pm_plan_index_validate": "pass",
@@ -19,20 +20,19 @@
     "pm_shard_plans_check": "pass",
     "required_files": "pass",
     "source_refs": "pass",
-    "stable_ids": "pass",
-    "pm_audit_closure_validate_current_matrix": "pass"
+    "stable_ids": "pass"
   },
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 5,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 6,
   "latest_audit_closure_status_counts": {
-    "repaired": 5
+    "repaired": 6
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T15:35:54Z",
-  "latest_validation_note": "Audit-20260619-009 repair validated; actionable closure rows, PlanUnit index, migration proof, generated shards/evidence, Spec Lock, and compact projections are current; no node/build/runtime artifacts were created.",
-  "latest_validation_status": "pass_governance_sealed_post_audit_009_repair",
+  "latest_audit_validated_at_utc": "2026-06-19T17:15:59Z",
+  "latest_validation_note": "Audit-20260619-010 repair validated; actionable closure rows, closed-world scope/impact, PlanUnit index, migration proof, generated shards/evidence, Spec Lock, and compact projections are current; no node/build/runtime artifacts were created.",
+  "latest_validation_status": "pass_governance_sealed_post_audit_010_repair",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass_governance_sealed",
@@ -51,6 +51,6 @@
     "open_questions": 0,
     "ready_for_plan_compile_atoms": 0
   },
-  "updated_at_utc": "2026-06-19T15:35:54Z",
+  "updated_at_utc": "2026-06-19T17:19:04Z",
   "warnings": []
 }

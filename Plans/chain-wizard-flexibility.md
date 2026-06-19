@@ -10097,6 +10097,13 @@ node_compile_hint:
   mode: prd_builder_legacy_ledger_to_invisible_goal
   create_worknodes: false
 source_lineage:
+  - pldg-20260618-001-prd-planning-wizard:atom-0001
+  - pldg-20260618-001-prd-planning-wizard:atom-0002
+  - pldg-20260618-001-prd-planning-wizard:atom-0004
+  - pldg-20260618-001-prd-planning-wizard:atom-0158
+  - pldg-20260618-001-prd-planning-wizard:atom-0159
+  - pldg-20260618-001-prd-planning-wizard:atom-0160
+  - pldg-20260618-001-prd-planning-wizard:atom-0161
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0007
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
