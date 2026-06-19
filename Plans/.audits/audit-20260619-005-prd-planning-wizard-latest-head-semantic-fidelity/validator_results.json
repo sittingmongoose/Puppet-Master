@@ -1,0 +1,225 @@
+{
+  "audit_id": "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "notes": [
+    "The default pm-plan-index invocation failed only because the local environment lacked yaml; the PYTHONPATH=/tmp/pm_pyyaml invocation passed and supersedes it."
+  ],
+  "range": "242415aba82384c58032bcaed49ad0819d8551c8..HEAD",
+  "schema_id": "pm.audit_validator_results.v1",
+  "status": "pass",
+  "summary": {
+    "fail": 0,
+    "git_status_after_each": "clean",
+    "git_status_before_each": "clean",
+    "invalid_invocation_environment": 1,
+    "pass": 13,
+    "side_effect_count": 0,
+    "side_effects_reverted": 0
+  },
+  "validators": [
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:41:31Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_run_gates",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_shard_plans_check",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "docs_checked": 54,
+        "failures": [],
+        "shards_checked": 985
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 1,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plan_index_validate_default_env",
+      "side_effects": [],
+      "status": "invalid_invocation_environment",
+      "summary": {
+        "error": "ModuleNotFoundError: No module named yaml",
+        "superseded_by": "pm_plan_index_validate_with_pythonpath"
+      }
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:42:23Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plan_index_validate_with_pythonpath",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 18423,
+        "coverage_status": "pass",
+        "failures": [],
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 5166
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate",
+      "exit_code": 0,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_audit_closure_validate_registry",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "errors": [],
+        "registry_row_count": 280,
+        "status_counts": {
+          "explicitly_deferred": 3,
+          "false_positive": 3,
+          "not_for_plan": 20,
+          "repaired": 220,
+          "source_lineage_only": 27,
+          "stale_retired": 7
+        },
+        "warnings": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:42:48Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_validate_plans_to_code_handoff_schema",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:43:05Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_audit_governance",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:48:59Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_verify_spec_lock",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:49:07Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_validate_auto_decisions",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:49:18Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_validate_evidence",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "exit_code": 0,
+      "generated_at_utc": "2026-06-19T05:49:27Z",
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plans_verify_validate_plan_graph",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "failures": []
+      }
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_bootstrap_ledger_validate",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "atoms": 168,
+        "compile_queue_items": 62,
+        "corrections": 15,
+        "decisions": 30,
+        "errors": [],
+        "events": 29,
+        "questions": 0,
+        "warnings": []
+      }
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "pm_plan_migration_validate",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "doc_count": 71,
+        "failures": [],
+        "live_plan_unit_count": 5166,
+        "run_id": "pds-20260611-002-atomize-planunits",
+        "span_count": 3916
+      }
+    },
+    {
+      "cmd": "git diff --check 242415aba82384c58032bcaed49ad0819d8551c8..HEAD",
+      "exit_code": 0,
+      "git_status_after": [],
+      "git_status_before": [],
+      "name": "git_diff_check",
+      "side_effects": [],
+      "status": "pass",
+      "summary": {
+        "output": ""
+      }
+    }
+  ]
+}
