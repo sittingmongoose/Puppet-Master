@@ -14,21 +14,23 @@
     "pm_shard_plans_check": "pass",
     "required_files": "pass",
     "source_refs": "pass",
-    "stable_ids": "pass"
+    "stable_ids": "pass",
+    "pm_audit_closure_validate_with_matrix": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_validate_plans_to_code_handoff_schema": "pass",
+    "git_diff_check": "pass"
   },
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 94,
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 10,
   "latest_audit_closure_status_counts": {
-    "not_for_plan": 14,
-    "repaired": 72,
-    "source_lineage_only": 2,
-    "stale_retired": 6
+    "repaired": 10
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-18T21:53:21Z",
-  "latest_validation_note": "Post-audit repair closure validated; ledger remains sealed.",
+  "latest_audit_validated_at_utc": "2026-06-19T00:50:57Z",
+  "latest_validation_note": "Audit-20260618-009 bounded repair closure validated with passing closure, ledger, index, migration, run-gates, shard, evidence, plan graph, governance, handoff-schema, and git diff checks; no validator side effects were detected.",
   "latest_validation_status": "pass",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "schema_id": "pm.bootstrap_ledger_health.v1",
@@ -41,13 +43,13 @@
     "decisions": 30,
     "deferred_questions": 0,
     "design_atoms": 168,
-    "events": 23,
+    "events": 25,
     "governance_seal": "passed",
     "nonatom_compile_disposition": "source_lineage_only_after_seal",
     "open_blockers": 0,
     "open_questions": 0,
     "ready_for_plan_compile_atoms": 0
   },
-  "updated_at_utc": "2026-06-18T21:42:37Z",
+  "updated_at_utc": "2026-06-19T00:50:57Z",
   "warnings": []
 }
