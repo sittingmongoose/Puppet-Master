@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
-  "title": "Plans-to-Code Handoff Design-Only Schema Draft",
-  "description": "Single design-only JSON Schema Draft 2020-12 schema draft for pldg-20260617-001-plans-to-code-handoff. The $defs document strict payload shapes for PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts without enabling PlanCompile or creating executable artifacts.",
+  "title": "Plans-to-Code Handoff Runtime-Aware Schema Draft",
+  "description": "Single JSON Schema Draft 2020-12 schema draft for pldg-20260617-001-plans-to-code-handoff. The $defs document strict payload shapes for PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts. The plan_compile_run payload splits current design_only disabled bootstrap records from native_runtime records that require runtime enablement evidence; this schema does not create WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -705,10 +705,10 @@
           ]
         },
         "automatic_launch_enabled": {
-          "const": false
+          "type": "boolean"
         },
         "native_plan_wizard_launch_enabled": {
-          "const": false
+          "type": "boolean"
         },
         "codex_bootstrap_launch_enabled": {
           "const": false
@@ -735,7 +735,93 @@
             "$ref": "#/$defs/compile_wave_contract"
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "design_only"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "disabled"
+              },
+              "runtime_enablement_ref": {
+                "type": "null"
+              },
+              "runtime_policy_snapshot_ref": {
+                "type": "null"
+              },
+              "status": {
+                "const": "design_only_disabled"
+              },
+              "automatic_launch_enabled": {
+                "const": false
+              },
+              "native_plan_wizard_launch_enabled": {
+                "const": false
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "native_runtime"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "automatic_after_approval"
+              },
+              "runtime_adapter": {
+                "const": "native_puppet_master_adapter"
+              },
+              "runtime_enablement_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "runtime_policy_snapshot_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "status": {
+                "enum": [
+                  "preflight",
+                  "running",
+                  "blocked",
+                  "ready_for_executor_intake",
+                  "cancelled",
+                  "complete"
+                ]
+              },
+              "automatic_launch_enabled": {
+                "const": true
+              },
+              "native_plan_wizard_launch_enabled": {
+                "const": true
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
     },
     "stage_card": {
       "type": "object",

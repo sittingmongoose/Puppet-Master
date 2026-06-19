@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L15069-L15164
 
-Source SHA256: `2dab73a0fe4a772f665f8c0bb5988f69637dd76fa256da9bd397b887c8eff4bc`
+Source SHA256: `a09c79bd51df81731897baaade6e17091e02fd58e5c7b46df365430deaeb6f95`
 
 ---
 
@@ -31,7 +31,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: execution_boundary
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

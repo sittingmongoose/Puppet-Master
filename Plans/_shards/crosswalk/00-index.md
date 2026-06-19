@@ -1,24 +1,24 @@
 # Shard Index: Plans/Crosswalk.md
 
-Generated: 2026-06-19T10:53:48Z
+Generated: 2026-06-19T11:59:36Z
 
-Source SHA256: `78d19ef3021f20e858346588759e3d6a80bb8220492136cfc26a89a3f69e25a7`
+Source SHA256: `78a37585e81a05216af1f0ed3179f18c73a400cd1b7c006405d34e6d1643ecb0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `8badd166ad38409449a8476f3b9b4f51e95b63ae89d7fbb62f0c8c06255a7826`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `62f73d5757cd682b11b84a2a305a44b93c328c35e93ce2a83925e0a60d0d8137`
-- [003 - 0. Scope](003-0.-scope.md) L25-L31 `29bf61ac34fd485af8b5ba1ca5ad22f743718470eb3fc3423ba630d1e82f19fb`
-- [004 - 1. Precedence (anti-drift)](004-1.-precedence-anti-drift.md) L33-L43 `47bc4bec733fb87fe7f5c7ec9ea3755abd7c71a2ce0b075aa9a946515259c613`
-- [005 - 2. Primitive index (definitions are DRY)](005-2.-primitive-index-definitions-are-dry.md) L45-L309 `c9620451a601b68820065974986c80f5ef5c9dda32b173f89f7e45a652a195c1`
-- [006 - References](006-references.md) L311-L384 `970343f57d585ffa64709cb0177ccb0d5775ba57680e9aa3cb37a59f2d7dd38d`
-- [007 - Recovery Terminology Canonical Alignment (2026-03-08)](007-recovery-terminology-canonical-alignment-2026-03-08.md) L386-L397 `a3c7060d6e0691e15fefe90744c0fd25747f0ef81521eb747548929581909ed1`
-- [008 - Runtime Scheduler / Recovery Ownership and Precedence](008-runtime-scheduler-recovery-ownership-and-precedence.md) L398-L415 `a5a7d8127e0034d11a0e68b5675aca53363409a051a0b8023876485e6f3ec45d`
-- [009 - Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)](009-source-control-github-actions-and-docker-manager-ownership-adden.md) L417-L478 `c3bf1dda4122af1c204c21085bb1f86243d82a1250e38b12995732622119ef09`
-- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L480-L484 `e72633ec71f8df9baad408bf12cfb8d482c7a30fe876b89df8ece6e7bb6e8317`
-- [011 - PlanUnits](011-planunits.md) L486-L3136 `d24221627772ca9b98eaf97303e8d9bad9b95d3b2e2f9ee493ec2857dcfdd8b0`
-- [012 - Migration Coverage](012-migration-coverage.md) L3138-L3148 `511710c971a43a236c19cae6878b48fa85afad9eb48e4d8d373d54b6d1d4a2d2`
-- [013 - Ledger Compile Addendum - pldg-20260614-001](013-ledger-compile-addendum-pldg-20260614-001.md) L3150-L3187 `6c17ae7f6cd14eb0a533baaa18e3cdd72f3954f69502e0c8cdc9cde65d61d61c`
-- [014 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3190-L3265 `a85754eddfc45817c6cb5702947f484e7a89a639e188c4b5a8ba425405b4053a`
+- [001 - Preamble](001-preamble.md) L1-L1 `9a0c048eef40a6ff54e69e128691b981da9611e361cfb21ce92fbc1e85cda638`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `f76a405f9cde7afa123d867c6b6a60515820cf431965a0a6d4514f0e0cd2b430`
+- [003 - 0. Scope](003-0.-scope.md) L25-L31 `1108c2f7ff1eb6c2166aeffbf0fb9a1bad9791750ad6e91e5ce7924c7ba53e68`
+- [004 - 1. Precedence (anti-drift)](004-1.-precedence-anti-drift.md) L33-L43 `d2d1fc7622abca7ab3ee95000859368efe8ed301b319bd086291045b42c8dd78`
+- [005 - 2. Primitive index (definitions are DRY)](005-2.-primitive-index-definitions-are-dry.md) L45-L309 `9ad5587787532cf8f18c4e3fde9038cd84fed8b9837818526dae0ac935d061b8`
+- [006 - References](006-references.md) L311-L384 `beb157d6e58d07762fec9840b778eb68b2251d48f7f5dc1ab32c27f3984350c5`
+- [007 - Recovery Terminology Canonical Alignment (2026-03-08)](007-recovery-terminology-canonical-alignment-2026-03-08.md) L386-L397 `4981c57354be2ae66719f1ecd0dcb10181e8d5c726b58c3736f46f6d8ff6a7f0`
+- [008 - Runtime Scheduler / Recovery Ownership and Precedence](008-runtime-scheduler-recovery-ownership-and-precedence.md) L398-L415 `d635ada75bb606d176b00ec3beda1b3c7ff23999a7a49056bb19b32b7ba3d82e`
+- [009 - Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)](009-source-control-github-actions-and-docker-manager-ownership-adden.md) L417-L478 `e2f3a800bad427340a7af8ea83d197fc94640af4fc357e96061d2b01cc906194`
+- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L480-L484 `c42905455534a0caa16643c5ad9b40084bb0c256bedeb5253553cf1139a2c72a`
+- [011 - PlanUnits](011-planunits.md) L486-L3136 `97cf3743ab6bfc23ef87a08256a00e4f4b87d5552c04bed6d7cbed074f5a395f`
+- [012 - Migration Coverage](012-migration-coverage.md) L3138-L3148 `812367df65b1cb744c68fe340b1cccf92d211fe2d903fd0b65568e4ed057368e`
+- [013 - Ledger Compile Addendum - pldg-20260614-001](013-ledger-compile-addendum-pldg-20260614-001.md) L3150-L3187 `9cfdf3baeb2991f11d3224a5dc94a36d525d844ad02042367bb9fabef6213706`
+- [014 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3190-L3265 `2b918829b79ce155f57dd26505000ca007accdc7ba52eee995a2c5ead1ce6d77`

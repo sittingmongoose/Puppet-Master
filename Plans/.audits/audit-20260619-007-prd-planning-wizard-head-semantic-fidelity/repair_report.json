@@ -1,0 +1,148 @@
+{
+  "accepted_dispositions": [
+    {
+      "finding_key": "sfk-8e89d5a3ec1c8ddcae9899d0",
+      "source": "atom_fidelity_matrix.jsonl:167",
+      "status": "stale_retired",
+      "summary": "atom-0167 remains source lineage but is retired against the current repair_required=true closure contract; ledger-local repair prompt was aligned."
+    }
+  ],
+  "audit_id": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+  "changed_surface_summary": {
+    "canonical_plans": "Removed local dependency path from live Plans validation surfaces; narrowed owner map; clarified PlanCompile runtime/design-only boundary.",
+    "generated_governance": "Regenerated .plan_index, shards, migration proof summaries, evidence hashes, and Spec Lock.",
+    "ledger_and_audit": "Updated audit-007 closure artifacts, closure registry rows/hashes, and compact latest_audit projections.",
+    "schema_and_validator": "Updated plans_to_code_handoff schema and pm-plans-verify schema checks for mode-specific launch semantics."
+  },
+  "closure_counts": {
+    "repaired": 3,
+    "stale_retired": 1
+  },
+  "closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "forbidden_artifacts_created": false,
+  "generated_at_utc": "2026-06-19T12:08:50Z",
+  "governance_status": "sealed_after_repair",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_safe_action": "Commit and push the validated repair state, or run a fresh audit only if requested.",
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "notes": [
+    "PyYAML-dependent validators were executed with PYTHONPATH=/tmp/pm_pyyaml because the base environment lacks yaml; this path was not written back into live canonical Plans prose.",
+    "Global closure registry hashes were refreshed after canonical and ledger projection files changed; only four new closure rows were added for audit-007."
+  ],
+  "parallel_assignment_receipts": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/parallel_assignment_receipts.jsonl",
+  "plan_units_touched": [
+    "PRDB-001",
+    "PWIZ-010",
+    "ATS-006",
+    "PDS-014",
+    "PLS-014",
+    "BPM-008",
+    "GRS-028",
+    "GRS-031",
+    "PNC-010",
+    "PNC-015"
+  ],
+  "registry_rows": [
+    "closure-audit-20260619-007-prd-planning-wizard-head-semantic-fidelity-repair-001",
+    "closure-audit-20260619-007-prd-planning-wizard-head-semantic-fidelity-repair-002",
+    "closure-audit-20260619-007-prd-planning-wizard-head-semantic-fidelity-repair-003",
+    "closure-audit-20260619-007-prd-planning-wizard-head-semantic-fidelity-repair-004"
+  ],
+  "remaining_blocked_decisions": [],
+  "repair_required_count": 4,
+  "repaired_items": [
+    {
+      "finding_key": "sfk-9004c05d325c979c02058376",
+      "source": "semantic_risks.jsonl:1",
+      "status": "repaired",
+      "summary": "Removed host-local validation PYTHONPATH prose from live Plans docs and regenerated index/shards/governance artifacts."
+    },
+    {
+      "finding_key": "sfk-678e9596c78963b2c1cbdd12",
+      "source": "semantic_risks.jsonl:2",
+      "status": "repaired",
+      "summary": "Split PlanCompile handoff docs/schema into current design_only disabled and native_runtime enablement branches; hardened the schema validator."
+    },
+    {
+      "finding_key": "sfk-f359a7d831b908a36af76013",
+      "source": "owner_routing_findings.jsonl:1",
+      "status": "repaired",
+      "summary": "Clarified ContractRef owner/consumer targets versus broader PlanUnit-index lineage/support owners."
+    }
+  ],
+  "runtime_artifacts_created": false,
+  "schema_id": "pm.audit_repair_report.v1",
+  "status": "repair_validated",
+  "validator_results": [
+    {
+      "details": "4 repair_required rows covered; status_counts repaired=3 stale_retired=1; registry row_count=300 with no errors.",
+      "name": "pm-audit-closure validate --require-closure-matrix",
+      "status": "pass"
+    },
+    {
+      "details": "atoms=168 compile_queue_items=62 decisions=30 corrections=15 events=29 questions=0.",
+      "name": "pm-bootstrap-ledger-validate",
+      "status": "pass"
+    },
+    {
+      "details": "plan_unit_count=5166 acceptance_unit_count=18432 coverage_status=pass node_readiness_status=blocked_compiler_contract_incomplete.",
+      "name": "pm-plan-index validate",
+      "status": "pass"
+    },
+    {
+      "details": "run_id=pds-20260611-002-atomize-planunits live_plan_unit_count=5166 coverage_rows=3916.",
+      "name": "pm-plan-migration validate",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[] after governance evidence restabilization.",
+      "name": "pm-plans-verify run-gates",
+      "status": "pass"
+    },
+    {
+      "details": "docs_checked=54 shards_checked=985.",
+      "name": "pm-shard-plans --check",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify validate-evidence",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify validate-plans-to-code-handoff-schema",
+      "status": "pass"
+    },
+    {
+      "details": "failures=[]",
+      "name": "pm-plans-verify audit-governance",
+      "status": "pass"
+    },
+    {
+      "details": "no whitespace errors",
+      "name": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "details": "no PYTHONPATH=/private/tmp/pm-py-deps or /private/tmp/pm-py-deps matches in Plans/*.md or Plans/bootstrap/*.md",
+      "name": "live Plans local path scan",
+      "status": "pass"
+    }
+  ]
+}

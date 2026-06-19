@@ -14,7 +14,7 @@ HARD PARALLEL GATE:
 - Do not certify repair if required assignments/results are absent.
 
 Hard completion rule:
-Validators passing is not completion. Build Plans/.audits/<audit_id>/repair_closure_matrix.jsonl covering every unclosed finding/detail from semantic_risks, atom_fidelity_matrix, planunit_source_claims, owner_routing_findings, changed_plan_fidelity, ledger_consistency, zero-incomplete findings, and validator_results. Every row must end repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision with exact evidence.
+Validators passing is not completion. Scan semantic_risks, atom_fidelity_matrix, planunit_source_claims, owner_routing_findings, changed_plan_fidelity, ledger_consistency, zero-incomplete findings, and validator_results for repair_required=true rows. If any exist, build Plans/.audits/<audit_id>/repair_closure_matrix.jsonl covering every and only those actionable rows. Every closure row must end repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision with exact evidence. Do not create closure rows for repair_required=false findings, previously_closed rows, exact_present rows, equivalent_with_evidence rows, ordinary validator warnings, or audit-artifact wording.
 
 Repair:
 1. Restore missing field names, enum/key shapes, examples, negative constraints, acceptance, stale/compat dispositions, source refs, GUI behavior, commands, and handoff details in live canonical Plans prose or PlanUnits.

@@ -1,20 +1,20 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-06-19T10:53:48Z
+Generated: 2026-06-19T11:59:36Z
 
-Source SHA256: `02323e502a05915eddbfc088b3d61646eeb1129e70c380e966db31f8455ea7e1`
+Source SHA256: `7fc81cf51a1ba20703e61b6a735c1f585a8ae9a0f524b76532ca28b0cbc9349a`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `ad38d40baf970013dfd40f91516034141bc3ccfadf6fec4dcf1a1e8b4890d282`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `f86f3645fcea7cfd58a1802ba971fd0ceb0d7ca3a19872013a0b47a87e2bb937`
-- [003 - 0. Scope](003-0.-scope.md) L23-L30 `c10525616d93d4a679279356f73898da1667e72721cd718e7a4ada835ace4f63`
-- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `e259e52da10a1bea438192dc2e7a35f578c82604f7af968263bba0d3d5b07cc6`
-- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1125 `8bb2590130b30f5a5ca19dd61f5e2fd29841e21116a57a5dc644bd59aaddc2ff`
-- [006 - References](006-references.md) L1126-L1219 `faee10a040ac5ed64a93b32a8e568a2a09bd4553b660f6ca12dd34e393181869`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1221-L1225 `078c6ee731002f0bd476f1bf53cf44bbd1ee94c03e1f8b0f07280f893aadf653`
-- [008 - PlanUnits](008-planunits.md) L1227-L6828 `a92d5d570a7e44fd7f8f5a343da2d827de9830e4df0843f8a8944d1b7c5ddc65`
-- [009 - Migration Coverage](009-migration-coverage.md) L6830-L6840 `bfdec19d47e1df0b08193b0b5faac2ea5d334b4a36340b965f1a9ede5fbd6cc8`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6843-L6927 `0185173ca7147f0454ae945636e7d70f1e5fa25b506db5edd7e0d19c5f1517af`
+- [001 - Preamble](001-preamble.md) L1-L1 `cc5ea27355bfe638ae0856e00fe82f70c88301a2bf4b6a40572af4b9d149759a`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `d631a4d9d8ce584ae7d38bd1252a26e16b56ef57937712ede91f2f0128b0d0f8`
+- [003 - 0. Scope](003-0.-scope.md) L23-L30 `2631df1c837b730bfb98450bd2c3f1381bfdb2c05c3de8e98813467f726533e6`
+- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `7d1747ea577fe5738587f1d032df0d0b9817857082bc03bd77d5415719c9aa30`
+- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1125 `af71d75943dab863a130c858ae9dfdbdeb0197cfc7f605c222999ff776bfbf13`
+- [006 - References](006-references.md) L1126-L1219 `6ba47d3cbb6687c33979eb484419bcd1367afe4e7ac3cff0ef0d51c335d017a6`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1221-L1225 `75a4484ae84e20a3febea99a5649956991b1e9e9fa9daa2f5fb5a1a188974263`
+- [008 - PlanUnits](008-planunits.md) L1227-L6828 `ea78bd40a8212d018f1d7d647acd9ca89b1e449025bdde0ae97a728b11a5b34a`
+- [009 - Migration Coverage](009-migration-coverage.md) L6830-L6840 `09b525f41ef00248ae39eb89b16d1e2a5e101c503b0406e692ca36d22b72bcc7`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6843-L6927 `bf71b822a70b0d3a0843b752f7ee95bd4176a122de6c76c9c91ded60fdc4d3e6`

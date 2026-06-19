@@ -1,16 +1,16 @@
 # Shard Index: Plans/Bootstrap_Planning_Migration.md
 
-Generated: 2026-06-19T10:53:48Z
+Generated: 2026-06-19T11:59:36Z
 
-Source SHA256: `e59b86de270375b45ace58a980b2ee7b445caee570018981341745c397b2915e`
+Source SHA256: `8a636765a5a6e900b7affbaf985dfe5c58c406dfe2016fad376f63399b0aa698`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `eb860e5d12b94ad35dded7d3d00dd2a4dcd12079b51780fa6c43cd37826cd840`
-- [002 - 0. Scope](002-0.-scope.md) L5-L9 `da94b875887ffef669cc3392c53fecbd46c4ceda23b08eb09aabd48d9d65be7d`
-- [003 - 1. Migration Principles](003-1.-migration-principles.md) L11-L19 `88f2afb1a50370c2c506152939bfb007213b4c6ce350eb9e30dd5cbcaaa321e8`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L21-L280 `6c2441c46ffd132dbb183b44a505e1b8d9e048363ac571be5f0f3169fc605386`
-- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L282-L298 `df312a519a0e5032d7a7132b205a5da80bdfe3b8634d2a6b80a541e0fb357a15`
-- [006 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L301-L381 `6e4843210207a1fb22541a1d39b53742a6c35b4406b3940b18f259fc49013bd0`
+- [001 - Preamble](001-preamble.md) L1-L3 `f0cc827b2815bb61def8c1bb16a56cbbd316e1bd5021665d752933de32a3add1`
+- [002 - 0. Scope](002-0.-scope.md) L5-L9 `5386760903746451d102aa28349511b3e7488ffaa129e84470d5a7ae2db149cd`
+- [003 - 1. Migration Principles](003-1.-migration-principles.md) L11-L19 `8f32b6b6609ccd91914feef56d2b148270b1dd86f0677e4d612d6b8017be91b8`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L21-L280 `b4841627ca49499696d5afd7da2baf9b6eb651a738b887bf6e4e4ff09bc0dd21`
+- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L282-L298 `f1e7320e30b80adc9ba786fa92f464c1c8929d0de0b087b728c5620116907369`
+- [006 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L301-L381 `93febf7bbf60b749d81e87e0e3a8d413afbf115999e941b40b02bf4ca97d877e`

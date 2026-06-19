@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L1963-L2132
 
-Source SHA256: `97aef6a0cd2fb95d62d49286220d2de73aad14fe9106e3c6e99e9e38cbe80d41`
+Source SHA256: `b5cc0d524612e5974dd957ae56c189f3f5f1d79c2613872079838144bed2ff5d`
 
 ---
 
@@ -18,14 +18,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Future native Planning Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, PlanCompile remains design-only and disabled. Planning Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
+  Future native Planning Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, current bootstrap and design_only v1 PlanCompile records remain design-only and disabled; this disabled boundary does not disable the finished-product native_runtime branch once runtime_enablement_ref and runtime_policy_snapshot_ref exist. Planning Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
   Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Planning Wizard terminology. Do not introduce new references or meta-comments using retired Chain Wizard or Plan Wizard names as active terminology.
 gui_related: false
 gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
 depends_on: [GRS-002, PNC-010, MS-110]
 unblocks: [OP-023, F3-396]
 acceptance_criteria:
-  - Native PlanCompile launch remains disabled until explicit enablement.
+  - Current bootstrap and design_only v1 PlanCompile launch remains disabled until explicit enablement.
   - Planning Wizard approval is the future trigger source, not this compile's runtime action.
   - Overseer and Auditor model roles are consumed from Models_System.
 validation_surfaces:

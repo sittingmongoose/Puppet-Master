@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L2464-L2555
 
-Source SHA256: `11d490cb351e4c7a6381d5d135e1fd58c5b1a30606aa166ed42c887150b1e497`
+Source SHA256: `f712a326889cb81a3c708e7c84b583f3ede9e96260613f3b1f5b9618c7cd3d0c`
 
 ---
 
@@ -31,7 +31,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: implementation_readiness
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

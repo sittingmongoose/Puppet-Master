@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-19T10:53:48Z",
+  "generated_at_utc": "2026-06-19T11:59:36Z",
   "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
-  "index_sha256": "b125b5e0b79648776693899d9a24aef73c1ca307cf3d9e5a89035408d2a95265",
+  "index_sha256": "125141c88eeeaac73d60b44cb28a1d86e007aa28dec07e375b5f94ba78ed837c",
   "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
-      "sha256": "eb860e5d12b94ad35dded7d3d00dd2a4dcd12079b51780fa6c43cd37826cd840",
+      "sha256": "f0cc827b2815bb61def8c1bb16a56cbbd316e1bd5021665d752933de32a3add1",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
-      "sha256": "da94b875887ffef669cc3392c53fecbd46c4ceda23b08eb09aabd48d9d65be7d",
+      "sha256": "5386760903746451d102aa28349511b3e7488ffaa129e84470d5a7ae2db149cd",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Migration Principles",
       "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
-      "sha256": "88f2afb1a50370c2c506152939bfb007213b4c6ce350eb9e30dd5cbcaaa321e8",
+      "sha256": "8f32b6b6609ccd91914feef56d2b148270b1dd86f0677e4d612d6b8017be91b8",
       "shard_id": "003",
       "source_line_end": 19,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
-      "sha256": "6c2441c46ffd132dbb183b44a505e1b8d9e048363ac571be5f0f3169fc605386",
+      "sha256": "b4841627ca49499696d5afd7da2baf9b6eb651a738b887bf6e4e4ff09bc0dd21",
       "shard_id": "004",
       "source_line_end": 280,
       "source_line_start": 21,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/bootstrap_planning_migration/005-3.-compilation-coverage.md",
-      "sha256": "df312a519a0e5032d7a7132b205a5da80bdfe3b8634d2a6b80a541e0fb357a15",
+      "sha256": "f1e7320e30b80adc9ba786fa92f464c1c8929d0de0b087b728c5620116907369",
       "shard_id": "005",
       "source_line_end": 298,
       "source_line_start": 282,
@@ -53,7 +53,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/bootstrap_planning_migration/006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "6e4843210207a1fb22541a1d39b53742a6c35b4406b3940b18f259fc49013bd0",
+      "sha256": "93febf7bbf60b749d81e87e0e3a8d413afbf115999e941b40b02bf4ca97d877e",
       "shard_id": "006",
       "source_line_end": 381,
       "source_line_start": 301,
@@ -63,6 +63,6 @@
   "source": {
     "line_count": 381,
     "path": "Plans/Bootstrap_Planning_Migration.md",
-    "sha256": "e59b86de270375b45ace58a980b2ee7b445caee570018981341745c397b2915e"
+    "sha256": "8a636765a5a6e900b7affbaf985dfe5c58c406dfe2016fad376f63399b0aa698"
   }
 }

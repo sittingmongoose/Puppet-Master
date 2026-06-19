@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L6175-L6338
 
-Source SHA256: `59ce0d71f0d06c16fda1878df12a1adab67123f1b818c2435be3add28bf29932`
+Source SHA256: `1944f1aa30f3ebfd672093fe1642fe75a4a15615544743564024e27837cec046`
 
 ---
 
@@ -30,7 +30,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: execution_boundary
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -99,7 +99,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: execution_boundary
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

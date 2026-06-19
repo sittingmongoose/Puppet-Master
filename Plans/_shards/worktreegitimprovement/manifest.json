@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-19T10:53:48Z",
+  "generated_at_utc": "2026-06-19T11:59:36Z",
   "index_path": "Plans/_shards/worktreegitimprovement/00-index.md",
-  "index_sha256": "161b8022d44d221da25572028fd3eab3c8006d73864333752a305bf7eb7a4dd0",
+  "index_sha256": "439e232bd8caac39c7f627ddd46338db1529434f78b7388c11b9f361b3f467f4",
   "manifest_path": "Plans/_shards/worktreegitimprovement/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/worktreegitimprovement/001-preamble.md",
-      "sha256": "28b8e00cca405603c30597851964157f5efbb0cfe2fd2998b577fb962487243d",
+      "sha256": "3e964ebee5d32d7ff17f571f9af05c824afed626812fbdcfa8633571ff8b166a",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/worktreegitimprovement/002-canonical-owner-section-requirements.md",
-      "sha256": "d23f8d68bb2e8459f8ca7853aee4e3c585d3192b58159d5cb49ceea7dc92618b",
+      "sha256": "b2f33c48034a6b72e67ee6ebcd95a5cfa3ad027519f1a6dbfa3212e09802f1cc",
       "shard_id": "002",
       "source_line_end": 21,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/worktreegitimprovement/003-plan-document-status.md",
-      "sha256": "00fc2519813c4683d40cd4f13ccc12c781f473561a4a52a6bb49799bf9cff305",
+      "sha256": "d96b363b47a60dd85c586585e8ffe48c2af83a5090d78f88bd488fca9a8ebc4b",
       "shard_id": "003",
       "source_line_end": 33,
       "source_line_start": 24,
@@ -35,7 +35,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/worktreegitimprovement/004-rewrite-alignment-2026-02-21.md",
-      "sha256": "09bc1d2ad44f822a3f8b6455dfee01bfd8532f189c7d0959c423ce8e9f923fec",
+      "sha256": "01c0fe5c276bbcbe049429bde2364ff67170ded0147cabed5719d70ad1772e6b",
       "shard_id": "004",
       "source_line_end": 41,
       "source_line_start": 35,
@@ -44,7 +44,7 @@
     {
       "heading": "SSOT references (DRY)",
       "path": "Plans/_shards/worktreegitimprovement/005-ssot-references-dry.md",
-      "sha256": "1a2a29cfa56dfdfe6ee3fcac1a2dcbf44c52705e19826937500c07344480b350",
+      "sha256": "3edf9447cdb08b177bf3fa14f95bb851aac982838fd6b0e8995c2dd0e9c5dd46",
       "shard_id": "005",
       "source_line_end": 55,
       "source_line_start": 43,
@@ -53,7 +53,7 @@
     {
       "heading": "Table of Contents",
       "path": "Plans/_shards/worktreegitimprovement/006-table-of-contents.md",
-      "sha256": "84683c11e0e7dcddc91153040cb31f6271b837ef197417aff86e002ff6c7674b",
+      "sha256": "11c200bc7ef4b631c111e501cc17fbd9bf07921302b2ab235a23f439f09d76ca",
       "shard_id": "006",
       "source_line_end": 68,
       "source_line_start": 57,
@@ -62,7 +62,7 @@
     {
       "heading": "1. Executive Summary",
       "path": "Plans/_shards/worktreegitimprovement/007-1.-executive-summary.md",
-      "sha256": "3b740931e97242f0e27f8338bfcf11555a8da147bb6272151ea4dbdd248f0f45",
+      "sha256": "2eedb89dec8e837bb880722302c6afe20d13528bf185dd03d9a8c098ca9e122b",
       "shard_id": "007",
       "source_line_end": 95,
       "source_line_start": 70,
@@ -71,7 +71,7 @@
     {
       "heading": "2. Worktree Improvements",
       "path": "Plans/_shards/worktreegitimprovement/008-2.-worktree-improvements.md",
-      "sha256": "7838fc394817c55562e4a9e203b6946c95d605203cf6ae7cc32137a1e905c4cb",
+      "sha256": "632d7bb4a9480a469bc0ece04d37144e26e2c44a32f4b91634acb763c5f185b2",
       "shard_id": "008",
       "source_line_end": 268,
       "source_line_start": 97,
@@ -80,7 +80,7 @@
     {
       "heading": "3. Git Improvements",
       "path": "Plans/_shards/worktreegitimprovement/009-3.-git-improvements.md",
-      "sha256": "56d362c446bba35b96ef8589146f57e56eb0e033565f9e872cbdfdd4eeff0643",
+      "sha256": "d2aecbac4cd5e803085dd5151b99977df4ca5ad0e48b9228fd36353f655641d2",
       "shard_id": "009",
       "source_line_end": 369,
       "source_line_start": 270,
@@ -89,7 +89,7 @@
     {
       "heading": "4. GUI for Git & Worktrees",
       "path": "Plans/_shards/worktreegitimprovement/010-4.-gui-for-git-worktrees.md",
-      "sha256": "6bfac1f3ff1464641887367da3438679e72b6dcf1b6c1f49901eb9385d4fdf29",
+      "sha256": "b5686065baf90a0c87f6fbc6090f4a25a7c2da11e49a684896f75e7593ef7ecb",
       "shard_id": "010",
       "source_line_end": 399,
       "source_line_start": 371,
@@ -98,7 +98,7 @@
     {
       "heading": "5. Config Wiring (Prerequisite)",
       "path": "Plans/_shards/worktreegitimprovement/011-5.-config-wiring-prerequisite.md",
-      "sha256": "5810a5b9aec755c2a5b84db3dc2e0ebf794c76a255127a6b256ef41961f2f651",
+      "sha256": "61ce1c9b65bd31630c75db66fef3a67e4d0e65dc8f63e7603b58c28064525b15",
       "shard_id": "011",
       "source_line_end": 438,
       "source_line_start": 401,
@@ -107,7 +107,7 @@
     {
       "heading": "6. Implementation Checklist",
       "path": "Plans/_shards/worktreegitimprovement/012-6.-implementation-checklist.md",
-      "sha256": "86ad76cc1ade07c006dd95ad378f2b1d654c1a3d4d0173739c7b947e504cfd76",
+      "sha256": "76b54700b656d92ed6d54d69aebf687304dc8d566f029acdcff61947c0702d01",
       "shard_id": "012",
       "source_line_end": 529,
       "source_line_start": 440,
@@ -116,7 +116,7 @@
     {
       "heading": "7. Gaps, Risks, and Implementation Notes",
       "path": "Plans/_shards/worktreegitimprovement/013-7.-gaps-risks-and-implementation-notes.md",
-      "sha256": "9207f823978507552fc24ed9a4e1aec776c0422b3bf35fa4e4b7435d97ece975",
+      "sha256": "b7b075ae5f2fd4d4a363fef094bc62da7f8c2f53f63463472d5f8ebf8168a368",
       "shard_id": "013",
       "source_line_end": 609,
       "source_line_start": 531,
@@ -125,7 +125,7 @@
     {
       "heading": "DRY Method Compliance",
       "path": "Plans/_shards/worktreegitimprovement/014-dry-method-compliance.md",
-      "sha256": "04c70c4ae04f472406d5aaf547d76c72cf1c83114252b8f1e5e49371f660c25d",
+      "sha256": "a033d109ad8c2cf43615291166dcf84d3a7810a2f25e2b4f395d6ec982b294bc",
       "shard_id": "014",
       "source_line_end": 650,
       "source_line_start": 611,
@@ -134,7 +134,7 @@
     {
       "heading": "7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations",
       "path": "Plans/_shards/worktreegitimprovement/015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md",
-      "sha256": "04279f527772dd41b818c90991697e0f072d46c84d42e2a7065dbbdd4a2cb41b",
+      "sha256": "b9bd1108ec9de94c38ffd2e2ca4aa1b1e6cd40665af128b8ab25c9d07c680ebf",
       "shard_id": "015",
       "source_line_end": 669,
       "source_line_start": 652,
@@ -143,7 +143,7 @@
     {
       "heading": "7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations",
       "path": "Plans/_shards/worktreegitimprovement/016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md",
-      "sha256": "4ef4a5076a4690c08b8f52d1602e56ec42fa60feca16d347c605be69bb8b535b",
+      "sha256": "de8820507b2f08df1296fb11a0f8e3c8fdc106952dcb62e8bbb063d19323d259",
       "shard_id": "016",
       "source_line_end": 684,
       "source_line_start": 670,
@@ -152,7 +152,7 @@
     {
       "heading": "8. References",
       "path": "Plans/_shards/worktreegitimprovement/017-8.-references.md",
-      "sha256": "b6d9128e26c825acf86218e3f48e074f833ad08ce080aff8ee59cca905387e50",
+      "sha256": "6aa61c0e9868acd5d888fbec59e8fac1e37b319069a0babeb99fa30e522bcdd6",
       "shard_id": "017",
       "source_line_end": 691,
       "source_line_start": 685,
@@ -161,7 +161,7 @@
     {
       "heading": "Safe-Point and Retry Integration Addendum (2026-03-08)",
       "path": "Plans/_shards/worktreegitimprovement/018-safe-point-and-retry-integration-addendum-2026-03-08.md",
-      "sha256": "66800127f562aeb88f6ce9fcb4c551e70d3dfa808b53a6fb4db682d0ecedded1",
+      "sha256": "facaa6a029f86febe74046945bbe4760c0f4b3ff1ea309a6acbb72b73af6b922",
       "shard_id": "018",
       "source_line_end": 716,
       "source_line_start": 693,
@@ -170,7 +170,7 @@
     {
       "heading": "Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)",
       "path": "Plans/_shards/worktreegitimprovement/019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md",
-      "sha256": "60db01ece30ebfa9b927f4b0fce0c4fa8e756216b42e83c0a229a3c4c63387e0",
+      "sha256": "df3baf3f1f13721b94a4c1f216ef492e1321cc3b542f812581dd87b9e6e51e4c",
       "shard_id": "019",
       "source_line_end": 726,
       "source_line_start": 717,
@@ -179,7 +179,7 @@
     {
       "heading": "Runtime Worktree Conflict Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/worktreegitimprovement/020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md",
-      "sha256": "d96521f8751d44b4dc57ed3a5f62977a346a37cc6f51459916ae8806babfa501",
+      "sha256": "d970d0edab6a11291d9dde869e4bd90ee16df41b1829005f3c922c25adb0d00d",
       "shard_id": "020",
       "source_line_end": 763,
       "source_line_start": 727,
@@ -188,7 +188,7 @@
     {
       "heading": "Worktree Lane Allocation and Source Control Reconciliation",
       "path": "Plans/_shards/worktreegitimprovement/021-worktree-lane-allocation-and-source-control-reconciliation.md",
-      "sha256": "0252b3e078fe0002cbab24cc1ddd11676d435470b890061cb62b5b33c849f548",
+      "sha256": "e3eec4e53158896534978d150d3812554273db532059c4897c6cf67623acc49c",
       "shard_id": "021",
       "source_line_end": 795,
       "source_line_start": 765,
@@ -197,7 +197,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/worktreegitimprovement/022-owner-consumer-map.md",
-      "sha256": "3c987cac5715190c2a8ee4f5719e2e27f03136848548e445122bdfb6d14d05c5",
+      "sha256": "29334cd72908c5965665b83fa4acd1d35ab609089dd4529d81808c092d75d620",
       "shard_id": "022",
       "source_line_end": 801,
       "source_line_start": 797,
@@ -206,7 +206,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/worktreegitimprovement/023-planunits.md",
-      "sha256": "141b8025747dab8e1c41164f7fdb3f4dc73b3c089910497551fc54258a1a0b9a",
+      "sha256": "1bd833cf3c524da1658eb076eb209bf32d9a98395fa01c03722326cb09861f9b",
       "shard_id": "023",
       "source_line_end": 4784,
       "source_line_start": 803,
@@ -215,7 +215,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/worktreegitimprovement/024-migration-coverage.md",
-      "sha256": "9f21d2971bf549731ff09d2caa1f91a40c22c5c50f4e24c5127ba8f184e75082",
+      "sha256": "04b8986a8934dac0f27a3008f085fed7cc7b3d3b1682343278592296b350e4cc",
       "shard_id": "024",
       "source_line_end": 4799,
       "source_line_start": 4785,
@@ -224,7 +224,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/worktreegitimprovement/025-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "4b116fe32c563db9b589e01b032a281a611732c83e3f9e398801ebbd82f71e18",
+      "sha256": "5e7e9e0539e3024caedcb608aa5efc6586465790e712d78b941a1f832e8d0e68",
       "shard_id": "025",
       "source_line_end": 4838,
       "source_line_start": 4801,
@@ -233,7 +233,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/worktreegitimprovement/026-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "ba299a01723c9f0cf612c1d398ddca6559031533a9fb5f4210e082cfc9f54be5",
+      "sha256": "8acc30352d252c5ebb5df62ec8e5b21af5d413a96c120f78cd8a0e66cca1f3e8",
       "shard_id": "026",
       "source_line_end": 4904,
       "source_line_start": 4840,
@@ -242,7 +242,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/worktreegitimprovement/027-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "5aec038f769e8b099afd241be99bff85c21a7d6ccb6eb9c249370471cb8ab4fc",
+      "sha256": "c3116b87932822a38e9411a69f4a5e6c09fdbdf0df64404c4f2dda7ebf75eae8",
       "shard_id": "027",
       "source_line_end": 4959,
       "source_line_start": 4906,
@@ -251,7 +251,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/worktreegitimprovement/028-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "1becbfddbb6f21a09ab60d7de1682be3b45fb1fc13928b9a342c392dc0c182f1",
+      "sha256": "3aadc7177705aecbe119b5b3abd2a663949e67278c14bf87da9956e508b35dfc",
       "shard_id": "028",
       "source_line_end": 5057,
       "source_line_start": 4962,
@@ -261,6 +261,6 @@
   "source": {
     "line_count": 5057,
     "path": "Plans/WorktreeGitImprovement.md",
-    "sha256": "9225bf79acfe09beeb7f2660142a35bdc120c81d5cd47f260804d46aed9e6549"
+    "sha256": "2a5c1f1a30f0bdca8b4f45ee04f4513d97c191bfd5238bf60dfa973fa560432c"
   }
 }

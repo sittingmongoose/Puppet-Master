@@ -1,17 +1,17 @@
 # Shard Index: Plans/Plan_Document_System.md
 
-Generated: 2026-06-19T10:53:48Z
+Generated: 2026-06-19T11:59:36Z
 
-Source SHA256: `1d1ea6770a4e316a61e6265bbd5c0c64162d0a5c4746a3b7db13bed8cd68576d`
+Source SHA256: `1ff575326a95228f524368b725dd37ecef5289c61ca0eb7472138dba905ba11f`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `9ff024430296ee2f95e81b0e2b1be7f834c5cd38c39984ba7017931fbb0a41f0`
-- [002 - 0. Scope](002-0.-scope.md) L5-L11 `b06afcfa289e023748adc90ddeefca5689d5df5c689b15bf54debcc1e30c2264`
-- [003 - 1. Profiles And Standard Document Shape](003-1.-profiles-and-standard-document-shape.md) L13-L66 `ab975d76bda1b0a562b5cad390bc95a653d38f1473c835ad220efe33b2a8f13b`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L68-L660 `ebb1b7f3eabeec567aac84cb1f494f05e71a3e96e1b417cdfd2892b5e1e17cdb`
-- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L662-L679 `26421a0e73e79bf4d88341441f9555b3eb880a6479ea5b7c4630b66451b60b4d`
-- [006 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L681-L754 `e577373adf73d5e4e5a7dd88195efe7ac90dd8d874780966516a110feb8bb774`
-- [007 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L757-L866 `b2a305dbffdce7df0ac2eee415d3f74a43ab16b7ac2191cfcaef684ea4a13b85`
+- [001 - Preamble](001-preamble.md) L1-L3 `cee6ac3ac60c00419c4bd712f908edc4ccbf08fa8b80ae6fe153208cee1aea8a`
+- [002 - 0. Scope](002-0.-scope.md) L5-L11 `f062cc54554f2d62907fe4e97c7315148d84271483bca5a4a14150bceed25ab3`
+- [003 - 1. Profiles And Standard Document Shape](003-1.-profiles-and-standard-document-shape.md) L13-L66 `3210f9e6185f37dac04a9837c06f5bb504ed1ed91cb30676762523b613f92dec`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L68-L660 `dd23cb103e5c14167476597652110be2953a60287aed7983c869920ebb18ef2e`
+- [005 - 3. Compilation Coverage](005-3.-compilation-coverage.md) L662-L679 `10b536f07c6e2cb76bca416a97e2b542ea90e5c08759246babed92b3eac31256`
+- [006 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L681-L754 `0d224f558a859d77edefcd3c4dd985934b79322f1f6d5e264c4ad9f489734700`
+- [007 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L757-L866 `ada7fd2e6a84adcf7491ff12f6afe28164de6d6bcb64bf32fef857a2da659679`

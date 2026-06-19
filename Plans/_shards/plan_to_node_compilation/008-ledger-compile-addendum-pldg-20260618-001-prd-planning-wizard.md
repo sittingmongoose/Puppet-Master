@@ -4,7 +4,7 @@ Source: `Plans/Plan_To_Node_Compilation.md`
 
 Source lines: L804-L1077
 
-Source SHA256: `249d9765c483b4d39a8d3e390b2d35497c9f0c7142293e4cf369ada1eb40dd71`
+Source SHA256: `7ee9d98374512e2f6081da4aa246b86d45299ab6a2b7d064c555b6de70ee0774`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: PNC-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: 'The Approved Plan Pack carries a hash-addressed project-context snapshot containing repository identity, host, path, branch, remotes, dirty state, codebase scan facts, test-capability facts, and currentness conditions. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Keep the current plans-to-code handoff v1 as a historical design-only contract with launch disabled, and introduce a versioned runtime-capable contract rather than silently changing v1 semantics. The runtime schema includes contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, and runtime_policy_snapshot_ref; finished product defaults to native_runtime plus automatic_after_approval through native_puppet_master_adapter. PlanCompileRun persists stage, cursor,
+canonical_text: 'The Approved Plan Pack carries a hash-addressed project-context snapshot containing repository identity, host, path, branch, remotes, dirty state, codebase scan facts, test-capability facts, and currentness conditions. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Keep the current plans-to-code handoff v1 as a historical design-only contract with launch disabled, and introduce a versioned runtime-capable contract rather than silently changing v1 semantics. The runtime schema includes contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, and runtime_policy_snapshot_ref; the design_only branch preserves const-false launch gates, while the finished-product native_runtime branch defaults to automatic_after_approval through native_puppet_master_adapter and requires runtime enablement evidence. PlanCompileRun persists stage, cursor,
   bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. Changes after approval create successor ApprovedPlanPack versions; during compilation or execution a PlanDiffImpactReport classifies unaffected, already safe, needs recompile, and invalidated lanes and only continues unaffected work when dependencies and write surfaces prove safety. The PlanUnit index/readiness Goal regenerates only allowed Plans/.plan_index outputs, reports exact blockers, and creates no WorkNodes, NodeSeeds, candidates, executable queues, implementation files, or production tasks.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -28,11 +28,11 @@ unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
-- "`Plans/plans_to_code_handoff.schema.json` carries `contract_mode`, `launch_policy`, `runtime_adapter`, `runtime_enablement_ref`, and `runtime_policy_snapshot_ref` in the `plan_compile_run` schema while preserving const-false launch gates for the current disabled contract."
+- "`Plans/plans_to_code_handoff.schema.json` carries `contract_mode`, `launch_policy`, `runtime_adapter`, `runtime_enablement_ref`, and `runtime_policy_snapshot_ref` in the `plan_compile_run` schema; its design_only branch preserves const-false launch gates for the current disabled contract, and its native_runtime branch allows automatic_after_approval only with runtime enablement evidence."
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: execution_boundary
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -125,7 +125,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: stale_or_forbidden_behavior
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
@@ -215,7 +215,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: implementation_readiness
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

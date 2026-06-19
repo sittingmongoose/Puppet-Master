@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L3190-L3265
 
-Source SHA256: `78d19ef3021f20e858346588759e3d6a80bb8220492136cfc26a89a3f69e25a7`
+Source SHA256: `78a37585e81a05216af1f0ed3179f18c73a400cd1b7c006405d34e6d1643ecb0`
 
 ---
 
@@ -30,7 +30,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile

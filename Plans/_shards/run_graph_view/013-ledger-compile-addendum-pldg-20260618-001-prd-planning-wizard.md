@@ -4,7 +4,7 @@ Source: `Plans/Run_Graph_View.md`
 
 Source lines: L945-L996
 
-Source SHA256: `37ef4a0b0658d15ac7fe291a3458d6ca744575601e26249934cccfbd1be14e56`
+Source SHA256: `37a31a88cd99a6b74067c8eed30e0c81e0894bd598e559d42ffc93ff2b0ffcec`
 
 ---
 
@@ -30,7 +30,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile

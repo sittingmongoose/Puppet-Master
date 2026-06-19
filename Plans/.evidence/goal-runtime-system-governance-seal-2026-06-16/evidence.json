@@ -2,43 +2,43 @@
   "artifacts": [
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "97aef6a0cd2fb95d62d49286220d2de73aad14fe9106e3c6e99e9e38cbe80d41"
+      "sha256": "b5cc0d524612e5974dd957ae56c189f3f5f1d79c2613872079838144bed2ff5d"
     },
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887"
+      "sha256": "d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf"
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "25014a06f320a203b1e5a457602f7b8b8fabc354f2b445c8f828186ae476d6fc"
+      "sha256": "67cc7c264336ab8fc4ed5198195dc5237800597d22c34aba7404f9d956705ab9"
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "efab96c75c99597ff28c9aee4c0eabab73cdf7a9db72a3ad4cde81ac01daa32e"
+      "sha256": "09e6a5a6ba8f7c839c3163a9b6b832b0924830d9f4646c626f0e37b6b31ea28c"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "3624fa231bfb7939bc2e2427912a8e51dc03fc5f5013ee4811c92614c74eb7a2"
+      "sha256": "4b08e23fe29b09d83c9890c180419c20211895f7a9916904db80679339ca760b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e84f76f52063b25f591189c77fdf3b251d0657de6d134860aff8d2fbf4eed17c"
+      "sha256": "b61b24ec1fc8455978dbbeff782a3a4f43b54e8fa6951edf2d782cfd25ce498f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "0294e7dbc07a35b71a3a0f5a4c3ad7cae80282995ec66a30f6e04af8a1368b6d"
+      "sha256": "e81c1393a19f5724d83c6014f50334e5aceaeae74abdd51050d55052cf22e0f8"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "0434445a146d5a83362d7a75bbe59f976fc8af7450524c5be8823d553eba6f25"
+      "sha256": "370303af474e2229c73d831ca1f1408f62e919fd218ea139759abcc63a621a09"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c4a4de2a6fa5e0b2b5bff0360c9964d5b77e573393902f81cb6b77fa07e00963"
+      "sha256": "19768cad5f8ac3da7341e328e74dd7640b5ffae994d474181d880c0f3432f6da"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "adeace2097777583a10ea97d730a60c170eb78a465167126096a8b2d654d5e6c"
+      "sha256": "a774a01521589e1ca46c6ab4dc47fceae92bf863d7b5442c2d7ee354fb47060b"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -62,11 +62,11 @@
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "23b81ecc9dc65c75f40a3ebcf5430741423b875994721abf0580eb5db19bbf73"
+      "sha256": "8d52f526bc71ee130e57ea5fddc8862a9aebc8e95fe678be7698c720b4fe8078"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "3764f41865c39c081770663d409b25f01e24fd6c883cabfb115b73fa238cf21e"
+      "sha256": "3c0d2b40cb2aaaf67b41b25ead2a30bcca12029b9dfb5a7115e2ec6c7022de4b"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -78,11 +78,11 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "d2fba1d816ef7735ea9db877c8d0bbbfe1ccc4d21da78a6bec59b48317938cc0"
+      "sha256": "1db235d53f48d62d5dadd3d976de78144a78199085f45a354a136d2fe4f982cc"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
+      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -94,7 +94,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "4c7e04b8920b8dbe41e77e58b19226ed8867199670f1a17ab562c075fd97749c"
+      "sha256": "426d8c7a6f3192d868305bf3808cbd4d4e96f56d9ccf23676c227c2e941366d1"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
@@ -331,7 +331,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; errors=0; warnings=0; plan_units_checked=892"
     },
@@ -361,7 +361,7 @@
       "stdout_excerpt": "status=pass; live_plan_unit_count=5045; source_preserving_unit_count=0"
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -381,7 +381,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -455,6 +455,10 @@
     },
     {
       "cmd": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity --require-closure-matrix",
       "exit_code": 0
     }
   ],

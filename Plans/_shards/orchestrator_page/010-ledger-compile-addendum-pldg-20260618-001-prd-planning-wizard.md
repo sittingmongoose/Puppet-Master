@@ -4,7 +4,7 @@ Source: `Plans/Orchestrator_Page.md`
 
 Source lines: L1706-L1846
 
-Source SHA256: `e5f5b2c36a94c0619e3c535b01896c26b8782cdf73c4138eb0edc3b36f8d3f18`
+Source SHA256: `a915c4671effdd63854fc4a7b253f34507b12328b194aab600d2fdb72164c22e`
 
 ---
 
@@ -33,7 +33,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: execution_boundary
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

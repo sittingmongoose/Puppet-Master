@@ -4,7 +4,7 @@ Source: `Plans/Multi-Account.md`
 
 Source lines: L4579-L4631
 
-Source SHA256: `3f281fb746ae606cbb38b04c81ecff30f21cf4d16c0704ccab20aa1028b77738`
+Source SHA256: `ec1b54e6589241754f126b81b9bee88c033195fdd7eb16e75e71a26523b18293`
 
 ---
 
@@ -30,7 +30,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile

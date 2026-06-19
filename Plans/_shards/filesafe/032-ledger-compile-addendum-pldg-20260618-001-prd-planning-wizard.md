@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L13086-L13199
 
-Source SHA256: `e110cdc8ebfb8f24dfd5c1636839c6ff4b538b1525ffdc8b6e5633ab449fe79d`
+Source SHA256: `a1ef3a9cbb332706dc5b6576c5211914693efc0ea1cdd00fe066a56bb4b861e3`
 
 ---
 
@@ -32,7 +32,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: stale_or_forbidden_behavior
 reasoning_tier: high
 context_scope: ledger_to_plans_compile

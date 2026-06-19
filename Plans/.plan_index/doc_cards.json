@@ -45,7 +45,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4333,
+      "line_count": 4335,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 59,
       "plan_unit_ids": [
@@ -173,7 +173,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887",
+      "sha256": "d6158af7d62e80dbd5d38c461fc43e0fd277ef1e910f8f998050fb1007500fdf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59
@@ -184,10 +184,10 @@
         "requirement": 58
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -1254,7 +1254,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "efab96c75c99597ff28c9aee4c0eabab73cdf7a9db72a3ad4cde81ac01daa32e",
+      "sha256": "09e6a5a6ba8f7c839c3163a9b6b832b0924830d9f4646c626f0e37b6b31ea28c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 421
@@ -1268,13 +1268,13 @@
         "validation_rule": 2
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Assistant Chat Goal UI review",
         "future Assistant Chat child-goal display review",
         "future Assistant Chat evidence display review",
         "future Assistant Chat task tracker review",
         "manual assistant-chat cross-reference review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "rg newfeatures.md Plans/assistant-chat-design.md"
@@ -1448,7 +1448,7 @@
         "unverifiable_completion",
         "weak_test_oracle"
       ],
-      "sha256": "6fdb060ba959d9897a69de3adb6bd7245ec27d67efdde94c9bdcdc2b45a018e9",
+      "sha256": "88303e3b3e0b4db9aa70048bea57d1db35b4155bb5f4cb47327beda0cd66bc10",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 10
@@ -1458,10 +1458,10 @@
         "requirement": 10
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future WorkNode request intake validation",
         "future automated testing strategy validator",
         "future test-gap blocker validation",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
@@ -1627,7 +1627,7 @@
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "e59b86de270375b45ace58a980b2ee7b445caee570018981341745c397b2915e",
+      "sha256": "8a636765a5a6e900b7affbaf985dfe5c58c406dfe2016fad376f63399b0aa698",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -1647,13 +1647,13 @@
         "Manual AGENTS.md review.",
         "Manual plan review.",
         "Original hash inventory.",
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "Per-turn ledger state projections.",
         "Phase validator reports.",
         "Plans/bootstrap/Codex_Prompts.md",
         "Plans/ledgers/v2/<ledger_id>/state/handoff.json",
         "Source-lineage coverage.",
         "Validators after pilot and each batch.",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check"
@@ -2027,7 +2027,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "f3d36df91449821add7b4fb1ccd89743610c2b29a761660fb3ae1a96bc4db6dc",
+      "sha256": "a9b5fbfbdf0de54c9447b116a9680bc755a2a5ce2c6b87a9d549a4a409bec2fd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 152
@@ -2041,11 +2041,11 @@
         "validation_rule": 3
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "PlanUnit-aware scan of live canonical_text and acceptance_criteria outside CWF-150's own placeholder-ban definition for \"future scope|future-scope\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "future Requirements Doc Builder flow review",
         "manual heading/deduplication review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -2102,7 +2102,7 @@
         "route_object_model_fragmentation",
         "wizard_resume_deeplink_drift"
       ],
-      "sha256": "3664528b4abfb96c9ea52031289426e6105435301798cffb88b95029234f6278",
+      "sha256": "88f8237badf092d27176c6e59c9202970038f5b70cd511e2a0f3f2fcbd3edf03",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -2114,8 +2114,8 @@
         "requirement": 3
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Chain Wizard Doc Builder handoff review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -2356,7 +2356,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "f4a3952776b709d40022d87f2ccc9b50d10f0014dee88a4bc7a1bfdb58c7f5a7",
+      "sha256": "2daf12c08330d43a2fd4d53ec4b07711c89dda72679ea9e71c77a09b3739551b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -2370,9 +2370,9 @@
         "requirement": 32
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future command registry validation",
         "manual heading/anchor review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -3256,7 +3256,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "1dad9c96de53e9ccf2f84ed7e8ca546575e424847b32f8dbc5841479b6d54146",
+      "sha256": "8d4dc9a7a050b09f5c91a64e0d774010a732733425f122754dd0791fb1b6b452",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 288,
@@ -3271,7 +3271,6 @@
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime contract/schema review",
         "future Goal Runtime event schema registration review",
         "future GoalRun contract registration review",
@@ -3279,6 +3278,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -3445,7 +3445,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "78d19ef3021f20e858346588759e3d6a80bb8220492136cfc26a89a3f69e25a7",
+      "sha256": "78a37585e81a05216af1f0ed3179f18c73a400cd1b7c006405d34e6d1643ecb0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50
@@ -3457,8 +3457,8 @@
         "requirement": 48
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "manual Crosswalk owner-pointer review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -4050,7 +4050,7 @@
         "unsafe_execution_context",
         "unverified_execution_completion"
       ],
-      "sha256": "59ce0d71f0d06c16fda1878df12a1adab67123f1b818c2435be3add28bf29932",
+      "sha256": "1944f1aa30f3ebfd672093fe1642fe75a4a15615544743564024e27837cec046",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 105
@@ -4061,11 +4061,11 @@
         "requirement": 103
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Executor WorkNode scheduler integration tests",
         "future failure_signature and PlanDiffImpactReport validation",
         "manual Executor heading/owner review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -4485,7 +4485,7 @@
         "stale_or_forbidden_behavior",
         "unrecoverable_mutation"
       ],
-      "sha256": "e110cdc8ebfb8f24dfd5c1636839c6ff4b538b1525ffdc8b6e5633ab449fe79d",
+      "sha256": "a1ef3a9cbb332706dc5b6576c5211914693efc0ea1cdd00fe066a56bb4b861e3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 190
@@ -4496,9 +4496,9 @@
         "requirement": 189
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future safe_point_receipt validation",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -4971,7 +4971,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "25014a06f320a203b1e5a457602f7b8b8fabc354f2b445c8f828186ae476d6fc",
+      "sha256": "67cc7c264336ab8fc4ed5198195dc5237800597d22c34aba7404f9d956705ab9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 397,
@@ -4986,7 +4986,6 @@
         "validation_rule": 1
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Orchestrator GUI placement review",
         "future Orchestrator UX review",
         "future Settings GUI review",
@@ -4997,6 +4996,7 @@
         "manual markdown anchor/cross-reference review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -5095,7 +5095,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "f15b2c7f8180daca62925a0f14b8f4a03759fcb821ca773b02ac62e37044b8ff",
+      "sha256": "32b5e5b19be60784a5bf8d23de9b82d5af02249906cd2b65834b12450d631751",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -5106,7 +5106,7 @@
         "requirement": 12
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -5174,7 +5174,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "0b601e48eed3d549fa0470dd6050393b7b7d8c2fdea8f4c2a9a8147d49081320",
+      "sha256": "6f1afa4a553faffd1940896f3704e587e844db7510184141843af13583d6f884",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 32
@@ -5185,8 +5185,8 @@
         "requirement": 31
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future GitHub promotion receipt validation",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -5370,7 +5370,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "97aef6a0cd2fb95d62d49286220d2de73aad14fe9106e3c6e99e9e38cbe80d41",
+      "sha256": "b5cc0d524612e5974dd957ae56c189f3f5f1d79c2613872079838144bed2ff5d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29,
@@ -5386,7 +5386,6 @@
         "validation_criterion": 2
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime PlanApproved integration review",
         "future Goal Runtime lifecycle tests",
         "future Goal Runtime verification-loop tests",
@@ -5417,6 +5416,7 @@
         "manual source-lineage review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -5567,7 +5567,7 @@
         "implementation_readiness",
         "migration_lineage"
       ],
-      "sha256": "11d490cb351e4c7a6381d5d135e1fd58c5b1a30606aa166ed42c887150b1e497",
+      "sha256": "f712a326889cb81a3c708e7c84b583f3ede9e96260613f3b1f5b9618c7cd3d0c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -5578,8 +5578,8 @@
         "requirement": 36
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future HITL checkpoint review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -5982,7 +5982,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "f606d9a2df0c92655a295685a16b5228286f04e15441d4f0c5fdd44fac037e15",
+      "sha256": "23e03abd5d474ccc933603db0d46f0a9365388d9762ad774dd7004ef466aa581",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 93
@@ -5993,8 +5993,8 @@
         "requirement": 92
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -6468,7 +6468,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "d7dc16646d4bd91ae7e6c47bc58daf2265ccfd65859370f94e668f795d2b1440",
+      "sha256": "f9e9652513133f82661c193a5d877bbd66105e2b948e58a65e392f6ce1fb2bbe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 112
@@ -6515,11 +6515,11 @@
         "variant_contract": 2
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime model-role resolver review",
         "future Settings model-role review",
         "future capability-lane resolver review",
         "manual provider/model owner review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -6673,7 +6673,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "3f281fb746ae606cbb38b04c81ecff30f21cf4d16c0704ccab20aa1028b77738",
+      "sha256": "ec1b54e6589241754f126b81b9bee88c033195fdd7eb16e75e71a26523b18293",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 61
@@ -6684,8 +6684,8 @@
         "requirement": 60
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime account-identity resolver review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -8345,7 +8345,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "e5f5b2c36a94c0619e3c535b01896c26b8782cdf73c4138eb0edc3b36f8d3f18",
+      "sha256": "a915c4671effdd63854fc4a7b253f34507b12328b194aab600d2fdb72164c22e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24,
@@ -8359,12 +8359,12 @@
         "validation_rule": 1
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Orchestrator Plan Compile tab review",
         "future Orchestrator execution observability review",
         "future Orchestrator page surface review",
         "manual Orchestrator owner-section review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -8530,7 +8530,7 @@
         "stale_or_forbidden_behavior",
         "unsafe_external_effect"
       ],
-      "sha256": "7bbd7a9e304c1e8dfc6888f169af76a11b743c53861a30cb3191c8bbeab08a40",
+      "sha256": "82ed1aa33fe9ed4a7d4d009c9143e61e3e16a06261b914bf86e894ecfb2126b6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 117
@@ -8543,11 +8543,11 @@
         "requirement": 74
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime permission/approval review",
         "future GoalRun permission/blocker review",
         "future external-effects policy validation",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -8689,7 +8689,7 @@
         "subagent_registry_persona_registry_conflation",
         "teacher_persona_doc_guessing_drift"
       ],
-      "sha256": "31445b995f23e515187e6a96600226e408289ec5e0d432f4ee7d37d0a19d083a",
+      "sha256": "75b45e602969e00f98f65cfb7e2a3951224818e3240cc8e9db43de4932a0559f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53,
@@ -8703,8 +8703,8 @@
         "requirement": 36
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -8784,7 +8784,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "1d1ea6770a4e316a61e6265bbd5c0c64162d0a5c4746a3b7db13bed8cd68576d",
+      "sha256": "1ff575326a95228f524368b725dd37ecef5289c61ca0eb7472138dba905ba11f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16
@@ -8807,7 +8807,6 @@
         "Migration inventory coverage map.",
         "Node-readiness report generator.",
         "Owner map review.",
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "Pilot conversion report.",
         "Pilot conversion validation.",
         "PlanUnit index field coverage.",
@@ -8822,6 +8821,7 @@
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check"
@@ -8905,7 +8905,7 @@
         "scheduling_correctness",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "249d9765c483b4d39a8d3e390b2d35497c9f0c7142293e4cf369ada1eb40dd71",
+      "sha256": "7ee9d98374512e2f6081da4aa246b86d45299ab6a2b7d064c555b6de70ee0774",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16,
@@ -8929,7 +8929,6 @@
         "Future routing-policy tests.",
         "Node-readiness dependency analysis.",
         "Node-readiness report status.",
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "Plan review for WorkNode language that implies executable tasks.",
         "Plans/.plan_index/dependencies.json",
         "Plans/.plan_index/node_readiness_report.json",
@@ -8939,6 +8938,7 @@
         "future handoff matrix validation",
         "future node_seed_candidate schema validation",
         "future stage_card schema validation",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema"
@@ -9033,7 +9033,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "9aa7510cb8c1c644ba7e9659fbba88da8064c7ad89863f1e5b6bae3b394b9723",
+      "sha256": "55135085930e0216a31caa4bacf81c8b0e8273ba04d3cc8453157a61c7cbcc28",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -9056,7 +9056,6 @@
         "Ledger schema validation.",
         "Manual compile review.",
         "Migration/import-export tests once the native service exists.",
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "PlanUnit coverage review.",
         "PlanUnit source_lineage and owner_hints.",
         "Plan_To_Node_Compilation boundary checks.",
@@ -9065,6 +9064,7 @@
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check"
@@ -9129,7 +9129,7 @@
         "owner_drift",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "121bf48efacec0f28a00ab2e90478feeafaad014ba805014b1547e302b3a1cc6",
+      "sha256": "d6a2e7061d440660f414597efb38f04aa0550c97e1fc5d477327a09a95f8dd31",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 13
@@ -9139,7 +9139,7 @@
         "requirement": 13
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate"
       ]
     },
@@ -9289,7 +9289,7 @@
         "owner_drift",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "bd4a3401ed0bf4c6e11ec89966039c3cf73ea58f2a7b92598a6ea65639e02367",
+      "sha256": "7187cbc05b22e9a4a291b12e417e2e3e7d38a4f88f2cfc60cc2bdee133480122",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 7
@@ -9299,7 +9299,7 @@
         "requirement": 7
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate"
       ]
     },
@@ -9394,7 +9394,7 @@
         "residual_bridge_overreach",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "edd9ade7f8f66c609e4ac387abac91a985de6c1e0eb6b2a470cf82eea6732df2",
+      "sha256": "68b1b2cca109eacddb3d7b4246d67ecb83cd862cd9430302f03e66c5b15c8405",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 58,
@@ -9408,9 +9408,9 @@
         "validation_rule": 8
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for \"future scope|future-scope|reserved anchors|deliberately not designed yet\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -9545,7 +9545,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "b3a47beac1f91f6f550d47cc74fd5cf3b618dd1c27d59ec127d2e03e0c33539c",
+      "sha256": "aaa580fb9d0e9cf980f18c501d242ed6785b5776ed1b259c5b697abd39828e2d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 48,
@@ -9560,8 +9560,8 @@
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -9989,7 +9989,7 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "37ef4a0b0658d15ac7fe291a3458d6ca744575601e26249934cccfbd1be14e56",
+      "sha256": "37a31a88cd99a6b74067c8eed30e0c81e0894bd598e559d42ffc93ff2b0ffcec",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -10014,7 +10014,6 @@
         "Manual review of Plans/Run_Graph_View.md section 1.",
         "Manual stale tier/HITL cleanup review.",
         "Owner adjudication review.",
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "Projection trust/manual action-gating review.",
         "Route/open payload audit.",
         "UI Command Catalog cross-check.",
@@ -10022,6 +10021,7 @@
         "future Run Graph GoalRun overlay review",
         "future Run Graph plans-to-code execution projection review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py generate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -10242,7 +10242,7 @@
         "stream_audit_drift",
         "structural_anchor_loss"
       ],
-      "sha256": "0194465ecc4e844874686c76bac452ba50b7168147059cf325970e82515cbfa9",
+      "sha256": "1208fddb028eaf4ad0735414aca61dd2c67d02c502e3a8e07b2d83451234adf7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28,
@@ -10254,11 +10254,11 @@
         "requirement": 28
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Runtime Artifacts plans-to-code receipt projection review",
         "future Runtime Artifacts receipt projection review",
         "manual heading/anchor review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -10854,7 +10854,7 @@
         "storage_owner_stub_loss",
         "storage_plan_drift"
       ],
-      "sha256": "2dab73a0fe4a772f665f8c0bb5988f69637dd76fa256da9bd397b887c8eff4bc",
+      "sha256": "a09c79bd51df81731897baaade6e17091e02fd58e5c7b46df365430deaeb6f95",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 215,
@@ -10866,10 +10866,10 @@
         "requirement": 215
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Goal Runtime persistence review",
         "future GoalRun storage contract review",
         "manual storage owner-section review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -11262,7 +11262,7 @@
         "residual_bridge_overreach",
         "ui_command_catalog_drift"
       ],
-      "sha256": "02323e502a05915eddbfc088b3d61646eeb1129e70c380e966db31f8455ea7e1",
+      "sha256": "7fc81cf51a1ba20703e61b6a735c1f585a8ae9a0f524b76532ca28b0cbc9349a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 96,
@@ -11274,8 +11274,8 @@
         "requirement": 96
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future command catalog/wiring review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -11599,7 +11599,7 @@
         "wiring_addenda_precedence_drift",
         "wiring_matrix_drift"
       ],
-      "sha256": "4707d0d6cad92d16363e744ff7ba71a02974bc2e2e538d958cac645080274159",
+      "sha256": "2616ba11aefb8faf615ec4cf1d46b4e7c42b572feab4fcaf2013b531828a0d8c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 38
@@ -11612,9 +11612,9 @@
         "requirement": 25
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future wiring coverage validation",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -11727,7 +11727,7 @@
         "worktree_allocation_drift",
         "worktree_git_drift"
       ],
-      "sha256": "9225bf79acfe09beeb7f2660142a35bdc120c81d5cd47f260804d46aed9e6549",
+      "sha256": "2a5c1f1a30f0bdca8b4f45ee04f4513d97c191bfd5238bf60dfa973fa560432c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 73
@@ -11740,17 +11740,17 @@
         "requirement": 57
       },
       "validation_surfaces": [
-        "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "future Source Control GoalRun lease review",
         "future source-control preflight validation",
         "manual worktree owner-section review",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T10:53:24Z",
+  "generated_at_utc": "2026-06-19T11:59:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

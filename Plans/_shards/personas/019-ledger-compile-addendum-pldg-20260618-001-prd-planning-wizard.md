@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L3239-L3307
 
-Source SHA256: `31445b995f23e515187e6a96600226e408289ec5e0d432f4ee7d37d0a19d083a`
+Source SHA256: `75b45e602969e00f98f65cfb7e2a3951224818e3240cc8e9db43de4932a0559f`
 
 ---
 
@@ -30,7 +30,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ledger_to_plans_compile

@@ -107,11 +107,11 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
       "exit_code": 0
     },
     {
@@ -181,6 +181,22 @@
     },
     {
       "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity --require-closure-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "git diff --check",
       "exit_code": 0
     }
   ],

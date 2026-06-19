@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L1856-L1945
 
-Source SHA256: `0b601e48eed3d549fa0470dd6050393b7b7d8c2fdea8f4c2a9a8147d49081320`
+Source SHA256: `6f1afa4a553faffd1940896f3704e587e844db7510184141843af13583d6f884`
 
 ---
 
@@ -31,7 +31,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
-- PYTHONPATH=/private/tmp/pm-py-deps python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: ledger_to_plans_compile
