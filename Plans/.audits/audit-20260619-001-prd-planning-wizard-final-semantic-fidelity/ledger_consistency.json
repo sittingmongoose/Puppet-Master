@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "audit_id": "audit-20260619-001-prd-planning-wizard-final-semantic-fidelity",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "status": "fail",
+  "phase": "compiled_prd_planning_wizard_governance_sealed",
+  "manifest_status": "sealed",
+  "current_status": "sealed",
+  "compile_queue_status": "compiled_prd_planning_wizard_governance_sealed",
+  "ledger_health_status": "pass_governance_sealed",
+  "registry_status": "sealed",
+  "last_event_id": "evt-0025",
+  "cursor_last_event_id": "evt-0024",
+  "candidate_atoms_count": 0,
+  "ready_for_plan_compile_atoms": 0,
+  "open_questions_count": 0,
+  "open_blockers_count": 0,
+  "compiled_atom_count": 168,
+  "compiled_plan_unit_count": 61,
+  "inconsistencies": [
+    {
+      "id": "LC-CANDIDATE-OWNER-DOCS",
+      "severity": "medium",
+      "status": "fail",
+      "evidence": [
+        "state/current.json:4",
+        "state/compile_queue.json:2"
+      ],
+      "summary": "Sealed projections retain active candidate_compile_owner_docs."
+    },
+    {
+      "id": "LC-CURSOR-STALE",
+      "severity": "medium",
+      "status": "fail",
+      "evidence": [
+        "state/current.json:188",
+        "state/current.json:203",
+        "state/handoff.json:14"
+      ],
+      "summary": "Nested current.cursor is stale relative to top-level last_event_id and handoff."
+    }
+  ],
+  "warnings": [],
+  "note": "No open atoms/questions/blockers remain, but sealed projection metadata still contains active candidate owner-doc state and a stale cursor."
+}
