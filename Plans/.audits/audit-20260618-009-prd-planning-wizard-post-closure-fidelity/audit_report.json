@@ -1,0 +1,442 @@
+{
+  "atom_fidelity_summary": {
+    "classification_counts": {
+      "exact_present": 161,
+      "missing_or_drift": 7
+    },
+    "missing_or_drift": 7,
+    "rows": 168,
+    "source": "regenerated from compile_queue/design_atoms and revalidated against current .plan_index; affected rows are marked missing_or_drift because changed Plan_To_Node_Compilation PNC-014/H-001 still conflicts with current Planning Wizard authority semantics."
+  },
+  "audit_id": "audit-20260618-009-prd-planning-wizard-post-closure-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "changed_files_summary": {
+    "classes": {
+      "audits": 38,
+      "governance": 702,
+      "ledger": 41,
+      "live_plan_docs": 38,
+      "plan_index": 6,
+      "support_root": 10
+    },
+    "total": 835
+  },
+  "changed_live_plan_docs": [
+    {
+      "old_path": null,
+      "path": "Plans/00-plans-index.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Automated_Testing_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Bootstrap_Planning_Migration.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Commands_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Contracts_V0.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Crosswalk.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Executor_Protocol.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/FileSafe.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/FinalGUISpec.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/GitHub_Integration.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Goal_Runtime_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Models_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Multi-Account.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Orchestrator_Page.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/PRD_Builder.md",
+      "status": "A"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Permissions_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Personas.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Plan_Document_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Planning_Ledger_System.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Planning_Wizard.md",
+      "status": "A"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Progression_Gates.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Project_Output_Artifacts.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Run_Graph_View.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/UI_Command_Catalog.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/Wiring_Matrix.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/WorktreeGitImprovement.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/assistant-chat-design.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/bootstrap/Codex_Prompts.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/chain-wizard-flexibility.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/chain-wizard.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/human-in-the-loop.md",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/plans_to_code_handoff.schema.json",
+      "status": "M"
+    },
+    {
+      "old_path": null,
+      "path": "Plans/storage-plan.md",
+      "status": "M"
+    }
+  ],
+  "closure_reuse_summary": {
+    "hash_validation_failures": 0,
+    "rows": 108,
+    "status_counts": {
+      "false_positive": 2,
+      "not_for_plan": 14,
+      "repaired": 82,
+      "source_lineage_only": 3,
+      "stale_retired": 7
+    }
+  },
+  "current_ref": "e40dae4d915795fac966b30bb260428c4128a3a5",
+  "final_report_path": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/FINAL_REPORT.md",
+  "forbidden_artifact_scan": {
+    "changed_support_artifacts_requiring_classification": [
+      "PACKAGE_MANIFEST.json",
+      "VALIDATION_REPORT.json",
+      "VALIDATION_REPORT.md",
+      "reports/shard_report.json",
+      "scripts/pm-install-prd-planning-wizard-ledger.py"
+    ],
+    "classification": "support_package_artifacts_only_no_runtime_node_artifacts",
+    "closure_reuse_refs": [
+      "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-001",
+      "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-002",
+      "closure-audit-20260618-008-prd-planning-wizard-semantic-fidelity-repair-003"
+    ],
+    "no_final_node_queues_created": true,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false
+  },
+  "generated_at_utc": "2026-06-19T00:27:53Z",
+  "inference": {
+    "audit_id_source": "next Plans/.audits audit number after audit-20260618-008",
+    "baseline_ref_source": "parent of earliest PRD Planning Wizard cycle commit c205ca50 touching the ledger/registry in the contiguous cycle.",
+    "current_ref_source": "git rev-parse HEAD",
+    "cycle_commits": [
+      "c205ca50",
+      "56b31762",
+      "61dce7d4",
+      "0480f38e",
+      "d99a406a",
+      "028b1b04",
+      "e40dae4d"
+    ],
+    "ledger_id_source": "latest non-background sealed ledger in Plans/ledgers/v2/ledger_registry.json plus recent commits; excluded pldg-20260610-001-ledger-plan-system as background unless only relevant."
+  },
+  "ledger_consistency_summary": {
+    "audit_id": "audit-20260618-009-prd-planning-wizard-post-closure-fidelity",
+    "candidate_atoms_count": 0,
+    "compiled_atom_count": 168,
+    "compiled_plan_unit_count": 61,
+    "current_status": "sealed",
+    "governance_status": "sealed",
+    "inconsistencies": [],
+    "last_event_id": "evt-0023",
+    "latest_audit_ref_in_ledger": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+    "latest_audit_status_in_ledger": "repair_validated",
+    "ledger_health_status": "pass_governance_sealed",
+    "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+    "manifest_status": "sealed",
+    "note": "Sealed ledger projections agree: no active candidates, open blockers, open questions, or ready-for-plan-compile atoms remain.",
+    "open_blockers_count": 0,
+    "open_questions_count": 0,
+    "phase": "compiled_prd_planning_wizard_governance_sealed",
+    "post_ledger_audit_closure_note": "HEAD includes audit-20260618-008 closure repair artifacts and registry rows after the ledger projections were sealed; this audit records them through closure_reuse rather than mutating ledger state.",
+    "ready_for_plan_compile_atoms": 0,
+    "record_counts": {
+      "blockers": 0,
+      "corrections": 15,
+      "decisions": 30,
+      "design_atoms": 168,
+      "events": 23,
+      "questions": 0
+    },
+    "registry_bucket": "sealed_ledgers",
+    "registry_status": "sealed",
+    "schema_id": "pm.audit_ledger_consistency.v1",
+    "status": "pass_with_warnings",
+    "terminal_ledger_event_id": "evt-0023",
+    "warnings": [
+      {
+        "classification": "ledger_projection_governance_provenance_drift",
+        "evidence": [
+          "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:8",
+          "scripts/pm-governance-seal.py:251",
+          "Plans/auto_decisions.jsonl:181"
+        ],
+        "risk_id": "SR-HANDOFF-AUTODECISIONS-001",
+        "summary": "Sealed ledger core projections agree, but state/handoff.json says auto_decisions were refreshed even though no PRD Planning Wizard auto_decision row exists and the seal helper only refreshes Spec Lock/evidence paths."
+      }
+    ]
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_safe_action": "Run a bounded semantic repair for PNC-014/H-001 only, then regenerate only allowed PlanUnit/governance artifacts in an explicit repair/seal phase. Do not create WorkNodes, NodeSeeds, executable queues, manifests, implementation files, runtime dispatch, or production build tasks.",
+  "no_live_non_audit_plan_changes_since_previous_audit_current_ref": true,
+  "owner_routing_summary": {
+    "owner_routing_findings_file_rows": 0,
+    "unclosed_findings": 0
+  },
+  "planunit_delta": {
+    "added": [
+      "PRDB-001",
+      "PRDB-002",
+      "PRDB-003",
+      "PRDB-004",
+      "PRDB-005",
+      "PRDB-006",
+      "PRDB-007",
+      "PWIZ-001",
+      "PWIZ-002",
+      "PWIZ-003",
+      "PWIZ-004",
+      "PWIZ-005",
+      "PWIZ-006",
+      "PWIZ-007",
+      "PWIZ-008",
+      "PWIZ-009",
+      "PWIZ-010",
+      "PWIZ-011",
+      "PWIZ-012",
+      "PWIZ-013",
+      "ACD-421",
+      "PLS-014",
+      "P-054",
+      "MS-112",
+      "PDS-016",
+      "ATS-005",
+      "ATS-006",
+      "ATS-007",
+      "ATS-008",
+      "ATS-009",
+      "ATS-010",
+      "PNC-015",
+      "PNC-016",
+      "PNC-017",
+      "EP-104",
+      "EP-105",
+      "GRS-031",
+      "CV-290",
+      "SP-216",
+      "F2-190",
+      "W-073",
+      "GI-032",
+      "GAAAF-013",
+      "PS-117",
+      "POA-049",
+      "RAP-030",
+      "RGV-014",
+      "MGAC-093",
+      "MA-061",
+      "HITL-037",
+      "PG-059",
+      "F3-398",
+      "OP-025",
+      "UCC-097",
+      "CS-052",
+      "0PI-059",
+      "C-050",
+      "WM-038",
+      "BPM-008",
+      "CW-009",
+      "CWF-152"
+    ],
+    "changed": [],
+    "compiled_count": 61,
+    "deleted": [],
+    "unchanged_existing": []
+  },
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..e40dae4d915795fac966b30bb260428c4128a3a5",
+  "reciprocal_lineage_summary": {
+    "canonical_text_atom_label_leaks": 0,
+    "claim_status_counts": {
+      "source_lineage_supported": 61
+    },
+    "extra_lineage_rows": 0,
+    "missing_lineage_rows": 0,
+    "rows": 61
+  },
+  "schema_id": "pm.semantic_fidelity_audit_report.v1",
+  "semantic_risk_summary": {
+    "blocking_risks": [
+      "SR-DF0965458FFC"
+    ],
+    "note": "Unclosed PNC-014/H-001 active stale-terminology and authority drift remains at HEAD; closure registry has no matching closed row for this exact drift.",
+    "semantic_risks_file_rows": 2,
+    "unclosed_exact_detail_losses_or_drift": 2,
+    "warning_risks": [
+      "SR-HANDOFF-AUTODECISIONS-001"
+    ]
+  },
+  "status": "BLOCKED",
+  "subagent_summary": {
+    "failing_or_warning_lanes": [
+      {
+        "lane": "atom_fidelity_atoms_0057_0112",
+        "risk_id": "SR-DF0965458FFC",
+        "summary": "PNC-014/H-001 active handoff text still says Plan Wizard approval / approved Plan Wizard ledger / Goal Runtime / Plan Wizard."
+      },
+      {
+        "lane": "ledger_projection_governance_provenance",
+        "risk_id": "SR-HANDOFF-AUTODECISIONS-001",
+        "summary": "handoff.json overclaims auto_decisions refresh."
+      }
+    ],
+    "passing_lanes": [
+      "atom_fidelity_atoms_0001_0056",
+      "atom_fidelity_atoms_0113_0168",
+      "reciprocal_planunit_lineage",
+      "owner_routing_and_changed_doc_fidelity",
+      "ledger_governance_forbidden_artifacts_core",
+      "index_governance_validator_mutability_core"
+    ],
+    "read_only_subagents_used": 6
+  },
+  "validator_summary": {
+    "commands_run": 13,
+    "side_effect_commands": [],
+    "side_effects_detected": false,
+    "status": "pass",
+    "status_counts": {
+      "pass": 13
+    },
+    "validator_results_path": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/validator_results.json"
+  }
+}

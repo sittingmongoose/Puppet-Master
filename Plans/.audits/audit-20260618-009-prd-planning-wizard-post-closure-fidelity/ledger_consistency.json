@@ -1,0 +1,46 @@
+{
+  "audit_id": "audit-20260618-009-prd-planning-wizard-post-closure-fidelity",
+  "candidate_atoms_count": 0,
+  "compiled_atom_count": 168,
+  "compiled_plan_unit_count": 61,
+  "current_status": "sealed",
+  "governance_status": "sealed",
+  "inconsistencies": [],
+  "last_event_id": "evt-0023",
+  "latest_audit_ref_in_ledger": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+  "latest_audit_status_in_ledger": "repair_validated",
+  "ledger_health_status": "pass_governance_sealed",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "manifest_status": "sealed",
+  "note": "Sealed ledger projections agree: no active candidates, open blockers, open questions, or ready-for-plan-compile atoms remain.",
+  "open_blockers_count": 0,
+  "open_questions_count": 0,
+  "phase": "compiled_prd_planning_wizard_governance_sealed",
+  "post_ledger_audit_closure_note": "HEAD includes audit-20260618-008 closure repair artifacts and registry rows after the ledger projections were sealed; this audit records them through closure_reuse rather than mutating ledger state.",
+  "ready_for_plan_compile_atoms": 0,
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 15,
+    "decisions": 30,
+    "design_atoms": 168,
+    "events": 23,
+    "questions": 0
+  },
+  "registry_bucket": "sealed_ledgers",
+  "registry_status": "sealed",
+  "schema_id": "pm.audit_ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "terminal_ledger_event_id": "evt-0023",
+  "warnings": [
+    {
+      "classification": "ledger_projection_governance_provenance_drift",
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json:8",
+        "scripts/pm-governance-seal.py:251",
+        "Plans/auto_decisions.jsonl:181"
+      ],
+      "risk_id": "SR-HANDOFF-AUTODECISIONS-001",
+      "summary": "Sealed ledger core projections agree, but state/handoff.json says auto_decisions were refreshed even though no PRD Planning Wizard auto_decision row exists and the seal helper only refreshes Spec Lock/evidence paths."
+    }
+  ]
+}
