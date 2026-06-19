@@ -670,7 +670,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Planning Wizard Approve And Build approval and the PlanApproved handoff into PlanCompileRun state, then through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. For the current v1 matrix, Plan Compile source authority is the immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes; the Planning Wizard ledger remains source and reasoning lineage rather than executable Plan Compile authority. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes as design-only contracts.
-  The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The PlanApproved handoff records the transactional outbox requirement plus deterministic idempotency_key, project_id, and pack_hash inputs so approval cannot create duplicate PlanCompileRun state. The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single design-only `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013]
@@ -695,8 +695,9 @@ source_lineage:
   - pldg-20260618-001-prd-planning-wizard:atom-0101
   - pldg-20260618-001-prd-planning-wizard:atom-0102
   - pldg-20260618-001-prd-planning-wizard:atom-0103
+  - pldg-20260618-001-prd-planning-wizard:atom-0104
+  - pldg-20260618-001-prd-planning-wizard:atom-0105
   - pldg-20260618-001-prd-planning-wizard:atom-0106
-  - pldg-20260618-001-prd-planning-wizard:atom-0107
   - pldg-20260618-001-prd-planning-wizard:atom-0109
   - pldg-20260617-001-plans-to-code-handoff:atom-0007
   - pldg-20260617-001-plans-to-code-handoff:atom-0011
@@ -714,6 +715,10 @@ preserved_exact_tokens:
   - "Approve And Build"
   - "ApprovedPlanPack"
   - "PlanApproved"
+  - "transactional outbox"
+  - "idempotency_key"
+  - "project_id"
+  - "pack_hash"
   - "PlanUnit index"
   - "acceptance-unit index"
   - "lineage"

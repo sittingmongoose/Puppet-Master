@@ -1,7 +1,7 @@
 # PRD Builder, Planning Wizard, Testing, Approve And Build, and Runtime Handoff
 
 - ledger_id: `pldg-20260618-001-prd-planning-wizard`
-- phase: `ready_for_plan_compile`
+- phase: `compiled_prd_planning_wizard_governance_sealed`
 - design atoms: `168`
 - accepted decisions: `30`
 - accepted corrections: `15`

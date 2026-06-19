@@ -561,7 +561,15 @@
     "WM-038",
     "BPM-008",
     "CW-009",
-    "CWF-152"
+    "CWF-152",
+    "PNC-014"
+  ],
+  "compiled_schema_outputs": [
+    "Plans/plans_to_code_handoff.schema.json"
+  ],
+  "compiled_workflow_support_outputs": [
+    "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+    "Plans/bootstrap/Codex_Prompts.md"
   ],
   "items": [
     {
@@ -579,6 +587,7 @@
         "atom-0006"
       ],
       "status": "compiled",
+      "target_doc": "Plans/PRD_Builder.md",
       "target_docs": [
         "Plans/PRD_Builder.md"
       ],
@@ -711,6 +720,7 @@
         "atom-0041"
       ],
       "status": "compiled",
+      "target_doc": "Plans/Planning_Wizard.md",
       "target_docs": [
         "Plans/Planning_Wizard.md"
       ],
@@ -1346,7 +1356,8 @@
         "atom-0130",
         "atom-0133",
         "atom-0134",
-        "atom-0139"
+        "atom-0139",
+        "atom-0008"
       ],
       "status": "compiled",
       "target_docs": [
@@ -1367,7 +1378,8 @@
         "atom-0121",
         "atom-0122",
         "atom-0128",
-        "atom-0134"
+        "atom-0134",
+        "atom-0008"
       ],
       "status": "compiled",
       "target_docs": [
@@ -1849,18 +1861,42 @@
         "Plans/chain-wizard-flexibility.md"
       ],
       "title": "PRD Builder And Planning Wizard Semantic Migration"
+    },
+    {
+      "compiled_plan_unit_ids": [
+        "PNC-014"
+      ],
+      "disposition": "update_existing_planunit_lineage",
+      "owner_adjudication": "Audit-002 reciprocal lineage repair: PNC-014 remains in Plans/Plan_To_Node_Compilation.md and is limited to direct handoff/source-authority atoms; GUI navigation atom-0107 remains owned by Planning Wizard, Orchestrator, Final GUI, and UI Command PlanUnits.",
+      "queue_id": "cq-0062",
+      "source_atom_ids": [
+        "atom-0002",
+        "atom-0101",
+        "atom-0102",
+        "atom-0103",
+        "atom-0104",
+        "atom-0105",
+        "atom-0106",
+        "atom-0109"
+      ],
+      "status": "compiled",
+      "target_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "title": "Plans-To-Code Handoff Matrix Current-Ledger Traceability Repair"
     }
   ],
-  "last_event_id": "evt-0026",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_closure_matrix.jsonl",
+  "last_event_id": "evt-0027",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
   "latest_audit_closure_rows": 16,
   "latest_audit_closure_status_counts": {
-    "repaired": 16
+    "repaired": 15,
+    "source_lineage_only": 1
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T01:40:00Z",
+  "latest_audit_validated_at_utc": "2026-06-19T03:17:42Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "notes": "All compiled atoms remain represented in live Plans PlanUnits. Audit-20260618-009 repaired PNC-014/H-001 authority wording and handoff provenance, then refreshed allowed PlanUnit index and governance artifacts. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
   "plan_index_outputs": [
@@ -1873,24 +1909,6 @@
   ],
   "ready_atom_ids": [],
   "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
-  "status": "compiled_prd_planning_wizard_governance_sealed",
-  "terminal_ledger_event_id": "evt-0026",
-  "updated_at_utc": "2026-06-19T01:40:00Z",
-  "validation_results": {
-    "git_diff_check": "pass",
-    "pm_bootstrap_ledger_validate": "pass",
-    "pm_plan_index_validate": "pass",
-    "pm_plan_migration_validate": "pass",
-    "pm_plans_verify_run_gates": "pass",
-    "pm_plans_verify_validate_auto_decisions": "pass",
-    "pm_plans_verify_validate_evidence": "pass",
-    "pm_plans_verify_verify_spec_lock": "pass",
-    "pm_shard_plans_check": "pass",
-    "pm_audit_closure_validate_with_matrix": "pass",
-    "pm_plans_verify_validate_plan_graph": "pass",
-    "pm_plans_verify_audit_governance": "pass",
-    "pm_plans_verify_validate_plans_to_code_handoff_schema": "pass"
-  },
   "source_lineage_pre_seal_candidate_compile_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
@@ -1928,5 +1946,26 @@
     "Plans/human-in-the-loop.md",
     "Plans/plans_to_code_handoff.schema.json",
     "Plans/storage-plan.md"
-  ]
+  ],
+  "status": "compiled_prd_planning_wizard_governance_sealed",
+  "terminal_ledger_event_id": "evt-0027",
+  "unchanged_prior_canon_support_docs": [
+    "Plans/Tools.md"
+  ],
+  "updated_at_utc": "2026-06-19T03:17:42Z",
+  "validation_results": {
+    "git_diff_check": "pass",
+    "pm_audit_closure_validate_with_matrix": "pass",
+    "pm_bootstrap_ledger_validate": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_validate_plans_to_code_handoff_schema": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass"
+  }
 }

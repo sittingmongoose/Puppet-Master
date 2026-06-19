@@ -2,7 +2,10 @@
   "accepted_decisions_count": 30,
   "candidate_atoms_count": 0,
   "candidate_compile_owner_docs": [],
-  "canonical_plan_targets": [],
+  "canonical_plan_targets": [
+    "Plans/PRD_Builder.md",
+    "Plans/Planning_Wizard.md"
+  ],
   "compiled_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
@@ -83,7 +86,8 @@
     "Plans/chain-wizard-flexibility.md",
     "Plans/chain-wizard.md",
     "Plans/human-in-the-loop.md",
-    "Plans/storage-plan.md"
+    "Plans/storage-plan.md",
+    "Plans/plans_to_code_handoff.schema.json"
   ],
   "compiled_plan_unit_ids": [
     "PRDB-001",
@@ -146,11 +150,19 @@
     "WM-038",
     "BPM-008",
     "CW-009",
-    "CWF-152"
+    "CWF-152",
+    "PNC-014"
+  ],
+  "compiled_schema_outputs": [
+    "Plans/plans_to_code_handoff.schema.json"
+  ],
+  "compiled_workflow_support_outputs": [
+    "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+    "Plans/bootstrap/Codex_Prompts.md"
   ],
   "cursor": {
     "last_completed_atom_id": "atom-0168",
-    "last_event_id": "evt-0026",
+    "last_event_id": "evt-0027",
     "next_action": "Audit-20260619-001 bounded repair is validated; wait for Jared to request a new conversational design turn, audit, compile, or build phase.",
     "next_atom_id": null
   },
@@ -160,19 +172,23 @@
     "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
     "Plans/_shards",
     "Plans/.evidence",
-    "Plans/Spec_Lock.json"
+    "Plans/Spec_Lock.json",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
   ],
   "governance_status": "sealed",
-  "last_event_id": "evt-0026",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_closure_matrix.jsonl",
+  "last_event_id": "evt-0027",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
   "latest_audit_closure_rows": 16,
   "latest_audit_closure_status_counts": {
-    "repaired": 16
+    "repaired": 15,
+    "source_lineage_only": 1
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T01:40:00Z",
+  "latest_audit_validated_at_utc": "2026-06-19T03:17:42Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers_count": 0,
   "open_questions_count": 0,
@@ -186,10 +202,29 @@
     "Plans/.plan_index/node_readiness_report.json"
   ],
   "post_audit_009_repair_summary": "PASS: all 10 audit-20260618-009 closure rows are repaired; PNC-014/H-001 Planning Wizard authority drift and handoff provenance drift are closed; validators passed with no side effects.",
+  "post_audit_20260619_002_repair_summary": {
+    "audit_id": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity",
+    "canonical_plan_targets": [
+      "Plans/PRD_Builder.md",
+      "Plans/Planning_Wizard.md"
+    ],
+    "closed_findings": 8,
+    "notes": "Bounded repair closed audit-002 projection, reciprocal lineage, owner routing, and ledger consistency findings without creating WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks.",
+    "schema_outputs": [
+      "Plans/plans_to_code_handoff.schema.json"
+    ],
+    "source_lineage_only_support_docs": [
+      "Plans/Tools.md"
+    ],
+    "status": "repair_validated",
+    "workflow_support_outputs": [
+      "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "Plans/bootstrap/Codex_Prompts.md"
+    ]
+  },
+  "post_audit_20260619_repair_summary": "PASS: all 16 audit-20260619-001 closure rows are repaired; stale governance footers, governance coverage, stale terminology, sealed candidate owner docs, and stale cursor drift are closed; validators passed with no side effects.",
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
-  "status": "sealed",
-  "updated_at_utc": "2026-06-19T01:40:00Z",
   "source_lineage_pre_seal_candidate_compile_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
@@ -228,5 +263,9 @@
     "Plans/plans_to_code_handoff.schema.json",
     "Plans/storage-plan.md"
   ],
-  "post_audit_20260619_repair_summary": "PASS: all 16 audit-20260619-001 closure rows are repaired; stale governance footers, governance coverage, stale terminology, sealed candidate owner docs, and stale cursor drift are closed; validators passed with no side effects."
+  "status": "sealed",
+  "unchanged_prior_canon_support_docs": [
+    "Plans/Tools.md"
+  ],
+  "updated_at_utc": "2026-06-19T03:17:42Z"
 }

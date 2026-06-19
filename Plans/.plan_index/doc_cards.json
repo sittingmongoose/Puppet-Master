@@ -2665,7 +2665,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17615,
+      "line_count": 17622,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 290,
       "plan_unit_ids": [
@@ -3256,7 +3256,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "6755cb70426858b731535c106571e888905d2c1257d992eb72f9a74d8d3f1177",
+      "sha256": "1dad9c96de53e9ccf2f84ed7e8ca546575e424847b32f8dbc5841479b6d54146",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 288,
@@ -8862,7 +8862,7 @@
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 1063,
+      "line_count": 1068,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -8903,7 +8903,7 @@
         "scheduling_correctness",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "4cf4fbee306b53456df35b9b956a1a93a87490ae08d82c33bb5c8af1ad784290",
+      "sha256": "b52550a019043d6733099ac905c264b0cd947345de761025c01dfd13370aa4ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16,
@@ -10614,9 +10614,10 @@
         "Plans/Provider_OpenCode.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 15158,
+      "line_count": 15164,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 216,
       "plan_unit_ids": [
@@ -10849,7 +10850,7 @@
         "storage_owner_stub_loss",
         "storage_plan_drift"
       ],
-      "sha256": "a8586b97aed930ae9ce7e22b4846c060e664a5ed7082be6ebc91d93ecbf48d9c",
+      "sha256": "2dab73a0fe4a772f665f8c0bb5988f69637dd76fa256da9bd397b887c8eff4bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 215,
@@ -11745,7 +11746,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T01:30:51Z",
+  "generated_at_utc": "2026-06-19T03:23:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

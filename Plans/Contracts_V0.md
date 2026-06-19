@@ -17398,7 +17398,7 @@ plan_unit_id: CV-290
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: 'Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. Edits after approval create a new draft based on the approved version and require a new approval event; previous Approved PRD Packs remain immutable and addressable. Planning Wizard accepts an Approved PRD Pack, normalized imported requirements pack, or structured Assistant Chat handoff seed, preserving source identity, version, hashes, warnings, amendments, and lineage. PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. The controller can add, split, merge, rename,
+canonical_text: 'Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. Edits after approval create a new draft based on the approved version and require a new approval event; previous Approved PRD Packs remain immutable and addressable. Planning Wizard accepts an Approved PRD Pack, normalized imported requirements pack, or structured Assistant Chat handoff seed, preserving source identity, version, hashes, warnings, amendments, and lineage. PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard child-thread identity uses thread_type planning_wizard plus thread_role values for intake, topic, final_integration, audit_review, and final_review, bound to Planning Run membership rather than minted as unrelated top-level thread families. The controller can add, split, merge, rename,
   defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. New information during planning becomes a planning clarification, immutable Planning Amendment, deferred future scope item, or PRD revision request according to materiality and impact. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, and reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be
   represented as an automated test pass or full certification. Each testing capability family supports Auto, On, and Off: Auto discovers and selects or installs within authority; On is required and blocks or asks for authority when unavailable; Off prohibits use and installation for that capability without implying a pass. Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. The runtime schema includes contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, and runtime_policy_snapshot_ref; finished product defaults to native_runtime plus automatic_after_approval through native_puppet_master_adapter.
   Each stage card defines exact inputs, outputs, algorithms, bounded units, read/write authority, required parallelism, validators, retry and repair routes, currentness behavior, terminal states, and evidence/receipt requirements. A certified WorkNodeRequest has non-empty objective, source PlanUnits and acceptance units, bounded read/write/implementation surfaces, typed dependencies, authority, model/capability routing, test binding, repository currentness, evidence requirements, idempotency, cancellation, and no unsupported or placeholder content. After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority,
@@ -17426,6 +17426,7 @@ implementation_surfaces:
 - Plans/Project_Output_Artifacts.md
 - Plans/Planning_Wizard.md
 - Plans/storage-plan.md
+- Plans/assistant-chat-design.md
 - Plans/FinalGUISpec.md
 - Plans/Automated_Testing_System.md
 - Plans/human-in-the-loop.md
@@ -17440,6 +17441,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0008
 - pldg-20260618-001-prd-planning-wizard:atom-0027
 - pldg-20260618-001-prd-planning-wizard:atom-0029
 - pldg-20260618-001-prd-planning-wizard:atom-0039
@@ -17473,6 +17475,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
 source_atom_ids:
+- atom-0008
 - atom-0027
 - atom-0029
 - atom-0039
@@ -17524,6 +17527,8 @@ preserved_exact_tokens:
 - successor version
 - Assistant Chat handoff seed
 - PlanningRun
+- 'thread_type: planning_wizard'
+- thread_role
 - thread_group_id
 - topic map
 - add_topic
@@ -17598,12 +17603,14 @@ negative_constraints:
 - Do not make superseded experimental pipeline artifacts part of the product audit architecture.
 - Do not certify a broad final audit performed by one agent when parallel specialist review is required.
 - Do not accept a broad 'allow TODOs' exception.
+- Do not define planning_topic or audit_review as unrelated top-level thread types.
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/Contracts_V0.md
 - Plans/Project_Output_Artifacts.md
 - Plans/Planning_Wizard.md
 - Plans/storage-plan.md
+- Plans/assistant-chat-design.md
 - Plans/FinalGUISpec.md
 - Plans/Automated_Testing_System.md
 - Plans/human-in-the-loop.md
