@@ -1,0 +1,116 @@
+{
+  "audit_id": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "counts": {
+    "compile_queue_items": 62,
+    "compiled_atom_ids": 168,
+    "compiled_owner_docs": 35,
+    "compiled_plan_unit_ids": 62,
+    "design_atoms_total": 168,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "ready_atom_ids": 0
+  },
+  "created_at_utc": "2026-06-19T12:45:27Z",
+  "findings": [
+    {
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "latest_audit_validated_at_utc",
+        "state_vs_global_registry_timestamp",
+        "repair_report_generated_at_utc"
+      ],
+      "evidence_refs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:188",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json:110",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json:1898",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json:34",
+        "Plans/ledgers/v2/ledger_registry.json:460",
+        "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json:23"
+      ],
+      "exact_tokens": [
+        "2026-06-19T12:04:46Z",
+        "2026-06-19T12:05:14Z",
+        "2026-06-19T12:08:50Z",
+        "repair_validated"
+      ],
+      "finding_family": "ledger_projection_timestamp_drift",
+      "finding_key": "ledger_latest_audit_timestamp_drift",
+      "finding_level": "warning",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [
+        "PLS-012"
+      ],
+      "repair_required": true,
+      "source_atom_ids": [],
+      "summary": "Local ledger projections and global registry agree on the audit-007 repair pointer and status, but latest_audit_validated_at_utc differs across projections and is not consistently tied to the repair report generation time."
+    },
+    {
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "compile_queue.notes",
+        "audit-004 stale repair note",
+        "audit-007 latest repair summary"
+      ],
+      "evidence_refs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json:1901",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json:288",
+        "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md:1"
+      ],
+      "exact_tokens": [
+        "Audit-20260619-004",
+        "Audit-20260619-007",
+        "repair_validated"
+      ],
+      "finding_family": "ledger_projection_stale_repair_note",
+      "finding_key": "compile_queue_stale_repair_note",
+      "finding_level": "warning",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+        "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-014"
+      ],
+      "repair_required": true,
+      "source_atom_ids": [],
+      "summary": "compile_queue latest_audit_* fields point to audit-007, but the narrative notes still describe audit-20260619-004 as the validated repair."
+    }
+  ],
+  "governance_status": "sealed",
+  "governing_files_checked": [
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/decisions.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/corrections.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/questions.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/blockers.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/operating_capsule.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "latest_audit_note": "latest_audit_* points to the latest state-certifying audit-007 repair; this audit-only certification run does not stale that pointer.",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_status": "repair_validated",
+  "ledger_health_status": "pass_governance_sealed_post_audit_007_repair",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "observation_ref": "ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "repair_required_count": 2,
+  "schema_id": "pm.semantic_ledger_consistency.v1",
+  "status": "blocked",
+  "subject_ref": "ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "summary": "Ledger governing state has valid sealed status and audit-007 repair pointer, but two projection freshness issues require bounded repair: latest_audit_validated_at_utc drift and a stale compile_queue repair note."
+}
