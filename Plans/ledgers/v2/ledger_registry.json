@@ -447,20 +447,19 @@
       ],
       "created_at_utc": "2026-06-18T18:30:00Z",
       "governance_status": "sealed",
-      "last_updated_at": "2026-06-19T12:05:14Z",
-      "last_updated_at_utc": "2026-06-19T12:05:14Z",
-      "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
-      "latest_audit_closure_rows": 4,
+      "last_updated_at": "2026-06-19T15:35:54Z",
+      "last_updated_at_utc": "2026-06-19T15:35:54Z",
+      "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+      "latest_audit_closure_rows": 5,
       "latest_audit_closure_status_counts": {
-        "repaired": 3,
-        "stale_retired": 1
+        "repaired": 5
       },
-      "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
-      "latest_audit_repair_report": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
+      "latest_audit_ref": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+      "latest_audit_repair_report": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
       "latest_audit_status": "repair_validated",
-      "latest_audit_validated_at_utc": "2026-06-19T12:05:14Z",
+      "latest_audit_validated_at_utc": "2026-06-19T15:35:54Z",
       "ledger_id": "pldg-20260618-001-prd-planning-wizard",
-      "notes": "Audit-20260619-007 bounded repair closed local validation path leakage, PlanCompile runtime boundary schema drift, ContractRef owner-map underreporting, and stale atom-0167 repair-scope wording. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
+      "notes": "Audit-20260619-009 bounded repair closed runtime schema framing, retired wizard-name active fields, terminal repair-event lineage, latest-audit timestamp drift, and stale compile_queue repair note. No WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns, implementation files, runtime dispatch, or production build tasks were created.",
       "phase": "compiled_prd_planning_wizard_governance_sealed",
       "primary_goal": "Compile the settled PRD Builder and Planning Wizard product architecture, visible automated testing, Approve And Build, Plan Compile, WorkNode materialization, and Orchestrator startup contracts into canonical Plans with exact fidelity.",
       "resume_file": "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
@@ -510,5 +509,5 @@
       "updated_at_utc": "2026-06-19T05:19:50Z"
     }
   ],
-  "updated_at_utc": "2026-06-19T12:05:14Z"
+  "updated_at_utc": "2026-06-19T15:35:54Z"
 }

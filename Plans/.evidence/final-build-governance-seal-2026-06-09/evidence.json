@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
+      "sha256": "765a83d1833d97e6dec3bb5f64bc8f3e82a6e70b0828d46660ac7f997a07bd90"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "05edf870aadc12adb12295e053f7c94cf09042245c5098aaec34aa74d6dba50c"
+      "sha256": "9f054e1d2e4360e20070c178d036d10360f179e9491141f1b596156196ac8965"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "38a82e2892736d2b0e735eb64b3737aae09f1b67dbbb6a3099c72cc49c0cec3f"
+      "sha256": "13b1a35c84456584d6c2bcfcd827c845da343a90630d3e6593001ab8230886af"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "17a3f6cfa1bb16dde6cfd706a1bf38d372863a8164254556a9514ae25f2c994d"
+      "sha256": "4d3a8df47dfae551dc6b8ed24a8d02a7eb7ab93609bfc061dfb993ab87f08a74"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "4b08e23fe29b09d83c9890c180419c20211895f7a9916904db80679339ca760b"
+      "sha256": "77cc0aaa1d43b62293e390c32e5acf241378a83c755c9ee8a18a618c61df4768"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "b61b24ec1fc8455978dbbeff782a3a4f43b54e8fa6951edf2d782cfd25ce498f"
+      "sha256": "7d0a19021f340eb115d30ba6a365a2af807369076b5fa432db1117c7810aa479"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "e81c1393a19f5724d83c6014f50334e5aceaeae74abdd51050d55052cf22e0f8"
+      "sha256": "d259eb44e87210916b6c2fc817ae08ad43dcfef68a933bacd14fd4ff95af15cb"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "370303af474e2229c73d831ca1f1408f62e919fd218ea139759abcc63a621a09"
+      "sha256": "51efc04e057d8e32932becbd6c0d4579ab5bd952dbd57db610d74e76c6df9ba8"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "19768cad5f8ac3da7341e328e74dd7640b5ffae994d474181d880c0f3432f6da"
+      "sha256": "d03b86ee91e755e9bf6b3c7ffb34cb49cfede2e979208f6c992a1c119af85021"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "a774a01521589e1ca46c6ab4dc47fceae92bf863d7b5442c2d7ee354fb47060b"
+      "sha256": "6f45c789814480ed4b5de21cf2361db59b43b4b255f4afd625bcbb7cc1389e0a"
     }
   ],
   "checks": [
@@ -218,6 +218,11 @@
       "name": "pm-audit-closure-terminal-state-tests",
       "result": "PASS",
       "details": "python3 -m unittest tests/test_pm_audit_closure.py passed, covering previously_closed no matrix, warning-only terminal audits, audit-only subject_ref exclusion, and zero-actionable no-op validation."
+    },
+    {
+      "name": "audit-20260619-009-repair",
+      "result": "PASS",
+      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
     }
   ],
   "commands_run": [

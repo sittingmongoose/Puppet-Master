@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
+      "sha256": "765a83d1833d97e6dec3bb5f64bc8f3e82a6e70b0828d46660ac7f997a07bd90"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -197,6 +197,11 @@
       "name": "pm-semantic-terminal-state-governance-refresh",
       "result": "PASS",
       "details": "Refreshed Spec Lock, shard report, plan index, and migration batch hashes after process-owner PlanUnit updates; no node/build/runtime artifacts created."
+    },
+    {
+      "name": "audit-20260619-009-repair",
+      "result": "PASS",
+      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
     }
   ],
   "commands_run": [

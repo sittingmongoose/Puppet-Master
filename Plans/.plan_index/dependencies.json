@@ -63794,7 +63794,7 @@
       "to": "RAP-029"
     }
   ],
-  "generated_at_utc": "2026-06-19T11:59:31Z",
+  "generated_at_utc": "2026-06-19T15:32:46Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -83594,8 +83594,8 @@
       "source_location": {
         "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
         "heading_level": 3,
-        "heading_line": 17394,
-        "line": 17396,
+        "heading_line": 17398,
+        "line": 17400,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -83721,14 +83721,14 @@
       "unit_type": "constraint"
     },
     {
-      "context_scope": "chain_wizard_doc_builder_handoff",
+      "context_scope": "legacy_builder_compatibility_handoff",
       "gui_related": true,
       "owner_doc": "Plans/chain-wizard.md",
       "plan_unit_id": "CW-008",
       "reasoning_tier": "standard",
-      "risk_class": "doc_builder_handoff_drift",
+      "risk_class": "legacy_builder_handoff_drift",
       "source_location": {
-        "heading": "CW-008 - Doc Builder Invisible Goal Handoff Pointer",
+        "heading": "CW-008 - Legacy Builder Invisible Goal Handoff Pointer",
         "heading_level": 3,
         "heading_line": 419,
         "line": 421,
@@ -83747,8 +83747,8 @@
       "source_location": {
         "heading": "CW-009 - Planning Wizard Compatibility Redirect",
         "heading_level": 3,
-        "heading_line": 485,
-        "line": 487,
+        "heading_line": 492,
+        "line": 494,
         "path": "Plans/chain-wizard.md"
       },
       "status": "accepted",
@@ -86305,14 +86305,14 @@
       "unit_type": "requirement"
     },
     {
-      "context_scope": "requirements_doc_builder",
+      "context_scope": "prd_builder_legacy_compatibility",
       "gui_related": true,
       "owner_doc": "Plans/chain-wizard-flexibility.md",
       "plan_unit_id": "CWF-151",
       "reasoning_tier": "high",
-      "risk_class": "requirements_doc_builder_runtime_drift",
+      "risk_class": "prd_builder_legacy_runtime_drift",
       "source_location": {
-        "heading": "CWF-151 - Requirements Doc Builder Ledger To Invisible Goal Flow",
+        "heading": "CWF-151 - PRD Builder Legacy Compatibility Ledger To Invisible Goal Flow",
         "heading_level": 3,
         "heading_line": 10060,
         "line": 10062,
@@ -86331,8 +86331,8 @@
       "source_location": {
         "heading": "CWF-152 - PRD Builder And Planning Wizard Semantic Migration",
         "heading_level": 3,
-        "heading_line": 10127,
-        "line": 10129,
+        "heading_line": 10133,
+        "line": 10135,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "accepted",
@@ -129902,8 +129902,8 @@
       "source_location": {
         "heading": "PNC-015 - Runtime-Capable PlanCompile v2 Boundary",
         "heading_level": 3,
-        "heading_line": 808,
-        "line": 810,
+        "heading_line": 814,
+        "line": 816,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -129919,8 +129919,8 @@
       "source_location": {
         "heading": "PNC-016 - Runtime Stage Cards, Parallel Worklists, And Typed Dependencies",
         "heading_level": 3,
-        "heading_line": 901,
-        "line": 903,
+        "heading_line": 907,
+        "line": 909,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -129936,8 +129936,8 @@
       "source_location": {
         "heading": "PNC-017 - Compile Readiness Fixtures And No-Runtime-Artifact Boundary",
         "heading_level": 3,
-        "heading_line": 992,
-        "line": 994,
+        "heading_line": 998,
+        "line": 1000,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",

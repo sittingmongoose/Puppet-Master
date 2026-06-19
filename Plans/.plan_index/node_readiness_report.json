@@ -1890,7 +1890,7 @@
     "unblocks_edge_count": 1635,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-19T11:59:32Z",
+  "generated_at_utc": "2026-06-19T15:32:46Z",
   "gui_related_units": {
     "count": 2196,
     "units": [
@@ -7521,8 +7521,8 @@
         "source_location": {
           "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
           "heading_level": 3,
-          "heading_line": 17394,
-          "line": 17396,
+          "heading_line": 17398,
+          "line": 17400,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -7574,7 +7574,7 @@
         "owner_doc": "Plans/chain-wizard.md",
         "plan_unit_id": "CW-008",
         "source_location": {
-          "heading": "CW-008 - Doc Builder Invisible Goal Handoff Pointer",
+          "heading": "CW-008 - Legacy Builder Invisible Goal Handoff Pointer",
           "heading_level": 3,
           "heading_line": 419,
           "line": 421,
@@ -7587,8 +7587,8 @@
         "source_location": {
           "heading": "CW-009 - Planning Wizard Compatibility Redirect",
           "heading_level": 3,
-          "heading_line": 485,
-          "line": 487,
+          "heading_line": 492,
+          "line": 494,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -8388,7 +8388,7 @@
         "owner_doc": "Plans/chain-wizard-flexibility.md",
         "plan_unit_id": "CWF-151",
         "source_location": {
-          "heading": "CWF-151 - Requirements Doc Builder Ledger To Invisible Goal Flow",
+          "heading": "CWF-151 - PRD Builder Legacy Compatibility Ledger To Invisible Goal Flow",
           "heading_level": 3,
           "heading_line": 10060,
           "line": 10062,
@@ -8401,8 +8401,8 @@
         "source_location": {
           "heading": "CWF-152 - PRD Builder And Planning Wizard Semantic Migration",
           "heading_level": 3,
-          "heading_line": 10127,
-          "line": 10129,
+          "heading_line": 10133,
+          "line": 10135,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -26798,7 +26798,6 @@
       "discovery_determinism": 1,
       "dispatcher_integrity": 1,
       "distribution_target_confusion": 1,
-      "doc_builder_handoff_drift": 1,
       "docker_access_intelligence_gap": 1,
       "docker_action_scope_preflight_rules": 1,
       "docker_auth_result_payload_minimum": 1,
@@ -27270,6 +27269,7 @@
       "layout_drift": 1,
       "lazy_lifecycle_state_directory_permission_fallback": 1,
       "lazy_verification_state_creation_compatibility_envelope": 1,
+      "legacy_builder_handoff_drift": 1,
       "legacy_effort_wording_supersession": 1,
       "legacy_fidelity_traceability": 1,
       "legacy_persona_snapshot_vocabulary_revival": 1,
@@ -27703,6 +27703,7 @@
       "postlock_integrity_fallback_drift": 1,
       "pr_flow_drift": 1,
       "pr_start_drift": 1,
+      "prd_builder_legacy_runtime_drift": 1,
       "prd_execution_acceptance_criteria": 1,
       "prd_tool_task_injection_path": 1,
       "pre_dispatch_tool_validation": 1,
@@ -27960,7 +27961,6 @@
       "requirements_completion_gate_drift": 1,
       "requirements_coverage_extraction_drift": 1,
       "requirements_coverage_markdown_drift": 1,
-      "requirements_doc_builder_runtime_drift": 1,
       "requirements_entry_drift": 1,
       "requirements_merge_drift": 1,
       "requirements_quality_report_drift": 2,

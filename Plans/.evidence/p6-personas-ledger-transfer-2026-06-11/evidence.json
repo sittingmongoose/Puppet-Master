@@ -18,7 +18,7 @@
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "a9b5fbfbdf0de54c9447b116a9680bc755a2a5ce2c6b87a9d549a4a409bec2fd"
+      "sha256": "c3c001c4ee9f934c1ffca82b4ab9a5dea924c0540983a19fcf5c95caae350670"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ea4e7ad1cc03db8c62ff11ac381fdaffe3c29550c5ea3e3586d435056a709005"
+      "sha256": "765a83d1833d97e6dec3bb5f64bc8f3e82a6e70b0828d46660ac7f997a07bd90"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "1db235d53f48d62d5dadd3d976de78144a78199085f45a354a136d2fe4f982cc"
+      "sha256": "99eeb6ea24729e9be6ecda5529adc964aaa24d1a256e25fa755ca1a3c37bff88"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "c9108fa14d0dfce29af39749f3d3070f0facdcfd8158c76e8e8d49a6f318c23f"
+      "sha256": "0f310c53bdb61c84aaea09e6fb7aca57ae15b6eb2421e339a1888f72d8bf898f"
     }
   ],
   "checks": [
@@ -332,6 +332,11 @@
       "name": "pm-audit-closure-terminal-state-tests",
       "result": "PASS",
       "details": "python3 -m unittest tests/test_pm_audit_closure.py passed, covering previously_closed no matrix, warning-only terminal audits, audit-only subject_ref exclusion, and zero-actionable no-op validation."
+    },
+    {
+      "name": "audit-20260619-009-repair",
+      "result": "PASS",
+      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
     }
   ],
   "commands_run": [

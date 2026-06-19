@@ -1712,7 +1712,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 10215,
+      "line_count": 10221,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 152,
       "plan_unit_ids": [
@@ -1967,6 +1967,7 @@
         "postlock_integrity_fallback_drift",
         "pr_flow_drift",
         "pr_start_drift",
+        "prd_builder_legacy_runtime_drift",
         "prelock_degradation_drift",
         "progress_checkpoint_drift",
         "provider_settings_drift",
@@ -1976,7 +1977,6 @@
         "recovery_state_drift",
         "requirements_boundary_drift",
         "requirements_completion_gate_drift",
-        "requirements_doc_builder_runtime_drift",
         "requirements_entry_drift",
         "requirements_merge_drift",
         "requirements_quality_report_schema_drift",
@@ -2027,7 +2027,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "a9b5fbfbdf0de54c9447b116a9680bc755a2a5ce2c6b87a9d549a4a409bec2fd",
+      "sha256": "c3c001c4ee9f934c1ffca82b4ab9a5dea924c0540983a19fcf5c95caae350670",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 152
@@ -2042,7 +2042,7 @@
       },
       "validation_surfaces": [
         "PlanUnit-aware scan of live canonical_text and acceptance_criteria outside CWF-150's own placeholder-ban definition for \"future scope|future-scope\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
-        "future Requirements Doc Builder flow review",
+        "future PRD Builder legacy compatibility flow review",
         "manual heading/deduplication review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
@@ -2073,7 +2073,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 559,
+      "line_count": 566,
       "path": "Plans/chain-wizard.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -2093,16 +2093,16 @@
       ],
       "risk_classes": [
         "attention_route_target_drift",
-        "doc_builder_handoff_drift",
         "launch_seam_identity_drift",
         "launched_run_lineage_drift",
+        "legacy_builder_handoff_drift",
         "migration_lineage",
         "modular_contract_route_drift",
         "owner_drift",
         "route_object_model_fragmentation",
         "wizard_resume_deeplink_drift"
       ],
-      "sha256": "88f8237badf092d27176c6e59c9202970038f5b70cd511e2a0f3f2fcbd3edf03",
+      "sha256": "3445d1497217ab43a935387ca0a2b4ac0069eae9336ff48ed0d4d1c53749818a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -2114,7 +2114,7 @@
         "requirement": 3
       },
       "validation_surfaces": [
-        "future Chain Wizard Doc Builder handoff review",
+        "future legacy builder compatibility handoff review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -2665,7 +2665,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 17622,
+      "line_count": 17626,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 290,
       "plan_unit_ids": [
@@ -3256,7 +3256,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "8d4dc9a7a050b09f5c91a64e0d774010a732733425f122754dd0791fb1b6b452",
+      "sha256": "42f7c08ac69960bdca58812acaf413a7c70d8212006e533b727f07e40c17b308",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 288,
@@ -5285,7 +5285,6 @@
         "Plans/ledgers/v2",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md",
-        "future Chain Wizard",
         "future Goal Mode scheduler",
         "future Goal Mode service",
         "future Planning Wizard",
@@ -5370,7 +5369,7 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "b5cc0d524612e5974dd957ae56c189f3f5f1d79c2613872079838144bed2ff5d",
+      "sha256": "14f750ef3eec88c0d4e80ac4be659dac8f3e3b22cdea92e0600870fee4d0f7d7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29,
@@ -8864,7 +8863,7 @@
         "future compiler",
         "future runtime router"
       ],
-      "line_count": 1077,
+      "line_count": 1083,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -8905,7 +8904,7 @@
         "scheduling_correctness",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "7ee9d98374512e2f6081da4aa246b86d45299ab6a2b7d064c555b6de70ee0774",
+      "sha256": "4334af59138de035149285a9c67ecd3ca83e1baefcbc4c09456a13b096be346d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16,
@@ -11750,7 +11749,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T11:59:31Z",
+  "generated_at_utc": "2026-06-19T15:32:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
