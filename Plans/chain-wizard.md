@@ -416,7 +416,7 @@ Phase 2B atomized `chain-wizard-S0001` through `chain-wizard-S0004` into fine-gr
 
 ## Ledger Compile Addendum - pldg-20260616-002
 
-### CW-008 - Doc Builder Invisible Goal Handoff Pointer
+### CW-008 - Legacy Builder Invisible Goal Handoff Pointer
 
 ```yaml
 plan_unit_id: CW-008
@@ -424,33 +424,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
-  Chain Wizard entry points may route Requirements Doc Builder users into conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work, and routes any plans-to-work-graphs or work-graph preparation artifact boundary through Plan_To_Node_Compilation/PNC-009; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
+  Legacy builder entry points that carried Chain Wizard, Plan Wizard, or Requirements Doc Builder labels are compatibility/source-lineage aliases only. Current product flows route users to PRD Builder and Planning Wizard conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the Planning Wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work, and routes any plans-to-work-graphs or work-graph preparation artifact boundary through Plan_To_Node_Compilation/PNC-009; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
 gui_related: true
-gui_classification_reason: This unit defines visible wizard entry and handoff behavior for Requirements Doc Builder flows.
+gui_classification_reason: This unit defines visible legacy compatibility entry and handoff behavior for PRD Builder and Planning Wizard flows.
 depends_on:
   - CW-007
   - GRS-003
   - PNC-009
 unblocks: []
 acceptance_criteria:
-  - Wizard entry can start conversational v2 ledger capture for Requirements Doc Builder.
+  - Legacy wizard or builder labels redirect to PRD Builder and Planning Wizard rather than remaining active product names.
+  - PRD Builder or Planning Wizard entry can start conversational v2 ledger capture.
   - Invisible conversion handoff occurs only after the ledger is accepted and ready.
   - Handoffs preserve ledger source refs and conversion-audit lineage.
   - plans-to-work-graphs handoffs route through the Plan_To_Node_Compilation compiler boundary.
   - Wizard handoff does not create default Orchestrator WorkNodes.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Chain Wizard Doc Builder handoff review
-risk_class: doc_builder_handoff_drift
+  - future legacy builder compatibility handoff review
+risk_class: legacy_builder_handoff_drift
 reasoning_tier: standard
-context_scope: chain_wizard_doc_builder_handoff
+context_scope: legacy_builder_compatibility_handoff
 implementation_surfaces:
   - Plans/chain-wizard.md
   - Plans/chain-wizard-flexibility.md
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
 node_compile_hint:
-  mode: doc_builder_invisible_goal_handoff
+  mode: legacy_builder_compatibility_handoff
   create_worknodes: false
 source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
@@ -467,7 +468,13 @@ preserved_exact_tokens:
   - "doc builder"
   - "Requirements Doc Builder"
   - "invisible Goal Mode"
+compatibility_only_notes:
+  - "'Chain Wizard', 'Plan Wizard', and 'Requirements Doc Builder' are retained in this PlanUnit only as legacy compatibility/source-lineage labels that redirect to PRD Builder and Planning Wizard."
+stale_retired_dispositions:
+  - Chain Wizard and Plan Wizard are retired current-product names.
+  - Requirements Doc Builder is the former product label now named PRD Builder.
 negative_constraints:
+  - Do not use Chain Wizard, Plan Wizard, or Requirements Doc Builder as active current-product names.
   - Do not bypass ledger preservation or conversion audit.
   - Do not treat invisible conversion handoff as a default Orchestrator WorkNode.
 owner_hints:

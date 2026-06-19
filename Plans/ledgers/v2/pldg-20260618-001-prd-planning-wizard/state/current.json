@@ -162,7 +162,7 @@
   ],
   "cursor": {
     "last_completed_atom_id": "atom-0168",
-    "last_event_id": "evt-0029",
+    "last_event_id": "evt-0031",
     "next_action": "Audit-20260619-007 bounded repair is validated and repair projections are current; wait for Jared to request another audit, repair, compile, build phase, or post-commit review.",
     "next_atom_id": null
   },
@@ -178,17 +178,16 @@
     "Plans/.audits/_semantic_closure_registry.jsonl"
   ],
   "governance_status": "sealed",
-  "last_event_id": "evt-0029",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 4,
+  "last_event_id": "evt-0031",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 5,
   "latest_audit_closure_status_counts": {
-    "repaired": 3,
-    "stale_retired": 1
+    "repaired": 5
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T12:04:46Z",
+  "latest_audit_validated_at_utc": "2026-06-19T15:35:54Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers_count": 0,
   "open_questions_count": 0,
@@ -267,7 +266,7 @@
   "unchanged_prior_canon_support_docs": [
     "Plans/Tools.md"
   ],
-  "updated_at_utc": "2026-06-19T12:04:46Z",
+  "updated_at_utc": "2026-06-19T15:35:54Z",
   "post_audit_20260619_003_repair_summary": "PASS: all 16 audit-20260619-003 closure rows are closed; stale cursor projection wording, audit-only repair matrix warning, and previously_closed/source_lineage_only atom-fidelity rows are represented in the closure matrix; validators pass with no side effects.",
   "post_audit_20260619_004_repair_summary": {
     "status": "repair_validated",
@@ -305,5 +304,31 @@
       "scripts/pm-plans-verify.py"
     ]
   },
-  "latest_repair_summary": "PASS: all 4 audit-20260619-007 closure rows are closed; local validation path leakage, PlanCompile runtime boundary schema drift, owner map underreporting, and stale atom-0167 repair-scope wording are addressed."
+  "latest_repair_summary": "PASS: all 5 audit-20260619-009 closure rows are closed; runtime schema framing, retired wizard naming, terminal event lineage, latest-audit timestamps, and compile_queue note drift are addressed.",
+  "post_audit_20260619_009_repair_summary": {
+    "audit_id": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+    "status": "repair_validated",
+    "validated_at_utc": "2026-06-19T15:35:54Z",
+    "closed_findings": 5,
+    "closure_status_counts": {
+      "repaired": 5
+    },
+    "notes": "Bounded repair closed audit-009 actionable rows without creating WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, or production build tasks.",
+    "canonical_plan_targets": [
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Contracts_V0.md",
+      "Plans/chain-wizard.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/Goal_Runtime_System.md"
+    ],
+    "schema_outputs": [
+      "Plans/plans_to_code_handoff.schema.json"
+    ],
+    "governance_outputs": [
+      "Plans/.plan_index/**",
+      "Plans/_shards/**",
+      "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "Plans/Spec_Lock.json"
+    ]
+  }
 }

@@ -1886,19 +1886,18 @@
       "title": "Plans-To-Code Handoff Matrix Current-Ledger Traceability Repair"
     }
   ],
-  "last_event_id": "evt-0029",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
-  "latest_audit_closure_rows": 4,
+  "last_event_id": "evt-0031",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "latest_audit_closure_rows": 5,
   "latest_audit_closure_status_counts": {
-    "repaired": 3,
-    "stale_retired": 1
+    "repaired": 5
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T12:04:46Z",
+  "latest_audit_validated_at_utc": "2026-06-19T15:35:54Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
-  "notes": "Compiled/sealed ledger remains closed. Audit-20260619-004 bounded repair validated governance evidence scope labeling, PNC-014 source_atom_ids/index shape, compact handoff PlanUnit count, and post-commit next action without changing product design or creating runtime/build artifacts.",
+  "notes": "Compiled/sealed ledger remains closed. Audit-20260619-009 bounded repair validated runtime schema framing, retired wizard-name active fields, terminal repair-event lineage, latest-audit timestamp consistency, and compile_queue repair-note currentness without creating node/build/runtime artifacts.",
   "plan_index_outputs": [
     "Plans/.plan_index/plan_units.jsonl",
     "Plans/.plan_index/doc_cards.json",
@@ -1948,11 +1947,11 @@
     "Plans/storage-plan.md"
   ],
   "status": "compiled_prd_planning_wizard_governance_sealed",
-  "terminal_ledger_event_id": "evt-0029",
+  "terminal_ledger_event_id": "evt-0031",
   "unchanged_prior_canon_support_docs": [
     "Plans/Tools.md"
   ],
-  "updated_at_utc": "2026-06-19T12:04:46Z",
+  "updated_at_utc": "2026-06-19T15:35:54Z",
   "validation_results": {
     "git_diff_check": "pass",
     "pm_audit_closure_validate_with_matrix": "pass",
@@ -1967,5 +1966,31 @@
     "pm_plans_verify_validate_plans_to_code_handoff_schema": "pass",
     "pm_plans_verify_verify_spec_lock": "pass",
     "pm_shard_plans_check": "pass"
+  },
+  "post_audit_20260619_009_repair_summary": {
+    "audit_id": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+    "status": "repair_validated",
+    "validated_at_utc": "2026-06-19T15:35:54Z",
+    "closed_findings": 5,
+    "closure_status_counts": {
+      "repaired": 5
+    },
+    "notes": "Bounded repair closed audit-009 actionable rows without creating WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, or production build tasks.",
+    "canonical_plan_targets": [
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Contracts_V0.md",
+      "Plans/chain-wizard.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/Goal_Runtime_System.md"
+    ],
+    "schema_outputs": [
+      "Plans/plans_to_code_handoff.schema.json"
+    ],
+    "governance_outputs": [
+      "Plans/.plan_index/**",
+      "Plans/_shards/**",
+      "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "Plans/Spec_Lock.json"
+    ]
   }
 }

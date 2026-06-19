@@ -1,0 +1,228 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "generated_at_utc": "2026-06-19T15:35:54Z",
+  "status": "repair_validated",
+  "repair_required_count": 5,
+  "closure_counts": {
+    "repaired": 5
+  },
+  "closure_matrix": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "registry_rows": [
+    "closure-audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity-repair-001",
+    "closure-audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity-repair-002",
+    "closure-audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity-repair-003",
+    "closure-audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity-repair-004",
+    "closure-audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity-repair-005"
+  ],
+  "changed_files_or_globs": [
+    "Plans/Contracts_V0.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/chain-wizard.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/plans_to_code_handoff.schema.json",
+    "Plans/.plan_index/**",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+    "Plans/_shards/**",
+    "Plans/.evidence/plan-sharding-2026-06-09/**",
+    "Plans/Spec_Lock.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/events.jsonl",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/manifest.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/repair_report.json",
+    "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/REPAIR_REPORT.md",
+    "Plans/.evidence/**",
+    "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/closure_reuse.jsonl"
+  ],
+  "plan_units_touched": [
+    "PNC-014",
+    "PNC-015",
+    "CV-289",
+    "CV-290",
+    "CW-008",
+    "CWF-151",
+    "GRS-002",
+    "CW-009",
+    "CWF-152",
+    "0PI-059",
+    "PWIZ-001",
+    "PLS-006",
+    "PLS-012",
+    "PLS-014"
+  ],
+  "ledger_events_added": [
+    "evt-0030",
+    "evt-0031"
+  ],
+  "forbidden_artifacts_created": false,
+  "runtime_artifacts_created": false,
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "governance_status": "sealed_after_repair_all_evidence_current",
+  "validator_results": [
+    {
+      "name": "audit_closure_validate",
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity --require-closure-matrix",
+      "status": "pass",
+      "summary": "repair_required_count=5; matrix_rows=5; status_counts.repaired=5; registry row_count=305"
+    },
+    {
+      "name": "ledger_validate",
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "status": "pass",
+      "summary": "events=31; atoms=168; compile_queue_items=62; plan_units_checked=2961"
+    },
+    {
+      "name": "plan_index_validate",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": "plan_unit_count=5166; acceptance_unit_count=18435; node_readiness_status=blocked_compiler_contract_incomplete"
+    },
+    {
+      "name": "plan_migration_validate",
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "summary": "run_id=pds-20260611-002-atomize-planunits; live_plan_unit_count=5166"
+    },
+    {
+      "name": "run_gates",
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "shard_check",
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": "docs_checked=54; shards_checked=985"
+    },
+    {
+      "name": "validate_auto_decisions",
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "verify_spec_lock",
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "validate_evidence",
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass",
+      "summary": "failures=[]; all registered evidence bundles current"
+    },
+    {
+      "name": "validate_plan_graph",
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "validate_plans_to_code_handoff_schema",
+      "command": "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "audit_governance",
+      "command": "python3 scripts/pm-plans-verify.py audit-governance",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "json_syntax",
+      "command": "python3 scripts/pm-plans-verify.py json-syntax",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "lint_contractrefs",
+      "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "lint_banned_phrases",
+      "command": "python3 scripts/pm-plans-verify.py lint-banned-phrases",
+      "status": "pass",
+      "summary": "failures=[]"
+    },
+    {
+      "name": "check_project_artifacts",
+      "command": "python3 scripts/pm-plans-verify.py check-project-artifacts",
+      "status": "pass",
+      "summary": "failures=[]; no forbidden project artifacts created"
+    },
+    {
+      "name": "git_diff_check",
+      "command": "git diff --check",
+      "status": "pass",
+      "summary": "no whitespace errors"
+    },
+    {
+      "name": "git_status_before_after",
+      "command": "git status --short",
+      "status": "pass",
+      "summary": "before/after status captured; validator suite introduced no unexpected non-audit state beyond refreshed generated governance artifacts"
+    }
+  ],
+  "remaining_blocked_decisions": [],
+  "next_safe_action": "Commit and push the validated repair state; no further repair is required unless a later audit finds repair_required=true rows.",
+  "repaired_items": [
+    {
+      "source": "semantic_risks.jsonl:1",
+      "finding_key": "sfk-17ce347626026cc51017e200",
+      "status": "repaired",
+      "summary": "Qualified handoff schema v1 design_only versus runtime-capable v2 native_runtime framing."
+    },
+    {
+      "source": "semantic_risks.jsonl:2",
+      "finding_key": "sfk-3bb0aa73a9f3c560d566525b",
+      "status": "repaired",
+      "summary": "Moved retired wizard names out of active PlanUnit fields into compatibility/source-lineage dispositions."
+    },
+    {
+      "source": "ledger_consistency.json:findings[0]",
+      "finding_key": "sfk-baad61c3d44623e4d904a5e9",
+      "status": "repaired",
+      "summary": "Restored audit-007 and audit-009 repair event lineage."
+    },
+    {
+      "source": "ledger_consistency.json:findings[1]",
+      "finding_key": "sfk-fcbba52032118ea93d2fc0d2",
+      "status": "repaired",
+      "summary": "Normalized latest_audit timestamps to this audit-009 repair."
+    },
+    {
+      "source": "ledger_consistency.json:findings[2]",
+      "finding_key": "sfk-9c51eae1114bf475c5a030b2",
+      "status": "repaired",
+      "summary": "Rewrote stale compile_queue repair note."
+    }
+  ],
+  "evidence_refresh": {
+    "plan_sharding_evidence_sync": "pass_no_artifact_list_changes",
+    "all_registered_evidence_hashes": "pass_refreshed_with_pm-governance-seal",
+    "closure_registry_hash_refresh": "pass_existing_rows_only_no_new_historical_rows"
+  },
+  "closure_registry_redactions": [
+    {
+      "closure_id": "closure-audit-20260619-007-prd-planning-wizard-head-semantic-fidelity-repair-002",
+      "previous_finding_key": "sfk-9004c05d325c979c02058376",
+      "redacted_finding_key": "sfk-84ee97b0533c3062f254a8d5",
+      "reason": "The row was touched by hash refresh; host-local dependency path strings were redacted so the current patch does not add local machine state."
+    }
+  ]
+}

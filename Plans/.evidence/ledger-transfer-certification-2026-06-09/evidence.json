@@ -95,6 +95,11 @@
       "name": "audit_20260618_007_closure_matrix",
       "result": "PASS",
       "details": "Closed 94 audit rows across semantic risks, atom fidelity, PlanUnit source claims, owner routing, ledger consistency, and validator context."
+    },
+    {
+      "name": "audit-20260619-009-repair",
+      "result": "PASS",
+      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
     }
   ],
   "commands_run": [

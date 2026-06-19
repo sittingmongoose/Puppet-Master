@@ -116,7 +116,7 @@ reasoning_tier: high
 context_scope: goal_runtime_system
 implementation_surfaces:
   - future Goal Mode service
-  - future Chain Wizard
+  - future Planning Wizard
   - Plans/assistant-chat-design.md
   - Plans/Orchestrator_Page.md
   - Plans/Executor_Protocol.md
