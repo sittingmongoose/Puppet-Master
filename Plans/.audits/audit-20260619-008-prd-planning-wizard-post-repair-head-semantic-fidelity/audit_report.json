@@ -1,0 +1,275 @@
+{
+  "advisory_count": 16,
+  "atom_fidelity": {
+    "classification_counts": {
+      "equivalent_with_evidence": 61,
+      "exact_present": 99,
+      "previously_closed": 7,
+      "stale_retired": 1
+    },
+    "missing_or_drift_count": 0,
+    "repair_required_count": 0,
+    "row_count": 168,
+    "summary": "168/168 source atoms are exact_present, equivalent_with_evidence, previously_closed, or stale_retired with evidence at current HEAD; no atom row requires repair."
+  },
+  "audit_id": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "changed_files": {
+    "live_non_pipeline_changed_count": 41,
+    "live_non_pipeline_changed_files": [
+      "Plans/00-plans-index.md",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Bootstrap_Planning_Migration.md",
+      "Plans/Commands_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Crosswalk.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FileSafe.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/GitHub_API_Auth_and_Flows.md",
+      "Plans/GitHub_Integration.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Media_Generation_and_Capabilities.md",
+      "Plans/Models_System.md",
+      "Plans/Multi-Account.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/PRD_Builder.md",
+      "Plans/Permissions_System.md",
+      "Plans/Personas.md",
+      "Plans/Plan_Document_System.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Planning_Wizard.md",
+      "Plans/Progression_Gates.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/Spec_Lock.json",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "Plans/bootstrap/Codex_Prompts.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/chain-wizard.md",
+      "Plans/human-in-the-loop.md",
+      "Plans/plan_graph.json",
+      "Plans/plans_to_code_handoff.schema.json",
+      "Plans/sharding_config.json",
+      "Plans/storage-plan.md"
+    ],
+    "name_status_count": 967,
+    "name_status_sample": [
+      "A\tPACKAGE_MANIFEST.json",
+      "A\tPM_PLANNING_WIZARD_LEDGER_INSTALL.md",
+      "A\tPROMPT_COMPATIBILITY.md",
+      "M\tPlans/.audits/_semantic_closure_registry.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/repair_validator_results.json",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/repair_validator_results.json",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/changed_plan_fidelity.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/validator_results.json",
+      "A\tPlans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/FINAL_REPORT.md"
+    ]
+  },
+  "closure_reuse": {
+    "closure_status_counts": {
+      "false_positive": 1,
+      "repaired": 11,
+      "stale_retired": 1
+    },
+    "hash_mismatch_count": 0,
+    "row_count": 13,
+    "summary": "Closure registry rows matching current subject evidence were reused rather than reopened or double-counted."
+  },
+  "created_at_utc": "2026-06-19T12:45:27Z",
+  "first_substantive_commit": "c205ca507832a23c9393c6e470229cc72f7f5eeb",
+  "forbidden_artifacts": {
+    "build_tasks": 0,
+    "executable_queues": 0,
+    "final_node_manifests": 0,
+    "forbidden_paths": [],
+    "implementation_files": 0,
+    "nodeseed_candidates": 0,
+    "nodeseeds": 0,
+    "summary": "No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime dispatch, implementation files, GoalRuns, or production build tasks were created by the audited cycle.",
+    "worknodes": 0
+  },
+  "inference": {
+    "audit_id_inference": "Existing 2026-06-19 PRD Planning Wizard audits ended at audit-007, so audit-008 is next.",
+    "baseline_ref_inference": "First substantive ledger-cycle commit is c205ca507832a23c9393c6e470229cc72f7f5eeb; baseline_ref is its parent be1fcd71.",
+    "ledger_id_inference": "Latest sealed non-background ledger in registry and recent commits is pldg-20260618-001-prd-planning-wizard.",
+    "subject_ref_inference": "HEAD ba61ff4e changed live Plans, target ledger governing projections, .plan_index, governance artifacts, and process scripts after audit-007 repair; therefore subject_ref=observation_ref=HEAD."
+  },
+  "ledger_consistency": {
+    "repair_required_count": 2,
+    "status": "blocked",
+    "summary": "Ledger governing state has valid sealed status and audit-007 repair pointer, but two projection freshness issues require bounded repair: latest_audit_validated_at_utc drift and a stale compile_queue repair note."
+  },
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "next_action": "Repair required: run a bounded repair lane for the two semantic_risks.jsonl rows and two ledger_consistency.json findings, then rerun this audit at the new HEAD. Do not broaden into WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or product build tasks.",
+  "observation_ref": "ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "owner_routing_findings": {
+    "repair_required_count": 0,
+    "row_count": 0,
+    "summary": "No new owner-routing gaps found. Audit-007 owner-map underreporting is closed and reused through closure_reuse.jsonl."
+  },
+  "plan_index": {
+    "acceptance_unit_count": 18432,
+    "coverage_status": "pass",
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 5166
+  },
+  "planunit_source_claims": {
+    "claim_status_counts": {
+      "source_lineage_supported": 62
+    },
+    "missing_lineage_count": 0,
+    "overclaim_count": 0,
+    "repair_required_count": 0,
+    "row_count": 62,
+    "summary": "Every audited PlanUnit source claim is supported by current compile_queue source atoms and current PlanUnit source_atom_ids/source_lineage."
+  },
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "repair_prompt": "Repair PM Bootstrap deep semantic audit audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity: read the audit bundle, repair only repair_required=true rows in semantic_risks.jsonl and ledger_consistency.json, write repair_closure_matrix.jsonl and registry closures for actionable rows only, run validators, then re-audit current HEAD. Do not repair previously_closed, stale_retired, exact_present, equivalent_with_evidence, ordinary validator warnings, audit-only currentness, or repair_required=false observations.",
+  "repair_required_count": 4,
+  "schema_id": "pm.semantic_fidelity_audit_report.v1",
+  "semantic_risks": {
+    "classification_counts": {
+      "missing_or_drift": 2
+    },
+    "repair_required_count": 2,
+    "risk_keys": [
+      "audit-20260619-008::runtime_schema_design_only_framing_drift",
+      "audit-20260619-008::retired_wizard_names_remain_in_active_planunit_fields"
+    ],
+    "row_count": 2,
+    "summary": "Two changed-doc semantic drifts require bounded repair: runtime schema/design-only framing and active retired wizard-name fields."
+  },
+  "status": "BLOCKED",
+  "subagent_summaries": [
+    {
+      "agent": "Ptolemy",
+      "area": "atom fidelity",
+      "disposition": "completed; no actionable atom drift, four closed/advisory observations"
+    },
+    {
+      "agent": "Jason",
+      "area": "lineage",
+      "disposition": "completed; 62/62 audited PlanUnit source claims supported"
+    },
+    {
+      "agent": "Avicenna",
+      "area": "owner routing",
+      "disposition": "completed; no new owner-routing gaps"
+    },
+    {
+      "agent": "Turing",
+      "area": "changed-doc fidelity",
+      "disposition": "completed; two semantic drift findings accepted as repair_required"
+    },
+    {
+      "agent": "Kierkegaard",
+      "area": "ledger state",
+      "disposition": "completed; two ledger projection findings accepted as repair_required"
+    },
+    {
+      "agent": "Fermat",
+      "area": "governance/forbidden artifacts",
+      "disposition": "completed; no forbidden artifacts or governance blockers"
+    },
+    {
+      "agent": "Cicero",
+      "area": "validator mutability",
+      "disposition": "completed; validator command boundaries recorded and no non-audit side effects found"
+    }
+  ],
+  "subject_ref": "ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "validators": {
+    "status": "pass",
+    "result_count": 19,
+    "pass_count": 16,
+    "superseded_environment_failure_count": 3,
+    "fail_count": 0,
+    "failed_results": [],
+    "non_audit_side_effects": [],
+    "results_path": "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json",
+    "final_count_check": "pm_audit_closure_validate_audit_008_final_count_check reported repair_required_count=4 and terminal_repair_state=repair_required."
+  },
+  "advisory_count_basis": "13 closure_reuse rows plus 3 superseded base-environment validator observations; subagent observation notes are preserved in parallel_assignment_receipts.jsonl but not counted here."
+}
