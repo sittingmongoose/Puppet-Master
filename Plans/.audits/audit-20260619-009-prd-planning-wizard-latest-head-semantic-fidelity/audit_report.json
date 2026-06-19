@@ -1,0 +1,219 @@
+{
+  "schema_id": "pm.semantic_audit_report.v1",
+  "audit_id": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "created_at_utc": "2026-06-19T14:58:07Z",
+  "status": "BLOCKED",
+  "baseline_ref": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe",
+  "first_substantive_commit": "c205ca507832a23c9393c6e470229cc72f7f5eeb",
+  "subject_ref": "ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "observation_ref": "54c8cabf3a829a3a85f0bff9dcd76ca5ea4521fd",
+  "range": "be1fcd710906c1d3243cf6e2020de9ac13eebbfe..ba61ff4e40e17c477c6260b8f33cfe9b8ef503e6",
+  "inference": {
+    "ledger_id": "latest sealed non-background ledger by registry last_updated_at and recent PRD Planning Wizard commits",
+    "audit_id": "next audit for 2026-06-19 after audit-008",
+    "baseline_ref": "parent of first substantive PRD Planning Wizard ledger/Plan commit c205ca50",
+    "subject_ref": "latest non-audit substantive commit ba61ff4e before audit-only HEAD",
+    "observation_ref": "HEAD 54c8cabf; subject..HEAD adds only audit-008 artifacts"
+  },
+  "changed_files": {
+    "name_status_count": 967,
+    "live_non_pipeline_changed_count": 42,
+    "live_non_pipeline_changed_files": [
+      "Plans/00-plans-index.md",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Bootstrap_Planning_Migration.md",
+      "Plans/Commands_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Crosswalk.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FileSafe.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/GitHub_API_Auth_and_Flows.md",
+      "Plans/GitHub_Integration.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Media_Generation_and_Capabilities.md",
+      "Plans/Models_System.md",
+      "Plans/Multi-Account.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/PRD_Builder.md",
+      "Plans/Permissions_System.md",
+      "Plans/Personas.md",
+      "Plans/Plan_Document_System.md",
+      "Plans/Plan_To_Node_Compilation.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Planning_Wizard.md",
+      "Plans/Progression_Gates.md",
+      "Plans/Project_Output_Artifacts.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/Spec_Lock.json",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/WorktreeGitImprovement.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/auto_decisions.jsonl",
+      "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+      "Plans/bootstrap/Codex_Prompts.md",
+      "Plans/chain-wizard-flexibility.md",
+      "Plans/chain-wizard.md",
+      "Plans/human-in-the-loop.md",
+      "Plans/plan_graph.json",
+      "Plans/plans_to_code_handoff.schema.json",
+      "Plans/sharding_config.json",
+      "Plans/storage-plan.md"
+    ],
+    "subject_to_observation_name_status": [
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/atom_fidelity_matrix.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/audit_report.json",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/closure_reuse.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/ledger_consistency.json",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/owner_routing_findings.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/parallel_assignment_receipts.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/planunit_source_claims.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/semantic_risks.jsonl",
+      "A\tPlans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json"
+    ]
+  },
+  "atom_fidelity": {
+    "row_count": 168,
+    "classification_counts": {
+      "equivalent_with_evidence": 61,
+      "exact_present": 99,
+      "previously_closed": 7,
+      "stale_retired": 1
+    },
+    "missing_or_drift_count": 0,
+    "repair_required_count": 0,
+    "summary": "168/168 source atoms are exact_present, equivalent_with_evidence, previously_closed, or stale_retired with evidence at observation HEAD; no atom matrix row requires repair."
+  },
+  "planunit_source_claims": {
+    "row_count": 62,
+    "claim_status_counts": {
+      "source_lineage_supported": 62
+    },
+    "missing_lineage_count": 0,
+    "overclaim_count": 0,
+    "repair_required_count": 0,
+    "summary": "Every audited PlanUnit source claim is supported by current compile_queue source atoms and current PlanUnit source_atom_ids/source_lineage."
+  },
+  "owner_routing_findings": {
+    "row_count": 0,
+    "repair_required_count": 0,
+    "summary": "No owner-routing gaps were adopted; source-control exact-token concern was adjudicated as covered by concrete support owner PlanUnits."
+  },
+  "closure_reuse": {
+    "row_count": 13,
+    "closure_status_counts": {
+      "false_positive": 1,
+      "repaired": 11,
+      "stale_retired": 1
+    },
+    "hash_mismatch_count": 0,
+    "summary": "Closure registry rows matching current subject evidence were reused rather than reopened or double-counted; previously_closed rows are not findings."
+  },
+  "semantic_risks": {
+    "row_count": 2,
+    "repair_required_count": 2,
+    "classification_counts": {
+      "missing_or_drift": 2
+    },
+    "risk_keys": [
+      "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity::runtime_schema_design_only_framing_drift",
+      "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity::retired_wizard_names_remain_in_active_planunit_fields"
+    ],
+    "summary": "Two changed-doc semantic drifts require bounded repair: runtime schema/design-only framing and active retired wizard-name fields."
+  },
+  "ledger_consistency": {
+    "status": "blocked",
+    "repair_required_count": 3,
+    "summary": "Ledger governing state is sealed with no open blockers/questions, but three repair-required consistency gaps remain: missing audit-007 terminal event lineage, latest-audit timestamp drift, and a stale compile_queue repair note."
+  },
+  "plan_index": {
+    "plan_unit_count": 5166,
+    "acceptance_unit_count": 18432,
+    "coverage_status": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "runtime_enablement_status": "runtime_disabled_or_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "nodeseed_candidates_created": false,
+    "no_executable_build_tasks_created": true,
+    "no_final_node_queues_created": true,
+    "summary": "Plan index and governance artifacts validate structurally; readiness remains intentionally blocked by incomplete compiler/runtime contract and does not authorize WorkNodes or NodeSeeds."
+  },
+  "forbidden_artifacts": {
+    "worknodes": 0,
+    "nodeseeds": 0,
+    "nodeseed_candidates": 0,
+    "executable_queues": 0,
+    "final_node_manifests": 0,
+    "implementation_files": 0,
+    "build_tasks": 0,
+    "forbidden_paths": [],
+    "summary": "No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime dispatch, implementation files, GoalRuns, Rust/Slint/Iced app scaffolds, or production build tasks were created by the audited cycle."
+  },
+  "validators": {
+    "status": "pass",
+    "result_count": 19,
+    "pass_count": 19,
+    "fail_count": 0,
+    "failed_results": [],
+    "non_audit_side_effects": [],
+    "results_path": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/validator_results.json"
+  },
+  "repair_required_count": 5,
+  "advisory_count": 0,
+  "advisory_count_basis": "No repair_required=false findings are counted as advisories; previously_closed closure-reuse rows and validator pass observations are not findings.",
+  "subagent_summaries": [
+    {
+      "area": "atom_fidelity",
+      "agent": "Galileo",
+      "disposition": "accepted_two_semantic_drift_rows; atom matrix itself has 0 repair-required rows",
+      "repair_required": true
+    },
+    {
+      "area": "reciprocal_lineage",
+      "agent": "Mencius",
+      "disposition": "62/62 PlanUnit source claims supported; 168/168 atoms mapped; no missing or overclaimed lineage",
+      "repair_required": false
+    },
+    {
+      "area": "owner_routing",
+      "agent": "Darwin",
+      "disposition": "no owner-routing gaps; support/lineage docs treated as PlanUnit-index owners, not promoted product ContractRefs",
+      "repair_required": false
+    },
+    {
+      "area": "changed_doc_fidelity",
+      "agent": "Parfit",
+      "disposition": "reported source-control Planning Wizard exact-token concern; main audit did not adopt because compile_queue routes those atoms to GitHub/FileSafe/Worktree/Permissions support owners and live PlanUnits preserve exact tokens there",
+      "repair_required": false
+    },
+    {
+      "area": "ledger_governing_state",
+      "agent": "Kant",
+      "disposition": "accepted terminal-event lineage gap and registry timestamp drift; compile_queue stale note verified by main audit",
+      "repair_required": true
+    },
+    {
+      "area": "index_governance",
+      "agent": "Epicurus",
+      "disposition": "plan index, migration, Spec Lock, plan graph, auto-decisions, shards and evidence structurally current; node readiness intentionally blocked_compiler_contract_incomplete",
+      "repair_required": false
+    },
+    {
+      "area": "forbidden_artifacts",
+      "agent": "Descartes",
+      "disposition": "no WorkNodes, NodeSeeds, executable queues, final node manifests, GoalRuns/runtime dispatch artifacts, implementation files, build tasks, Rust/Slint scaffolds, or legacy Iced resurrection",
+      "repair_required": false
+    },
+    {
+      "area": "validator_mutability",
+      "agent": "Rawls",
+      "disposition": "read-only validator command set and generator modes identified; main audit runs validators with git status before/after",
+      "repair_required": false
+    }
+  ],
+  "next_action": "Run bounded repair for the five repair_required=true rows only, then re-run validators and re-audit HEAD. Do not repair previously_closed rows, audit-only artifact wording, or forbidden-artifact nonfindings."
+}
