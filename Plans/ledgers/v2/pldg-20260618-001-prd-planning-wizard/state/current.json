@@ -162,8 +162,8 @@
   ],
   "cursor": {
     "last_completed_atom_id": "atom-0168",
-    "last_event_id": "evt-0027",
-    "next_action": "Audit-20260619-001 bounded repair is validated; wait for Jared to request a new conversational design turn, audit, compile, or build phase.",
+    "last_event_id": "evt-0028",
+    "next_action": "Audit-20260619-003 bounded repair is validated; wait for Jared to request a new conversational design turn, audit, compile, or build phase.",
     "next_atom_id": null
   },
   "deferred_questions_count": 0,
@@ -178,17 +178,17 @@
     "Plans/.audits/_semantic_closure_registry.jsonl"
   ],
   "governance_status": "sealed",
-  "last_event_id": "evt-0027",
-  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl",
+  "last_event_id": "evt-0028",
+  "latest_audit_closure_matrix": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_closure_matrix.jsonl",
   "latest_audit_closure_rows": 16,
   "latest_audit_closure_status_counts": {
-    "repaired": 15,
-    "source_lineage_only": 1
+    "repaired": 13,
+    "source_lineage_only": 3
   },
-  "latest_audit_ref": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/REPAIR_REPORT.md",
-  "latest_audit_repair_report": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_report.json",
+  "latest_audit_ref": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/REPAIR_REPORT.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/repair_report.json",
   "latest_audit_status": "repair_validated",
-  "latest_audit_validated_at_utc": "2026-06-19T03:17:42Z",
+  "latest_audit_validated_at_utc": "2026-06-19T04:27:01Z",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "open_blockers_count": 0,
   "open_questions_count": 0,
@@ -267,5 +267,6 @@
   "unchanged_prior_canon_support_docs": [
     "Plans/Tools.md"
   ],
-  "updated_at_utc": "2026-06-19T03:17:42Z"
+  "updated_at_utc": "2026-06-19T04:27:01Z",
+  "post_audit_20260619_003_repair_summary": "PASS: all 16 audit-20260619-003 closure rows are closed; stale cursor projection wording, audit-only repair matrix warning, and previously_closed/source_lineage_only atom-fidelity rows are represented in the closure matrix; validators pass with no side effects."
 }
