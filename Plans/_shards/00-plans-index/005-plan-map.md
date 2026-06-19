@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L204-L457
 
-Source SHA256: `d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573`
+Source SHA256: `90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887`
 
 ---
 
@@ -25,8 +25,8 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 ### PM Semantic Audit Closure Map (2026-06-17)
 
 Semantic audit closure support uses this owner split:
-- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, and reopen policy.
-- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_closure_matrix.jsonl`, and validator-facing matrix coverage.
+- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules.
+- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, and validator-facing actionable-row coverage.
 - `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics.
 - `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
 

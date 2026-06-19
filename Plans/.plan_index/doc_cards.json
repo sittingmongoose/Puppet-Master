@@ -45,7 +45,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4325,
+      "line_count": 4333,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 59,
       "plan_unit_ids": [
@@ -173,7 +173,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573",
+      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59
@@ -1600,7 +1600,7 @@
         "Plans/plan_graph.json",
         "future migration inventory"
       ],
-      "line_count": 378,
+      "line_count": 381,
       "path": "Plans/Bootstrap_Planning_Migration.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -1627,7 +1627,7 @@
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "b7e524c3b32b5bc5c6a97caf92b0c42b6c3ae8f02129a859bfcdc530e64f0cb9",
+      "sha256": "e59b86de270375b45ace58a980b2ee7b445caee570018981341745c397b2915e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -8741,9 +8741,10 @@
         "future Settings UI",
         "future migration inventory",
         "scripts/pm-audit-closure.py",
-        "scripts/pm-plan-index.py"
+        "scripts/pm-plan-index.py",
+        "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 846,
+      "line_count": 866,
       "path": "Plans/Plan_Document_System.md",
       "plan_unit_count": 16,
       "plan_unit_ids": [
@@ -8783,7 +8784,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "a13d7540774b88f3209d8be9649b9154763ef347ded110c87c280be53501b0c8",
+      "sha256": "1d1ea6770a4e316a61e6265bbd5c0c64162d0a5c4746a3b7db13bed8cd68576d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 16
@@ -8817,6 +8818,7 @@
         "Post-conversion validators.",
         "Pre-hash inventory.",
         "future owner_routing_findings.jsonl audit",
+        "python3 -m unittest tests/test_pm_audit_closure.py",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
@@ -8990,9 +8992,10 @@
         "future Native Ledger Service",
         "future Planning Wizard",
         "scripts/pm-audit-closure.py",
-        "scripts/pm-bootstrap-ledger-validate.py"
+        "scripts/pm-bootstrap-ledger-validate.py",
+        "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 811,
+      "line_count": 838,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -9030,7 +9033,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "683244565930333652282da6995a689383fe525c08be09b0dfe270f2c51e3bde",
+      "sha256": "9aa7510cb8c1c644ba7e9659fbba88da8064c7ad89863f1e5b6bae3b394b9723",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -9058,6 +9061,7 @@
         "PlanUnit source_lineage and owner_hints.",
         "Plan_To_Node_Compilation boundary checks.",
         "future bootstrap ledger validate matrix checks",
+        "python3 -m unittest tests/test_pm_audit_closure.py",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
@@ -11746,7 +11750,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-19T05:13:44Z",
+  "generated_at_utc": "2026-06-19T10:53:24Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

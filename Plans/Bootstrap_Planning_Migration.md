@@ -310,7 +310,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Bootstrap_Planning_Migration.md
 canonical_text: 'Resume Ledger continues to read compact state first, avoid full event and record scans unless referenced, use Collaborator behavior, update ledger after each substantive turn, and infer gui_related. The ledger-to-Plans Goal prompt must require many bounded read-only subagents in parallel when atom, owner, or document thresholds are exceeded, require assignment/result evidence, and block rather than silently use one broad agent; main agent remains sole writer. The ledger-local governance seal prompt validates this ledger ID when present, seals only after Plans and indexes stabilize, and preserves runtime-disabled readiness unless runtime contracts were explicitly completed. The deep-audit Goal uses many bounded read-only subagents in parallel for atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance, forbidden artifacts, and validator mutability, with the main agent writing
-  audit artifacts. The repair Goal builds a complete closure matrix, repairs or adjudicates every finding/detail, updates the semantic closure registry, uses bounded read-only specialist subagents, and does not treat passing validators alone as completion. Ledger-to-Plans compilation writes or updates canonical Plans and allowed PlanUnit indexes only in their proper phases; it does not start Plan Compile, create WorkNodes, launch GoalRuns, modify implementation code, or start an Orchestrator build.'
+  audit artifacts. The repair Goal builds a closure matrix only for repair_required=true findings, repairs or adjudicates those actionable rows, updates the semantic closure registry only for actionable closures, uses bounded read-only specialist subagents, and no-ops when no actionable rows exist. Passing validators alone are insufficient when repair_required=true rows remain unclosed. Ledger-to-Plans compilation writes or updates canonical Plans and allowed PlanUnit indexes only in their proper phases; it does not start Plan Compile, create WorkNodes, launch GoalRuns, modify implementation code, or start an Orchestrator build.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []
@@ -365,11 +365,14 @@ preserved_exact_tokens:
 - many bounded read-only subagents in parallel
 - repair_closure_matrix.jsonl
 - semantic closure registry
+- repair_required
+- finding_level
 - ledger-to-Plans
 - not runtime
 negative_constraints:
 - Do not reference or invoke superseded experimental planning-pipeline machinery.
 - Do not confuse the bootstrap compile Goal with the finished-product Approve And Build runtime.
+- Do not treat repair_required=false warnings, previously_closed rows, or audit-artifact wording as repair work.
 owner_hints:
 - Plans/bootstrap/Codex_Prompts.md
 - Plans/bootstrap/Bootstrap_Planning_Workflow.md

@@ -26,6 +26,8 @@ ALLOWED_STATUSES = {
     "reopened",
 }
 OPEN_STATUSES = {"blocked_requires_user_decision", "reopened"}
+FINDING_LEVELS = {"blocker", "warning", "observation"}
+TERMINAL_CLASSIFICATIONS = {"exact_present", "equivalent_with_evidence", "previously_closed"}
 REOPEN_CONDITIONS = {
     "source_atom_hash_changed",
     "plan_unit_hash_changed",
@@ -73,6 +75,12 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "ledger_consistency.json",
     "validator_results.json",
 ]
+GOVERNANCE_FILES = {
+    "Plans/Spec_Lock.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/plan_graph.json",
+    "Plans/sharding_config.json",
+}
 MATRIX_REQUIRED_FIELDS = {
     "source_artifact",
     "source_row",
@@ -144,6 +152,34 @@ def stable_strings(value: Any) -> list[str]:
     if not isinstance(value, list):
         return [str(value)]
     return sorted({str(item) for item in value})
+
+
+def is_substantive_subject_path(path: str) -> bool:
+    """Return true when a path belongs to the audit subject, not audit hygiene."""
+    normalized = path.strip().lstrip("./")
+    if not normalized:
+        return False
+    if normalized.startswith("Plans/.audits/"):
+        return False
+    if normalized.startswith("Plans/.plan_index/"):
+        return True
+    if normalized.startswith("Plans/_shards/"):
+        return True
+    if normalized.startswith("Plans/.evidence/"):
+        return True
+    if normalized in GOVERNANCE_FILES:
+        return True
+    if normalized.startswith("Plans/ledgers/v2/"):
+        return True
+    if normalized.startswith("Plans/") and normalized.endswith(".md"):
+        return True
+    if normalized.startswith("scripts/") and normalized.endswith(".py"):
+        return True
+    return False
+
+
+def has_substantive_subject_paths(paths: list[str]) -> bool:
+    return any(is_substantive_subject_path(path) for path in paths)
 
 
 def compute_finding_key(row: dict[str, Any]) -> str:
@@ -378,6 +414,77 @@ def artifact_row_count(path: Path, errors: list[str]) -> int:
     return count
 
 
+def explicit_repair_required(
+    row: dict[str, Any],
+    path_label: str,
+    errors: list[str],
+) -> bool | None:
+    has_repair_required = "repair_required" in row
+    has_finding_level = "finding_level" in row
+    if not has_repair_required and not has_finding_level:
+        return None
+
+    repair_required = row.get("repair_required")
+    finding_level = row.get("finding_level")
+    if not isinstance(repair_required, bool):
+        errors.append(f"{path_label}: repair_required must be a boolean")
+    if not isinstance(finding_level, str) or finding_level not in FINDING_LEVELS:
+        errors.append(f"{path_label}: finding_level must be one of {sorted(FINDING_LEVELS)}")
+    return bool(repair_required) if isinstance(repair_required, bool) else None
+
+
+def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
+    """Compatibility inference for pre-repair_required audit artifacts."""
+    risk_key = str(row.get("risk_key", "")).lower()
+    finding_family = str(row.get("finding_family", "")).lower()
+    if any(
+        token in risk_key or token in finding_family
+        for token in (
+            "latest_audit_projection_stale",
+            "repair_report_next_safe_action_stale",
+            "review_commit",
+            "review_or_commit",
+            "audit_artifact_historical_next_action",
+            "audit_artifact_wording",
+        )
+    ):
+        return False
+    if artifact == "semantic_risks.jsonl":
+        classification = str(row.get("classification", ""))
+        severity = str(row.get("severity", row.get("finding_level", ""))).lower()
+        if classification in {"source_lineage_only", "not_for_plan", "stale_retired", "explicitly_deferred"}:
+            return False
+        return classification == "missing_or_drift" or severity in {"blocker", "high"}
+
+    classification = str(row.get("classification", ""))
+    if classification in TERMINAL_CLASSIFICATIONS:
+        return False
+    if classification == "missing_or_drift":
+        return True
+
+    status = str(row.get("status", "")).lower()
+    if status in {"fail", "failed", "blocked", "blocker"}:
+        return True
+
+    claim_status = str(row.get("claim_status", ""))
+    if claim_status and claim_status != "source_lineage_supported":
+        return True
+
+    issues = row.get("issues")
+    if isinstance(issues, list) and bool(issues):
+        return True
+
+    for field in (
+        "overclaim_notes",
+        "missing_from_planunit_source_atoms",
+        "extra_planunit_source_atoms_not_in_compile_queue",
+    ):
+        value = row.get(field)
+        if isinstance(value, list) and value:
+            return True
+    return False
+
+
 def actionable_jsonl_rows(path: Path, artifact: str, errors: list[str]) -> list[str]:
     rows: list[str] = []
     if not path.exists():
@@ -391,24 +498,31 @@ def actionable_jsonl_rows(path: Path, artifact: str, errors: list[str]) -> list[
         except json.JSONDecodeError as exc:
             errors.append(f"{rel(path)}:{line_no}: invalid JSONL: {exc}")
             continue
-        if artifact == "semantic_risks.jsonl":
+        explicit = explicit_repair_required(row, f"{rel(path)}:{line_no}", errors)
+        if explicit is True:
             rows.append(str(line_no))
             continue
-        classification = str(row.get("classification", ""))
-        status = str(row.get("status", ""))
-        issues = row.get("issues")
-        needs_closure = classification in {
-            "missing_or_drift",
-            "source_lineage_only",
-            "explicitly_deferred",
-            "not_for_plan",
-            "stale_retired",
-            "previously_closed",
-        }
-        needs_closure = needs_closure or status in {"warning", "fail", "blocked"}
-        needs_closure = needs_closure or (isinstance(issues, list) and bool(issues))
-        if needs_closure:
+        if explicit is False:
+            continue
+        if legacy_actionable_jsonl_row(row, artifact):
             rows.append(str(line_no))
+    return rows
+
+
+def actionable_warning_rows(data: dict[str, Any], artifact: str, errors: list[str]) -> list[str]:
+    rows: list[str] = []
+    for field in ("warnings", "findings", "semantic_risks"):
+        values = data.get(field)
+        if not isinstance(values, list):
+            continue
+        for index, item in enumerate(values):
+            if not isinstance(item, dict):
+                continue
+            explicit = explicit_repair_required(item, f"{artifact}:{field}[{index}]", errors)
+            if explicit is True:
+                rows.append(f"{field}[{index}]")
+            elif explicit is None and legacy_actionable_jsonl_row(item, artifact):
+                rows.append(f"{field}[{index}]")
     return rows
 
 
@@ -422,7 +536,15 @@ def actionable_json_rows(path: Path, artifact: str, errors: list[str]) -> list[s
         errors.append(f"{rel(path)}: invalid JSON: {exc}")
         return []
     rows: list[str] = []
+    if isinstance(data, dict):
+        explicit = explicit_repair_required(data, rel(path), errors)
+        if explicit is True:
+            rows.append("$")
+        elif explicit is False:
+            return rows
+
     if artifact == "ledger_consistency.json":
+        rows.extend(actionable_warning_rows(data, artifact, errors))
         new_units = (
             data.get("compile_queue", {})
             .get("range_new_plan_units_not_in_compile_queue", [])
@@ -440,22 +562,16 @@ def actionable_json_rows(path: Path, artifact: str, errors: list[str]) -> list[s
             rows.append("non_audit_side_effects")
         for result in data.get("results", []):
             name = str(result.get("name", "unnamed"))
-            stdout = result.get("stdout")
-            stderr = result.get("stderr")
-            has_warning = False
-            for stream in (stdout, stderr):
-                if not isinstance(stream, str) or '"warnings"' not in stream:
-                    continue
-                try:
-                    parsed = json.loads(stream)
-                except json.JSONDecodeError:
-                    has_warning = "warning" in stream.lower()
-                else:
-                    has_warning = bool(parsed.get("warnings"))
-                    has_warning = has_warning or any(bool(report.get("warnings")) for report in parsed.get("audit_dirs", []))
+            explicit = explicit_repair_required(result, f"{rel(path)}:results.{name}", errors)
+            if explicit is True:
+                rows.append(f"results.{name}")
+                continue
+            if explicit is False:
+                continue
             status = result.get("status")
             passed = status == "pass" or (status is None and result.get("exit_code") == 0)
-            if not passed or has_warning:
+            side_effect_count = result.get("side_effect_count", 0)
+            if not passed or (isinstance(side_effect_count, int) and side_effect_count > 0):
                 rows.append(f"results.{name}")
     return rows
 
@@ -501,12 +617,36 @@ def validate_audit_dir(
     matrix_path = audit_dir / "repair_closure_matrix.jsonl"
     if not audit_dir.exists():
         return {"path": rel(audit_dir), "errors": [f"missing audit dir {rel(audit_dir)}"], "warnings": warnings}
+
+    requested_artifacts = source_artifacts
+    if requested_artifacts is None:
+        requested_artifacts = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (audit_dir / name).exists()]
+
+    actionable_rows: set[tuple[str, str]] = set()
+    for artifact in requested_artifacts:
+        for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors):
+            actionable_rows.add((artifact, str(source_row)))
+
     if not matrix_path.exists():
-        if require_matrix:
+        if require_matrix and actionable_rows:
             errors.append(f"missing required {rel(matrix_path)}")
         else:
-            warnings.append(f"no repair_closure_matrix.jsonl found for {rel(audit_dir)}; completeness check skipped")
-        return {"path": rel(audit_dir), "errors": errors, "warnings": warnings, "matrix_rows": 0}
+            if not require_matrix:
+                warnings.append(f"no repair_closure_matrix.jsonl found for {rel(audit_dir)}; completeness check skipped")
+        return {
+            "path": rel(audit_dir),
+            "errors": errors,
+            "warnings": warnings,
+            "matrix_rows": 0,
+            "coverage_artifacts": requested_artifacts,
+            "repair_required_count": len(actionable_rows),
+            "matrix_required": bool(actionable_rows),
+            "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
+            "missing_coverage": [
+                {"source_artifact": artifact, "source_row": source_row}
+                for artifact, source_row in sorted(actionable_rows)
+            ][:50] if actionable_rows else [],
+        }
 
     rows = read_jsonl(matrix_path, errors, required=True)
     registry_by_id = registry_lookup(registry_path, errors)
@@ -567,18 +707,17 @@ def validate_audit_dir(
         evidence = row.get("closure_evidence", row.get("evidence"))
         validate_evidence_refs(evidence, label, errors)
 
-    requested_artifacts = source_artifacts
-    if requested_artifacts is None:
-        requested_artifacts = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (audit_dir / name).exists()]
-
     missing_coverage: list[dict[str, Any]] = []
-    for artifact in requested_artifacts:
-        for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors):
-            if (artifact, str(source_row)) not in covered:
-                missing_coverage.append({"source_artifact": artifact, "source_row": source_row})
+    for artifact, source_row in sorted(actionable_rows):
+        if (artifact, source_row) not in covered:
+            missing_coverage.append({"source_artifact": artifact, "source_row": source_row})
 
     if missing_coverage:
         errors.append(f"{rel(matrix_path)}: missing closure rows for {len(missing_coverage)} source rows")
+
+    extra_coverage = sorted(covered - actionable_rows)
+    if extra_coverage:
+        errors.append(f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows")
 
     return {
         "path": rel(audit_dir),
@@ -586,7 +725,14 @@ def validate_audit_dir(
         "matrix_rows": len(rows),
         "status_counts": status_counts,
         "coverage_artifacts": requested_artifacts,
+        "repair_required_count": len(actionable_rows),
+        "matrix_required": bool(actionable_rows),
+        "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
         "missing_coverage": missing_coverage[:50],
+        "extra_coverage": [
+            {"source_artifact": artifact, "source_row": source_row}
+            for artifact, source_row in extra_coverage[:50]
+        ],
         "errors": errors,
         "warnings": warnings,
     }

@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "d42bfd587c7042c3f1c95cf698bc4929a5248121a6ca38977b46c0b166e9d573"
+      "sha256": "90caa74f1e9bf2ccae4698bbd68e773ac68a1dfb94bb8413092f6bbac3238887"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a6243d6a31b9928e2fbf63a45a710f1326616436737359a588ac53530cc5d4d8"
+      "sha256": "364962459a4be9855bc8f2d731e439e4a8797bb8bb37e4d86dc7f123cb96779e"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "a43322235e7eb04087fad66da7df2c9eab5fceeef3d06489fb947e589e1ccc4d"
+      "sha256": "d2fba1d816ef7735ea9db877c8d0bbbfe1ccc4d21da78a6bec59b48317938cc0"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "d13653eee7639ea5aa5044e3f5fb919584a1543a01e16c3e7f4b9370e75fcd74"
+      "sha256": "26fedd0425401683aa698a699b8e9e6406ab9d80e3d0d93932e2c3f56695b710"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index validate after audit-20260618-009 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created."
+      "details": "Plan index regenerated after PM semantic audit terminal-state process PlanUnit updates; node_readiness remains blocked_compiler_contract_incomplete and no WorkNodes or NodeSeeds were created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -327,6 +327,11 @@
       "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
       "result": "PASS",
       "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
+    },
+    {
+      "name": "pm-audit-closure-terminal-state-tests",
+      "result": "PASS",
+      "details": "python3 -m unittest tests/test_pm_audit_closure.py passed, covering previously_closed no matrix, warning-only terminal audits, audit-only subject_ref exclusion, and zero-actionable no-op validation."
     }
   ],
   "commands_run": [
@@ -583,6 +588,10 @@
     },
     {
       "cmd": "python3 scripts/pm-governance-seal.py register-canonical-docs --doc Plans/PRD_Builder.md --doc Plans/Planning_Wizard.md --auto-decisions Plans/auto_decisions.jsonl --decision-id dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 -m unittest tests/test_pm_audit_closure.py",
       "exit_code": 0
     }
   ],
