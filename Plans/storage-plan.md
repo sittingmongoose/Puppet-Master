@@ -15077,7 +15077,7 @@ plan_unit_id: SP-216
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. PlanCompileRun persists stage, cursor, bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point
+canonical_text: 'PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard child-thread records persist thread_type planning_wizard, thread_role, and Planning Run membership so intake, topic, final_integration, audit_review, and final_review conversations stay one typed thread family rather than unrelated top-level thread types. PlanCompileRun persists stage, cursor, bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point
   refs, evidence, currentness, cancellation, invalidation, and replan generation. Plans-to-code runtime records carry schema version, project, planning run, plan pack, PlanCompileRun, GoalRun, WorkGraph and revision, WorkNode, attempt, actor, status, revision, hashes, currentness, correlation, causation, idempotency, source, artifact, evidence, and supersession fields as applicable. Audit findings have stable finding keys, source and artifact hashes, closure status, evidence, reason, repair attempts, and reopen conditions so unchanged closed findings become previously closed rather than recurring forever.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -15097,6 +15097,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - Plans/Planning_Wizard.md
 - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
 - Plans/Plan_To_Node_Compilation.md
 - Plans/Goal_Runtime_System.md
 - Plans/Executor_Protocol.md
@@ -15105,6 +15106,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0008
 - pldg-20260618-001-prd-planning-wizard:atom-0042
 - pldg-20260618-001-prd-planning-wizard:atom-0111
 - pldg-20260618-001-prd-planning-wizard:atom-0121
@@ -15115,6 +15117,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
 source_atom_ids:
+- atom-0008
 - atom-0042
 - atom-0111
 - atom-0121
@@ -15128,6 +15131,8 @@ decision_refs:
 correction_refs: []
 preserved_exact_tokens:
 - PlanningRun
+- 'thread_type: planning_wizard'
+- thread_role
 - thread_group_id
 - topic map
 - PlanCompileRun
@@ -15147,7 +15152,8 @@ preserved_exact_tokens:
 - finding_key
 - previously_closed
 - reopen conditions
-negative_constraints: []
+negative_constraints:
+- Do not define planning_topic or audit_review as unrelated top-level thread types.
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/Contracts_V0.md
