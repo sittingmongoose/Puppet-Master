@@ -67,7 +67,9 @@
         "ContractName:Plans/Automated_Testing_System.md",
         "ContractName:Plans/plans_to_code_handoff.schema.json",
         "ContractName:Plans/PRD_Builder.md",
-        "ContractName:Plans/Planning_Wizard.md"
+        "ContractName:Plans/Planning_Wizard.md",
+        "ContractName:Plans/prd_planning_runtime_contracts.json",
+        "ContractName:Plans/prd_planning_runtime_contracts.schema.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -76,7 +78,8 @@
         "dec-2026-06-11-planunit-index-and-governance-artifact-reseal",
         "dec-2026-06-16-goal-runtime-system-governance-seal",
         "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair",
-        "dec-2026-06-19-prd-planning-wizard-governance-coverage-repair"
+        "dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
+        "AD-20260621-prd-planning-runtime-contract-packet"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -144,6 +147,16 @@
           "kind": "file",
           "ref": "Plans/Planning_Wizard.md",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/prd_planning_runtime_contracts.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/prd_planning_runtime_contracts.schema.json",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -205,6 +218,16 @@
         {
           "kind": "file",
           "ref": "Plans/Planning_Wizard.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/prd_planning_runtime_contracts.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/prd_planning_runtime_contracts.schema.json",
           "note": "Registered canonical owner doc coverage."
         }
       ],

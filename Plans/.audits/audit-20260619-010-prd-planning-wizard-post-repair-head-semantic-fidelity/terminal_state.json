@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.audit_terminal_state.v1",
+  "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "terminal_repair_state": "repair_validated",
+  "terminal_status": "PASS",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "historical_audit_report": "audit_report.json",
+  "historical_audit_status": "BLOCKED",
+  "original_repair_required_count": 6,
+  "open_repair_required_count": 0,
+  "closure_status_counts": {
+    "repaired": 6
+  },
+  "superseded_historical_artifacts": [
+    "FINAL_REPORT.md",
+    "audit_report.json"
+  ],
+  "effective_evidence": [
+    "REPAIR_REPORT.md",
+    "REPAIR_CERTIFICATION.md",
+    "post_repair_audit_report.json",
+    "repair_report.json",
+    "repair_closure_matrix.jsonl",
+    "repair_impact_matrix.jsonl"
+  ],
+  "notes": [
+    "The original audit report remains historical evidence for the six actionable findings.",
+    "The effective latest terminal state is repair_validated because every actionable source row has a repaired closure row and post_repair_audit_report.json reports repair_required_count=0."
+  ]
+}

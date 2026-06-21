@@ -18,17 +18,17 @@
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5"
+      "sha256": "0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f"
+      "sha256": "2ee55b103561817b0df045551f72aaa1872b84c9e669aeefb7a3c1a6be5fa2f0"
     },
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab"
+      "sha256": "8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -63,17 +63,17 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "7e7af01b5a579900fbed155c7fe6cdd1cfd0562877f5f100924f0657e6c5d538"
+      "sha256": "eda652bf20d6c08cc068429f97d205e947a7963413b7c994e83a6e8638f234b3"
     },
     {
       "note": "P6 node repair refs.",
       "path": "Plans/plan_graph.json",
-      "sha256": "64628bf83e1ab725909b5a2d2e4d11a22048e98c735c2afca07a8d907043ec01"
+      "sha256": "d26878ea4e12ac77016b9a98824924d5afa53960506aa6ec9b9c2bd7b9417726"
     },
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "206fe0002ce9bb09327e491c24b4150b10b6dfb3d3c506e28310a87540a2203d"
+      "sha256": "d1f78919de844b792988ea2d25c8405a8ea82d4bb8222fcc0cdcb5dcdf5860c6"
     },
     {
       "note": "Shard regeneration report.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "44cb4b73ab9b98617d7340ec2757a5888422c72d38428438b4fa8ca7df72aa2b"
+      "sha256": "b2bb4a5fb65c4fee6a284ff15665e47c805a8019ef9e0f073b90c589f87241f6"
     }
   ],
   "checks": [
@@ -601,6 +601,14 @@
     },
     {
       "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity --require-closure-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
       "exit_code": 0
     }
   ],

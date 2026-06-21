@@ -9023,7 +9023,6 @@ gui_classification_reason: This unit covers provider/platform invocation formatt
 split_recommended: false
 depends_on:
 - OSI-036
-- OSI-046
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
@@ -9082,8 +9081,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: This unit covers evidence extraction from backend output, not GUI behavior.
 split_recommended: false
-depends_on:
-- OSI-046
+depends_on: []
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.

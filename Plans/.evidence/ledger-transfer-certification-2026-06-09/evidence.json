@@ -203,6 +203,18 @@
     {
       "cmd": "git diff --check",
       "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

@@ -7559,7 +7559,7 @@ unblocks: []
 acceptance_criteria:
 - Crawl/session approval remains host-pattern scoped.
 - Webresearch approval does not broadly allow unrelated tools.
-- Advanced query-pattern support stays future-only.
+- Advanced query-pattern support requires a separate owner-defined matcher contract and validation evidence before use.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

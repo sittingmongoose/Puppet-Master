@@ -6,7 +6,7 @@
 
 ## 0. Scope
 
-The Automated Testing System is the plans-to-code owner for platform-capability-discovery-first verification. It defines how Puppet Master discovers available test capabilities, probes project harnesses, binds tests to future WorkNode requests, records test receipts, handles visual/browser/device evidence, and blocks completion when automated verification is missing.
+The Automated Testing System is the plans-to-code owner for platform-capability-discovery-first verification. It defines how Puppet Master discovers available test capabilities, probes project harnesses, binds tests to WorkNode request contracts, records test receipts, handles visual/browser/device evidence, and blocks completion when automated verification is missing.
 
 This document is a contract and policy owner. It does not create WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, or production build tasks.
 
@@ -48,7 +48,8 @@ acceptance_criteria:
   - No WorkNodes, NodeSeeds, queues, implementation files, dispatched GoalRuns, or production build tasks are emitted by this doc.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future automated testing strategy validator
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: unverifiable_completion
 reasoning_tier: high
 context_scope: plans_to_code_testing
@@ -142,7 +143,7 @@ acceptance_criteria:
   - Visual/browser/device evidence requirements are explicit where user-visible behavior is under test.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
-  - future WorkNode request intake validation
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: weak_test_oracle
 reasoning_tier: high
 context_scope: worknode_test_binding
@@ -190,12 +191,12 @@ depends_on: [ATS-001, ATS-002, ATS-003]
 unblocks: [GRS-030, EP-101, RAP-029, T-159]
 acceptance_criteria:
   - Human visual inspection is never a required completion criterion.
-  - Missing automatic verification records a blocker or, after later runtime enablement, a deferred non-executable test-harness WorkNode request candidate.
+  - Missing automatic verification records a blocker or, after runtime enablement, a deferred non-executable test-harness WorkNode request candidate.
   - Browser/GUI/device screenshots and logs are captured automatically where required.
   - Native web testing prefers Puppet Master built-in browser automation once available, while Playwright remains optional, fallback, or project-native.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
-  - future test-gap blocker validation
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: manual_only_completion
 reasoning_tier: high
 context_scope: automated_verification_gaps
@@ -250,14 +251,16 @@ Integration surfaces:
 
 ## 5. Validation And Acceptance
 
-Acceptance for this owner doc is established by PlanUnit index validation, standard plan governance gates, future schema validation for test reports and strategies, and future Executor intake checks that reject missing required test bindings.
+Acceptance for this owner doc is established by PlanUnit index validation, standard plan governance gates, the plans-to-code handoff schema, the PRD/planning runtime contract packet, and Executor intake contracts that reject missing required test bindings.
 
 Safe current validators:
 - `python3 scripts/pm-plan-index.py validate`
 - `python3 scripts/pm-plans-verify.py run-gates`
+- `python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema`
+- `python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts`
 - `python3 scripts/pm-shard-plans.py --check`
 
-Future validators may check TestCapabilityReport, TestHarnessProbeReport, TestStrategy, TestRunReceipt, and test-gap blocker shapes once the runtime/compiler contract is explicitly enabled.
+Current contract validators check TestCapabilityReport, TestHarnessProbeReport, TestStrategy, TestRunReceipt, visible evidence, and test-gap blocker shapes as schema contracts; executable test harness proof is required only after the runtime/compiler boundary is explicitly enabled.
 
 ## 6. Plan-To-Node Readiness
 
@@ -266,8 +269,7 @@ The Automated Testing System is ready as a contract source for future Plan-to-no
 ## 7. Deferred, Retired, Compatibility, And Non-Goals
 
 Deferred:
-- Runtime validators for the testing report families remain future work.
-- Concrete project-native runner adapters remain implementation work after the compiler/runtime boundary is enabled.
+- Executable project-native runner adapters remain implementation work after the compiler/runtime boundary is enabled.
 
 Compatibility and non-goals:
 - Slint is an example for Puppet Master itself, not the default test strategy for every user project.
@@ -306,7 +308,7 @@ plan_unit_id: ATS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, and reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification.'
+canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, approver_ref, approved_at_utc, evidence_refs, redaction_profile_ref, and expiration or reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification. Visible or headed-session verification cannot pass without interaction evidence, artifact evidence, and redaction disposition.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []
@@ -315,6 +317,7 @@ acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- Testing Off or restricted testing records approver, scope, risk, evidence, redaction profile, expiration or reopen condition, and truthful exception result.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -348,10 +351,14 @@ preserved_exact_tokens:
 - automated testing is enabled by default
 - testing_policy_override
 - completed_with_approved_verification_exception
+- approver_ref
+- evidence_refs
+- redaction_profile_ref
 negative_constraints:
 - Do not ask whether testing should exist as though no testing were the ordinary default.
 - Do not infer an opt-out from casual conversation or a capability setting being unavailable.
 - Do not convert an approved testing exception into test_passed or certified.
+- Do not allow visible-session pass without evidence and redaction disposition.
 owner_hints:
 - Plans/Automated_Testing_System.md
 - Plans/Planning_Wizard.md

@@ -180,6 +180,7 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "ledger_consistency.json",
     "validator_results.json",
 ]
+TERMINAL_STATE = "terminal_state.json"
 GOVERNANCE_FILES = {
     "Plans/Spec_Lock.json",
     "Plans/auto_decisions.jsonl",
@@ -890,6 +891,38 @@ def validate_audit_report_status(
         errors.append(f"{label}: status should be PASS_WITH_WARNINGS when non-actionable findings exist")
 
 
+def validate_terminal_state_projection(
+    audit_dir: Path,
+    refs: dict[str, str],
+    projection: dict[str, Any],
+    errors: list[str],
+) -> dict[str, Any] | None:
+    path = audit_dir / TERMINAL_STATE
+    if not path.exists():
+        return None
+    data = load_json_object(path, errors, required=False)
+    if data is None:
+        return None
+    label = rel(path)
+    if data.get("schema_id") != "pm.audit_terminal_state.v1":
+        errors.append(f"{label}: schema_id must be pm.audit_terminal_state.v1")
+    if data.get("audit_id") != refs.get("audit_id"):
+        errors.append(f"{label}: audit_id does not match audit_report")
+    for field in ("terminal_repair_state", "original_repair_required_count", "open_repair_required_count"):
+        if data.get(field) != projection.get(field):
+            errors.append(f"{label}: {field} {data.get(field)!r} does not match computed {projection.get(field)!r}")
+    if projection.get("terminal_repair_state") == "repair_validated":
+        if data.get("effective_terminal_report") != "post_repair_audit_report.json":
+            errors.append(f"{label}: effective_terminal_report must be post_repair_audit_report.json for repair_validated")
+        if data.get("historical_audit_report") != "audit_report.json":
+            errors.append(f"{label}: historical_audit_report must preserve audit_report.json")
+    return {
+        "path": label,
+        "terminal_repair_state": data.get("terminal_repair_state"),
+        "effective_terminal_report": data.get("effective_terminal_report"),
+    }
+
+
 def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
     """Compatibility inference for pre-repair_required audit artifacts."""
     risk_key = str(row.get("risk_key", "")).lower()
@@ -1113,6 +1146,7 @@ def validate_audit_dir(
             "source_artifacts": source_report,
             "scope_manifest": {key: value for key, value in scope_report.items() if key != "finding_keys"},
             "repair_impact_matrix": impact_report,
+            "original_repair_required_count": len(actionable_rows),
             "repair_required_count": len(actionable_rows),
             "matrix_required": bool(actionable_rows),
             "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
@@ -1126,6 +1160,7 @@ def validate_audit_dir(
     registry_by_id = registry_lookup(registry_path, errors)
     covered: set[tuple[str, str]] = set()
     status_counts: dict[str, int] = {}
+    open_matrix_rows: list[dict[str, Any]] = []
 
     for row in rows:
         label = f"{rel(matrix_path)}:{row.get('_line_no')}"
@@ -1139,6 +1174,15 @@ def validate_audit_dir(
             errors.append(f"{label}: invalid closure_status {status}")
         if status == "reopened":
             errors.append(f"{label}: repair_closure_matrix rows must close the item, not use reopened")
+        if status in OPEN_STATUSES:
+            open_matrix_rows.append(
+                {
+                    "source_artifact": row.get("source_artifact"),
+                    "source_row": row.get("source_row"),
+                    "finding_key": row.get("finding_key"),
+                    "closure_status": status,
+                }
+            )
         finding_key = row.get("finding_key")
         if not isinstance(finding_key, str) or not finding_key.strip():
             errors.append(f"{label}: finding_key must be non-empty")
@@ -1194,7 +1238,24 @@ def validate_audit_dir(
     if extra_coverage:
         errors.append(f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows")
 
-    return {
+    open_repair_required_count = len(missing_coverage) + len(open_matrix_rows)
+    if open_repair_required_count:
+        terminal_repair_state = "repair_required"
+    elif actionable_rows:
+        terminal_repair_state = "repair_validated"
+    else:
+        terminal_repair_state = "no_repair_required"
+    terminal_projection = {
+        "terminal_repair_state": terminal_repair_state,
+        "original_repair_required_count": len(actionable_rows),
+        "open_repair_required_count": open_repair_required_count,
+        "effective_terminal_report": "post_repair_audit_report.json" if terminal_repair_state == "repair_validated" else "audit_report.json",
+        "historical_audit_report": "audit_report.json",
+        "matrix_status_counts": status_counts,
+    }
+    terminal_state_report = validate_terminal_state_projection(audit_dir, audit_refs, terminal_projection, errors)
+
+    report = {
         "path": rel(audit_dir),
         "matrix": rel(matrix_path),
         "matrix_rows": len(rows),
@@ -1203,9 +1264,12 @@ def validate_audit_dir(
         "source_artifacts": source_report,
         "scope_manifest": {key: value for key, value in scope_report.items() if key != "finding_keys"},
         "repair_impact_matrix": impact_report,
-        "repair_required_count": len(actionable_rows),
+        "original_repair_required_count": len(actionable_rows),
+        "repair_required_count": open_repair_required_count,
         "matrix_required": bool(actionable_rows),
-        "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
+        "terminal_repair_state": terminal_repair_state,
+        "terminal_projection": terminal_projection,
+        "open_matrix_rows": open_matrix_rows,
         "missing_coverage": missing_coverage[:50],
         "extra_coverage": [
             {"source_artifact": artifact, "source_row": source_row}
@@ -1214,6 +1278,9 @@ def validate_audit_dir(
         "errors": errors,
         "warnings": warnings,
     }
+    if terminal_state_report is not None:
+        report["terminal_state_projection"] = terminal_state_report
+    return report
 
 
 def cmd_validate(args: argparse.Namespace) -> int:

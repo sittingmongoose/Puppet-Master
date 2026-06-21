@@ -1009,7 +1009,6 @@ depends_on:
   - "PNC-001"
   - "BPM-004"
   - "PSMERA-008"
-  - "PSMERA-016"
 unblocks: []
 acceptance_criteria:
   - "Native HITL Handoff And Raw Observation Mappings remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
@@ -1725,7 +1724,6 @@ depends_on:
   - "PNC-001"
   - "BPM-004"
   - "PSMERA-016"
-  - "PSMERA-022"
   - "OSI-414"
   - "OSI-418"
   - "OSI-419"

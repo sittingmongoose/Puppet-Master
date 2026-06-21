@@ -4,7 +4,7 @@
 
 ## 0. Scope
 
-This document is the canonical owner for the Bootstrap Planning Ledger, the later Native Ledger Service, compact operating surfaces, per-turn ledger protocol, ledger source-lineage preservation, and ledger-to-Plan compilation boundary.
+This document is the canonical owner for the Bootstrap Planning Ledger, the Native Ledger Service runtime contract, compact operating surfaces, per-turn ledger protocol, ledger source-lineage preservation, and ledger-to-Plan compilation boundary.
 
 The ledger exists to preserve planning/source memory during long feature-spec conversations. Canonical product/build truth remains in live non-pipeline `Plans/**` docs after compilation.
 
@@ -15,7 +15,7 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 The planning system has two incarnations:
 
 1. Bootstrap Ledger: file-backed JSONL/JSON under `Plans/ledgers/v2/`.
-2. Native Ledger Service: future Puppet Master service/API implementation that imports and exports the same record concepts.
+2. Native Ledger Service: the finished-product Puppet Master runtime contract for service/API or storage-backed ledger persistence, with implementation required to conform to PLS-015.
 
 Both incarnations use `design_atom` records during conversation and compile accepted atoms into PlanUnits only when the user asks to compile.
 
@@ -71,7 +71,7 @@ plan_unit_id: PLS-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
-canonical_text: The Bootstrap Ledger and the future Native Ledger Service are two incarnations of one planning-ledger standard. Bootstrap uses repo files now; native storage may be service/API or DB backed later but preserves import/export compatibility for the core concepts.
+canonical_text: The Bootstrap Ledger and the Native Ledger Service are two incarnations of one planning-ledger standard. Bootstrap uses repo files now; the finished-product native service/API or storage-backed implementation conforms to the strict PLS-015 runtime contract and preserves import/export compatibility for append logs, records, projections, source-lineage, exact-token fields, and currentness receipts.
 gui_related: false
 gui_classification_reason: Storage/service architecture is not GUI implementation work.
 depends_on: [PLS-001]
@@ -79,14 +79,15 @@ unblocks: [PLS-003, PLS-004, BPM-001]
 acceptance_criteria:
   - Bootstrap records can be imported into the native service without losing record identity, source refs, decisions, questions, blockers, corrections, or gui_related classification.
   - Native export can reconstruct the bootstrap concepts needed for audit or migration.
+  - PLS-015 defines the current Native Ledger Service API, atomic turn-write, CAS, idempotency, recovery, compaction, import/export, and ledger_sync_blocked clearance contract.
 validation_surfaces:
   - Ledger schema validation.
-  - Migration/import-export tests once the native service exists.
+  - Native Ledger Service runtime contract validation.
 risk_class: migration_compatibility
 reasoning_tier: standard
 context_scope: repo_to_native
-implementation_surfaces: [Plans/ledgers/v2, future Native Ledger Service]
-node_compile_hint: {mode: preserve_for_future_service, create_worknodes: false}
+implementation_surfaces: [Plans/ledgers/v2, Plans/Planning_Ledger_System.md, Plans/prd_planning_runtime_contracts.json]
+node_compile_hint: {mode: native_ledger_contract, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0002
   - pldg-20260610-001-ledger-plan-system:atom-0012
@@ -872,4 +873,62 @@ owner_hints:
 - Plans/00-plans-index.md
 - Plans/bootstrap/Codex_Prompts.md
 - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+```
+
+### PLS-015 - Native Ledger Service Runtime Contract
+
+```yaml
+plan_unit_id: PLS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: 'The Native Ledger Service is the finished-product runtime owner for PRD Builder, Planning Wizard, topic, and compile-source ledger persistence. It provides strict append_event, upsert_record, update_projection, commit_turn, recover_turn, compact_ledger, and import_export APIs with ledger_id, PlanningRun/thread/topic binding, monotonic revision/CAS, idempotency keys, causation/correlation refs, source refs, and receipt hashes. A substantive PRD Builder or Planning Wizard turn is not durable until event append, record upserts, projection updates, handoff/currentness projection, and ledger_turn_commit receipt are atomically committed; failed partial writes leave the visible thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until recovery proves append log, records, projections, and handoff state agree. Runtime certification must reject dangling, orphaned, cross-project, cross-snapshot, stale-revision, wrong-kind, or hash-mismatched *_ref and *_refs edges across PRD source records, PlanningRun records, ApprovedPlanPack, PlanApproved, PlanCompileRun, WorkGraph, WorkNodeRecord, activation, testing, and evidence receipts. Compaction and import/export preserve enough source-lineage, exact-token data, forwarding refs, and tombstone refs to reproduce canonical Plan evidence and revalidate every certified edge, while native storage implementation details may vary behind the service contract. The strict machine-readable contract lives in Plans/prd_planning_runtime_contracts.json and is validated by scripts/pm-prd-planning-runtime-validate.py through the standard plan gates.'
+gui_related: false
+gui_classification_reason: Runtime storage/API contract, not visual presentation.
+depends_on: [PLS-014]
+unblocks: [PRDB-004, PWIZ-002, PWIZ-004, PWIZ-012]
+acceptance_criteria:
+- Native ledger writes use atomic per-turn commit with revision/CAS and idempotency.
+- ledger_sync_blocked clears only after append log, records, projections, and handoff/currentness state agree.
+- Referential-integrity certification rejects stale, dangling, wrong-kind, wrong-project, wrong-revision, or hash-mismatched refs before terminal success.
+- The runtime contract packet validates under python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: implementation_readiness
+reasoning_tier: high
+context_scope: native_ledger_service_contract
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+- scripts/pm-prd-planning-runtime-validate.py
+node_compile_hint:
+  mode: native_runtime_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Planning_Ledger_System.md#PLS-014
+- Plans/PRD_Builder.md#PRDB-004
+- Plans/Planning_Wizard.md#PWIZ-002
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-004
+preserved_exact_tokens:
+- Native Ledger Service
+- append_event
+- upsert_record
+- update_projection
+- commit_turn
+- revision/CAS
+- idempotency
+- ledger_sync_blocked
+- import/export
+- referential integrity
+negative_constraints:
+- Do not treat the bootstrap file ledger as the finished native runtime service.
+- Do not clear ledger_sync_blocked from chat memory or UI state alone.
+- Do not certify runtime records whose IDs, hashes, record kinds, projects, revisions, or currentness disagree.
+owner_hints:
+- Plans/Planning_Ledger_System.md
+- Plans/storage-plan.md
+- Plans/prd_planning_runtime_contracts.json
 ```

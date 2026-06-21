@@ -25,7 +25,7 @@ plan_unit_id: PWIZ-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Planning Wizard accepts an Approved PRD Pack, normalized imported requirements pack, or structured Assistant Chat handoff seed, preserving source identity, version, hashes, warnings, amendments, and lineage. Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions.'
+canonical_text: 'The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Planning Wizard accepts exactly three canonical input seed families before topic work begins: ApprovedPRDPack, normalized_requirements_pack, or assistant_chat_handoff_seed. Each seed preserves source identity, version, hashes, warnings, amendments, lineage, project context, and bounded work_intent axes; multiple compatible intents such as feature work plus release PR delivery may overlap in one PlanningRun without collapsing project context into a single lossy mode enum. Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -34,6 +34,7 @@ acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- Canonical input seeds preserve identity, version/hash, warnings, lineage, project context, and multiple compatible work_intent axes.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -72,7 +73,10 @@ preserved_exact_tokens:
 - Chain Wizard
 - Plan Wizard
 - Approved PRD Pack
+- ApprovedPRDPack
+- normalized_requirements_pack
 - Assistant Chat handoff seed
+- assistant_chat_handoff_seed
 - Send to Planning Wizard
 - structured seed
 - fast-path
@@ -80,6 +84,7 @@ negative_constraints:
 - Do not use Chain Wizard or Plan Wizard as current terminology.
 - Do not use the raw Assistant Chat transcript as the sole Planning Wizard handoff.
 - Do not sacrifice provenance, quality warnings, or readiness validation to avoid repetition.
+- Do not collapse overlapping compatible work intents or project context into a single lossy mode enum.
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/FinalGUISpec.md
@@ -335,7 +340,7 @@ plan_unit_id: PWIZ-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. New information during planning becomes a planning clarification, immutable Planning Amendment, deferred future scope item, or PRD revision request according to materiality and impact. Approved PRD Packs remain immutable; Planning Wizard records amendments or requests a successor PRD rather than editing the approved source snapshot in place.'
+canonical_text: 'Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. New information during planning becomes a planning clarification, immutable Planning Amendment, out_of_current_approved_scope item, or PRD revision request according to materiality and impact. Approved PRD Packs remain immutable; Planning Wizard records amendments or requests a successor PRD rather than editing the approved source snapshot in place.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -770,6 +775,66 @@ owner_hints:
 ```
 
 
+### PWIZ-014 - Approve And Build CAS, Currentness, And Approval Transaction Boundary
+
+
+```yaml
+plan_unit_id: PWIZ-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Approve And Build is a compare-and-swap approval transaction over the exact PlanningRun revision, topic map version, ApprovedPlanPack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash that were displayed in the final review. The approval command must carry those currentness inputs and fail closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, or Plan index input changes between final review and approval. A successful transaction atomically writes approval_cas_receipt, PlanApproved, and PlanCompileRun_created_or_bound, and returns the PlanCompileRun identity synchronously; projection reconciliation may lag, but run identity may not. Duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun. A stale CAS input routes to bounded revalidation or final-review refresh rather than silently approving a different plan.'
+gui_related: true
+gui_classification_reason: Approve And Build is a user-visible approval command and launch transition, while the CAS/currentness boundary is runtime contract behavior.
+depends_on: [PWIZ-010, PWIZ-012]
+unblocks: []
+acceptance_criteria:
+- The final review shows the exact pack, PlanningRun revision, topic map version, project-context hash, PlanUnit and acceptance-unit index hashes, testing policy hash, and final audit/closure hash used by approval.
+- Approve And Build fails closed when any displayed approval input changes before the approval commit.
+- Approval writes an approval CAS receipt and synchronously creates or binds exactly one PlanCompileRun identity.
+- Duplicate approval delivery with the same idempotency key and CAS inputs returns the existing PlanCompileRun.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: stale_approval_build_race
+reasoning_tier: high
+context_scope: approve_and_build_cas_boundary
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Goal_Runtime_System.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+node_compile_hint:
+  mode: approve_and_build_cas_currentness
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- external_report:PRD_Planning_Runtime_Second_Sweep/approve_and_build_cas_gap
+preserved_exact_tokens:
+- Approve And Build
+- compare-and-swap
+- PlanningRun revision
+- topic map version
+- ApprovedPlanPack
+- pack_hash
+- project-context snapshot
+- PlanUnit index hash
+- acceptance-unit index hash
+- PlanCompileRun
+negative_constraints:
+- Do not approve mutable planning state that changed after final review.
+- Do not leave PlanCompileRun identity to eventual projection reconciliation.
+- Do not convert stale approval inputs into a successful build launch.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Goal_Runtime_System.md
+```
+
+
 ### PWIZ-011 - Product-Native Planning Audit And Repair Ownership
 
 
@@ -1052,7 +1117,7 @@ Planning Wizard integrates with PRD Builder through Approved PRD Pack, with Assi
 
 ## 5. Validation And Acceptance
 
-Acceptance requires synchronized ledgers, ready or explicitly excluded topics, audited topic plans, resolved invalidations, final integration, final audit, source lineage, captured testing requirements, current project context, zero unapproved incomplete content, and a durable ApprovedPlanPack before Plan Compile authority exists.
+Acceptance requires synchronized ledgers, ready or explicitly excluded topics, audited topic plans, resolved invalidations, final integration, final audit, source lineage, captured testing requirements, current project context, zero unapproved incomplete content, a durable ApprovedPlanPack, and a passing approval CAS/currentness check before Plan Compile authority exists.
 
 
 ## 6. Plan-To-Node Readiness
