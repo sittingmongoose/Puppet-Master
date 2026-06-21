@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1246-L7470
 
-Source SHA256: `82ed1aa33fe9ed4a7d4d009c9143e61e3e16a06261b914bf86e894ecfb2126b6`
+Source SHA256: `a871f6f62d5259f9a4204813dadbb3cd84ab985694143b2b1b1bc2e8e183642a`
 
 ---
 
@@ -1543,11 +1543,11 @@ preserved_exact_tokens:
 - "audit payloads"
 negative_constraints:
 - "Crawl/map fan-out must not be hidden behind generic webfetch."
-- "Query/task pattern rules are future-only until the advanced matcher is implemented."
+- "Query/task pattern rules require a separate advanced-matcher owner contract before use."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget"
 compatibility_only_notes:
-- "Search/research may use query/task pattern rules only when the advanced matcher is implemented."
+- "Search/research may use query/task pattern rules only after the advanced matcher has an owner-defined contract and validation evidence."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Permissions_System.md"

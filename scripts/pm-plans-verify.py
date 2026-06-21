@@ -1486,6 +1486,42 @@ def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[
     }
 
 
+def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-prd-planning-runtime-validate.py"
+    proc = subprocess.run(
+        [sys.executable, str(validator)],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            "validate-prd-planning-runtime-contracts",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "stdout": proc.stdout,
+                    "stderr": proc.stderr,
+                    "returncode": proc.returncode,
+                }
+            ],
+        )
+    if proc.returncode != 0 and report.get("status") == "pass":
+        report["status"] = "fail"
+        report.setdefault("failures", []).append(
+            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
+        )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
     checks = [
         ("json_syntax", cmd_json_syntax(argparse.Namespace())),
@@ -1497,6 +1533,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("lint_banned_phrases", cmd_lint_banned_phrases(argparse.Namespace())),
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements(argparse.Namespace())),
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())),
+        ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts(argparse.Namespace())),
     ]
     shard_report = cmd_check_shards(argparse.Namespace(report=None))
     checks.append(("check_shards", shard_report))
@@ -1521,6 +1558,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
     shards = cmd_check_shards(argparse.Namespace(report=None))
     project_artifacts = cmd_check_project_artifact_requirements(argparse.Namespace())
     plans_to_code_handoff_schema = cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())
+    prd_planning_runtime_contracts = cmd_validate_prd_planning_runtime_contracts(argparse.Namespace())
     failures: list[dict[str, Any]] = []
     for name, report in [
         ("spec_lock", spec),
@@ -1531,6 +1569,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("shards", shards),
         ("project_artifacts", project_artifacts),
         ("plans_to_code_handoff_schema", plans_to_code_handoff_schema),
+        ("prd_planning_runtime_contracts", prd_planning_runtime_contracts),
     ]:
         if report.get("status") != "pass":
             failures.append({"check": name, "failures": report.get("failures", [])[:100]})
@@ -1545,6 +1584,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         shards=compact_gate_report(shards),
         project_artifacts=compact_gate_report(project_artifacts),
         plans_to_code_handoff_schema=compact_gate_report(plans_to_code_handoff_schema),
+        prd_planning_runtime_contracts=compact_gate_report(prd_planning_runtime_contracts),
     )
 
 
@@ -1559,6 +1599,7 @@ COMMANDS = {
     "check-shards": cmd_check_shards,
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
+    "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
 }

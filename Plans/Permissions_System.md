@@ -2778,11 +2778,11 @@ preserved_exact_tokens:
 - "audit payloads"
 negative_constraints:
 - "Crawl/map fan-out must not be hidden behind generic webfetch."
-- "Query/task pattern rules are future-only until the advanced matcher is implemented."
+- "Query/task pattern rules require a separate advanced-matcher owner contract before use."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget"
 compatibility_only_notes:
-- "Search/research may use query/task pattern rules only when the advanced matcher is implemented."
+- "Search/research may use query/task pattern rules only after the advanced matcher has an owner-defined contract and validation evidence."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Permissions_System.md"
@@ -7666,7 +7666,7 @@ canonical_text: >-
   Policy field names include network_access_policy, secret_access_policy, and destructive_command_policy, and critical blockers include configured checkpoints only when explicit HITL or approval policy calls for them.
 gui_related: false
 gui_classification_reason: Permission, approval, network, secrets, destructive command, and privacy policy are security/runtime behavior.
-depends_on: [PS-115, GRS-029]
+depends_on: [PS-115]
 unblocks: [EP-102, GRS-030, HITL-036]
 acceptance_criteria:
   - Default user escalation is critical-only.

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L482-L541
+Source lines: L485-L546
 
-Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
+Source SHA256: `8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a`
 
 ---
 
@@ -68,3 +68,5 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `Wiring_Matrix.md` | [`Plans/_shards/wiring_matrix/00-index.md`](Plans/_shards/wiring_matrix/00-index.md) |
 | `GUI_Rebuild_Requirements_Checklist.md` | [`Plans/_shards/gui_rebuild_requirements_checklist/00-index.md`](Plans/_shards/gui_rebuild_requirements_checklist/00-index.md) |
 | `Widget_System.md` | [`Plans/_shards/widget_system/00-index.md`](Plans/_shards/widget_system/00-index.md) |
+| `prd_planning_runtime_contracts.json` | [`Plans/_shards/prd_planning_runtime_contracts/00-index.md`](Plans/_shards/prd_planning_runtime_contracts/00-index.md) |
+| `prd_planning_runtime_contracts.schema.json` | [`Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md`](Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md) |

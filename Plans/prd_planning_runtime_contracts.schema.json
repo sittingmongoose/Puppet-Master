@@ -1,0 +1,637 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.prd_planning_runtime_contracts.schema.v1",
+  "title": "PRD Builder, Planning Wizard, Plan Compile Runtime Contract Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "native_ledger_service",
+    "cross_record_referential_integrity",
+    "project_context_snapshot",
+    "prd_builder_runtime",
+    "planning_wizard_runtime",
+    "plan_compile_runtime",
+    "worknode_runtime",
+    "executor_activation_runtime",
+    "testing_runtime",
+    "ui_command_contracts",
+    "clean_room_harness",
+    "retired_search_exclusions"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.prd_planning_runtime_contracts.v1"
+    },
+    "native_ledger_service": {
+      "$ref": "#/$defs/native_ledger_service"
+    },
+    "cross_record_referential_integrity": {
+      "$ref": "#/$defs/cross_record_referential_integrity"
+    },
+    "project_context_snapshot": {
+      "$ref": "#/$defs/project_context_snapshot_contract"
+    },
+    "prd_builder_runtime": {
+      "$ref": "#/$defs/prd_builder_runtime"
+    },
+    "planning_wizard_runtime": {
+      "$ref": "#/$defs/planning_wizard_runtime"
+    },
+    "plan_compile_runtime": {
+      "$ref": "#/$defs/plan_compile_runtime"
+    },
+    "worknode_runtime": {
+      "$ref": "#/$defs/worknode_runtime"
+    },
+    "executor_activation_runtime": {
+      "$ref": "#/$defs/executor_activation_runtime"
+    },
+    "testing_runtime": {
+      "$ref": "#/$defs/testing_runtime"
+    },
+    "ui_command_contracts": {
+      "type": "array",
+      "minItems": 22,
+      "items": {
+        "$ref": "#/$defs/ui_command_contract"
+      }
+    },
+    "clean_room_harness": {
+      "$ref": "#/$defs/clean_room_harness"
+    },
+    "retired_search_exclusions": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ref_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "non_empty_string_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "record_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "required_fields",
+        "terminal_invariants",
+        "receipt_refs"
+      ],
+      "properties": {
+        "record_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "terminal_invariants": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "receipt_refs": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "native_ledger_service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_owner",
+        "storage_authority",
+        "operations",
+        "transaction_guards",
+        "recovery_contract"
+      ],
+      "properties": {
+        "service_owner": {
+          "$ref": "#/$defs/ref"
+        },
+        "storage_authority": {
+          "$ref": "#/$defs/ref"
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 7,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "transaction_guards": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "recovery_contract": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "cross_record_referential_integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edge_authority_fields",
+        "terminal_rules",
+        "compaction_import_rules",
+        "certification_rules"
+      ],
+      "properties": {
+        "edge_authority_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "terminal_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "compaction_import_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "certification_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "project_context_snapshot_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id_fields",
+        "variants",
+        "currentness_hash_fields",
+        "preflight_receipts"
+      ],
+      "properties": {
+        "snapshot_id_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "$ref": "#/$defs/project_context_variant"
+          }
+        },
+        "currentness_hash_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "preflight_receipts": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "project_context_variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "variant",
+        "required_fields",
+        "forbidden_fake_fields"
+      ],
+      "properties": {
+        "variant": {
+          "enum": [
+            "greenfield",
+            "local_git",
+            "local_non_git",
+            "remote_git",
+            "remote_non_git",
+            "fork_upstream"
+          ]
+        },
+        "required_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "forbidden_fake_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "prd_builder_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "records",
+        "quality_terminal_rules",
+        "source_security_required_fields",
+        "source_security_terminal_rules",
+        "resource_limit_fields",
+        "resource_limit_terminal_rules"
+      ],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "quality_terminal_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "source_security_required_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "source_security_terminal_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "resource_limit_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "resource_limit_terminal_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "planning_wizard_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "records",
+        "input_seed_contracts",
+        "work_intent_axes",
+        "topic_operations",
+        "final_integration_rules",
+        "approve_and_build_cas_fields",
+        "approve_and_build_cas_terminal_rules"
+      ],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 7,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "input_seed_contracts": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/input_seed_contract"
+          }
+        },
+        "work_intent_axes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "topic_operations": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "enum": [
+              "add",
+              "split",
+              "merge",
+              "rename",
+              "defer",
+              "reopen",
+              "reorder",
+              "mark_impacted"
+            ]
+          }
+        },
+        "final_integration_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "approve_and_build_cas_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "approve_and_build_cas_terminal_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "input_seed_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seed_kind",
+        "required_fields",
+        "terminal_invariants"
+      ],
+      "properties": {
+        "seed_kind": {
+          "enum": [
+            "ApprovedPRDPack",
+            "normalized_requirements_pack",
+            "assistant_chat_handoff_seed"
+          ]
+        },
+        "required_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "terminal_invariants": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "plan_compile_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_cards",
+        "terminal_state_rules",
+        "canonical_schema_refs",
+        "runtime_readiness_rules",
+        "executable_certification_rules"
+      ],
+      "properties": {
+        "stage_cards": {
+          "type": "array",
+          "minItems": 15,
+          "items": {
+            "$ref": "#/$defs/stage_card"
+          }
+        },
+        "terminal_state_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "canonical_schema_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "runtime_readiness_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "executable_certification_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "stage_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_id",
+        "purpose",
+        "inputs",
+        "outputs",
+        "algorithm",
+        "entry_gates",
+        "exit_gates",
+        "parallelism",
+        "evidence",
+        "repair_routes"
+      ],
+      "properties": {
+        "stage_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "outputs": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "algorithm": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 12
+          }
+        },
+        "entry_gates": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "exit_gates": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "parallelism": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "evidence": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "repair_routes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "worknode_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "records",
+        "cardinality_rules",
+        "attempt_rules"
+      ],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "cardinality_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "attempt_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "executor_activation_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "states",
+        "records",
+        "transaction_rules"
+      ],
+      "properties": {
+        "states": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "enum": [
+              "activation_pending",
+              "records_materialized",
+              "entrypoints_queued",
+              "start_event_pending",
+              "active",
+              "cancelled_before_mutation"
+            ]
+          }
+        },
+        "records": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "transaction_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "testing_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "records",
+        "selection_rules",
+        "visible_session_rules",
+        "cleanup_rules"
+      ],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "selection_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "visible_session_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "cleanup_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "ui_command_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "command_kind",
+        "payload_contract",
+        "result_contract",
+        "enablement_guards",
+        "disabled_reason_codes",
+        "receipt_effects",
+        "stale_projection_policy",
+        "idempotency_key_fields",
+        "recovery_routes"
+      ],
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.(prd_builder|planning_wizard|plan_compile)\\."
+        },
+        "command_kind": {
+          "enum": [
+            "domain_action",
+            "navigation_wrapper",
+            "shell_view"
+          ]
+        },
+        "payload_contract": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "result_contract": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "enablement_guards": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "disabled_reason_codes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "receipt_effects": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "stale_projection_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "recovery_routes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "clean_room_harness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "harness_id",
+        "state_machine",
+        "positive_scenarios",
+        "negative_scenarios",
+        "certification_authority_rules"
+      ],
+      "properties": {
+        "harness_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state_machine": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "positive_scenarios": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "$ref": "#/$defs/harness_scenario"
+          }
+        },
+        "negative_scenarios": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/harness_scenario"
+          }
+        },
+        "certification_authority_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "harness_scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "stimulus",
+        "expected_terminal_state",
+        "must_prove"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stimulus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_terminal_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "must_prove": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    }
+  }
+}

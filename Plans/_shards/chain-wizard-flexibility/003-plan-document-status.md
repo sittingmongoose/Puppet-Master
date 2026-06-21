@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L27-L35
+Source lines: L28-L38
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -17,3 +17,5 @@ Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5
 - Legacy Requirements Doc Builder, Interview, and multiple requirements upload material retained as compatibility lineage for PRD Builder and Planning Wizard owner docs.
 - Historical adaptive interview, project setup, GitHub, fork, and PR-flow material retained as consumer/source-lineage inputs.
 - Gaps, risks, and cross-references preserved for migration audit rather than direct current implementation authority.
+
+As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator implementation. All `CWF-*` PlanUnits are retired in place for compatibility and source-lineage only; current behavior must be revalidated through `Plans/PRD_Builder.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md`, `Plans/Contracts_V0.md`, `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`, `Plans/Goal_Runtime_System.md`, GitHub/source-control owner docs, storage/runtime owner docs, and the active owner map in `Plans/00-plans-index.md`.

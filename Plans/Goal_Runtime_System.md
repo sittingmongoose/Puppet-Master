@@ -1597,7 +1597,7 @@ acceptance_criteria:
   - No node artifacts are produced by this deferred decision.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Planning Wizard compatibility and compiler design reviews
+  - Planning Wizard compatibility and compiler design reviews
 risk_class: deferred_compiler_boundary
 reasoning_tier: high
 context_scope: chain_wizard_and_compiler
@@ -1628,38 +1628,38 @@ owner_hints:
   - Plans/chain-wizard-flexibility.md
 ```
 
-### GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults
+### GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults
 
 ```yaml
 plan_unit_id: GRS-025
-unit_type: deferred_decision
-status: deferred
+unit_type: requirement
+status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Final Goal chip/status/task-drawer styling, exact persistence substrate, and provider-specific model-role tier mappings remain deferred implementation decisions. The accepted runtime contract still requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements.
+  Goal chip/status/task-drawer styling, persistence substrate, and provider-specific model-role tier mappings are required implementation-bound decisions for the Goal Runtime product surface. The Goal implementation plan must bind each choice to named owner docs, durable state records, provider-policy records, validation surfaces, and acceptance evidence before production readiness can be certified. The accepted runtime contract requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements; unresolved styling, persistence, or provider defaults must block certification rather than remain as unbound implementation gaps.
 gui_related: true
-gui_classification_reason: This deferred decision includes final visual styling, iconography, and layout for Goal UI surfaces.
+gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal UI surfaces.
 depends_on:
   - GRS-005
   - GRS-007
   - GRS-010
 unblocks: []
 acceptance_criteria:
-  - Deferred visual styling does not weaken functional Goal UI requirements.
-  - Deferred persistence substrate does not weaken durable state and event-log requirements.
-  - Deferred provider defaults do not weaken separate worker/verifier-adjudicator policy or strong-certification blocking rules.
+- Goal visual styling binds to owner-doc UI contracts before certification.
+- Persistence substrate selection binds to durable state and event-log contracts before certification.
+- Provider defaults bind to separate worker/verifier-adjudicator policy and strong-certification blocking rules before certification.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future UI design, persistence, and provider-policy reviews
-risk_class: deferred_implementation_choice
+  - UI design, persistence, and provider-policy reviews
+risk_class: implementation_binding_drift
 reasoning_tier: standard
-context_scope: goal_runtime_deferred_items
+context_scope: goal_runtime_implementation_bindings
 implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
 node_compile_hint:
-  mode: deferred_goal_runtime_implementation_choices
+  mode: goal_runtime_implementation_bindings
   create_worknodes: false
 source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0017
@@ -2092,7 +2092,7 @@ canonical_text: >-
   GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
 gui_classification_reason: Completion certification and evidence truth-layer policy are runtime/governance behavior.
-depends_on: [GRS-027, GRS-029, EP-103, ATS-004, POA-048]
+depends_on: [GRS-027, GRS-029, EP-103, ATS-004]
 unblocks: [RAP-029, CV-289, OP-024]
 acceptance_criteria:
   - GoalCompletionReceipt proves code-complete status from objective receipt criteria.
@@ -2150,7 +2150,7 @@ plan_unit_id: GRS-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: 'Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains product-runtime canon and does not launch PlanCompile. For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. A required broad stage may reduce scope or block with a typed runtime-capability
+canonical_text: 'Approve And Build first validates a compare-and-swap approval boundary over the PlanningRun revision, topic map version, immutable pack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash shown in final review. It then atomically writes the immutable pack, approval_cas_receipt, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, pack hash, and approval CAS inputs; duplicate delivery returns the existing PlanCompileRun rather than creating another run. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and returns its identity synchronously before projection reconciliation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains product-runtime canon and does not launch PlanCompile. For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. A required broad stage may reduce scope or block with a typed runtime-capability
   error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
   states; retries resume idempotently, duplicate commands return the existing GoalRun, and cancellation routes according to whether mutation began. Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
   requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker.'
@@ -2162,6 +2162,8 @@ acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- Approve And Build records an approval CAS receipt and fails closed when final-review currentness inputs drift.
+- The PlanCompileRun identity is created or returned synchronously; projection identity reconciliation cannot be the source of run identity truth.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -2220,10 +2222,14 @@ correction_refs:
 - corr-0009
 preserved_exact_tokens:
 - PlanApproved
+- approval_cas_receipt
 - transactional outbox
 - idempotency_key
 - project_id
 - pack_hash
+- PlanningRun revision
+- topic map version
+- project-context snapshot hash
 - automatic_after_approval
 - PlanCompileRun
 - minimum_parallel_assignments
@@ -2256,6 +2262,7 @@ preserved_exact_tokens:
 - requires_user_risk_acceptance
 negative_constraints:
 - Do not require a redundant ordinary Start Build confirmation after Approve And Build.
+- Do not approve stale final-review inputs or defer PlanCompileRun identity creation to projection reconciliation.
 - Do not accept agent self-report as proof that required parallel subagents were used.
 - Do not silently degrade a mandatory parallel stage to one agent.
 - Do not start a partially accepted required WorkGraph.

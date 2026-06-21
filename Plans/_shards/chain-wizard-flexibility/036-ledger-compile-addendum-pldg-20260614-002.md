@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L9975-L10056
+Source lines: L9978-L10059
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5
 ```yaml
 plan_unit_id: CWF-149
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard `gap-005` is resolved by a versioned blocked-packet payload contract carrying packet_id,
@@ -55,7 +55,7 @@ owner_hints: [Plans/chain-wizard-flexibility.md, Plans/FinalGUISpec.md, Plans/Co
 ```yaml
 plan_unit_id: CWF-150
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Chain Wizard fork and PR setup must not use future-scope placeholders for organization forks or

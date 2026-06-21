@@ -132,6 +132,14 @@
     {
       "cmd": "git diff --check",
       "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260618-001-prd-planning-wizard",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -272,15 +280,15 @@
   "artifacts": [
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab"
+      "sha256": "8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a"
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "7a8790354ed3cbeda3a0b12609b4d7f0afb431c7faba43c25a0baeba9f37bd96"
+      "sha256": "33db337463762146a902e09d2035065c0467e280722b5a695a159875c3e97b40"
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "sha256": "1944f1aa30f3ebfd672093fe1642fe75a4a15615544743564024e27837cec046"
+      "sha256": "1314f282d60b9fe0102415be12ffe96850ad6cce1c005d1e0ae23a822f9c0269"
     },
     {
       "path": "Plans/FinalGUISpec.md",
@@ -288,7 +296,7 @@
     },
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "bc4253dbc952946955b2dc60feeca2b48f51671319fa7c8f038d4bd29889d532"
+      "sha256": "0b20c72c615e1b42c9d2b906a97ba5ab0f1f2639ca77b478bf746a6a5cdafe68"
     },
     {
       "path": "Plans/Models_System.md",
@@ -300,15 +308,15 @@
     },
     {
       "path": "Plans/Permissions_System.md",
-      "sha256": "82ed1aa33fe9ed4a7d4d009c9143e61e3e16a06261b914bf86e894ecfb2126b6"
+      "sha256": "a871f6f62d5259f9a4204813dadbb3cd84ab985694143b2b1b1bc2e8e183642a"
     },
     {
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "sha256": "728cc03a98362140cd8b71edd83a6cf034905db619a40746903f6ab326392270"
+      "sha256": "fec4781f4b52f7e6c4901431bef533f5f1cd728df93accf7bd3150505024aa39"
     },
     {
       "path": "Plans/Planning_Ledger_System.md",
-      "sha256": "9cd70737b7e1b524045af9c7b5e47fbace2e219af3023b355014c6cd2fba9bfd"
+      "sha256": "cde61b311d635b7053a311a1b285921c6bf822a424236fc0c5d1fadcecac36a2"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -316,19 +324,19 @@
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
-      "sha256": "2a5c1f1a30f0bdca8b4f45ee04f4513d97c191bfd5238bf60dfa973fa560432c"
+      "sha256": "a7d2273c08de3321166347b4a05d314b40aca1a6c5fc24957594e1c2e70d47f9"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5"
+      "sha256": "0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe"
     },
     {
       "path": "Plans/chain-wizard.md",
-      "sha256": "4beea145f5fef5281ed4dcbd00694f35b083fe1c77832a2449e1548b8e97f5f8"
+      "sha256": "c03dfe1840905803d55d1b7df90f5face904cb5169df64148e17abd0ee54a6aa"
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f"
+      "sha256": "2ee55b103561817b0df045551f72aaa1872b84c9e669aeefb7a3c1a6be5fa2f0"
     },
     {
       "path": "Plans/storage-plan.md",
@@ -336,35 +344,35 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "8ad2eb5af5f5597952972a453dba00a9e60780c97a1baba40540877e2771caa3"
+      "sha256": "43010a4c2d85d0025bf36ac2fea9195f89efbd537bb7159faa459ef8c1399428"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "f24046b644e0eaf8c495e089c51beafa8461b238cbaaba19b30b2b116c08f9f2"
+      "sha256": "a175a2c9c5f721bf38f7198dce9bac10f89915a2e65b430ded2489fa9e9fb287"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "ed55a39f844ef2a4728c03a42b65ff37c60e0d6628dd6f220d14790462d02898"
+      "sha256": "3bbdf3532d1fa95f95bafbf60364df6681e67c1ad7548d47966918524294d0c8"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "b215fc4901051676ec3668f152bf3c2559e7f51db7d2c4da3cb30bce373abdde"
+      "sha256": "323ae22d2c3228ef634c9d37d27188300579c3e05cda877643d1cf035df67b74"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "f518be7b339b9f8be8f5ab9fcf5f58599da03e8d58a8551ecd1a40b446f0c556"
+      "sha256": "8f2d312b6aaedecadeff020a80fe732324e4a88e60b4adde5334fa658965f759"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "b575efe41a528e6b0364f17eb0151d5f03e4dbfd7a9607bcdf9f29ebead6368f"
+      "sha256": "c6b662f1a02ef514c696949ca28dca76c89f930701301258ffc756c4910e8efe"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "3ae6b030d0010a0e2f9a2a09047151207bf9c915a9fb3d6ed201e9c6889d1de7"
+      "sha256": "740f5cd08d09d8c0d5799422ed72133336b3e1a7e0920d2c9f74a6e765044ff0"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "f1b3d2f760b44cde1049356e0521beddd8f205769c422a74a9ee854ff30f120b"
+      "sha256": "622e22359b4a116dd07e13e9d32380610f256c327370f2ec17a4fe22bb8add32"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -376,15 +384,15 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "9ec029437b84b1de9ed86b8a9cea24284b39765eaf7ef950c15c4cb1c2c1fa6d"
+      "sha256": "54c7ebd725593a21c69ea12605d1ed586f34f7947d214dc39f0746a802c06d5d"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "206fe0002ce9bb09327e491c24b4150b10b6dfb3d3c506e28310a87540a2203d"
+      "sha256": "d1f78919de844b792988ea2d25c8405a8ea82d4bb8222fcc0cdcb5dcdf5860c6"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "7e7af01b5a579900fbed155c7fe6cdd1cfd0562877f5f100924f0657e6c5d538"
+      "sha256": "eda652bf20d6c08cc068429f97d205e947a7963413b7c994e83a6e8638f234b3"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json",

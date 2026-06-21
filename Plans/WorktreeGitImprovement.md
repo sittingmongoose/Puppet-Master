@@ -4917,7 +4917,7 @@ canonical_text: >-
   This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
 gui_related: true
 gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
-depends_on: [W-071, EP-100]
+depends_on: [W-071]
 unblocks: [OP-024, EP-100, RAP-029]
 acceptance_criteria:
   - Mutation-capable WorkNodes preserve repo and worktree identity before execution.

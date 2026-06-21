@@ -294,7 +294,7 @@ The §4 rule ("plans must not depend on humans making decisions mid-run") applie
 
 Clarification questions under §6.2 are generated **prior to execution**, during wizard/interview artifact generation. This does NOT violate §4.
 
-**Timing:** Clarification questions surface during Chain Wizard or Interview phase, before any orchestrator run begins.
+**Timing:** Clarification questions surface during Planning Wizard finalization or a legacy Chain Wizard / Interview compatibility flow, before any orchestrator run begins.
 
 **Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action.
 
@@ -1894,9 +1894,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Decision_Policy.md
 canonical_text: >-
-  Clarification questions surface before orchestrator execution during Chain
-  Wizard or Interview; unresolved clarification blocks run start by moving
-  wizard state to attention_required and blocking the Start Run action.
+  Clarification questions surface before orchestrator execution during Planning
+  Wizard finalization or a legacy Chain Wizard / Interview compatibility flow;
+  unresolved clarification blocks run start by moving wizard state to
+  attention_required and blocking the Start Run action.
 gui_related: true
 gui_classification_reason: This unit defines user-visible clarification timing and Start Run blocking.
 split_recommended: false
@@ -1927,8 +1928,10 @@ preserved_exact_tokens:
   - "`PolicyRule:Decision_Policy.md§4`"
 negative_constraints:
   - "If clarification cannot be resolved before run start, the run MUST NOT start."
+  - "Do not use Chain Wizard or Interview as current product terminology outside compatibility/source-lineage contexts."
 owner_hints:
   - Plans/Decision_Policy.md
+  - Plans/Planning_Wizard.md
   - Plans/chain-wizard-flexibility.md
 ```
 

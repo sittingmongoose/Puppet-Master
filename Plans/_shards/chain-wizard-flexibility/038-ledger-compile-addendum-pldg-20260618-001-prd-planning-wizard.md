@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L10136-L10228
+Source lines: L10139-L10231
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -17,7 +17,7 @@ This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20
 ```yaml
 plan_unit_id: CWF-152
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md are legacy compatibility/source-lineage consumers for material now owned by PRD Builder, Planning Wizard, Final GUI, and downstream PlanCompile/Executor owners. PMConcept and FinalGUISpec replace the old fixed Project Setup through Start Chain sequence with PRD Builder intake, dynamic Planning Run topics, live topic and plan projections, audits, Approve And Build, and Orchestrator Plan Compile navigation. Existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation,
   activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'

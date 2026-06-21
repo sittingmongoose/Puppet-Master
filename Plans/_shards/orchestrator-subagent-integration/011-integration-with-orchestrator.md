@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L266-L31180
+Source lines: L266-L31178
 
-Source SHA256: `958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f`
+Source SHA256: `2ee55b103561817b0df045551f72aaa1872b84c9e669aeefb7a3c1a6be5fa2f0`
 
 ---
 
@@ -8768,7 +8768,6 @@ gui_classification_reason: This unit covers provider/platform invocation formatt
 split_recommended: false
 depends_on:
 - OSI-036
-- OSI-046
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
@@ -8827,8 +8826,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: This unit covers evidence extraction from backend output, not GUI behavior.
 split_recommended: false
-depends_on:
-- OSI-046
+depends_on: []
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.

@@ -1,27 +1,27 @@
 # Shard Index: Plans/Commands_System.md
 
-Generated: 2026-06-19T17:12:41Z
+Generated: 2026-06-21T20:47:52Z
 
-Source SHA256: `2daf12c08330d43a2fd4d53ec4b07711c89dda72679ea9e71c77a09b3739551b`
+Source SHA256: `22dd09e99960560bd60cf5022e9bbc8ce19050021d1898510cc37c138dff2864`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `4367d6d7ba9755a484af92505d400249a6acd3c1345ef5bd770efc9c3f78b2d8`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L100 `897d119e240e6ca5f1c80127a37658d424f2d98d941477655a9d4c5d2ae6c1fd`
-- [003 - 1. Definitions](003-1.-definitions.md) L102-L142 `33c3bbb8707728432a4da743ea8caa6b333e8c300623a0403f0d60be2a956327`
-- [004 - 2. Storage and discovery](004-2.-storage-and-discovery.md) L144-L208 `ba658cebedaae029ec2cac5fa4e38dba99ce819a2ee2e8632b3a74af2cd68552`
-- [005 - 3. Command schema](005-3.-command-schema.md) L210-L282 `e24f3969c0cb3785a6e815e51ffbf1ec40a0f1f51f166e8c4fbf7c3fbeab36b8`
-- [006 - 4. Execution semantics](006-4.-execution-semantics.md) L284-L371 `b47dc75d33bf8704bed0637d9f3d0b092529289b6713475de6f9a3c346904351`
-- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L373-L405 `caaa547d7de324ad2f882f0c0af48e1d200b262b69248c4fbb976a779f0e77eb`
-- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L407-L490 `8341c2ea50baacbed3e9d7f398bc7ff0730bc7592d3b83b2b68ab51f5a95ae65`
-- [009 - 7. Reserved built-in slash commands](009-7.-reserved-built-in-slash-commands.md) L492-L573 `c227dc29e057add1012a37e6bd8a7abab3dd77984c281b4b32051adceb29d24e`
-- [010 - 7. UICommand catalog entry](010-7.-uicommand-catalog-entry.md) L575-L610 `7e3e5f84b31817a13e3157a7679ed53804149918518de182effbd12d59ad1b36`
-- [011 - 8. OpenCode baseline and Puppet Master deltas](011-8.-opencode-baseline-and-puppet-master-deltas.md) L612-L638 `9583c820c84b3eeef8db71898d91c9ec1f12b49e86f69cc43e3e2fd26d943665`
-- [012 - 9. Acceptance criteria](012-9.-acceptance-criteria.md) L640-L682 `0f9be9141d6e140955606529b242fefc1ba0301971b1f127a8878eb5cb89f375`
-- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L684-L688 `8085865695011d0aa25926e76e9e496190267bd4905553823f2a2328c50c82f1`
-- [014 - PlanUnits](014-planunits.md) L690-L3407 `baf89e4bc97e3642ae8ce2501a0a7ea661f723e90c2df60adb9e6c51338c8c40`
-- [015 - Migration Coverage](015-migration-coverage.md) L3409-L3419 `f08bfccc378e51ffb015621c3e58af962829009f3776d539afd2520e1b26c98b`
-- [016 - Ledger Compile Addendum - pldg-20260614-001](016-ledger-compile-addendum-pldg-20260614-001.md) L3421-L3511 `3e3877591688a39b4c1c6ab8cfd4d5e29049fb3033e0fc97d28f1bd892d3ebe0`
-- [017 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3514-L3568 `4098096441e0068a34bf2aef3acf2a728d27ca9a43f93834c643438afac4cfab`
+- [001 - Preamble](001-preamble.md) L1-L4 `385e8fd4972b00973edff6c048fe259b491257e7cdc155a545afb2400c8885a0`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L100 `4c999c13ead75a22978a402a9a93d084ab75f49a3b44f2b5402b6bee8df0840a`
+- [003 - 1. Definitions](003-1.-definitions.md) L102-L142 `3d88e673c7d4de53fdd521eb07d80574d5d240c63f5431b87f9b7b33e5a94da2`
+- [004 - 2. Storage and discovery](004-2.-storage-and-discovery.md) L144-L208 `d1ee522dfe635a692af905c57f4c9a41b48218dc7183519b4c12de148ff67381`
+- [005 - 3. Command schema](005-3.-command-schema.md) L210-L282 `5bc8fd43d2a1a990a3b97ee5dd68f20b0e3bf8361aa723baa079b8a45c5fce72`
+- [006 - 4. Execution semantics](006-4.-execution-semantics.md) L284-L371 `be0a6d348f039d459a879f196d85500fa252d1b9ab0e86a1e3fdbc3e418f0661`
+- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L373-L405 `565c3a8b3c117d008973f1f021f947af7328d19f82f7e499fb434d37ce386888`
+- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L407-L490 `cb9cd44b134ff23ac18d57a9f26849eb3f57c6d0a95ee6cc8b584afa76b93d29`
+- [009 - 7. Reserved built-in slash commands](009-7.-reserved-built-in-slash-commands.md) L492-L573 `dd1d211b9e07afdddfa1943ab3bb55da995bd31e21be388332df537811775566`
+- [010 - 7. UICommand catalog entry](010-7.-uicommand-catalog-entry.md) L575-L610 `a32d43077f33af7dda1a7a92e5f787d4239d7f0ae4f8ab20be938b2d4cb1d79e`
+- [011 - 8. OpenCode baseline and Puppet Master deltas](011-8.-opencode-baseline-and-puppet-master-deltas.md) L612-L638 `4d14d41ce52fa228ab15ecd3aae8a501abe8b6bc0cf950929614cc4ab5b024a8`
+- [012 - 9. Acceptance criteria](012-9.-acceptance-criteria.md) L640-L682 `0ad9ed3b4f0ed65ec48937c6886983e87699a381151622e086db048b3c6d4dff`
+- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L684-L688 `e32a4864efd3119a325fdea889ec6f951e04ac6cd23df87dfec0c6e865c742e7`
+- [014 - PlanUnits](014-planunits.md) L690-L3407 `d7ecf61283b0bdc7ae8d199fc2cf05912359f6843b0bc24a344d5f093b0ddece`
+- [015 - Migration Coverage](015-migration-coverage.md) L3409-L3419 `9c09b87b2069deea314655fc49693865d1befaea53753fe98a8b4ef5b3dc970e`
+- [016 - Ledger Compile Addendum - pldg-20260614-001](016-ledger-compile-addendum-pldg-20260614-001.md) L3421-L3511 `971d123a9d7ce164810dae185af71a26608578e258dac2ce8ba4c137556fd568`
+- [017 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3514-L3571 `3bebec940630f28d2224e9cce9f8d3aac67e39b57180e03b03e769512daa3c1f`

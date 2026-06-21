@@ -414,7 +414,53 @@ def dependency_graph(units: list[dict[str, Any]]) -> dict[str, Any]:
             if not incoming_work[dependent]:
                 queue.append(dependent)
 
-    cycle_blockers = [{"plan_unit_id": uid, "remaining_depends_on": sorted(deps)} for uid, deps in sorted(incoming_work.items()) if deps]
+    build_order_blocked_nodes = [{"plan_unit_id": uid, "remaining_depends_on": sorted(deps)} for uid, deps in sorted(incoming_work.items()) if deps]
+
+    index = 0
+    stack: list[str] = []
+    on_stack: set[str] = set()
+    indices: dict[str, int] = {}
+    lowlinks: dict[str, int] = {}
+    cyclic_components: list[list[str]] = []
+
+    def strongconnect(uid: str) -> None:
+        nonlocal index
+        indices[uid] = index
+        lowlinks[uid] = index
+        index += 1
+        stack.append(uid)
+        on_stack.add(uid)
+        for dep in sorted(incoming[uid]):
+            if dep not in indices:
+                strongconnect(dep)
+                lowlinks[uid] = min(lowlinks[uid], lowlinks[dep])
+            elif dep in on_stack:
+                lowlinks[uid] = min(lowlinks[uid], indices[dep])
+        if lowlinks[uid] != indices[uid]:
+            return
+        component: list[str] = []
+        while True:
+            member = stack.pop()
+            on_stack.remove(member)
+            component.append(member)
+            if member == uid:
+                break
+        has_self_loop = len(component) == 1 and component[0] in incoming[component[0]]
+        if len(component) > 1 or has_self_loop:
+            cyclic_components.append(sorted(component))
+
+    for uid in sorted(ids):
+        if uid not in indices:
+            strongconnect(uid)
+
+    cyclic_plan_units = sorted({uid for component in cyclic_components for uid in component})
+    cycle_blockers = [
+        {"plan_unit_id": uid, "remaining_depends_on": sorted(incoming_work.get(uid, set()))}
+        for uid in cyclic_plan_units
+    ]
+    downstream_blocked_nodes = [
+        row for row in build_order_blocked_nodes if row["plan_unit_id"] not in set(cyclic_plan_units)
+    ]
     nodes = [
         {
             "plan_unit_id": unit_id(unit),
@@ -440,13 +486,22 @@ def dependency_graph(units: list[dict[str, Any]]) -> dict[str, Any]:
             "unblocks_edge_count": sum(1 for edge in edges if edge["edge_type"] == "unblocks"),
             "unresolved_reference_count": len(unresolved),
             "cycle_blocker_count": len(cycle_blockers),
-            "build_order_available": not unresolved and not cycle_blockers,
+            "true_cycle_component_count": len(cyclic_components),
+            "downstream_blocked_node_count": len(downstream_blocked_nodes),
+            "build_order_blocked_node_count": len(build_order_blocked_nodes),
+            "build_order_available": not unresolved and not build_order_blocked_nodes,
         },
         "nodes": sorted(nodes, key=lambda row: row["plan_unit_id"]),
         "edges": sorted(edges, key=lambda row: (row["edge_type"], row["from"], row["to"])),
         "unresolved_references": unresolved,
+        "cycle_components": [
+            {"component_id": f"cycle-{index + 1:03d}", "plan_unit_ids": component}
+            for index, component in enumerate(sorted(cyclic_components, key=lambda row: (len(row), row)))
+        ],
         "cycle_blockers": cycle_blockers,
-        "build_order": build_order if not cycle_blockers else [],
+        "downstream_blocked_nodes": downstream_blocked_nodes,
+        "build_order_blocked_nodes": build_order_blocked_nodes,
+        "build_order": build_order if not build_order_blocked_nodes else [],
     }
 
 
@@ -644,6 +699,7 @@ def coverage_report(units: list[dict[str, Any]], docs: list[dict[str, Any]], iss
 def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     pnc_007 = next((unit for unit in units if unit_id(unit) == "PNC-007"), None)
     pnc_008 = next((unit for unit in units if unit_id(unit) == "PNC-008"), None)
+    pnc_019 = next((unit for unit in units if unit_id(unit) == "PNC-019"), None)
     disabled_guards: list[dict[str, Any]] = []
     if pnc_007 and pnc_007.get("status") == "deferred":
         disabled_guards.append(
@@ -660,6 +716,22 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
             "guard": "node_artifact_generation_disabled",
             "evidence": "PNC-001 and PNC-008 forbid runtime NodeSeed/WorkNode artifacts until an explicit later enablement accepts runtime launch.",
             "source_location": pnc_008.get("source_location") if pnc_008 else None,
+        }
+    )
+    disabled_guards.append(
+        {
+            "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+            "guard": "strict_runtime_contract_validation_required",
+            "evidence": "PNC-018 requires Plans/prd_planning_runtime_contracts.json, Plans/plans_to_code_handoff.schema.json, and scripts/pm-prd-planning-runtime-validate.py to remain green before native PlanCompile/WorkNode runtime readiness can be claimed.",
+            "validator": "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
+        }
+    )
+    disabled_guards.append(
+        {
+            "plan_unit_id": "PNC-019",
+            "guard": "executable_lifecycle_certification_required",
+            "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
+            "source_location": pnc_019.get("source_location") if pnc_019 else None,
         }
     )
     return {
@@ -688,13 +760,15 @@ def node_readiness_report(
     status_reason = (
         "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
         if coverage_blocked
-        else "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete and runtime node artifact generation is disabled until an explicit later enablement accepts runtime PlanCompile/NodeSeed/WorkNode artifacts."
+        else "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete, runtime node artifact generation is disabled, and executable lifecycle certification evidence is absent until explicit runtime enablement."
     )
     build_order_blockers = []
     if deps.get("unresolved_references"):
         build_order_blockers.append({"blocker_type": "unresolved_dependency_references", "items": deps["unresolved_references"]})
     if deps.get("cycle_blockers"):
         build_order_blockers.append({"blocker_type": "dependency_cycles", "items": deps["cycle_blockers"]})
+    if deps.get("downstream_blocked_nodes"):
+        build_order_blockers.append({"blocker_type": "dependency_cycle_downstream_blocked_nodes", "items": deps["downstream_blocked_nodes"]})
 
     gui_units = [
         {

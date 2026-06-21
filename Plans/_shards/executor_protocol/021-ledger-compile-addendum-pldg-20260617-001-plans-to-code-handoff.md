@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L5899-L6172
 
-Source SHA256: `1944f1aa30f3ebfd672093fe1642fe75a4a15615544743564024e27837cec046`
+Source SHA256: `1314f282d60b9fe0102415be12ffe96850ad6cce1c005d1e0ae23a822f9c0269`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-    WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. When explicitly enabled later, PlanCompile may draft non-executable requests and WorkGraph drafts only; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery.
+    WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
 gui_related: false
 gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
 depends_on: [EP-098, PNC-013]

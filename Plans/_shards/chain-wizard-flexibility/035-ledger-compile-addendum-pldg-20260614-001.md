@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L9937-L9973
+Source lines: L9940-L9976
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5
 ```yaml
 plan_unit_id: CWF-148
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   chain-wizard-flexibility must restore the missing Section 12 top-level parent for existing 12.x subsections and deduplicate the five

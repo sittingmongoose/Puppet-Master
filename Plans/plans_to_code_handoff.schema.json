@@ -72,6 +72,13 @@
         "$ref": "#/$defs/ref"
       }
     },
+    "non_empty_ref_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
     "stage_success_route": {
       "type": "object",
       "additionalProperties": false,
@@ -1013,12 +1020,13 @@
       "properties": {
         "nodes": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "$ref": "#/$defs/workgraph_node"
           }
         },
         "entrypoints": {
-          "$ref": "#/$defs/ref_list"
+          "$ref": "#/$defs/non_empty_ref_list"
         },
         "dependency_edges": {
           "type": "array",
@@ -1048,6 +1056,7 @@
       "additionalProperties": false,
       "required": [
         "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
         "objective",
         "implementation_surfaces",
         "read_set",
@@ -1075,7 +1084,10 @@
       ],
       "properties": {
         "source_plan_unit_ids": {
-          "$ref": "#/$defs/ref_list"
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "source_acceptance_unit_ids": {
+          "$ref": "#/$defs/non_empty_ref_list"
         },
         "objective": {
           "type": "string"

@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L7655-L7711
 
-Source SHA256: `82ed1aa33fe9ed4a7d4d009c9143e61e3e16a06261b914bf86e894ecfb2126b6`
+Source SHA256: `a871f6f62d5259f9a4204813dadbb3cd84ab985694143b2b1b1bc2e8e183642a`
 
 ---
 
@@ -22,7 +22,7 @@ canonical_text: >-
   Policy field names include network_access_policy, secret_access_policy, and destructive_command_policy, and critical blockers include configured checkpoints only when explicit HITL or approval policy calls for them.
 gui_related: false
 gui_classification_reason: Permission, approval, network, secrets, destructive command, and privacy policy are security/runtime behavior.
-depends_on: [PS-115, GRS-029]
+depends_on: [PS-115]
 unblocks: [EP-102, GRS-030, HITL-036]
 acceptance_criteria:
   - Default user escalation is critical-only.

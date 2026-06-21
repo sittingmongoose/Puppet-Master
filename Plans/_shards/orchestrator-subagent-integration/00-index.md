@@ -1,21 +1,21 @@
 # Shard Index: Plans/orchestrator-subagent-integration.md
 
-Generated: 2026-06-19T17:12:41Z
+Generated: 2026-06-21T20:47:52Z
 
-Source SHA256: `958f6c707b245e3d09eca30314b6c528a1529a1ca1dc048102836213889cec8f`
+Source SHA256: `2ee55b103561817b0df045551f72aaa1872b84c9e669aeefb7a3c1a6be5fa2f0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `a6ec5c4587acb5c4db1ac247e2edc66246b8ddb29fa7afe71856f96bde9b27d0`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L14 `78a7d28a2201967667b1f125ce25987ede1b5a1987830e1404e23672a7ec641e`
-- [003 - Plan Document Status](003-plan-document-status.md) L17-L28 `b7298504976f7402cec5d8e3b07d5a819edd73ce10d06259d2ae57a79418b156`
-- [004 - Executive Summary](004-executive-summary.md) L30-L77 `f9953f0077fadb4fce916b0c9d7db3126828ac7769af942114b68e8f96804225`
-- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L79-L124 `35557b6b7e886f5924cbce5dfe5d591196797afdff0dcdba4a277936f4212408`
-- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L125-L161 `8f0f8ebf2024767688f4265a85ba14dba06967ab25f3ee8fedc3d9219b7cb768`
-- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L163-L179 `3075ae278517ea2868889ed612012dbdaf23eb8677be70fdedfaf97d6115a816`
-- [008 - Tier-Level Subagent Strategy](008-tier-level-subagent-strategy.md) L180-L194 `2b9b5dd80e026d7621b5a403bfd2ff2d25c032d378c6fc26fd58e6665e161235`
-- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L195-L206 `649bc410301ebd7d5019680821f66b7277c7bb2b9bc06c2a67bdf3b12c8e047e`
-- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L208-L265 `3a8cc3a7e625bf3a40780ac43e67df59da4672fc5e91c43bee6e0324b0478fce`
-- [011 - Integration with Orchestrator](011-integration-with-orchestrator.md) L266-L31180 `c1323cbf35647dca1bd0fdd7623a4efd3471b1e08b845043af25a98a82a75821`
+- [001 - Preamble](001-preamble.md) L1-L1 `63e08b0f39742f31c35f9f705a70b1a60b9171f2147de3d0a882c9bf84a15a2d`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L14 `17d90da353b3c0e630b70d0ce96b4d1bfec9d9720f4aadb3a2e1dae0b26861d0`
+- [003 - Plan Document Status](003-plan-document-status.md) L17-L28 `2100652e36567565376055ef9a07e0919f6caa7c6a8bdf44cc7bd0122433f928`
+- [004 - Executive Summary](004-executive-summary.md) L30-L77 `8ed4919e2656ffd944b4af9ee55a4238ce47e98934277794c1123bf80509d37e`
+- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L79-L124 `131ca938a25c22f4a82bccf277944013820a18c66ba4123e0dfe6365debc4603`
+- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L125-L161 `8d8f2244e196cd296724449c5cffc89e4d2da8b268e5fdf90bfa5880b05dea80`
+- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L163-L179 `c04ebb908b3bd4976a25acda93f5780b5d9a0963b9531d428638cb45ea3f54d5`
+- [008 - Tier-Level Subagent Strategy](008-tier-level-subagent-strategy.md) L180-L194 `cd0a7e8f471cd2187f72690452e1a94a8b237456640702cf2021cbbc707c7673`
+- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L195-L206 `404fe33bb73804ab50468e15718f1aac653860b4a42ebccd8cde95bbc5259ef0`
+- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L208-L265 `f885701b17a3bb65eac8699f524cfb9579ca11ff1852115b165caf97eaee509f`
+- [011 - Integration with Orchestrator](011-integration-with-orchestrator.md) L266-L31178 `7cd938904f032fda71997fb8fe5c8e27de8d6f588930df3941049a74f1b5aa5a`

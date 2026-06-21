@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L410-L807
+Source lines: L410-L811
 
-Source SHA256: `728cc03a98362140cd8b71edd83a6cf034905db619a40746903f6ab326392270`
+Source SHA256: `fec4781f4b52f7e6c4901431bef533f5f1cd728df93accf7bd3150505024aa39`
 
 ---
 
@@ -32,7 +32,8 @@ acceptance_criteria:
   - The state machine emits no executable WorkNodes, NodeSeeds, queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future PlanCompileRun schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: false_node_generation
 reasoning_tier: high
 context_scope: plancompile_design_state_machine
@@ -90,7 +91,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-    Each design-only PlanCompile stage has a bounded stage_card with stage_id, purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state only after a later explicit runtime enablement. Stage success_route and blocked_route use canonical route objects with route_kind, target_stage, reason, and optional resume_ref, and compile worklist blocked_route uses the same exact target object shape, rather than unrestricted strings. target_stage is a stage_name whenever the route chooses a next stage; terminal route kinds must set target_stage to null. Required stage contracts include preflight/currentness, scope selection, PlanUnit normalization, dependency/cycle analysis, surface mapping, work type and effort classification, NodeSeed candidate drafting, split/merge sizing, NodeSeed review, WorkGraph draft, WorkNode request schema drafting, adapter packaging, and certification/handoff.
+    Each design-only PlanCompile stage has a bounded stage_card with stage_id, purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state after explicit runtime enablement, while the current bootstrap remains non-dispatching. Stage success_route and blocked_route use canonical route objects with route_kind, target_stage, reason, and optional resume_ref, and compile worklist blocked_route uses the same exact target object shape, rather than unrestricted strings. target_stage is a stage_name whenever the route chooses a next stage; terminal route kinds must set target_stage to null. Required stage contracts include preflight/currentness, scope selection, PlanUnit normalization, dependency/cycle analysis, surface mapping, work type and effort classification, NodeSeed candidate drafting, split/merge sizing, NodeSeed review, WorkGraph draft, WorkNode request schema drafting, adapter packaging, and certification/handoff.
 gui_related: false
 gui_classification_reason: Stage cards and resumable worklists are compiler process contracts, not GUI implementation.
 depends_on: [PNC-010]
@@ -101,7 +102,7 @@ acceptance_criteria:
   - Stage cards never authorize WorkNodes, NodeSeeds as runtime artifacts, queues, implementation files, or production build tasks.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future stage_card schema validation
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: low_context_resume_failure
 reasoning_tier: high
 context_scope: plancompile_stage_cards
@@ -150,7 +151,8 @@ acceptance_criteria:
   - Candidate contracts preserve gui_related inheritance without creating runtime NodeSeeds.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future node_seed_candidate schema validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: false_node_generation
 reasoning_tier: high
 context_scope: nodeseed_candidate_contract
@@ -203,12 +205,12 @@ depends_on: [PNC-012, ATS-003]
 unblocks: [EP-099, EP-100, EP-101, CV-289]
 acceptance_criteria:
   - WorkGraph drafts remain reviewable and cannot dispatch before Executor intake.
-  - When explicitly enabled later, PlanCompile may draft WorkNode requests, not runnable WorkNodes; the current repair emits no runtime artifacts.
+  - Native runtime enablement may draft WorkNode requests, not runnable WorkNodes; the current repair emits no runtime artifacts.
   - Requests carry test binding, model routing, ordering, risk, GUI/frontend, authority, and validation metadata.
   - Default build order covers discovery, safe points, environment, contracts, runtime, providers, GUI shell, features, integrations, automated checks, promotion, and Auditor certification before execution is accepted, with manual priority and required-before/after start/completion relationships.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - future WorkGraph draft and WorkNode request schema validation
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: executor_boundary_bypass
 reasoning_tier: high
 context_scope: workgraph_draft_worknode_request
@@ -271,7 +273,7 @@ status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
   Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Planning Wizard Approve And Build approval and the PlanApproved handoff into PlanCompileRun state, then through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. For the current bootstrap/v1 matrix, Plan Compile source authority is the immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes; the Planning Wizard ledger remains source and reasoning lineage rather than executable Plan Compile authority. The shared `Plans/plans_to_code_handoff.schema.json` document keeps top-level `schema_id` at `pm.plans_to_code_handoff.v1`; within that stable document identity, the current bootstrap/v1 branch is the historical design_only contract with launch disabled, while PNC-015 owns the runtime-capable v2 native_runtime branch with runtime enablement evidence. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes for the disabled design_only branch plus the runtime-aware native_runtime branch; neither branch creates runtime artifacts by itself.
-  The PlanApproved handoff records the transactional outbox requirement plus deterministic idempotency_key, project_id, and pack_hash inputs so approval cannot create duplicate PlanCompileRun state. The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. Within that single schema_id=v1 draft, current bootstrap/v1 records use the historical design_only branch and runtime-capable v2 records use native_runtime only with runtime enablement evidence. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
+  The PlanApproved handoff records the approval_cas_receipt, transactional outbox requirement, and deterministic idempotency_key over project_id, pack identity/version/hash, PlanningRun revision, topic map version, PlanUnit and acceptance-unit index hashes, testing policy hash, project-context snapshot hash, and final audit/closure hash so approval cannot create duplicate or stale PlanCompileRun state. The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. Within that single schema_id=v1 draft, current bootstrap/v1 records use the historical design_only branch and runtime-capable v2 records use native_runtime only with runtime enablement evidence. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
 depends_on: [PNC-010, PNC-011, PNC-012, PNC-013, PNC-015]
@@ -286,7 +288,8 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
-  - future handoff matrix validation
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: handoff_gap
 reasoning_tier: high
 context_scope: plans_to_code_handoff
@@ -326,6 +329,7 @@ preserved_exact_tokens:
   - "Approve And Build"
   - "ApprovedPlanPack"
   - "PlanApproved"
+  - "approval_cas_receipt"
   - "transactional outbox"
   - "idempotency_key"
   - "project_id"
@@ -386,7 +390,7 @@ These rows are design-only contract rows. They do not launch PlanCompile, create
 
 | row_id | transition | source_artifact | destination_artifact | producer | consumer | owner | validator | receipt | schema_payload | retry_route | rollback_route | user_escalation_condition | evidence_refs | plan_unit_refs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| H-001 | Planning Wizard Approve And Build approval to current bootstrap/v1 design-only PlanCompileRun state | immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes plus PlanApproved event | current bootstrap/v1 PlanCompileRun state | Planning Wizard Approve And Build / PlanApproved outbox | Plan_To_Node_Compilation | Planning_Wizard + Plan_To_Node_Compilation + Contracts_V0 | ApprovedPlanPack currentness, PlanUnit index hash, acceptance-unit index hash, design_only disabled gate | plan_compile_receipt | plan_compile_run | rerun currentness preflight or reissue PlanApproved from the same approved pack | no runtime mutation to roll back | true product decision, missing Approve And Build approval evidence, stale ApprovedPlanPack hash, or stale PlanUnit/acceptance-unit index hash | ApprovedPlanPack ref, PlanApproved/approval receipt ref, PlanUnit index ref, acceptance-unit index ref, compile state ref | PWIZ-010, PNC-010, PNC-015, CV-290, GRS-028, GRS-031 |
+| H-001 | Planning Wizard Approve And Build approval to current bootstrap/v1 design-only PlanCompileRun state | immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes plus PlanApproved event | current bootstrap/v1 PlanCompileRun state | Planning Wizard Approve And Build / PlanApproved outbox | Plan_To_Node_Compilation | Planning_Wizard + Plan_To_Node_Compilation + Contracts_V0 | ApprovedPlanPack currentness, approval CAS receipt, PlanUnit index hash, acceptance-unit index hash, design_only disabled gate | plan_compile_receipt | plan_compile_run | rerun currentness preflight or reissue PlanApproved from the same approved pack | no runtime mutation to roll back | true product decision, missing Approve And Build approval evidence, missing approval_cas_receipt, stale ApprovedPlanPack hash, or stale PlanUnit/acceptance-unit index hash | ApprovedPlanPack ref, PlanApproved/approval receipt ref, approval_cas_receipt ref, PlanUnit index ref, acceptance-unit index ref, compile state ref | PWIZ-010, PWIZ-014, PNC-010, PNC-015, CV-290, GRS-028, GRS-031 |
 | H-002 | Compile state to bounded stage work | PlanCompileRun state | stage_card and compile_worklist | Plan_To_Node_Compilation | low-context compile adapter | Plan_To_Node_Compilation | stage entry/exit gate validation | plan_compile_receipt | stage_card, compile_worklist | regenerate bounded worklist from same source hashes | discard draft worklist | stage cannot name bounded read/write/forbidden surfaces | compile state ref, stage card ref, worklist ref | PNC-010, PNC-011 |
 | H-003 | Stage work to non-executable NodeSeed candidate review | compile_worklist | NodeSeed candidate plus NodeSeed review | Plan_To_Node_Compilation | Plan_To_Node_Compilation review gate | Plan_To_Node_Compilation | coverage, exclusions, validators/gaps, GUI flags, no executable WorkNodes | plan_compile_receipt | node_seed_candidate, node_seed_review | split/merge candidate and rerun review | mark candidate excluded or blocked | source PlanUnit ambiguity or authority boundary | candidate ref, review ref, coverage ref | PNC-012 |
 | H-004 | Reviewed candidates to WorkGraph draft | approved NodeSeed reviews | WorkGraph draft | Plan_To_Node_Compilation | Executor intake preview | Plan_To_Node_Compilation | graph integrity, dependencies, scheduler policy, authority | plan_compile_receipt | workgraph_draft | repair graph edges or candidate sizing | return to NodeSeed review | irreconcilable dependency cycle or authority conflict | workgraph ref, candidate refs, graph validation ref | PNC-012, PNC-013 |

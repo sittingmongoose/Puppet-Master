@@ -1,0 +1,50 @@
+{
+  "generated_at_utc": "2026-06-21T20:47:52Z",
+  "index_path": "Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md",
+  "index_sha256": "c20fef9b39887595a831c200820b89ce2990857fd969e3d56d7fec44bc899eaf",
+  "manifest_path": "Plans/_shards/prd_planning_runtime_contracts.schema/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/001-lines-1-200.md",
+      "sha256": "934c12497667aa54cb293979a0748fae404b22c0c40c0bcfbc90aca6c437bf1c",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/002-lines-201-400.md",
+      "sha256": "19ead6553c88e2575cc2f4472d9da9eaa2e6ebd392df3ced8ff22cbc1a342f04",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-600",
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/003-lines-401-600.md",
+      "sha256": "77f9230e9e2189c26fb0fa5746aee0766a8a42ece0d5e6a86fd22c68d9f4d843",
+      "shard_id": "003",
+      "source_line_end": 600,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 601-637",
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-637.md",
+      "sha256": "36eaf0bd22e096a697ccb01d87e46ac41c9c2f85ae6babb97f2502220e68064b",
+      "shard_id": "004",
+      "source_line_end": 637,
+      "source_line_start": 601,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 637,
+    "path": "Plans/prd_planning_runtime_contracts.schema.json",
+    "sha256": "0fb1518acc96c1be7c223593ac0b25519d1c00f8e0a554131a4ec0c7ba9848b9"
+  }
+}

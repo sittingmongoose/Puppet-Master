@@ -4,7 +4,7 @@ Source: `Plans/Plan_Document_System.md`
 
 Source lines: L712-L785
 
-Source SHA256: `59565b7722e420dbeb1f009068cf87988b24a9bd60d78844d58f244b3e789e0c`
+Source SHA256: `e99b6b40c6c526e766580bfe237754b93d38844b112f163026797a94e29593fa`
 
 ---
 
@@ -22,7 +22,7 @@ canonical_text: >-
   Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.
-depends_on: [PDS-014, PLS-013]
+depends_on: [PDS-014]
 unblocks: []
 acceptance_criteria:
   - Owner, consumer, reference/index/UI, and wiring docs are accounted for after owner contract edits.

@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L2258-L10735
 
-Source SHA256: `973686a25e1117920c44f4afe44e3107a0a2fc0279a026fbab168de7c71f2aee`
+Source SHA256: `ec2739c2d3571449e92549b0cedcfd00c386db3383dca5ecdf46b52e0b0f3c32`
 
 ---
 
@@ -5312,7 +5312,7 @@ unblocks: []
 acceptance_criteria:
 - Crawl/session approval remains host-pattern scoped.
 - Webresearch approval does not broadly allow unrelated tools.
-- Advanced query-pattern support stays future-only.
+- Advanced query-pattern support requires a separate owner-defined matcher contract and validation evidence before use.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

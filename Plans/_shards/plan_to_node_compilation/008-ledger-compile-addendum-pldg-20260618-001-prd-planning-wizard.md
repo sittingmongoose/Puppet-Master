@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L810-L1083
+Source lines: L814-L1210
 
-Source SHA256: `728cc03a98362140cd8b71edd83a6cf034905db619a40746903f6ab326392270`
+Source SHA256: `fec4781f4b52f7e6c4901431bef533f5f1cd728df93accf7bd3150505024aa39`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: PNC-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: 'The Approved Plan Pack carries a hash-addressed project-context snapshot containing repository identity, host, path, branch, remotes, dirty state, codebase scan facts, test-capability facts, and currentness conditions. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Keep the current plans-to-code handoff v1 schema_id as the stable shared schema document for the historical design-only contract with launch disabled, and introduce the versioned runtime-capable v2 identity as the native_runtime branch inside that document rather than silently changing v1 branch semantics. The runtime schema includes contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, and runtime_policy_snapshot_ref; the design_only branch preserves const-false launch gates, while the finished-product native_runtime branch defaults to automatic_after_approval through native_puppet_master_adapter and requires runtime enablement evidence. PlanCompileRun persists stage, cursor,
+canonical_text: 'The Approved Plan Pack carries a hash-addressed project-context snapshot containing repository identity, host, path, branch, remotes, dirty state, codebase scan facts, test-capability facts, and currentness conditions, and the approval_cas_receipt binds that snapshot to the exact PlanningRun revision, topic map version, pack hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash shown at final review. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Keep the current plans-to-code handoff v1 schema_id as the stable shared schema document for the historical design-only contract with launch disabled, and introduce the versioned runtime-capable v2 identity as the native_runtime branch inside that document rather than silently changing v1 branch semantics. The runtime schema includes contract_mode, launch_policy, runtime_adapter, runtime_enablement_ref, and runtime_policy_snapshot_ref; the design_only branch preserves const-false launch gates, while the finished-product native_runtime branch defaults to automatic_after_approval through native_puppet_master_adapter and requires runtime enablement evidence. PlanCompileRun persists stage, cursor,
   bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. Changes after approval create successor ApprovedPlanPack versions; during compilation or execution a PlanDiffImpactReport classifies unaffected, already safe, needs recompile, and invalidated lanes and only continues unaffected work when dependencies and write surfaces prove safety. The PlanUnit index/readiness Goal regenerates only allowed Plans/.plan_index outputs, reports exact blockers, and creates no WorkNodes, NodeSeeds, candidates, executable queues, implementation files, or production tasks.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -281,4 +281,127 @@ owner_hints:
 - Plans/Automated_Testing_System.md
 - Plans/bootstrap/Bootstrap_Planning_Workflow.md
 - Plans/Planning_Ledger_System.md
+```
+
+### PNC-018 - Runtime Contract Packet And Readiness Gate
+
+```yaml
+plan_unit_id: PNC-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: 'Implementation readiness for PRD Builder, Planning Wizard, Plan Compile, WorkNodeRequest, Executor activation, and Orchestrator launch depends on the strict runtime contract packet in Plans/prd_planning_runtime_contracts.json plus the shared handoff schema in Plans/plans_to_code_handoff.schema.json. The runtime contract packet instantiates stage-specific Plan Compile cards, Native Ledger Service operations, discriminated ProjectContextSnapshot variants, PRD source projection and extraction records, Planning topic-map operations, WorkNodeRecord and attempt records, activation state/outbox records, visible testing records, typed UI command contracts, clean-room positive and negative scenarios, and retired Chain Wizard search exclusions. The standard run-gates include scripts/pm-prd-planning-runtime-validate.py so unresolved local schema refs, generic stage algorithms, impossible terminal success records, empty valid WorkGraphs, zero-request certified compiles, false-integrity activation, no-evidence visible test passes, and current-name-as-legacy tautologies cannot be used as certification evidence. node_compile_hint.create_worknodes=false in bootstrap PlanUnits means no WorkNodes are emitted during planning/governance compiles; it does not exclude accepted product requirements from later native Plan Compile once runtime enablement evidence, strict contracts, and executor intake are available.'
+gui_related: false
+gui_classification_reason: Runtime/schema/validator contract, not visual presentation.
+depends_on: [PNC-013, PNC-014, PNC-016, PNC-017, PLS-015]
+unblocks: [EP-104, EP-105, GRS-031, UCC-098]
+acceptance_criteria:
+- Plans/prd_planning_runtime_contracts.json validates against Plans/prd_planning_runtime_contracts.schema.json.
+- WorkNodeRequest carries source PlanUnit and acceptance-unit refs plus direct acceptance, validator, test, model, authority, capability, ordering, and evidence fields.
+- Valid WorkGraph and certified compile states require non-empty nodes, entrypoints, WorkNodeRequests, evidence, and closure receipts.
+- Retired Chain Wizard docs are excluded from active product/runtime search or treated only as compatibility/source-lineage evidence.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: implementation_readiness
+reasoning_tier: high
+context_scope: prd_planning_runtime_contracts
+implementation_surfaces:
+- Plans/Plan_To_Node_Compilation.md
+- Plans/plans_to_code_handoff.schema.json
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+- scripts/pm-prd-planning-runtime-validate.py
+- scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: runtime_contract_readiness_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Plan_To_Node_Compilation.md#PNC-013
+- Plans/Plan_To_Node_Compilation.md#PNC-016
+- Plans/Plan_To_Node_Compilation.md#PNC-017
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-002
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-003
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-005
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-006
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-017
+preserved_exact_tokens:
+- stage cards
+- ProjectContextSnapshot
+- WorkNodeRequest
+- WorkNodeRecord
+- activation_pending
+- BuildStarted
+- zero-incomplete
+- clean-room fixture
+- node_compile_hint
+negative_constraints:
+- Do not mark runtime readiness from file presence or JSON parse alone.
+- Do not treat create_worknodes:false as a product requirement exclusion.
+- Do not use legacy Chain Wizard PlanUnits as active product search authority.
+owner_hints:
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Contracts_V0.md
+- Plans/Executor_Protocol.md
+- Plans/Planning_Ledger_System.md
+- Plans/UI_Command_Catalog.md
+```
+
+### PNC-019 - Static Scenario Boundary And Executable Certification Requirement
+
+```yaml
+plan_unit_id: PNC-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: 'The clean-room positive and negative scenarios in Plans/prd_planning_runtime_contracts.json are contract fixtures and certification targets, not proof that Approve And Build, Plan Compile, Executor intake, activation, Orchestrator projection, testing, or source-control behavior has executed. Runtime readiness after explicit enablement requires an executable certification harness that drives the full lifecycle from immutable ApprovedPlanPack and PlanApproved through currentness preflight, mandatory parallel stage execution, WorkGraph and WorkNodeRequest certification, Executor intake, atomic activation, queued entrypoint, visible Orchestrator projection, testing evidence, cancellation/restart cases, and negative-case rejection. Static JSON parse, required-file existence, schema validation, and contract-scenario presence are necessary preconditions only; they cannot by themselves mark the native pipeline ready. The node-readiness report must remain blocked until either runtime is intentionally disabled or the executable certification harness has passed and recorded evidence for the enabled runtime boundary.'
+gui_related: false
+gui_classification_reason: Certification harness and readiness gates are runtime/governance contracts, not visual presentation.
+depends_on: [PNC-017, PNC-018]
+unblocks: []
+acceptance_criteria:
+- Contract scenarios are labeled as static certification targets rather than executable proof.
+- Native runtime readiness requires executable lifecycle evidence once runtime launch is enabled.
+- File presence, JSON parse, and schema validation alone cannot certify Approve And Build or Plan Compile implementation readiness.
+- Negative scenarios must be executed by the harness after enablement, not merely listed in the contract packet.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: static_fixture_false_certification
+reasoning_tier: high
+context_scope: executable_runtime_certification_boundary
+implementation_surfaces:
+- Plans/Plan_To_Node_Compilation.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+- Plans/Executor_Protocol.md
+- Plans/Goal_Runtime_System.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: executable_certification_required_after_enablement
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- external_report:PRD_Planning_Runtime_Second_Sweep/static_fixture_gap
+- external_report:PRD_Planning_Runtime_Second_Sweep/runtime_readiness_false_positive_gap
+preserved_exact_tokens:
+- clean-room fixture
+- executable end-to-end tests
+- Approve And Build
+- PlanCompileRun
+- Executor intake
+- atomic activation
+- Orchestrator projection
+- runtime readiness
+negative_constraints:
+- Do not treat static JSON fixtures as executable lifecycle tests.
+- Do not mark native runtime ready from required files existing or parsing.
+- Do not certify implementation readiness before an executable harness proves the lifecycle after runtime enablement.
+owner_hints:
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/Goal_Runtime_System.md
+- Plans/Automated_Testing_System.md
 ```

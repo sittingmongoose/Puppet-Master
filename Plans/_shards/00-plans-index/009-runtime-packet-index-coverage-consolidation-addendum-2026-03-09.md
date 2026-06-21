@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L550-L567
+Source lines: L555-L572
 
-Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
+Source SHA256: `8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a`
 
 ---
 
@@ -24,5 +24,5 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 - `Plans/Executor_Protocol.md` for scheduler semantics, attempt lifecycle, and graph-lock behavior
 - `Plans/storage-plan.md` for persistence and restart rules
 - `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction
-- `Plans/chain-wizard-flexibility.md`, `Plans/assistant-chat-design.md`, and `Plans/interview-subagent-integration.md` for paused/degraded planning-state semantics
+- `Plans/assistant-chat-design.md` and `Plans/interview-subagent-integration.md` for active paused/degraded planning-state semantics; `Plans/chain-wizard-flexibility.md` preserves legacy examples only as compatibility/source-lineage input
 - `Plans/Glossary.md` for canonical runtime terminology

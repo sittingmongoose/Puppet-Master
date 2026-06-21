@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-19T17:12:41Z",
+  "generated_at_utc": "2026-06-21T20:47:52Z",
   "index_path": "Plans/_shards/automated_testing_system/00-index.md",
-  "index_sha256": "e98af24c8b0edb4435493af7636709809d34d70518663d9e2df5ffa81655f580",
+  "index_sha256": "eb48c96002eff010b39f228b7108b64a024f0c242bf749d697330665544c8b84",
   "manifest_path": "Plans/_shards/automated_testing_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/automated_testing_system/001-preamble.md",
-      "sha256": "ec3a9e5d9dbe8296dff43da772b5423c28198087eca58953198ecb400354b03d",
+      "sha256": "667f7103c0709aeca5d195d370a9a40a8962c09bb51565817c467574f3a7fb25",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/automated_testing_system/002-0.-scope.md",
-      "sha256": "6ede06aee275d4b332109e9435000f7498fd43f7999eb416bcebbdaed4134b54",
+      "sha256": "b7c627049066c0e304d514f3d00ab3b993ed759352ee0e442fe713baa44c3945",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md",
-      "sha256": "a865cbc64ff72e15837669cc4f4556c719d8d1e65ab6279bc4604d95a7f00ef7",
+      "sha256": "d63eb5a69029886557991a242569e47353f1d6afa2cc4097f8a23176cc393952",
       "shard_id": "003",
       "source_line_end": 26,
       "source_line_start": 13,
@@ -35,79 +35,79 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md",
-      "sha256": "7c1a4f9393cba8116a513b35f8ee973b59b14cbebcd9bc6a80a8b13ad6f2094c",
+      "sha256": "ed04c1895714f695fb0afc0f1c2f4482ab76255448e8f5eb2e9071829483bcf9",
       "shard_id": "004",
-      "source_line_end": 232,
+      "source_line_end": 233,
       "source_line_start": 28,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/automated_testing_system/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "7a3e423d48d2c46a3ecc8fed69ed2330e3a1c561964e80c5771f6785d8a758d4",
+      "sha256": "dc55f171917b0e6cdb7b32eade4f88d5ffcf26a7b6d64906ab66544fa33bee05",
       "shard_id": "005",
-      "source_line_end": 240,
-      "source_line_start": 234,
+      "source_line_end": 241,
+      "source_line_start": 235,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/automated_testing_system/006-4.-integration-surfaces.md",
-      "sha256": "4ec748d586543476fedc4fbc3ff112b8de3ca00c86ca175b929c68df96247e7f",
+      "sha256": "d219b9bebee6fd375ae84bc6a1f6834f11c789ee09954cee96148beb57f145ab",
       "shard_id": "006",
-      "source_line_end": 249,
-      "source_line_start": 242,
+      "source_line_end": 250,
+      "source_line_start": 243,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/automated_testing_system/007-5.-validation-and-acceptance.md",
-      "sha256": "b1b4962a7152b47f420115a341edc966cf674ef812771294e3148029ab33a491",
+      "sha256": "749fa423916bb30d097df0ddb264b6232e7c9c26a356dd1fa0918d6b7733c802",
       "shard_id": "007",
-      "source_line_end": 260,
-      "source_line_start": 251,
+      "source_line_end": 263,
+      "source_line_start": 252,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/automated_testing_system/008-6.-plan-to-node-readiness.md",
-      "sha256": "b41f97a47bec463e6c3e572144f855920b6da59be382cbc6223dc6119a850ba9",
+      "sha256": "d8b1fa9f61bdf9e41495575eb1fa1a64897e04c2f5994eff540e7ef985c2fa8e",
       "shard_id": "008",
-      "source_line_end": 264,
-      "source_line_start": 262,
+      "source_line_end": 267,
+      "source_line_start": 265,
       "split_rule": "heading-##"
     },
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/automated_testing_system/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "2d893e600670b5c6e1d6406ac884fbcf8886c8648fa28ffdbc69332f5238adfa",
+      "sha256": "b51b2c931f53f2520a93e4636fd88bb176c19b7c47ff69a54b906015b4149933",
       "shard_id": "009",
-      "source_line_end": 276,
-      "source_line_start": 266,
+      "source_line_end": 278,
+      "source_line_start": 269,
       "split_rule": "heading-##"
     },
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/automated_testing_system/010-8.-source-lineage-and-governance.md",
-      "sha256": "8f32e6d2cf029df4287680406760b2bba476f1bc03db275c536bf5bbe56f7613",
+      "sha256": "90af34a3764ffc92a5014173a67464feeb101f2ec97370a938f196dc08c9b13b",
       "shard_id": "010",
-      "source_line_end": 295,
-      "source_line_start": 278,
+      "source_line_end": 297,
+      "source_line_start": 280,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/automated_testing_system/011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "de50d422d6fcdc49f4100cfd75da1f691cce7eaffadbd8a771e0b16c2d5d229c",
+      "sha256": "02b5807d720897c7a5fef7317836568f6aee265112b268e5c6d7e408e17ec654",
       "shard_id": "011",
-      "source_line_end": 708,
-      "source_line_start": 298,
+      "source_line_end": 715,
+      "source_line_start": 300,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 708,
+    "line_count": 715,
     "path": "Plans/Automated_Testing_System.md",
-    "sha256": "88303e3b3e0b4db9aa70048bea57d1db35b4155bb5f4cb47327beda0cd66bc10"
+    "sha256": "b89fe1330b3ed4eb95534c3bf5cd052323abd66b80c1e3b5f044bfa2d2874fd2"
   }
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2311-L9923
+Source lines: L2314-L9926
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5
 ```yaml
 plan_unit_id: CWF-001
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The former doc-level source-preserving bridge is retired in place after Phase
@@ -300,7 +300,7 @@ split_recommendation_reason: The doc-level source-preserving unit covers both GU
 ```yaml
 plan_unit_id: CWF-002
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Chain Wizard & Interview Flexibility remains a plan-only canonical workflow
@@ -355,7 +355,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-003
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The change summary and SSOT guardrails preserve validation pass field names,
@@ -414,7 +414,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-004
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The plan scope and navigation preserve intent-based workflows, GUI/flow
@@ -463,7 +463,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-005
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: The wizard and Interview support four distinct intents, with each intent changing requirements framing, Interview depth, upstream/fork handling, and resulting PRD or plan shape as shown in the summary matrix.
 gui_related: false
@@ -507,7 +507,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-006
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: New Project supports greenfield products or codebases from scratch, with optional new directory initialization, optional GitHub repo creation, full-product requirements, full adaptive Interview, and full PRD/plan outcome.
 gui_related: false
@@ -550,7 +550,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-007
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Fork & Evolve supports derivative work from an upstream repo, offers GitHub HTTPS API fork creation or user-provided forks, frames requirements and Interview as delta/evolution, and produces a delta PRD/plan over upstream.
 gui_related: false
@@ -595,7 +595,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-008
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Enhance, Rewrite, or Add supports existing projects new to Puppet Master, uses an existing project path without requiring a fork, frames requirements and Interview as scoped delta work, scans the current codebase for context, and executes in the existing project directory.
 gui_related: false
@@ -639,7 +639,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-009
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Contribute PR supports feature or fix contributions to someone else's project, guides fork and feature-branch setup, keeps requirements lightweight, focuses Interview on scope/acceptance/upstream compatibility, and offers commit, push, and pull-request completion.
 gui_related: false
@@ -683,7 +683,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-010
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Intent selection happens at flow start and drives project setup questions, fork/repo creation offers, requirements prompt copy, Interview phase/depth configuration, PRD/plan framing, and downstream state handoff through app state and optional .puppet-master recovery state.
 gui_related: false
@@ -728,7 +728,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-011
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard and Interview thread lifecycle references use active, attention_required, blocked, completed, and failed as canonical thread states; permanent removal is a delete action with confirmation, and archive is not a lifecycle state.
 gui_related: false
@@ -772,7 +772,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-012
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: ChainWizardState captures intent, wizard_step, project path, new-repo fields, fork/upstream fields, PR branch, requirements upload/Builder/canonical path fields, and recovery correlation in Rust and JSON-equivalent forms.
 gui_related: true
@@ -819,7 +819,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-013
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard runtime state adds required fields including wizard_id, wizard_status, launch_source, phase override and plan references, GUI flag, attention report reference, remote repo reference, deferred payload reference, and the canonical wizard_status lifecycle enum without conflating state families.
 gui_related: true
@@ -867,7 +867,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-014
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard step contracts remain PhaseSelectorContract, RequirementsGatheringContract, InterviewContract, and ValidationPassContract, and blocked wizard persistence uses wizard_status=blocked with blocked_reason_code while rejecting legacy blocked field aliases.
 gui_related: true
@@ -915,7 +915,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-015
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard state persists in app state and .puppet-master recovery storage, preserves credential-safe remote metadata, promotes canonical requirements before execution, and hands one normalized payload to Builder handoff, Interview initialization, and start-chain kickoff.
 gui_related: true
@@ -967,7 +967,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-016
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Validation report bridge fields and canonical auditor_cycle_report terms must carry accepted or final sweep output into launched execution through a launch receipt or promoted package ref while preserving effective runtime identity; validation_pass_report may appear only as a legacy mirror with compatibility_only true and cycle_report_ref, and pass reports must not masquerade as run, node, or attempt records.
 gui_related: true
@@ -1024,7 +1024,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-017
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard cancellation terminates subagents, aborts tool calls, conditionally cleans up or preserves branches, preserves Interview state for a 24-hour resume window, moves partial artifacts to .cancelled, counts consumed usage, emits wizard.cancelled, and keeps FUTURE FEATURE or OPEN QUESTION labels non-blocking unless promoted.
 gui_related: false
@@ -1077,7 +1077,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-018
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: The GUI Updates and Intent Selection headings are preserved as structural boundaries for the next GUI-specific window; batch 016 does not pull the 3.1A Feature/enhancement entry copy body into this PlanUnit.
 gui_related: true
@@ -1117,7 +1117,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-019
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: The Chain Wizard start surface exposes Add a new Feature or Enhancement as a user-facing CTA that maps to EnhanceRewriteAdd without creating a fifth intent, preserves the four intent options, and can be reused from Assistant Chat, Deep Plan, and deferred-wizard shortcuts.
 gui_related: true
@@ -1166,7 +1166,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-020
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: OpenCode is configured as a first-class provider backend in Settings, with enable toggle, Direct server and CLI launcher/discovery fallback connection methods, auth/sign-in options, and shared Provider model selection without OpenCode-only picker behavior.
 gui_related: true
@@ -1212,7 +1212,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-021
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: The requirements step prompts users to provide Requirements Document(s), supports uploading one or multiple files under .puppet-master/requirements, and offers Requirements Doc Builder as a no-reupload Assistant-generated requirements path into Interview.
 gui_related: true
@@ -1255,7 +1255,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-022
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Project setup collects project path, intent-specific GitHub create/fork/existing repo fields, provider auth readiness, tool install readiness, manual Cursor/Claude paths, and command-contract actions from FinalGUISpec.
 gui_related: true
@@ -1306,7 +1306,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-023
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard navigation permits back/forward changes while requiring documented reset or confirmation behavior when intent changes, and recovery snapshots include current view, wizard step, intent, and project path.
 gui_related: true
@@ -1348,7 +1348,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-024
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Wizard-produced Plan and Deep Plan artifacts use the normalized TODO schema, treat Plan and Deep Plan as intensity variants of plan runtime mode, may use read-only research subagents and web tools through normal permissions, and keep mutating tools denied in plan mode.
 gui_related: true
@@ -1402,7 +1402,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-025
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements Builder, Multi-Pass Review, Interview document creation, and review work show a same-page embedded read-only agent activity pane with streaming agent output, blocked-state badges/actions, progress status, and separate document review/editing pane.
 gui_related: true
@@ -1452,7 +1452,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-026
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Multi-Pass Review and document generation expose pause, cancel, and resume controls whose runtime semantics preserve handoff boundaries, avoid killing in-flight subagents on pause/cancel, discard cancelled reports, and support crash recovery choices.
 gui_related: true
@@ -1501,7 +1501,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-027
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Agent activity progress uses the canonical run-state enum, a Pause Resume Cancel control row, confirmation modal/toasts, stale-progress warning after 30 seconds, and a recoverable checkpoint payload with run type, run id, phase, step/document indexes, subagent task count, and checkpoint version.
 gui_related: true
@@ -1551,7 +1551,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-028
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements uploads allow up to ten ordered files, enforce a five MiB per-file limit, preserve originals byte-for-byte, normalize each upload into deterministic UTF-8 text projections, and exclude failed extraction files until replaced or removed.
 gui_related: true
@@ -1602,7 +1602,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-029
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements merging always concatenates normalized uploads and/or Builder output into canonical staging and promotion paths, uses exact separators and list order, performs no AI or rule-based conflict resolution, and makes Interview/start chain read only canonical_requirements_path.
 gui_related: true
@@ -1650,7 +1650,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-030
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements artifacts are represented in seglog/redb, stored under .puppet-master/requirements and .puppet-master/project paths with exact upload, normalized, Builder, contract seed, merge, and canonical requirements locations, while contract-seeds.md remains staging input and not the canonical project contract pack.
 gui_related: false
@@ -1700,7 +1700,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-031
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements upload edge cases are resolved by enforcing ten files, five MiB per file, upload-specific errors, no reference-only or sampling fallback, and always-concatenation merge semantics controlled by user ordering.
 gui_related: true
@@ -1744,7 +1744,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-032
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements Doc Builder is a conversation-first button in the requirements step with no questionnaire before first response, staged output until approval/handoff, and context-dependent opening prompts that the Assistant sends first.
 gui_related: true
@@ -1790,7 +1790,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-033
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder conversation counts completed turns only after Assistant message plus user response, may suggest generation when enough information exists or completed_turns reaches six, never auto-generates, and starts generation only after explicit user confirmation.
 gui_related: false
@@ -1834,7 +1834,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-034
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder handoff emits one requirements document plus a staging-only contract seed pack, persists paths/source/checklist/conversation/approval state, and packages qualifying .puppet-master/requirements outputs as verified Document Sets before handoff continues.
 gui_related: false
@@ -1881,7 +1881,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-035
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder output and contract seed pack templates require named top-level sections for requirements and contract seeds while allowing additional sections and validation warnings for missing required headings.
 gui_related: false
@@ -1927,7 +1927,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-036
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder tracks separate conversation and checklist state contracts, uses empty/thin/filled section statuses and requirements_doc or contract_seed_pack sources, and asks qualifying questions only for empty or thin checklist entries.
 gui_related: false
@@ -1976,7 +1976,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-037
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder promotion operates on staged bundle artifacts, with Accept, Reject, and Edit gates controlling promotion to accepted Builder artifacts and enabling Done -- hand off to Interview only when the bundle state is approved_for_handoff.
 gui_related: false
@@ -2023,7 +2023,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-038
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements Doc Builder depends on Assistant chat plus current project path and intent, uses the shared rules pipeline, and does not duplicate interview-specific rules beyond producing a requirements document for handoff.
 gui_related: false
@@ -2068,7 +2068,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-039
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Builder document review uses canonical bundle-level and doc-level states for generation, review, targeted revision, approvals, final gate, completion, errors/interruption, and doc approval/revision badges.
 gui_related: false
@@ -2119,7 +2119,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-040
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements Doc Builder review generates staged artifacts as a bundle, supports durable annotations and Resubmit with Annotations targeted revision, enables Run Final Review only after all docs are Approved/Done and no annotations remain open, and ends final review with Accept, Reject, or Edit.
 gui_related: true
@@ -2167,7 +2167,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-041
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Resubmit with Annotations accepts current docs plus open durable annotations in deterministic order, structured annotation operations and payloads, source-text anchors, bounded provenance, and preview-mode downgrade behavior when deterministic source mapping is unavailable.
 gui_related: true
@@ -2218,7 +2218,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-042
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Targeted revision output returns updated doc text, replies, and one ordered result record per input annotation, with runtime validation authoritative for addressed, still_open, cannot_apply, or unresolved transitions.
 gui_related: true
@@ -2265,7 +2265,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-043
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Targeted revision may answer questions without changing docs, must not trigger Multi-Pass Review, excludes conflicting or stale mutating annotations, allows one retry on structured validation failure, exposes requested/effective capability, preserves non-blocking tags, and does not introduce direct patch-apply semantics.
 gui_related: true
@@ -2319,7 +2319,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-044
 unit_type: validation_rule
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Document review workflow acceptance preserves selection-palette operations, Send selection to chat chips, deterministic re-anchoring with explicit anchor_not_found, Resubmit with Annotations targeted revision, Resubmit with Notes as a legacy label for the same pass, and the final-review gate.
 gui_related: true
@@ -2371,7 +2371,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-045
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Multi-Pass Review is the Requirements Doc Builder final-review action,
@@ -2434,7 +2434,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-046
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The wizard inserts a Contract Layer between requirements and execution, with
@@ -2494,7 +2494,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-047
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Project contract artifacts materialize under .puppet-master/project/, while
@@ -2548,7 +2548,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-048
 unit_type: validation_rule
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Execution nodes reference resolvable ProjectContract IDs through
@@ -2603,7 +2603,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-049
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Adaptive Interview chooses which phases to cut, shorten, or double down on so
@@ -2653,7 +2653,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-050
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Phase 0 always runs a mandatory max-two-question scope probe before phase
@@ -2710,7 +2710,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-051
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The phase selector consumes intent, requirements summary, optional codebase
@@ -2769,7 +2769,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-052
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Phase plans persist with source and override metadata, selector failures use
@@ -2824,7 +2824,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-053
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The Interview UI exposes a default-off Run all phases checkbox and an ordered
@@ -2878,7 +2878,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-054
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Adaptive phases select which existing Interview subagents and
@@ -2925,7 +2925,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-055
 unit_type: risk
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Adaptive phase selection must surface determinism risk and may be cached by
@@ -2970,7 +2970,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-056
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Adaptive Interview phases emit structured contract fragments for scope,
@@ -3027,7 +3027,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-057
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The wizard pipeline owns the deterministic Contract Unification Pass after
@@ -3077,7 +3077,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-058
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Contract Unification materializes required .puppet-master/project/ artifacts
@@ -3133,7 +3133,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-059
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   When has_gui is true, Contract Unification emits
@@ -3192,7 +3192,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-060
 unit_type: validation_rule
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Contract packs may be chunked with contracts/index.json as the resolver,
@@ -3247,7 +3247,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-061
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Project setup for New Project supports actual GitHub repository creation with
@@ -3300,7 +3300,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-062
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Fork & Evolve and Contribute PR offer Create fork for me through GitHub API
@@ -3352,7 +3352,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-063
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Contribute PR starts by resolving fork, clone, and one feature branch in the
@@ -3405,7 +3405,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-064
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   PR finish offers commit, push, and Open PR via GitHub HTTPS API, fetching
@@ -3461,7 +3461,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-065
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   GitHub create, fork, and PR flows require documented scopes,
@@ -3533,7 +3533,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-066
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Contribute PR uses the main clone feature branch as the user-facing branch,
@@ -3588,7 +3588,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-067
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The Relationship table records adjacent owner and consumer docs for
@@ -3642,7 +3642,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-068
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Intent changes after downstream state require the exact confirmation modal and
@@ -3699,7 +3699,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-069
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements and Builder gap resolutions fix merge order, required Builder
@@ -3757,7 +3757,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-070
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard length is mitigated with a visible step/total progress indicator while
@@ -3805,7 +3805,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-071
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The wizard may borrow selectively from IDE workspace models but must avoid a
@@ -3856,7 +3856,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-072
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Cross-surface handoffs must preserve exact source, project, terminal cwd, and file context so source resolution does not drift between tools.
 gui_related: false
@@ -3903,7 +3903,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-073
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The shared agent activity pane keeps bounded, readable, accessible streaming
@@ -3957,7 +3957,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-074
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Intent selection and Builder, Create fork, and Open PR controls must preserve focus order, labels, keyboard activation, ARIA where needed, and screen-reader text.
 gui_related: true
@@ -4006,7 +4006,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-075
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: New intent labels, buttons, and help text are stored in a centralized string module or locale resource keyed by ID, with no inline hardcoded strings in view code.
 gui_related: true
@@ -4052,7 +4052,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-076
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Requirements docs, Builder output, Interview handoff, and PR body generation must not accept, embed, or propagate tokens/secrets and must sanitize sensitive fields before PR creation.
 gui_related: false
@@ -4101,7 +4101,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-077
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Fork/PR setup from untrusted upstreams may clone and create a branch but must not run upstream scripts, hooks, or code during fork/clone.
 gui_related: false
@@ -4147,7 +4147,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-078
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Chain Wizard consumes Plans/Project_Output_Artifacts.md for exact user-project artifact, sharding, and persistence contracts, while keeping CWF flow-specific and avoiding local schema restatement.
 gui_related: false
@@ -4195,7 +4195,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-079
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Validators and orchestrator use only the canonical sharded plan_graph as scheduling/execution input; monolithic graph export is optional, derived, and consistency-only.
 gui_related: false
@@ -4247,7 +4247,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-080
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Ambiguity uses deterministic defaults with auto-decision records in project artifacts and seglog, while tool_policy_mode ask approvals do not block unrelated runnable scheduler work.
 gui_related: false
@@ -4295,7 +4295,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-081
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The always-on Auditor invariant loop runs immediately after Contract
@@ -4351,7 +4351,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-082
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The initial Auditor audit cycle validates and completes the provisional
@@ -4405,7 +4405,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-083
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Bounded Auditor repair compares project artifacts against contracts and canon,
@@ -4462,7 +4462,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-084
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The Auditor certification gate enforces DRY/SSOT, plan graph, wiring,
@@ -4517,7 +4517,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-085
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The sweep runs deterministically and headlessly, uses one Auditor validation
@@ -4575,7 +4575,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-086
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Auditor loop blocks route to user-visible clarification or resolution
@@ -4630,7 +4630,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-087
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime identity survives validation into launch handoff.
 gui_related: false
@@ -4684,7 +4684,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-088
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: CWF records no-wizard entry-point wiring and cross-references, while the full flow specification remains owned by Plans/GitHub_Integration.md §D.
 gui_related: false
@@ -4726,7 +4726,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-089
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Three project management flows are reachable from File menu Project or Dashboard and each finishes with a Run Chain Wizard later affordance that preloads the new project context.
 gui_related: true
@@ -4773,7 +4773,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-090
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Add Existing Project lets users pick a local folder or SSH remote path, auto-detects repo/language/framework/project name, optionally links GitHub, opens File Manager/editor, and offers Run Chain Wizard later.
 gui_related: true
@@ -4824,7 +4824,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-091
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Create New Local Project collects project name, parent folder, default-on git-init, and optional language/framework preset, then creates/opens the project and offers Run Chain Wizard later.
 gui_related: true
@@ -4871,7 +4871,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-092
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: Create New GitHub Repo + Project requires github_api auth, launches inline device-code if needed, collects repo/visibility/README/gitignore/license/local clone inputs, creates via API, clones locally, and offers Run Chain Wizard later.
 gui_related: true
@@ -4922,7 +4922,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-093
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   No-wizard project-management finish screens expose Run Chain Wizard later,
@@ -4976,7 +4976,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-094
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Every requirement must satisfy C-1 through C-5 before leaving the Chain
@@ -5025,7 +5025,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-095
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Each requirement includes at least one happy-path scenario and one
@@ -5070,7 +5070,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-096
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Each requirement declares explicit in-scope and out-of-scope boundaries and
@@ -5115,7 +5115,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-097
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Each requirement carries either a ProjectContract reference that pins the
@@ -5159,7 +5159,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-098
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Each requirement includes at least one acceptance check command path or named
@@ -5203,7 +5203,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-099
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Unknowns become blocking research dependencies, deterministic auto-decisions
@@ -5253,7 +5253,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-100
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Initial Auditor audit produces and bounded Auditor repair updates a requirements_quality_report artifact
@@ -5300,7 +5300,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-101
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements quality reports are stable across equivalent reruns by ordering
@@ -5350,7 +5350,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-102
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Auditor certification reads the post-repair requirements_quality_report and triggers user
@@ -5396,7 +5396,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-103
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Quality escalation moves the wizard to attention_required, disables proceed
@@ -5444,7 +5444,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-104
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements clarification appears in the relevant chain/wizard chat thread
@@ -5494,7 +5494,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-105
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements clarification also appears on the Dashboard under Attention
@@ -5543,7 +5543,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-106
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   The canonical requirements quality report is stored under project traceability,
@@ -5587,7 +5587,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-107
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   A clarification cycle is report, answer submission, and automatic Auditor
@@ -5635,7 +5635,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-108
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Blocked clarification disables proceed actions, explains repeated failure to
@@ -5687,7 +5687,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-109
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard clarification uses the shared question and /questionnaire contract plus
@@ -5740,7 +5740,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-110
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder and related wizard generation/review work distinguish
@@ -5789,7 +5789,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-111
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder resolves Personas in deterministic priority order from
@@ -5841,7 +5841,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-112
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   review_pass_personas persists canonical ordinal pass_1 through pass_5 keys,
@@ -5892,7 +5892,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-113
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Builder Persona settings persist a canonical config object with mode,
@@ -5940,7 +5940,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-114
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Every Builder stage or pass persists and exposes requested/effective Persona,
@@ -5989,7 +5989,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-115
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Intake defaults to collaborator-style clarification behavior, while drafting
@@ -6038,7 +6038,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-116
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Domain-specialized fragment generation may use domain or language Personas,
@@ -6087,7 +6087,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-117
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder settings allow platform and model selection per stage and
@@ -6133,7 +6133,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-118
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Requirements Builder UI exposes effective Persona, selection reason, effective
@@ -6183,7 +6183,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-119
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Assistant Chat and Deep Plan may recommend escalation into Chain Wizard /
@@ -6238,7 +6238,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-120
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Accepted Assistant Chat or Deep Plan recommendations for feature/enhancement
@@ -6282,7 +6282,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-121
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Assistant Chat and Deep Plan create a typed handoff payload with source,
@@ -6335,7 +6335,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-122
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard handoff carries runtime attribution, validation lineage, and permission
@@ -6392,7 +6392,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-123
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   ChainWizardState persists assistant handoff fields for recovery, resume,
@@ -6441,7 +6441,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-124
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Accepted assistant/deep-plan handoffs open a preloaded EnhanceRewriteAdd path
@@ -6489,7 +6489,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-125
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Imported handoff bundles preserve redaction, truncation, and omission metadata
@@ -6534,7 +6534,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-126
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   After assistant/deep-plan handoff, Interview still owns scoping and adaptive
@@ -6582,7 +6582,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-127
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Adaptive phase pruning applies across all chain-wizard intents, using imported
@@ -6635,7 +6635,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-128
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Later blocked-state and enum addenda defer to the canonical wizard_status
@@ -6690,7 +6690,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-129
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   attention_required means the current clarification cycle can still resolve the
@@ -6737,7 +6737,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-130
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Blocked state disables proceed actions, explains unresolved repeated
@@ -6785,7 +6785,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-131
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard packets support both wizard_attention_required and wizard_blocked with
@@ -6832,7 +6832,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-132
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Before canonical graph lock, invalid or cyclic adaptive decomposition may
@@ -6886,7 +6886,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-133
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   After graph lock, invalid canonical decomposition is a blocking integrity
@@ -6934,7 +6934,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-134
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard state persists attention, blocked, report, resume, recovery,
@@ -6983,7 +6983,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-135
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard UX differentiates clarification still pending, blocked on correction,
@@ -7027,7 +7027,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-136
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard remains attention_required while the current loop can resolve the issue
@@ -7072,7 +7072,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-137
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Canonical blocked records persist wizard identity, step, reason, round count,
@@ -7126,7 +7126,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-138
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   A wizard leaves blocked only when materially new input, resolved external
@@ -7176,7 +7176,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-139
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard planning output carries execution, lane, package, seam, attempt,
@@ -7228,7 +7228,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-140
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Audit refinement tokens, gap IDs, exact counters, source model pass labels,
@@ -7277,7 +7277,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-141
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard, thread, search, card, and deep-link navigation normalize to shared
@@ -7328,7 +7328,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-142
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Gate registry integrity keeps reserved gate/tombstone handling visible and
@@ -7377,7 +7377,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-143
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Project-level attention summaries remain compact and severity semantics stay
@@ -7427,7 +7427,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-144
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Persona ownership and Historical mode boundaries remain explicit: overseer
@@ -7478,7 +7478,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-145
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard planning and document systems identify the staged or generated artifact
@@ -7522,7 +7522,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-146
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Wizard/interview output converges on graph-native planning for
@@ -7576,7 +7576,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CWF-147
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   Cross-surface actions and explanation fields remain shared across Usage,

@@ -2426,7 +2426,7 @@ canonical_text: >-
   Configured checkpoints may pause for credentials/secrets or other critical authority blockers only when HITL policy enables them or critical escalation policy requires them.
 gui_related: true
 gui_classification_reason: HITL checkpoints, approvals, and continuation prompts are user-visible interaction surfaces.
-depends_on: [PS-116, GRS-029]
+depends_on: [PS-116]
 unblocks: [OP-024]
 acceptance_criteria:
   - HITL checkpoints are opt-in mode behavior.

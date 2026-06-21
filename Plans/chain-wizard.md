@@ -1,5 +1,10 @@
 # Chain Wizard -- Plan
 
+## Canon Status (2026-06-21)
+
+This document is retired from active product canon and retained only as legacy compatibility/source-lineage for historical Chain Wizard launch, handoff, and route examples. Current PRD intake, planning, GUI, command, runtime, PlanCompile, Executor, and Orchestrator authority routes through `Plans/PRD_Builder.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md`, `Plans/Contracts_V0.md`, `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`, `Plans/Goal_Runtime_System.md`, and the current owners named in `Plans/00-plans-index.md`.
+
+All `CW-*` PlanUnits in this file are retired in place for audit, search, and source-lineage compatibility. They must not be treated as accepted/indexed active product truth or as implementation-ready requirements.
 
 ## Wizard and launched-run lineage reconciliation
 
@@ -39,7 +44,7 @@ ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Boot
 ```yaml
 plan_unit_id: CW-001
 unit_type: compatibility_disposition
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   The former doc-level source-preserving bridge is retired in place after Phase
@@ -89,7 +94,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-002
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Wizard-launched execution handoffs include project, thread, wizard, and child
@@ -142,7 +147,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-003
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Wizard, interview, and worktree lineage preserves the exact launch seams and
@@ -198,7 +203,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-004
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Chain Wizard routes preserve chain-wizard-flexibility as Wizard / Project
@@ -248,7 +253,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-005
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Attention routing is shared across Dashboard, Orchestrator, chat thread,
@@ -302,7 +307,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-006
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Wizard resume is identity-first and uses primary-view route objects with
@@ -357,7 +362,7 @@ owner_hints:
 ```yaml
 plan_unit_id: CW-007
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   In-app navigation uses one route-object model across file opens, wizard
@@ -421,7 +426,7 @@ Phase 2B atomized `chain-wizard-S0001` through `chain-wizard-S0004` into fine-gr
 ```yaml
 plan_unit_id: CW-008
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: >-
   Legacy builder entry points that carried Chain Wizard, Plan Wizard, or Requirements Doc Builder labels are compatibility/source-lineage aliases only. Current product flows route users to PRD Builder and Planning Wizard conversational v2 ledger capture before any invisible Goal conversion. When the accepted ledger is ready, the Planning Wizard handoff points to Goal Runtime for invisible ledger-to-requirements-docs, ledger-to-Plans, plans-to-work-graphs, or conversion-audit work, and routes any plans-to-work-graphs or work-graph preparation artifact boundary through Plan_To_Node_Compilation/PNC-009; it does not create default Orchestrator WorkNodes or bypass ledger source preservation.
@@ -501,7 +506,7 @@ This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20
 ```yaml
 plan_unit_id: CW-009
 unit_type: constraint
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard.md
 canonical_text: 'The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md are legacy compatibility/source-lineage consumers for material now owned by PRD Builder, Planning Wizard, Final GUI, and downstream PlanCompile/Executor owners. PMConcept and FinalGUISpec replace the old fixed Project Setup through Start Chain sequence with PRD Builder intake, dynamic Planning Run topics, live topic and plan projections, audits, Approve And Build, and Orchestrator Plan Compile navigation.'
 gui_related: true

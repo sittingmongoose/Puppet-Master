@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L298-L708
+Source lines: L300-L715
 
-Source SHA256: `88303e3b3e0b4db9aa70048bea57d1db35b4155bb5f4cb47327beda0cd66bc10`
+Source SHA256: `b89fe1330b3ed4eb95534c3bf5cd052323abd66b80c1e3b5f044bfa2d2874fd2`
 
 ---
 
@@ -19,7 +19,7 @@ plan_unit_id: ATS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, and reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification.'
+canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, approver_ref, approved_at_utc, evidence_refs, redaction_profile_ref, and expiration or reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification. Visible or headed-session verification cannot pass without interaction evidence, artifact evidence, and redaction disposition.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []
@@ -28,6 +28,7 @@ acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- Testing Off or restricted testing records approver, scope, risk, evidence, redaction profile, expiration or reopen condition, and truthful exception result.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -61,10 +62,14 @@ preserved_exact_tokens:
 - automated testing is enabled by default
 - testing_policy_override
 - completed_with_approved_verification_exception
+- approver_ref
+- evidence_refs
+- redaction_profile_ref
 negative_constraints:
 - Do not ask whether testing should exist as though no testing were the ordinary default.
 - Do not infer an opt-out from casual conversation or a capability setting being unavailable.
 - Do not convert an approved testing exception into test_passed or certified.
+- Do not allow visible-session pass without evidence and redaction disposition.
 owner_hints:
 - Plans/Automated_Testing_System.md
 - Plans/Planning_Wizard.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_Document_System.md`
 
-Source lines: L788-L897
+Source lines: L788-L949
 
-Source SHA256: `59565b7722e420dbeb1f009068cf87988b24a9bd60d78844d58f244b3e789e0c`
+Source SHA256: `e99b6b40c6c526e766580bfe237754b93d38844b112f163026797a94e29593fa`
 
 ---
 
@@ -117,4 +117,56 @@ owner_hints:
 - Plans/00-plans-index.md
 - Plans/Crosswalk.md
 - Plans/Wiring_Matrix.md
+```
+
+### PDS-017 - Retired Compatibility Retrieval Exclusion
+
+```yaml
+plan_unit_id: PDS-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: 'Retired compatibility/source-lineage documents may remain in Plans for auditability, but active product, runtime, implementation, RAG, and search consumers must not retrieve them as current authority. Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md are retained only as compatibility and source-lineage evidence after the PRD Builder and Planning Wizard owner map; product search, runtime-contract search, Plan Compile retrieval, and implementation-agent context builders must exclude those paths or label returned snippets as retired compatibility evidence before use. The exclusion choice is represented in Plans/prd_planning_runtime_contracts.json and validated by scripts/pm-prd-planning-runtime-validate.py; compacting either file to tombstone-only form remains a separate owner decision, not a prerequisite for this bounded repair.'
+gui_related: false
+gui_classification_reason: Search/index/retrieval governance, not visual presentation.
+depends_on: [PDS-016, PNC-018]
+unblocks: []
+acceptance_criteria:
+- Retired Chain Wizard docs are listed in the runtime contract packet retired_search_exclusions.
+- Active PRD Builder and Planning Wizard owner docs remain the product authority.
+- Compatibility snippets from retired docs cannot be consumed as current runtime/implementation instructions.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: stale_legacy_retrieval
+reasoning_tier: standard
+context_scope: retired_compatibility_search_exclusion
+implementation_surfaces:
+- Plans/Plan_Document_System.md
+- Plans/00-plans-index.md
+- Plans/prd_planning_runtime_contracts.json
+- scripts/pm-prd-planning-runtime-validate.py
+node_compile_hint:
+  mode: retired_retrieval_exclusion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/chain-wizard.md
+- Plans/chain-wizard-flexibility.md
+- Plans/PRD_Builder.md#PRDB-001
+- Plans/Planning_Wizard.md#PWIZ-001
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-019
+preserved_exact_tokens:
+- Chain Wizard
+- compatibility/source-lineage
+- retired_search_exclusions
+- PRD Builder
+- Planning Wizard
+negative_constraints:
+- Do not use retired Chain Wizard docs as active product or implementation authority.
+- Do not move legacy prose into PRD Builder or Planning Wizard owner docs.
+owner_hints:
+- Plans/Plan_Document_System.md
+- Plans/00-plans-index.md
+- Plans/prd_planning_runtime_contracts.json
 ```

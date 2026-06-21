@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L2415-L2461
 
-Source SHA256: `f712a326889cb81a3c708e7c84b583f3ede9e96260613f3b1f5b9618c7cd3d0c`
+Source SHA256: `051c284c0318d7d70e2f0fc5fa6c4281c28cdd7bb9aec764d0489d3b511feaa3`
 
 ---
 
@@ -22,7 +22,7 @@ canonical_text: >-
   Configured checkpoints may pause for credentials/secrets or other critical authority blockers only when HITL policy enables them or critical escalation policy requires them.
 gui_related: true
 gui_classification_reason: HITL checkpoints, approvals, and continuation prompts are user-visible interaction surfaces.
-depends_on: [PS-116, GRS-029]
+depends_on: [PS-116]
 unblocks: [OP-024]
 acceptance_criteria:
   - HITL checkpoints are opt-in mode behavior.

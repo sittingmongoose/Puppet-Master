@@ -280,6 +280,23 @@ class PmAuditClosureTerminalStateTests(unittest.TestCase):
 
             self.assertTrue(any("drift.dependencies must be false" in error for error in report["errors"]))
 
+    def test_repaired_matrix_supersedes_historical_blocked_report(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            audit_dir, registry, audit_refs = self.setup_audit(Path(tmp), "audit-repaired", status="BLOCKED", repair_required_count=1)
+            actionable = finding_row(audit_refs, repair_required=True, level="blocker")
+            write_jsonl(audit_dir / "semantic_risks.jsonl", [actionable])
+            write_complete_scope(audit_dir, audit_refs, finding_keys=[actionable["finding_key"]])
+            write_jsonl(registry, [registry_row(audit_refs, actionable)])
+            write_jsonl(audit_dir / "repair_closure_matrix.jsonl", [closure_matrix_row(audit_refs, actionable)])
+            write_jsonl(audit_dir / "repair_impact_matrix.jsonl", [impact_row(audit_refs, actionable)])
+
+            report = self.validate(audit_dir, registry)
+
+            self.assertEqual(report["errors"], [])
+            self.assertEqual(report["original_repair_required_count"], 1)
+            self.assertEqual(report["repair_required_count"], 0)
+            self.assertEqual(report["terminal_repair_state"], "repair_validated")
+
     def test_audit_report_status_must_match_repair_required_count(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             audit_dir, registry, audit_refs = self.setup_audit(Path(tmp), "audit-status-mismatch", status="PASS", repair_required_count=1)

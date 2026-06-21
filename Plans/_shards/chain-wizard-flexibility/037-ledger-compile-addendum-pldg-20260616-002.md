@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L10058-L10133
+Source lines: L10061-L10136
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5
 ```yaml
 plan_unit_id: CWF-151
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
 canonical_text: >-
   PRD Builder uses a conversational v2 ledger phase to co-shape and preserve requirements intent; Requirements Doc Builder survives here only as a compatibility/source-lineage label for the same migrated product surface. After the user accepts the ledger-ready state, an invisible Goal Mode conversion may produce requirements docs, Plans, work-graph preparation artifacts, and conversion audit evidence, with any work-graph preparation artifact boundary routed through Plan_To_Node_Compilation/PNC-009. The conversational phase is not a Goal run by default, and the invisible conversion is not a default Orchestrator WorkNode unless the user explicitly asks to hand it to Orchestrator.

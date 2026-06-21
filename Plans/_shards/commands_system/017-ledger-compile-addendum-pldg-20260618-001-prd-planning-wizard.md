@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L3514-L3568
+Source lines: L3514-L3571
 
-Source SHA256: `2daf12c08330d43a2fd4d53ec4b07711c89dda72679ea9e71c77a09b3739551b`
+Source SHA256: `22dd09e99960560bd60cf5022e9bbc8ce19050021d1898510cc37c138dff2864`
 
 ---
 
@@ -19,13 +19,13 @@ plan_unit_id: CS-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery.'
+canonical_text: 'Commands_System may expose user-authored command presets, slash-command shortcuts, or palette entries that invoke Planning Wizard and Plan Compile UICommands, but UI_Command_Catalog owns the typed command payloads, results, permission and enablement guards, disabled reason codes, receipt effects, idempotency, stale-projection behavior, and recovery routes. For topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build, Commands_System records only invocation/display boundaries and must reference the UI command contract rather than restating or weakening it.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- The live owner doc preserves the command invocation/display surface without treating Commands_System as the UICommand semantic owner.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
@@ -39,6 +39,7 @@ implementation_surfaces:
 - Plans/UI_Command_Catalog.md
 - Plans/Planning_Wizard.md
 - Plans/Orchestrator_Page.md
+- Plans/prd_planning_runtime_contracts.json
 node_compile_hint:
   mode: canonical_planunit_from_bootstrap_ledger
   create_worknodes: false
@@ -56,7 +57,9 @@ preserved_exact_tokens:
 - cancel
 - resume
 - inspect evidence
-negative_constraints: []
+negative_constraints:
+- Do not define UICommand payload/result schemas in Commands_System.
+- Do not allow user-authored command presets to bypass UI_Command_Catalog enablement or stale-projection guards.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Commands_System.md

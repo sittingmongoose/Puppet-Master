@@ -2,14 +2,15 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L7-L25
+Source lines: L7-L26
 
-Source SHA256: `0b04946d9ec2c1f17eba863e6167a9df24c398c55901440a71f1b36b4a858cb5`
+Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
 
 ---
 
 ## Change Summary
 
+- 2026-06-21: Retired this document from active product canon. Historical Chain Wizard, Plan Wizard, Requirements Doc Builder, intent, requirements, interview, GitHub, fork, PR, blocked-state, and route material is compatibility/source-lineage only; current authority routes to PRD Builder, Planning Wizard, Final GUI, Contracts, PlanCompile, Executor, Goal Runtime, GitHub/source-control, storage, and other current owner docs named in `Plans/00-plans-index.md`. All `CWF-*` PlanUnits are retired in place and must not be accepted/indexed as active product truth.
 - 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.
 - 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with "Run Chain Wizard later" affordance; full spec in Plans/GitHub_Integration.md §D.
 - 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation provider/model settings and active process stages. The mandatory invariant sweep is now an Auditor audit-to-repair loop that repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary. Legacy pass names and `validation_pass_report` fields remain compatibility aliases only.

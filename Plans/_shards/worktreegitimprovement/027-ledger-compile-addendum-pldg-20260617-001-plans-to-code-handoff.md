@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L4906-L4959
 
-Source SHA256: `2a5c1f1a30f0bdca8b4f45ee04f4513d97c191bfd5238bf60dfa973fa560432c`
+Source SHA256: `a7d2273c08de3321166347b4a05d314b40aca1a6c5fc24957594e1c2e70d47f9`
 
 ---
 
@@ -22,7 +22,7 @@ canonical_text: >-
   This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
 gui_related: true
 gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
-depends_on: [W-071, EP-100]
+depends_on: [W-071]
 unblocks: [OP-024, EP-100, RAP-029]
 acceptance_criteria:
   - Mutation-capable WorkNodes preserve repo and worktree identity before execution.

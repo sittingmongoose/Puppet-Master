@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L1970-L2139
 
-Source SHA256: `bc4253dbc952946955b2dc60feeca2b48f51671319fa7c8f038d4bd29889d532`
+Source SHA256: `0b20c72c615e1b42c9d2b906a97ba5ab0f1f2639ca77b478bf746a6a5cdafe68`
 
 ---
 
@@ -133,7 +133,7 @@ canonical_text: >-
   GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
 gui_classification_reason: Completion certification and evidence truth-layer policy are runtime/governance behavior.
-depends_on: [GRS-027, GRS-029, EP-103, ATS-004, POA-048]
+depends_on: [GRS-027, GRS-029, EP-103, ATS-004]
 unblocks: [RAP-029, CV-289, OP-024]
 acceptance_criteria:
   - GoalCompletionReceipt proves code-complete status from objective receipt criteria.

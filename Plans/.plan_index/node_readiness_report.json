@@ -1,1898 +1,20 @@
 {
-  "build_order_blockers": [
-    {
-      "blocker_type": "dependency_cycles",
-      "items": [
-        {
-          "plan_unit_id": "0PI-058",
-          "remaining_depends_on": [
-            "CV-289",
-            "EP-103",
-            "F2-189",
-            "F3-397",
-            "GI-031",
-            "GRS-030",
-            "PDS-015",
-            "PLS-013",
-            "POA-048",
-            "RAP-029",
-            "W-072"
-          ]
-        },
-        {
-          "plan_unit_id": "CV-289",
-          "remaining_depends_on": [
-            "EP-103",
-            "POA-048"
-          ]
-        },
-        {
-          "plan_unit_id": "EP-100",
-          "remaining_depends_on": [
-            "F2-189",
-            "W-072"
-          ]
-        },
-        {
-          "plan_unit_id": "EP-102",
-          "remaining_depends_on": [
-            "EP-100",
-            "GRS-029",
-            "PS-116"
-          ]
-        },
-        {
-          "plan_unit_id": "EP-103",
-          "remaining_depends_on": [
-            "EP-100",
-            "EP-102"
-          ]
-        },
-        {
-          "plan_unit_id": "F2-189",
-          "remaining_depends_on": [
-            "W-072"
-          ]
-        },
-        {
-          "plan_unit_id": "F3-397",
-          "remaining_depends_on": [
-            "OP-024"
-          ]
-        },
-        {
-          "plan_unit_id": "GI-031",
-          "remaining_depends_on": [
-            "EP-100",
-            "W-072"
-          ]
-        },
-        {
-          "plan_unit_id": "GRS-029",
-          "remaining_depends_on": [
-            "HITL-036",
-            "PS-116"
-          ]
-        },
-        {
-          "plan_unit_id": "GRS-030",
-          "remaining_depends_on": [
-            "EP-103",
-            "GRS-029",
-            "POA-048"
-          ]
-        },
-        {
-          "plan_unit_id": "HITL-036",
-          "remaining_depends_on": [
-            "GRS-029",
-            "PS-116"
-          ]
-        },
-        {
-          "plan_unit_id": "OP-024",
-          "remaining_depends_on": [
-            "EP-103",
-            "GRS-030",
-            "RAP-029",
-            "W-072"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-046",
-          "remaining_depends_on": [
-            "OSI-047",
-            "OSI-048"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-047",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-048",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-049",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-061",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-062",
-          "remaining_depends_on": [
-            "OSI-049"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-078",
-          "remaining_depends_on": [
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-093",
-          "remaining_depends_on": [
-            "OSI-047"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-094",
-          "remaining_depends_on": [
-            "OSI-093"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-139",
-          "remaining_depends_on": [
-            "OSI-047",
-            "OSI-093"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-148",
-          "remaining_depends_on": [
-            "OSI-093"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-149",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-148"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-150",
-          "remaining_depends_on": [
-            "OSI-148"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-151",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-150"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-152",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-151"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-153",
-          "remaining_depends_on": [
-            "OSI-151",
-            "OSI-152"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-154",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-150",
-            "OSI-151"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-155",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-156",
-          "remaining_depends_on": [
-            "OSI-046",
-            "OSI-154",
-            "OSI-155"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-157",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-094",
-            "OSI-154",
-            "OSI-156"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-158",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-151",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-159",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-150",
-            "OSI-151",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-160",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-150",
-            "OSI-151",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-161",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-151",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-162",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-150",
-            "OSI-155",
-            "OSI-161"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-163",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-151",
-            "OSI-154"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-164",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-094",
-            "OSI-154",
-            "OSI-157"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-165",
-          "remaining_depends_on": [
-            "OSI-093",
-            "OSI-094",
-            "OSI-151",
-            "OSI-152"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-166",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-155"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-167",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-155",
-            "OSI-164"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-168",
-          "remaining_depends_on": [
-            "OSI-167"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-169",
-          "remaining_depends_on": [
-            "OSI-168"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-170",
-          "remaining_depends_on": [
-            "OSI-169"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-171",
-          "remaining_depends_on": [
-            "OSI-169",
-            "OSI-170"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-172",
-          "remaining_depends_on": [
-            "OSI-164",
-            "OSI-165",
-            "OSI-169"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-176",
-          "remaining_depends_on": [
-            "OSI-154",
-            "OSI-157"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-177",
-          "remaining_depends_on": [
-            "OSI-164",
-            "OSI-176"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-180",
-          "remaining_depends_on": [
-            "OSI-148",
-            "OSI-154",
-            "OSI-164"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-181",
-          "remaining_depends_on": [
-            "OSI-158",
-            "OSI-159",
-            "OSI-160",
-            "OSI-161",
-            "OSI-162",
-            "OSI-163",
-            "OSI-164",
-            "OSI-165"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-182",
-          "remaining_depends_on": [
-            "OSI-180",
-            "OSI-181"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-183",
-          "remaining_depends_on": [
-            "OSI-182"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-184",
-          "remaining_depends_on": [
-            "OSI-172",
-            "OSI-180"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-185",
-          "remaining_depends_on": [
-            "OSI-139",
-            "OSI-183"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-187",
-          "remaining_depends_on": [
-            "OSI-151",
-            "OSI-152",
-            "OSI-153",
-            "OSI-158",
-            "OSI-159",
-            "OSI-160",
-            "OSI-161",
-            "OSI-162"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-188",
-          "remaining_depends_on": [
-            "OSI-169"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-192",
-          "remaining_depends_on": [
-            "OSI-176",
-            "OSI-177"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-194",
-          "remaining_depends_on": [
-            "OSI-151",
-            "OSI-152",
-            "OSI-158",
-            "OSI-161",
-            "OSI-162",
-            "OSI-180",
-            "OSI-181",
-            "OSI-187"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-195",
-          "remaining_depends_on": [
-            "OSI-139",
-            "OSI-183",
-            "OSI-185"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-197",
-          "remaining_depends_on": [
-            "OSI-169",
-            "OSI-188"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-198",
-          "remaining_depends_on": [
-            "OSI-180"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-199",
-          "remaining_depends_on": [
-            "OSI-151",
-            "OSI-152",
-            "OSI-158",
-            "OSI-161",
-            "OSI-162",
-            "OSI-180",
-            "OSI-181",
-            "OSI-187"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-200",
-          "remaining_depends_on": [
-            "OSI-184"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-202",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-180",
-            "OSI-181",
-            "OSI-187",
-            "OSI-199"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-203",
-          "remaining_depends_on": [
-            "OSI-170",
-            "OSI-172",
-            "OSI-188",
-            "OSI-197"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-206",
-          "remaining_depends_on": [
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-208",
-          "remaining_depends_on": [
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-209",
-          "remaining_depends_on": [
-            "OSI-208"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-213",
-          "remaining_depends_on": [
-            "OSI-206"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-214",
-          "remaining_depends_on": [
-            "OSI-061",
-            "OSI-206"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-215",
-          "remaining_depends_on": [
-            "OSI-046",
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-216",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-217",
-          "remaining_depends_on": [
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-218",
-          "remaining_depends_on": [
-            "OSI-061"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-221",
-          "remaining_depends_on": [
-            "OSI-184"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-223",
-          "remaining_depends_on": [
-            "OSI-170",
-            "OSI-172",
-            "OSI-188",
-            "OSI-197"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-224",
-          "remaining_depends_on": [
-            "OSI-184",
-            "OSI-200"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-225",
-          "remaining_depends_on": [
-            "OSI-046"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-226",
-          "remaining_depends_on": [
-            "OSI-216",
-            "OSI-225"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-227",
-          "remaining_depends_on": [
-            "OSI-046",
-            "OSI-225"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-228",
-          "remaining_depends_on": [
-            "OSI-200",
-            "OSI-202",
-            "OSI-203"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-229",
-          "remaining_depends_on": [
-            "OSI-184"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-230",
-          "remaining_depends_on": [
-            "OSI-150",
-            "OSI-159",
-            "OSI-165",
-            "OSI-180",
-            "OSI-187",
-            "OSI-199",
-            "OSI-202"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-231",
-          "remaining_depends_on": [
-            "OSI-170",
-            "OSI-172",
-            "OSI-188",
-            "OSI-197",
-            "OSI-203"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-233",
-          "remaining_depends_on": [
-            "OSI-199"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-235",
-          "remaining_depends_on": [
-            "OSI-206"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-236",
-          "remaining_depends_on": [
-            "OSI-206",
-            "OSI-216",
-            "OSI-235"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-237",
-          "remaining_depends_on": [
-            "OSI-213",
-            "OSI-236"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-238",
-          "remaining_depends_on": [
-            "OSI-237"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-239",
-          "remaining_depends_on": [
-            "OSI-213"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-240",
-          "remaining_depends_on": [
-            "OSI-215"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-241",
-          "remaining_depends_on": [
-            "OSI-213"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-242",
-          "remaining_depends_on": [
-            "OSI-241"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-243",
-          "remaining_depends_on": [
-            "OSI-241"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-244",
-          "remaining_depends_on": [
-            "OSI-225",
-            "OSI-227"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-245",
-          "remaining_depends_on": [
-            "OSI-244"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-246",
-          "remaining_depends_on": [
-            "OSI-225",
-            "OSI-245"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-247",
-          "remaining_depends_on": [
-            "OSI-245"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-248",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-249",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-250",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-251",
-          "remaining_depends_on": [
-            "OSI-225",
-            "OSI-245"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-252",
-          "remaining_depends_on": [
-            "OSI-229",
-            "OSI-251"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-253",
-          "remaining_depends_on": [
-            "OSI-216",
-            "OSI-225"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-254",
-          "remaining_depends_on": [
-            "OSI-227",
-            "OSI-251"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-255",
-          "remaining_depends_on": [
-            "OSI-253",
-            "OSI-254"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-256",
-          "remaining_depends_on": [
-            "OSI-251"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-257",
-          "remaining_depends_on": [
-            "OSI-225",
-            "OSI-256"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-258",
-          "remaining_depends_on": [
-            "OSI-257"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-259",
-          "remaining_depends_on": [
-            "OSI-258"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-260",
-          "remaining_depends_on": [
-            "OSI-259"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-261",
-          "remaining_depends_on": [
-            "OSI-258",
-            "OSI-260"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-262",
-          "remaining_depends_on": [
-            "OSI-254",
-            "OSI-256"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-263",
-          "remaining_depends_on": [
-            "OSI-257",
-            "OSI-262"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-264",
-          "remaining_depends_on": [
-            "OSI-257"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-265",
-          "remaining_depends_on": [
-            "OSI-264"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-266",
-          "remaining_depends_on": [
-            "OSI-262"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-267",
-          "remaining_depends_on": [
-            "OSI-256",
-            "OSI-258"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-268",
-          "remaining_depends_on": [
-            "OSI-254",
-            "OSI-262"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-269",
-          "remaining_depends_on": [
-            "OSI-260",
-            "OSI-261",
-            "OSI-267"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-270",
-          "remaining_depends_on": [
-            "OSI-251",
-            "OSI-252",
-            "OSI-254"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-271",
-          "remaining_depends_on": [
-            "OSI-270"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-272",
-          "remaining_depends_on": [
-            "OSI-271"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-273",
-          "remaining_depends_on": [
-            "OSI-260",
-            "OSI-261",
-            "OSI-269"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-274",
-          "remaining_depends_on": [
-            "OSI-273"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-275",
-          "remaining_depends_on": [
-            "OSI-270",
-            "OSI-273"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-276",
-          "remaining_depends_on": [
-            "OSI-275"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-277",
-          "remaining_depends_on": [
-            "OSI-270",
-            "OSI-271"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-278",
-          "remaining_depends_on": [
-            "OSI-260",
-            "OSI-262",
-            "OSI-267",
-            "OSI-277"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-279",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-251"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-280",
-          "remaining_depends_on": [
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-281",
-          "remaining_depends_on": [
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-282",
-          "remaining_depends_on": [
-            "OSI-279",
-            "OSI-281"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-283",
-          "remaining_depends_on": [
-            "OSI-279",
-            "OSI-281",
-            "OSI-282"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-284",
-          "remaining_depends_on": [
-            "OSI-279",
-            "OSI-281",
-            "OSI-283"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-285",
-          "remaining_depends_on": [
-            "OSI-284"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-286",
-          "remaining_depends_on": [
-            "OSI-285"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-287",
-          "remaining_depends_on": [
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-288",
-          "remaining_depends_on": [
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-289",
-          "remaining_depends_on": [
-            "OSI-281"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-290",
-          "remaining_depends_on": [
-            "OSI-284",
-            "OSI-289"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-291",
-          "remaining_depends_on": [
-            "OSI-279",
-            "OSI-284"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-292",
-          "remaining_depends_on": [
-            "OSI-291"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-293",
-          "remaining_depends_on": [
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-294",
-          "remaining_depends_on": [
-            "OSI-293"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-295",
-          "remaining_depends_on": [
-            "OSI-293"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-296",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-279"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-297",
-          "remaining_depends_on": [
-            "OSI-296"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-298",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-246"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-299",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-300",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-301",
-          "remaining_depends_on": [
-            "OSI-247",
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-302",
-          "remaining_depends_on": [
-            "OSI-248"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-303",
-          "remaining_depends_on": [
-            "OSI-302"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-304",
-          "remaining_depends_on": [
-            "OSI-302"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-305",
-          "remaining_depends_on": [
-            "OSI-250",
-            "OSI-302"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-306",
-          "remaining_depends_on": [
-            "OSI-247",
-            "OSI-248",
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-307",
-          "remaining_depends_on": [
-            "OSI-306"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-308",
-          "remaining_depends_on": [
-            "OSI-254",
-            "OSI-302"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-309",
-          "remaining_depends_on": [
-            "OSI-254",
-            "OSI-302",
-            "OSI-308"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-310",
-          "remaining_depends_on": [
-            "OSI-248",
-            "OSI-253",
-            "OSI-302"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-311",
-          "remaining_depends_on": [
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-312",
-          "remaining_depends_on": [
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-313",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-246",
-            "OSI-251"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-314",
-          "remaining_depends_on": [
-            "OSI-247"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-315",
-          "remaining_depends_on": [
-            "OSI-247",
-            "OSI-254",
-            "OSI-300"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-316",
-          "remaining_depends_on": [
-            "OSI-314",
-            "OSI-315"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-317",
-          "remaining_depends_on": [
-            "OSI-247",
-            "OSI-250",
-            "OSI-306"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-318",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-248",
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-319",
-          "remaining_depends_on": [
-            "OSI-249",
-            "OSI-250"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-320",
-          "remaining_depends_on": [
-            "OSI-245",
-            "OSI-314",
-            "OSI-315",
-            "OSI-317"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-321",
-          "remaining_depends_on": [
-            "OSI-307",
-            "OSI-317"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-322",
-          "remaining_depends_on": [
-            "OSI-251",
-            "OSI-253"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-323",
-          "remaining_depends_on": [
-            "OSI-322"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-324",
-          "remaining_depends_on": [
-            "OSI-322",
-            "OSI-323"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-325",
-          "remaining_depends_on": [
-            "OSI-324"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-326",
-          "remaining_depends_on": [
-            "OSI-325"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-327",
-          "remaining_depends_on": [
-            "OSI-251",
-            "OSI-322"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-328",
-          "remaining_depends_on": [
-            "OSI-322",
-            "OSI-327"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-329",
-          "remaining_depends_on": [
-            "OSI-265",
-            "OSI-328"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-330",
-          "remaining_depends_on": [
-            "OSI-257",
-            "OSI-329"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-331",
-          "remaining_depends_on": [
-            "OSI-264",
-            "OSI-269",
-            "OSI-273"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-332",
-          "remaining_depends_on": [
-            "OSI-331"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-333",
-          "remaining_depends_on": [
-            "OSI-273",
-            "OSI-274"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-334",
-          "remaining_depends_on": [
-            "OSI-333"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-335",
-          "remaining_depends_on": [
-            "OSI-262",
-            "OSI-263",
-            "OSI-264"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-336",
-          "remaining_depends_on": [
-            "OSI-262",
-            "OSI-263",
-            "OSI-335"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-337",
-          "remaining_depends_on": [
-            "OSI-276",
-            "OSI-322",
-            "OSI-323"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-338",
-          "remaining_depends_on": [
-            "OSI-257",
-            "OSI-337"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-339",
-          "remaining_depends_on": [
-            "OSI-338"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-340",
-          "remaining_depends_on": [
-            "OSI-253",
-            "OSI-263"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-341",
-          "remaining_depends_on": [
-            "OSI-340"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-342",
-          "remaining_depends_on": [
-            "OSI-270",
-            "OSI-271",
-            "OSI-274"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-343",
-          "remaining_depends_on": [
-            "OSI-337",
-            "OSI-342"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-344",
-          "remaining_depends_on": [
-            "OSI-307",
-            "OSI-321",
-            "OSI-343"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-345",
-          "remaining_depends_on": [
-            "OSI-343"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-346",
-          "remaining_depends_on": [
-            "OSI-257"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-347",
-          "remaining_depends_on": [
-            "OSI-258",
-            "OSI-346"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-348",
-          "remaining_depends_on": [
-            "OSI-265",
-            "OSI-328"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-349",
-          "remaining_depends_on": [
-            "OSI-348"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-350",
-          "remaining_depends_on": [
-            "OSI-257",
-            "OSI-330"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-351",
-          "remaining_depends_on": [
-            "OSI-350"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-352",
-          "remaining_depends_on": [
-            "OSI-235",
-            "OSI-236",
-            "OSI-251",
-            "OSI-253"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-353",
-          "remaining_depends_on": [
-            "OSI-352"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-354",
-          "remaining_depends_on": [
-            "OSI-254",
-            "OSI-268",
-            "OSI-337",
-            "OSI-343"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-355",
-          "remaining_depends_on": [
-            "OSI-338",
-            "OSI-354"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-356",
-          "remaining_depends_on": [
-            "OSI-354"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-357",
-          "remaining_depends_on": [
-            "OSI-281"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-358",
-          "remaining_depends_on": [
-            "OSI-352",
-            "OSI-357"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-359",
-          "remaining_depends_on": [
-            "OSI-352"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-360",
-          "remaining_depends_on": [
-            "OSI-359"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-361",
-          "remaining_depends_on": [
-            "OSI-359",
-            "OSI-360"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-362",
-          "remaining_depends_on": [
-            "OSI-236"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-363",
-          "remaining_depends_on": [
-            "OSI-362"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-370",
-          "remaining_depends_on": [
-            "OSI-139",
-            "OSI-271"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-371",
-          "remaining_depends_on": [
-            "OSI-370"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-373",
-          "remaining_depends_on": [
-            "OSI-181"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-374",
-          "remaining_depends_on": [
-            "OSI-240",
-            "OSI-373"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-375",
-          "remaining_depends_on": [
-            "OSI-240",
-            "OSI-371",
-            "OSI-373",
-            "OSI-374"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-376",
-          "remaining_depends_on": [
-            "OSI-370",
-            "OSI-371",
-            "OSI-373"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-377",
-          "remaining_depends_on": [
-            "OSI-373"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-378",
-          "remaining_depends_on": [
-            "OSI-370",
-            "OSI-371",
-            "OSI-373"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-384",
-          "remaining_depends_on": [
-            "OSI-221"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-385",
-          "remaining_depends_on": [
-            "OSI-384"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-386",
-          "remaining_depends_on": [
-            "OSI-221",
-            "OSI-384"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-389",
-          "remaining_depends_on": [
-            "OSI-168",
-            "OSI-172"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-391",
-          "remaining_depends_on": [
-            "OSI-239",
-            "OSI-240",
-            "OSI-375"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-392",
-          "remaining_depends_on": [
-            "OSI-384"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-393",
-          "remaining_depends_on": [
-            "OSI-385"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-394",
-          "remaining_depends_on": [
-            "OSI-386"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-395",
-          "remaining_depends_on": [
-            "OSI-389",
-            "OSI-394"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-397",
-          "remaining_depends_on": [
-            "OSI-384",
-            "OSI-385",
-            "OSI-389"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-398",
-          "remaining_depends_on": [
-            "OSI-384",
-            "OSI-389"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-400",
-          "remaining_depends_on": [
-            "OSI-181",
-            "OSI-373"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-409",
-          "remaining_depends_on": [
-            "OSI-352",
-            "OSI-357"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-410",
-          "remaining_depends_on": [
-            "OSI-354",
-            "OSI-357"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-411",
-          "remaining_depends_on": [
-            "OSI-409"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-412",
-          "remaining_depends_on": [
-            "OSI-411"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-414",
-          "remaining_depends_on": [
-            "OSI-166",
-            "OSI-169",
-            "OSI-172",
-            "OSI-197",
-            "OSI-231"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-415",
-          "remaining_depends_on": [
-            "OSI-414"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-417",
-          "remaining_depends_on": [
-            "OSI-409",
-            "OSI-411",
-            "OSI-414"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-418",
-          "remaining_depends_on": [
-            "OSI-409"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-419",
-          "remaining_depends_on": [
-            "OSI-414",
-            "OSI-415"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-420",
-          "remaining_depends_on": [
-            "OSI-411"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-421",
-          "remaining_depends_on": [
-            "OSI-409",
-            "OSI-415",
-            "OSI-419"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-422",
-          "remaining_depends_on": [
-            "OSI-414",
-            "OSI-419"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-423",
-          "remaining_depends_on": [
-            "OSI-411",
-            "OSI-420",
-            "OSI-422"
-          ]
-        },
-        {
-          "plan_unit_id": "OSI-424",
-          "remaining_depends_on": [
-            "OSI-415",
-            "OSI-421",
-            "OSI-422",
-            "OSI-423"
-          ]
-        },
-        {
-          "plan_unit_id": "PDS-015",
-          "remaining_depends_on": [
-            "PLS-013"
-          ]
-        },
-        {
-          "plan_unit_id": "PLS-013",
-          "remaining_depends_on": [
-            "PDS-015"
-          ]
-        },
-        {
-          "plan_unit_id": "POA-047",
-          "remaining_depends_on": [
-            "EP-103"
-          ]
-        },
-        {
-          "plan_unit_id": "POA-048",
-          "remaining_depends_on": [
-            "EP-103",
-            "GRS-030",
-            "POA-047"
-          ]
-        },
-        {
-          "plan_unit_id": "PS-116",
-          "remaining_depends_on": [
-            "GRS-029"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-001",
-          "remaining_depends_on": [
-            "PSMERA-011",
-            "PSMERA-016",
-            "PSMERA-021",
-            "PSMERA-022",
-            "PSMERA-023",
-            "PSMERA-024",
-            "PSMERA-025"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-011",
-          "remaining_depends_on": [
-            "PSMERA-016"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-016",
-          "remaining_depends_on": [
-            "OSI-411",
-            "OSI-420",
-            "PSMERA-011"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-021",
-          "remaining_depends_on": [
-            "OSI-414",
-            "OSI-418",
-            "OSI-419",
-            "PSMERA-016",
-            "PSMERA-022"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-022",
-          "remaining_depends_on": [
-            "OSI-411",
-            "OSI-420",
-            "OSI-423",
-            "PSMERA-021"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-023",
-          "remaining_depends_on": [
-            "OSI-418",
-            "OSI-419",
-            "PSMERA-022"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-024",
-          "remaining_depends_on": [
-            "PSMERA-023"
-          ]
-        },
-        {
-          "plan_unit_id": "PSMERA-025",
-          "remaining_depends_on": [
-            "PSMERA-023",
-            "PSMERA-024"
-          ]
-        },
-        {
-          "plan_unit_id": "RAP-029",
-          "remaining_depends_on": [
-            "EP-103",
-            "GRS-030",
-            "POA-047",
-            "POA-048"
-          ]
-        },
-        {
-          "plan_unit_id": "RGV-013",
-          "remaining_depends_on": [
-            "EP-103",
-            "GRS-030",
-            "OP-024",
-            "RAP-029"
-          ]
-        },
-        {
-          "plan_unit_id": "W-072",
-          "remaining_depends_on": [
-            "EP-100"
-          ]
-        }
-      ]
-    }
-  ],
+  "build_order_blockers": [],
   "dependency_graph_summary": {
-    "build_order_available": false,
-    "cycle_blocker_count": 265,
-    "depends_on_edge_count": 10752,
-    "edge_count": 12391,
-    "node_count": 5166,
-    "unblocks_edge_count": 1639,
+    "build_order_available": true,
+    "build_order_blocked_node_count": 0,
+    "cycle_blocker_count": 0,
+    "depends_on_edge_count": 10758,
+    "downstream_blocked_node_count": 0,
+    "edge_count": 12408,
+    "node_count": 5173,
+    "true_cycle_component_count": 0,
+    "unblocks_edge_count": 1650,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-19T17:11:49Z",
+  "generated_at_utc": "2026-06-21T20:47:48Z",
   "gui_related_units": {
-    "count": 2196,
+    "count": 2198,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -1900,8 +22,8 @@
         "source_location": {
           "heading": "0PI-005 - Owner Map Guard And Initial Seams",
           "heading_level": 3,
-          "heading_line": 955,
-          "line": 957,
+          "heading_line": 960,
+          "line": 962,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1911,8 +33,8 @@
         "source_location": {
           "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
           "heading_level": 3,
-          "heading_line": 1004,
-          "line": 1006,
+          "heading_line": 1009,
+          "line": 1011,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1922,8 +44,8 @@
         "source_location": {
           "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
           "heading_level": 3,
-          "heading_line": 1055,
-          "line": 1057,
+          "heading_line": 1060,
+          "line": 1062,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1933,8 +55,8 @@
         "source_location": {
           "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
           "heading_level": 3,
-          "heading_line": 1106,
-          "line": 1108,
+          "heading_line": 1111,
+          "line": 1113,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1944,8 +66,8 @@
         "source_location": {
           "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
           "heading_level": 3,
-          "heading_line": 1210,
-          "line": 1212,
+          "heading_line": 1215,
+          "line": 1217,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1955,8 +77,8 @@
         "source_location": {
           "heading": "0PI-011 - Provider Account Owner Split",
           "heading_level": 3,
-          "heading_line": 1264,
-          "line": 1266,
+          "heading_line": 1269,
+          "line": 1271,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1966,8 +88,8 @@
         "source_location": {
           "heading": "0PI-013 - Instant Grep Live Canon Map",
           "heading_level": 3,
-          "heading_line": 1367,
-          "line": 1369,
+          "heading_line": 1372,
+          "line": 1374,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1977,8 +99,8 @@
         "source_location": {
           "heading": "0PI-014 - Instant Grep Owner Split",
           "heading_level": 3,
-          "heading_line": 1416,
-          "line": 1418,
+          "heading_line": 1421,
+          "line": 1423,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1988,8 +110,8 @@
         "source_location": {
           "heading": "0PI-015 - Browser Owner Split",
           "heading_level": 3,
-          "heading_line": 1465,
-          "line": 1467,
+          "heading_line": 1470,
+          "line": 1472,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -1999,8 +121,8 @@
         "source_location": {
           "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
           "heading_level": 3,
-          "heading_line": 1518,
-          "line": 1520,
+          "heading_line": 1523,
+          "line": 1525,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2010,8 +132,8 @@
         "source_location": {
           "heading": "0PI-017 - Slash Chat SSOT Boundary",
           "heading_level": 3,
-          "heading_line": 1570,
-          "line": 1572,
+          "heading_line": 1575,
+          "line": 1577,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2021,8 +143,8 @@
         "source_location": {
           "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
           "heading_level": 3,
-          "heading_line": 1621,
-          "line": 1623,
+          "heading_line": 1626,
+          "line": 1628,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2032,8 +154,8 @@
         "source_location": {
           "heading": "0PI-019 - Artifact HITL Tool Owner Split",
           "heading_level": 3,
-          "heading_line": 1673,
-          "line": 1675,
+          "heading_line": 1678,
+          "line": 1680,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2043,8 +165,8 @@
         "source_location": {
           "heading": "0PI-021 - Terminal Ownership Map",
           "heading_level": 3,
-          "heading_line": 1773,
-          "line": 1775,
+          "heading_line": 1778,
+          "line": 1780,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2054,8 +176,8 @@
         "source_location": {
           "heading": "0PI-022 - File Manager Editor Owner Posture",
           "heading_level": 3,
-          "heading_line": 1826,
-          "line": 1828,
+          "heading_line": 1831,
+          "line": 1833,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2065,8 +187,8 @@
         "source_location": {
           "heading": "0PI-023 - File Manager Editor Packetization Gates",
           "heading_level": 3,
-          "heading_line": 1876,
-          "line": 1878,
+          "heading_line": 1881,
+          "line": 1883,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2076,8 +198,8 @@
         "source_location": {
           "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
           "heading_level": 3,
-          "heading_line": 1929,
-          "line": 1931,
+          "heading_line": 1934,
+          "line": 1936,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2087,8 +209,8 @@
         "source_location": {
           "heading": "0PI-025 - Debug Ownership And Packet Coupling",
           "heading_level": 3,
-          "heading_line": 1982,
-          "line": 1984,
+          "heading_line": 1987,
+          "line": 1989,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2098,8 +220,8 @@
         "source_location": {
           "heading": "0PI-026 - Plan Map Table Core UX Owners",
           "heading_level": 3,
-          "heading_line": 2036,
-          "line": 2038,
+          "heading_line": 2041,
+          "line": 2043,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2109,8 +231,8 @@
         "source_location": {
           "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
           "heading_level": 3,
-          "heading_line": 2088,
-          "line": 2090,
+          "heading_line": 2093,
+          "line": 2095,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2120,8 +242,8 @@
         "source_location": {
           "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
           "heading_level": 3,
-          "heading_line": 2147,
-          "line": 2149,
+          "heading_line": 2152,
+          "line": 2154,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2131,8 +253,8 @@
         "source_location": {
           "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
           "heading_level": 3,
-          "heading_line": 2208,
-          "line": 2210,
+          "heading_line": 2213,
+          "line": 2215,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2142,8 +264,8 @@
         "source_location": {
           "heading": "0PI-031 - Context Lens UI Hotspot",
           "heading_level": 3,
-          "heading_line": 2317,
-          "line": 2319,
+          "heading_line": 2322,
+          "line": 2324,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2153,8 +275,8 @@
         "source_location": {
           "heading": "0PI-036 - Docker Manager Auth UX Routing",
           "heading_level": 3,
-          "heading_line": 2584,
-          "line": 2586,
+          "heading_line": 2589,
+          "line": 2591,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2164,8 +286,8 @@
         "source_location": {
           "heading": "0PI-038 - Runtime Rendering And Blocked UX",
           "heading_level": 3,
-          "heading_line": 2690,
-          "line": 2692,
+          "heading_line": 2695,
+          "line": 2697,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2175,8 +297,8 @@
         "source_location": {
           "heading": "0PI-040 - Visible Source-Control Surface Routing",
           "heading_level": 3,
-          "heading_line": 2800,
-          "line": 2802,
+          "heading_line": 2805,
+          "line": 2807,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2186,8 +308,8 @@
         "source_location": {
           "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
           "heading_level": 3,
-          "heading_line": 2864,
-          "line": 2866,
+          "heading_line": 2869,
+          "line": 2871,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2197,8 +319,8 @@
         "source_location": {
           "heading": "0PI-042 - Web Firecrawl Owner Set",
           "heading_level": 3,
-          "heading_line": 2919,
-          "line": 2921,
+          "heading_line": 2924,
+          "line": 2926,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2208,8 +330,8 @@
         "source_location": {
           "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
           "heading_level": 3,
-          "heading_line": 2990,
-          "line": 2992,
+          "heading_line": 2995,
+          "line": 2997,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2219,8 +341,8 @@
         "source_location": {
           "heading": "0PI-045 - Slash And Provider Drift Guards",
           "heading_level": 3,
-          "heading_line": 3134,
-          "line": 3136,
+          "heading_line": 3139,
+          "line": 3141,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2230,8 +352,8 @@
         "source_location": {
           "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
           "heading_level": 3,
-          "heading_line": 3200,
-          "line": 3202,
+          "heading_line": 3205,
+          "line": 3207,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2241,8 +363,8 @@
         "source_location": {
           "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
           "heading_level": 3,
-          "heading_line": 3409,
-          "line": 3411,
+          "heading_line": 3414,
+          "line": 3416,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2252,8 +374,8 @@
         "source_location": {
           "heading": "0PI-050 - A2A OpenCode Packet Boundary",
           "heading_level": 3,
-          "heading_line": 3481,
-          "line": 3483,
+          "heading_line": 3486,
+          "line": 3488,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2263,8 +385,8 @@
         "source_location": {
           "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
           "heading_level": 3,
-          "heading_line": 3542,
-          "line": 3544,
+          "heading_line": 3547,
+          "line": 3549,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -2274,8 +396,8 @@
         "source_location": {
           "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
           "heading_level": 3,
-          "heading_line": 4249,
-          "line": 4251,
+          "heading_line": 4254,
+          "line": 4256,
           "path": "Plans/00-plans-index.md"
         }
       },
@@ -5299,8 +3421,8 @@
         "source_location": {
           "heading": "ATS-003 - Test Strategy V2 And WorkNode Test Binding",
           "heading_level": 3,
-          "heading_line": 125,
-          "line": 127,
+          "heading_line": 126,
+          "line": 128,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -5310,8 +3432,8 @@
         "source_location": {
           "heading": "ATS-004 - Automated Evidence And Test Gap Blockers",
           "heading_level": 3,
-          "heading_line": 177,
-          "line": 179,
+          "heading_line": 178,
+          "line": 180,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -5321,8 +3443,8 @@
         "source_location": {
           "heading": "ATS-008 - Testing Capability Settings Model",
           "heading_level": 3,
-          "heading_line": 492,
-          "line": 494,
+          "heading_line": 499,
+          "line": 501,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -5332,8 +3454,8 @@
         "source_location": {
           "heading": "ATS-009 - Visible Verification Sessions And Redaction",
           "heading_level": 3,
-          "heading_line": 559,
-          "line": 561,
+          "heading_line": 566,
+          "line": 568,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -7532,8 +5654,8 @@
         "source_location": {
           "heading": "CW-004 - Modular Contract Pack Surface Focus Route",
           "heading_level": 3,
-          "heading_line": 196,
-          "line": 198,
+          "heading_line": 201,
+          "line": 203,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7543,8 +5665,8 @@
         "source_location": {
           "heading": "CW-005 - Cross-Surface Attention Routing Target Shape",
           "heading_level": 3,
-          "heading_line": 246,
-          "line": 248,
+          "heading_line": 251,
+          "line": 253,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7554,8 +5676,8 @@
         "source_location": {
           "heading": "CW-006 - Wizard Resume Identity-First Deep-Link Contract",
           "heading_level": 3,
-          "heading_line": 300,
-          "line": 302,
+          "heading_line": 305,
+          "line": 307,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7565,8 +5687,8 @@
         "source_location": {
           "heading": "CW-007 - Shared In-App Route Object Model",
           "heading_level": 3,
-          "heading_line": 355,
-          "line": 357,
+          "heading_line": 360,
+          "line": 362,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7576,8 +5698,8 @@
         "source_location": {
           "heading": "CW-008 - Legacy Builder Invisible Goal Handoff Pointer",
           "heading_level": 3,
-          "heading_line": 419,
-          "line": 421,
+          "heading_line": 424,
+          "line": 426,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7587,8 +5709,8 @@
         "source_location": {
           "heading": "CW-009 - Planning Wizard Compatibility Redirect",
           "heading_level": 3,
-          "heading_line": 499,
-          "line": 501,
+          "heading_line": 504,
+          "line": 506,
           "path": "Plans/chain-wizard.md"
         }
       },
@@ -7598,8 +5720,8 @@
         "source_location": {
           "heading": "CWF-002 - Document Compliance, Status, and Rewrite Alignment",
           "heading_level": 3,
-          "heading_line": 2598,
-          "line": 2600,
+          "heading_line": 2601,
+          "line": 2603,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7609,8 +5731,8 @@
         "source_location": {
           "heading": "CWF-003 - Change Summary and SSOT Guardrails",
           "heading_level": 3,
-          "heading_line": 2653,
-          "line": 2655,
+          "heading_line": 2656,
+          "line": 2658,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7620,8 +5742,8 @@
         "source_location": {
           "heading": "CWF-004 - Executive Scope and Navigation",
           "heading_level": 3,
-          "heading_line": 2712,
-          "line": 2714,
+          "heading_line": 2715,
+          "line": 2717,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7631,8 +5753,8 @@
         "source_location": {
           "heading": "CWF-012 - Canonical Wizard State Shape",
           "heading_level": 3,
-          "heading_line": 3070,
-          "line": 3072,
+          "heading_line": 3073,
+          "line": 3075,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7642,8 +5764,8 @@
         "source_location": {
           "heading": "CWF-013 - Wizard Runtime Fields and Lifecycle",
           "heading_level": 3,
-          "heading_line": 3117,
-          "line": 3119,
+          "heading_line": 3120,
+          "line": 3122,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7653,8 +5775,8 @@
         "source_location": {
           "heading": "CWF-014 - Wizard Contracts and Blocked Persistence Aliases",
           "heading_level": 3,
-          "heading_line": 3165,
-          "line": 3167,
+          "heading_line": 3168,
+          "line": 3170,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7664,8 +5786,8 @@
         "source_location": {
           "heading": "CWF-015 - Wizard Persistence and Handoff Payload",
           "heading_level": 3,
-          "heading_line": 3213,
-          "line": 3215,
+          "heading_line": 3216,
+          "line": 3218,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7675,8 +5797,8 @@
         "source_location": {
           "heading": "CWF-016 - Validation Report Bridge and Runtime Identity Carry-Through",
           "heading_level": 3,
-          "heading_line": 3265,
-          "line": 3267,
+          "heading_line": 3268,
+          "line": 3270,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7686,8 +5808,8 @@
         "source_location": {
           "heading": "CWF-018 - GUI Updates Boundary",
           "heading_level": 3,
-          "heading_line": 3375,
-          "line": 3377,
+          "heading_line": 3378,
+          "line": 3380,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7697,8 +5819,8 @@
         "source_location": {
           "heading": "CWF-019 - Feature Enhancement CTA and Intent Selection Copy",
           "heading_level": 3,
-          "heading_line": 3415,
-          "line": 3417,
+          "heading_line": 3418,
+          "line": 3420,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7708,8 +5830,8 @@
         "source_location": {
           "heading": "CWF-020 - OpenCode Provider Settings Surface",
           "heading_level": 3,
-          "heading_line": 3464,
-          "line": 3466,
+          "heading_line": 3467,
+          "line": 3469,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7719,8 +5841,8 @@
         "source_location": {
           "heading": "CWF-021 - Requirements Step Entry and Builder Option",
           "heading_level": 3,
-          "heading_line": 3510,
-          "line": 3512,
+          "heading_line": 3513,
+          "line": 3515,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7730,8 +5852,8 @@
         "source_location": {
           "heading": "CWF-022 - Project Setup GitHub Fields and Readiness Strips",
           "heading_level": 3,
-          "heading_line": 3553,
-          "line": 3555,
+          "heading_line": 3556,
+          "line": 3558,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7741,8 +5863,8 @@
         "source_location": {
           "heading": "CWF-023 - Navigation and Recovery Reset Semantics",
           "heading_level": 3,
-          "heading_line": 3604,
-          "line": 3606,
+          "heading_line": 3607,
+          "line": 3609,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7752,8 +5874,8 @@
         "source_location": {
           "heading": "CWF-024 - Wizard Plan Deep Plan TODO Handoff and Permission Boundary",
           "heading_level": 3,
-          "heading_line": 3646,
-          "line": 3648,
+          "heading_line": 3649,
+          "line": 3651,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7763,8 +5885,8 @@
         "source_location": {
           "heading": "CWF-025 - Embedded Agent Activity Pane and Progress Placement",
           "heading_level": 3,
-          "heading_line": 3700,
-          "line": 3702,
+          "heading_line": 3703,
+          "line": 3705,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7774,8 +5896,8 @@
         "source_location": {
           "heading": "CWF-026 - Pause Cancel Resume Runtime Semantics",
           "heading_level": 3,
-          "heading_line": 3750,
-          "line": 3752,
+          "heading_line": 3753,
+          "line": 3755,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7785,8 +5907,8 @@
         "source_location": {
           "heading": "CWF-027 - Run States Control Row Stale Progress and Checkpoint Payload",
           "heading_level": 3,
-          "heading_line": 3799,
-          "line": 3801,
+          "heading_line": 3802,
+          "line": 3804,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7796,8 +5918,8 @@
         "source_location": {
           "heading": "CWF-028 - Requirements Upload UI and Normalization",
           "heading_level": 3,
-          "heading_line": 3849,
-          "line": 3851,
+          "heading_line": 3852,
+          "line": 3854,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7807,8 +5929,8 @@
         "source_location": {
           "heading": "CWF-029 - Canonical Requirements Merge and Single Source",
           "heading_level": 3,
-          "heading_line": 3900,
-          "line": 3902,
+          "heading_line": 3903,
+          "line": 3905,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7818,8 +5940,8 @@
         "source_location": {
           "heading": "CWF-031 - Upload Limits and Merge Edge Constraints",
           "heading_level": 3,
-          "heading_line": 3998,
-          "line": 4000,
+          "heading_line": 4001,
+          "line": 4003,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7829,8 +5951,8 @@
         "source_location": {
           "heading": "CWF-032 - Builder Concept and Opening Prompts",
           "heading_level": 3,
-          "heading_line": 4042,
-          "line": 4044,
+          "heading_line": 4045,
+          "line": 4047,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7840,8 +5962,8 @@
         "source_location": {
           "heading": "CWF-040 - Updated Builder Review Flow and Final Review Gate",
           "heading_level": 3,
-          "heading_line": 4417,
-          "line": 4419,
+          "heading_line": 4420,
+          "line": 4422,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7851,8 +5973,8 @@
         "source_location": {
           "heading": "CWF-041 - Targeted Revision Input Contract",
           "heading_level": 3,
-          "heading_line": 4465,
-          "line": 4467,
+          "heading_line": 4468,
+          "line": 4470,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7862,8 +5984,8 @@
         "source_location": {
           "heading": "CWF-042 - Targeted Revision Output and Validation Contract",
           "heading_level": 3,
-          "heading_line": 4516,
-          "line": 4518,
+          "heading_line": 4519,
+          "line": 4521,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7873,8 +5995,8 @@
         "source_location": {
           "heading": "CWF-043 - Targeted Revision Hard Rules and Capability Modes",
           "heading_level": 3,
-          "heading_line": 4563,
-          "line": 4565,
+          "heading_line": 4566,
+          "line": 4568,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7884,8 +6006,8 @@
         "source_location": {
           "heading": "CWF-044 - Workflow Acceptance and Legacy Label Compatibility",
           "heading_level": 3,
-          "heading_line": 4617,
-          "line": 4619,
+          "heading_line": 4620,
+          "line": 4622,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7895,8 +6017,8 @@
         "source_location": {
           "heading": "CWF-045 - Multi-Pass Final Review Gate",
           "heading_level": 3,
-          "heading_line": 4669,
-          "line": 4671,
+          "heading_line": 4672,
+          "line": 4674,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7906,8 +6028,8 @@
         "source_location": {
           "heading": "CWF-053 - Phase Override Controls",
           "heading_level": 3,
-          "heading_line": 5122,
-          "line": 5124,
+          "heading_line": 5125,
+          "line": 5127,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7917,8 +6039,8 @@
         "source_location": {
           "heading": "CWF-056 - Per-Phase Contract Fragments",
           "heading_level": 3,
-          "heading_line": 5268,
-          "line": 5270,
+          "heading_line": 5271,
+          "line": 5273,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7928,8 +6050,8 @@
         "source_location": {
           "heading": "CWF-059 - GUI Project Wiring Artifacts",
           "heading_level": 3,
-          "heading_line": 5431,
-          "line": 5433,
+          "heading_line": 5434,
+          "line": 5436,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7939,8 +6061,8 @@
         "source_location": {
           "heading": "CWF-061 - GitHub Create Repo Setup Flow",
           "heading_level": 3,
-          "heading_line": 5545,
-          "line": 5547,
+          "heading_line": 5548,
+          "line": 5550,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7950,8 +6072,8 @@
         "source_location": {
           "heading": "CWF-062 - Fork Creation vs User-Provided Fork",
           "heading_level": 3,
-          "heading_line": 5598,
-          "line": 5600,
+          "heading_line": 5601,
+          "line": 5603,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7961,8 +6083,8 @@
         "source_location": {
           "heading": "CWF-063 - PR Start Feature Branch Flow",
           "heading_level": 3,
-          "heading_line": 5650,
-          "line": 5652,
+          "heading_line": 5653,
+          "line": 5655,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7972,8 +6094,8 @@
         "source_location": {
           "heading": "CWF-064 - PR Finish and Default Branch Targeting",
           "heading_level": 3,
-          "heading_line": 5703,
-          "line": 5705,
+          "heading_line": 5706,
+          "line": 5708,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7983,8 +6105,8 @@
         "source_location": {
           "heading": "CWF-065 - GitHub Auth Scopes Rate Limits and Host Scope",
           "heading_level": 3,
-          "heading_line": 5759,
-          "line": 5761,
+          "heading_line": 5762,
+          "line": 5764,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -7994,8 +6116,8 @@
         "source_location": {
           "heading": "CWF-068 - Intent Change Recovery and Builder-Interview State Guard",
           "heading_level": 3,
-          "heading_line": 5940,
-          "line": 5942,
+          "heading_line": 5943,
+          "line": 5945,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8005,8 +6127,8 @@
         "source_location": {
           "heading": "CWF-069 - Requirements Merge Template and Builder Abandonment Resolutions",
           "heading_level": 3,
-          "heading_line": 5997,
-          "line": 5999,
+          "heading_line": 6000,
+          "line": 6002,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8016,8 +6138,8 @@
         "source_location": {
           "heading": "CWF-070 - Wizard Progress Indicator and Deferred Skip-to-Execution",
           "heading_level": 3,
-          "heading_line": 6055,
-          "line": 6057,
+          "heading_line": 6058,
+          "line": 6060,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8027,8 +6149,8 @@
         "source_location": {
           "heading": "CWF-071 - Legible Project Shell Complexity Guard",
           "heading_level": 3,
-          "heading_line": 6103,
-          "line": 6105,
+          "heading_line": 6106,
+          "line": 6108,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8038,8 +6160,8 @@
         "source_location": {
           "heading": "CWF-073 - Agent Activity Pane Accessibility and Stream Bounds",
           "heading_level": 3,
-          "heading_line": 6201,
-          "line": 6203,
+          "heading_line": 6204,
+          "line": 6206,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8049,8 +6171,8 @@
         "source_location": {
           "heading": "CWF-074 - New Wizard Control Accessibility",
           "heading_level": 3,
-          "heading_line": 6255,
-          "line": 6257,
+          "heading_line": 6258,
+          "line": 6260,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8060,8 +6182,8 @@
         "source_location": {
           "heading": "CWF-075 - Centralized User-Facing Wizard Strings",
           "heading_level": 3,
-          "heading_line": 6304,
-          "line": 6306,
+          "heading_line": 6307,
+          "line": 6309,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8071,8 +6193,8 @@
         "source_location": {
           "heading": "CWF-086 - Validation Failure Routing and Finding Artifact Split",
           "heading_level": 3,
-          "heading_line": 6873,
-          "line": 6875,
+          "heading_line": 6876,
+          "line": 6878,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8082,8 +6204,8 @@
         "source_location": {
           "heading": "CWF-089 - No-Wizard Entry Points and Later-Wizard Preload Overview",
           "heading_level": 3,
-          "heading_line": 7024,
-          "line": 7026,
+          "heading_line": 7027,
+          "line": 7029,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8093,8 +6215,8 @@
         "source_location": {
           "heading": "CWF-090 - Add Existing Project No-Wizard Flow",
           "heading_level": 3,
-          "heading_line": 7071,
-          "line": 7073,
+          "heading_line": 7074,
+          "line": 7076,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8104,8 +6226,8 @@
         "source_location": {
           "heading": "CWF-091 - Create New Local Project No-Wizard Flow",
           "heading_level": 3,
-          "heading_line": 7122,
-          "line": 7124,
+          "heading_line": 7125,
+          "line": 7127,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8115,8 +6237,8 @@
         "source_location": {
           "heading": "CWF-092 - Create New GitHub Repo Project No-Wizard Flow",
           "heading_level": 3,
-          "heading_line": 7169,
-          "line": 7171,
+          "heading_line": 7172,
+          "line": 7174,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8126,8 +6248,8 @@
         "source_location": {
           "heading": "CWF-093 - Deferred Chain Wizard Later Affordance and Payload",
           "heading_level": 3,
-          "heading_line": 7220,
-          "line": 7222,
+          "heading_line": 7223,
+          "line": 7225,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8137,8 +6259,8 @@
         "source_location": {
           "heading": "CWF-103 - Attention Required Wizard State",
           "heading_level": 3,
-          "heading_line": 7694,
-          "line": 7696,
+          "heading_line": 7697,
+          "line": 7699,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8148,8 +6270,8 @@
         "source_location": {
           "heading": "CWF-104 - Thread Clarification Surface",
           "heading_level": 3,
-          "heading_line": 7742,
-          "line": 7744,
+          "heading_line": 7745,
+          "line": 7747,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8159,8 +6281,8 @@
         "source_location": {
           "heading": "CWF-105 - Dashboard Attention Required Card",
           "heading_level": 3,
-          "heading_line": 7792,
-          "line": 7794,
+          "heading_line": 7795,
+          "line": 7797,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8170,8 +6292,8 @@
         "source_location": {
           "heading": "CWF-108 - Blocked Clarification Override Evidence",
           "heading_level": 3,
-          "heading_line": 7933,
-          "line": 7935,
+          "heading_line": 7936,
+          "line": 7938,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8181,8 +6303,8 @@
         "source_location": {
           "heading": "CWF-112 - Review Pass Persona Key Contract",
           "heading_level": 3,
-          "heading_line": 8139,
-          "line": 8141,
+          "heading_line": 8142,
+          "line": 8144,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8192,8 +6314,8 @@
         "source_location": {
           "heading": "CWF-113 - Builder Persona Settings Config",
           "heading_level": 3,
-          "heading_line": 8190,
-          "line": 8192,
+          "heading_line": 8193,
+          "line": 8195,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8203,8 +6325,8 @@
         "source_location": {
           "heading": "CWF-114 - Builder Requested Effective Runtime Record",
           "heading_level": 3,
-          "heading_line": 8238,
-          "line": 8240,
+          "heading_line": 8241,
+          "line": 8243,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8214,8 +6336,8 @@
         "source_location": {
           "heading": "CWF-118 - Builder Requested Effective UI Visibility",
           "heading_level": 3,
-          "heading_line": 8431,
-          "line": 8433,
+          "heading_line": 8434,
+          "line": 8436,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8225,8 +6347,8 @@
         "source_location": {
           "heading": "CWF-119 - Assistant Deep Plan Chain Wizard Escalation Optionality",
           "heading_level": 3,
-          "heading_line": 8481,
-          "line": 8483,
+          "heading_line": 8484,
+          "line": 8486,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8236,8 +6358,8 @@
         "source_location": {
           "heading": "CWF-120 - Feature Enhancement CTA Intent Mapping",
           "heading_level": 3,
-          "heading_line": 8536,
-          "line": 8538,
+          "heading_line": 8539,
+          "line": 8541,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8247,8 +6369,8 @@
         "source_location": {
           "heading": "CWF-123 - Imported Handoff State Persistence",
           "heading_level": 3,
-          "heading_line": 8690,
-          "line": 8692,
+          "heading_line": 8693,
+          "line": 8695,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8258,8 +6380,8 @@
         "source_location": {
           "heading": "CWF-124 - Context Aware Wizard Launch After Acceptance",
           "heading_level": 3,
-          "heading_line": 8739,
-          "line": 8741,
+          "heading_line": 8742,
+          "line": 8744,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8269,8 +6391,8 @@
         "source_location": {
           "heading": "CWF-127 - Adaptive Phase Pruning Across Intents",
           "heading_level": 3,
-          "heading_line": 8880,
-          "line": 8882,
+          "heading_line": 8883,
+          "line": 8885,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8280,8 +6402,8 @@
         "source_location": {
           "heading": "CWF-130 - Blocked Controls Copy and Rewrite Stop",
           "heading_level": 3,
-          "heading_line": 9035,
-          "line": 9037,
+          "heading_line": 9038,
+          "line": 9040,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8291,8 +6413,8 @@
         "source_location": {
           "heading": "CWF-135 - Wizard Status UX Differentiation",
           "heading_level": 3,
-          "heading_line": 9281,
-          "line": 9283,
+          "heading_line": 9284,
+          "line": 9286,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8302,8 +6424,8 @@
         "source_location": {
           "heading": "CWF-136 - Block Escalation Thresholds",
           "heading_level": 3,
-          "heading_line": 9325,
-          "line": 9327,
+          "heading_line": 9328,
+          "line": 9330,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8313,8 +6435,8 @@
         "source_location": {
           "heading": "CWF-141 - Shared Route Payloads and Typed Selectors",
           "heading_level": 3,
-          "heading_line": 9575,
-          "line": 9577,
+          "heading_line": 9578,
+          "line": 9580,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8324,8 +6446,8 @@
         "source_location": {
           "heading": "CWF-143 - Project Attention Summaries and Severity Model",
           "heading_level": 3,
-          "heading_line": 9675,
-          "line": 9677,
+          "heading_line": 9678,
+          "line": 9680,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8335,8 +6457,8 @@
         "source_location": {
           "heading": "CWF-146 - Graph Native Planning Output and Compatibility Vocabulary",
           "heading_level": 3,
-          "heading_line": 9820,
-          "line": 9822,
+          "heading_line": 9823,
+          "line": 9825,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8346,8 +6468,8 @@
         "source_location": {
           "heading": "CWF-147 - Cross Surface Actions and Work Type Explanation",
           "heading_level": 3,
-          "heading_line": 9874,
-          "line": 9876,
+          "heading_line": 9877,
+          "line": 9879,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8357,8 +6479,8 @@
         "source_location": {
           "heading": "CWF-148 - Section 12 Parent And Blocked Addenda Deduplication",
           "heading_level": 3,
-          "heading_line": 9939,
-          "line": 9941,
+          "heading_line": 9942,
+          "line": 9944,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8368,8 +6490,8 @@
         "source_location": {
           "heading": "CWF-149 - Wizard Blocked Packet Payload Contract",
           "heading_level": 3,
-          "heading_line": 9977,
-          "line": 9979,
+          "heading_line": 9980,
+          "line": 9982,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8379,8 +6501,8 @@
         "source_location": {
           "heading": "CWF-150 - Fork Destination And Unsupported Host Active Contract",
           "heading_level": 3,
-          "heading_line": 10017,
-          "line": 10019,
+          "heading_line": 10020,
+          "line": 10022,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8390,8 +6512,8 @@
         "source_location": {
           "heading": "CWF-151 - PRD Builder Legacy Compatibility Ledger To Invisible Goal Flow",
           "heading_level": 3,
-          "heading_line": 10060,
-          "line": 10062,
+          "heading_line": 10063,
+          "line": 10065,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8401,8 +6523,8 @@
         "source_location": {
           "heading": "CWF-152 - PRD Builder And Planning Wizard Semantic Migration",
           "heading_level": 3,
-          "heading_line": 10140,
-          "line": 10142,
+          "heading_line": 10143,
+          "line": 10145,
           "path": "Plans/chain-wizard-flexibility.md"
         }
       },
@@ -8632,8 +6754,8 @@
         "source_location": {
           "heading": "DP-038 - Projection-Sensitive Mutation Guard",
           "heading_level": 3,
-          "heading_line": 2128,
-          "line": 2130,
+          "heading_line": 2131,
+          "line": 2133,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8643,8 +6765,8 @@
         "source_location": {
           "heading": "DP-039 - Auth Action Lifecycle Provider Pressure And Config Ownership",
           "heading_level": 3,
-          "heading_line": 2177,
-          "line": 2179,
+          "heading_line": 2180,
+          "line": 2182,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8654,8 +6776,8 @@
         "source_location": {
           "heading": "DP-040 - Question Routing Approval UX And Runtime Display Defaults",
           "heading_level": 3,
-          "heading_line": 2229,
-          "line": 2231,
+          "heading_line": 2232,
+          "line": 2234,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8665,8 +6787,8 @@
         "source_location": {
           "heading": "DP-041 - Debug Context And Reopen Blocking",
           "heading_level": 3,
-          "heading_line": 2280,
-          "line": 2282,
+          "heading_line": 2283,
+          "line": 2285,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8676,8 +6798,8 @@
         "source_location": {
           "heading": "DP-053 - Source Control Recovery CTA Effects",
           "heading_level": 3,
-          "heading_line": 2806,
-          "line": 2808,
+          "heading_line": 2809,
+          "line": 2811,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8687,8 +6809,8 @@
         "source_location": {
           "heading": "DP-055 - GitHub Actions Recovery CTA Effect",
           "heading_level": 3,
-          "heading_line": 2883,
-          "line": 2885,
+          "heading_line": 2886,
+          "line": 2888,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -8698,8 +6820,8 @@
         "source_location": {
           "heading": "DP-057 - Docker Manager Kubernetes CTA Effect",
           "heading_level": 3,
-          "heading_line": 2966,
-          "line": 2968,
+          "heading_line": 2969,
+          "line": 2971,
           "path": "Plans/Decision_Policy.md"
         }
       },
@@ -14790,7 +12912,7 @@
         "owner_doc": "Plans/Goal_Runtime_System.md",
         "plan_unit_id": "GRS-025",
         "source_location": {
-          "heading": "GRS-025 - Deferred Goal UI Styling, Persistence Substrate, And Provider Defaults",
+          "heading": "GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults",
           "heading_level": 3,
           "heading_line": 1631,
           "line": 1633,
@@ -18620,8 +16742,8 @@
         "source_location": {
           "heading": "OSI-051 - Execution Unit UI Inspection Anchor",
           "heading_level": 3,
-          "heading_line": 9242,
-          "line": 9244,
+          "heading_line": 9240,
+          "line": 9242,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18631,8 +16753,8 @@
         "source_location": {
           "heading": "OSI-054 - SCM Snapshot UI Consumer Projection",
           "heading_level": 3,
-          "heading_line": 9410,
-          "line": 9412,
+          "heading_line": 9408,
+          "line": 9410,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18642,8 +16764,8 @@
         "source_location": {
           "heading": "OSI-075 - GUI Backend Scope Now In Scope",
           "heading_level": 3,
-          "heading_line": 10558,
-          "line": 10560,
+          "heading_line": 10556,
+          "line": 10558,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18653,8 +16775,8 @@
         "source_location": {
           "heading": "OSI-077 - Plan Mode Config And Wizard Controls",
           "heading_level": 3,
-          "heading_line": 10670,
-          "line": 10672,
+          "heading_line": 10668,
+          "line": 10670,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18664,8 +16786,8 @@
         "source_location": {
           "heading": "OSI-082 - Subagents Config UI And Registry Validation",
           "heading_level": 3,
-          "heading_line": 10972,
-          "line": 10974,
+          "heading_line": 10970,
+          "line": 10972,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18675,8 +16797,8 @@
         "source_location": {
           "heading": "OSI-083 - Agent Config Personas UI And Import Seeds",
           "heading_level": 3,
-          "heading_line": 11034,
-          "line": 11036,
+          "heading_line": 11032,
+          "line": 11034,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18686,8 +16808,8 @@
         "source_location": {
           "heading": "OSI-086 - Gemini Project Context UX And Copy Boundary",
           "heading_level": 3,
-          "heading_line": 11207,
-          "line": 11209,
+          "heading_line": 11205,
+          "line": 11207,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18697,8 +16819,8 @@
         "source_location": {
           "heading": "OSI-087 - Config Message Variants And App Handlers",
           "heading_level": 3,
-          "heading_line": 11262,
-          "line": 11264,
+          "heading_line": 11260,
+          "line": 11262,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18708,8 +16830,8 @@
         "source_location": {
           "heading": "OSI-088 - Interview Built But Not Wired Audit",
           "heading_level": 3,
-          "heading_line": 11318,
-          "line": 11320,
+          "heading_line": 11316,
+          "line": 11318,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18719,8 +16841,8 @@
         "source_location": {
           "heading": "OSI-090 - Interview Question Limit UI Prompt And Test Wiring",
           "heading_level": 3,
-          "heading_line": 11432,
-          "line": 11434,
+          "heading_line": 11430,
+          "line": 11432,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18730,8 +16852,8 @@
         "source_location": {
           "heading": "OSI-092 - GUI Widget Catalog And DRY Tagging",
           "heading_level": 3,
-          "heading_line": 11549,
-          "line": 11551,
+          "heading_line": 11547,
+          "line": 11549,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18741,8 +16863,8 @@
         "source_location": {
           "heading": "OSI-094 - Parser Failure Recovery UX",
           "heading_level": 3,
-          "heading_line": 11672,
-          "line": 11674,
+          "heading_line": 11670,
+          "line": 11672,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18752,8 +16874,8 @@
         "source_location": {
           "heading": "OSI-097 - Config Dirty State Atomic Persistence",
           "heading_level": 3,
-          "heading_line": 11830,
-          "line": 11832,
+          "heading_line": 11828,
+          "line": 11830,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18763,8 +16885,8 @@
         "source_location": {
           "heading": "OSI-099 - Interview Architecture Confirmation Gate",
           "heading_level": 3,
-          "heading_line": 11945,
-          "line": 11947,
+          "heading_line": 11943,
+          "line": 11945,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18774,8 +16896,8 @@
         "source_location": {
           "heading": "OSI-100 - Interview Vision Provider Selection",
           "heading_level": 3,
-          "heading_line": 12002,
-          "line": 12004,
+          "heading_line": 12000,
+          "line": 12002,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18785,8 +16907,8 @@
         "source_location": {
           "heading": "OSI-101 - Main Run Config Source Alignment",
           "heading_level": 3,
-          "heading_line": 12057,
-          "line": 12059,
+          "heading_line": 12055,
+          "line": 12057,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18796,8 +16918,8 @@
         "source_location": {
           "heading": "OSI-102 - Execution Config Wiring Checklist",
           "heading_level": 3,
-          "heading_line": 12112,
-          "line": 12114,
+          "heading_line": 12110,
+          "line": 12112,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18807,8 +16929,8 @@
         "source_location": {
           "heading": "OSI-103 - GUI Wiring Matrix Enforcement",
           "heading_level": 3,
-          "heading_line": 12170,
-          "line": 12172,
+          "heading_line": 12168,
+          "line": 12170,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18818,8 +16940,8 @@
         "source_location": {
           "heading": "OSI-105 - Config Wiring Validator Entrypoint And Failure Policy",
           "heading_level": 3,
-          "heading_line": 12286,
-          "line": 12288,
+          "heading_line": 12284,
+          "line": 12286,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18829,8 +16951,8 @@
         "source_location": {
           "heading": "OSI-107 - Tier Verification Lifecycle And HITL Boundary",
           "heading_level": 3,
-          "heading_line": 12393,
-          "line": 12395,
+          "heading_line": 12391,
+          "line": 12393,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18840,8 +16962,8 @@
         "source_location": {
           "heading": "OSI-108 - Tier Start Pre-Spawn Verification Checklist",
           "heading_level": 3,
-          "heading_line": 12452,
-          "line": 12454,
+          "heading_line": 12450,
+          "line": 12452,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18851,8 +16973,8 @@
         "source_location": {
           "heading": "OSI-109 - Tier Start Responsibility Phases And Persistence",
           "heading_level": 3,
-          "heading_line": 12508,
-          "line": 12510,
+          "heading_line": 12506,
+          "line": 12508,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18862,8 +16984,8 @@
         "source_location": {
           "heading": "OSI-111 - Start Verification Result Types And Categories",
           "heading_level": 3,
-          "heading_line": 12622,
-          "line": 12624,
+          "heading_line": 12620,
+          "line": 12622,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18873,8 +16995,8 @@
         "source_location": {
           "heading": "OSI-112 - Verify Tier Start Algorithm",
           "heading_level": 3,
-          "heading_line": 12684,
-          "line": 12686,
+          "heading_line": 12682,
+          "line": 12684,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18884,8 +17006,8 @@
         "source_location": {
           "heading": "OSI-113 - Tier Start Helper Function Boundaries",
           "heading_level": 3,
-          "heading_line": 12742,
-          "line": 12744,
+          "heading_line": 12740,
+          "line": 12742,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18895,8 +17017,8 @@
         "source_location": {
           "heading": "OSI-114 - Tier Start Error Handling Policy",
           "heading_level": 3,
-          "heading_line": 12798,
-          "line": 12800,
+          "heading_line": 12796,
+          "line": 12798,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18906,8 +17028,8 @@
         "source_location": {
           "heading": "OSI-115 - End Tier Wiring And Acceptance Recheck",
           "heading_level": 3,
-          "heading_line": 12854,
-          "line": 12856,
+          "heading_line": 12852,
+          "line": 12854,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18917,8 +17039,8 @@
         "source_location": {
           "heading": "OSI-120 - DuringTierEnd Verification Execution",
           "heading_level": 3,
-          "heading_line": 13137,
-          "line": 13139,
+          "heading_line": 13135,
+          "line": 13137,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18928,8 +17050,8 @@
         "source_location": {
           "heading": "OSI-121 - AfterTierEnd Persistence Feedback And Failure Handling",
           "heading_level": 3,
-          "heading_line": 13197,
-          "line": 13199,
+          "heading_line": 13195,
+          "line": 13197,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18939,8 +17061,8 @@
         "source_location": {
           "heading": "OSI-127 - End Tier Verification Error Handling Policy",
           "heading_level": 3,
-          "heading_line": 13549,
-          "line": 13551,
+          "heading_line": 13547,
+          "line": 13549,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18950,8 +17072,8 @@
         "source_location": {
           "heading": "OSI-128 - Start/End Verification Timing Matrix",
           "heading_level": 3,
-          "heading_line": 13608,
-          "line": 13610,
+          "heading_line": 13606,
+          "line": 13608,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18961,8 +17083,8 @@
         "source_location": {
           "heading": "OSI-129 - Canonical Validation Table Source Of Truth",
           "heading_level": 3,
-          "heading_line": 13672,
-          "line": 13674,
+          "heading_line": 13670,
+          "line": 13672,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18972,8 +17094,8 @@
         "source_location": {
           "heading": "OSI-135 - Interview Phase Lifecycle Mirror",
           "heading_level": 3,
-          "heading_line": 14049,
-          "line": 14051,
+          "heading_line": 14047,
+          "line": 14049,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18983,8 +17105,8 @@
         "source_location": {
           "heading": "OSI-136 - Unrelated Failure Escalation Policy",
           "heading_level": 3,
-          "heading_line": 14111,
-          "line": 14113,
+          "heading_line": 14109,
+          "line": 14111,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -18994,8 +17116,8 @@
         "source_location": {
           "heading": "OSI-137 - Structured Verification Feedback Loop",
           "heading_level": 3,
-          "heading_line": 14174,
-          "line": 14176,
+          "heading_line": 14172,
+          "line": 14174,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19005,8 +17127,8 @@
         "source_location": {
           "heading": "OSI-222 - GUI Readiness Verification Criterion",
           "heading_level": 3,
-          "heading_line": 19693,
-          "line": 19695,
+          "heading_line": 19691,
+          "line": 19693,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19016,8 +17138,8 @@
         "source_location": {
           "heading": "OSI-238 - Frontend/UI Selection Example Evidence",
           "heading_level": 3,
-          "heading_line": 20586,
-          "line": 20588,
+          "heading_line": 20584,
+          "line": 20586,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19027,8 +17149,8 @@
         "source_location": {
           "heading": "OSI-283 - Crew GUI And Assistant Surfaces Are Consumer Projections",
           "heading_level": 3,
-          "heading_line": 23048,
-          "line": 23050,
+          "heading_line": 23046,
+          "line": 23048,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19038,8 +17160,8 @@
         "source_location": {
           "heading": "OSI-285 - Future Crew Template Save Surface",
           "heading_level": 3,
-          "heading_line": 23165,
-          "line": 23167,
+          "heading_line": 23163,
+          "line": 23165,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19049,8 +17171,8 @@
         "source_location": {
           "heading": "OSI-287 - Crew Performance Metrics",
           "heading_level": 3,
-          "heading_line": 23267,
-          "line": 23269,
+          "heading_line": 23265,
+          "line": 23267,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19060,8 +17182,8 @@
         "source_location": {
           "heading": "OSI-290 - User Reorders Queued Crew Execution",
           "heading_level": 3,
-          "heading_line": 23418,
-          "line": 23420,
+          "heading_line": 23416,
+          "line": 23418,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19071,8 +17193,8 @@
         "source_location": {
           "heading": "OSI-307 - Communication Pattern GUI Insights",
           "heading_level": 3,
-          "heading_line": 24334,
-          "line": 24336,
+          "heading_line": 24332,
+          "line": 24334,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19082,8 +17204,8 @@
         "source_location": {
           "heading": "OSI-321 - Agent Communication GUI Visualization Consumer",
           "heading_level": 3,
-          "heading_line": 25100,
-          "line": 25102,
+          "heading_line": 25098,
+          "line": 25100,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19093,8 +17215,8 @@
         "source_location": {
           "heading": "OSI-344 - Coordination GUI Monitoring Consumer",
           "heading_level": 3,
-          "heading_line": 26363,
-          "line": 26365,
+          "heading_line": 26361,
+          "line": 26363,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19104,8 +17226,8 @@
         "source_location": {
           "heading": "OSI-360 - Frontend UI Parallelization Example",
           "heading_level": 3,
-          "heading_line": 27220,
-          "line": 27222,
+          "heading_line": 27218,
+          "line": 27220,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19115,8 +17237,8 @@
         "source_location": {
           "heading": "OSI-361 - Dependency-Level Execution Flow Example",
           "heading_level": 3,
-          "heading_line": 27272,
-          "line": 27274,
+          "heading_line": 27270,
+          "line": 27272,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19126,8 +17248,8 @@
         "source_location": {
           "heading": "OSI-381 - Autonomous QA Visual Status Symbols",
           "heading_level": 3,
-          "heading_line": 28386,
-          "line": 28388,
+          "heading_line": 28384,
+          "line": 28386,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19137,8 +17259,8 @@
         "source_location": {
           "heading": "OSI-382 - Progress Tracking Visual Status Model",
           "heading_level": 3,
-          "heading_line": 28437,
-          "line": 28439,
+          "heading_line": 28435,
+          "line": 28437,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19148,8 +17270,8 @@
         "source_location": {
           "heading": "OSI-388 - Pause Gate GUI Event Projection",
           "heading_level": 3,
-          "heading_line": 28781,
-          "line": 28783,
+          "heading_line": 28779,
+          "line": 28781,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19159,8 +17281,8 @@
         "source_location": {
           "heading": "OSI-396 - Autonomous QA Clear Progress Visibility Evidence",
           "heading_level": 3,
-          "heading_line": 29215,
-          "line": 29217,
+          "heading_line": 29213,
+          "line": 29215,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19170,8 +17292,8 @@
         "source_location": {
           "heading": "OSI-399 - Autonomous QA Visual Status Config Knob",
           "heading_level": 3,
-          "heading_line": 29382,
-          "line": 29384,
+          "heading_line": 29380,
+          "line": 29382,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19181,8 +17303,8 @@
         "source_location": {
           "heading": "OSI-405 - Persona Runtime State UI Event Availability",
           "heading_level": 3,
-          "heading_line": 29731,
-          "line": 29733,
+          "heading_line": 29729,
+          "line": 29731,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19192,8 +17314,8 @@
         "source_location": {
           "heading": "OSI-417 - Event Driven GUI Projection Alignment",
           "heading_level": 3,
-          "heading_line": 30452,
-          "line": 30454,
+          "heading_line": 30450,
+          "line": 30452,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19203,8 +17325,8 @@
         "source_location": {
           "heading": "OSI-425 - Persona-Aware Subagent Configuration Recovery",
           "heading_level": 3,
-          "heading_line": 30947,
-          "line": 30949,
+          "heading_line": 30945,
+          "line": 30947,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -19544,8 +17666,8 @@
         "source_location": {
           "heading": "PLS-014 - Planning Product Ledger Synchronization And Compile Boundary",
           "heading_level": 3,
-          "heading_line": 741,
-          "line": 743,
+          "heading_line": 742,
+          "line": 744,
           "path": "Plans/Planning_Ledger_System.md"
         }
       },
@@ -19698,8 +17820,8 @@
         "source_location": {
           "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
           "heading_level": 3,
-          "heading_line": 589,
-          "line": 591,
+          "heading_line": 591,
+          "line": 593,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       },
@@ -20171,8 +18293,8 @@
         "source_location": {
           "heading": "PRDB-007 - Conflicts, Source Priority, And Ledger-Backed Annotations",
           "heading_level": 3,
-          "heading_line": 441,
-          "line": 444,
+          "heading_line": 504,
+          "line": 507,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -20732,8 +18854,8 @@
         "source_location": {
           "heading": "PSMERA-025 - Provider-Stream Continuity Schema Gaps And Stale Routing Dispositions",
           "heading_level": 3,
-          "heading_line": 1976,
-          "line": 1978,
+          "heading_line": 1974,
+          "line": 1976,
           "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
         }
       },
@@ -20754,8 +18876,8 @@
         "source_location": {
           "heading": "PWIZ-002 - PlanningRun Aggregate, Thread Topology, Context, And Intent Axes",
           "heading_level": 3,
-          "heading_line": 93,
-          "line": 96,
+          "heading_line": 98,
+          "line": 101,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20765,8 +18887,8 @@
         "source_location": {
           "heading": "PWIZ-003 - Dynamic Topic Graph And Topic Operations",
           "heading_level": 3,
-          "heading_line": 180,
-          "line": 183,
+          "heading_line": 185,
+          "line": 188,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20776,8 +18898,8 @@
         "source_location": {
           "heading": "PWIZ-005 - Topic Ledger, Invalidation, Amendments, And PRD Immutability",
           "heading_level": 3,
-          "heading_line": 330,
-          "line": 333,
+          "heading_line": 335,
+          "line": 338,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20787,8 +18909,8 @@
         "source_location": {
           "heading": "PWIZ-006 - Topic Conversion, Audit, Ready State, And Checkpoints",
           "heading_level": 3,
-          "heading_line": 400,
-          "line": 403,
+          "heading_line": 405,
+          "line": 408,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20798,8 +18920,8 @@
         "source_location": {
           "heading": "PWIZ-007 - Final Integration, Plan Review, And Visual References",
           "heading_level": 3,
-          "heading_line": 471,
-          "line": 474,
+          "heading_line": 476,
+          "line": 479,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20809,8 +18931,8 @@
         "source_location": {
           "heading": "PWIZ-008 - Project Context, Discovery, Setup Authority, And Currentness",
           "heading_level": 3,
-          "heading_line": 540,
-          "line": 543,
+          "heading_line": 545,
+          "line": 548,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20820,8 +18942,8 @@
         "source_location": {
           "heading": "PWIZ-010 - Approve And Build And ApprovedPlanPack Authority",
           "heading_level": 3,
-          "heading_line": 689,
-          "line": 692,
+          "heading_line": 694,
+          "line": 697,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20831,8 +18953,19 @@
         "source_location": {
           "heading": "PWIZ-013 - Planning Run GUI, Topic Progress, And Attached Audits",
           "heading_level": 3,
-          "heading_line": 968,
-          "line": 971,
+          "heading_line": 1033,
+          "line": 1036,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-014",
+        "source_location": {
+          "heading": "PWIZ-014 - Approve And Build CAS, Currentness, And Approval Transaction Boundary",
+          "heading_level": 3,
+          "heading_line": 778,
+          "line": 781,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -24698,6 +22831,17 @@
         }
       },
       {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-098",
+        "source_location": {
+          "heading": "UCC-098 - PRD And Planning Runtime Command Contracts",
+          "heading_level": 3,
+          "heading_line": 6929,
+          "line": 6931,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
         "owner_doc": "Plans/usage-feature.md",
         "plan_unit_id": "UF-002",
         "source_location": {
@@ -26058,12 +24202,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5166,
+  "plan_unit_count": 5173,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 954,
+      "high": 960,
       "low": 5,
-      "standard": 4207
+      "standard": 4208
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -26755,7 +24899,6 @@
       "deferred_algorithm": 1,
       "deferred_compiler_boundary": 1,
       "deferred_contract_authority": 1,
-      "deferred_implementation_choice": 1,
       "deferred_pathing_decision": 1,
       "deferred_wizard_launch_drift": 1,
       "degradation_recovery_field_drift": 1,
@@ -27098,6 +25241,7 @@
       "gui_automation_evidence_run_layout": 1,
       "gui_backend_scope_now_in_scope": 1,
       "gui_blocked_recovery_addenda_drift": 1,
+      "gui_command_contract_drift": 1,
       "gui_config_coverage_matrix_rows": 1,
       "gui_config_wiring_permissions_commands_skills": 1,
       "gui_config_wiring_plugins_models_formatters": 1,
@@ -27199,9 +25343,10 @@
       "ignore_search_index_invalidation_and_storage_isolation": 1,
       "immediate_wake_consumer_behavior": 1,
       "implementation_anchor_drift": 1,
+      "implementation_binding_drift": 1,
       "implementation_checklist_mirror_partial": 1,
       "implementation_notes_placement_boundary": 1,
-      "implementation_readiness": 5,
+      "implementation_readiness": 7,
       "implementation_sequence_drift": 4,
       "implementer_confirmation_guardrail": 1,
       "imported_handoff_state_drift": 1,
@@ -28306,8 +26451,10 @@
       "ssot_drift": 1,
       "stable_anchor_gap_audit_findings": 1,
       "stale_agent_cleanup_and_crash_recovery_gap": 1,
+      "stale_approval_build_race": 1,
       "stale_architecture_revival": 2,
       "stale_gap_promotion_risk": 1,
+      "stale_legacy_retrieval": 1,
       "stale_lineage": 1,
       "stale_or_forbidden_behavior": 10,
       "stale_owner_residue": 1,
@@ -28326,6 +26473,7 @@
       "startup_recovered_wake_drift": 1,
       "state_machine": 1,
       "state_reset_loss": 1,
+      "static_fixture_false_certification": 1,
       "static_or_misleading_plan_compile_ui": 1,
       "stop_reason_drift": 2,
       "storage_boundary": 1,
@@ -28580,6 +26728,7 @@
       "unsupported_persona_control_skip_disclosure": 1,
       "unsupported_runtime_controls_skipped_state": 1,
       "untrusted_code_execution": 1,
+      "untrusted_source_security_bypass": 1,
       "untyped_page_dump_drift": 1,
       "unverifiable_completion": 1,
       "unverified_execution_completion": 1,
@@ -28734,9 +26883,9 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5141,
-      "deferred": 8,
-      "retired": 17
+      "accepted": 4988,
+      "deferred": 7,
+      "retired": 178
     },
     "unit_type_counts": {
       "acceptance": 4,
@@ -28754,7 +26903,7 @@
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
-      "deferred_decision": 6,
+      "deferred_decision": 5,
       "deferred_enhancement": 9,
       "deferred_reconciliation": 3,
       "delta_contract": 1,
@@ -28774,7 +26923,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4283,
+      "requirement": 4291,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -28821,6 +26970,24 @@
           "line": 260,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
+      },
+      {
+        "evidence": "PNC-018 requires Plans/prd_planning_runtime_contracts.json, Plans/plans_to_code_handoff.schema.json, and scripts/pm-prd-planning-runtime-validate.py to remain green before native PlanCompile/WorkNode runtime readiness can be claimed.",
+        "guard": "strict_runtime_contract_validation_required",
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "validator": "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
+      },
+      {
+        "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
+        "guard": "executable_lifecycle_certification_required",
+        "plan_unit_id": "PNC-019",
+        "source_location": {
+          "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
+          "heading_level": 3,
+          "heading_line": 1155,
+          "line": 1157,
+          "path": "Plans/Plan_To_Node_Compilation.md"
+        }
       }
     ],
     "owner_doc": "Plans/Plan_To_Node_Compilation.md",
@@ -28830,5 +26997,5 @@
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "status": "blocked_compiler_contract_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete and runtime node artifact generation is disabled until an explicit later enablement accepts runtime PlanCompile/NodeSeed/WorkNode artifacts."
+  "status_reason": "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete, runtime node artifact generation is disabled, and executable lifecycle certification evidence is absent until explicit runtime enablement."
 }

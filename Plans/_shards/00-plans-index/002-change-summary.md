@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L21
+Source lines: L7-L23
 
-Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
+Source SHA256: `8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a`
 
 ---
 
@@ -20,6 +20,8 @@ Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab
 - 2026-06-17: Registered semantic audit closure routing: `Plans/Planning_Ledger_System.md` owns the durable closure registry and reopen policy, `Plans/Plan_Document_System.md` owns deterministic finding keys and closure-matrix validation, and bootstrap prompt/workflow docs consume those owner contracts.
 - 2026-06-17: Registered Plans-to-code handoff routing compiled from ledger `pldg-20260617-001-plans-to-code-handoff`; PlanCompile remains design-only/disabled, `Plans/Automated_Testing_System.md` is the automated-testing SSOT, `Plans/plans_to_code_handoff.schema.json` is a design-only schema draft, governance registration is metadata-only, and no WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, dispatched GoalRuns, or production build tasks are authorized.
 - 2026-06-18: Registered PRD Builder and Planning Wizard owner routing compiled from ledger `pldg-20260618-001-prd-planning-wizard`; bootstrap compile remains Plans/index-only and does not run finished-product Plan Compile or create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+- 2026-06-21: Registered PRD/Planning runtime-contract repair: `Plans/prd_planning_runtime_contracts.json` and schema carry strict Native Ledger Service, ProjectContextSnapshot, stage-card, WorkNode, activation, testing, UICommand, clean-room, and retired-search-exclusion contracts; `scripts/pm-prd-planning-runtime-validate.py` is part of standard gates.
+- 2026-06-21: Retired `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` from active product canon. Their `CW-*` and `CWF-*` PlanUnits are compatibility/source-lineage only and must not be accepted/indexed as active current-product truth.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

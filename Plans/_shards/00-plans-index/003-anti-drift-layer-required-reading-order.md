@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L23-L180
+Source lines: L25-L182
 
-Source SHA256: `5d2e9795842f00091fba54f12d22ddc82dbee9d7be2f6438f42109ca6cc751ab`
+Source SHA256: `8820360e61300e26b1e170259a6c878f0c29919a4912a4c05fabcfa4ae32b86a`
 
 ---
 
@@ -101,8 +101,8 @@ This index records these routing relationships only; it does not re-own contract
 - Contracts/Crosswalk/storage/HITL repeat seam: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, `Plans/storage-plan.md`, and `Plans/human-in-the-loop.md` remain the owner-map set for repeated source orderings of the same four docs.
 - Runtime/storage/policy/UI terminology seam: normalize `safe-point`, `restore-point`, `rollback`, and `contamination` terminology through one authoritative mapping and event taxonomy across runtime, storage, policy, and UI docs; index routing points to `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, and `Plans/FinalGUISpec.md`.
 - Final GUI/UI/orchestrator repeat seam: listed orderings `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md` route to the same owner-map set.
-- Contracts/Crosswalk/chain-wizard seam: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, and `Plans/chain-wizard-flexibility.md`.
-- Chain-wizard/contracts/executor seam: `Plans/chain-wizard-flexibility.md` (section 1), `Plans/Contracts_V0.md`, and `Plans/Executor_Protocol.md`.
+- Contracts/Crosswalk/legacy chain-wizard source-lineage seam: `Plans/chain-wizard-flexibility.md` is preserved only as compatibility/source-lineage input; active contract and boundary ownership remains with `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`.
+- Legacy chain-wizard/contracts/executor source-lineage seam: `Plans/chain-wizard-flexibility.md` (section 1) is preserved only as historical input; active executor/runtime ownership remains with `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, and the current PRD/Planning owner docs.
 - Contracts/executor/multi-account seam: `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, and `Plans/Multi-Account.md`.
 - Storage/orchestrator pair seam: `Plans/storage-plan.md` and `Plans/Orchestrator_Page.md`.
 - Orchestrator-subagent/executor/storage repeat seam: `Plans/orchestrator-subagent-integration.md`, `Plans/Executor_Protocol.md`, and `Plans/storage-plan.md` remain the owner-map set for repeated source orderings of the same three docs.
