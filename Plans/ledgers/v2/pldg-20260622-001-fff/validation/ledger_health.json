@@ -1,0 +1,93 @@
+{
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Required v2 scaffold files were initialized and registry entry was added as active."
+    },
+    {
+      "check_id": "research-0002",
+      "status": "pass",
+      "summary": "Research intake recorded without touching canonical Plans or generated governance/build artifacts."
+    },
+    {
+      "check_id": "adoption-options-0003",
+      "status": "pass",
+      "summary": "Native versus direct fff adoption options, pros, cons, and recommended planning posture were recorded in ledger-only state."
+    },
+    {
+      "check_id": "native-impl-research-0004",
+      "status": "pass",
+      "summary": "Jared selected native PM-owned fff-inspired file discovery; fff and OpenCode implementation details were inspected at stable commits, temporary clones were deleted, and API/ranking/lifecycle/guardrail/UI-ordering/validation lessons were recorded."
+    },
+    {
+      "check_id": "shared-substrate-0005",
+      "status": "pass",
+      "summary": "Jared selected one shared native discovery substrate for both agent tools and GUI surfaces from day one."
+    },
+    {
+      "check_id": "agent-bearing-consumers-0006",
+      "status": "pass",
+      "summary": "Jared clarified that Orchestrator, Executor, WorkNodes, Planning Wizard, PRDBuilder, Assistant Chat, and anything that uses an agent should be able to discover files through the shared substrate."
+    },
+    {
+      "check_id": "conformance-contract-0007",
+      "status": "pass",
+      "summary": "Jared agreed that every agent-bearing discovery consumer needs conformance proof for shared-substrate access, ranked/fresh/fallback-aware results, and FileSafe/permissions/ignore/fallback/policy compliance."
+    },
+    {
+      "check_id": "first-acceptance-workflow-0008",
+      "status": "pass",
+      "summary": "Jared revised the first acceptance workflow to ordinary agent bug-fix/code-orientation: agents use shared discovery to locate relevant code before exact verification."
+    },
+    {
+      "check_id": "opencode-current-head-0009",
+      "status": "pass",
+      "summary": "Fresh OpenCode current HEAD c5a4a8288cbe115f673f3f9933fe217402c85406 was cloned, inspected, and deleted; fff usage was recorded as FileSystem/Search and file-discovery surfaces, with model-facing grep/glob tools still using ripgrep directly."
+    },
+    {
+      "check_id": "implementation-readiness-0010",
+      "status": "pass",
+      "summary": "Assessed that there is enough substance for an implementation-ready ledger tightening pass, provided it remains ledger-only and makes service/API, invocation policy, conformance, fallback, lifecycle, and validation details explicit."
+    },
+    {
+      "check_id": "implementation-ready-tightening-0011",
+      "status": "pass",
+      "summary": "Jared said `ok lets get to it`; the ledger-only implementation-ready packet captures DiscoveryService contract, request/result/provenance shapes, ambient agent invocation policy, consumer conformance, policy envelope, ranking model, exact verification handoff, lifecycle/fallback, validation scenarios, non-goals, and owner hints."
+    },
+    {
+      "check_id": "pre-compile-gap-review-0012",
+      "status": "needs_resolution",
+      "summary": "Pre-compile review found underspecified details that should be resolved before conversion to canonical Plans."
+    },
+    {
+      "check_id": "gap-resolution-candidates-0013",
+      "status": "needs_confirmation",
+      "summary": "Candidate resolutions were proposed for q-0006 through q-0009. Assistant Chat thread discovery visibility was accepted as a GUI requirement."
+    }
+  ],
+  "last_validated_at_utc": "2026-06-22T19:39:56Z",
+  "ledger_id": "pldg-20260622-001-fff",
+  "notes": "Gap-resolution workshop is active. Candidate resolutions exist for q-0006 through q-0009, but they remain open until Jared confirms or revises them. Compile queue stays empty.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_initialized_with_open_questions",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 4,
+    "compile_queue_items": 0,
+    "corrections": 0,
+    "decisions": 9,
+    "deferred_questions": 0,
+    "design_atoms": 65,
+    "events": 14,
+    "open_blockers": 0,
+    "open_questions": 4
+  },
+  "updated_at_utc": "2026-06-22T19:39:56Z",
+  "warnings": [
+    "Open questions q-0006 through q-0009 should be resolved or explicitly assumption-locked before compile.",
+    "Doc-impact and exact consumer-conformance matrices should be materialized before compile.",
+    "No canonical Plans or generated governance/build artifacts have been updated."
+  ]
+}

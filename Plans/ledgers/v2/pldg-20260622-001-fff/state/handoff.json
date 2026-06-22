@@ -1,0 +1,53 @@
+{
+  "current_phase": "gap_resolution_workshop_active",
+  "cursor": {
+    "last_decision_id": "dec-0009",
+    "last_event_id": "evt-0014",
+    "last_question_id": "q-0009",
+    "next_atom_id": "atom-0066",
+    "next_decision_id": "dec-0010",
+    "next_event_id": "evt-0015",
+    "next_question_id": "q-0010"
+  },
+  "deferred_questions": [],
+  "do_not_redo": [
+    "Do not re-create this ledger unless Jared asks for a fresh ledger.",
+    "Do not write canonical Plans during conversational planning.",
+    "Do not infer product behavior from the placeholder token `<fff>` alone.",
+    "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.",
+    "Do not treat WorkNode mentions as permission to create WorkNodes or executable queues.",
+    "Do not re-clone fff or OpenCode unless Jared asks for refreshed external research; both temporary clones were deleted after inspection.",
+    "Do not compile this ledger while q-0006 through q-0009 remain open unless Jared explicitly accepts assumptions for them."
+  ],
+  "last_completed_action": "Started the gap-resolution workshop after Jared said `ok lets work through them`. Proposed candidate resolutions for q-0006 through q-0009: path/context discovery scope with exact content handoff; local full-fidelity plus degraded remote/cache path discovery; project/worktree-local frecency with GUI reset/disable and sanitized agent use; internal DiscoveryService plus agent-facing discover_paths and discovery-specific receipts. Accepted Jared's GUI requirement that Assistant Chat threads must show what discovery is doing.",
+  "last_known_good_state": "Ledger remains source memory, not canonical product prose. Native PM-owned fff-inspired discovery is accepted; one shared substrate serves agent tools and GUI surfaces; ordinary agent bug-fix/code-orientation uses discovery before exact verification. Candidate defaults exist for the remaining pre-compile questions, but q-0006 through q-0009 remain open until Jared confirms or revises them. Assistant Chat thread discovery visibility is accepted.",
+  "ledger_id": "pldg-20260622-001-fff",
+  "next_action": "Ask Jared to confirm or revise the four candidate defaults, then close q-0006 through q-0009 and build doc-impact plus consumer-conformance matrices.",
+  "next_safe_action": "Continue ledger-only refinement; do not compile or edit canonical Plans unless Jared explicitly instructs compile after gaps are resolved or accepted.",
+  "open_blockers": [],
+  "open_questions": [
+    {
+      "question_id": "q-0006",
+      "summary": "Candidate atom-0060 proposes MVP path/context discovery only, with Instant Grep / grep / codesearch owning content search."
+    },
+    {
+      "question_id": "q-0007",
+      "summary": "Candidate atom-0061 proposes full local-worktree discovery plus degraded/read-only remote/cache path discovery where safe manifests or Git cache exist."
+    },
+    {
+      "question_id": "q-0008",
+      "summary": "Candidate atom-0062 proposes on-device, user-scoped, project/worktree-local frecency by default with GUI reset/disable and sanitized agent use."
+    },
+    {
+      "question_id": "q-0009",
+      "summary": "Candidate atom-0063 proposes internal DiscoveryService, agent-facing discover_paths, and discovery-specific receipt/event names."
+    }
+  ],
+  "phase": "gap_resolution_workshop_active",
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "updated_at_utc": "2026-06-22T19:39:56Z",
+  "validation_state": {
+    "ledger_health": "pass_initialized",
+    "safe_content_checks": "Updated only Plans/ledgers/v2/pldg-20260622-001-fff/* and ledger_registry.json; no canonical Plans or generated governance/build artifacts touched."
+  }
+}

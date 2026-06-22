@@ -1,0 +1,33 @@
+{
+  "canonical_plan_targets": [],
+  "created_at_utc": "2026-06-22T07:40:19Z",
+  "files": {
+    "blockers": "records/blockers.jsonl",
+    "compile_queue": "state/compile_queue.json",
+    "corrections": "records/corrections.jsonl",
+    "current_state": "state/current.json",
+    "decisions": "records/decisions.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "events": "events.jsonl",
+    "handoff": "state/handoff.json",
+    "open_items": "state/open_items.json",
+    "operating_capsule": "state/operating_capsule.json",
+    "questions": "records/questions.jsonl"
+  },
+  "ledger_id": "pldg-20260622-001-fff",
+  "notes": "Gap-resolution workshop active. `<fff>` refers to evaluating dmtrKovalenko/fff, OpenCode's fff integration, and Cursor-style fast regex search for possible Puppet Master benefit. Cursor-style regex acceleration is already represented in Plans as Instant Grep / SparseNgramIndex. Jared selected native PM-owned fff-inspired file discovery as the product direction, selected one shared substrate for both agent tools and GUI surfaces from day one, clarified that Orchestrator, Executor, WorkNodes, Planning Wizard, PRDBuilder, Assistant Chat, and anything that uses an agent should be able to discover files through it, agreed that this needs a conformance contract, and clarified that ordinary agent work such as bug fixing should use the shared substrate to locate relevant code before exact verification. Fresh OpenCode current HEAD inspection confirmed OpenCode's fff use is narrower. Pre-compile review found remaining underspecified details. Candidate resolutions now exist for q-0006 through q-0009: MVP path/context discovery scope with exact content handoff; local full-fidelity plus degraded remote/cache path discovery; project/worktree-local frecency with GUI reset/disable and sanitized agent use; internal DiscoveryService plus agent-facing discover_paths and discovery-specific receipts. Jared's GUI requirement is accepted: Assistant Chat threads must show what discovery is doing. Direct fff remains reference/evidence/prototype-only unless direction changes. No canonical Plans edits authorized.",
+  "profile": "bootstrap_planning",
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 0,
+    "decisions": 9,
+    "design_atoms": 65,
+    "events": 14,
+    "questions": 9
+  },
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for Feature: <fff> on 2026-06-22, then clarified `<fff>` as fff / OpenCode / Cursor fast regex search research for Puppet Master. This is a conversational design/spec thread, not a Goal run and not canonical Plans prose.",
+  "status": "active",
+  "title": "Feature <fff>",
+  "updated_at_utc": "2026-06-22T19:39:56Z"
+}
