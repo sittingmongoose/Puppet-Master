@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L410-L811
+Source lines: L410-L810
 
-Source SHA256: `fec4781f4b52f7e6c4901431bef533f5f1cd728df93accf7bd3150505024aa39`
+Source SHA256: `365781498d8c956b58bf60b334585bf7ee7a75e04265627ab301e2d55e2cde16`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  The current bootstrap/v1 PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch_source, runtime_adapter, status, current_state, current_stage, cursor, last_green_stage, last_green_hashes, blockers, next_required_stage, resume_command_or_action, receipts, and compile_wave_contracts; last_green_stage and next_required_stage are stage_name | null, not free-form strings. Compile waves are bounded subagent assignment contracts: each wave names assignment_id, assigned_agent_role, source_item_refs, read_set, write_set, forbidden_writes, parent_only_writes, result_status, retry_route, resume_ref, durable_evidence_refs, and parent_writeback_required so a parent compiler remains the only writer/adjudicator. retry_route uses the canonical compile_wave_retry_route object with route_kind, target_stage, reason, and optional resume_ref rather than free-form strings; target_stage is a stage_name, except terminal route kinds must use null. The shared compiler core has two adapters, a Codex bootstrap adapter and a native Puppet Master adapter, so the truth model stays shared while execution surfaces differ. Current bootstrap/v1 PlanCompile remains design_only_disabled with automatic_launch_enabled: false, native_plan_wizard_launch_enabled: false, and codex_bootstrap_launch_enabled: false until an explicit later enablement PlanUnit accepts runtime launch; native_runtime records use the separate PNC-015 branch and must not reinterpret v1 const-false flags as runtime enablement.
+  The current bootstrap/v1 PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch_source, runtime_adapter, status, current_state, current_stage, cursor, last_green_stage, last_green_hashes, blockers, next_required_stage, resume_command_or_action, receipts, and compile_wave_contracts; last_green_stage and next_required_stage are stage_name | null, not free-form strings. Compile waves are bounded subagent assignment contracts: each wave names assignment_id, assigned_agent_role, source_item_refs, read_set, write_set, forbidden_writes, parent_only_writes, result_status, retry_route, resume_ref, durable_evidence_refs, assignment_receipt, completion_receipt, and parent_writeback_required so a parent compiler remains the only writer/adjudicator. retry_route uses the canonical compile_wave_retry_route object with route_kind, target_stage, reason, and optional resume_ref rather than free-form strings; target_stage is a stage_name, except terminal route kinds must use null. The shared compiler core has two adapters, a Codex bootstrap adapter and a native Puppet Master adapter, so the truth model stays shared while execution surfaces differ. Current bootstrap/v1 PlanCompile remains design_only_disabled with automatic_launch_enabled: false, planning_wizard_launch_enabled: false, and codex_bootstrap_launch_enabled: false until an explicit later enablement PlanUnit accepts runtime launch; native_runtime records use the separate PNC-015 branch and must not reinterpret v1 const-false flags as runtime enablement.
   Resume must be possible through a bounded stage card, stage cards, worklists, compile-wave result receipts, and a single goal prompt carrying the compile_id plus current state refs, and the Codex bootstrap adapter may package Codex work packages without native runtime dispatch. Do not depend on the native Puppet Master scheduler for bootstrap. The explicit no-build boundary is No WorkNodes, No NodeSeeds, No executable queues, No final node manifests, and PlanCompile dry-run/non-executable schema examples may be documented but not emitted as runtime work.
 gui_related: false
 gui_classification_reason: State machine and compiler adapter contracts are backend planning/runtime design, not visual presentation.
@@ -70,7 +70,7 @@ preserved_exact_tokens:
   - "durable_evidence_refs"
   - "design_only"
   - "automatic_launch_enabled: false"
-  - "native_plan_wizard_launch_enabled: false"
+  - "planning_wizard_launch_enabled: false"
   - "codex_bootstrap_launch_enabled: false"
 negative_constraints:
   - Do not build two unrelated compilers that drift.
@@ -91,7 +91,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-    Each design-only PlanCompile stage has a bounded stage_card with stage_id, purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state after explicit runtime enablement, while the current bootstrap remains non-dispatching. Stage success_route and blocked_route use canonical route objects with route_kind, target_stage, reason, and optional resume_ref, and compile worklist blocked_route uses the same exact target object shape, rather than unrestricted strings. target_stage is a stage_name whenever the route chooses a next stage; terminal route kinds must set target_stage to null. Required stage contracts include preflight/currentness, scope selection, PlanUnit normalization, dependency/cycle analysis, surface mapping, work type and effort classification, NodeSeed candidate drafting, split/merge sizing, NodeSeed review, WorkGraph draft, WorkNode request schema drafting, adapter packaging, and certification/handoff.
+    Each design-only PlanCompile stage has a bounded stage_card with stage_id, purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state after explicit runtime enablement, while the current bootstrap remains non-dispatching. Stage success_route and blocked_route use canonical route objects with route_kind, target_stage, reason, and optional resume_ref, and compile worklist blocked_route uses the same exact target object shape, rather than unrestricted strings. target_stage is a stage_name whenever the route chooses a next stage; terminal route kinds must set target_stage to null. Required stage contracts use the canonical registry: preflight_currentness, scope_selection, planunit_normalization, test_repository_discovery, typed_dependency_analysis, implementation_surface_mapping, work_risk_classification, nodeseed_candidate_drafting, split_merge_sizing, candidate_review, workgraph_construction, worknode_request_construction, final_compile_audit_repair, executor_handoff_certification, activation_transaction, and orchestrator_projection.
 gui_related: false
 gui_classification_reason: Stage cards and resumable worklists are compiler process contracts, not GUI implementation.
 depends_on: [PNC-010]
@@ -287,7 +287,6 @@ acceptance_criteria:
   - Codex bootstrap external GUI-agent request is documented as a bootstrap artifact only, not a built Puppet Master setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
 risk_class: handoff_gap

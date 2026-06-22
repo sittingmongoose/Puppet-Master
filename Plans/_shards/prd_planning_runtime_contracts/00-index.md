@@ -1,12 +1,12 @@
 # Shard Index: Plans/prd_planning_runtime_contracts.json
 
-Generated: 2026-06-21T20:47:52Z
+Generated: 2026-06-22T07:09:11Z
 
-Source SHA256: `cf807ce2dab1ca273136e183c7bb3561e0d566af0cea689a968b7f7679489d0d`
+Source SHA256: `6038b2905b68550bf7454213c3d8acbc2bd2a4509b6de1c16fa8b8da3d7ab5dd`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `45b908655f172bc580bb5ca3cdf16dc0c2e8c24d527dc2f631b37b31a8da91d1`
-- [002 - Lines 201-225](002-lines-201-225.md) L201-L225 `e635f38527dde729e7161f633b6438fd1b2065b8d71abd553184ee26b842d4f5`
+- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `cb1cf63fa8182be761b452c80daeddf469c6c73b70c134a5d9b657e98a01b99f`
+- [002 - Lines 201-233](002-lines-201-233.md) L201-L233 `bc5b6e14676ae52a41bb79879a420bf4efaa8de075a85c63dddb55b4e4060b9f`
