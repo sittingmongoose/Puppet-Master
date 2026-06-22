@@ -1,0 +1,53 @@
+{
+  "deferred_questions": [],
+  "ledger_id": "pldg-20260622-001-fff",
+  "notes": "Candidate resolutions exist for q-0006 through q-0009, but they remain open until Jared confirms or revises them. Assistant Chat thread discovery visibility is accepted. No canonical Plans compile should begin until these questions are answered or Jared explicitly accepts assumptions, and until doc-impact plus consumer-conformance matrices are materialized or deliberately deferred.",
+  "open_blockers": [],
+  "open_questions": [
+    {
+      "question": "Before compile, should MVP native discovery be locked to file/path/context-candidate discovery, with content regex search remaining owned by Instant Grep / grep / codesearch and `content_candidate` used only as a handoff to exact verification?",
+      "question_id": "q-0006",
+      "proposed_resolution_atom": "atom-0060",
+      "source_refs": [
+        "chat:pre-convert-gap-review",
+        "chat:work-through-gaps-assistant-chat-visibility"
+      ],
+      "status": "open"
+    },
+    {
+      "question": "Before compile, should DiscoveryService support remote/cache-backed projects and multiple worktrees in MVP, or should local-worktree discovery be MVP with remote/cache discovery explicitly deferred?",
+      "question_id": "q-0007",
+      "proposed_resolution_atom": "atom-0061",
+      "source_refs": [
+        "chat:pre-convert-gap-review",
+        "chat:work-through-gaps-assistant-chat-visibility"
+      ],
+      "status": "open"
+    },
+    {
+      "question": "Before compile, what default should apply to frecency/query/open history: enabled project-locally with visible reset/disable controls, disabled until opted in, or another persistence/privacy posture?",
+      "question_id": "q-0008",
+      "proposed_resolution_atom": "atom-0062",
+      "source_refs": [
+        "chat:pre-convert-gap-review",
+        "chat:work-through-gaps-assistant-chat-visibility"
+      ],
+      "status": "open"
+    },
+    {
+      "question": "Before compile, should the public vocabulary be `DiscoveryService` plus a tool/event family such as `discover_files` / `discovery.invoked`, or should PM reuse existing file-find/glob/codesearch tool names with discovery-specific receipt fields?",
+      "question_id": "q-0009",
+      "proposed_resolution_atom": "atom-0063",
+      "source_refs": [
+        "chat:pre-convert-gap-review",
+        "chat:work-through-gaps-assistant-chat-visibility"
+      ],
+      "status": "open"
+    }
+  ],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-22T19:39:56Z"
+}
